@@ -4,7 +4,7 @@
 
 /**
  * \ingroup NtlSimulation
- * \brief 캐릭터의 점프 상태에서의 행위 클래스
+ * \brief Character's behavior class while jumping
  *
  * \date 2009-04-17
  * \author agebreak
@@ -30,13 +30,13 @@ private:
     RwReal              m_fSyncSendTime;
     RwUInt8				m_byJumpState;	        /** jump state */
     RwReal				m_fJumpTime;		    /** jump time */
-    RwReal				m_fJumpUpSpeed;	        /** 위로 jump 하는  speed */
+    RwReal				m_fJumpUpSpeed;	        /** The speed of jumping upward */
     RwUInt8				m_byCollMoveImpossCnt;  /** collision move impossible count */
-    RwBool				m_bRandingVisualEffect;	/** landing visual effect를 표현 하였는가? */
+    RwBool				m_bRandingVisualEffect;	/** Did you express the landing visual effect? */
     RwBool				m_bStandRandingEnd;
-    RwBool              m_bCreateBubbleEffect;  /** 거품 이펙트를 표현하였는가? */
-    RwBool              m_bNoneDirJump;         ///< 제자리 점프 여부
-    CNtlInstanceEffect* m_pWaterBubbleEffect;   /** 물속으로 빠졌을때 나오는 거품 이펙트 */
+    RwBool              m_bCreateBubbleEffect;  /** Did you express the bubble effect? */
+    RwBool              m_bNoneDirJump;         ///< Whether to jump in place
+    CNtlInstanceEffect* m_pWaterBubbleEffect;   /** Bubble effect when falling into water */
 
     void UpdatePositionMove(SMoveStuff *pMoveStuff, SJumpStuff *pJumpStuff, OUT RwV3d& vPos, RwBool bIncHeight, RwReal fElapsed, RwReal fSpeedScale = 1.0f);
 

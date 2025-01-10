@@ -104,19 +104,19 @@ public:
 	virtual ~CNtlPLEntity();
 
 	/**
-	*  entity가 생성된 다음 호출하는 interface 함수.
+	* Interface function called after the entity is created.
 	*  \see Destroy
 	*/
 	virtual RwBool Create(const SPLEntityCreateParam *pParam = NULL) = 0;
 
 	/**
-	*  entity가 creat 함수가 호출된 다음 실행되는 interface 함수.
+	* An interface function that is executed after the entity's create function is called.
 	*  \see Destroy
 	*/
 	virtual RwBool PostCreate(void) { return TRUE; }
 
 	/**
-	*  entity가 삭제되기 전에 호출하는 interface 함수.
+	* Interface function called before the entity is deleted.
 	*  \see Create
 	*/
 	virtual void Destroy(void) = 0;
@@ -129,7 +129,7 @@ public:
 	virtual RwBool Update(RwReal fElapsed);
 
 	/**
-	*  entity CullingTest interface 함수
+	* entity CullingTest interface 함수
 	*  \see SetCull
 	*  \see IsCulled
 	*/
@@ -147,18 +147,18 @@ public:
     virtual void   Finish() {}
 
 	/**
-	*  entity rendering interface 함수
+    * Entity rendering interface functions
 	*  \see Upate
 	*/
 	virtual RwBool Render(void) = 0;
 
 	/**
-	*  entity rendertotexture interface 함수
+	* Entity rendering texture interface functions
 	*/
 	virtual RwBool RenderToTexture(void) { return TRUE; }
 
 	/**
-	*  entity property setting interface 함수
+	* entity property setting interface functions
 	*  \param pData Property base pointer
 	*/
 	virtual RwBool SetProperty(const CNtlPLProperty *pData) = 0;
@@ -170,69 +170,70 @@ public:
 	virtual void AddWorld(void)		{}
 
 	/**
-	*  renderware resource를 world에서 삭제한다.
+	*Delete the renderware resource from the world.
 	*  \see AddWorld
 	*/
 	virtual void RemoveWorld(void)	{}
 
 	/**
-	*  resource manager에서 scheduling 한 resource를 생성하기 전에 알려준다.
+	*Notifies before creating a scheduled resource in the resource manager.
 	*/
 	virtual void CallPreSchedulingResource(void) {}
 
 	/**
-	*  resource manager에서 scheduling 한 resource를 알려준다.
+	*Notifies the resource scheduled by the resource manager.
 	*/
 	virtual void CallSchedulingResource(CNtlPLResource *pResource) {}
 	virtual void CallSchedulingResourceOnly() {}
     virtual RwBool IsSchedulingLoadingComplete() {return TRUE;}
 
 	/**
-	*  entity position interface 함수
+	* entity position interface function
 	*  \param pPos entity position pointer.
 	*  \see GetPosition
 	*/
 	virtual void SetPosition(const RwV3d *pPos) { }
 
 	/**
-	*  entity direction interface function
+	* entity direction interface function
 	*  \param pDir entity dir pointer.
 	*/
 	virtual void SetDirection(const RwV3d *pDir) { }
     virtual RwV3d GetDirection() {RwV3d dir;dir.x = dir.y = 0.0f;dir.z = 1.0f; return dir;}
 
 	/**
-	*  entity position을 리턴하는 interface 함수.
-	*  \return entity position을 리턴한다.
+	*Interface function that returns entity position.
+	*  \return Returns the entity position.
 	*  \see SetPosition
 	*/
 	// by agebreak
 	// Would not it be better to use the return type as a pointer or a reference?
+
 	virtual RwV3d GetPosition(void) { return CNtlPLGlobal::m_vZeroV3; }
 
 	/**
-	*  entity scale 함수.
+	* entity scale function.
 	*  \param fScale entity scale value.
 	*  \see GetScale
 	*/
 	virtual void SetScale(RwReal fScale) {}
 
 	/**
-	*  entity scale value을 얻어오는 함수.
+	*Function to obtain entity scale value.
 	*  \return fScale entity scale value.
 	*  \see SetScale
 	*/
 	virtual RwReal GetScale(void) { return 1.0f; }
 
 	/**
-	*  entity scale vector을 얻어오는 함수.
+	*Function to obtain entity scale vector.
 	*  \return entity scale vector value.
 	*  \see SetScale
 	*/
 	virtual const RwV3d* GetScaleVector(void) const { return NULL; }
 
 	/**
-	*  entity rotate를 시키는 함수.
+	* entity rotate interface function.
 	*  \param fXAngle x-axis rotate.
 	*  \param fXAngle y-axis rotate.
 	*  \param fXAngle z-axis rotate.
@@ -240,128 +241,128 @@ public:
 	virtual void SetRotate(RwReal fXAngle, RwReal fYAngle, RwReal fZAngle) {;}
 
 	/**
-	*  entity rotate vector을 얻어오는 함수.
+	*Function to obtain the rotated entity vector.
 	*  \return entity rotate value.
 	*  \see SetRotate
 	*/
 	virtual const RwV3d* GetRotate(void) const { return NULL;} 
 
 	/**
-	*  entity bounding sphere을 얻어오는 함수.
+	*Function to obtain the entity bounding sphere.
 	*  \return bounding sphere pointer.
 	*/
 	virtual const RwSphere* GetBoundingSphere(void) { return NULL; }
 
 	/**
-	*  entity bounding box을 얻어오는 함수.
+	*Function to get the entity bounding box.
 	*  \return bounding box pointer.
 	*/
 	virtual const RwBBox* GetBoundingBox(void) { return NULL; }
 
 	/**
-	*  entity matrix setting시키는 함수.
-	*  \param matWorld RwMatrix 변수.
+	*Function for setting entity matrix.
+	*  \param matWorld RwMatrix variable.
 	*/
 	virtual void SetMatrix(RwMatrix& matWorld) {;}
 
 	/**
-	*  entity matrix setting시키는 함수.
+	*Function for setting entity matrix.
 	*  \return matrix 
 	*/
 	virtual RwMatrix& GetMatrix(void) { return CNtlPLGlobal::m_matIden; } 
 
 	/**
-	*  entity alpha 값을 setting 한다.
+	*Set entity alpha value.
 	*/
 	virtual void SetAlpha(RwUInt8 byValue) { }
 
 	/**
-	*  entity color 값을 setting 한다.
+	*Setting the entity color value.
 	*/
 	virtual void SetColor(RwUInt8 byRed, RwUInt8 byGreen, RwUInt8 byBlue) { }
 
 	/**
-	*  entity Addcolor 값을 setting 한다.
+	*Setting the entity Addcolor value.
 	*/
 	virtual void SetAddColor(RwUInt8 byRed, RwUInt8 byGreen, RwUInt8 byBlue) { }
 
 	/**
-	*  entity distance culling value을 setting 한다.
+	*Setting entity distance culling value.
 	*/
 	virtual void SetVisibleCullingDistance(RwReal fDistance);
 
 	/** 
-	*  entity 현재 distance culling value
+	* entity current distance culling value
 	*  \return culling value
 	*/
 	virtual RwReal	GetVisibleCullingDistance(void) const { return m_fVisibleCullingDistance; }
 
 	/**
-	*  entity weight alpha value을 setting 한다.
+	*Setting entity weight alpha value.
 	*/
 	virtual void SetWeightAlpha(RwReal fWeightValue);
 
 	/** 
-	*  entity 현재 weight alpha
+	* entity current weight alpha
 	*  \return weight alpha
 	*/
 	RwReal GetWeightAlpha(void) const;
 
 	/**
-	*  atomic weight alpha value을 setting 한다.
+	*Setting atomic weight alpha value.
 	*/
 	virtual void SetAtomicWeightAlpha(const RwChar *pAtomicName, RwReal fWeightValue) {}
 
 	/** 
-	*  entity 현재 weight alpha
+	* entity current weight alpha
 	*  \return weight alpha
 	*/
 	CNtlPLEntityBlendController* GetAlphaBlendController(void);
 
 	/**
-	*  weight elapsed time value을 setting 한다.
+	*Setting the weight elapsed time value.
 	*/
 	void SetWeightElapsedTime(RwReal fWeightValue);
 
 	/** 
-	*  entity 현재 weight elapsed time
+	* entity current weight elapsed time
 	*  \return weight elapsed time
 	*/
 	RwReal GetWeightElapsedTime(void) const;
 
 	/** 
-	*  entity 현재 weight elapsed controller 생성.
+	*Create entity current weight elapsed controller.
 	*/
 	virtual void CreateWeightElapsedController(RwReal fLifeTime, RwReal fWeightValue); 
 
 	/** 
-	*  entity 현재 weight elapsed controller 소멸.
+	*Entity current weight elapsed controller disappears.
 	*/
 	virtual void DeleteWeightElapsedController(void);
 
 	/** 
-	*  entity rendering on/off 시키는 함수.
-	*  \param rendering on/off flag 변수.
+	*Function that turns entity rendering on/off.
+	*  \param rendering on/off flag variable.
 	*/
 	virtual void	SetVisible(RwBool bVisible);	
 	/** 
-	*  entity  현재 rendering이 되고 있는 entity 인가?
-	*  \param  함께 연산될 CullFlags.
-	*  \return rendering on이면 TRUE, rendering off이면 FALSE
+	*Is the entity currently being rendered?
+	*  \param CullFlags to be operated on.
+	*  \return TRUE if rendering is on, FALSE if rendering is off
 	*/
 	virtual RwBool	IsVisible(RwUInt32 uiFlags = 0xFFFFFFFF);
 
 	/** 
-	*  entity camera collision을 위해 존재하는 Visible 검사 함수로
-	*  Performance 향상을 위한 Culling을 고려하지 않은 함수
-	*  \return rendering 중이면 TRUE, 그렇지 않으면 FALSE
+	*Visible check function that exists for entity camera collision
+	*Function that does not consider culling to improve performance
+	*  \return TRUE if rendering is in progress, otherwise FALSE
 	*/
 	//virtual RwBool	IsVisibleForCameraCollision(void);
 
 	/** 
-	*  entity cullflags setting 시키는 함수.
-	*  \param cullflags check bit 변수.
-	*  \param cullflasgs on/off 변수.
+	*Function that sets entity cullflags.
+	*  \param cullflags check bit variable.
+	*  \param cullflasgs on/off variable.
 	*/
 	virtual void	SetCullFlags(RwUInt32 uiFlag, RwBool bCulled);
 	virtual void	SetCullFlags(RwUInt32 uiFlag);
@@ -369,101 +370,101 @@ public:
 	virtual RwUInt32 GetCullFlags();
 
 	/** 
-	*  entity picking on/off 시키는 함수.
-	*  \param picking on/off flag 변수.
+	*Function that turns entity picking on/off.
+	*  \param picking on/off flag variable.
 	*/
 	virtual void SetPicking(RwBool bPicking);
 
 	/** 
-	*  entity picking order 정의 함수.
-	*  \param picking order 변수.
+	*Entity picking order definition function.
+	*  \param picking order variable.
 	*/
 	virtual RwUInt16 GetPickingOrder(void);
 
 	virtual void SetPickingOrder(RwUInt16 byPickOrder);
 
 	/** 
-	*  entity weight elapsed time flag on/off 시키는 함수.
+	*Function that turns the entity weight elapsed time flag on/off.
 	*/
 	virtual void EnableWeightElapsedTime(RwBool bEnable);
   
 	/**
-	*  entity name setting
+	* entity name setting
 	*  \see GetName
 	*/
 	void SetName(const RwChar *pName);
 
 	/**
-	*  entity name을 얻어오는 함수.
-	*  \return entity name을 리턴한다.
+	*Function to obtain entity name.
+	*  \return Returns the entity name.
 	*  \see SetName
 	*/
 	const RwChar* GetName(void); 
 
 	/**
-	*  entity class id setting.
-	*  RTTI 대체용으로써 class id를 저장함으로써 entity 종류를 판별한다.
+	*entity class id setting.
+	*As a replacement for RTTI, the entity type is determined by storing the class id.
 	*  \see GetClassID
 	*/
 	void SetClassType(const ENtlPLEntityType eType);
 
 	/**
-	*  entity class id를 얻어오는 함수.
-	*  \return class id를 리턴한다.
+	*Function to obtain entity class id.
+	*  \return Returns the class id.
 	*  \see SetClassID
 	*/
 	ENtlPLEntityType GetClassType(void) const;
 
 	/**
-	*  entity layer를 setting
-	*  entity layer를 사용하여, rendering 순서를 조절할 수 있다.
-	*  entity layer는 NtlPLEntity.h에 enum으로 정의되어 있고, 필요에 의해 추가할 수 있다.
+	*Setting entity layer
+	*Using the entity layer, you can control the rendering order.
+	*The entity layer is defined as an enum in NtlPLEntity.h, and can be added as needed.
 	*  \see GetLayer
 	*/
 	void SetLayer(RwUInt32 wLayer);
 
 	/**
-	*  entity layer를 얻어 오는 함수.
-	*  \return entity의 layer value.
+	*Function to obtain the entity layer.
+	*  \return The layer value of the entity.
 	*  \see SetLayer
 	*/
 	RwUInt32 GetLayer(void) const;
 
 	/**
-	*  entity flag를 setting 한다.
+	*Setting entity flag.
 	*  \see GetFlags
 	*/
 	virtual void SetFlags(RwUInt32 uiFlags);
 
 	/**
-	*  entity flag를 얻어온다.
+	*Get the entity flag.
 	*  \see SetFlags
 	*/
 	RwUInt32 GetFlags(void);
 
 	/**
-	*  entity minimap layer를 setting
-	*  entity minimap layer를 사용하여, 현재 minimap layer 출력에만 사용된다.
-	*  entity minimap layer는 NtlPLEntity.h에 enum으로 정의되어 있고, 필요에 의해 추가할 수 있다.
+	*Setting entity minimap layer
+	*Uses entity minimap layer, currently only used for minimap layer output.
+	*The entity minimap layer is defined as an enum in NtlPLEntity.h, and can be added as needed.
 	*  \see GetMinimapLayer
 	*/
 	void SetMinimapLayer(RwUInt32 uiLayerFlags);
 
 	/**
-	*  entity layer를 얻어 오는 함수.
-	*  \return entity의 minimap layer flags value.
+	*Function to obtain the entity layer.
+	*  \return the entity's minimap layer flags value.
 	*  \see SetMinimapLayer
 	*/
 	RwUInt32 GetMinimapLayer(void) const;
 
 	/**
-	*  simulation object serial id를 setting 한다.
+	*Set simulation object serial ID.
 	*  \see GetSerialID
 	*/
 	void SetSerialID(RwUInt32 uiSerialID);
 
 	/**
-	*  simulation object serial id를 얻어온다.
+	*Obtain simulation object serial id.
 	*  \see SetSerialID
 	*/
 	RwUInt32 GetSerialID(void);
@@ -479,14 +480,14 @@ public:
 #endif
 
 	/**
-	*  entity에 layer 및 class id와 layer가 유효한 데이터를 가지고 있는지를 판별하여, entity에 정확한 정보가 들어
-	*  있는지를 검사하는 함수.
-	*  \return class id 및 layer에 유효한 정보가 들어 있으면 true, 그렇지 않으면 false
+	*Determine whether the layer, class id, and layer in the entity have valid data, and ensure that the entity contains accurate information.
+	*A function that checks whether it exists.
+	*  \return true if class id and layer contain valid information, false otherwise.
 	*/
 	RwBool IsValid(void) const;
 
 	/**
-	*  update time에 자동으로 삭제되는 entity인가..
+	*Is this an entity that is automatically deleted at update time?
 	*/
 	virtual RwBool IsAutoDelete(void);
 
@@ -495,33 +496,33 @@ public:
 // event function
 //-------------------------------------------------------------------------------
 
-	// 용신소환시 수행되는 함수
+	// Function performed when summoning the Dragon God
 	virtual void OnDragonSkyAppearence(RwBool _FlgDragonAppeared) {}
 
 	/**
-	*  entity 가 click 되었을 때 발생한다.
+	*Occurs when an entity is clicked.
 	*/
 	virtual void	OnClicked(void) {}
 
 	/**
-	*  entity 가 double click 되었을 때 발생한다.
+	*Occurs when an entity is double clicked.
 	*/
 	virtual void	OnDbClicked(void) {}
 
 	/**
-	*  entity에 mouse focus가 들어올 때 발생한다.
+	*Occurs when mouse focus is placed on an entity.
 	*/
 	virtual void	OnGotFocus(void) {}
 
 	/**
-	*  entity에 mouse focus를 잃어버렸을 때 호출한다.
+	*Called when mouse focus is lost on an entity.
 	*/
 	virtual void	OnLostFocus(void) {}
 
 //-------------------------------------------------------------------------------
-// World Editor를 위한 트리거 정보를 가져오는 인터페이스 (by agebreak 2006-11-28)
+// Interface to retrieve trigger information for World Editor (by agebreak 2006-11-28)
 //-------------------------------------------------------------------------------
-    virtual RwBBox  GetTriggerAABBInfo() {RwBBox bbbox; ZeroMemory(&bbbox, sizeof(RwBBox)); return bbbox;}                                  ///< 월드에디터의 트리거 정보에 사용하기 위한 AABB의 정보를 반환한다.
+    virtual RwBBox  GetTriggerAABBInfo() {RwBBox bbbox; ZeroMemory(&bbbox, sizeof(RwBBox)); return bbbox;}                                  ///< Returns AABB information for use in world editor trigger information.
     virtual RwBBox  GetTriggerAABBInfo(const RwV3d& vPos, const RwV3d& vRotate, const RwV3d& vScale) {RwBBox bbbox; ZeroMemory(&bbbox, sizeof(RwBBox)); return bbbox;}
 
 };

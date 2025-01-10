@@ -43,7 +43,7 @@ bool CThread::Create( void )
 {
 	if ( m_hThread ) return false;
 
-	// Thread 를 생성한다
+	// Create a Thread
 	m_hThread = (HANDLE)_beginthreadex( NULL, 0, &ThreaFuncCB, this, CREATE_SUSPENDED, &m_uiThreaID );
 	if ( 0 == m_hThread ) return false;
 
@@ -56,13 +56,13 @@ void CThread::Delete( void )
 {
 	if ( m_hThread )
 	{
-		// Thread 가 종료하기전에 이 객체가 소멸 되면
-		// 않되므로 Thread가 정상적인 종료를 수행 할 수
-		// 있도록 대기후 종료한다
+		// If this object is destroyed before the thread terminates,
+		// Therefore, the Thread cannot perform a graceful termination.
+		// Wait and then quit
 		SetExit( true );
 		WaitForSingleObject( m_hThread, INFINITE );
 
-		// Thread 핸들을 닫는다
+		// Close the Thread handle
 		CloseHandle( m_hThread );
 
 		g_clWorkThreadMgr.RemoveTread( m_hThread );

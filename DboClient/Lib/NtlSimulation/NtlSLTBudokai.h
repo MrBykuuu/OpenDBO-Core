@@ -4,7 +4,7 @@
 * Author		: Pee Sangjun
 * Copyright		: (주)NTL
 * Date			: 2008. 5. 9	
-* Abstract		: Simulation 천하제일 무도회
+* Abstract		:Simulation The World's Best Martial Arts
 *****************************************************************************
 * Desc          : 
 *****************************************************************************/
@@ -48,7 +48,7 @@ public:
 	BUDOKAITIME							GetBudokaiMainStateRemainTime()	{ return m_sStateInfo.tmRemainTime; }
 	
 private:
-	RwUInt16							m_wSeasonCount;								///< 천하제일 무도회 횟수
+	RwUInt16							m_wSeasonCount;								///< World's Best Martial Arts Count
 	
 	sBUDOKAI_UPDATE_STATE_INFO			m_sStateInfo;								///< MainState
 	sBUDOKAI_UPDATE_MATCH_STATE_INFO	m_aMatchStateInfo[MAX_BUDOKAI_MATCH_TYPE];	///< MatchState

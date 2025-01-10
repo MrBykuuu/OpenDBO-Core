@@ -250,7 +250,7 @@ VOID CIconPopupGui::ShowEvent( RWS::CMsg& msg )
 			{
 				if( pSobItemAttr->IsNeedToIdentify() )
 				{
-					// 미확인 아이템					
+					// Unidentified item					
 					SelectItem( m_apMenu[PMW_PICKUP] );
 				}
 				else
@@ -268,13 +268,13 @@ VOID CIconPopupGui::ShowEvent( RWS::CMsg& msg )
 			{
 				if( pSobItemAttr->IsNeedToIdentify() )
 				{
-					// 미확인 아이템
+					// Unidentified item
 					SelectItem( m_apMenu[PMW_PICKUP] );
 					SelectItem( m_apMenu[PMW_DELETE] );
 				}
 				else
 				{
-					// 일반적인 경우
+					// general case
 					if( reinterpret_cast<CNtlSobItemIcon*>( pSobItem->GetIcon() )->IsUsePossible() )
 						SelectItem( m_apMenu[PMW_USE] );
 
@@ -289,10 +289,10 @@ VOID CIconPopupGui::ShowEvent( RWS::CMsg& msg )
 			// If the items in the bag can not be placed in the slot in duplicate
 			if( GetDialogManager()->IsOpenDialog(DIALOG_NPCSHOP) )
 			{
-				// NPC 상점을 열었다면
+				// If you open an NPC store
 				if( pSobItemAttr->IsNeedToIdentify() )
 				{
-					// 미확인 아이템					
+					// Unidentified item					
 					SelectItem( m_apMenu[PMW_PICKUP] );
 				}
 				else
@@ -310,12 +310,12 @@ VOID CIconPopupGui::ShowEvent( RWS::CMsg& msg )
 			{
 				if( pSobItemAttr->IsNeedToIdentify() )
 				{
-					// 미확인 아이템					
+					// Unidentified item					
 					SelectItem( m_apMenu[PMW_PICKUP] );
 				}
 				else
 				{
-					// 일반적인 경우
+					// general case
 					SelectItem( m_apMenu[PMW_EQUIP] );
 					SelectItem( m_apMenu[PMW_PICKUP] );
 					SelectItem( m_apMenu[PMW_DELETE] );
@@ -335,12 +335,12 @@ VOID CIconPopupGui::ShowEvent( RWS::CMsg& msg )
 	}
 	else if( pData->nSrcPlace == PLACE_EQUIP )
 	{
-		// 장비창인 아이템인 경우
+		// If the item is an equipment window
 		CNtlSobItem* pSobItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( m_hSerial ) );
 		
 		if( pSobItem->IsScouterItem() )
 		{
-			// 장비창의 스카우터 슬롯인 경우
+			// In the case of a scout slot in the equipment window
 			SelectItem( m_apMenu[PMW_VIEW] );
 		}
 
@@ -349,7 +349,7 @@ VOID CIconPopupGui::ShowEvent( RWS::CMsg& msg )
 	}
 	else if( pData->nSrcPlace == PLACE_SCOUTER_SLOT )
 	{
-		// 스카우터 슬롯인 경우
+		// For scout slots
 		SelectItem( m_apMenu[PMW_VIEW] );
 		SelectItem( m_apMenu[PMW_PICKUP] );
 		SelectItem( m_apMenu[PMW_DELETE] );
@@ -391,7 +391,7 @@ VOID CIconPopupGui::ShowEvent( RWS::CMsg& msg )
 				RwBool bIamPartyLearder = Logic_I_am_PartyLeader();
 				RwBool bCanPartyInvite = Logic_CanPartyInvite();
 
-				// 파티
+				// party
 				if( bIamPartyLearder )
 				{
 					if( pParty->IsMember(m_hSerial) )
@@ -414,7 +414,7 @@ VOID CIconPopupGui::ShowEvent( RWS::CMsg& msg )
 				}
 
 
-				// 길드장이거나 부길드장일 경우의 메뉴
+				// Menu for guild leader or vice-guild leader
 				if( pGuild->IsGuildMaster( pAvatar->GetCharID() ) ||
 					pGuild->IsSecondGuildMaster( pAvatar->GetCharID() ) )
 				{
@@ -426,7 +426,7 @@ VOID CIconPopupGui::ShowEvent( RWS::CMsg& msg )
 
 				SelectItem( m_apMenu[PMW_FRIEND_ADD] );
 
-				// 일반 월드에서
+				// In the normal world
 				if (pWorldTblData->byWorldRuleType == GAMERULE_NORMAL)
 				{
 					if (Logic_CanRequestFreeBattle())
@@ -464,7 +464,7 @@ VOID CIconPopupGui::ShowEvent( RWS::CMsg& msg )
 		CNtlSobAvatar* pAvater = GetNtlSLGlobal()->GetSobAvatar();
 		SERIAL_HANDLE hLeaderHandle = pAvater->GetParty()->GetLeaderHandle();		
 
-		// 파티장일 경우의 메뉴
+		// Menu for party venues
 		if( pAvater->GetSerialID() == hLeaderHandle )
 		{
 			SelectItem( m_apMenu[PMW_PARTY_LEADER_CHANGE] );
@@ -519,7 +519,7 @@ VOID CIconPopupGui::ShowEvent( RWS::CMsg& msg )
 		CNtlParty* pParty = GetNtlSLGlobal()->GetSobAvatar()->GetParty();
 		RwUInt8 byZennyLootingMethod = pParty->GetZennyLootingMethod();
 
-		// 현재 선택된 제니 분배 방식은 다른 색으로 보여준다
+		// The currently selected Zenny distribution method is shown in a different color.
 		switch( byZennyLootingMethod )
 		{
 		case NTL_PARTY_ZENNY_LOOTING_GREEDILY:
@@ -544,7 +544,7 @@ VOID CIconPopupGui::ShowEvent( RWS::CMsg& msg )
 		CNtlParty* pParty = GetNtlSLGlobal()->GetSobAvatar()->GetParty();
 		RwUInt8 byItemLootingMethod = pParty->GetItemLootingMethod();
 
-		// 현재 선택된 아이템 분배 방식은 다른 색으로 보여준다
+		// The currently selected item distribution method is shown in a different color.
 		switch( byItemLootingMethod )
 		{
 		case NTL_PARTY_ITEM_LOOTING_GREEDILY:
@@ -748,7 +748,7 @@ VOID CIconPopupGui::CalcRect( RwInt32 nXPos, RwInt32 nYPos )
 	RwInt32 nWidth = ICONPOPUP_ITEM_WIDTH + 2 * ICONPOPUP_MARGIN_X;
 	RwInt32 nHeight = ICONPOPUP_ITEM_HEIGHT * m_nSeletecItemCount + ICONPOPUP_SPACE * ( m_nSeletecItemCount - 1 ) + 2 * ICONPOPUP_MARGIN_Y;
 
-	// 기본위치는 Right Bottom
+	// Default position is Right Bottom
 	RwInt32 nX = nXPos + NTL_ITEM_ICON_SIZE + ICONPOPUP_POINT_MARGIN_X;
 	RwInt32 nY = nYPos + NTL_ITEM_ICON_SIZE + ICONPOPUP_POINT_MARGIN_Y;
 
@@ -820,7 +820,7 @@ RwBool CCalcPopupGui::Create(VOID)
 
 	m_pThis = (gui::CDialog*)GetComponent( "dlgMain" );
 
-	m_pThis->SetPriority( dDIALOGPRIORITY_CALC_POPUP );	// 계산기 우선 순위 추가
+	m_pThis->SetPriority( dDIALOGPRIORITY_CALC_POPUP );	// Add calculator priority
 	
 	m_apButton[0] = (gui::CButton*)GetComponent( "btn0" );
 	m_apButton[1] = (gui::CButton*)GetComponent( "btn1" );
@@ -895,7 +895,7 @@ VOID CCalcPopupGui::ShowEvent( RWS::CMsg& msg )
 	RwInt32 nScreenHeight = m_pThis->GetGuiManager()->GetHeight();
 	CRectangle rtBox = m_pThis->GetClientRect();
 
-	// 기본위치는 Right Bottom
+	// Default position is Right Bottom
 	RwInt32 nX = pData->nXPos + ICONPOPUP_MARGIN_X;
 	RwInt32 nY = pData->nYPos + ICONPOPUP_MARGIN_Y;
 	RwInt32 nWidth = rtBox.GetWidth(); 
@@ -917,7 +917,7 @@ VOID CCalcPopupGui::ShowEvent( RWS::CMsg& msg )
 
 VOID CCalcPopupGui::OnButtonClick( gui::CComponent* pComponent )
 {
-	// RwUInt32 범위를 넘기는 것을 방지하기 위해
+	// To prevent RwUInt32 from going out of range:
 	RwUInt64 ui64Temp = m_uiValue;
 
 	ui64Temp *= 10;

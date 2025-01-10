@@ -1,7 +1,7 @@
 #include "precomp_dboclient.h"
 #include "NPCShop.h"
 
-// shared
+// Shared
 #include "TableContainer.h"
 #include "NPCTable.h"
 #include "ItemTable.h"
@@ -9,17 +9,17 @@
 #include "MerchantTable.h"
 #include "GraphicDataTable.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// presetation
+// Presetation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEvent.h"
 #include "NtlSLLogic.h"
@@ -119,7 +119,7 @@ RwBool CNPCShop::Create()
 
 	CRectangle rect;
 
-	// 상점 이름	
+	// store name	
 	//rect.SetRectWH(DBOGUI_DIALOG_TITLE_X, DBOGUI_DIALOG_TITLE_Y, 145, 14);
 	rect.SetRectWH(DBOGUI_DIALOG_TITLE_X, DBOGUI_DIALOG_TITLE_Y, 175, 16);
 	m_pShopTitle = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
@@ -129,7 +129,7 @@ RwBool CNPCShop::Create()
 
 	rect = GetPosition();
 
-	// background
+	// Background
 	m_BackLineSurface.SetType(CWindowby3::WT_HORIZONTAL);
 	m_BackLineSurface.SetSurface( 0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "srfBackLineTop" ) );
 	m_BackLineSurface.SetSurface( 1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "srfBackLineCenter" ) );
@@ -159,7 +159,7 @@ RwBool CNPCShop::Create()
 	m_pExitButton = (gui::CButton*)GetComponent( "ExitButton" );
 	m_slotCloseButton = m_pExitButton->SigClicked().Connect(this, &CNPCShop::ClickedCloseButton);		
 
-	// ItemPanel
+	// Item panel
 	std::string fullName = "";
 	char acPanelName[] = "ItemPanel";
 	char acNum[3] = "";
@@ -262,7 +262,7 @@ RwBool CNPCShop::Create()
 	m_pCurrentPage->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pCurrentPage->SetTextColor( RGB(255, 192, 0) );
 
-	// PrePageButton
+	// Pre page button
 	m_pPrePageButton = (gui::CButton*)GetComponent( "PrePageButton" );
 	m_slotPrePageButton = m_pPrePageButton->SigClicked().Connect(this, &CNPCShop::ClickedPrePageButton);
 
@@ -271,7 +271,7 @@ RwBool CNPCShop::Create()
 	m_slotNextPageButton = m_pNextPageButton->SigClicked().Connect(this, &CNPCShop::ClickedNextPageButton);
 
 
-	// Sig
+	// Signals
 	m_slotMouseDown		= m_pThis->SigMouseDown().Connect( this, &CNPCShop::OnMouseDown );
 	m_slotMouseUp		= m_pThis->SigMouseUp().Connect( this, &CNPCShop::OnMouseUp );
 	m_slotMove			= m_pThis->SigMove().Connect( this, &CNPCShop::OnMove );	
@@ -336,16 +336,16 @@ VOID CNPCShop::OpenShop(SERIAL_HANDLE hNPC, sNPC_TBLDAT* pNPC_TBLDAT)
 	CTextTable* pMerchantTextTable = API_GetTableContainer()->GetTextAllTable()->GetMerchantTbl();
 	CTextTable* pItemTextTable = API_GetTableContainer()->GetTextAllTable()->GetItemTbl();
 
-	// NPC 번호
+	// NPC number
 	m_hNPCSerial = hNPC;
 
-	// 상점 이름
+	// store name
 	m_pShopTitle->SetText( pNPCTextTable->GetText(pNPC_TBLDAT->Name).c_str() );
 
-	// 전체 수리 툴팁
+	// Full repair tooltip
 	SetRepairAllTooltip();	
 
-	// 현재 상점에서 팔 수 있는 아이템 최대 4종류의 목록을 읽어온다.
+	// Reads a list of up to 4 types of items currently available for sale in the store.
 	ShopItem shopItem;
 	char acBuffer[256] = "";
 	for(RwInt32 iTabIndex = 0 ; iTabIndex < NTL_MAX_MERCHANT_TAB_COUNT ; ++iTabIndex )
@@ -353,18 +353,18 @@ VOID CNPCShop::OpenShop(SERIAL_HANDLE hNPC, sNPC_TBLDAT* pNPC_TBLDAT)
 		if( pNPC_TBLDAT->amerchant_Tblidx[iTabIndex] <= 0 )
 			continue;
 
-		// 각 Tab 별 등록된 아이템을 읽어온다.
+		// The registered items for each tab are read.
 		sMERCHANT_TBLDAT* pMERCHANT_TBLDAT = Logic_GetMerchantDataFromTable(pNPC_TBLDAT->amerchant_Tblidx[iTabIndex]);
 		if(!pMERCHANT_TBLDAT)
 			continue;
 
-		// Tab 이름			
+		// Tab name			
 		const wchar_t* pwcMerchantName = pMerchantTextTable->GetText(pMERCHANT_TBLDAT->Tab_Name).c_str();
 		WideCharToMultiByte(GetACP(), 0, pwcMerchantName, -1, acBuffer, 256, NULL, NULL);
 		std::string str = acBuffer;
 		m_pTabButton->AddTab(str);
 
-		// 각 Tab별 등록된 아이템을 ShopItem에 등록한다			
+		// Register items registered for each tab in ShopItem			
 		sITEM_TBLDAT* pITEM_DATA;			
 		for( RwInt32 iMerchantIndex = 0 ; iMerchantIndex < NTL_MAX_MERCHANT_COUNT ; ++iMerchantIndex )
 		{				
@@ -372,7 +372,7 @@ VOID CNPCShop::OpenShop(SERIAL_HANDLE hNPC, sNPC_TBLDAT* pNPC_TBLDAT)
 			if(!pITEM_DATA)
 				continue;
 
-			// 실제 ShopItem 데이터				
+			// Actual ShopItem data				
 			if( pMERCHANT_TBLDAT->aitem_Tblidx[iMerchantIndex] == 0 )
 			{
 				m_aShopItem[iTabIndex][iMerchantIndex].hItem = INVALID_SERIAL_ID;
@@ -428,7 +428,7 @@ VOID CNPCShop::OpenShop(SERIAL_HANDLE hNPC, sNPC_TBLDAT* pNPC_TBLDAT)
 		}
 	}	
 
-	// 최초 탭
+	// first tab
 	m_pTabButton->SelectTab(0);
 	UpdateTabContent(0);
 
@@ -859,7 +859,7 @@ VOID CNPCShop::CheckInfoWindow()
 
 VOID CNPCShop::OnMouseDown( const CKey& key )
 {
-	// 현재 다이얼로그에 포커스가 들어오면 링크된 다이얼로그들도 화면의 최상단으로 옮긴다.
+	// When the current dialog receives focus, linked dialogs are also moved to the top of the screen.
 	gui::CGUIManager *pGuiMgr = CNtlPLGuiManager::GetInstance()->GetGuiManager();  
 	if( pGuiMgr->GetFocus() == m_pThis )
 		RaiseLinked();
@@ -872,14 +872,14 @@ VOID CNPCShop::OnMouseDown( const CKey& key )
 
 	for( RwInt32 i = 0 ; i < dMAX_ITEM_PANEL ; ++i )
 	{
-		// 아이콘 영역에서 마우스를 눌렀다
+		// The mouse was pressed in the icon area.
 		if( m_ItemPanel[i].slot.GetSerial() != INVALID_SERIAL_ID &&
 			m_ItemPanel[i].slot.PtInRect((RwInt32)key.m_fX, (RwInt32)key.m_fY) )
 		{
 			m_iMouseDownSlot = i;
 			m_pThis->CaptureMouse();
 
-			// 클릭 이벤트 시작
+			// Start click event
 			m_iClickEffectedSlot = i;	
 			m_ItemPanel[m_iClickEffectedSlot].slot.ClickEffect(true);
 
@@ -892,7 +892,7 @@ VOID CNPCShop::OnMouseUp( const CKey& key )
 {
 	m_pThis->ReleaseMouse();
 
-	// 클릭 이벤트 종료	
+	// Click event ends	
 	if( m_iClickEffectedSlot != INVALID_INDEX )
 	{		
 		m_ItemPanel[m_iClickEffectedSlot].slot.ClickEffect(false);
@@ -908,7 +908,7 @@ VOID CNPCShop::OnMouseUp( const CKey& key )
 	if( m_iMouseDownSlot < 0 || m_iMouseDownSlot >= dMAX_ITEM_PANEL )
 		return;
 
-	// 아이콘 영역에서 마우스를 눌렀다
+	// The mouse was pressed in the icon area.
 	if( m_ItemPanel[m_iMouseDownSlot].slot.GetSerial() != INVALID_SERIAL_ID &&
 		m_ItemPanel[m_iMouseDownSlot].slot.PtInRect((RwInt32)key.m_fX, (RwInt32)key.m_fY) )
 	{
@@ -926,7 +926,7 @@ VOID CNPCShop::OnMouseUp( const CKey& key )
 
 			if( key.m_dwVKey == UD_MK_CONTROL )
 			{
-				// 최대 스택 갯수를 산다(1개 혹은 20개)
+				// Buy the maximum number of stacks (1 or 20)
 				CDboEventGenerator::ShopEvent(TRM_REG_ITEM_BY_NPCSHOP_LARGE_BUY,
 												m_aShopItem[m_iCurTab][iItemIndex].hItem,
 												m_aShopItem[m_iCurTab][iItemIndex].uiPrice,
@@ -954,7 +954,7 @@ VOID CNPCShop::OnMove(RwInt32 iOldX, RwInt32 iOldY)
 	m_MoneyBackPanel.SetPositionbyParent(rtScreen.left, rtScreen.top);	
 	m_PageBackPanel.SetPositionbyParent(rtScreen.left, rtScreen.top);
 
-	// NPCShop 다이얼로그가 움직일 때	
+	// When the NPCShop dialog moves	
 	for( RwInt32 i = 0 ; i < dMAX_ITEM_PANEL ; ++i )
 	{
 		m_ItemPanel[i].slot.SetParentPosition(rtScreen.left, rtScreen.top);
@@ -977,7 +977,7 @@ VOID CNPCShop::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 
 	if( iPtinSlot != INVALID_INDEX )
 	{
-		// 슬롯 클릭 이펙트
+		// slot click effect
 		if( m_iClickEffectedSlot != INVALID_INDEX )
 		{
 			if( m_iClickEffectedSlot == iPtinSlot )
@@ -1012,7 +1012,7 @@ VOID CNPCShop::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 		RwInt8 iSmallIconSlot = PtinSlot_of_SmallIcon_in_panel(nX, nY);
 		if( iSmallIconSlot != INVALID_INDEX )
 		{
-			// 아이템을 사기 위해서 가지고 있어야 하는 아이템 정보
+			// Item information you must have to purchase the item
 			if( m_ItemPanel[iSmallIconSlot].slot.GetSerial() != INVALID_SERIAL_ID )
 			{
 				FocusEffect(TRUE, iSmallIconSlot);
@@ -1107,7 +1107,7 @@ RwInt32 CNPCShop::SwitchDialog(bool bOpen)
 	}
 	else
 	{
-        // NPC 애니메이션
+        // NPC Animation
         Logic_SetActorAnimation(m_hNPCSerial, NML_IDLE_LOOP, TRUE);
 
 		CNtlWorldConceptController* pWorldConcept = GetNtlWorldConcept()->FindGradeExtController(WORLD_CONCEPT_SECOND_GRADE);

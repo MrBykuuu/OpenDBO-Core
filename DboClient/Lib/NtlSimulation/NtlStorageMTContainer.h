@@ -1,17 +1,17 @@
 /*****************************************************************************
 * File			: NtlStorageMTContainer.h
 * Author		: HaeSung, Cho
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2009. 2. 5	
-* Abstract		: NtlStorage의 Key와 관련 정보들을 저장하는 매핑 테이블
+* Abstract		:  Mapping table that stores NtlStorage key and related information
 *****************************************************************************
 * Desc			: 
 *
-* 만약 MappingTable을 수정하기 위해서는 NtlStorageDefine.h 에 있는 Define값을 수정하고
-* 현재 클래스에 있는 매핑테이블 데이터를 채워준다. Table 배열의 끝에 삽입은 할 수 있으나 수정/삭제는 절대로
-* 하지 않는다. 만약 폐기해야할 KEY가 있다면 정의된 KEY는 그대로 놔두고 그냥 사용하지 않는다.
+* If you want to modify MappingTable, modify the Define value in NtlStorageDefine.h and
+* Fills in the mapping table data in the current class. You can insert at the end of a table array, but never modify/delete it.
+* Don't do it. If there is a KEY that needs to be discarded, leave the defined KEY as is and do not use it.
 *
-* Mapping Table은 static 배열로 구성되며 절대로 중간 삽입/삭제는 해서는 안된다.
+* The Mapping Table is composed of a static array, and intermediate insertion/deletion must never be performed.
 * ( Mapping table is composed of static array, and you should not insert/delete it from the midterm )
 *****************************************************************************/
 
@@ -56,11 +56,11 @@ public:
 protected:
 	static SNtlStorageMappingTableData m_StorageMappingTable[];
 
-	// Type 별로 멀티맵에 포인터를 보관하고 있는다.
+	// Pointers are stored in the multimap for each type.
 	typedef std::multimap	<unsigned char, SNtlStorageMappingTableData*> SORTMMAP;
 	SORTMMAP		m_mmapCategory;
 
-	// KEY ID 순서대로 MAP에 보관하고 있는다.
+	// They are stored in the MAP in order of KEY ID.
 	typedef std::map	<unsigned int, SNtlStorageMappingTableData* > TABLEMAP;
 	TABLEMAP		m_mapTable;
 
@@ -68,8 +68,8 @@ protected:
 	STRINGMAP		m_mapString;
 
 
-	bool			m_bSorted;			///< 테이블을 정렬해서 가지고 있는지 확인
-	unsigned int	m_uiCount;			///< 테이블 원소 갯수
+	bool			m_bSorted;			///< Sort the table and check if you have it
+	unsigned int	m_uiCount;			///< Number of table elements
 };
 
 static CNtlStorageMTContainer* GetNtlStorageMTContainer()

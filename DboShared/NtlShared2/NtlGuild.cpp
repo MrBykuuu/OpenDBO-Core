@@ -11,6 +11,7 @@
 //	Desc		:	
 //
 //***********************************************************************************
+
 #pragma once
 #include "StdAfx.h"
 #include "NtlGuild.h"
@@ -29,33 +30,55 @@ enum eDBO_DOJO_PEACE_TYPE
 
 const DWORD64 ENABLE_GUILD_FUNCTION = 
 {
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_MEMBER_30 | 			// 유파 20명
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_SECOND_MASTER_1 |		// 유파 사범 1명
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_NOTICE_BOARD |			// 유파 공지 사항
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_POST |					// 유파 메일
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_WAREHOUSE |				// 유파 창고
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_MEMBER_50 |			// 유파 멤버 30명
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_SECOND_MASTER_2 | 	// 유파 사범 2명
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_MEMBER_70 |			// 유파 멤버 40명
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_MEMBER_90 |			// 유파 이름 변경
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_SECOND_MASTER_3 |		// 유파 사범 3명
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_CAN_SET_EMBLEM |			// 유파 엠블렘 설정
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_MEMBER_110 |			// 유파 멤버 60명
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_MEMBER_130 |			// 유파 멤버 70명
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_SECOND_MASTER_4 |		// 유파 사범 4명
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_CAN_HAVE_DOJO |			// 유파 도장 소유
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_CAN_USE_DOJO_TELEPORT |	// 유파 도장 텔레포트
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_MEMBER_30 | 			// 20 schools
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_SECOND_MASTER_1 |		// 1 school instructor
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_NOTICE_BOARD |			// School Notice
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_POST |					// school mail
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_WAREHOUSE |				// school warehouse
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_MEMBER_50 |			// 30 school members
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_SECOND_MASTER_2 | 	// 2 school instructors
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_MEMBER_70 |			// 40 school members
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_MEMBER_90 |			// School name change
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_SECOND_MASTER_3 |		// 3 school instructors
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_CAN_SET_EMBLEM |			// School emblem settings
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_MEMBER_110 |			// 60 school members
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_MEMBER_130 |			// 70 school members
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_SECOND_MASTER_4 |		// 4 school instructors
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_CAN_HAVE_DOJO |			// Owned by Yupa Dojo
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_CAN_USE_DOJO_TELEPORT |	// Yupa Dojo Teleport
+
 	
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_MEMBER_150 |			// 유파 멤버 80명
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_CAN_MAKE_DOGI |			// 유파 도복
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_CAN_CHANGE_EMBLEM |		// 유파 엠블렘 체인지
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_DOJO_UPGRADE_2 |			// 유파 도장 업그레이드2
-	(DWORD64) 1 << DBO_GUILD_FUNCTION_TENKAICHI_SEED |			// 유파 천하제일 무술 대회 출전*/
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_MEMBER_150 |			// 80 school members
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_CAN_MAKE_DOGI |			// school uniform
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_CAN_CHANGE_EMBLEM |		// School emblem change
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_DOJO_UPGRADE_2 |			// Yupa Dojo Upgrade 2
+
+	(DWORD64) 1 << DBO_GUILD_FUNCTION_TENKAICHI_SEED |			// Participation in Yupa World’s Best Martial Arts Competition*/
+
 
 	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_MEMBER_170 |
 	(DWORD64) 1 << DBO_GUILD_FUNCTION_DOJO_UPGRADE_3 |
 //	(DWORD64) 1 << DBO_GUILD_FUNCTION_DOJO_QUEST_1 |
 //	(DWORD64) 1 << DBO_GUILD_FUNCTION_DOJO_MIX_RATE_UP_1 |
+
 
 	(DWORD64) 1 << DBO_GUILD_FUNCTION_MAX_MEMBER_190// |
 //	(DWORD64) 1 << DBO_GUILD_FUNCTION_DOJO_UPGRADE_4 |
@@ -66,8 +89,10 @@ const DWORD64 ENABLE_GUILD_FUNCTION =
 //	(DWORD64) 1 << DBO_GUILD_FUNCTION_CAN_HAVE_BOOK |
 //	(DWORD64) 1 << DBO_GUILD_FUNCTION_DOJO_UPGRADE_7 |
 //	(DWORD64) 1 << DBO_GUILD_FUNCTION_DOJO_MIX_RATE_UP_2 
+
 };
-	//functio										//need function to learn the func			// function type				//need rep	//need zeni	//need rock
+	//functio										//need function to learn the func			//function type				//need rep	//need zeni	//need rock
+
 const sDBO_GUILD_FUNCTION_INFO g_aGuildFunctionInfo[DBO_GUILD_FUNCTION_COUNT] =
 {
 	{ DBO_GUILD_FUNCTION_MAX_MEMBER_30,				DBO_GUILD_FUNCTION_INVALID,					eDBO_FUNC_TYPE_GUILD_PASSIVE,		0,			0,			0 },
@@ -91,6 +116,7 @@ const sDBO_GUILD_FUNCTION_INFO g_aGuildFunctionInfo[DBO_GUILD_FUNCTION_COUNT] =
 	{ DBO_GUILD_FUNCTION_MAX_MEMBER_150,			DBO_GUILD_FUNCTION_MAX_MEMBER_130,			eDBO_FUNC_TYPE_GUILD_PASSIVE,		12000,		2000000,	0 },
 	
 //	{ DBO_GUILD_FUNCTION_DOJO_UPGRADE_1,			DBO_GUILD_FUNCTION_CAN_HAVE_DOJO,			eDBO_FUNC_TYPE_DOJO_PASSIVE,		12000,		3000000,	0 },
+
 	{ DBO_GUILD_FUNCTION_CAN_MAKE_DOGI,				DBO_GUILD_FUNCTION_INVALID,					eDBO_FUNC_TYPE_GUILD_PASSIVE,		12000,		2000000,	0 },
 
 	{ DBO_GUILD_FUNCTION_CAN_CHANGE_EMBLEM,			DBO_GUILD_FUNCTION_CAN_SET_EMBLEM,			eDBO_FUNC_TYPE_GUILD_ACTIVE,		14000,		10000000,	0 },
@@ -152,6 +178,7 @@ bool Dbo_CanGetGuildFunction(DWORD64 qwGuildFunctionFlag, DWORD dwPoint, DWORD d
 	if (NULL == pGuildFunctionInfo)
 	{
 		// The specified guild function doesn't exist.
+
 		*pwResultCode = GAME_GUILD_NON_EXISTING_GUILD_FUNCTION;
 		return false;
 	}
@@ -165,6 +192,7 @@ bool Dbo_CanGetGuildFunction(DWORD64 qwGuildFunctionFlag, DWORD dwPoint, DWORD d
 	if (qwGuildFunctionFlag & ((DWORD64)1 << eGuildFunction))
 	{
 		// The guild already has the function.
+
 		*pwResultCode = GAME_GUILD_ALREADY_HAS_GUILD_FUNCTION;
 		return false;
 	}
@@ -174,6 +202,7 @@ bool Dbo_CanGetGuildFunction(DWORD64 qwGuildFunctionFlag, DWORD dwPoint, DWORD d
 		if (false == Dbo_HasGuildFunction(qwGuildFunctionFlag, pGuildFunctionInfo->prerequisite))
 		{
 			// The guild doesn't have prerequisite guild function.
+
 			*pwResultCode = GAME_GUILD_NEED_PREREQUISITE_GUILD_FUNCTION;
 			return false;
 		}
@@ -182,6 +211,7 @@ bool Dbo_CanGetGuildFunction(DWORD64 qwGuildFunctionFlag, DWORD dwPoint, DWORD d
 	if (pGuildFunctionInfo->dwRequiredPoint > dwPoint)
 	{
 		// The guild needs more guild point.
+
 		*pwResultCode = GAME_GUILD_NEED_MORE_GUILD_POINT;
 		return false;
 	}
@@ -189,11 +219,13 @@ bool Dbo_CanGetGuildFunction(DWORD64 qwGuildFunctionFlag, DWORD dwPoint, DWORD d
 	if (pGuildFunctionInfo->dwRequiredZenny > dwZenny)
 	{
 		// The zenny is not enough.
+
 		*pwResultCode = GAME_GUILD_NEED_MORE_ZENNY;
 		return false;
 	}
 
 	// The guild can obtain the specified guild function.
+
 	*pwResultCode = GAME_SUCCESS;
 	return true;
 }
@@ -204,6 +236,7 @@ bool Dbo_CanGetDojoFunction(DWORD64 qwGuildFunctionFlag, DWORD dwPoint, DWORD dw
 	if (NULL == pGuildFunctionInfo)
 	{
 		// The specified guild function doesn't exist.
+
 		*pwResultCode = GAME_GUILD_NON_EXISTING_DOJO_FUNCTION;
 		return false;
 	}
@@ -217,6 +250,7 @@ bool Dbo_CanGetDojoFunction(DWORD64 qwGuildFunctionFlag, DWORD dwPoint, DWORD dw
 	if (qwGuildFunctionFlag & ((DWORD64)1 << eGuildFunction))
 	{
 		// The guild already has the function.
+
 		*pwResultCode = GAME_GUILD_ALREADY_HAS_DOJO_FUNCTION;
 		return false;
 	}
@@ -226,6 +260,7 @@ bool Dbo_CanGetDojoFunction(DWORD64 qwGuildFunctionFlag, DWORD dwPoint, DWORD dw
 		if (false == Dbo_HasGuildFunction(qwGuildFunctionFlag, pGuildFunctionInfo->prerequisite))
 		{
 			// The guild doesn't have prerequisite guild function.
+
 			*pwResultCode = GAME_GUILD_NEED_PREREQUISITE_DOJO_FUNCTION;
 			return false;
 		}
@@ -234,6 +269,7 @@ bool Dbo_CanGetDojoFunction(DWORD64 qwGuildFunctionFlag, DWORD dwPoint, DWORD dw
 	if (pGuildFunctionInfo->dwRequiredPoint > dwPoint)
 	{
 		// The guild needs more guild point.
+
 		*pwResultCode = GAME_GUILD_NEED_MORE_GUILD_POINT;
 		return false;
 	}
@@ -241,11 +277,13 @@ bool Dbo_CanGetDojoFunction(DWORD64 qwGuildFunctionFlag, DWORD dwPoint, DWORD dw
 	if (pGuildFunctionInfo->dwRequiredZenny > dwZenny)
 	{
 		// The zenny is not enough.
+
 		*pwResultCode = GAME_GUILD_NEED_MORE_ZENNY;
 		return false;
 	}
 
 	// The guild can obtain the specified guild function.
+
 	*pwResultCode = GAME_SUCCESS;
 	return true;
 }
@@ -256,6 +294,7 @@ bool Dbo_GetUIGuildFunction(DWORD64 qwGuildFunctionFlag, eDBO_GUILD_FUNCTION eGu
 	if (NULL == pGuildFunctionInfo)
 	{
 		// The specified guild function doesn't exist.
+
 		return false;
 	}
 
@@ -268,6 +307,7 @@ bool Dbo_GetUIGuildFunction(DWORD64 qwGuildFunctionFlag, eDBO_GUILD_FUNCTION eGu
 	if ( Dbo_HasGuildFunction( qwGuildFunctionFlag, eGuildFunction ) )
 	{
 		// The guild already has the function.
+
 		return false;
 	}
 
@@ -276,11 +316,13 @@ bool Dbo_GetUIGuildFunction(DWORD64 qwGuildFunctionFlag, eDBO_GUILD_FUNCTION eGu
 		if (false == Dbo_HasGuildFunction( qwGuildFunctionFlag, pGuildFunctionInfo->prerequisite ))
 		{
 			// The guild doesn't have prerequisite guild function.
+
 			return false;
 		}
 	}
 
 	// The guild can obtain the specified guild function.
+
 	return true;
 }
 
@@ -290,6 +332,7 @@ bool Dbo_GetUIDojoFunction(DWORD64 qwGuildFunctionFlag, eDBO_GUILD_FUNCTION eGui
 	if (NULL == pGuildFunctionInfo)
 	{
 		// The specified guild function doesn't exist.
+
 		return false;
 	}
 
@@ -301,6 +344,7 @@ bool Dbo_GetUIDojoFunction(DWORD64 qwGuildFunctionFlag, eDBO_GUILD_FUNCTION eGui
 	if (qwGuildFunctionFlag & ((DWORD64)1 << eGuildFunction))
 	{
 		// The guild already has the function.
+
 		return false;
 	}
 
@@ -309,11 +353,13 @@ bool Dbo_GetUIDojoFunction(DWORD64 qwGuildFunctionFlag, eDBO_GUILD_FUNCTION eGui
 		if (false == Dbo_HasGuildFunction(qwGuildFunctionFlag, pGuildFunctionInfo->prerequisite))
 		{
 			// The guild doesn't have prerequisite guild function.
+
 			return false;
 		}
 	}
 
 	// The guild can obtain the specified guild function.
+
 	return true;
 }
 
@@ -415,6 +461,7 @@ DWORD Dbo_GetGuildDojoLevel(DWORD64 qwGuildFunctionFlag)
 	//{
 	//	return 1;
 	//}
+
 	else
 	{
 		return 0;
@@ -451,6 +498,7 @@ BYTE Dbo_GetDojoLevel(BYTE eGuildFunction )
 	//{
 	//	return 1;
 	//}
+
 	else
 	{
 		return 0;

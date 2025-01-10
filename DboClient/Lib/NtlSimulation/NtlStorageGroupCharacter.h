@@ -3,7 +3,7 @@
 * Author		: HaeSung, Cho
 * Copyright		: (주)NTL
 * Date			: 2009. 8. 16	
-* Abstract		: 캐릭터 별로 묶을 수 있는 옵션들
+* Abstract		: Options that can be grouped by character
 *****************************************************************************
 * Desc         : 
 *

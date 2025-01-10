@@ -1,28 +1,28 @@
 /******************************************************************************
-* File			: ClassExplainGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2007. 10. 17
-* Abstract		: 
+*File           : ClassExplainGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : October 17, 2007
+*Abstract		: 
 *****************************************************************************
-* Desc			: 로비에서 클래스에 대한 설명을 보여준다
+*Desc           : Shows a description of the class in the lobby
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// gui
+// Gui
 #include "gui_button.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "Inputhandler.h"
 
-// dbo
+// Dbo
 #include "Windowby3.h"
 
 
@@ -47,11 +47,11 @@ protected:
 protected:
 	gui::CSlot			m_slotPaint;
 
-	CWindowby3			m_Background;		///< 배경
+	CWindowby3			m_Background;		///< background
 
-	CSurfaceGui			m_srtClassNameBack;	///< 클래스 이름 배경
+	CSurfaceGui			m_srtClassNameBack;	///< class name background
 
 	gui::CStaticBox*	m_pTitleStatic;
-	gui::CStaticBox*	m_pClassName;		///< 클래스 이름
-	gui::CHtmlBox*		m_pExplainHtml;		///< 클래스 설명
+	gui::CStaticBox*	m_pClassName;		///< class name
+	gui::CHtmlBox*		m_pExplainHtml;		///< Class description
 };

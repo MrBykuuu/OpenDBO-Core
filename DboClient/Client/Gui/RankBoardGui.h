@@ -1,15 +1,15 @@
 /*****************************************************************************
  *
- * File			: RankBoardGui.h
- * Author		: Haesung, Cho
- * Copyright	: (주)NTL
- * Date			: 2007. 12. 11	
- * Abstract		: DBO Rank Board Gui
+ *File			: RankBoardGui.h
+ *Author	    : Haesung, Cho
+*Copyright	    : (주)NTL
+ *Date			: 2007. 12. 11	
+ *Abstract		: DBO Rank Board Gui
  *****************************************************************************
- * Desc         : 
- * 랭킹 보드
- * 현재는 랭크배틀의 PVP 순위만 표시되지만, 후에 TMQ나 각종 순위에 관련된 게시판
- * 추가 예정
+ *Desc          : 
+ *Ranking board
+ *Currently, only the PVP ranking of ranked battles is displayed, but later on, bulletin boards related to TMQ and various rankings are displayed.
+ *To be added
  *****************************************************************************/
 
 #ifndef __RANK_BOARD_H__
@@ -33,7 +33,7 @@ public:
 
 	// HandleEvents & SwitchDialog
 	VOID		HandleEvents(RWS::CMsg &msg);
-	RwInt32		SwitchDialog(bool bOpen);		///< DialogManager에서의 Open/Close
+	RwInt32		SwitchDialog(bool bOpen);		///< Open/Close in DialogManager
 
 	RwBool		IsEnableButton();
 	VOID		EnableAllButton();

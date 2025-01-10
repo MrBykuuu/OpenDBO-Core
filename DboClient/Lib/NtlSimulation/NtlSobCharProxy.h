@@ -161,9 +161,9 @@ private:
 	RwReal						m_fWeightInk;
 	RwReal						m_fCurrHalfOneSecTime;
 	RwBool						m_bEnableHighlight;
-    CNtlSobProxySystemEffect*   m_pFocusColorEffect;       ///< 픽킹시 하이라이트 이펙트
+    CNtlSobProxySystemEffect*   m_pFocusColorEffect;       ///< Highlight effect when picking
 	RwBool						m_bResLoaded;
-	RwUInt8						m_byAnimBlendNoneOneTime;	/** animation blending을 한번만 하지 않는다 */
+	RwUInt8						m_byAnimBlendNoneOneTime;	/**Do not perform animation blending only once */
     
 
 	SUICharacter				*m_pUIPcStatusWnd;
@@ -174,8 +174,8 @@ private:
 	SUIPcStatusRotate			*m_pUIPcDogiRotate;
 
 
-    RwBool                      m_bRemoveColorChangeEffect;  ///< 색상 변경 이펙트 삭제 플래그
-    CNtlSobProxySystemEffect*   m_ppColorChangeEffect[2];    ///< 색상 변경 이벤트에 사용되는 시스템 이펙트
+    RwBool                      m_bRemoveColorChangeEffect;  ///< Color change effect delete flag
+    CNtlSobProxySystemEffect*   m_ppColorChangeEffect[2];    ///< System effects used for color change events
 
 //-------------------------------------------------------------------------------
 // event handler
@@ -208,7 +208,7 @@ public:
 protected:
 
 	/** 
-	* character 생성
+	*Character creation
 	*/
 	CNtlPLCharacter* CreatePLCharacter(RwBool bNotShading);
 	void DeletePLCharacter(void);
@@ -272,7 +272,7 @@ public:
 	virtual void HandleEvents(RWS::CMsg &pMsg);
 
 	//---------------------------------------------------
-	// proxy system flag 설정에 관한 함수.
+	// Function related to proxy system flag settings.
 	//---------------------------------------------------
 
 	void EnableProxySystemVisible(RwBool bVisible);
@@ -284,43 +284,43 @@ public:
 	RwBool GetActiveSubWeapon(void);
 
 	//---------------------------------------------------
-	// Inventory UI 에 관련된 함수.
+	// Functions related to Inventory UI.
 	//---------------------------------------------------
 	RwTexture* UIPcStatusWndRender(void);
 	RwTexture* UIPcStatusBarRender(void);
 	RwTexture* UIPcDogiWndRender(void);
-	SUICharacter* GetUICharacter() {return m_pUIPcStatusWnd;}		///< UI화면상의 캐릭터 객체를 반환한다.
-	SUICharacter* GetUIDogiCharacter() {return m_pUIPcDogiWnd;}		///< UI화면상의 캐릭터 객체를 반환한다.
+	SUICharacter* GetUICharacter() {return m_pUIPcStatusWnd;}		///< Returns the character object on the UI screen.
+	SUICharacter* GetUIDogiCharacter() {return m_pUIPcDogiWnd;}		///< Returns the character object on the UI screen.
 
 	//---------------------------------------------------
-	// owner simulation object  설정에 관한 함수.
+	// Function related to owner simulation object settings.
 	//---------------------------------------------------
 	void	NotifyStateEnter(RwUInt32 uiStateId);	
 	void	NotifyStateExit(RwUInt32 uiOldState, RwUInt32 uiNewState);
 
 	//---------------------------------------------------
-	// presentation entity 생성 함수.                                                                      
+	// Presentation entity creation function.                                                                   
 	//---------------------------------------------------
 
-	// bone attach시키면서 effect 생성.
+	//Create effect while attaching bone.
 	virtual CNtlPLEntity* CreatePLChildEffect(const RwChar *pKey, const RwChar *pAttachBoneName, RwV3d vOffset = ZeroAxis, RwBool bIgnoreVisible = FALSE);
 
 	// offset position에 attach시키면서 effect 생성.
 	virtual CNtlPLEntity*	CreatePLChildEffect(const RwChar *pKey, RwV3d vOffset, RwBool bIgnoreVisible = FALSE, RwBool bApplyRotate = FALSE);
 
 	//---------------------------------------------------
-	// main presentation entity에 관련된 함수 
+	// Functions related to the main presentation entity 
 	//---------------------------------------------------
 
 	/**
-	* world에 add 및 remove 관련된 함수.
+	*Functions related to add and remove in the world.
 	*/
 
 	virtual void			AddWorld(void);		
 	virtual void			RemoveWorld(void);
 
 	/**
-	* transform에 관현된 함수.
+	*Function related to transform.
 	*/
 
 	virtual void SetPosition(const RwV3d *pPos);
@@ -332,7 +332,7 @@ public:
 	virtual void SetScale(RwReal fScale);
 
 	/**
-	* material에 관현된 함수.
+	*Function implemented in material.
 	*/
 
 	void SetAlpha(RwUInt8 byAlpha);
@@ -344,7 +344,7 @@ public:
     void SetStoneMaterial(RwBool bApply);
 
 	/**
-	* animation에 관련된 함수.
+	*Functions related to animation.
 	*/
 
 	// animation
@@ -358,35 +358,35 @@ public:
     void        SetSkillCancel();
 
 	/**
-	* entity 정보에 관한 함수.
+	* Function regarding entity information.
 	*/
 	CNtlPLEntity* GetPLMainEntity(void);    // presentation main entity
-	virtual RwV3d GetBonePosition(const RwChar *pBoneName); 	// bone position을 구한다.
-	virtual RwV3d GetWeaponBonePosition(const RwChar *pBoneName);   // 장착한 무기의 bone position
-	virtual RwV3d GetSubWeaponBonePosition(const RwChar *pBoneName);    // 장착한 sub weapon의 bone position
+	virtual RwV3d GetBonePosition(const RwChar *pBoneName); 	//Find the bone position.
+	virtual RwV3d GetWeaponBonePosition(const RwChar *pBoneName);   //bone position of the equipped weapon
+	virtual RwV3d GetSubWeaponBonePosition(const RwChar *pBoneName);    //Bone position of the mounted sub weapon
 
-	virtual RwReal GetPLEntityHeight(void); // pl entity의 높이를 얻어온다.
-	virtual RwReal GetPLEntityWidth(void);  // pl entity의 폭을 얻어온다.
-	virtual RwReal GetPLEntityDepth(void);  // pl entity의 깊이을 얻어온다.
-	virtual RwReal GetPLEntityBaseScale(void);  // pl entity의 base scale을 얻어온다.
+	virtual RwReal GetPLEntityHeight(void); //Get the height of pl entity.
+	virtual RwReal GetPLEntityWidth(void);  //Get the width of pl entity.
+	virtual RwReal GetPLEntityDepth(void);  //Get the depth of pl entity.
+	virtual RwReal GetPLEntityBaseScale(void);  //Obtain the base scale of pl entity.
     virtual RwReal GetScale();
-    void           ChangeModel(CNtlPLCharacter* pCharacter, RwBool bEquipItem, RwBool bDeleteOrgModel = FALSE);        ///< 메인 Entity 모델을 변경한다.
-	void           ChangeUIModel(CNtlPLCharacter* pCharacter);                         ///< UI창에 렌더링될 모델을 변경한다.
-	void           ChangeUIModel_Dogi(CNtlPLCharacter* pCharacter);                         ///< UI창에 렌더링될 모델을 변경한다.
+    void           ChangeModel(CNtlPLCharacter* pCharacter, RwBool bEquipItem, RwBool bDeleteOrgModel = FALSE);        ///< Change the main Entity model.
+	void           ChangeUIModel(CNtlPLCharacter* pCharacter);                         ///< Changes the model to be rendered in the UI window.
+	void           ChangeUIModel_Dogi(CNtlPLCharacter* pCharacter);                         ///< Changes the model to be rendered in the UI window.
 
-    // Item 관련 함수
-    SEquipItem*    GetEquipItem(RwUInt8 bySlotIdx);                         ///< 장착하고 있는 Item을 반환한다.
-    void           CreateEquipItem(RwUInt32 uiTblId, RwUInt8 bySlotIdx, RwUInt8 byGrade);           ///< Item을 장착한다.
+    //Item-related functions
+    SEquipItem*    GetEquipItem(RwUInt8 bySlotIdx);                         ///< Returns the equipped item.
+    void           CreateEquipItem(RwUInt32 uiTblId, RwUInt8 bySlotIdx, RwUInt8 byGrade);           ///< Equip the item.
     void           DeleteEquipItem(RwUInt8 bySlotIdx);    
-    void           SetVisibleEquipItem(RwBool bVisible, RwUInt8 bySlotIdx);                  ///< 장착하고 있는 Item의 Visible을 설정한다.   
+    void           SetVisibleEquipItem(RwBool bVisible, RwUInt8 bySlotIdx);                  ///< Sets the Visibility of the equipped item. 
 
 	/**
-	* Decoration에 관련된 함수
+	* Functions related to decoration
 	*/
 
     // Rp Bonus Skill
-    void AttachRPBonusEffect();             ///< RP Bonus Effect를 생성한다.
-    void DetachRPBonusEffect();             ///< RP Bonus Effect를 제거한다.
+    void AttachRPBonusEffect();             ///< Creates an RP Bonus Effect.
+    void DetachRPBonusEffect();             ///< Removes the RP Bonus Effect.
 
 	// Guard Skill
 	void				CreateGuardEffect();
@@ -396,7 +396,7 @@ public:
 	void				CreateRpChargeEffect();
 	void				DeleteRpChargeEffect();
 
-	// Entity 상단의 이름 색상을 변경한다
+	//Change the name color at the top of the entity
 	virtual void SetNameColor(const WCHAR* pwcName, COLORREF nameColor,
 							  const WCHAR* pwcGuildName, COLORREF guildColor,
 							  const WCHAR* pwcTitleName, COLORREF titlecolor);
@@ -434,13 +434,13 @@ public:
 	virtual void DeleteElapsedController(void);
 
 	//---------------------------------------------------
-	// event에 관련된 함수.  
+	// Function related to event. 
 	//---------------------------------------------------
 
-	// mouse focus를 받았을 경우.
+	//When mouse focus is received.
 	virtual void SetFocus(void);
 
-    // mouse focus를 읽어 버렸을 경우.
+    //When mouse focus is read.
 	virtual void ReleaseFocus(void);
 
     CNtlSobCharDecorationProxy* GetDecorationProxy() {return m_pDecorationProxy;}

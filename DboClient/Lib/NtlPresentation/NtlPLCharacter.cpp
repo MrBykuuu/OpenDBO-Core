@@ -133,9 +133,9 @@ RwBool CNtlPLCharacter::SetProperty(const CNtlPLProperty *pData)
 }
 
 /**
-* Character 생성시 호출이 된다.
-* \param pParam Character 생성시 필요한(Head, Hair, SkinColor, HairColor값을 받아야 한다. Pc, Mob, Npc에 대한 구분도)
-* \return 실패 유무
+*Called when creating a character.
+* \param pParam Required when creating a character (Head, Hair, SkinColor, HairColor values ??must be received. Classification for Pc, Mob, Npc)
+* \return Is there a failure?
 */
 RwBool CNtlPLCharacter::Create(const SPLEntityCreateParam *pParam)
 {
@@ -638,9 +638,9 @@ RwBool CNtlPLCharacter::Update(float fElapsed)
 }
 
 /**
-* Visula Manager에서 Render를 강제로 호출하게 했다.
-* CallBack 형식으로 변경을 해야 할듯 하다.
-* \return 실패 유무
+*Visula Manager was forced to call Render.
+*I think I need to change it to CallBack format.
+* \return Is there a failure?
 */
 RwBool CNtlPLCharacter::Render(void)
 {	
@@ -671,8 +671,8 @@ static RpAtomic *RenderToTextureAtomic(RpAtomic *pAtomic, void *pData)
 }
 
 /**
-* Texture에 Rendering을 할 경우 쓰는 함수
-* \return 실패 유무
+*Function used when rendering to texture
+* \return Is there a failure?
 */
 RwBool CNtlPLCharacter::RenderToTexture()
 {
@@ -726,8 +726,8 @@ void CNtlPLCharacter::UpdatePreBoneScale()
 
         if(bTargetPosApply && parentIndex == uiBone1)
         {
-            // 어깨 본으로부터 타겟의 각도를 계산해서 변형한다. 
-            // 타겟 방향으로 본을 늘리기 위해서다. 나메크 팔늘리기 스킬용 (by agebreak 08-10-23)
+            // Calculate the angle of the target from the shoulder bone and transform it. 
+            // This is to increase the number of patterns in the target direction. For Namek arm extension skill (by agebreak 08-10-23)
             RwV3d vBonePos = pMatClavicle->pos;            
             vBonePos.x = GetPosition().x;
             vBonePos.z = GetPosition().z;
@@ -739,7 +739,7 @@ void CNtlPLCharacter::UpdatePreBoneScale()
             RwV3dNormalize(&vTargetDir, &vTargetDir);            
             RwReal fAngle = acos(RwV3dDotProduct(&vDir, &vTargetDir));
 
-            // 왼쪽, 오른쪽 어깨에 따라서 휘어지는 각도가 다르다.
+            //The bending angle is different depending on the left and right shoulders.
             if(strstr(m_szBoneStretchAxisBone, " L ") > 0)
             {
                 fAngle = vBonePos.y <= m_vBoneStretchTargetPos.y ? fAngle : -fAngle;
@@ -808,7 +808,7 @@ void CNtlPLCharacter::UpdatePostBoneScale()
 }
 
 /**
-* Toon Data를 생성을 한다.
+*Create Toon Data.
 */
 void CNtlPLCharacter::CreateToonData(const RwChar *szTexName, const RwChar *szTexPath)
 {
@@ -829,9 +829,9 @@ void CNtlPLCharacter::CreateToonData(const RwChar *szTexName, const RwChar *szTe
 }
 
 /**
-* Animation에 필요한 세팅을 한다.
+*Make the settings necessary for animation.
 * \param pAnim RtAnimAnimation Data
-* \return 실패 유무
+* \return Whether or not there is a failure
 */
 RwBool CNtlPLCharacter::CreateAnim(RwUInt32 uiAnimKey, RwReal fStartTime, RwBool bLoop )
 {
@@ -896,11 +896,11 @@ RwBool CNtlPLCharacter::IsExistAnim(RwUInt32 uiAnimKey)
 
 
 /**
-* Animation Change를 한다. RUN_FRONT, RUN_BACK, ROTATE는 현재 Animation이 있을 경우 변경하지 않는다.
-* \param uiAnimKey		AnimationKey
-* \param fStartTime	Animation 시작시간
-* \param bLoop			Loop 유무
-* \return 실패 유무
+*Make Animation Change. RUN_FRONT, RUN_BACK, and ROTATE do not change if there is currently an animation.
+* \param uiAnimKey AnimationKey
+* \param fStartTime Animation start time
+* \param bLoop Loop presence or absence
+* \return Is there a failure?
 */
 RwBool CNtlPLCharacter::SetBaseAnimation(RwUInt32 uiAnimKey, RwReal fStartTime, RwBool bLoop)
 {
@@ -964,11 +964,11 @@ RwBool CNtlPLCharacter::SetBaseAnimation(RwUInt32 uiAnimKey, RwReal fStartTime, 
 }
 
 /**
-* Animation Blend를 하지 않고 Pre, Next 모두 Animation를 바꾼다. 
-* \param uiAnimKey		AnimationKey
-* \param fStartTime	Animation 시작시간
-* \param bLoop			Loop 유무
-* \return 실패 유무
+*Change animations for both Pre and Next without performing Animation Blend. 
+* \param uiAnimKey AnimationKey
+* \param fStartTime Animation start time
+* \param bLoop Loop presence or absence
+* \return Is there a failure?
 */
 RwBool CNtlPLCharacter::SetAllAnimation(RwUInt32 uiAnimKey, RwReal fStartTime, RwBool bLoop)
 {
@@ -1033,7 +1033,7 @@ RwBool CNtlPLCharacter::SetBlend(EBlendType eBlendType, RwReal fBlendAlpha, RwRe
 }
 
 /**
-* Animation에서의 AnimHit
+*AnimHit in Animation
 * \return SAnimHitParam
 */
 SAnimPlayInfo *CNtlPLCharacter::GetBaseAnimPlayInfo()
@@ -1211,8 +1211,8 @@ RpAtomic* CNtlPLCharacter::GetAtomic( const std::string& strName )
 }
 
 /**
-* pPos위치에 Character를 위치 시킨다.
-* \param pPos World에서의 위치
+*Place the character at the pPos position.
+* \param pPos Position in World
 */
 void CNtlPLCharacter::SetPosition(const RwV3d *pPos)
 {
@@ -1245,7 +1245,7 @@ void CNtlPLCharacter::SetPosition(const RwV3d *pPos)
 
 	RwFrameUpdateObjects( pFrame );
 
-	// Sound의 위치도 변경한다.
+	// The location of the sound also changes.
 	ListSoundHandle::iterator it = m_listLoopSound.begin();
 	for(; it != m_listLoopSound.end(); ++it)
 	{
@@ -1253,14 +1253,14 @@ void CNtlPLCharacter::SetPosition(const RwV3d *pPos)
 		GetSoundManager()->SetSoundPosition(hSound, m_vCurPos.x, m_vCurPos.y, m_vCurPos.z);
 	}
 
-	// Position이 변경이 될 경우에 위치는 변경이 되지 않는다.(이거 Test를 좀 해봐야 할 듯 하다 by HoDong)
+	// When the position is changed, the position does not change. (I think I need to do some testing on this by HoDong)
 	//CNtlPLAttach::Update(0.f);
 }
 
 
 /**
-* Base Scale를 조정을 한다.
-* \param fScale Default값은 1.f 이다.
+*Adjust Base Scale.
+* \param fScale Default value is 1.f.
 */
 void CNtlPLCharacter::SetScale(RwReal fScale)
 {
@@ -1300,8 +1300,8 @@ RwReal CNtlPLCharacter::GetScale()
 
 
 /**
-* Base Scale를 조정을 한다.
-* \param fScale Default값은 1.f 이다.
+*Adjust Base Scale.
+* \param fScale Default value is 1.f.
 */
 void CNtlPLCharacter::SetBaseScale(RwReal fBaseScale)
 {
@@ -1338,7 +1338,7 @@ void CNtlPLCharacter::SetBaseScale(RwReal fBaseScale)
 }
 
 /**
-* 프로퍼티에 설정된 BaseScale을 반환한다.
+*Returns the BaseScale set in the property.
 */
 RwReal CNtlPLCharacter::GetBaseScale()
 {
@@ -1353,8 +1353,8 @@ RwReal CNtlPLCharacter::GetBaseScale()
 }
 
 /**
-* 발이 땅에서 떨어질 경우 위치값이다.
-* \param pPos 이동시킬 위치이다.
+*This is the position value when the foot leaves the ground.
+* \param pPos is the position to move to.
 */
 void CNtlPLCharacter::SetPosOffset(RwV3d *pPos)
 {
@@ -1387,8 +1387,8 @@ void CNtlPLCharacter::SetPosOffset(RwV3d *pPos)
 }
 
 /**
-* Character의 회전
-* \param fAngleY 회전값
+*Rotation of Character
+* \param fAngleY rotation value
 */
 void CNtlPLCharacter::SetAngleY(const RwReal fAngleY)
 {
@@ -1451,8 +1451,8 @@ void CNtlPLCharacter::SetAngleX(const RwReal fAngleX)
 }
 
 /**
-* 현재 Angle에서 fAngleDeltaY값 만큼을 더한다.
-* \param fAngleDeltaY Delta 회전값
+*Add fAngleDeltaY value to the current Angle.
+* \param fAngleDeltaY Delta rotation value
 */
 void CNtlPLCharacter::SetAngleDelta(const RwReal fAngleDeltaY)
 {
@@ -1463,8 +1463,8 @@ void CNtlPLCharacter::SetAngleDelta(const RwReal fAngleDeltaY)
 }
 
 /**
-* 특정 Bone의 Matrix 값을 얻는다.
-* \param pBoneName Bone의 이름
+*Obtain the Matrix value of a specific Bone.
+* \param pBoneName Name of the bone
 */
 RwMatrix* CNtlPLCharacter::GetBoneMatrix(const RwChar *pBoneName)
 {
@@ -1605,7 +1605,7 @@ void CNtlPLCharacter::SetMatrix( RwMatrix& matWorld)
 	RwMatrixCopy(pMatChar, &matWorld);
     pMatChar->pos = ZeroAxis;
     
-    // Base Scale을 적용해줘야만 한다.
+    // Base Scale must be applied.
     RwFrameScale(pFrame, &m_pTypeBoneData->vBaseScale, rwCOMBINEPOSTCONCAT);
     RwFrameTranslate(pFrame, RwMatrixGetPos(&matWorld), rwCOMBINEPOSTCONCAT);
 
@@ -1774,9 +1774,9 @@ VOID CNtlPLCharacter::SetToonEdgeVisibility4CurEquipItem(RwBool _Visibility)
 }
 
 /**
-* CallBack function that is called when character is rendered
-* Equip Item also calls this function.
-* \ param pAtomic:
+*CallBack function that is called when character is rendered
+*Equip Item also calls this function.
+*\ param pAtomic:
 */
 RpAtomic *CNtlPLCharacter::RenderCallBack(RpAtomic *pAtomic)
 {
@@ -1848,7 +1848,7 @@ RpAtomic *CNtlPLCharacter::RenderCallBack(RpAtomic *pAtomic)
 							
 						}
 
-						// color
+						// Color
 						RwRGBAReal sColorReal;
 						RwRGBARealFromRwRGBA(&sColorReal, pItemEntity->GetColor());						
 
@@ -1930,7 +1930,7 @@ RpAtomic *CNtlPLCharacter::RenderCallBack(RpAtomic *pAtomic)
 				}
 			}
 
-			// 형석 coding
+			// fluorite coding
 			if(m_SkipAdge)
 			{
 				AtomicDefaultRenderCallBack(pAtomic);
@@ -1982,7 +1982,7 @@ RpAtomic *CNtlPLCharacter::RenderCallBack(RpAtomic *pAtomic)
 						else
 							RpNtlMaterialExtSetFlag(pMaterial, RpNtlMaterialExtGetFlag(pMaterial) & ~rpNTL_MATERIAL_SIMPLEMATERIAL);
 						
-						// petrify
+						// Petrify
 						if(pCharEntity->GetPetrifyMaterial())
 							RpNtlMaterialExtSetFlag(pMaterial, RpNtlMaterialExtGetFlag(pMaterial) | rpNTL_MATERIAL_PETRIFY);
 						else
@@ -1994,7 +1994,7 @@ RpAtomic *CNtlPLCharacter::RenderCallBack(RpAtomic *pAtomic)
 						RwRGBAReal	sColorReal;
 						RwRGBARealFromRwRGBA(&sColorReal, pCharEntity->GetColor());
 
-						// Atomic에 설정된 Alpha 값
+						// Alpha value set for Atomic
 						RwReal fAtomicAlpha = RpNtlAtomicGetAlpha(pAtomic) / 255.0f;
 
 						RwRGBA sColor;
@@ -2023,7 +2023,7 @@ RpAtomic *CNtlPLCharacter::RenderCallBack(RpAtomic *pAtomic)
 				}
 			}
 
-			// 형석 coding
+			// fluorite coding
 			if(m_SkipAdge)
 			{
 				AtomicDefaultRenderCallBack(pAtomic);
@@ -2160,7 +2160,7 @@ void CNtlPLCharacter::OnEventTraceEffect( SEventTrace* pEventTrace )
 
 void CNtlPLCharacter::OnEventVisualEffect( SEventVisualEffect* pEventVisualEffect ) 
 {
-	//Effect Name이 없는 경우는 무조건 Return을 한다.
+	//If there is no Effect Name, Return is unconditional.
 	if( strlen(pEventVisualEffect->chEffectName) <= 0)
 		return;
 
@@ -2170,7 +2170,7 @@ void CNtlPLCharacter::OnEventVisualEffect( SEventVisualEffect* pEventVisualEffec
 
 	if(!pEventVisualEffect->bAttach || pEventVisualEffect->eBoneType == BONE_CHARACTER)
 	{
-		// 만약 LoopEffect 리스트에 같은 이름,Bone이 있으면 새로 생성하지 않는다.
+		// If there is a same name, Bone, in the LoopEffect list, a new one is not created.
 		if(IsExistLoopEffect(pEventVisualEffect->chEffectName, pEventVisualEffect->chBoneName))
 			return;
 
@@ -2181,16 +2181,16 @@ void CNtlPLCharacter::OnEventVisualEffect( SEventVisualEffect* pEventVisualEffec
 
 		CNtlInstanceEffect *pInstanceEffect = (CNtlInstanceEffect *)pPLEntity;
 
-		// 이펙트의 Scale 적용 유무 플래그를 설정한다.
+		// Set the flag for whether to apply the scale of the effect.
 		pInstanceEffect->SetApplyScale(pEventVisualEffect->bApplyScale);
 		pPLEntity->SetScale(GetBaseScale() * m_vScale.x);            
 
-		//Effect에 Character의 Serial ID를 넣는다.(Client에서 사용을 하기 위해서)
+		//Enter the Serial ID of the Character in the Effect. (To use in the Client)
 		pPLEntity->SetSerialID(GetSerialID());
 
 		pInstanceEffect->SetPlayAnimSpeed(m_fAnimSpeed);
 
-		// AutoDelete가 아니면 LoopEffect라고 간주하고 리스트에 추가한다              
+		// If it is not AutoDelete, it is considered LoopEffect and added to the list.              
 		if(!pPLEntity->IsAutoDelete())
 		{
 			SLoopEffect* pLoopEffect = NTL_NEW SLoopEffect();
@@ -2211,7 +2211,7 @@ void CNtlPLCharacter::OnEventVisualEffect( SEventVisualEffect* pEventVisualEffec
 		{
 			if(pEventVisualEffect->bProjectileType)
 			{
-				//  발사체 타입인경우에는 Attach 하지 않는다.
+				//  If it is a projectile type, it does not attach.
 				RwMatrix* pMatBone = GetBoneMatrix(pEventVisualEffect->chBoneName);
 				RwMatrix matEffect;
 				RwMatrixSetIdentity(&matEffect);
@@ -2302,17 +2302,17 @@ void CNtlPLCharacter::OnEventSubWeapon( SEventSubWeapon* pEventSubWeapon )
 
 void CNtlPLCharacter::OnEventVisualSound( SEventSound* pEventSound ) 
 {
-	// Sound를 Play한다.    
+	// Play Sound.    
 
 	if(strlen(pEventSound->chSoundName) <= 1)
 		return ;
 
-	// LoopSound이고 이미 기존에 Play되고 있다면 Play하지 않는다.
+	// If it is LoopSound and is already playing, it does not play.
 	if(pEventSound->bLoop && IsExistLoopSound(pEventSound->chSoundName))
 		return ;
 
 
-	// 파일이 여러개 세팅되어 있는경우에는 랜덤으로 플레이된다.
+	// If multiple files are set, they are played randomly.
 	std::string soundFileName;
 	int nMax = 1;
 	if(strlen(pEventSound->chSoundName4) > 0)
@@ -2346,7 +2346,7 @@ void CNtlPLCharacter::OnEventVisualSound( SEventSound* pEventSound )
 		soundFileName = pEventSound->chSoundName;
 	}
 
-	// 피치를 랜덤으로 선택한다
+	// Select a pitch randomly
 	RwReal fSoundPitch = NtlRandomNumber(pEventSound->fSoundPitchMin, pEventSound->fSoundPitchMax);
 
 	sNtlSoundPlayParameta tSoundParam;
@@ -2364,7 +2364,7 @@ void CNtlPLCharacter::OnEventVisualSound( SEventSound* pEventSound )
 	// by daneos test
 	int iRet = GetSoundManager()->Play(&tSoundParam);
 
-	// Loop Sound면 리스트에 추가한다.
+	// If it is a Loop Sound, add it to the list.
 	if(iRet == SOUNDRESULT_OK && pEventSound->bLoop && tSoundParam.hHandle != INVALID_SOUND_HANDLE)
 	{
 		AddLoopSound(tSoundParam.hHandle);
@@ -2393,7 +2393,7 @@ void CNtlPLCharacter::OnEventHit( SEventAnimHit* pEventHit )
 
 void CNtlPLCharacter::OnEventPostEffect( SEventPostEffect* pEventPostEffect ) 
 {
-	// 포스트 이펙트는 타겟을 판별하고, 자신 이외의 다른 캐릭터의 이펙트를 보지 않기 위해서 Simul 레이어에서 처리한다.
+	// Post effects determine the target and are processed in the Simul layer to avoid seeing effects on characters other than yourself.
 	CNtlPLEventGenerator::AnimEventPostEffect(GetSerialID(), pEventPostEffect);
 }
 
@@ -2404,7 +2404,7 @@ void CNtlPLCharacter::OnEventSummonPet( SEventSummonPet* pEventSummonPet )
 
 void CNtlPLCharacter::OnEventAlphaFade( SEventAlpha* pEventAlpha ) 
 {
-	// Atomic Alpha에 관해서만 PL단에서 처리한다.
+	// Only Atomic Alpha is handled by the PL stage.
 	if(pEventAlpha->eAlphaEventType != SEventAlpha::E_ALPHA_EVENT_ATOMIC)
 	{
 		CNtlPLEventGenerator::AnimEventAlpha(GetSerialID(), (void*)pEventAlpha);
@@ -2501,7 +2501,7 @@ void CNtlPLCharacter::ClearLoopEffect()
     {
         if(pLoopEffect && pLoopEffect->pLoopEffectIntance)
         {
-            // 삭제가 아니라 종료를 시킨다.
+            // It terminates rather than deletes.
             pLoopEffect->pLoopEffectIntance->Finish();            
         }
 
@@ -2765,7 +2765,7 @@ RwBool CNtlPLCharacter::IsApplyGroundPitchAngle(void)
 	return m_pProperty->IsApplyNormal();
 }
 
-// RwSphere* CNtlPLCharacter::GetBoundingSphere()
+// RwSphere*CNtlPLCharacter::GetBoundingSphere()
 // {
 // 	m_BSphereCur.center = GetPosition() + m_BSphere.center;
 // 	m_BSphereCur.radius	= m_BSphere.radius;
@@ -2815,7 +2815,7 @@ RwBool CNtlPLCharacter::CullingTest(RwCamera* pRwCamera, RwUInt16 uiRenderFrame)
 			{				
 				if (IsCullingTestAllAtomic())
 				{
-					// [m_vecAtomicList.size()]번 Occluder Proxy는 Bounding Sphere다.
+					// [m_vecAtomicList.size()] times the occluder proxy is a bounding sphere.
 					for (RwInt32 i = 0; i < iNumAtomic; ++i)
 					{
 #ifdef _DEBUG
@@ -2874,8 +2874,8 @@ RwBool CNtlPLCharacter::CullingTest(RwCamera* pRwCamera, RwUInt16 uiRenderFrame)
 			}
 			else if (iFrustumCheck + iOccluderCheck >= iNumAtomic) 
 			{
-				// Frustum + Occluder 갯수가 Atomic 갯수보다 많다면
-				// OCCLUDER Flag를 셋팅 한다. 단 OccluderCheck 갯수가 존재해야 하므로, iFrustumCheck >= iNumAtomic를 통과해야만 가능하다.
+				// If the number of Frustum + Occluders is greater than the number of Atomics
+				// Set the OCCLUDER Flag. However, since the number of OccluderChecks must exist, this is only possible if iFrustumCheck >= iNumAtomic is passed.
 				m_uiCullFlags |= NTL_PLEFLAG_CULLED_OCCLUDER;
 			}
 		}
@@ -2938,8 +2938,8 @@ RwBool CNtlPLCharacter::CullingTest(RwCamera* pRwCamera)
 			}
 			else if (iFrustumCheck + iOccluderCheck >= iNumAtomic) 
 			{
-				// Frustum + Occluder 갯수가 Atomic 갯수보다 많다면
-				// OCCLUDER Flag를 셋팅 한다. 단 OccluderCheck 갯수가 존재해야 하므로, iFrustumCheck >= iNumAtomic를 통과해야만 가능하다.
+				// If the number of Frustum + Occluders is greater than the number of Atomics
+				// Set the OCCLUDER Flag. However, since the number of OccluderChecks must exist, this is only possible if iFrustumCheck >= iNumAtomic is passed.
 				m_uiCullFlags |= NTL_PLEFLAG_CULLED_OCCLUDER;
 			}
 		}		
@@ -2970,7 +2970,7 @@ void CNtlPLCharacter::SetCullFlags(RwUInt32 uiFlag)
 
 RwReal CNtlPLCharacter::GetAlphaDistance() 
 {
-    // 설정이 안되어 있으면 높이의 1.5배를 반환한다.
+    // If not set, 1.5 times the height is returned.
     return m_pProperty->GetAlphaDistance() == 0.0f ? GetHeight() * 1.5f : m_pProperty->GetAlphaDistance();
 }
 

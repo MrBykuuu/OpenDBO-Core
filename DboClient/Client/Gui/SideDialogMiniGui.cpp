@@ -1,10 +1,10 @@
 #include "precomp_dboclient.h"
 #include "SideDialogMiniGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "SideDialogManager.h"
 #include "DialogPriority.h"

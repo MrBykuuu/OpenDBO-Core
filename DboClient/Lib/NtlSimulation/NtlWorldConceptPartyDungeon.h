@@ -1,6 +1,6 @@
 #pragma once
 
-// simulation
+// Simulation
 #include "NtlWorldConceptController.h"
 
 

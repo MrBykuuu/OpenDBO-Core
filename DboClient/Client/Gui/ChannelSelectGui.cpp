@@ -1,13 +1,13 @@
 #include "precomp_dboclient.h"
 #include "ChannelSelectGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "CharStageState.h"
@@ -73,19 +73,19 @@ RwBool CChannelSelectGui::Create()
 	m_pServerName->SetTextColor(RGB(255, 192, 0));
 	m_pServerName->Enable(false);
 
-	// 스크롤
+	// scroll
 	m_pScrollBar = (gui::CScrollBar*)GetComponent("scbScroll");
 	m_slotServerScrollChanged		= m_pScrollBar->SigValueChanged().Connect( this, &CChannelSelectGui::OnScrollChanged );
 	m_slotServerScrollSliderMoved	= m_pScrollBar->SigSliderMoved().Connect( this, &CChannelSelectGui::OnScrollChanged );
 
-	// 확인 버튼
+	// OK button
 	m_pOkButton = (gui::CButton*)GetComponent("btnOk");
 	m_pOkButton->SetTextFocusColor(INFOCOLOR_LOBBY_FOC);
 	m_pOkButton->SetTextDownColor(INFOCOLOR_LOBBY_DOWN);
 	m_pOkButton->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_OK"));
 	m_slotOKButton = m_pOkButton->SigClicked().Connect( this, &CChannelSelectGui::OnClickOKButton );
 
-	// 취소 버튼
+	// Cancel button
 	m_pCancelButton = (gui::CButton*)GetComponent("btnCancel");
 	m_pCancelButton->SetTextFocusColor(INFOCOLOR_LOBBY_FOC);
 	m_pCancelButton->SetTextDownColor(INFOCOLOR_LOBBY_DOWN);
@@ -97,10 +97,10 @@ RwBool CChannelSelectGui::Create()
 	m_srfSelectBar.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharChannelSelect.srf", "srfSelectBar" ));
 	m_srfDownBar.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharChannelSelect.srf", "srfDownBar" ));
 
-	// dafault set
-	// avooo's comment : 마지막에 접속했던 서버가 없는 상태에서 게임에 들어갔다가 로비로 나오면 여전히 마지막에 접속했던 서버의 인덱스가 없다.
-	//				     이 때 GUI상에 채널 정보가 표시되지 않는다. 그러나, 실제로는 채널 정보를 가지고 있으므로 GUI 채널 정보를
-	//					 구축하자.(마지막에 접속했던 서버의 인덱스는 인증 서버 접속시, 캐릭터 서버 접속시 서버로 부터 받는다.)
+	// default set
+	// avooo's comment: If you enter the game without the last server you connected to and then exit the lobby, there is still no index of the last server you connected to.
+	//				     At this time, channel information is not displayed on the GUI. However, since it actually has channel information, the GUI channel information
+	//					 Let's build it. (The index of the last connected server is received from the server when connecting to the authentication server or character server.)
 	SERVER_HANDLE	hServer	= GetLobbyManager()->GetSelectedServerHandle();
 	CLobby*			pLobby	= GetLobbyManager()->GetLobby(hServer);
 
@@ -113,7 +113,7 @@ RwBool CChannelSelectGui::Create()
 	LinkMsg(g_EventCharStageStateEnter);
 	LinkMsg(g_EventLobbyMessage);
 
-	// sig	
+	// Signals	
 	m_slotCaptureWheelMove	= GetNtlGuiManager()->GetGuiManager()->SigCaptureWheelMove().Connect( this, &CChannelSelectGui::OnCaptureWheelMove );
 	m_slotMouseDown			= m_pThis->SigMouseDown().Connect( this, &CChannelSelectGui::OnMouseDown );
 	m_slotMouseUp			= m_pThis->SigMouseUp().Connect( this, &CChannelSelectGui::OnMouseUp );	
@@ -172,17 +172,17 @@ VOID CChannelSelectGui::CreateChannels()
 			continue;
 		}
 
-		// 채널 ID
+		// channel id
 		pChannelGui->byChannelID = pDBO_GAME_SERVER_CHANNEL_INFO->byServerChannelIndex;
 
-		// 채널 사용 게이지
+		// Channel usage gauge
 		rect.SetRectWH(dCHANNEL_GAUGE_X, iGaugeY, 68, 8);
 		pChannelGui->pUseGauge =  NTL_NEW gui::CProgressBar( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharChannelSelect.srf", "srfGauge" )  );
 		pChannelGui->pUseGauge->Enable(false);
 		pChannelGui->pUseGauge->SetRange(0, pDBO_GAME_SERVER_CHANNEL_INFO->dwMaxLoad);
 		pChannelGui->pUseGauge->SetPos(pDBO_GAME_SERVER_CHANNEL_INFO->dwLoad);
 
-		// 채널 번호
+		// channel number
 		rect.SetRectWH(dCHANNEL_TEXT__CHANNEL_NUM_X, iTextY + dCHANNEL_TEXT__CHANNEL_NUM_ADJUST_Y, 100, 25);
 		pChannelGui->pChannelNum = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER );	
 		pChannelGui->pChannelNum->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -191,14 +191,14 @@ VOID CChannelSelectGui::CreateChannels()
 		pChannelGui->pChannelNum->SetText(awcBuffer);
 		pChannelGui->pChannelNum->Enable(false);
 
-		// 채널 상태
+		// channel status
 		rect.SetRectWH(dCHANNEL_TEXT__CHANNEL_STATE_X, iTextY, 68, 14);
 		pChannelGui->pChannelState = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER );
 		pChannelGui->pChannelState->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 		SetChannelState(pChannelGui, pDBO_GAME_SERVER_CHANNEL_INFO);
 		pChannelGui->pChannelState->Enable(false);
 
-		// 채널 사용 게이지 배경
+		// Channel Usage Gauge Background
 		pChannelGui->srfGaugeBack.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharChannelSelect.srf", "srfGaugeBack" ));
 
 		iButtonY	+= dCHANNEL_HEIGHT_BUTTON_GAP;
@@ -503,15 +503,15 @@ VOID CChannelSelectGui::OnClickOKButton(gui::CComponent* pComponent)
 
 	if( m_bySelectIndex == INVALID_BYTE )
 	{
-		// 채널을 선택하십시요
+		// Please select a channel
 		GetAlarmManager()->AlarmMessage( "DST_LOBBY_MUST_CHOICE_CHANNEL" );
 		return;
 	}
 
-	// 채널 다이얼로그 닫기
+	// Close channel dialog
 	Show(false);
 
-	// 게임 시작
+	// start the game
 	if( FALSE == Logic_IsUsableIndex(bySelectedCharIndex, NTL_MAX_COUNT_USER_CHAR_SLOT) )
 	{
 		DBO_FAIL("Invalid index : " << bySelectedCharIndex);
@@ -533,13 +533,13 @@ VOID CChannelSelectGui::OnClickOKButton(gui::CComponent* pComponent)
 
 	if( pLOBBY_CHARACTER->tSummary.bTutorialFlag )
 	{
-		// 바로 게임 진입
+		// Enter the game right away
 		CDboEventGenerator::LobbyEvent(LMT_GAME_SERVER_WAIT_CHECK_REQ);
 		GetDboGlobal()->SetEnterTutorial( FALSE );
 	}
 	else
 	{
-		// 튜토리얼을 진행할지 물어본다
+		// Ask if you want to do a tutorial
 		GetAlarmManager()->AlarmMessage( "DST_TUTORIAL_ASK_BEGIN" );
 	}
 	
@@ -551,7 +551,7 @@ VOID CChannelSelectGui::OnClickCancleButton(gui::CComponent* pComponent)
 	if( GetCharStageState()->GetCurrentState() != CHAR_STATE_SELECT_IDLE )
 		return;
 
-	// 채널 다이얼로그 닫기
+	// Close channel dialog
 	Show(false);
 	m_pThis->Popup(false);
 }
@@ -717,7 +717,7 @@ VOID CChannelSelectGui::HandleEvents( RWS::CMsg &msg )
 					DBO_FAIL("Not exist lobby infomation of server handle : " << hServer);
 					NTL_RETURNVOID();
 				}
-
+				
 				for( RwUInt8 i = 0 ; i < NTL_MAX_SERVER_CHANNEL_COUNT_IN_SERVER_FARM ; ++i )
 				{
 					sDBO_GAME_SERVER_CHANNEL_INFO* pDBO_GAME_SERVER_CHANNEL_INFO = pLobby->GetChannel(i);
@@ -762,7 +762,7 @@ VOID CChannelSelectGui::HandleEvents( RWS::CMsg &msg )
 			}
 		case LMT_START_CONNECT_GAME_SERVER:
 			{
-				// 캐릭터 서버로 부터 게임 서버로 연결을 해도 좋다는 패킷을 받은 이후
+				// After receiving a packet from the character server indicating that it is okay to connect to the game server
 				SERVER_HANDLE	hServer	= GetLobbyManager()->GetSelectedServerHandle();
 				CLobby*			pLobby	= GetLobbyManager()->GetLobby(hServer);
 				if( !pLobby )

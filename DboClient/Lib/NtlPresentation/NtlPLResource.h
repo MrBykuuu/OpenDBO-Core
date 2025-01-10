@@ -2,13 +2,13 @@
  *
  * File			: NtlPLResouce.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2005. 7. 21	
  * Abstract		: Presentation layer resource base class
  *****************************************************************************
  * Desc         : 
  * Adjust		: HuunSuk, Jang(2005. 7 29)
- *				    - dictory type 변수/함수 추가.
+ *				    - Added dictionary type variable/function.
  *
  *****************************************************************************/
 
@@ -22,10 +22,10 @@
 
 /**
  * \ingroup NtlPresentation
- * RenderWare resource wrapping class이다.
- * RenderWare에서는 clump 와 atomic data는 clone을 할 수 있는데, 
- * resource의 일관성 있는 관리를 위하여 같은 이름의 data를 사용할 경우 reference count를 사용하였으며, 
- * clone resource일 경우에는 original CNtlPLResource에 clone list로 CNtlPLReseource를 link 하는 방식을 선택하였다.
+ * RenderWare resource wrapping class.
+ *In RenderWare, clump and atomic data can be cloned. 
+ *For consistent management of resources, a reference count was used when data with the same name was used. 
+ *In the case of a clone resource, the method of linking CNtlPLResource to the original CNtlPLResource as a clone list was selected.
  */
 
 class CNtlPLResource
@@ -118,22 +118,22 @@ public:
       unsigned int GetRefCount(void) const {return m_uiRefCount;}
 
 	  /**
-      *  RpWorld pointer로 casting 한다.
+      *  Casting to RpWorld pointer.
       */
 	  RpWorld* GetWorld(void) { return reinterpret_cast<RpWorld*>(const_cast<void*>(m_pData)); }
 
   	  /**
-      *  RpClump pointer로 casting 한다.
+      *  Casting to RpClump pointer.
       */
 	  RpClump* GetClump(void) { return reinterpret_cast<RpClump*>(const_cast<void*>(m_pData)); }
 
 	  /**
-      *  RpAtomic pointer로 casting 한다.
+      *  Cast to RpAtomic pointer.
       */
 	  RpAtomic* GetAtomic(void) { return reinterpret_cast<RpAtomic*>(const_cast<void*>(m_pData)); }
 
 	  /**
-      *  RtAnimAnimation pointer로 casting 한다.
+      *  Cast to RtAnimAnimation pointer.
       */
 	  RtAnimAnimation* GetAnimation(void) { return reinterpret_cast<RtAnimAnimation*>(const_cast<void*>(m_pData)); }
 };

@@ -1,22 +1,22 @@
 /******************************************************************************
-* File			: DojoSideIconGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2009. 1. 15
-* Abstract		: 
+*File           : DojoSideIconGui.h
+*Author         : Hong SungBock
+*Copyright      : NTL Co., Ltd.
+*Date           : January 15, 2009
+*Abstract       : 
 *****************************************************************************
-* Desc			: 도장 사이드 아이콘
+*Desc           : Dojo side icon
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// cleint
+// Client
 #include "SideIconGui.h"
 #include "Windowby3.h"
 

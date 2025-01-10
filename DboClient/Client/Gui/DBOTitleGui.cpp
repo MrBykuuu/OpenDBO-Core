@@ -1,18 +1,18 @@
 #include "precomp_dboclient.h"
 #include "DBOTitleGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlSystemInfo.h"
 
-// sound
+// Sound
 #include "NtlSoundEventGenerator.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// client
+// Client
 #include "DisplayStringManager.h"
 #include "MoviePlayer.h"
 #include "DialogDefine.h"
@@ -45,10 +45,10 @@ RwBool CDBOTitleGui::Create()
 
 	CRectangle rect;
 
-	// 배경
+	// background
 	m_pFlashBackground = (gui::CFlash*)GetComponent("flaBackground");
 
-	// 동영상 재생 버튼
+	// video play button
 	m_pCinemaButton = (gui::CButton*)GetComponent("CinemaButton");
 	m_pCinemaButton->SetTextFont(DEFAULT_FONT, 105, DEFAULT_FONT_ATTR);
 	m_pCinemaButton->SetTextFocusColor(INFOCOLOR_LOBBY_FOC);
@@ -56,7 +56,7 @@ RwBool CDBOTitleGui::Create()
 	m_pCinemaButton->SetText( GetDisplayStringManager()->GetString("DST_LOGIN_PLAY_MOVIE") );
 	m_slotCinemaButton = m_pCinemaButton->SigClicked().Connect( this, &CDBOTitleGui::OnClicked_CinemaButton);
 
-	// 약관 보기 버튼
+	// View Terms and Conditions button
 	m_pContractButton = (gui::CButton*)GetComponent("ContractButton");
 	m_pContractButton->SetTextFont(DEFAULT_FONT, 105, DEFAULT_FONT_ATTR);
 	m_pContractButton->SetTextFocusColor(INFOCOLOR_LOBBY_FOC);
@@ -64,7 +64,7 @@ RwBool CDBOTitleGui::Create()
 	m_pContractButton->SetText( GetDisplayStringManager()->GetString("DST_LOGIN_CONTRACT") );
 	m_slotContractButton = m_pContractButton->SigClicked().Connect( this, &CDBOTitleGui::OnClicked_ContractButton);
 
-	// 게임 서버 접속 버튼
+	// Game server connection button
 	m_pConnectGameServerButton = (gui::CButton*)GetComponent("ConnectGameServerButton");
 	m_pConnectGameServerButton->SetTextFont(DEFAULT_FONT, 105, DEFAULT_FONT_ATTR);
 	m_pConnectGameServerButton->SetTextFocusColor(INFOCOLOR_LOBBY_FOC);
@@ -72,7 +72,7 @@ RwBool CDBOTitleGui::Create()
 	m_pConnectGameServerButton->SetText( GetDisplayStringManager()->GetString("DST_LOGIN") );
 	m_slotConnectGameServerButton = m_pConnectGameServerButton->SigClicked().Connect( this, &CDBOTitleGui::OnClicked_ConnectGameServerButton);
 
-	// 나가기 버튼
+	// exit button
 	m_pExitButton = (gui::CButton*)GetComponent("ExitButton");
 	m_pExitButton->SetTextFont(DEFAULT_FONT, 105, DEFAULT_FONT_ATTR);
 	m_pExitButton->SetTextFocusColor(INFOCOLOR_LOBBY_FOC);
@@ -89,18 +89,18 @@ RwBool CDBOTitleGui::Create()
 	m_pVersion->SetText(awcBuffer);
 	m_pVersion->Enable(false);
 
-	// 제목 서페이스
+	// title surface
 	m_srfTitle.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "DBOTitle.srf", "srfTitle" ));
 
 	// Locate Component
 	LocateComponent(GetDboGlobal()->GetScreenWidth(), GetDboGlobal()->GetScreenHeight());
 
-	// sig
+	// Signals
 	m_slotPaint			= m_pFlashBackground->SigPaint().Connect( this, &CDBOTitleGui::OnPaint );
 
 	GetNtlGuiManager()->AddUpdateFunc( this );
 
-	// event 등록.
+	// Event registration.
 	LinkMsg(g_EventLoginGuiEnable, 0);
 	LinkMsg(g_EventLogInStageStateEnter, 0);
 	LinkMsg(g_EventLogInStageStateExit, 0);
@@ -196,13 +196,13 @@ int CDBOTitleGui::CallBackMoviePlayStop()
 
 VOID CDBOTitleGui::OnClicked_ContractButton( gui::CComponent* pComponent )
 {
-	// 약관 보기
+	// View Terms and Conditions
 	CDboEventGenerator::LoginEvent(LOGIN_EVENT_SHOW_CONTRACT_PAGE);
 }
 
 VOID CDBOTitleGui::OnClicked_ConnectGameServerButton( gui::CComponent* pComponent )
 {
-	// 게임 서버 접속하기
+	// Connect to the game server
 	SwitchEnableButtons(false);
 
 	GetLogInStageState()->ChangeState(LOGIN_STATE_CHAR_SERVER_CONNECT);
@@ -210,7 +210,7 @@ VOID CDBOTitleGui::OnClicked_ConnectGameServerButton( gui::CComponent* pComponen
 
 VOID CDBOTitleGui::OnClicked_ExitButton( gui::CComponent* pComponent )
 {
-	// 게임 나가기
+	// Leave the game
 	SUserData* pUserData = GetDboGlobal()->GetUserData();
 	CLoginPacketGenerator* pLoginPacketGenerator = GetDboGlobal()->GetLoginPacketGenerator(); 
 

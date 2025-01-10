@@ -2,7 +2,7 @@
 //	File		:	NtlInstanceLightningSystem.h
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -29,7 +29,7 @@ public:
 protected:
     RwV3d							m_vStartPoint;
     RwV3d							m_vEndPoint;
-    RwV3d                           m_vFinishPoint;                 ///< Finish에 사용될 임시 변수
+    RwV3d                           m_vFinishPoint;                 ///< Temporary variables to be used in Finish
 
 public:
 	CNtlInstanceLightningSystem(void);
@@ -58,5 +58,5 @@ protected:
     void	UpdateVertices();    
     void	CalculateMatrix(RwMatrix& matWorld, const RwV3d& vStart, const RwV3d& vEnd);
     void	CalculatePoints(const RwV3d& vStart, const RwV3d& vEnd, RwReal fAmp, RwReal fRough);
-    virtual RwBool  UpdateFinish(RwReal fElapsedTime);                  ///< Finish 작업을 처리한다.
+    virtual RwBool  UpdateFinish(RwReal fElapsedTime);                  ///< Finish the task.
 };

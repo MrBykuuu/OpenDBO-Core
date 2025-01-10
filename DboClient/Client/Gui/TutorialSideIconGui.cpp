@@ -1,16 +1,16 @@
 #include "precomp_dboclient.h"
 #include "TutorialSideIconGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// dbo
+// Dbo
 #include "DisplayStringManager.h"
 #include "DboEventGenerator.h"
 #include "AlarmManager.h"
@@ -64,7 +64,7 @@ void CTutorialSideIconGui::OnSideViewClosed()
 
 void CTutorialSideIconGui::OnIconButtonClicked(gui::CComponent* pComponent)
 {	
-	// 튜토리얼을 종료하시겠습니까?
+	// Are you sure you want to end the tutorial?
 	//CDboEventGenerator::MsgBoxShow(GetDisplayStringManager()->GetString("DST_TUTORIAL_ASK_END"), MBW_TUTORIAL_ASK_END, MBTF_OK | MBTF_CANCEL);
 	GetAlarmManager()->AlarmMessage( "DST_TUTORIAL_ASK_END" );
 }

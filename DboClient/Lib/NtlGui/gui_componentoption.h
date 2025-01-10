@@ -76,7 +76,7 @@ public:
 		return (*it).second; 
 	}
 
-	//: option_name에 해당하는 data factor를 수정하기 위하여 쓴다... (조심)
+	//: Used to modify the data factor corresponding to option_name... (Be careful)
 	std::string& GetValueFactor(const std::string& option_name,int offset=0) 
 	{
 		std::multimap<std::string, std::string>::iterator it = m_stlOptions.find(option_name);

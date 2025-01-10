@@ -1,24 +1,24 @@
 
 /*****************************************************************************
  *
- * File			: GameStageState.h
- * Author		: HyungSuk, Jang
- * Copyright	: (аж)NTL
- * Date			: 2007. 09. 13	
- * Abstract		: Game stage state
+ *File			: GameStageState.h
+ *Author	    : HyungSuk, Jang
+ *Copyright	    : NTL Co., Ltd.
+ *Date			: 2007. 09. 13	
+ *Abstract		: Game stage state
  *****************************************************************************
- * Desc         : 
+ *Desc          : 
  *
  *****************************************************************************/
 
 #ifndef __GAME_STAGE_STATE_H__
 #define __GAME_STAGE_STATE_H__
 
-// gui
+// Gui
 #include "eventtimer.h"
 #include "ceventhandler.h"
 
-// dbo
+// Dbo
 #include "DboDef.h"
 
 
@@ -28,7 +28,7 @@ private:
 
 	enum
 	{
-		GSS_TIME_SERVER_CONNECT = 30000,	// 3╨п.
+		GSS_TIME_SERVER_CONNECT = 30000,	// 3rd
 	};
 
 	static CGameStageState *m_pGameState;

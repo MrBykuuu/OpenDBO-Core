@@ -105,7 +105,7 @@ void CNtlRankBattle::HandleEvents(RWS::CMsg& msg)
 		m_mapMyTeam.clear();
 		m_mapEnemyTeam.clear();
 
-		// peessitemp : 임시. 나중에 Myteam EnemyTeam 구조 자체를 바꾼다. 
+		// peessi temp: Temporary. Later, the Myteam EnemyTeam structure itself will change. 
 		m_bRoomOwner = FALSE;
 		for( RwInt32 i = 0 ; i < pData->byCount ; ++i )
 		{

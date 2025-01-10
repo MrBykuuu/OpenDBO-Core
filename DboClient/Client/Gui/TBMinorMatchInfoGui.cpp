@@ -7,7 +7,7 @@
 // Presentation
 #include "NtlPLGuiManager.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
 // Simulation
@@ -24,7 +24,7 @@
 #include "DisplayStringManager.h"
 #include "DboEventGenerator.h"
 
-#define TB_MINOR_ENEMY_PARTYINFO_CLASSICON_X	-24		// 각 파티인포아이템 기준 좌표.
+#define TB_MINOR_ENEMY_PARTYINFO_CLASSICON_X	-24		// The coordinates of each party info item.
 #define TB_MINOR_ENEMY_PARTYINFO_CLASSICON_Y	0	
 
 #define TB_MINOR_BATTLEINFO_ALIVESCORE_X	38
@@ -175,7 +175,7 @@ RwBool CTBMinorMatchInfoGui::Create(VOID)
 
 	m_pThis = (gui::CDialog*)GetComponent( "dlgMain" );
 
-	// RBEnemyInfo
+	// RB Enemy Info
 	gui::CStaticBox* pName = NULL;
 	gui::CStaticBox* pKillCount = NULL;
 	gui::CProgressBar* pTeamMember = NULL;
@@ -216,7 +216,7 @@ RwBool CTBMinorMatchInfoGui::Create(VOID)
 	m_EnemyInfoArray[4].SetUI( pName, pKillCount, pTeamMember, pKilledMember );
 	m_EnemyInfoArray[4].Show( FALSE );
 
-	// TBMinorMatchInfo
+	// TB Minor Match Info
 	m_pstbNameTitle = (gui::CStaticBox*)GetComponent( "stbEnemyMemberTitle" );
 	m_pstbKOTitle = (gui::CStaticBox*)GetComponent( "stbKOCountTitle" );
 	m_pstbTitle = (gui::CStaticBox*)GetComponent( "stbTitle" );
@@ -323,7 +323,7 @@ VOID CTBMinorMatchInfoGui::HandleEvents( RWS::CMsg& msg )
 	}
 	else if( msg.Id == g_EventMinorMatchUpdateScore )
 	{
-		// 참가자인지 관전자인지에 따라서 다른 UI Update 방식을 사용한다.
+		// Different UI update methods are used depending on whether you are a participant or a spectator.
 		if( IsEntrance() )
 			HandleEventEntranceUpdateScore( msg );
 		else
@@ -338,7 +338,7 @@ VOID CTBMinorMatchInfoGui::HandleEvents( RWS::CMsg& msg )
 	}	
 	else if( msg.Id == g_EventMinorMatchTeamInfo )
 	{
-		// 참가자인지 관전자인지 확인한다.
+		// Check whether you are a participant or a spectator.
 		UpdateInfoType();
 		SetInfoFrame();
 		SetInfoOnce();
@@ -386,7 +386,7 @@ VOID CTBMinorMatchInfoGui::HandleEventObserverMinorMatchPlayerState( RWS::CMsg& 
 			pEnemyInfoItem->SetMemberState( pBudokaiMember->pTeam->wTeamType );
 		}
 
-		// 현재 매치 STATE가 READY보다 높다면 살아 있는 카운트를 세어서 적용한다.
+		// If the current match STATE is higher than READY, the live count is counted and applied.
 		if( pTBWorldConcept->GetMatchState() >= BUDOKAI_MINORMATCH_STATE_STAGE_READY )
 		{
 			m_numAliveCount.SetNumber( GetAliveCount() );
@@ -476,7 +476,7 @@ VOID CTBMinorMatchInfoGui::HandleEventEntranceMatchStateUpdate( RWS::CMsg& msg )
 			m_numAliveCount.SetNumber( GetAliveEnemyCount() );
 			m_numKillCount.SetNumber( 0 );				
 
-			// 상대팀 정보 입력
+			// Enter opposing team information
 			RwInt32 idx = 0;
 			MAP_TBTEAM* pTeams = pTBWorldConcept->GetTeams();
 			stTBudokaiTeam* pMyTeam = pTBWorldConcept->GetMyTeam();
@@ -530,7 +530,7 @@ VOID CTBMinorMatchInfoGui::HandleEventObserverMatchStateUpdate( RWS::CMsg& msg )
 		m_numAliveCount.SetNumber( GetAliveCount() );
 		m_numKillCount.SetNumber( GetTotalMemberCount() );				
 
-		// 현재 인원 정보 입력
+		// Enter current personnel information
 		RwInt32 idx = 0;
 		MAP_TBTEAM* pTeams = pTBWorldConcept->GetTeams();
 		MAP_TBTEAM_ITER iter;			
@@ -569,7 +569,7 @@ CTBMinorMatchEnemyInfoItem* CTBMinorMatchInfoGui::FindEnemyInfoItem( RwUInt16 wT
 }
 
 /**
-* \brief 남아있는 적 인원수를 체크한다.
+* \brief Checks the number of remaining enemies.
 */
 RwUInt32 CTBMinorMatchInfoGui::GetAliveEnemyCount(VOID)
 {
@@ -626,7 +626,7 @@ RwUInt32 CTBMinorMatchInfoGui::GetTotalMemberCount( VOID )
 	CNtlWorldConceptTB* pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 	NTL_ASSERT( pTBWorldConcept, "CNtlTBudokai::HandleEvents : must World concept is valid" );		
 
-	// 죽은 사람들까지 판단한다.
+	// Even dead people are judged.
 	RwUInt32 uiTotalMember = 0;
 	MAP_TBTEAM* pTeams = pTBWorldConcept->GetTeams();
 	MAP_TBTEAM_ITER iter;
@@ -645,7 +645,7 @@ RwBool CTBMinorMatchInfoGui::IsEntrance()
 	CNtlWorldConceptTB* pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 	NTL_ASSERT( pTBWorldConcept, "CNtlTBudokai::HandleEvents : must world concept is valid" );
 
-	// 천하제일 무도회에 자신이 없으면 참가자가 아니다
+	// If you are not confident in the World's Best Martial Arts Club, you are not a participant.
 	stTBudokaiMember* pMember = pTBWorldConcept->FindMember( GetNtlSLGlobal()->GetSobAvatar()->GetSerialID() );
 	if( pMember )
 	{
@@ -671,7 +671,7 @@ VOID CTBMinorMatchInfoGui::UpdateInfoType()
 
 VOID CTBMinorMatchInfoGui::SetInfoFrame()
 {
-	// GUI INFO TYPE에 따라 다름
+	// Depends on GUI INFO TYPE
 	if( m_byInfoType == INFO_ENTRANCE )
 	{
 		m_pStbAllPlayer->Show( false );

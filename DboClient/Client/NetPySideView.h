@@ -1,19 +1,19 @@
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// dbo
+// Dbo
 #include "Windowby3.h"
 #include "SideIconGui.h"
 #include "DBOEvent.h"
     
 /**
  * \ingroup Client
- * \brief NetPy 정보를 표시하는 Side View
+ * \brief Side View showing NetPy information
  *
  * \date 2009-04-20
  * \author agebreak
@@ -49,18 +49,18 @@ protected:
     VOID			OnPaint();
 
     VOID            SetState(eNetPySideViewType type);
-    VOID            OnShowInfo();           ///< 현재 NetPy 정보를 출력한다
-    VOID            OnShowNotify();         ///< NetPy 습득 정보를 출력한다. 
+    VOID            OnShowInfo();           ///< Prints current NetPy information
+    VOID            OnShowNotify();         ///< Prints NetPy acquisition information. 
 
 protected:
-    CWindowby3			m_BackPanel;		///< 배경
-    eNetPySideViewType  m_type;             ///< 현재 보여지는 타입
+    CWindowby3			m_BackPanel;		///< background
+    eNetPySideViewType  m_type;             ///< Currently displayed type
 
     gui::CSlot			m_slotPaint;
     gui::CSlot			m_slotMove;
     gui::CSlot			m_slotResize;
 
-    // 현재 NetPy 정보
+    // Current NetPy information
     gui::CStaticBox*    m_pstbRemainTimeTitle;
     gui::CStaticBox*    m_pstbRemainTimeData;    
     gui::CStaticBox*    m_pstbGetTitle;
@@ -68,12 +68,12 @@ protected:
     gui::CStaticBox*    m_pstbCurrentTitle;
     gui::CStaticBox*    m_pstbCurrentData;   
 
-    // NetPy 획득 정보
+    // NetPy acquisition information
     gui::CStaticBox*    m_pstbGetPoint;
 
-    SDboEventUpdateNetPy m_UpdateNetPyInfo;                 ///< 서버로 부터 받은 NetPy 업데이트 정보
-    DWORD                m_dwUpdateNetPyPoint;              ///< 획득 포인트
-    RwReal               m_fRemainTime;                     ///< 다음 NetPy 획득까지의 남은 시간
-    RwReal               m_fNotifyShowTime;                 ///< Notify 표시 시간    
-    RwBool               m_bIsPCBang;                       ///< PC방인지를 판단한다.
+    SDboEventUpdateNetPy m_UpdateNetPyInfo;                 ///< NetPy update information received from the server
+    DWORD                m_dwUpdateNetPyPoint;              ///< Points earned
+    RwReal               m_fRemainTime;                     ///< Time remaining until next NetPy acquisition
+    RwReal               m_fNotifyShowTime;                 ///< Notify display time    
+    RwBool               m_bIsPCBang;                       ///< Determine whether it is a PC room.
 };

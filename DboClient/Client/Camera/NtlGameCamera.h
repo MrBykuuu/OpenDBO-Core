@@ -37,7 +37,7 @@ public:
 	~CNtlGameCamera(void);
 
 private:
-	RwReal	m_fDistance;		//Camera와 Target과의 거리
+	RwReal	m_fDistance;		//Distance between Camera and Target
 
 	RwReal	m_fMaxDistance;
 	RwReal	m_fMinDistance;

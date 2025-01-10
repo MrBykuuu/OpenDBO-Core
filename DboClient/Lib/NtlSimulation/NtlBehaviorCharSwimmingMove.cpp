@@ -1,14 +1,14 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlBehaviorCharSwimmingMove.h"
 
-// shared 
+// Shared 
 #include "NtlMovement.h"
 
-// presentation
+// Presentation
 #include "NtlPLCharacter.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlFSMDef.h"
 #include "NtlSLApi.h"
 #include "NtlSobActor.h"
@@ -98,7 +98,7 @@ void CNtlBehaviorCharSwimmingMove::SetAnim(void)
 
         CreateSwimFrontEffect();
 
-        // 뒤에 붙는 물장구(?) 이펙트
+        // Water splash(?) effect attached to the back
         if(uiNextAnimKey == SWIM_FRONT)
         {
             CreateSwimBackEffect();
@@ -246,7 +246,7 @@ void CNtlBehaviorCharSwimmingMove::Enter(void)
     SetTransform();
     SetAnim();    
 
-    // 나중에 base class enter를 호출한다.
+    // Later, base class enter is called.
     CNtlBehaviorBase::Enter(); 
 }
 
@@ -260,7 +260,7 @@ void CNtlBehaviorCharSwimmingMove::Exit(void)
     CNtlPLCharacter *pPLCharacter = reinterpret_cast<CNtlPLCharacter*>( pSobProxy->GetPLMainEntity() );
     pPLCharacter->SetBlend(BLEND_TWEEN);
 
-    // 나중에 base class enter를 호출한다.
+    // Later, base class enter is called.
     CNtlBehaviorBase::Exit(); 
 }
 
@@ -272,7 +272,7 @@ RwBool CNtlBehaviorCharSwimmingMove::UpdateDirectionMove(RwReal fElapsed)
     RwReal fSpeed	= Logic_GetFrontRunSpeed(m_pActor);
     fSpeed			= fSpeed * DBO_SWIMMING_SPEED_RATIO;
 
-    //keyboard 이동을 처리한다
+    //Handles keyboard movement
     CNtlVector vHeading, vDest;
     NtlGetDestination_Keyboard(vDir.x, vDir.y, vDir.z, fSpeed, vPos.x, vPos.y, vPos.z, m_MoveStuff.byMoveFlags, fElapsed * 1000.f, 0.5f, &vHeading, &vDest);
 
@@ -301,7 +301,7 @@ RwBool CNtlBehaviorCharSwimmingMove::UpdateDirectionMove(RwReal fElapsed)
                 vNewPos.y = m_sHStuff.fFinialHeight;
             }
 
-            // 충돌 했는데 어느쪽으로도 이동이 불가능할 경우 멈춰준다.
+            // If there is a collision and it is impossible to move in either direction, it stops.
             if(m_byCollMoveImpossCnt >= COLLISION_MOVE_IMPOSSIBLE_COUNT)
             {
                 CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
@@ -316,7 +316,7 @@ RwBool CNtlBehaviorCharSwimmingMove::UpdateDirectionMove(RwReal fElapsed)
     m_pActor->SetPosition(&vNewPos);
     m_pActor->SetDirection(&vNewDir);
 
-    // 일정 시간 동안 이동한 거리가 limit 거리 안에 있으면? 멈춘다.
+    // What if the distance traveled during a certain period of time is within the limit distance? It stops.
     if( !(m_MoveStuff.byMoveFlags == NTL_MOVE_TURN_L ||  m_MoveStuff.byMoveFlags == NTL_MOVE_TURN_R) )
         LimitPositionChangeCheck(fElapsed);
 
@@ -333,7 +333,7 @@ RwBool CNtlBehaviorCharSwimmingMove::UpdateLocationMove(RwReal fElapsed)
     RwV3dSubMacro(&vDir, &vDestPos, &vPos); 
     vDir.y = 0.0f;
 
-    // 현재 남은 거리를 구한다.
+    // Find the current remaining distance.
     RwReal fCurrLen = RwV3dLength(&vDir);
 
     RwReal fSpeed	= Logic_GetFrontRunSpeed(m_pActor);
@@ -343,7 +343,7 @@ RwBool CNtlBehaviorCharSwimmingMove::UpdateLocationMove(RwReal fElapsed)
     RwV3dNormalize(&vDir, &vDir);
     CNtlMath::MathRwV3dAssign(&vDelta, vDir.x*fElapsed*fSpeed, vDir.y*fElapsed*fSpeed, vDir.z*fElapsed*fSpeed);
 
-    // 현재 남아 있는 거리가 다음 이동할 거리보다 작을 경우.
+    // When the current remaining distance is less than the next distance to be moved.
     if(fCurrLen <= RwV3dLength(&vDelta))
     {
         RwUInt8 byColliResult = NTL_CHARACTER_COLLI_NONE;
@@ -370,7 +370,7 @@ RwBool CNtlBehaviorCharSwimmingMove::UpdateLocationMove(RwReal fElapsed)
 
         if(byColliResult == NTL_CHARACTER_COLLI_OBJECT)
         {
-            // 충돌 했는데 어느쪽으로도 이동이 불가능할 경우 멈춰준다.
+            // If there is a collision and it is impossible to move in either direction, it stops.
             if(m_byCollMoveImpossCnt >= COLLISION_MOVE_IMPOSSIBLE_COUNT)
             {
                 CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
@@ -390,7 +390,7 @@ RwBool CNtlBehaviorCharSwimmingMove::UpdateLocationMove(RwReal fElapsed)
 
         return TRUE;
     }
-    else // 현재 남아 있는 거리가 다음 이동할 거리보다 작지 않을 경우.
+    else // If the current remaining distance is not less than the next distance to be moved.
     {
         vPos.x += vDelta.x;
         vPos.z += vDelta.z;
@@ -398,7 +398,7 @@ RwBool CNtlBehaviorCharSwimmingMove::UpdateLocationMove(RwReal fElapsed)
         Logic_GetWorldHeight(m_pActor, &vPos, m_sHStuff);
         vPos.y = m_sHStuff.fFinialHeight;
 
-        // object 충돌 처리.
+        // object collision handling.
         RwUInt8 byColliResult = NTL_CHARACTER_COLLI_NONE;
         if(m_pActor->GetFlags() & SLFLAG_OBJECT_COLLISION)
         {
@@ -415,7 +415,7 @@ RwBool CNtlBehaviorCharSwimmingMove::UpdateLocationMove(RwReal fElapsed)
                 vPos.y = m_sHStuff.fFinialHeight;
             }
         }
-        // 충돌 했는데 어느쪽으로도 이동이 불가능할 경우 멈춰준다.
+        // If there is a collision and it is impossible to move in either direction, it stops.
         if(m_byCollMoveImpossCnt >= COLLISION_MOVE_IMPOSSIBLE_COUNT)
         {
             CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
@@ -428,7 +428,7 @@ RwBool CNtlBehaviorCharSwimmingMove::UpdateLocationMove(RwReal fElapsed)
         m_pActor->SetDirection(&vDir);
         m_pActor->SetPosition(&vPos);
 
-        // 일정 시간 동안 이동한 거리가 limit 거리 안에 있으면? 멈춘다.
+        // What if the distance traveled during a certain period of time is within the limit distance? It stops.
         if(byColliResult != NTL_CHARACTER_COLLI_WORLD_ATTR_TERRAIN_SLANT)
         {
             LimitPositionChangeCheck(fElapsed);
@@ -451,40 +451,40 @@ RwBool CNtlBehaviorCharSwimmingMove::UpdateTargetMove( RwReal fElapsed )
     RwReal fFollowRange = m_MoveStuff.fFollowRange * FOLLOW_ERROR_RANGE;
     RwBool bInRange = FALSE;
 
-    // 캐릭터의 방향 설정
+    // Setting the character's direction
     vDir.y = 0.0f;
     RwV3dNormalize(&vDir, &vDir);
     m_pActor->SetDirection(&vDir);
 
-    if(fCurrLen < fFollowRange)     // 사정거리 이내에 있을때
+    if(fCurrLen < fFollowRange)     // When within range
     {
         bInRange = TRUE;
     }
-    else // 사정거리이내에 없을때
+    else // When you are not within range
     {
 
         RwReal fSpeed	= Logic_GetFrontRunSpeed(m_pActor);
         fSpeed			= fSpeed * DBO_SWIMMING_SPEED_RATIO;
         RwV3d vDelta = vDir * fSpeed * fElapsed;
 
-        // 현재 남은 거리가 이동 delta 거리보다 작은경우
+        // If the current remaining distance is smaller than the travel delta distance
         if(fCurrLen < RwV3dLength(&vDelta) + fFollowRange)
         {
             bInRange = TRUE;
         }
-        else // 타겟 방향으로 이동
+        else // move towards target
         {
             vPos += vDelta;
             Logic_GetWorldHeight(m_pActor, &vPos, m_sHStuff);
             vPos.y = m_sHStuff.fFinialHeight;
 
-            // TODO: 충돌체크
+            // TODO: Collision check
 
             m_pActor->SetPosition(&vPos);
         }
     }
 
-    if(bInRange) // 범위내에 들어오면 범위 위치에 위치시킨다.
+    if(bInRange) // Once within range, it is placed at the range location.
     {
         vPos.x = vDestPos.x - vDir.x * fFollowRange;
         vPos.z = vDestPos.z - vDir.z * fFollowRange;

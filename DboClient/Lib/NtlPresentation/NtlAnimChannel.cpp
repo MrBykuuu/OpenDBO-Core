@@ -3,9 +3,9 @@
 #include "NtlDebug.h"
 
 /**
- * AnimChannel를 생성
- * \param pBaseHierarchy 미리 생성된 BaseHierarchy
- * \return 성공 유무
+ *Create AnimChannel
+ * \param pBaseHierarchy Pre-generated BaseHierarchy
+ * \return Success or not
  */
 RwBool CNtlAnimChannel::Create(RpHAnimHierarchy *pBaseHierarchy)
 {
@@ -23,7 +23,7 @@ RwBool CNtlAnimChannel::Create(RpHAnimHierarchy *pBaseHierarchy)
 	if(m_pHierarchy == NULL)
 		NTL_RETURN(FALSE);
 
-	//Default Anim이 없으면 AddTogether 연산시 에러가 난다.
+	//If there is no Default Anim, an error occurs when calculating AddTogether.
 	RpHAnimHierarchySetCurrentAnim( m_pHierarchy, pBaseHierarchy->currentAnim->pCurrentAnim);
 	
 	NTL_RETURN(TRUE);
@@ -31,7 +31,7 @@ RwBool CNtlAnimChannel::Create(RpHAnimHierarchy *pBaseHierarchy)
 
 /**
  * Animation Update
- * \return 성공 유무
+ * \return Success or not
  */
 RwBool CNtlAnimChannel::Update(RwReal fElapsed)
 {
@@ -56,8 +56,8 @@ void CNtlAnimChannel::Destroy()
 }
 
 /**
- * AnimChannel의 Hierarchy를 얻어온다.
- * \return RpHAnimHierarchy
+ * Obtain the AnimChannel hierarchy.
+ * \return RpHANimHierarchy
  */
 RpHAnimHierarchy *CNtlAnimChannel::GetHierarchy()				
 {
@@ -66,9 +66,9 @@ RpHAnimHierarchy *CNtlAnimChannel::GetHierarchy()
 }
 
 /**
- * Animation Data를 적용을 한다.
+ * Apply Animation Data.
  * \param 
- * \return RpHAnimHierarchy
+ * \return RpHANimHierarchy
  */
 void CNtlAnimChannel::SetAnimData(SInstanceAnimData *pInstanceAnimData)	
 {

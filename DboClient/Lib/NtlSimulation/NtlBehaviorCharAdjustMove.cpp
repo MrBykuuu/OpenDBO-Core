@@ -1,10 +1,10 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlBehaviorCharAdjustMove.h"
 
-// shared 
+// Shared 
 #include "NtlMovement.h"
 
-// simulation
+// Simulation
 #include "NtlSobActor.h"
 #include "NtlSLLogic.h"
 #include "NtlSobCharProxy.h"
@@ -52,7 +52,7 @@ void CNtlBehaviorCharGroundAdjustMove::Enter(void)
 
     SetAnim();
 
-    // 나중에 base class enter를 호출한다.
+    // Later, base class enter is called.
     CNtlBehaviorBase::Enter(); 
 
 }
@@ -134,7 +134,7 @@ void CNtlBehaviorCharGroundAdjustMove::SetAnim()
         {
             uiNextAnimKey = SWIM_FRONT;
         }
-        else if(Logic_IsTransformGreatNamek(m_pActor))  // 변신시
+        else if(Logic_IsTransformGreatNamek(m_pActor))  // When transformed
         {
             uiNextAnimKey = TRANS_RUN_FRONT;
         }
@@ -162,7 +162,7 @@ void CNtlBehaviorCharGroundAdjustMove::SetAnim()
         {
             uiNextAnimKey = SWIM_BACK;
         }
-        else if(Logic_IsTransformGreatNamek(m_pActor)) // 변신시
+        else if(Logic_IsTransformGreatNamek(m_pActor)) // When transformed
         {
             uiNextAnimKey = TRANS_RUN_BACK;
         }
@@ -191,7 +191,7 @@ void CNtlBehaviorCharGroundAdjustMove::SetAnim()
 		{
 			uiNextAnimKey = SWIM_FRONT;
 		}
-		else if (Logic_IsTransformGreatNamek(m_pActor))  // 변신시
+		else if (Logic_IsTransformGreatNamek(m_pActor))  // When transformed
 		{
 			uiNextAnimKey = TRANS_RUN_FRONT;
 		}
@@ -216,7 +216,7 @@ void CNtlBehaviorCharGroundAdjustMove::SetAnim()
 		{
 			uiNextAnimKey = SWIM_FRONT;
 		}
-		else if (Logic_IsTransformGreatNamek(m_pActor))  // 변신시
+		else if (Logic_IsTransformGreatNamek(m_pActor))  // When transformed
 		{
 			uiNextAnimKey = TRANS_RUN_FRONT;
 		}

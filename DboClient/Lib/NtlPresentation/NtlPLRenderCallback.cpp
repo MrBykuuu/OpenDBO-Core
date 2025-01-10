@@ -374,7 +374,7 @@ RpWorldSector* NtlWorldSectorAtomicCallback(RpWorldSector *pWorldSector, void *d
 // 							else
 // 							{
 // #ifdef dNTL_WORLD_TOOL_MODE
-// 								// World Tool에서 Object Visible을 Off 시킨 경우 Object는 렌더링 하지 않는다. (07.10.24 by agebreak)
+// 								//If Object Visible is turned off in the World Tool, the object is not rendered. (07.10.24 by agebreak)
 // 								if(CNtlPLGlobal::m_bObjectRender || pPLEntity->GetClassType() != PLENTITY_OBJECT )
 // 								{
 // 									if( !(RpNtlAtomicGetFlag(atomic) & NTL_NOT_VISIBLE) )

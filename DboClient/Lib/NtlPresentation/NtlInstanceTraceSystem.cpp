@@ -41,7 +41,7 @@ void CNtlInstanceTraceSystem::Init()
     m_nControlPointIndex    = 0;
     m_poolTraceEdge         = NULL;    
     m_poolControlPoint      = NULL;
-    m_fEdgeGapTemp          = 10.0f;                ///< 첫 프레임때 무조건 생성하기 위해 큰값을 설정한다.    
+    m_fEdgeGapTemp          = 10.0f;                ///< Set a large value to unconditionally generate the first frame.    
     m_bUpdate               = TRUE;
     m_uiMemoryUseSize       = sizeof(CNtlInstanceTraceSystem);
 }
@@ -62,10 +62,10 @@ void CNtlInstanceTraceSystem::Delete()
 }
 
 /**
- * 궤적 이펙트를 생성한다.
- * \param pEventTrace 궤적 이펙트에 대한 정보를 가지고 있는 Event 객체
- * \param pCharacter 궤적 이펙트를 붙일 캐릭터의 포인터
- * return 성공 유무
+ *Create a trajectory effect.
+ * \param pEventTrace Event object containing information about trajectory effects
+ * \param pCharacter Pointer to the character to which the trajectory effect will be applied.
+ *Whether return is successful or not
  */
 RwBool CNtlInstanceTraceSystem::Create(SEventTrace* pEventTrace, CNtlPLAttach* pAttach)
 {
@@ -83,13 +83,13 @@ RwBool CNtlInstanceTraceSystem::Create(SEventTrace* pEventTrace, CNtlPLAttach* p
         m_pEventTrace->fEdgeGap *= 1.0f / CNtlInstanceEffect::GetLowSpecRatio();
     }
 
-    // Vertex Buffer 생성    
+    // Create Vertex Buffer    
     m_pVertices = NTL_NEW RwIm3DVertex[pEventTrace->nMaxEdgeCount * pEventTrace->nSplinePointCount];    
     if(!m_pVertices) NTL_RETURN(FALSE);
     ZeroMemory(m_pVertices, sizeof(RwIm3DVertex) * (pEventTrace->nMaxEdgeCount * pEventTrace->nSplinePointCount));
     m_uiMemoryUseSize += sizeof(RwIm3DVertex) * (pEventTrace->nMaxEdgeCount * pEventTrace->nSplinePointCount);
     
-    // Pool을 생성한다.
+    // Create a pool.
     m_poolTraceEdge = NTL_NEW STraceEdge[pEventTrace->nMaxEdgeCount * pEventTrace->nSplinePointCount];
     ZeroMemory(m_poolTraceEdge, sizeof(STraceEdge) * (pEventTrace->nMaxEdgeCount * pEventTrace->nSplinePointCount));
     m_uiMemoryUseSize += sizeof(STraceEdge) * (pEventTrace->nMaxEdgeCount * pEventTrace->nSplinePointCount);
@@ -98,11 +98,11 @@ RwBool CNtlInstanceTraceSystem::Create(SEventTrace* pEventTrace, CNtlPLAttach* p
     ZeroMemory(m_poolControlPoint, sizeof(STraceEdge) * pEventTrace->nMaxEdgeCount);
     m_uiMemoryUseSize += sizeof(STraceEdge) * pEventTrace->nMaxEdgeCount;
 
-    // 텍스쳐 설정
+    // Texture settings
     std::string strTextureName = pEventTrace->strTexture;
     m_pCurrentTexture = m_pStandardTexture = CreateTexture(strTextureName);
 
-    // Bone의 위치 포인터 설정
+    // Setting the location pointer of the bone
     SetEdgePoint(pAttach);
 
     m_pAttach = pAttach;    
@@ -111,9 +111,9 @@ RwBool CNtlInstanceTraceSystem::Create(SEventTrace* pEventTrace, CNtlPLAttach* p
 }
 
 /**
- * 두개의 Bone으로부터 위치를 가져와서 설정한다.
- * \param pAttach Bone의 가져올 Entity 객체 (캐릭터 Or Item)
- * return 
+ *Set the positions by taking them from two bones.
+ * \param pAttach Bone's Entity object to be retrieved (Character Or Item)
+ *return 
  */
 void CNtlInstanceTraceSystem::SetEdgePoint(CNtlPLAttach* pAttach)
 {
@@ -148,11 +148,11 @@ void CNtlInstanceTraceSystem::SetEdgePoint(CNtlPLAttach* pAttach)
     m_vStartPoint = *RwMatrixGetPos(pMatStartBone);
     m_vEndPoint = *RwMatrixGetPos(pMatEndBone);    
 
-    // Offset이 설정되어있으면 적용한다.
+    // Applies if Offset is set.
     if(RwV3dLength(&(m_pEventTrace->v3dStartBoneOffset)) > 0.0f ||
        RwV3dLength(&(m_pEventTrace->v3dEndBoneOffset)) > 0.0f)
     {
-        // Matrix에서 회전값만 가져와서 Offset에 적용한후 Point에 더한다.
+        // Get only the rotation value from the Matrix, apply it to Offset, and add it to Point.
         RwMatrix matStartOffset = *pMatStartBone;
         RwMatrix matEndOffset = *pMatEndBone;   
         matStartOffset.pos.x = matStartOffset.pos.y = matStartOffset.pos.z = 0.0f;
@@ -194,7 +194,7 @@ RwBool CNtlInstanceTraceSystem::Render()
     if(!m_pEventTrace || !m_bVisible || m_listTraceEdge.empty())
         return TRUE;
 
-    // 리스트안의 Vertex들을 렌더링 한다.
+    // Render the vertices in the list.
     RwD3D9SetTexture(m_pCurrentTexture, 0);
 
     BeginEffectTraceSystem(TRUE, m_pEventTrace->eSrcBlend, m_pEventTrace->eDestBlend);    
@@ -212,7 +212,7 @@ RwBool CNtlInstanceTraceSystem::Render()
 
 RwBool CNtlInstanceTraceSystem::UpdateVertices(RwReal fElapsedTime)
 {
-    // 새로운 Edge를 추가한다.
+    // Add a new edge.
     if(m_fEdgeGapTemp >= m_pEventTrace->fEdgeGap &&
        m_bUpdate)
     {
@@ -224,13 +224,13 @@ RwBool CNtlInstanceTraceSystem::UpdateVertices(RwReal fElapsedTime)
         m_fEdgeGapTemp += fElapsedTime;
     }
 
-    // UV를 udpate한다.
+    // Udpate the UV.
     UpdateUV();
 
-    // Color를 Udpate한다.
+    // Update the color.
     UpdateColor();
     
-    // 리스트에 있는 버텍스들의 LifeTime을 Update한다.    
+    // Updates the LifeTime of the vertices in the list.    
     int nCount = 0;
     ListTraceEdge::iterator it = m_listTraceEdge.begin();
     while(it != m_listTraceEdge.end())
@@ -239,7 +239,7 @@ RwBool CNtlInstanceTraceSystem::UpdateVertices(RwReal fElapsedTime)
 
         if((*it)->fLifeTime >= m_pEventTrace->fEdgeLifeTime)
         {
-            // Life 타임이 종료되면 리스트에서 제거한다.
+            // When the life time expires, it is removed from the list.
             it = m_listTraceEdge.erase(it);
         }
         else
@@ -261,18 +261,18 @@ RwBool CNtlInstanceTraceSystem::UpdateVertices(RwReal fElapsedTime)
 
 void CNtlInstanceTraceSystem::CreateEdge() 
 {
-    // 새로운 Edge를 리스트의 맨끝에 추가한다.    
+    // Adds a new edge to the end of the list.    
 
-    // 최대 Edge 개수를 초과했는지 계산한다.
+    // Calculate whether the maximum number of edges has been exceeded.
     if(m_nControlPointIndex >= m_pEventTrace->nMaxEdgeCount)
     {
-        // Index가 Pool의 끝에 달하면 처음으로 되돌린다.
+        // When the index reaches the end of the pool, it returns to the beginning.
         m_nControlPointIndex = 0;        
                 
         m_listControlPoint.erase(m_listControlPoint.begin());
     }
 
-    // 최대 길이를 초과 했는지 계산한다.
+    // Calculate whether the maximum length has been exceeded.
     if(m_listTraceEdge.size() > 2)
     {
         RwReal fLength = 0.0f;               
@@ -296,33 +296,33 @@ void CNtlInstanceTraceSystem::CreateEdge()
         }
     }
 
-    // 두개의 Vertex의 위치를 설정한다.
+    // Set the positions of two vertices.
     SetEdgePoint(m_pAttach);
 
-    // List에 새로운 컨트롤 포인트를 추가한다.
+    // Add a new control point to the List.
     m_poolControlPoint[m_nControlPointIndex].vVertices[0].objVertex = m_vStartPoint;
     m_poolControlPoint[m_nControlPointIndex].vVertices[1].objVertex = m_vEndPoint;
     
     m_listControlPoint.push_back(&m_poolControlPoint[m_nControlPointIndex]);
     ++m_nControlPointIndex;
 
-    // Spline Curve Point를 생성하여 리스트에 추가한다.
+    // Create a Spline Curve Point and add it to the list.
     CreateSplinePath();   
 }
 
 /**
- * Spline Path Point를 생성하여 버텍스 버퍼에 추가한다.
- * \param nIndex Spline을 생성한 리스트의 인덱스 (nIndex, nIndex-1, nIndex-2, nIndex-3의 4개의 버텍스로 Spline Path를 생성한다.
- * return 
+ *Create a Spline Path Point and add it to the vertex buffer.
+ * \param nIndex Index of the list that created the spline (Creates a Spline Path with four vertices: nIndex, nIndex-1, nIndex-2, and nIndex-3.
+ *return 
  */
 void CNtlInstanceTraceSystem::CreateSplinePath()
 {
-    // Catmull-rom Spline을 생성한다.
-    // DX에 있는 함수를 사용한다.
+    // Create a catmull-rom spline.
+    // Use functions in DX.
 
     if(m_listControlPoint.size() < 4 || m_pEventTrace->nSplinePointCount < 2)
     {
-        // Spline을 생성하기 위한 조건은 최소한 4개의 버텍스가 있어야만 한다.
+        // The condition for creating a spline is that there must be at least 4 vertices.
 
         ListTraceEdge::reverse_iterator it = m_listControlPoint.rbegin();
         STraceEdge* pEdge = *it;

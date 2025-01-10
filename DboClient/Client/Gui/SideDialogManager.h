@@ -1,25 +1,25 @@
 /******************************************************************************
-* File			: SideDialogManager.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2007. 11. 6
-* Abstract		: 
+*File			: SideDialogManager.h
+*Author		    : Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2007. 11. 6
+*Abstract		: 
 *****************************************************************************
-* Desc			: 클라이언트의 오른쪽 중앙에 나타나는 다이얼로그를 관리한다
-*				  높이가 겹치는 경우 Open/close 이펙트가 없이 화면에 표시중이면
-*				  겹치는 모든 기존의 SideDialog를 닫는다
+*Desc			: Manages the dialog that appears in the center right of the client.
+*                If the heights overlap and are displayed on the screen without open/close effects,
+*                Close all existing overlapping SideDialogs
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 #include "NtlCallbackWidget.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// dbo
+// Dbo
 #include "DialogPriority.h"
 #include "SideDialogDefine.h"
 
@@ -30,15 +30,15 @@ public:
 
 	enum eOpenType
 	{
-		OPENTYPE_OPEN,							///< 현재 화면에 보여지고 있는 상태
-		OPENTYPE_MINIMAM,						///< 현재 화면에 보여지고 있으나 최소화된 상태
-		OPENTYPE_CONCEAL,						///< 다른 창에 가려져 있는 상태
+		OPENTYPE_OPEN,							///< Current status displayed on screen
+		OPENTYPE_MINIMAM,						///< Currently displayed on screen, but minimized
+		OPENTYPE_CONCEAL,						///< State covered by another window
 	};
 
 	struct DialogInfo
 	{
-		CNtlPLGui*				pDialog;		///< 다이얼로그로의 포인터
-		CNtlCallbackParam1bool* pCallSwitch;	///< 다이얼로그 열고 닫는 함수로의 콜백
+		CNtlPLGui*				pDialog;		///< Pointer to dialog
+		CNtlCallbackParam1bool* pCallSwitch;	///< Callback to the function that opens and closes the dialog
 
 		DialogInfo()
 		{
@@ -76,7 +76,7 @@ public:
 
 	VOID		Update(RwReal fElapsed);
 	RwInt32		SwitchDialog(bool bOpen);
-	RwBool		SwitchDialog(int iDialog);			///< 사이드 다이얼로그를 열거나 닫는다
+	RwBool		SwitchDialog(int iDialog);			///< Opens or closes the side dialog
 
 	VOID		OpenDefaultDialog();
 	RwBool		OpenDialog(RwInt32 iSideDialog, RwBool bPlaySound = TRUE);
@@ -114,8 +114,8 @@ protected:
 
 	gui::CSlot				m_slotMove;
 
-	MAP_SDIALOG				m_mapDialog;					///< 등록된 다이얼로그들의 포인터 모음
-	MAP_PRESENTATION		m_mapPresentDialog;				///< 현재 보여지고 있는 다이얼로그의 정보
+	MAP_SDIALOG				m_mapDialog;					///< Collection of pointers to registered dialogs
+	MAP_PRESENTATION		m_mapPresentDialog;				///< Information on the currently displayed dialog
 
 	MAP_ATTRIBUTE			m_mapAttribute;
 };

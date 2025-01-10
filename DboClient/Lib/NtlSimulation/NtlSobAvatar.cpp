@@ -1,15 +1,15 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobAvatar.h"
 
-// shared
+// Shared
 #include "PCTable.h"
 #include "NtlCharacter.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 #include "NtlPLSceneManager.h"
 #include "NtlPLCharacter.h"
@@ -17,7 +17,7 @@
 #include "NtlPLPlayerName.h"
 #include "NtlPLHelpers.h"
 
-// simulation
+// Simulation
 #include "NtlFSMStateBase.h"
 #include "NtlSobAttrFactory.h"
 #include "NtlSLEvent.h"
@@ -80,7 +80,7 @@ RwBool CNtlSobAvatar::CreateContents(void)
 	if(!m_SkillContainer.Create())
 		return FALSE;
 
-	// DB에 저장된 캐릭터 ID
+	// Character ID stored in DB
 	SAvatarInfo* pAvatarInfo = GetNtlSLGlobal()->GetAvatarInfo();
 	m_charID = pAvatarInfo->sCharPf.charId;
 
@@ -91,35 +91,35 @@ RwBool CNtlSobAvatar::CreateContents(void)
 	m_Guild.Create();
 	m_GuildWarehouse.Create();
 
-	// OtherParam
+	// Other param
 	m_OtherParam.Create();
 
-	// PrivateShop
+	// Private shop
 	m_PrivateShop.Create();
 
-	// TMQ
+	// Tmq
 	m_TMQ.Create();
 
-	// CCBD
+	// cucumber
 	m_CCBD.Create();
 
-	// MailSystem
+	// Mail system
 	m_MailSystem.Create();
 
-	// RankBattle
+	// Rank battle
 	m_RankBattle.Create();
 
     // Friend List
     m_FriendList.Create();
     m_BlackList.Create();
 
-	// Tenkaichi Budokai
+	// Tenkaichi Department Association
 	m_TBudokai.Create();
 
 	// Hoipoi Mix
 	m_HoipoiMix.Create();
 
-	// 도장
+	// Dojo
 	m_Dojo.Create();
 
 	m_bValidAvatarData = true;
@@ -145,22 +145,22 @@ void CNtlSobAvatar::DestroyContents(void)
 	m_Guild.Destroy();
 	m_GuildWarehouse.Destroy();
 
-	// OtherParam
+	// Other param
 	m_OtherParam.Destroy();
 
-	// PrivateShop
+	// Private shop
 	m_PrivateShop.Destroy();
 
-	// TMQ
+	// Tmq
 	m_TMQ.Destroy();
 
-	// CCBD
+	// cucumber
 	m_CCBD.Destroy();
 
-	// MailSystem
+	// Mail system
 	m_MailSystem.Destroy();
 
-	// RankBattle
+	// Rank battle
 	m_RankBattle.Destroy();
 
     // Friend List
@@ -245,7 +245,7 @@ void CNtlSobAvatar::CreateEvent(void)
 	LinkMsg(g_EventPrivateShopItemState, 0);
 	LinkMsg(g_EventPrivateShopItemBuying, 0);
 		
-	// quest 수락 및 보상.
+	// Quest accepted and rewarded.
 	LinkMsg(g_EventQuestAcceptProposal_Nfy, 0);
 	LinkMsg(g_EventQuestAcceptReward_Nfy, 0);
 
@@ -264,7 +264,7 @@ void CNtlSobAvatar::CreateEvent(void)
 	// cc battle dungeon
 	LinkMsg(g_EventBattleDungeonStateUpdate);
 
-	// MailSystem
+	// Mail system
 	LinkMsg(g_EventMailStart, 0);
 	LinkMsg(g_EventMailLoadInfo, 0);
 	LinkMsg(g_EventMailLoadData, 0);
@@ -281,7 +281,7 @@ void CNtlSobAvatar::CreateEvent(void)
 	LinkMsg(g_EventMailCloseNfy, 0);
 	LinkMsg(g_EventCharAway, 0);
 
-	// RPBonus
+	// Rp bonus
 	LinkMsg(g_EventRpBonusSetupRes, 0);
 	
 	LinkMsg(g_EventChangeWorldConceptState, 0);
@@ -290,15 +290,15 @@ void CNtlSobAvatar::CreateEvent(void)
     LinkMsg(g_EventDirectionNfy, NULL);
     LinkMsg(g_EventWorldChange, NULL);
 
-    // 변신
+    // transformation
     LinkMsg(g_EventTransform, NULL);
 
-    // 컨디션 관련
+    // Condition related
     LinkMsg(g_EventAfterEffectRemainTimeNfy, NULL);
 
 	LinkMsg(NPEI_IS_MAPNAME_CHANGE, 0);
 
-	// 채널 변경
+	// change channel
 	LinkMsg(g_EventGameServerChannelChanged, 0);
 
 	// TS Data reload
@@ -306,7 +306,7 @@ void CNtlSobAvatar::CreateEvent(void)
 
 	LinkMsg(g_EventBusMove, 0);
 
-	// 도장
+	// coating
 	LinkMsg(g_EventDojo, 0);	
 	LinkMsg(g_EventDojoState, 0);
 	LinkMsg(g_EventScrambleDefaultInfo, 0);
@@ -381,7 +381,7 @@ void CNtlSobAvatar::DestroyEvent(void)
 	UnLinkMsg(g_EventPrivateShopItemState);
 	UnLinkMsg(g_EventPrivateShopItemBuying);
 
-	// quest 수락 및 보상.
+	// Quest accepted and rewarded.
 	UnLinkMsg(g_EventQuestAcceptProposal_Nfy);
 	UnLinkMsg(g_EventQuestAcceptReward_Nfy);
 
@@ -400,7 +400,7 @@ void CNtlSobAvatar::DestroyEvent(void)
 	// cc battle dungeon
 	UnLinkMsg(g_EventBattleDungeonStateUpdate);
 
-	// MailSystem
+	// Mail system
 	UnLinkMsg(g_EventMailStart);
 	UnLinkMsg(g_EventMailLoadInfo);
 	UnLinkMsg(g_EventMailLoadData);
@@ -445,7 +445,7 @@ RwBool CNtlSobAvatar::Create(void)
 
 	SetFlags(GetFlags() | SLFLAG_NOT_HITSHOCK | SLFLAG_CAMERASHAKE_ENABLE | SLFLAG_SERVER_SENDER);
 
-	// class name 설정.
+	// Set class name.
 	SetClassName(SLCLASS_NAME_AVATAR);
 
 	if(!CreateContents())
@@ -579,15 +579,15 @@ void CNtlSobAvatar::HandleEvents(RWS::CMsg &pMsg)
 		SetPosition(&vLoc);
 		SetDirection(&vDir);
 		
-		// actor
+		// Actor
 		CNtlSobActor::HandleEvents(pMsg); 
 
 		//--------------------------
-		// event 발생.
+		// event occurs.
 		// gui data update
 		CNtlSLEventGenerator::SobUpdate(GetSerialID(), EVENT_AIUT_ATTR | EVENT_AIUT_SKILL | EVENT_AIUT_ITEM | EVENT_AIUT_ZENNY | EVENT_AIUT_QUESTITEM | EVENT_AIUT_BUFF, 0 );
 		
-		if( Logic_IsFirstClass( this ) && pAvatarInfo->sCharPf.bChangeClass )	// 1차직이면서 전직가능할 떄만 보낸다.
+		if( Logic_IsFirstClass( this ) && pAvatarInfo->sCharPf.bChangeClass )	// It is a primary position and is sent only when it is possible to change jobs.
 			CNtlSLEventGenerator::ChangeClassAuthorityChanged( pAvatarInfo->sCharPf.bChangeClass );
 		
 		// server sync avatar type
@@ -792,15 +792,15 @@ void CNtlSobAvatar::HandleEvents(RWS::CMsg &pMsg)
         if(GetSobProxy())
             GetSobProxy()->HandleEvents(pMsg);
 
-        CNtlSobPlayer::HandleEvents(pMsg); // Idle에서도 처리한다.
+        CNtlSobPlayer::HandleEvents(pMsg); // Idle also handles this.
     }
     else if(pMsg.Id == g_EventWorldChange || pMsg.Id == g_EventDirectionNfy)            
     {
-        // 툴팁을 보이고 있는 경우 해제한다.
-        // 클라이언트 레이어의 UI쪽으로 메시지를 쏴서 툴팁 제거
+        // If the tooltip is showing, turn it off.
+        // Remove tooltip by shooting a message towards the UI of the client layer
         CNtlSLEventGenerator::ShowToolTip(FALSE, 0, 0, L"");
 
-        // 프리카메라인 경우 해제한다
+        // If it is a free camera, turn it off.
         CNtlSLEventGenerator::CameraControlDelete(CAMERA_CONTROL_FREE);
 
         if(GetSobProxy())

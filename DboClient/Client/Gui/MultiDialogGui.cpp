@@ -1,10 +1,10 @@
 #include "precomp_dboclient.h"
 #include "MultiDialogGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "NPCTable.h"
 #include "TextAllTable.h"
 #include "QuestTextDataTable.h"
@@ -14,18 +14,18 @@
 #include "TableContainer.h"
 #include "ItemMixMachineTable.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// gui
+// Gui
 #include "GuiUtil.h"
 #include "AltarGui.h"
 #include "NtlWorldConceptDBC.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEvent.h"
 #include "NtlSlEventFunc.h"
@@ -54,7 +54,7 @@
 #include "NtlSobDynamicObjectAttr.h"
 
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DialogManager.h"
@@ -66,7 +66,7 @@
 #include "DboLogic.h"
 #include "AlarmManager.h"
 
-//test
+//Test
 #include "NtlMath.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -205,7 +205,7 @@ VOID CMultiDialogGui::Destroy(VOID)
 
 RwInt32 CMultiDialogGui::SwitchDialog( bool bOpen )
 {
-	// 무조건 닫는다.
+	// Close it unconditionally.
 	m_pstbMsg->Show( false );	
 	m_MsgBackImage.Show( false );
 
@@ -324,7 +324,7 @@ RwInt32 CMultiDialogGui::SwitchDialog( bool bOpen )
 					GetBalloonManager()->FadeOutBalloon( pSobObject, CBalloonGui::FIRST_TYPE_LAYER );
 			}			
 		}
-		// Gamble 일 경우 겜블 확인 창을 닫아준다.
+		// In the case of Gamble, the gambling confirmation window closes.
 		else if( m_eDlgType == TYPE_GAMBLE )
 		{
 			if( pSobObject )
@@ -463,7 +463,7 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 			{
 				m_pCommandList->RegistCommand(CCommandList::UPGRADE_COMMAND);
 				m_pCommandList->RegistCommand(CCommandList::SMITH_CHANGE_BATTLE_ATTRIBUTE_COMMAND);
-			//	m_pCommandList->RegistCommand(CCommandList::SMITH_TRANSFER_ITEM_GRADE);
+					//	m_pCommandList->RegistCommand(CCommandList::SMITH_TRANSFER_ITEM_GRADE);
 			}
 			else if (pTableData->byJob == NPC_JOB_EVENT_NPC) // is event manager npc?
 			{
@@ -481,7 +481,7 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 				}
 			}
 
-			// 제조 기술 초기화
+			// Reset manufacturing technology
 
 			if (pTableData->byJob == NPC_JOB_VENDING_MACHINE)
 			{
@@ -588,19 +588,19 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 				m_pCommandList->RegistCommand( CCommandList::GUILD_COMMAND );				
 			}
 
-			if(pTableData->dwFunc_Bit_Flag & NPC_FUNC_FLAG_PORTAL)       // 포탈맨
+			if(pTableData->dwFunc_Bit_Flag & NPC_FUNC_FLAG_PORTAL)       // portal man
 			{
 				m_pCommandList->RegistCommand( CCommandList::PORTAL_COMMAND );	
 			}
 			
-			// Gamble 비용은 Merchant Table의 Need_Mileage 필드의 값을 참조하는 것으로 변경한다.
-			// -by Kell ( 09. 07. 22 )
+			// The Gamble cost is changed to refer to the value of the Need_Mileage field in the Merchant Table.
+			// -by Kell (09. 07. 22)
 			if(pTableData->dwFunc_Bit_Flag & NPC_FUNC_FLAG_GAMBLE_MERCHANT )
 			{
 				m_pCommandList->RegistCommand( CCommandList::GAMBLE_BUY_COMMNAD );	
 				m_pCommandList->RegistCommand( CCommandList::EXIT_COMMAND );
 
-				// Merchant Table의 가장 첫번째 Index를 참조한다.
+				// Refer to the very first Index in the Merchant Table.
 				if( pTableData->amerchant_Tblidx[0] == INVALID_TBLIDX )
 				{
 					DBO_FAIL( "[GAMBLE] NPC Table havn't merchant table index." << pTableData->tblidx );
@@ -633,7 +633,7 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 					CNtlSLEventGenerator::CameraNpc( pData->hSerialId );
 					GetNtlWorldConcept()->AddWorldPlayConcept( WORLD_PLAY_NPC_COMMU );
 
-					// Npc handle 저장( FSM 에서 사용 )
+					// Save Npc handle (used in FSM)
 					CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(GetNtlSLGlobal()->GetSobAvatar()->GetBehaviorData()); 
 					SCtrlStuff *pCtrlStuff = pBeData->GetCtrlStuff();
 					pCtrlStuff->uExtra.sGamble.hGambleNpc = pData->hSerialId;
@@ -642,10 +642,10 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 				return;
 			}
 
-			// exit
+			// Exit
 			m_pCommandList->RegistCommand( CCommandList::EXIT_COMMAND );
 
-			// Dialog내용을 입력.
+			// Enter the dialog contents.
 			CTextTable* pNPCText = API_GetTableContainer()->GetTextAllTable()->GetNPCTbl();
 			std::wstring wstrText;
 			pNPCText->GetText( pTableData->Dialog_Script_Index, &wstrText );
@@ -667,7 +667,7 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 				CNtlSLEventGenerator::CameraNpc( pData->hSerialId );
 				GetNtlWorldConcept()->AddWorldPlayConcept( WORLD_PLAY_NPC_COMMU );
 
-				// npc handle Save (used in FSM - fluorspar)
+				// npc handle Save (used in FSM -fluorspar)
 				CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(GetNtlSLGlobal()->GetSobAvatar()->GetBehaviorData()); 
 				SCtrlStuff *pCtrlStuff = pBeData->GetCtrlStuff();
 				pCtrlStuff->uExtra.sTeleport.hTeleportNpc = pData->hSerialId;
@@ -745,7 +745,7 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 				CNtlSLEventGenerator::CameraNpc(pData->hSerialId);
 				GetNtlWorldConcept()->AddWorldPlayConcept(WORLD_PLAY_NPC_COMMU);
 
-				// npc handle Save (used in FSM - fluorspar)
+				// npc handle Save (used in FSM -fluorspar)
 				CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(GetNtlSLGlobal()->GetSobAvatar()->GetBehaviorData());
 				SCtrlStuff *pCtrlStuff = pBeData->GetCtrlStuff();
 				pCtrlStuff->uExtra.sTeleport.hTeleportNpc = pData->hSerialId;
@@ -766,7 +766,7 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 
 			if( pGetTriggerList->dwType & eDBO_TRIGGER_OBJECT_FUNC_PORTAL )
 			{
-				// 포탈
+				// portal
 			}
 
 			if( pGetTriggerList->dwType & eDBO_TRIGGER_OBJECT_FUNC_SCOUTER )
@@ -797,7 +797,7 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 			if((pGetTriggerList->dwType & eDBO_TRIGGER_OBJECT_FUNC_NORMAL_DRAGONBALL) ||
 				(pGetTriggerList->dwType & eDBO_TRIGGER_OBJECT_FUNC_RAID_DRAGONBALL))
 			{
-				// 드래곤볼 용신 소환
+				// Dragon Ball Dragon God Summon
 				GetNtlWorldConcept()->AddWorldPlayConcept(WORLD_PLAY_DRAGONBALL_COLLECT);
 				CNtlWorldConceptDBC* pWorldConceptDBC = (CNtlWorldConceptDBC*)GetNtlWorldConcept()->GetWorldConceptController(WORLD_PLAY_DRAGONBALL_COLLECT);
 				pWorldConceptDBC->SetAltarSerialID(pData->hSerialId);
@@ -814,17 +814,17 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 
 				m_pCommandList->RegistCommand( CCommandList::HOIPOIMIX_CREATE_COMMAND );
 
-				// 나가기는 기본.
+				// Getting out is basic.
 				m_pCommandList->RegistCommand( CCommandList::EXIT_COMMAND );
 
-				// Dialog 출력
+				// Dialog output
 				SetDialogType( TYPE_NPCTALK );
 				if( GetDialogManager()->OpenDialog( DIALOG_MULTIDIALOG, GetNtlSLGlobal()->GetSobAvatar()->GetSerialID() ) )
 				{
 					CNtlSLEventGenerator::CameraNpc( pData->hSerialId );
 					GetNtlWorldConcept()->AddWorldPlayConcept( WORLD_PLAY_NPC_COMMU );
 
-					// npc handle 저장(FSM에서 사용 - 형석)
+					// Save npc handle (used in FSM -fluorite)
 					CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(GetNtlSLGlobal()->GetSobAvatar()->GetBehaviorData()); 
 					SCtrlStuff *pCtrlStuff = pBeData->GetCtrlStuff();
 					pCtrlStuff->uExtra.sTeleport.hTeleportNpc = pData->hSerialId;
@@ -839,12 +839,12 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 	}
 	else if( msg.Id == g_EventQuestDirectForward )
 	{
-		// peessi : User Select인 경우에만 들어온다.
+		// peessi: Comes in only in case of User Select.
 
 		SNtlEventQuestDirect_Forward* pData = reinterpret_cast<SNtlEventQuestDirect_Forward*>( msg.pData );
 		SNtlEventQuestUserSelectDialog_Req* pReqData = &pData->sUserSelect;
 
-		// peessi : MultiDialog가 열려있다면, 커뮤니티 상태 이거나, 퀘스트 다이얼로그, 유저 선택중 하나 이므로 취소.
+		// peessi: If MultiDialog is open, cancel because it is in community state, quest dialog, or user selection.
 		if( IsShow() )
 		{
 			SNtlEventQuestDirect_Echo stEcho;
@@ -857,13 +857,13 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 			return;
 		}
 
-		// Serial 입력.
+		// Serial input.
 		if( pReqData->uiTargetType == eUSER_SEL_TARGET_TYPE_NPC )
 			m_hTargetSerialID = GetNtlSobManager()->GetNpcTriggerSerialFromId( pReqData->uiTargetTblIdx );
 		else if( pReqData->uiTargetType == eUSER_SEL_TARGET_TYPE_OBJECT )
 			m_hTargetSerialID = GetNtlSobManager()->GetObjectTriggerSerialFromId( pReqData->uiTargetTblIdx );
 
-		// 모드
+		// mode
 		m_pCommandList->ClearNodes();
 		m_pCommandList->SetTCUnit( pData->pTCUnit );
 		m_pCommandList->SetTSKey( pReqData->sTSKey );
@@ -1058,7 +1058,7 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 			break;
 		case TYPE_QUESTCAT:
 			{
-				// 리스트 재출력
+				// Reprint list
 				m_pCommandList->SendQuest();
 			}
 			break;
@@ -1084,7 +1084,7 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 			break;
 		case TYPE_QUESTCAT:
 			{
-				// 리스트 재출력
+				// Reprint list
 				m_pCommandList->SendQuest();
 			}
 			break;
@@ -1092,7 +1092,7 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 	}
 	else if( msg.Id == g_EventTSMudosaTeleport_Req )
 	{
-		// 무도사 리스트 안내 패킷 실행 무도사 패킷 받고 그걸로 실행
+		// Run the martial arts master list guide packet. Receive the martial arts master packet and run it.
 		SNtlEventTSMudosaTeleport_Req* pData = reinterpret_cast<SNtlEventTSMudosaTeleport_Req*>( msg.pData );
 		m_pCommandList->SetTSKey( pData->sTSKey );
 
@@ -1117,7 +1117,7 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 		ReserveDialog( std::wstring( GetDisplayStringManager()->GetString( "DST_BUDOKAI_MUDOSA_TELEPOR_INFO" ) ), sMultiDialogData::TYPE_JUST_MSG, FALSE );
 		GetDialogManager()->OpenDialog( DIALOG_MULTIDIALOG, GetNtlSLGlobal()->GetSobAvatar()->GetSerialID() );
 	}
-	// 겜블 NPC의 애니메이션이 끝났을 경우 이제 서버쪽으로 패킷을 요청해야 한다.
+	// When the gambling NPC's animation has ended, a packet must now be requested from the server.
 	else if( msg.Id == g_EventGambleAniEnd )
 	{
 		SNtlEventGambleAniEnd* pData = reinterpret_cast<SNtlEventGambleAniEnd*>( msg.pData );
@@ -1140,7 +1140,7 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 		CNtlSobNpcAttr* pNPCAttr = reinterpret_cast<CNtlSobNpcAttr*>( pNPC->GetSobAttr() );
 		sNPC_TBLDAT* pTableData = pNPCAttr->GetNpcTbl();
 
-		// Merchant Table의 가장 첫번째 Index를 참조한다.
+		// Refer to the very first Index in the Merchant Table.
 		if( pTableData->amerchant_Tblidx[0] == INVALID_TBLIDX )
 		{
 			DBO_FAIL( "[GAMBLE] NPC Table havn't merchant table index." << pTableData->tblidx );
@@ -1186,8 +1186,8 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 	{
 		SNtlEventSobDynamicObjCommunity* pData = reinterpret_cast<SNtlEventSobDynamicObjCommunity*>( msg.pData );
 
-		// 모든 트리거 관련 창이 켜져 있을때 시발점인 멀티다이얼로그에서 막는다. 
-		// 창이 열리기 전에 연속 클릭되는 것을 방지
+		// When all trigger-related windows are turned on, they are blocked from the multi-dialog, which is the starting point. 
+		// Prevent successive clicks before the window opens
 		if( GetDialogManager()->IsTriggerSystemDialogOpen() || m_hTargetSerialID == pData->hSerialId )
 			return;
 
@@ -1226,17 +1226,17 @@ VOID CMultiDialogGui::HandleEvents( RWS::CMsg& msg )
 			break;
 		}
 			
-		// 나가기는 기본.
+		// Getting out is basic.
 		m_pCommandList->RegistCommand( CCommandList::EXIT_COMMAND );
 
-		// Dialog 출력
+		// Dialog output
 		SetDialogType( TYPE_NPCTALK );
 		if( GetDialogManager()->OpenDialog( DIALOG_MULTIDIALOG, GetNtlSLGlobal()->GetSobAvatar()->GetSerialID() ) )
 		{
 			CNtlSLEventGenerator::CameraNpc( pData->hSerialId );
 			GetNtlWorldConcept()->AddWorldPlayConcept( WORLD_PLAY_NPC_COMMU );
 
-			// npc handle 저장(FSM에서 사용 - 형석)
+			// Save npc handle (used in FSM -fluorite)
 			CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(GetNtlSLGlobal()->GetSobAvatar()->GetBehaviorData()); 
 			SCtrlStuff *pCtrlStuff = pBeData->GetCtrlStuff();
 			pCtrlStuff->uExtra.sTeleport.hTeleportNpc = pData->hSerialId;
@@ -1843,8 +1843,8 @@ VOID CCommandList::ClearState_ClearAndMakeBuyBankMenu(VOID)
 
 	CNtlWarehouse* pWarehouse = GetNtlSLGlobal()->GetSobAvatar()->GetWarehouse();
 
-	// 게임에 처음 들어가서 창고NPC를 클릭하면 서버로부터 창고 데이터를 받는다.
-	// 그 데이터를 전부 받기 전에 이 코드로 들어온다면 부정확한 정보로 하위코드를 실행하지 않도록 하자
+	// When you first enter the game and click on the warehouse NPC, you will receive warehouse data from the server.
+	// If you enter this code before receiving all the data, avoid executing the subcode with incorrect information.
 	if( pWarehouse->IsRecieveData_from_Server() == FALSE )
 	{
 		GetAlarmManager()->AlarmMessage("DST_PLEASE_RETRY");
@@ -1897,7 +1897,7 @@ VOID CCommandList::OnClear(VOID)
 CCommandNode::CCommandNode( CGuiLineTree* pTree, RwInt32 nID, gui::CSurface surface, std::string strText, NODE_TYPE eType )
 : CGuiLineTreeNode( pTree, nID ), m_pbtnCommand( NULL ), m_ppnlIcon( NULL ), m_eNodeType( eType )
 {
-	// gui component설정 및 surface 설정.
+	// GUI component settings and surface settings.
 	CRectangle rect;
 	rect.SetRectWH( COMMANDNODE_X ,COMMANDNODE_Y, COMMANDNODE_WIDTH, COMMANDNODE_HEIGHT );
 	m_pbtnCommand = NTL_NEW gui::CButton( rect, strText, pTree->GetParentGui(), GetNtlGuiManager()->GetSurfaceManager() );
@@ -1924,7 +1924,7 @@ CCommandNode::CCommandNode( CGuiLineTree* pTree, RwInt32 nID, gui::CSurface surf
 CCommandNode::CCommandNode( CGuiLineTree* pTree, RwInt32 nID, gui::CSurface surface, std::wstring wstrText, NODE_TYPE eType )
 : CGuiLineTreeNode( pTree, nID ), m_pbtnCommand( NULL ), m_ppnlIcon( NULL ), m_eNodeType( eType )
 {
-	// gui component설정 및 surface 설정.
+	// GUI component settings and surface settings.
 	CRectangle rect;
 	rect.SetRectWH( COMMANDNODE_X ,COMMANDNODE_Y, COMMANDNODE_WIDTH, COMMANDNODE_HEIGHT );
 	m_pbtnCommand = NTL_NEW gui::CButton( rect, wstrText, pTree->GetParentGui(), GetNtlGuiManager()->GetSurfaceManager() );
@@ -1951,7 +1951,7 @@ CCommandNode::CCommandNode( CGuiLineTree* pTree, RwInt32 nID, gui::CSurface surf
 CCommandNode::CCommandNode( CGuiLineTree* pTree, RwInt32 nID, gui::CSurface surface, RwInt32 nTextID )
 : CGuiLineTreeNode( pTree, nID ), m_pbtnCommand( NULL ), m_ppnlIcon( NULL )
 {
-	// gui component설정 및 surface 설정.
+	// GUI component settings and surface settings.
 	CQuestTextDataTable* pQuestTextTable = API_GetTableContainer()->GetQuestTextDataTable();
 	sQUEST_TEXT_DATA_TBLDAT* pQuestText = reinterpret_cast<sQUEST_TEXT_DATA_TBLDAT*>( pQuestTextTable->FindData( nTextID ) );
 	std::wstring wstrText;
@@ -1988,14 +1988,14 @@ CCommandNode::CCommandNode( CGuiLineTree* pTree, RwInt32 nID, gui::CSurface surf
 	m_slotPressedCommand = m_pbtnCommand->SigPressed().Connect( this, &CCommandNode::OnPressedCommand );
 	m_slotReleasedCommand = m_pbtnCommand->SigReleased().Connect( this, &CCommandNode::OnReleasedCommand );
 
-	// Type설정.
+	// Type setting.
 	m_eNodeType = BRANCHDIALOG_NODE;
 }
 
 CCommandNode::CCommandNode( CGuiLineTree* pTree, RwInt32 nID, gui::CSurface surface, sQUEST_INFO sData )
 : CGuiLineTreeNode( pTree, nID ), m_pbtnCommand( NULL ), m_ppnlIcon( NULL )
 {
-	// gui component설정 및 surface 설정.
+	// GUI component settings and surface settings.
 	CQuestTextDataTable* pQuestTextTable = API_GetTableContainer()->GetQuestTextDataTable();
 	sQUEST_TEXT_DATA_TBLDAT* pQuestText = reinterpret_cast<sQUEST_TEXT_DATA_TBLDAT*>( pQuestTextTable->FindData( sData.dwQuestTitle ) );
 	std::wstring wstrText;
@@ -2032,7 +2032,7 @@ CCommandNode::CCommandNode( CGuiLineTree* pTree, RwInt32 nID, gui::CSurface surf
 	m_slotPressedCommand = m_pbtnCommand->SigPressed().Connect( this, &CCommandNode::OnPressedCommand );
 	m_slotReleasedCommand = m_pbtnCommand->SigReleased().Connect( this, &CCommandNode::OnReleasedCommand );
 
-	// Type설정.
+	// Type setting.
 	m_eNodeType = QUESTCATALOG_NODE;
 	m_sData		= sData;
 }
@@ -2170,7 +2170,7 @@ VOID CCommandNode::OnClickCommand( gui::CComponent* pComponent )
 					CNtlSobNpcAttr* pNPCAttr = reinterpret_cast<CNtlSobNpcAttr*>( pNPC->GetSobAttr() );
 					sNPC_TBLDAT* pTableData = pNPCAttr->GetNpcTbl();
 
-					// Merchant Table의 가장 첫번째 Index를 참조한다.
+					// Refer to the very first Index in the Merchant Table.
 					if( pTableData->amerchant_Tblidx[0] == INVALID_TBLIDX )
 					{
 						DBO_FAIL( "[GAMBLE] NPC Table havn't merchant table index." << pTableData->tblidx );
@@ -2518,13 +2518,13 @@ VOID CCommandNode::OnClickCommand( gui::CComponent* pComponent )
 				sMERCHANT_TBLDAT* pMERCHANT_TBLDAT = Logic_GetMerchantDataFromTable( pNPC_TBLDAT->amerchant_Tblidx[0] );
 				DBO_ASSERT( pMERCHANT_TBLDAT, "Not exist merchant index in NPC table");
 
-				// avooo's comment : 아이템 테이블 상의 공유 창고는 3을 가리킨다
+				// avooo's comment: Shared storage on the item table points to 3
 				sITEM_TBLDAT* pITEM_TBLDAT = Logic_GetItemDataFromTable( pMERCHANT_TBLDAT->aitem_Tblidx[3] );
 				DBO_ASSERT( pITEM_TBLDAT, "Not exist item index in Merchant table");
 
 				SERIAL_HANDLE hNPCHandle = pNodeMgr->GetOwnerGui()->GetTargetSerial();
 
-				// 공유 창고(%d 제니)를 구입하시겠습니까?
+				// Would you like to purchase a shared warehouse (%d jenny)?
 				sMsgBoxData data;
 				data.hHandle = hNPCHandle;
 				GetAlarmManager()->FormattedAlarmMessage( "DST_WAREHOUSE_WANT_YOU_BUY_COMMON", FALSE, &data, Logic_FormatZeni(pITEM_TBLDAT->dwCost) );
@@ -2560,7 +2560,7 @@ VOID CCommandNode::OnClickCommand( gui::CComponent* pComponent )
 	}
 	else if( m_eNodeType == SERVERSELECT_MODE )
 	{
-		// 서버이동은 ServerSelectNode에서 처리.
+		// Server movement is handled by ServerSelectNode.
 		if( GetID() == CCommandList::EXIT_COMMAND )
 		{
 			CNtlSLEventGenerator::TSMudosaTeleport_Res( pNodeMgr->GetTSKey(), (RwUInt8)GetID(), TRUE );
@@ -2597,7 +2597,7 @@ VOID CCommandNode::OnReleasedCommand( gui::CComponent* pComponent )
 CServerSelectNode::CServerSelectNode( CGuiLineTree* pTree, RwInt32 nID, WCHAR* pText, RwInt32 nCurrentUserCount )
 : CGuiLineTreeNode( pTree, nID ), m_pbtnCommand( NULL ), m_ppnlIcon( NULL ), m_ppnlUserCountBack( NULL ), m_ppgbUserCount( NULL )
 {
-	// gui component설정 및 surface 설정.
+	// GUI component settings and surface settings.
 	CRectangle rect;
 	rect.SetRectWH( COMMANDNODE_X ,COMMANDNODE_Y, COMMANDNODE_WIDTH, COMMANDNODE_HEIGHT );
 	m_pbtnCommand = NTL_NEW gui::CButton( rect, pText, pTree->GetParentGui(), GetNtlGuiManager()->GetSurfaceManager() );

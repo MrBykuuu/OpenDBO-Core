@@ -1,31 +1,31 @@
 #include "precomp_dboclient.h"
 #include "QuestSearchGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "QuestTextDataTable.h"
 #include "TextAllTable.h"
 #include "NPCTable.h"
 #include "TableContainer.h"
 
-// gui
+// Gui
 #include "GuiUtil.h"
 
-// presetation
+// Presetation
 #include "NtlPLGuiManager.h"
 #include "NtlPLWorldEntity.h"
 #include "NtlPLVisualManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEventFunc.h"
 #include "NtlSobAvatar.h"
 #include "DboTSCQAgency.h"
 #include "NtlSLLogic.h"
 #include "NtlSLApi.h"
 
-// client
+// Client
 #include "DialogPriority.h"
 #include "InfoWndManager.h"
 #include "AlarmManager.h"
@@ -68,11 +68,11 @@ RwBool CQuestSearchGui::Create(RwReal fMapScale, gui::CComponent* parentComponen
 	CRectangle rect;
 	RwReal fReducedScale = fMapScale/dMAP_DEFAULT_REDUCED_SCALE;
 
-	// avooo's commnet : 이 부분을 테이블로 빼자. 월드별로 검색 범위를 다르게...
+	// avooo's commnet: Let's take this part out of the table. Different search ranges for each world...
 	if( 5 == Logic_GetActiveWorldTableId() )
 		fReducedScale /= 3.f;
 
-	// 측정시의 배경
+	// Background during measurement
 	m_pFlashSearch = (gui::CFlash*)GetComponent("flaQuestSearch");
 	m_slotMovieEnd = m_pFlashSearch->SigMovieEnd().Connect( this, &CQuestSearchGui::OnMovieEnd );
 	rect = m_pFlashSearch->GetFrameResolution();
@@ -82,7 +82,7 @@ RwBool CQuestSearchGui::Create(RwReal fMapScale, gui::CComponent* parentComponen
 	if( !SetQuestInfo() )
 		NTL_RETURN(FALSE);
 
-	// sig	
+	// Signals	
 	m_slotMouseMove		= m_pThis->SigMouseMove().Connect( this, &CQuestSearchGui::OnMouseMove );
 	m_slotMouseLeave	= m_pThis->SigMouseLeave().Connect( this, &CQuestSearchGui::OnMouseLeave );
 
@@ -147,7 +147,7 @@ VOID CQuestSearchGui::ResetArea(const CRectangle& rtWorldMap, RwReal fMapScale, 
 {
 	CRectangle rtScreen;
 
-	// 플래쉬 클리핑을 위한 영역 설정
+	// Area settings for flash clipping
 	rtScreen.left		= rtWorldMap.left	+ dADJUST_AREA_LEFT;
 	rtScreen.top		= rtWorldMap.top	+ dADJUST_AREA_TOP;
 	rtScreen.right		= rtWorldMap.right	- dADJUST_AREA_RIGHT;
@@ -158,7 +158,7 @@ VOID CQuestSearchGui::ResetArea(const CRectangle& rtWorldMap, RwReal fMapScale, 
 	m_pFlashSearch->SetPosition(m_iAvatarXPos - m_pFlashSearch->GetWidth()/2 - dADJUST_AREA_LEFT,
 								m_iAvatarYPos - m_pFlashSearch->GetHeight()/2 - dADJUST_AREA_TOP);
 
-	// 퀘스트 마크 위치 보정
+	// Quest mark position correction
 	CRectangle rtQuest;
 	ITER_QUEST_INFO it = m_mapQuestInfo.begin();
 	for( ; it != m_mapQuestInfo.end() ; ++it )
@@ -197,11 +197,11 @@ RwBool CQuestSearchGui::SetQuestInfo()
 	v2AvatarPos.y = v3AvatarPos.z;
 
 
-	// 아바타와 일정 반경에 있는 퀘스트를 찾는다.
+	// Find your avatar and quests within a certain radius.
 
 	SGET_QUEST_INFO* pSGETQuestInfo = NULL;
 
-	// avooo's commnet : 이 부분을 테이블로 빼자. 월드별로 검색 범위를 다르게...
+	// avooo's commnet: Let's take this part out of the table. Different search ranges for each world...
 	if( 5 == Logic_GetActiveWorldTableId() )
 		pSGETQuestInfo = pTSCQAgency->GetQuestInfoList_ForQuestSerarch(Logic_GetActiveWorldTableId(), v3AvatarPos.x, v3AvatarPos.z, dSEARCH_RADIUS/3.f);
 	else
@@ -217,7 +217,7 @@ RwBool CQuestSearchGui::SetQuestInfo()
 	CNPCTable*				pNPCTable		= API_GetTableContainer()->GetNpcTable();
 	CTextTable*				pNPCTextTable	= API_GetTableContainer()->GetTextAllTable()->GetNPCTbl();
 
-	// 아바타와 같은 존에 존재하는 퀘스트를 찾기 위해
+	// To find quests that exist in the same zone as your avatar
 	CNtlPLWorldEntity* pWorldEntity = reinterpret_cast<CNtlPLVisualManager*>( GetSceneManager() )->GetWorld();
 	if( !pWorldEntity )
 	{
@@ -252,7 +252,7 @@ RwBool CQuestSearchGui::SetQuestInfo()
 		ITER_QUEST_INFO it = m_mapQuestInfo.find(pNPC_TBLDAT->Name);
 		if( it == m_mapQuestInfo.end() )
 		{
-			// quest search에 아직 저장되지 않은 퀘스트를 가지고 있는 NPC이다
+			// This NPC has a quest that has not yet been saved in quest search.
 
 			RwV2d v2QuestPos;
 
@@ -260,7 +260,7 @@ RwBool CQuestSearchGui::SetQuestInfo()
 			v2QuestPos.y = pSGETQuestInfo->QuestInfoList[i].fZPos;
 
 
-			// 아바타와 같은 존에 존재하는 퀘스트를 찾기 위해
+			// To find quests that exist in the same zone as your avatar
 			if( FALSE == IsSameZoneWithAvatar(idxAvatarWorldZone, v2QuestPos.x, v2QuestPos.y) )
 				continue;
 
@@ -290,7 +290,7 @@ RwBool CQuestSearchGui::SetQuestInfo()
 		}
 		else
 		{
-			// quest search에 저장된 퀘스트를 가지고 있는 NPC이다			
+			// This is an NPC with a quest saved in quest search.			
 
 			sQUEST_TEXT_DATA_TBLDAT* pQUEST_TEXT_DATA_TBLDAT = reinterpret_cast<sQUEST_TEXT_DATA_TBLDAT*>( pQuestTable->FindData(pSGETQuestInfo->QuestInfoList[i].dwQuestTitle) );
 			if( !pQUEST_TEXT_DATA_TBLDAT )
@@ -309,7 +309,7 @@ RwBool CQuestSearchGui::SetQuestInfo()
 	if( m_mapQuestInfo.size() == 0 )
 		GetAlarmManager()->AlarmMessage("DST_SCOUTER_QUEST_SEARCH_NOT_QUEST");
 
-	// 퀘스트 이벤트
+	// Quest Event
 	CNtlSLEventGenerator::TSSearchQuest();
 
 	return TRUE;

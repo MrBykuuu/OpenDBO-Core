@@ -1,17 +1,17 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobDynamicObject.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
 // Sound
 #include "NtlSoundManager.h"
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "DynamicObjectTable.h"
 #include "NtlSobDynamicObjectAttr.h"
 #include "NtlSobProxy.h"
@@ -27,7 +27,7 @@ DEFINITION_MEMORY_POOL(CNtlSobDynamicObject)
 CNtlSobDynamicObject::CNtlSobDynamicObject( VOID )
 {
 	m_byCurState = eDYNAMIC_OBJECT_STATE_SPAWN;
-	// m_byFareRate = 기본값;
+	// m_byFareRate = default;
 
 	SetFlags(SLFLAG_ADD_UPDATE | SLFLAG_TARGET_NEAR_APPROACH );
 	SetActorFlags( SLFLAG_ACTOR_HAVE_LIFE);
@@ -42,7 +42,7 @@ RwBool CNtlSobDynamicObject::Create( VOID )
 {
 	NTL_FUNCTION( "CNtlSobDynamicObject::Create");
 
-	// TODO: Proxy 설정
+	// TODO: Proxy settings
 	m_pSobProxy = NTL_NEW CNtlSobDynamicObjectProxy;
 	m_pSobProxy->Create(0);
 	m_pSobProxy->SetSobObj(this);
@@ -80,7 +80,7 @@ void CNtlSobDynamicObject::HandleEvents( RWS::CMsg& pMsg )
 	{
 		SNtlEventSobDynamicObjectCreate *pSobCreate = reinterpret_cast<SNtlEventSobDynamicObjectCreate*>(pMsg.pData);
 
-		//// 좌표와 방향 세팅.
+		//// Coordinate and direction settings.
 		SWorldHeightStuff sHStuff;
 		RwV3d vPos = pSobCreate->vLoc;
 		Logic_GetWorldHeight(this, &vPos, sHStuff);

@@ -9,7 +9,7 @@
 #include "NtlSLVisualDeclear.h"
 #include "NtlSLEventFunc.h"
 
-#define DESTORY_DIST 5.0f                                      ///< 이펙트 소멸 거리
+#define DESTORY_DIST 5.0f                                      ///< Effect extinction distance
 #define DIRECTOR_FADE_TIME 1.0f
 
 CDBODirectorIndicate::CDBODirectorIndicate(CNtlPLCharacter* pPLCharacter)
@@ -83,7 +83,7 @@ VOID CDBODirectorIndicate::HandleEvents( RWS::CMsg &pMsg )
             SetTargetEffectPos(m_vTargetPos);
             m_bUpdate = TRUE;            
         }
-        else    // 이펙트 삭제 이벤트
+        else    //Effect delete event
         {
             Destory();
         }
@@ -106,7 +106,7 @@ VOID CDBODirectorIndicate::HandleEvents( RWS::CMsg &pMsg )
     }
 }
 
-// 방향 지시 이펙트를 생성한다.
+// Creates a direction indication effect.
 RwBool CDBODirectorIndicate::CreateDirector()
 {
     if(!m_pCharacter)
@@ -130,20 +130,20 @@ RwBool CDBODirectorIndicate::CreateTargetEffect()
     return TRUE;
 }
 
-// 타겟과의 거리가 지정거리보다 가까워지면 이펙트를 삭제한다.
+//Delete the effect when the distance to the target becomes closer than the specified distance.
 RwBool CDBODirectorIndicate::CalcDistance() 
 {
     if(!m_pCharacter)
         return FALSE;
 
-    // NOTE : 타겟의 위치에는 Y값이 없다. (이벤트에서 안날려준다)
+        // NOTE: The target's position does not have a Y value. (it is not sent in the event) (이벤트에서 안날려준다)
     RwV3d vCharPos = m_pCharacter->GetPosition();
     vCharPos.y = 0.0f;
     RwV3d vDistance = m_vTargetPos - vCharPos;
     RwReal fDist = CNtlMath::MathRwV3dSquaredLength(&vDistance);
     if(fDist < DESTORY_DIST * DESTORY_DIST)
     {
-        // 미니맵 표시를 없애기 위해서 삭제 이벤트를 날려준다
+        // A delete event is sent to remove the minimap display.
         CNtlSLEventGenerator::SLDirection_Nfy(FALSE, m_vTargetPos);
 
 		sNtlSoundPlayParameta tSoundParam;
@@ -185,7 +185,7 @@ VOID CDBODirectorIndicate::SetTargetEffectPos(RwV3d vPos )
     if(!m_pTargetEffect)
         return;
 
-    // 서버로부터 내려오는 좌표는 Y좌표가 없다. 클라이언트에서 직접 계산한다.
+    // The coordinates coming down from the server have no y-coordinate. The client calculates them directly.
     RwReal fHeight = 0.0f;
     RwV3d  vNormal = ZeroAxis;
     GetSceneManager()->GetWorldHeight(&vPos, fHeight, &vNormal);

@@ -1,19 +1,19 @@
 /******************************************************************************
-* File			: DeveloperPreviewGui.h
-* Author		: Hong SungBock
-* Copyright		: (аж)NTL
-* Date			: 2009. 1. 15
-* Abstract		: 
+*File			: DeveloperPreviewGui.h
+*Author		    : Hong SungBock
+*Copyright		: (аж)NTL
+*Date			: 2009. 1. 15
+*Abstract		: 
 *****************************************************************************
-* Desc			: 
+*Desc			: 
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
 class CDeveloperPreviewGui : public CNtlPLGui, public RWS::CEventHandler

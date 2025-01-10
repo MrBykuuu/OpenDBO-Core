@@ -1,21 +1,21 @@
 #include "precomp_dboclient.h"
 #include "SlotGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// share
+// Share
 #include "ItemTable.h"
 #include "SkillTable.h"
 #include "HTBSetTable.h"
 #include "ItemOptionTable.h"
 #include "TableContainer.h"
 
-// presentation
+// Presentation
 #include "NtlPLDef.h"
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSobIcon.h"
 #include "NtlSobBuff.h"
 #include "NtlSobItem.h"
@@ -24,7 +24,7 @@
 #include "NtlSLLogic.h"
 #include "NtlSLApi.h"
 
-// dbo
+// Dbo
 #include "DboDef.h"
 #include "DboLogic.h"
 #include "DialogDefine.h"
@@ -53,13 +53,13 @@ CSlotGui::~CSlotGui()
 
 RwBool CSlotGui::Create(gui::CComponent *pParent, RwUInt32 uiOwnerDialog, DWORD dwSlotStyle /* = SDS_NONE*/)
 {
-	// 부모 다이얼로그 인덱스
+	// Parent dialog index
 	m_uiOwnerDialog = uiOwnerDialog;
 
-	// 아이템 슬롯 스타일
+	// Item Slot Style
 	m_dwSlotStyle = dwSlotStyle;
 
-	// 갯수를 표시한다면
+	// If you display the number
 	if( BIT_FLAG_TEST(m_dwSlotStyle, SDS_COUNT) )
 	{
 		CRectangle rect;
@@ -72,13 +72,13 @@ RwBool CSlotGui::Create(gui::CComponent *pParent, RwUInt32 uiOwnerDialog, DWORD 
 		m_pCount->Clear();
 	}	
 
-	// 사용금지 이미지
+	// Prohibited images
 	if( BIT_FLAG_TEST(m_dwSlotStyle, SDS_LOCK) )
 	{
 		m_srfLock.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface("GameCommon.srf", "srfSlotDisableEffect") );
 	}
 
-	// 현재 조건이 맞지 않아 사용할 수 없다는 이미지 사용
+	// Use an image that says it cannot be used because it does not meet the current conditions
 	if( BIT_FLAG_TEST(m_dwSlotStyle, SDS_DISABLE) )
 	{
 		m_srfDisable.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface("GameCommon.srf", "srfSlotRed" ) );
@@ -465,7 +465,7 @@ RwBool CRegularSlotGui::SetIcon(RwUInt32 uiSerial, RwUInt32 uiCount /* = 1 */)
 			}
 			else
 			{
-				// 아이템 테이블이 없어도 다른 로직들은 동작해야 하기에 리턴하지 않는다
+				// It does not return because other logic must operate even if there is no item table.
 				DBO_FAIL("Not exist skill table of index : " << uiSerial);
 			}
 			break;
@@ -481,7 +481,7 @@ RwBool CRegularSlotGui::SetIcon(RwUInt32 uiSerial, RwUInt32 uiCount /* = 1 */)
 			}
 			else
 			{
-				// 아이템 테이블이 없어도 다른 로직들은 동작해야 하기에 리턴하지 않는다
+				// It does not return because other logic must operate even if there is no item table.
 				DBO_FAIL("Not exist htb table of index : " << uiSerial);
 			}
 		}
@@ -548,7 +548,7 @@ VOID CRegularSlotGui::SetCount(RwUInt32 uiCount)
 
 	if( m_uiStackCount >= 1 )
 	{
-		// 스택커블 아이템만 pITEM_TBLDAT->byMax_Stack 값이 1보다 크다
+		// Only stackable items have a pITEM_TBLDAT->byMax_Stack value greater than 1.
 		if( (pITEM_TBLDAT->byMax_Stack > 1 ) ||
 			IsOnlyUsableIcon() )
 		{

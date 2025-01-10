@@ -40,7 +40,7 @@ VOID ChangeLineFeedToCStyle( std::wstring& wstr );
 
 float RwV2dLineInterpolation( RwV2d* v2dOutput, RwV2d* v2dStart, RwV2d* v2dEnd, float fTime, float fGoalTime );
 
-// 문자열 관련
+//string related
 void ExtractTokenByLastChar( char* pStr, char* pBuffer, int nLen, const char *pMark );
 BOOL ExtractTokenByFind( char* pOutBuffer, int nBufferSize, char* pSrcBuffer, char* pToken, int nTokenSize );
 void RemoveSpaceForSelfBuffer( char* pStrBuffer );

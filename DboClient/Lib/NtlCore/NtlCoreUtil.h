@@ -25,7 +25,7 @@ void  g_SetElapsedTime(float fElapsedTime);
 float g_GetElapsedTime();
 
 //------------------------------------------------------------------------------
-// file attribute 관련 util function
+// util function related to file attribute
 //------------------------------------------------------------------------------
 
 void NtlFileAttrReadOnlyRelease(const RwChar *pFileName);
@@ -39,20 +39,20 @@ RwBool DeleteFolder(const RwChar* strFolder);
 // log file util function
 //------------------------------------------------------------------------------
 
-// log file name을 설정한다.
+// Set the log file name.
 void NtlLogFilePath(RwChar *pFilePath);
 
-// logfile print 함수.
+// logfile print function.
 void NtlLogFilePrint(RwChar *pLog);
 void NtlLogFilePrintArgs(RwChar *fmt, ... );
 
 void NtlTraceEnable_inRelease(bool bEnable);
 
-// trace file name을 설정한다.
+// Set the trace file name.
 void NtlTraceInitFilePath();
 void NtlTraceInitFilePath(RwChar *pFilePath);
 
-// logfile print 함수.
+// logfile print function.
 void NtlTraceFilePrint(RwChar *pLog);
 void NtlTraceFilePrintArgs(RwChar *fmt, ... );
 

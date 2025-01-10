@@ -1,29 +1,29 @@
 #include "precomp_dboclient.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "CEventHandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 #include "NtlPLGuiManager.h"
 
-// framework
+// Framework
 #include "NtlApplication.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 
-// table
+// Table
 
-// dbo
+// Dbo
 #include "DialogManager.h"
 #include "DisplayStringManager.h"
 #include "SideIconGui.h"
 #include "DboEvent.h"
 #include "PetitionManager.h"
 
-// etc
+// Etc
 #include <algorithm>
 
 #include "HintSideIconGui.h"
@@ -45,7 +45,7 @@
 #include "NetPySideIconGui.h"
 #include "NetPySideView.h"
 
-// SideIcon을 생성하고 SideIconGui에 등록하는 매크로
+// Macro to create a SideIcon and register it with SideIconGui
 #define RegisterSideIcon( pSideIcon, ClassName, szName, id ) \
 	{ \
 	pSideIcon = NTL_NEW ClassName(szName); \
@@ -63,7 +63,7 @@
 	RocateSideIcon(); \
 	} \
 
-// SideView를 생성하고 SideViewGui에 등록하는 매크로
+// Macro to create a SideView and register it with SideViewGui
 #define RegisterSideView( pSideView, ClassName, szName, id ) \
 	{ \
 	pSideView = NTL_NEW ClassName(szName); \
@@ -80,7 +80,7 @@
 	pSideView->GetDialog()->SetPriority( dDIALOGPRIORITY_SIDEICON ); \
 	}
 
-// SideIcon을 해제 & 소멸
+// Release & destroy SideIcon
 #define UnRegisterSideIcon( pSideIcon, id ) \
 	{ \
 	if( pSideIcon ) \
@@ -92,7 +92,7 @@
 	RocateSideIcon(); \
 	}
 
-// SideView를 해제 & 소멸
+// Release & destroy SideView
 #define UnRegisterSideView( pSideView, id ) \
 	{ \
 	if( pSideView ) \
@@ -163,7 +163,7 @@ RwBool CSideIconGui::Create()
 	RegisterSideIcon( m_pDBCSideIconGui, CDBCSideIconGui, "DBCSideIconGui", SIDEICON_DBC );
 	RegisterSideView( m_pDBCSideViewGui, CDBCSideViewGui, "DBCSideViewGui", SIDEVIEW_DBC );
 
-	// RankBattle
+	// Rank Battle
 	RegisterSideIcon( m_pRBSideIconGui, CRBSideIconGui, "RBSideIconGui", SIDEICON_RB );
 	RegisterSideView( m_pRBSideViewGui, CRBSideViewGui, "RBSideViewGui", SIDEVIEW_RB );
 
@@ -201,7 +201,7 @@ RwBool CSideIconGui::Create()
 	RegisterSideIcon(m_pHLSSideIconGui, CHLSSideIconGui, "CHLSSideIconGui", SIDEICON_HLS);
 	RegisterSideView(m_pHLSSideViewGui, CHLSSideViewGui, "CHLSSideViewGui", SIDEVIEW_HLS);
 
-	//Token Shop - NetPy
+	//Token Shop -NetPy
 	RegisterSideIcon(m_pNetPySideIconGui, CNetPySideIconGui, "CNetPySideIconGui", SIDEICON_NETPY);
 	RegisterSideView(m_pNetPySideViewGui, CNetPySideViewGui, "CNetPySideViewGui", SIDEVIEW_NETPY);
 
@@ -275,7 +275,7 @@ void CSideIconGui::Destroy()
 
 	UnLinkMsg(g_EventPetition);
 
-	//test
+	//Test
 	UnLinkMsg(g_EventSCS);
 
 	NTL_RETURNVOID();
@@ -381,7 +381,7 @@ void CSideIconGui::HandleEvents(RWS::CMsg &msg)
 
 		if( pEvent->uiState == WORLD_STATE_TMQ_PREPARE )
 		{
-			// TutorialSideIcon
+			// Tutorial side icon
 			m_pTutorialSideIconGui = NTL_NEW CTutorialSideIconGui("TutorialSideIconGui");
 			if(!m_pTutorialSideIconGui->Create())
 			{
@@ -394,7 +394,7 @@ void CSideIconGui::HandleEvents(RWS::CMsg &msg)
 			m_pTutorialSideIconGui->SetNumber(dSIDEICON_PRIORITY_TUTORIAL);
 			m_pTutorialSideIconGui->Show(true);
 
-			// TutorialSideView
+			// Tutorial side view
 			m_pTutorialSideViewGui = NTL_NEW CTutorialSideViewGui("TutorialSideViewGui");
 			if(!m_pTutorialSideViewGui->Create())
 			{
@@ -514,7 +514,7 @@ RwInt32 CSideIconGui::SwitchDialog(bool bOpen)
 
 void CSideIconGui::RocateSideIcon()
 {
-	// 정렬
+	// array
 	SortSideIcon();
 
 	RwInt32 iPosX		= s_pSideIconGui->GetPosition().left;
@@ -665,13 +665,13 @@ void CSideIconGui::OnSideViewShow(CSideViewBase* pSideView, bool bShow)
 }
 
 /**
-* \brief SideIcon의 벌룬 창을 출력한다.
+* \brief Prints the balloon window of SideIcon.
 *
-* SideView는 하나만 출력한다.
+*SideView outputs only one.
 */
 void CSideIconGui::OpenSideView(CSideIconBase* pSideIcon, const eSideViewType& eSideView, void* pData)
 {
-	// DialogMode라면 SideView를 출력하지 않는다.
+	// In DialogMode, SideView is not displayed.
 	if( GetDialogManager()->IsMode( DIALOGMODE_NARRATION ) )
 		return;
 
@@ -779,7 +779,7 @@ void CSideViewBase::Show(bool bShow)
 {
 	if (IsShow() != (RwBool)bShow)
 	{
-		// 나레이션 모드 중, SideView를 SHOW(TRUE)하라는 명령이 온다면 리턴한다.
+		// During narration mode, if a command is given to SHOW(TRUE) SideView, it returns.
 		if( GetDialogManager()->IsMode( DIALOGMODE_NARRATION ) && bShow)
 			return;
 

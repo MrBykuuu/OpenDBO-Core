@@ -1,26 +1,26 @@
 /*****************************************************************************
  *
- * File			: NtlBehaviorBase.h
- * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
- * Date			: 2006. 2. 13	
- * Abstract		: actor behavior data stuff
+ *File			: NtlBehaviorBase.h
+ *Author		: HyungSuk, Jang
+ *Copyright	: (주)NTL
+ *Date			: 2006. 2. 13	
+ *Abstract		: actor behavior data stuff
  *****************************************************************************
- * Desc         : 
+ *Desc         : 
  *
  *****************************************************************************/
 
 #ifndef __NTL_BEHAVIORDATA_H__
 #define __NTL_BEHAVIORDATA_H__
 
-// shared 
+// Shared 
 #include "NtlBattle.h"
 #include "NtlSkill.h"
 
 // PL
 #include "NtlAnimEventData.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
 struct SNtlEventSobMoveSync;
@@ -30,54 +30,54 @@ struct SNtlEventSobMoveSync;
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////
-// 공격 
+// attack 
 
-// 공격 성공의 형태.
-#define NTL_ATTACK_RESULT_SUCCESS		0		// 공격 성공
-#define NTL_ATTACK_RESULT_BLOCK			1		// 공격 방어
-#define NTL_ATTACK_RESULT_DODGE			2		// 공격 회피
-#define NTL_ATTACK_RESULT_KNOCKDOWN		3		// 공격 knockdown
+//Type of attack success.
+#define NTL_ATTACK_RESULT_SUCCESS		0		// attack success
+#define NTL_ATTACK_RESULT_BLOCK			1		// attack defense
+#define NTL_ATTACK_RESULT_DODGE			2		// attack dodge
+#define NTL_ATTACK_RESULT_KNOCKDOWN		3		// attack knockdown
 #define NTL_ATTACK_RESULT_SLIDING		4		// 공격 sliding ( NTL_ATTACK_RESULT_KNOCKDOWN | NTL_ATTACK_RESULT_BLOCK )
 #define NTL_ATTACK_RESULT_HEALING		5		// heading
 #define NTL_ATTACK_RESULT_BUFF			6		// heading
-#define NTL_ATTACK_RESULT_STEAL			7		// 공격한 대상의 체력을 뺏서온다. (이 플래그는 Projectile 전용 플래그다)
+#define NTL_ATTACK_RESULT_STEAL			7		// Steals the attacked target's health. (This flag is for Projectile only)
 #define NTL_ATTACK_RESULT_IMMUNE		8		// 
 #define NTL_ATTACK_RESULT_RESIST		9		// 
 
 
-// behavior 형태
-#define NTL_ATTACK_NORMAL				0		// 일반적인 공격형태.
-#define NTL_ATTACK_PUSH					1		// push
+// behavior form
+#define NTL_ATTACK_NORMAL				0		// A common form of attack.
+#define NTL_ATTACK_PUSH					1		// Push
 #define NTL_ATTACK_KNOCKDOWN			2		// knock down
-#define NTL_ATTACK_SLIDING				3		// sliding
-#define NTL_ATTACK_TOSS_UP				4		// 공중으로 띄우는 공격
-#define NTL_ATTACK_TOSS_DOWN			5		// 공중에서 아래로 내려 꽂는 공격.
+#define NTL_ATTACK_SLIDING				3		// Sliding
+#define NTL_ATTACK_TOSS_UP				4		// attack in the air
+#define NTL_ATTACK_TOSS_DOWN			5		// An attack that strikes downward from the air.
 
-// 물리적 공격 형태
-#define NTL_ATTACK_PHYSIC_MELEE			0		// 직접 공격.
-#define NTL_ATTACK_PHYSIC_PROJECTILE	1		// 발사체 공격.
-#define NTL_ATTACK_PHYSIC_SPELL			2		// 마법 공격
+// form of physical attack
+#define NTL_ATTACK_PHYSIC_MELEE			0		// Direct attack.
+#define NTL_ATTACK_PHYSIC_PROJECTILE	1		// Projectile attack.
+#define NTL_ATTACK_PHYSIC_SPELL			2		// magic attack
 
-// 논리적 공격 형태
-#define NTL_ATTACK_LOGIC_NORMAL			0		// 일반 공격(기본으로 설정된 공격 방식)
-#define NTL_ATTACK_LOGIC_SKILL			1		// skill 공격
+// logical form of attack
+#define NTL_ATTACK_LOGIC_NORMAL			0		// Normal attack (default attack method)
+#define NTL_ATTACK_LOGIC_SKILL			1		// skill attack
 
-// attribute 공격 형태
-#define NTL_ATTACK_ATTR_NORMAL			0		// 일반 공격
-#define NTL_ATTACK_ATTR_CRITICAL		1		// critical 공격.
+// attribute attack form
+#define NTL_ATTACK_ATTR_NORMAL			0		// normal attack
+#define NTL_ATTACK_ATTR_CRITICAL		1		// critical attack.
 
 
 struct SAttackDamageStuff
 {
-    RwInt32 iDamage;        ///< 일반 데미지
+    RwInt32 iDamage;        ///< Normal damage
     
     // DD/DOT        
     RwInt32 iAbsorbedDamage;
     RwInt32 iReflectedDamage;
 
 	sDBO_LP_EP_RECOVERED		lpEpRecovered;	// attacked target recover
-        
-    // 스틸 스킬
+
+    // steel skill
     float						LP_EP_STEAL_fLpDamage;
     float						LP_EP_STEAL_fEpDamage;
     float						LP_EP_STEAL_fAbsorbedDamage;
@@ -90,15 +90,15 @@ typedef union _UAttackAttr
 {
 	struct 
 	{
-		RwUInt32 bitResult		: 4;	// 공격 성공의 result.
-		RwUInt32 bitPhysic		: 2;	// 물리적 공격 형태
-		RwUInt32 bitBehavior	: 4;	// behavior 형태
-		RwUInt32 bitLogic		: 4;	// 논리적 공격 형태
-		RwUInt32 bitCritical	: 1;	// attribute 공격 형태
+		RwUInt32 bitResult		: 4;	// Result of successful attack.
+		RwUInt32 bitPhysic		: 2;	// form of physical attack
+		RwUInt32 bitBehavior	: 4;	// behavior form
+		RwUInt32 bitLogic		: 4;	// logical form of attack
+		RwUInt32 bitCritical	: 1;	// attribute attack form
 		RwUInt32 bitChainAttack : 1;    // chain attack
 		RwUInt32 bitHitSeq		: 4;	// hit sequence
 		RwUInt32 bitPowerEffect : 1;	// power effect
-		RwUInt32 bitBlocking	: 8;	// blocking mode 종류.
+		RwUInt32 bitBlocking	: 8;	// Type of blocking mode.
 		RwUInt32 bitReserved	: 5;        
 	};
 	RwUInt32 uiFlags;
@@ -111,33 +111,33 @@ struct SHitStuff
 
 public:
 
-	UAttackAttr			uiAttr;									// 공격의 모든 속성
+	UAttackAttr			uiAttr;									// All attributes of the attack
 	SERIAL_HANDLE		hAttackerSerialId;						// attacker serial id
 	SERIAL_HANDLE		hDefenderSerialId;						// defender serial id
 	SAttackDamageStuff	sDamageStuff;							// damage stuff
-	RwUInt32			uiAttrLogicTblId;						// 무기 공격 : item id, skill 공격 : skill idRw
-	RwUInt32			uiProjectileBehaviorId;					// projectile이 존재하면 id를 setting 한다.
-	RwUInt8				byShotType;								// projectile  발사 위치(character, weapon, sub weapon)			
-	RwUInt8				bySubWeaponShotFlag;					// projectile  발사 위치가 sub weapon일 경우.(character, weapon, sub weapon)
+	RwUInt32			uiAttrLogicTblId;						// Weapon attack: item id, skill attack: skill idRw
+	RwUInt32			uiProjectileBehaviorId;					// If the projectile exists, set the ID.
+	RwUInt8				byShotType;								// projectile firing position (character, weapon, sub weapon)			
+	RwUInt8				bySubWeaponShotFlag;					// When the projectile firing position is sub weapon. (character, weapon, sub weapon)
 	RwReal				fSpeed;									// projectile speed
 	RwBool				bLeftHand;								// left or right hand
-	RwBool				bCreateHitStuffEffect;					// Projectile or Target Effct or Word Effect를 생성할 것인가?
+	RwBool				bCreateHitStuffEffect;					// Should I create Projectile or Target Effect or Word Effect?
 	RwChar				chBoneName[NTL_MAX_BONE_NAME];			// bone name
 	RwChar				chProjEffName[NTL_MAX_EFFECT_NAME];		// projectile effect name
 	
 	RwChar				chTargetEffName[NTL_MAX_EFFECT_NAME];	// target effect name
-	RwUInt8				byTargetAttach;							// target에 attach할 것인가?
-	RwReal				fTargetLocHeight;						// target effect  터질 높이 값(persent이며, 1.0이 100%이다.)
-	RwUInt8				byTargetEffectDir;						// target effect 방향(character anim event 참조)
+	RwUInt8				byTargetAttach;							// Should I attach to the target?
+	RwReal				fTargetLocHeight;						// Height value at which the target effect will explode (persent, 1.0 is 100%)
+	RwUInt8				byTargetEffectDir;						// Target effect direction (see character animation event)
 	RwChar				chWordEffName[NTL_MAX_EFFECT_NAME];		// target word effect name
 
-	RwV3d				vPushDir;								// push 방향.
-	RwBool				bCameraShake;							// 카메라 흔들기.
-    RwReal              fShakeFactor;                           // 카메라 흔들기 팩터
-    RwReal              fShakeMaxHeight;                        // 카메라 흔들기 최대치 팩터
+	RwV3d				vPushDir;								// push direction.
+	RwBool				bCameraShake;							// Shake the camera.
+    RwReal              fShakeFactor;                           // camera shake factor
+    RwReal              fShakeMaxHeight;                        // Maximum camera shake factor
 	SYNCEVENT_HANDLE	hSyncEventId;
 	void				*pProjExtData;
-    RwBool              bHitSoundEcho;                          // Hit Sound의 Echo 적용 유무
+    RwBool              bHitSoundEcho;                          // Whether Hit Sound Echo is applied or not
 
 	SHitStuff& operator = (const SHitStuff& stuff)
 	{
@@ -206,14 +206,14 @@ public:
 
 struct SAttackStuff
 {
-	UAttackAttr			uiType;						// 공격의 모든 속성
-	SERIAL_HANDLE		hAttackerSerialId;			// attacker
-	SERIAL_HANDLE		hDefenderSerialId;			// defender
+	UAttackAttr			uiType;						// All attributes of the attack
+	SERIAL_HANDLE		hAttackerSerialId;			// Attacker
+	SERIAL_HANDLE		hDefenderSerialId;			// Defender
 	RwUInt8				byAttSeq;					// chain attack sequence
 	SAttackDamageStuff	sDamage;					// damage stuff
-	RwUInt32			uiAttrLogicTblId;			// 무기 공격 : item id, skill 공격 : skill id
+	RwUInt32			uiAttrLogicTblId;			// Weapon attack: item id, skill attack: skill id
 	RwV3d				vPushDir;
-	RwBool				bAnimSpeedApply;			// 공격 animation speed를 적용할 것인가?
+	RwBool				bAnimSpeedApply;			// Should attack animation speed be applied?
 	RwUInt32			uiSyncEventId;
 	RwV3d				vFinalLoc;
 		
@@ -298,7 +298,7 @@ public:
 #define NTL_MOVEFORM_SWIMMING		1
 #define NTL_MOVEFORM_FLY			2
 #define NTL_MOVEFORM_SPLINE			3
-#define NTL_MOVEFORM_BUS            4               // 버스 이동
+#define NTL_MOVEFORM_BUS            4               // bus transfer
 
 
 // move target
@@ -320,10 +320,10 @@ struct SMoveStuff
 	RwUInt8			byType;							// direction, location, actor
 	RwUInt8			byForm;							// ground, fly
 	RwUInt8			byFormFlag;						// Walking, running, swimming, etc.
-	RwUInt8			byMoveFlags;					// byMoveDirection
-	RwV3d			vCurrLoc;						// 이동 현재 위치.
-	RwV3d			vDir;							// dash일 경우 방향 vector로 사용된다.
-	RwV3d			vDest;							// mouse 및 dash 이동일 경우 최종 목적지.
+	RwUInt8			byMoveFlags;					// By move direction
+	RwV3d			vCurrLoc;						// Go to current location.
+	RwV3d			vDir;							// In the case of dash, it is used as a direction vector.
+	RwV3d			vDest;							// Final destination for mouse and dash movements.
 	RwV3d			vSendDest;						// Second shift destination (on bus)
 	RwReal			fFollowRange;					// follow range
 	SERIAL_HANDLE	hFollowSerialId;				// follow serial
@@ -331,7 +331,7 @@ struct SMoveStuff
 	RwV3d			arrPathNode[DBO_MAX_NEXT_DEST_LOC_COUNT];
 	RwUInt8			byMoveResult;					// Results after moving.
 	RwBool			bSplineGroundCheck;		
-	RwBool			bSplineRunMove;					// run 이동.
+	RwBool			bSplineRunMove;					// run move.
 	RwChar			chSpline[NTL_MAX_SPLINE_NAME];
 
 	void Reset(void)
@@ -346,11 +346,11 @@ struct SMoveStuff
 	}
 };
 
-/// Move Sync 정보를 가지고 있는 구조체 (클라이언트에서만 사용한다)
+/// Structure containing Move Sync information (used only by the client)
 struct SMoveSyncStuff
 {
-    std::deque<SNtlEventSobMoveSync*>   m_MoveSyncQ;             ///< Move Sync 패킷 큐
-    SNtlEventSobMoveSync*               m_pMoveSyncCurr;         ///< 현재 Move Sync값    
+    std::deque<SNtlEventSobMoveSync*>   m_MoveSyncQ;             ///< Move Sync packet queue
+    SNtlEventSobMoveSync*               m_pMoveSyncCurr;         ///< Current Move Sync value    
 
     SMoveSyncStuff()
     {
@@ -516,26 +516,26 @@ struct SCtrlStuffOperate
 };
 
 /**
-* \brief 겜블 Npc에 대한 정보
+* \brief Information about gambling NPCs
 */
 struct SCtrlStuffGamble
 {
 	SERIAL_HANDLE	hGambleNpc;
 };
 
-/// 스턴 타입
+/// stun type
 struct SCtrlStuffStun
 {
     BYTE    byStunType;
 };
 
-// 버스 및 탈것에 대한 정보
+// Information about buses and vehicles
 struct SCtrlStuffRide
 {
     RwUInt32        hTargetSerialId;
 };
 
-/// Pushing 상태 정보
+/// Pushing status information
 struct SCtrlStuffPushing
 {
     BYTE    byAttackResult;
@@ -543,7 +543,7 @@ struct SCtrlStuffPushing
     RwV3d   vDestPos;
 };
 
-// Vehicle에 대한 정보
+// Information about Vehicle
 
 enum eVehicleEngineMessgeType
 {
@@ -559,7 +559,7 @@ struct SCtrlStuffVehicle
 {
 	RwBool	bCreateUpdate;
 	RwBool	bRideOn;
-//	RwBool	bEngineOn; // engine disabled by daneos
+//	RwBool	bEngineOn; //engine disabled by daneos
 	RwV3d	vSpawnPos;
 	SERIAL_HANDLE hVehicleItem;
 	TBLIDX	idxVehicleItem;
@@ -689,7 +689,7 @@ public:
 	virtual void* GetData(RwReal fTime);
 };
 
-// 3차원 좌표계의 Time Sequence 클래스 (by agebreak)
+// Time Sequence class in 3D coordinate system (by agebreak)
 class CNtl3DTimeSequence : public CNtlTimeSequence
 {
     DECLEAR_MEMORY_POOL(CNtl3DTimeSequence, NTL_DEFAULT_MEMORY_POOL);
@@ -706,9 +706,9 @@ protected:
     RwV3d           RecursiveData(RwReal fTime);
 
 protected:
-    RwV3d m_vData;                      ///< 현재 시퀀스의 데이터
+    RwV3d m_vData;                      ///< Data of current sequence
 
-    static RwV3d m_svCurrData;          ///< 포인터형 반환을 위해서 가지고 있어야하는 정적 데이터 
+    static RwV3d m_svCurrData;          ///< Static data that must be held for pointer type return 
 };
 
 
@@ -724,7 +724,7 @@ private:
 
 	SCtrlStuff	m_sCtrlStuff;
 	SMoveStuff	m_sMoveStuff;
-    SMoveSyncStuff m_sMoveSyncStuff;                ///< Move Sync 정보를 담고 있는 구조체
+    SMoveSyncStuff m_sMoveSyncStuff;                ///< Structure containing Move Sync information
 	SJumpStuff	m_sJumpStuff;
 	SHitStuff	m_sHitStuff;
 	SSkillStuff m_sSkillStuff;    
@@ -760,7 +760,7 @@ public:
 
 class CNtlSobActor;
 
-// actor 좌표 보정에 관한 함수.
+// Function related to actor coordinate correction.
 void Behavior_AdjustPositionJumping(CNtlSobActor *pActor, const RwV3d *pTarLoc);
 
 

@@ -4,7 +4,7 @@
 
 /**
  * \ingroup NtlPresentation
- * \brief Particle및 Mesh System의 꼬리 부분을 표현하기 위한 이펙트 클래스. TraceSystem에서 상속받아서 만든다.
+ * \brief Effect class for expressing the tail of Particle and Mesh System. It is created by inheriting from TraceSystem.
  * \date 2006-12-29
  * \author agebreak
  */
@@ -26,12 +26,12 @@ protected:
     virtual void Init();
     virtual void Reset();
 
-    virtual void   CreateEdge();                                        ///< 새로운 Edge를 추가한다.
-    void           SetEdgePoint();                                      ///< Edge 위치를 설정한다.
+    virtual void   CreateEdge();                                        ///< Add a new edge.
+    void           SetEdgePoint();                                      ///< Set the edge location.
 
 protected:
-    SNtlPrtStdEmitterTrail*         m_pEmitterTrail;                    ///< Trail 생성 정보를 가지고 있는 프로퍼티 객체
-    CNtlInstanceComponentSystem*    m_pAttachComponent;                 ///< Trail이 부착될 InstanceComponentSystem 객체
+    SNtlPrtStdEmitterTrail*         m_pEmitterTrail;                    ///< Property object containing trail creation information
+    CNtlInstanceComponentSystem*    m_pAttachComponent;                 ///< InstanceComponentSystem object to which the Trail will be attached
     
-    RwV3d                           m_vPrevTrailPoint;                  ///< 이전 프레임에 계산한 Trail Point;
+    RwV3d                           m_vPrevTrailPoint;                  ///< Trail Point calculated in the previous frame;
 };

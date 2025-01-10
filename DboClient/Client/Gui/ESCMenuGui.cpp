@@ -13,7 +13,7 @@
 #include "NtlWorldConcept.h"
 #include "NtlSLLogic.h"
 
-// client
+// Client
 #include "DboGlobal.h"
 #include "DboEvent.h"
 #include "DialogManager.h"

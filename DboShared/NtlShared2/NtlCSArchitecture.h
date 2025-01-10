@@ -37,9 +37,9 @@ enum eNtlServerGroupType
 {
 	NTL_SERVER_GROUP_TYPE_AUTH = 0,
 	NTL_SERVER_GROUP_TYPE_CHARACTER,
-	NTL_SERVER_GROUP_TYPE_SERVERFARM_TOP,//모든 서버팜에 최상위
-	NTL_SERVER_GROUP_TYPE_SERVERFARM, //각각의 서버팜
-	NTL_SERVER_GROUP_TYPE_CHANNEL,//서버팜 밑에 채널
+	NTL_SERVER_GROUP_TYPE_SERVERFARM_TOP,//Top notch for all server farms
+	NTL_SERVER_GROUP_TYPE_SERVERFARM, //Each server farm
+	NTL_SERVER_GROUP_TYPE_CHANNEL,//Channel under the server farm
 
 	NTL_SERVER_GROUP_TYPE_INVALID = 0xFF,
 
@@ -54,9 +54,9 @@ enum eNtlServerGroupType
 
 enum eDBO_SERVER_STATUS
 {
-	DBO_SERVER_STATUS_UP = 0,			//정상 동작
-	DBO_SERVER_STATUS_DOWN,				//점검중
-	DBO_SERVER_STATUS_LOCKED,			//잠김
+	DBO_SERVER_STATUS_UP = 0,			//normal operation
+	DBO_SERVER_STATUS_DOWN,				//Under maintenance
+	DBO_SERVER_STATUS_LOCKED,			//locked
 	DBO_SERVER_STATUS_OPEN
 };
 

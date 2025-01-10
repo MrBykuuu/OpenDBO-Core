@@ -1,9 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: QuickSlotGui.h
-// Desc: Skill및 Item의 링크를 관리하는 GUI
+// Desc: GUI that manages links to skills and items
 //
 // 2006.06.12 Peessi@hitel.net
-// 2007.11.30 Kell - RpBonus Skill 추가
+// 2007.11.30 Kell -RpBonus Skill added
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -55,7 +55,7 @@ public:
 	stQUICKSLOTOBJ* HasObj( RwUInt32 hSerialID );
 
 	VOID		 SetItem( RwUInt32 hSerialID, CNtlSobIcon* pSetIcon, RwUInt8 byQuickSlotID );
-	RwBool		 UnSetItem( RwUInt32 hSerialID );						// return FALSE : 아직 남아있음. TRUE : 완전히 지워짐
+	RwBool		 UnSetItem( RwUInt32 hSerialID );						// return FALSE: Still remaining. TRUE: Completely erased
 	VOID		 UnSetItem(VOID);
 	VOID		 SetEnableState( RwInt32 eEnableState ) { m_eEnableState = eEnableState; }
 	VOID		 SetUseableCheckFlag( RwUInt32 flagUseableCheck ) { m_flagUseableCheck = flagUseableCheck; }
@@ -70,7 +70,7 @@ private:
 	RwUInt8						m_byQuickSlotID;
 };
 
-// 초기 시작시, 아이템 등록시 같은 아이템을 찾는 로직 필요. 
+// At initial startup, logic is needed to find the same item when registering an item. 
 
 class CQuickSlotGui : public CNtlPLGui, RWS::CEventHandler
 {
@@ -96,7 +96,7 @@ public:
 	VOID	LinkActionMap();
 	VOID	UnLinkActionMap();
 
-	CPos	GetInitialRowPosOffset(VOID);	// 튜토리얼에서 첫번째 슬롯의 오프셋을 구할떄.
+	CPos	GetInitialRowPosOffset(VOID);	// When getting the offset of the first slot in the tutorial.
 
 //! Event
 	VOID	HandleEvents( RWS::CMsg& msg );
@@ -178,7 +178,7 @@ private:
 	RwBool	CheckIconMoveLock(VOID);
 	VOID	SwapKeyInputData( RwInt32 nCurrentVisibleCount, RwInt32 nChangeVisibleCount );
 			
-//! CallBack
+	//! CallBack
 	VOID	OnClickedUpRow( gui::CComponent* pComponent );
 	VOID	OnClickedDownRow( gui::CComponent* pComponent );
 	VOID	OnMouseDown( const CKey& key );
@@ -220,17 +220,17 @@ private:
 	RwInt32		m_nRSelectedSlotIdx;
 	RwInt32		m_nMouseOnIndex;
 	
-	RwInt32		m_nPushDownIndex;							// 마우스 다운된 Index
+	RwInt32		m_nPushDownIndex;							// Mouse-down Index
 	
 	// RpBonus
-	RwInt32		m_abPushDownKey[QUICKSLOT_MAX_VISIBLE_ROW][QUICKSLOT_MAXCOL];			// 키 조작 퀵슬롯 상태
-	RwReal		m_afPushDownKeyElapsed[QUICKSLOT_MAX_VISIBLE_ROW][QUICKSLOT_MAXCOL];	// 키 조작 퀵슬롯의 TRUE상태 경과시간
-	RwBool		m_abIsProcDownKey[QUICKSLOT_MAX_VISIBLE_ROW][QUICKSLOT_MAXCOL];		// 현재 검사중인 퀵슬롯이 처리가 되었던 것인가?
-	RwInt32		m_abEnableIgnoreUp[QUICKSLOT_MAX_VISIBLE_ROW][QUICKSLOT_MAXCOL];		// TRUE면 Key Up때 IconProc을 처리 안함
+	RwInt32		m_abPushDownKey[QUICKSLOT_MAX_VISIBLE_ROW][QUICKSLOT_MAXCOL];			// Key operation quick slot status
+	RwReal		m_afPushDownKeyElapsed[QUICKSLOT_MAX_VISIBLE_ROW][QUICKSLOT_MAXCOL];	// TRUE state elapsed time of key operation quick slot
+	RwBool		m_abIsProcDownKey[QUICKSLOT_MAX_VISIBLE_ROW][QUICKSLOT_MAXCOL];		// Has the quick slot currently being inspected been processed?
+	RwInt32		m_abEnableIgnoreUp[QUICKSLOT_MAX_VISIBLE_ROW][QUICKSLOT_MAXCOL];		// If TRUE, IconProc is not processed during Key Up.
 
 	RwBool		m_bIsProcMouseSelected;
-	RwInt32		m_nEnableIgnoreIndex;						// 마우스 Up때 IconProc을 처리 안할 Index
-	RwReal		m_fPushDownMouseElapsed;					// 마우스 Elapsed
+	RwInt32		m_nEnableIgnoreIndex;						// Index that will not process IconProc when mouse up
+	RwReal		m_fPushDownMouseElapsed;					// Mouse Elapsed
 		
 	/*gui::CPanel*	m_ppnlAlt;
 	gui::CPanel*	m_ppnlCtrl;*/
@@ -239,19 +239,19 @@ private:
 	gui::CStaticBox* m_pRowNum;
 	gui::CStaticBox* m_apstbStackNum[QUICKSLOT_MAX_VISIBLE_ROW][QUICKSLOT_MAXCOL];
 
-	// AttckMode관련 플래시 이펙트
+	// Flash effects related to AttckMode
 	RwBool			 m_bAttackMode;
-	RwUInt32		 m_uiEffectFrame;	// 프레임동기를 위해 기억.
+	RwUInt32		 m_uiEffectFrame;	// Remember for frame synchronization.
 	gui::CFlash*	 m_apflaEffect[QUICKSLOT_MAX_VISIBLE_ROW][QUICKSLOT_MAXCOL];
 	
-	// 단축키 이름을 출력해주는 Comopnent
+	// Component that displays shortcut key names
 	gui::CStaticBox* m_apStbShortCutName[QUICKSLOT_MAX_VISIBLE_ROW][QUICKSLOT_MAXCOL];
 	RwInt32			 m_anQuickSlotRow[ROW_NUMS];
 	
 	gui::CRadarEffect m_CoolTimeEffect[QUICKSLOT_MAX_VISIBLE_ROW][QUICKSLOT_MAXCOL];
 
 	RwBool		m_bLock;
-	RwBool		m_bIconMoveLock;							// 아이콘의 움직임을 멈춘다. 
+	RwBool		m_bIconMoveLock;							// Stop the icon from moving. 
 };
 
 #endif

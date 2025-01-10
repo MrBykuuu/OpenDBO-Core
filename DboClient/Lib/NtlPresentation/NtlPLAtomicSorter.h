@@ -3,7 +3,7 @@
  *
  * File			: NtlPLAtomicSorter.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: (?)NTL
  * Date			: 2005. 12. 06	
  * Abstract		: Presentation atomic sorter
  *****************************************************************************
@@ -33,8 +33,8 @@ public:
 	struct SSortData
 	{
 		EPlSortType eSortType;
-		void* pRenderEntity;		// 레더링할 객체의 포인터
-		RwReal fDepth;				// 카메라와 렌더링 객체와의 거리
+		void* pRenderEntity;		// Pointer to object to render
+		RwReal fDepth;				// Distance between camera and rendered object
 	};
 	
 private:

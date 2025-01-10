@@ -2,7 +2,7 @@
  *
  * File			: NtlPackImage
  * Author		: HongHoDong
- * Copyright	: (주)NTL
+ * Copyright	: ntl Co., Ltd.
  * Date			: 2007. 3. 22	
  * Abstract		: Load Pack Image(dds, png, bmp)
  *****************************************************************************
@@ -14,10 +14,10 @@
 
 struct SNtlPackImage
 {
-	const RwChar	*pName;				//Texture 이름
-	const RwChar	*pMaskName;			//Mask 이름
+	const RwChar	*pName;				//Texture name
+	const RwChar	*pMaskName;			//Mask name
 	
-	std::string		strPackFileName;	//Pack 이름
+	std::string		strPackFileName;	//Pack name
 	RwUInt32		uiPackOffset;		//Offset
 	RwUInt32		uiPackSize;			//File Size
 	

@@ -1,19 +1,19 @@
 #include "precomp_dboclient.h"
 #include "SkillAbilityUseGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
 /// Sound
 #include "GuiSoundDefine.h"
 
-// shared
+// Shared
 #include "NtlSkill.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simualtion
+// Simualtion
 #include "NtlSLLogic.h"
 #include "NtlSobSkill.h"
 #include "NtlSobSkillAttr.h"
@@ -22,7 +22,7 @@
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 
-// result
+// Result
 #include "NtlResultCode.h"
 
 // Dbo

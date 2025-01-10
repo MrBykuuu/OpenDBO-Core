@@ -2,7 +2,7 @@
  *
  * File			: NtlPLItemData.h
  * Author		: HongHoDong
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2006. 8. 29.	
  * Abstract		: NTL CNtlPLItem
  *****************************************************************************
@@ -30,11 +30,11 @@
 
 enum EItemResType
 {
-	ITEM_RES_EQUIP_BODY				= 0,			// Body용 Item(Owner에 장착이 됨)
+	ITEM_RES_EQUIP_BODY				= 0,			// Item for body (installed on owner)
 	ITEM_RES_EQUIP_MAIN				= 1,			// Main Item
 	ITEM_RES_EQUIP_SUB				= 100,			// Sub Item
-	
-	ITEM_RES_NOT_EQUIP				= 200,			// World용 Item
+
+	ITEM_RES_NOT_EQUIP				= 200,			// Item for World
 };
 
 enum EItemEquipSlotType
@@ -52,7 +52,7 @@ enum EItemEquipSlotType
 	ITEM_EQUIP_R_HAND = 10,							// Weapon
 	ITEM_EQUIP_L_HAND,								// Weapon
 	ITEM_EQUIP_BACK,								// SubWeapon....
-    ITEM_EQUIP_MASK,                                // 마인용 마스크
+    ITEM_EQUIP_MASK,                                // Mask for Majin Karma
 	
 	ITEM_EQUIP_USER_MOVE1 = 20,						// In the Weapon (Gem) Model Tool, decrease by the Offset value.
 	ITEM_EQUIP_SCOUTER	= 100,						// Scouter (Offset value applied, Offset value applied)
@@ -60,16 +60,16 @@ enum EItemEquipSlotType
 
 struct SItemScheduleResInfo
 {
-	RwBool	bEquip;									// 장착을 하는지
-	RwBool	bAttach;								// 실제 Attach를 하는지
-	RwBool	bVisible;								// 화면에 보여주는지
+	RwBool	bEquip;									// Are you installing it?
+	RwBool	bAttach;								// Are you actually attaching?
+	RwBool	bVisible;								// Is it shown on the screen?
 
-	RwBool	bApplyedEquip;							// 장착이 되었는지
-	RwBool	bLoadComplete;							// Resource Load가 완료 되었는지
+	RwBool	bApplyedEquip;							// Is it installed?
+	RwBool	bLoadComplete;							// Is Resource Load Completed?
 
-	RwV3d	vOffset;								// 장착시 Offset
-	RwV3d	vScale;									// 원본 Scale
-    RwUInt32 uiAnimKey;                             ///< 애니메이션 ID
+	RwV3d	vOffset;								// Offset when installed
+	RwV3d	vScale;									// Original Scale
+    RwUInt32 uiAnimKey;                             ///< Animation ID
 	
 
 	SItemScheduleResInfo() :  bEquip(FALSE),
@@ -89,7 +89,7 @@ struct SItemScheduleResInfo
 	}
 };
 
-// Body Item의 경우는 Owner에서 World에 Add가 된다.
+// In the case of a body item, it is added to the world by the owner.
 inline RwBool	g_CheckItemBody(EItemResType	eItemResType)
 {
 	if(eItemResType == ITEM_RES_EQUIP_BODY)
@@ -105,7 +105,7 @@ inline RwBool	g_CheckItemWeapon(EItemResType	eItemResType)
 	return FALSE;
 };
 
-/// Upgrade Effect 관련 속성
+/// Upgrade Effect related properties
 struct SUpgradeEffectProperty
 {
     RwChar  szBone1[MAX_DEFAULT_NAME];

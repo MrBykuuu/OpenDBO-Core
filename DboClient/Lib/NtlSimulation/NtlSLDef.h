@@ -2,7 +2,7 @@
  *
  * File			: NtlSLDef.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2005. 8. 10	
  * Abstract		: Simulation object entity base class
  *****************************************************************************
@@ -35,7 +35,7 @@ typedef void*						CINEMATIC_HANDLE;
 //--------------------------------------------------------------
 // simulation class id
 
-#define SLCLASS_AVATAR				1 // myself
+#define SLCLASS_AVATAR				1 // Myself
 #define SLCLASS_PLAYER				2 // other players
 #define SLCLASS_NPC					3
 #define SLCLASS_MONSTER				4
@@ -100,8 +100,8 @@ typedef void*						CINEMATIC_HANDLE;
 #define SLCONTROLLER_PLYAER					0x0001		// avatar control
 #define SLCONTROLLER_PLAYER_SYNC			0x0002		// player sync control
 #define SLCONTROLLER_SERVER					0x0004		// server가 control
-#define SLCONTROLLER_SUMMON_PET				0x0008		// 자기가 control하는 summonn pet
-#define SLCONTROLLER_ITEM_PET				0x0010		// 자기가 control하는 item pet
+#define SLCONTROLLER_SUMMON_PET				0x0008		// Summon pet that you control
+#define SLCONTROLLER_ITEM_PET				0x0010		// Item pet that you control
 #define SLCONTROLLER_VEHICLE				0x0020		// Vehicle control
 #define SLCONTROLLER_VEHICLE_SYNC			0x0040		// Vehicle sysnc control
 
@@ -109,9 +109,9 @@ typedef void*						CINEMATIC_HANDLE;
 //--------------------------------------------------------------
 // simulation object flags
 
-#define SLFLAG_ADD_UPDATE					0x00000001		// update에 추가하라.
-#define SLFLAG_UPDATE_PAUSE					0x00000002		// update를 pause를 하라.
-#define SLFLAG_NOT_INPUT					0x00000004		// input에 대한 처리 불가.
+#define SLFLAG_ADD_UPDATE					0x00000001		// Add to update.
+#define SLFLAG_UPDATE_PAUSE					0x00000002		// Pause the update.
+#define SLFLAG_NOT_INPUT					0x00000004		// Unable to process input.
 #define SLFLAG_NOT_VISIBLE					0x00000008		// Do not render.
 #define SLFLAG_CAN_SKILLUSE					0x00000010		// It is an object that can use skill.
 #define SLFLAG_CAN_REVIVAL					0x00000020		// Is it possible to resurrect?
@@ -148,7 +148,7 @@ typedef void*						CINEMATIC_HANDLE;
 #define SLFLAG_ACTOR_CALC_HEIGHT            0x00000010      // Set this flag if you need to recalculate the height.
 
 //--------------------------------------------------------------
-// 객체 update 우선순위
+// Object update priority
 
 #define SLUPDATE_PRIORITY_CROWD             11
 #define SLUPDATE_PRIORITY_INPUT				10		
@@ -192,7 +192,7 @@ enum eDBO_TEAM
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// file / directory definition
+// file /directory definition
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define NTL_GAME_TABLE_DATA_XML_FOLDER		"devdata\\table"

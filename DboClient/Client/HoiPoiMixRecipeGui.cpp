@@ -36,13 +36,13 @@
 #include "HoiPoiMixCraftGui.h"
 
 
-#define dRECIPE_DLG_ITEM_OFFSET_TOP		10		// 레시피 목록의 가장 윗쪽 오프셋
-#define dRECIPE_DLG_ITEM_HEIGHT			72		// 레시피 목록의 높이
-#define dRECIPE_DLG_ITEM_HEIGHT_MARGIN	10		// 레시피 목록의 마진
-#define dRECIPE_DLG_ITEM_VIEW_NUM		5		// 한 화면에 보이는 레시피 갯수
+#define dRECIPE_DLG_ITEM_OFFSET_TOP		10		// Offset from the top of the recipe list
+#define dRECIPE_DLG_ITEM_HEIGHT			72		// Height of recipe list
+#define dRECIPE_DLG_ITEM_HEIGHT_MARGIN	10		// Margin in recipe list
+#define dRECIPE_DLG_ITEM_VIEW_NUM		5		// Number of recipes visible on one screen
 
 //////////////////////////////////////////////////////////////////////////
-// CRecipeDlgItem
+// CReceiveDlgItem
 //////////////////////////////////////////////////////////////////////////
 
 CRecipeDlgItem::CRecipeDlgItem()
@@ -628,7 +628,7 @@ VOID CHoiPoiMixRecipeGui::CreateRecipeFilterList()
 
 	for each(CRecipeDlgItem* pItem in m_vecAvatarRecipe)
 	{
-		// normal
+		// Normal
 		if (bSelectNormal)
 		{
 			if (pItem->GetRecipeType() == eRECIPE_TYPE_NORMAL)
@@ -636,14 +636,14 @@ VOID CHoiPoiMixRecipeGui::CreateRecipeFilterList()
 				m_vecShowListRecipe.push_back(pItem);
 			}
 		}
-		else if (bSelectWeapon) // weapon
+		else if (bSelectWeapon) // Weapon
 		{
 			if (pItem->GetRecipeType() == eRECIPE_TYPE_MAINWEAPON || pItem->GetRecipeType() == eRECIPE_TYPE_SUBWEAPON)
 			{
 				m_vecShowListRecipe.push_back(pItem);
 			}
 		}
-		else if (bSelectArmor) // armor
+		else if (bSelectArmor) // Armor
 		{
 			if (pItem->GetRecipeType() == eRECIPE_TYPE_CLOTH_ARMOR || pItem->GetRecipeType() == eRECIPE_TYPE_TECH_ARMOR)
 			{
@@ -678,7 +678,7 @@ VOID CHoiPoiMixRecipeGui::RecipeDispoisition()
 
 	m_pdlgRecipeList->SetClippingMode(true);
 
-	// ItemDisposition
+	// Item disposition
 	int nIndex = 0;
 	for each(CRecipeDlgItem* pItem in m_vecShowListRecipe)
 	{

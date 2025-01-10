@@ -1,10 +1,10 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlFSMCharActLayer.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlFSMDef.h"
 #include "NtlSobActor.h"
@@ -115,7 +115,7 @@ RwUInt32 CNtlFSMCharActLayer::HandleEvents(RWS::CMsg &pMsg)
 		if( (uiResult == NTL_ATTACK_RESULT_SUCCESS || uiResult == NTL_ATTACK_RESULT_KNOCKDOWN || uiResult == NTL_ATTACK_RESULT_SLIDING) 
 			&& (uiBehavior == NTL_ATTACK_NORMAL || uiBehavior == NTL_ATTACK_PUSH) )
 		{
-			// hit shock를 적용하는 놈이면.?
+			//If you are the one applying hit shock.?
 			if( !(m_pActor->GetFlags() & SLFLAG_NOT_HITSHOCK) )
 			{
 				if(m_pBeShock)

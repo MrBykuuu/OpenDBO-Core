@@ -4,8 +4,8 @@
 #include "ntlworldcommon.h"
 
 /*
-WorldFileFormat - SectorInfo, FieldProperty
-WorldData를 Memory에 Load하여 조작하기 위해 사용된다.
+WorldFileFormat -SectorInfo, FieldProperty
+It is used to load and manipulate WorldData into memory.
 */
 
 //////////////////////////////////////////////////////////////////////////
@@ -53,7 +53,7 @@ public:
 	BYTE* Skip_LightObject(BYTE* _pFileMem);
 	BYTE* Skip_Dojo(BYTE* _pFileMem);
 
-	// 인도어
+	// Indoor
 	BYTE* Skip_DoodadsIndoor(BYTE* _pFileMem);
 	BYTE* Skip_LightMap(BYTE* _pFileMem);
 	BYTE* Skip_DecalVolume(BYTE* _pFileMem);
@@ -74,7 +74,7 @@ public:
 	BYTE* Skip_Weather(BYTE* _pFileMem);
 	BYTE* Skip_FieldHeatHaze(BYTE* _pFileMem);
 
-	// 인도어
+	// Indoor
 	BYTE* Skip_BlockGameProperty(BYTE* _pFileMem);
 
 	// interfaces for sector method
@@ -117,7 +117,7 @@ public:
 	BYTE*	Save_LightObject(BYTE* _pFileMem, FILE* _pFile, RwInt32 IdxSrcField = -1, RwInt32 IdxDstField = -1, CNtlWorldFieldManager* pFieldMgr = NULL);
 	BYTE*	Save_Dojo(BYTE* _pFileMem, FILE* _pFile, RwInt32 IdxSrcField = -1, RwInt32 IdxDstField = -1, CNtlWorldFieldManager* pFieldMgr = NULL);
 	
-	// 인도어
+	// Indoor
 	BYTE*	Save_DoodadsIndoor(BYTE* _pFileMem, FILE* _pFile);	
 	BYTE*	Save_DecalVolume(BYTE* _pFileMem, FILE* _pFile, RwInt32 IdxSrcField = -1, RwInt32 IdxDstField = -1, CNtlWorldFieldManager* pFieldMgr = NULL);
 	BYTE*	Save_GameProperty(BYTE* _pFileMem, FILE* _pFile, RwInt32 IdxSrcField = -1, RwInt32 IdxDstField = -1, CNtlWorldFieldManager* pFieldMgr = NULL);
@@ -137,7 +137,7 @@ public:
 	BYTE* Save_Weather(BYTE* _pFileMem, FILE* _pFile);
 	BYTE* Save_FieldHeatHaze(BYTE* _pFileMem, FILE* _pFile);
 
-	// 인도어
+	// Indoor
 	BYTE* Save_BlockGameProperty(BYTE* _pFileMem, FILE* _pFile);
 	
 	// only outdoor use

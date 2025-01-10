@@ -2,7 +2,7 @@
  *
  * File			: NtlPLEventGenerator.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2005. 9. 29	
  * Abstract		: Presentation layer event function
  *****************************************************************************
@@ -28,14 +28,14 @@ public:
 	static void AnimEventSubWeaponActive(RwUInt32 uiSerialId);
 	static void AnimEventSubWeaponDeActive(RwUInt32 uiSerialId);
 	static void AnimEventSummonActive(RwUInt32 uiSerialId);
-    static void AnimEventAlpha(RwUInt32 uiSerialId, void* pData);           ///< 애니메이션의 알파 이벤트를 발생 시킨다
-    static void AnimEventTMQ(RwUInt32 uiSerialID, RwBool bIn);              ///< TMQ 진입 이벤트를 발생 시킨다.
-    static void AnimEventExplosion(RwUInt32 uiSerialID, void* pData);       ///< 폭발 이벤트를 발생 시킨다.
-    static void AnimEventPostEffect(RwUInt32 uiSerialID, void* pData);      ///< 포스트 이펙트 이벤트를 발생 시킨다.    
-    static void AnimEventDirect(RwUInt32 uiSerialID, void* pData);          ///< 연출 이벤트를 발생시킨다.
-    static void AnimEventColorChange(RwUInt32 uiSerialID, void* pData);     ///< 컬러 변경 이벤트를 발생시킨다.
-    static void AnimEventStretch(RwUInt32 uiSerialID, void* pData);         ///< 팔늘리는 이벤트를 발생시킨다.
-    static void AnimEventTrigger(RwUInt32 uiSerialID, void* pData);         ///< 트리거 이벤트
+    static void AnimEventAlpha(RwUInt32 uiSerialId, void* pData);           ///< Generates the alpha event of the animation
+    static void AnimEventTMQ(RwUInt32 uiSerialID, RwBool bIn);              ///< Generates a TMQ entry event.
+    static void AnimEventExplosion(RwUInt32 uiSerialID, void* pData);       ///< Generates an explosion event.
+    static void AnimEventPostEffect(RwUInt32 uiSerialID, void* pData);      ///< Generates a post-effect event.    
+    static void AnimEventDirect(RwUInt32 uiSerialID, void* pData);          ///< Generates a production event.
+    static void AnimEventColorChange(RwUInt32 uiSerialID, void* pData);     ///< Generates a color change event.
+    static void AnimEventStretch(RwUInt32 uiSerialID, void* pData);         ///< Arm stretching event occurs.
+    static void AnimEventTrigger(RwUInt32 uiSerialID, void* pData);         ///< Trigger event
 	static void AnimEventSkillCancel(RwUInt32 uiSerialID);
 
 	// world field switching effects

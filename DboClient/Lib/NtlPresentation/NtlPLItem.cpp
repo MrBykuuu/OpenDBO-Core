@@ -15,7 +15,7 @@
 #include "NtlPLPalette.h"
 
 
-// 기획쪽 요청으로 도복의 기본 색상을 흰색으로 한다
+//At the request of the planning department, the basic color of the uniform is white.
 #define dDEFAULT_DOGI_COLOR_RED				(255)
 #define dDEFAULT_DOGI_COLOR_GREEN			(255)
 #define dDEFAULT_DOGI_COLOR_BLUE			(255)
@@ -89,7 +89,7 @@ CNtlPLItem::CNtlPLItem() : m_pProperty(NULL),
 	m_DogiBeltClr.blue	= 0;
 	m_DogiBeltClr.alpha = 255;
 
-	// 도복 색상
+	//Dogi color
 	m_DogiEditedColor.red	= dDEFAULT_DOGI_COLOR_RED;
 	m_DogiEditedColor.green = dDEFAULT_DOGI_COLOR_GREEN;
 	m_DogiEditedColor.blue	= dDEFAULT_DOGI_COLOR_BLUE;
@@ -206,14 +206,14 @@ RwBool CNtlPLItem::CreateThreadSafe(void)
 
 	//SetEMUV();
 
-    // Link Effect를 설정한다.
+    // Set Link Effect.
     for(UINT i = 0; i < m_pProperty->m_vLinkEffect.size(); ++i)
     {
         SEventLinkEffect* pEventLinkEffect = m_pProperty->m_vLinkEffect[i];        
         m_LinkEffectInstance.AttachLinkEffect(this, pEventLinkEffect);
     }
 
-    // 애니메이션을 설정한다.
+    // Set up animation.
     if(m_sScheduleResInfo.uiAnimKey > 0)
     {
         SetAnimation(m_sScheduleResInfo.uiAnimKey, 0.0f, TRUE);
@@ -705,10 +705,10 @@ void CNtlPLItem::SetApplyEquipDataOwner(RpAtomic *pAtomic, CNtlPLCharacter *pOwn
 	//RpAtomicSetRenderCallBack(pAtomic, RpAtomicGetRenderCallBack(pAtomic));
 	RpAtomicSetRenderCallBack(pAtomic, AtomicDefaultRenderCallBack);
 
-	// Toon설정
+	// Toon settings
 	Helper_SetToonAtomic(pAtomic, &m_ToonData);
 
-	// RenderCallBack 설정
+	// RenderCallBack Settings
 	//if(RpAtomicGetRenderCallBack(pAtomic) != CNtlPLCharacter::RenderCallBack)
 	{
 		RpNtlAtomicSetRenderCallBack( pAtomic, RpAtomicGetRenderCallBack(pAtomic) );
@@ -953,14 +953,14 @@ RwBool CNtlPLItem::Render( void )
 }
 
 /**
-* 궤적 이펙트를 생성한다.
-* \param pEventTrace 궤적 이펙트를 설정한 이벤트 객체의 포인터. 
-*        NULL이면 Item Property에 설정된 궤적 이벤트 설정값을 사용한다.
-* return 생성 성공 유무
+* Create a trajectory effect.
+* \param pEventTrace Pointer to the event object that set the trace effect. 
+* If NULL, the trajectory event setting value set in the Item Property is used.
+* Whether return creation is successful or not
 */
 RwBool CNtlPLItem::ActiveTraceEffect( SEventTrace* pEventTrace) 
 {
-    // 테스트
+    // test
     m_bEnableTrace = TRUE;
 
     if(!m_bEnableTrace || !pEventTrace)
@@ -980,7 +980,7 @@ RwBool CNtlPLItem::ActiveTraceEffect( SEventTrace* pEventTrace)
             m_pProperty->m_eventTrace.fLifeTime = pEventTrace->fLifeTime;
             m_pProperty->m_eventTrace.fEdgeLifeTime = pEventTrace->fEdgeLifeTime;
 
-            // 무기의 Bone을 설정한다.
+            // Set the bone of the weapon.
             strcpy_s(m_pProperty->m_eventTrace.strStartBoneName, MAX_DEFAULT_NAME, g_strTraceBoneName[i * 2]);
             strcpy_s(m_pProperty->m_eventTrace.strEndBoneName, MAX_DEFAULT_NAME, g_strTraceBoneName[i * 2 + 1]);
 
@@ -988,7 +988,7 @@ RwBool CNtlPLItem::ActiveTraceEffect( SEventTrace* pEventTrace)
         }
         else if(pEventTrace->eTraceKind == SEventTrace::EVENT_TRACE)
         {
-            // 무기의 Bone을 설정한다.
+            // Set the bone of the weapon.
             strcpy_s(pEventTrace->strStartBoneName, MAX_DEFAULT_NAME, g_strTraceBoneName[i * 2]);
             strcpy_s(pEventTrace->strEndBoneName, MAX_DEFAULT_NAME, g_strTraceBoneName[i * 2 + 1]);
 
@@ -1008,13 +1008,13 @@ RwBool CNtlPLItem::ActiveTraceEffect( SEventTrace* pEventTrace)
 
 RwBool CNtlPLItem::CreateAnimData(RwUInt32 uiAnimKey)
 {
-    // Item은 Animation이 적용되지 않은것이 많기 때문에, 필요한 경우에만 Animation 관련 데이터들을 생성한다.
+    // Since animation is not applied to many items, animation-related data is created only when necessary.
     
     NTL_FUNCTION(__FUNCTION__);
     if(!m_pResourceClump)
         NTL_RETURN(FALSE);
 
-    // Instance Anim Table 생성
+    // Create Instance Anim Table
     m_pInstanceAnimTable = NTL_NEW CNtlInstanceAnimTable();
     m_pInstanceAnimTable->Create(m_pProperty->GetAnimTable());
     SInstanceAnimData* pInstanceAnimData = m_pInstanceAnimTable->Get(uiAnimKey);
@@ -1025,7 +1025,7 @@ RwBool CNtlPLItem::CreateAnimData(RwUInt32 uiAnimKey)
         NTL_RETURN(FALSE);
     }
 
-    // Hierarchy 설정
+    // Hierarchy settings
     m_pBaseHierarchy = Helper_GetHierarchyClump( m_pResourceClump->GetClump() );
     if(!m_pBaseHierarchy)
         NTL_RETURN(FALSE);
@@ -1109,7 +1109,7 @@ RwBool CNtlPLItem::AttachVisualEffect(CNtlInstanceEffect* pInstanceEffect, SEven
 
 	pInstanceEffect->SetSerialID(GetSerialID());
 
-    // Item의 Visual Effect는 무조건 Item의 Bone에 붙는다.
+        // The Item's Visual Effect will always be attached to the Item's Bone.
     return AttachBone(pInstanceEffect, pEventVisualEffect->chBoneName);
 }
 

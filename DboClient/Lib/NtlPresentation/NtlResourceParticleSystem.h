@@ -2,7 +2,7 @@
 //	File		:	NtlResourceParticleSystem.h
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -42,8 +42,8 @@ public:
 
 	std::string						m_strSubSystem;
 
-    SNtlPrtStdEmitterTrail          m_EmitterTrail;             ///< Trail Action 관련 프로퍼티
-	RwReal							m_fDepthBias;				///< Depth Bias 값
+    SNtlPrtStdEmitterTrail          m_EmitterTrail;             ///< Trail Action related properties
+	RwReal							m_fDepthBias;				///< Depth Bias value
 
 public:
 	CNtlResourceParticleSystem(const RwChar* strName);
@@ -62,5 +62,5 @@ public:
 public:
 	RwBool	IsPointEmitterDataFlag(RwUInt32 flag)		{ return (m_nPointEmitterDataFlag == flag) ? TRUE : FALSE; }
     
-    void    SetFollowFlag(BOOL bFollow);                ///< 파티클이 생성위치를 따라다닐지 유무를 설정한다.
+    void    SetFollowFlag(BOOL bFollow);                ///< Sets whether or not particles follow the creation location.
 };

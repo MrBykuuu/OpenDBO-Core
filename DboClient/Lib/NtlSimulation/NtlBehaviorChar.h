@@ -107,7 +107,7 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-// 일반적인 공격.
+// Normal attack.
 
 class CNtlBehaviorCharPushFollow;
 
@@ -127,7 +127,7 @@ protected:
 	RwUInt8			m_iHitIdx;
 	SHitStuff		*m_ppHit[NTL_MAX_HITGROUP][NTL_MAX_HITNUM];
 	RwReal			m_fHitTime[NTL_MAX_HITNUM];
-	RwReal			m_fAnimTime;					/** attack animation 전체 시간 */
+	RwReal			m_fAnimTime;					/** attack animation full time */
 	RwReal			m_fAnimSpeed;					/** attack animation speed */
 
 	CNtlBehaviorCharPushFollow *m_pPushFollow;
@@ -171,7 +171,7 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-// 일반적인 공격.
+// Normal attack.
 
 class CNtlBehaviorCharPushFollow : public CNtlBehaviorBase
 {
@@ -220,18 +220,18 @@ public:
     virtual void UpdateData(void);
 
 private:
-    void CreateTimeSequence(void);          ///< push sequence node 생성 함수.
-    void DeleteTimeSequence(void);          ///< push sequence node 삭제 함수. 
-    RwReal GetMaxTime(void) const;          ///< 객체의 life time.
-    RwReal GetMaxDist(void) const;          ///< 움직임의 최대 거리.
-    void   UpdatePosition(RwReal fElapsed);                ///< 위치를 업데이트한다.
+    void CreateTimeSequence(void);          ///< push sequence node creation function.
+    void DeleteTimeSequence(void);          ///< push sequence node deletion function. 
+    RwReal GetMaxTime(void) const;          ///< Life time of the object.
+    RwReal GetMaxDist(void) const;          ///< Maximum distance of movement.
+    void   UpdatePosition(RwReal fElapsed);                ///< Update the location.
 
 private:
-	RwV3d m_vPushDir;		/** push 방향 */
-	RwReal m_fPrevDist;     /** 시간에 따른 distance를 사용하므로, 이전의 dist를 보관한다. */
-	RwReal m_fTime;			/** push 누적 time */
-	RwReal m_fDistScale;    /** time sequence는 시간과 거리가 고정, push 거리가 고정이 아니므로 */
-	RwV3d  m_vDestPos;		/** push로 인하여 움직일 최종 위치 */
+	RwV3d m_vPushDir;		/** push direction */
+	RwReal m_fPrevDist;     /** Since distance based on time is used, the previous dist is stored. */
+	RwReal m_fTime;			/** push cumulative time */
+	RwReal m_fDistScale;    /** In the time sequence, the time and distance are fixed, but the push distance is not fixed. */
+	RwV3d  m_vDestPos;		/** Final position to move due to push */
 
 	CNtlDistTimeSequence *m_pSeq;	/** push sequence node */
 };
@@ -255,65 +255,65 @@ private:
 	};
 	
 	RwUInt32 m_uiSlidingState;	/** sliding state */
-	RwV3d m_vPushDir;			/** sliding 방향 */
-	RwReal m_fPrevDist;		    /** 시간에 따른 distance를 사용하므로, 이전의 dist를 보관한다. */
-	RwReal m_fTime;				/** sliding 누적 time */
-	RwReal m_fDistScale;		/** time sequence는 시간과 거리가 고정, sliding 거리가 고정이 아니므로 */
-	RwV3d  m_vDestPos;			/** sliding로 인하여 움직일 최종 위치 */
+	RwV3d m_vPushDir;			/** sliding direction */
+	RwReal m_fPrevDist;		    /** Since distance based on time is used, the previous dist is stored. */
+	RwReal m_fTime;				/** sliding cumulative time */
+	RwReal m_fDistScale;		/** In a time sequence, the time and distance are fixed, but the sliding distance is not fixed. */
+	RwV3d  m_vDestPos;			/** Final position to move to due to sliding */
 
 	CNtlDistTimeSequence *m_pSeq;	/** sliding sequence node */
 
 private:
 
 	/**
-	* sliding sequence node 생성 함수.
+	*Sliding sequence node creation function.
 	*/
 	void CreateTimeSequence(void);
 
 	/**
-	* sliding sequence node 삭제 함수. 
+	*Sliding sequence node deletion function. 
 	*/
 	void DeleteTimeSequence(void);
 
 	/**
-	* 객체의 life time.
+	*Life time of the object.
 	*/
 	RwReal GetMaxTime(void) const;
 
 	/**
-	* 움직임의 최대 거리.
+	*Maximum distance of movement.
 	*/
 	RwReal GetMaxDist(void) const;
 
 	/**
-	* update sliding landing.
+	*update sliding landing.
 	*/
 	void UpdateSlidingLanding(RwReal fElapsed);
 
 	/**
-	* update sliding stop.
+	*update sliding stop.
 	*/
 	void UpdateSlidingStop(RwReal fElapsed);
 
 	/**
-	* sliding 좌표 계산.
+	*Calculating sliding coordinates.
 	*/
 	void UpdatePosition(RwReal fTime);
 
 	/**
-	* sliding 상태 바꾸는 함수.
+	*Function that changes the sliding state.
 	*/
 	void ChangeSlidingState(RwUInt32 uiState);
 
 public:
 
 	/**
-	* 생성자
+	*constructor
 	*/
 	CNtlBehaviorCharSliding();
 
 	/**
-	* 소멸자
+	*destructor
 	*/
 	~CNtlBehaviorCharSliding();
 
@@ -323,8 +323,8 @@ public:
 	virtual RwUInt32 HandleEvents(RWS::CMsg &pMsg);
 
 	/**
-	* 객체는 CNtlBeCharData 객체 정보를 참조하여 사용하기 때문에, sliding 객체 update시 사용.
-	* 현재 sliding behavior가 동작중인 상태에서, 다른 sliding 명령을 받았을 때. 정보 update.
+	*Because the object is used by referring to CNtlBeCharData object information, it is used when updating a sliding object.
+	*When another sliding command is received while the current sliding behavior is in operation. Information update.
 	*/
 	virtual void UpdateData(void);
 
@@ -344,56 +344,56 @@ class CNtlBehaviorCharShock : public CNtlBehaviorBase
 
 private:
 
-	RwV3d m_vPushDir;		/** shock 방향 */
-	RwV3d m_vDestPos;		/** shock로 인하여 움직일 최종 위치 */
-	RwReal m_fTime;			/** shock 누적 time */
-	RwReal m_fDistScale;    /** time sequence는 시간과 거리가 고정, shock 거리가 고정이 아니므로 */
+	RwV3d m_vPushDir;		/** shock direction */
+	RwV3d m_vDestPos;		/** Final position to move due to shock */
+	RwReal m_fTime;			/** shock cumulative time */
+	RwReal m_fDistScale;    /** In the time sequence, the time and distance are fixed, but the shock distance is not fixed. */
 		
 	CNtlDistTimeSequence *m_pSeq;
 
 private:
 
 	/**
-	* hit shock sequence node 생성 함수.
+	*hit shock sequence node creation function.
 	*/
 	void CreateTimeSequence(void);
 
 	/**
-	* hit shock sequence node 삭제 함수. 
+	*hit shock sequence node deletion function. 
 	*/
 	void DeleteTimeSequence(void);
 
 	/**
-	* hit shock 객체 data reset 함수.
+	*hit shock object data reset function.
 	*/
 	void ResetTimeSequence(void);
 
 	/**
-	* time sequence node update 함수.
-	* param1 : 바로 이전의 누적 시간.
-	* param2 : 현재의 누적 시간.
+	*Time sequence node update function.
+	*param1: Immediately previous cumulative time.
+	*param2: Current accumulated time.
 	*/
 	void UpdateTimeSequence(RwReal fOldTime, RwReal fCurrTime);
 
 	/**
-	* 객체의 life time.
+	*Life time of the object.
 	*/
 	RwReal GetMaxTime(void) const;
 
 	/**
-	* 움직임의 최대 거리.
+	*Maximum distance of movement.
 	*/
 	RwReal GetMaxDist(void) const;
 
 public:
 
 	/**
-	* 생성자.
+	*Constructor.
 	*/
 	CNtlBehaviorCharShock();
 
 	/**
-	* 소멸자.
+	*Destructor.
 	*/
 	~CNtlBehaviorCharShock();
 
@@ -403,8 +403,8 @@ public:
 	virtual RwUInt32 HandleEvents(RWS::CMsg &pMsg);
 
 	/**
-	* 객체는 CNtlBeCharData 객체 정보를 참조하여 사용하기 때문에, shock 객체 update시 사용.
-	* 현재 shock behavior가 동작중인 상태에서, 다른 shock 명령을 받았을 때. 정보 update.
+	*Because the object is used by referring to CNtlBeCharData object information, it is used when updating the shock object.
+	*When another shock command is received while the current shock behavior is in operation. Information update.
 	*/
 	virtual void UpdateData(void);
 };
@@ -437,34 +437,34 @@ public:
     virtual RwUInt32 HandleEvents(RWS::CMsg &pMsg);
 
     /**
-    * 객체는 CNtlBeCharData 객체 정보를 참조하여 사용하기 때문에, knock down 객체 update시 사용.
-    * 현재 knock down behavior가 동작중인 상태에서, 다른 knock down 명령을 받았을 때. 정보 update.
+    *Since the object is used by referring to the CNtlBeCharData object information, it is used when updating the knock down object.
+    *When another knock down command is received while the current knock down behavior is in effect. Information update.
     */
     virtual void UpdateData(void);
-    void ChangeKnockDownState(RwUInt32 uiState);    ///< knockdown bahavior 의 state를 전이시키는 함수.
+    void ChangeKnockDownState(RwUInt32 uiState);    ///< Function that transitions the state of knockdown bahavior.
     void SetKnockDownDir(const RwV3d *pKnockDownDir);   ///< knock down direction.
 
 private:
-	void CreateFallupTimeSequence(void);    ///< knockdown fall up sequence node 생성 함수.
-	void CreateLandingTimeSequence(void);   ///< knockdown landing sequence node 생성 함수.
-	void DeleteTimeSequence(void);          ///< knockdown sequence node 삭제 함수. 
+	void CreateFallupTimeSequence(void);    ///< knockdown fall up sequence node creation function.
+	void CreateLandingTimeSequence(void);   ///< knockdown landing sequence node creation function.
+	void DeleteTimeSequence(void);          ///< knockdown sequence node deletion function. 
 	void UpdateFallUp(RwReal fElapsed);     ///< knockdown fall up update 함수.
-	void UpdateLanding(RwReal fElapsed);    ///< knockdown landing update 함수.
+	void UpdateLanding(RwReal fElapsed);    ///< knockdown landing update function.
 	void UpdateFallDown(RwReal fElapsed);   ///< knockdown fall down update 함수.
-	void UpdateKnock(RwReal fElapsed);      ///< knockdown의 쓰러져 있을 때 update 함수.
-	void CalcLanding(RwReal fElapsed);      ///< landing 상태 계산.
-    RwV3d UpdatePosition(RwReal fElapsed, RwV3d& vPos, RwReal fSpeed);   ///< y값을 제외한 위치 계산 (충돌 처리)
+	void UpdateKnock(RwReal fElapsed);      ///< update function when knockdown is down.
+	void CalcLanding(RwReal fElapsed);      ///< Calculate landing state.
+    RwV3d UpdatePosition(RwReal fElapsed, RwV3d& vPos, RwReal fSpeed);   ///< Calculate position excluding y value (collision handling)
 
 protected:
     RwUInt32 m_uiKnockDownState;		/** knock down state */
     RwBool m_bStanding;					/** knock down standing */
     RwBool m_bFainting;					/** knock down fainting */
 
-    RwReal m_fTime;						/** known down 누적 time */
-    RwV3d m_vKnockDownDir;				/** knock down 방향 */
-    RwV2d m_vPrevDist;					/** 시간에 따른 distance를 사용하므로, 이전의 dist를 보관한다. */
-    RwV2d m_vFallDelta;					/** 떨어지는 delta dist */
-    RwReal m_fDistScale;				/** time sequence는 시간과 거리가 고정, push 거리가 고정이 아니므로 */
+    RwReal m_fTime;						/** known down cumulative time */
+    RwV3d m_vKnockDownDir;				/** knock down direction */
+    RwV2d m_vPrevDist;					/** Since distance based on time is used, the previous dist is stored. */
+    RwV2d m_vFallDelta;					/** falling delta dist */
+    RwReal m_fDistScale;				/** In the time sequence, the time and distance are fixed, but the push distance is not fixed. */
 
     CNtl2DTimeSequence *m_pSeq;				/** knock down fall up sequence node */
     CNtlDistTimeSequence *m_pLandingSeq;	/** knock donw landing sequence node */
@@ -521,32 +521,32 @@ protected:
 private:
 
 	/**
-	* animation setting
+	*animation setting
 	*/
 	void SetAnim(void);
 
 	/**
-	* push sequence node 생성 함수.
+	*push sequence node creation function.
 	*/
 	void CreateTimeSequence(void);
 
 	/**
-	* push sequence node 삭제 함수. 
+	*push sequence node deletion function. 
 	*/
 	void DeleteTimeSequence(void);
 
 	/**
-	* toss update up
+	*toss update up
 	*/
 	void UpdateUp(RwReal fElapsed);
 
 	/**
-	* toss update idle
+	*toss update idle
 	*/
 	void UpdateIdle(RwReal fElapsed);
 
 	/**
-	* toss update down
+	*toss update down
 	*/
 	void UpdateDown(RwReal fElapsed);
 
@@ -583,17 +583,17 @@ protected:
 private:
 
 	/**
-	* animation setting
+	*animation setting
 	*/
 	void SetAnim(void);
 
 	/**
-	* toss update up
+	*toss update up
 	*/
 	void UpdateDown(RwReal fElapsed);
 
 	/**
-	* toss update idle
+	*toss update idle
 	*/
 	void UpdateIdle(RwReal fElapsed);
 
@@ -611,7 +611,7 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-// 수직 상승.(target을 따라간다)
+// Vertical rise (follows target)
 
 class CNtlBehaviorCharHomingUp : public CNtlBehaviorBase
 {
@@ -645,7 +645,7 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-// 수직 하강.
+// Vertical descent.
 
 class CNtlBehaviorCharHomingDown : public CNtlBehaviorBase
 {
@@ -672,12 +672,12 @@ private:
 
 
 	/**
-	* push sequence node 생성 함수.
+	* push sequence node creation function.
 	*/
 	void CreateTimeSequence(void);
 
 	/**
-	* push sequence node 삭제 함수. 
+	* push sequence node deletion function. 
 	*/
 	void DeleteTimeSequence(void);
 
@@ -699,7 +699,7 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-// 수직 상승(target을 따라가지 않고) 일정한 높이를 jumping 한다.
+// Ascends vertically (without following the target) and jumps a certain height.
 
 class CNtlBehaviorCharJumpingUp : public CNtlBehaviorBase
 {
@@ -720,12 +720,12 @@ private:
 	void SetAnim(void);
 
 	/**
-	* push sequence node 생성 함수.
+	* push sequence node creation function.
 	*/
 	void CreateTimeSequence(void);
 
 	/**
-	* push sequence node 삭제 함수. 
+	* push sequence node deletion function. 
 	*/
 	void DeleteTimeSequence(void);
 
@@ -745,7 +745,7 @@ public:
 
 /**
  * \ingroup NtlSimulation
- * \brief 나메크의 마신완 스킬. 타겟을 끌어당긴다.
+ * \brief Namek's Demon God skill. Attracts the target.
  *
  * \date 2008-10-17
  * \author agebreak
@@ -766,25 +766,25 @@ public:
     virtual void UpdateData(void);
 
 protected:
-    RwReal  GetTargetDistance(CNtlSobActor* pTargetActor);              ///< 당겨오는 타겟과의 거리를 계산한다 (Radius로 비교)
+    RwReal  GetTargetDistance(CNtlSobActor* pTargetActor);              ///< Calculate the distance to the pulling target (compare with Radius)
 
 protected:
-    CNtlPLCharacter*    m_pCharacter;           ///< 사용자의 엔티티 객체    
-    RwUInt32            m_uiTargetId;           ///< 타겟 시리얼 ID
-    RwV3d               m_vTargetPos;           ///< 처음 이벤트가 발생했을때의 타겟 위치
-    RwBool              m_bPulling;             ///< 당기는 상태인지 뻗는상태인지 플래그 (FALSE 뻗는상태, TRUE 당겨오는 상태)    
-    SEventStretch*      m_pStretchEvent;         ///< 이벤트 구조체
-    RwReal              m_fStretchPullingSpeed;  ///< 현재 풀링 스피드
-    RwMatrix            m_matDir;                ///< 어깨 방향 매트릭스
+    CNtlPLCharacter*    m_pCharacter;           ///< User's entity object    
+    RwUInt32            m_uiTargetId;           ///< Target serial ID
+    RwV3d               m_vTargetPos;           ///< Target location when the event first occurs
+    RwBool              m_bPulling;             ///< Flag whether it is in a pulling or stretching state (FALSE in a stretching state, TRUE in a pulling state)    
+    SEventStretch*      m_pStretchEvent;         ///< event structure
+    RwReal              m_fStretchPullingSpeed;  ///< Current pulling speed
+    RwMatrix            m_matDir;                ///< Shoulder direction matrix
 
-    RwBool              m_bOrgBoneScale;        ///< 원래의 본 스케일 플래그
-    RwReal              m_fOrgBoneLength[3];    ///< 원래의 본 길이
-    RwReal              m_fOrgBoneWidth[3];     ///< 원래의 본 두께
+    RwBool              m_bOrgBoneScale;        ///< Original bone scale flag
+    RwReal              m_fOrgBoneLength[3];    ///< Original bone length
+    RwReal              m_fOrgBoneWidth[3];     ///< Original bone thickness
 };
 //////////////////////////////////////////////////////////////////////////
 /**
  * \ingroup NtlSimulation
- * \brief 상대의 등뒤로 워프해서 공격하는 스킬 (섬광참)
+ * \brief A skill to attack by warping behind the opponent's back (flash slash)
  *
  * \date 2008-11-20
  * \author agebreak
@@ -807,7 +807,7 @@ public:
 
 protected:
 
-    void    OnWarpBack();                       ///< 상대방의 뒤로 워프한다.
+    void    OnWarpBack();                       ///<Warp behind the opponent.
 
 protected:
 
@@ -818,7 +818,7 @@ protected:
 
 /**
  * \ingroup NtlSimulation
- * \brief 마인의 근거리 공간 도약 스킬 (타겟의 근처로 이동)
+ * \brief Mine's short-distance spatial leap skill (moves near target)
  *
  * \date 2008-11-21
  * \author agebreak
@@ -838,7 +838,7 @@ public:
 
 protected:
 
-    void    OnWarpTarget();                 ///< 타겟의 주위로 워프한다.
+    void    OnWarpTarget();                 ///<Warp around the target.
 
 protected:
 
@@ -852,7 +852,7 @@ protected:
 
 /**
  * \ingroup NtlSimulation
- * \brief 스루 어택(일섬 스타일) 스킬
+ * \brief Through Attack (Slash Style) Skill
  *
  * \date 2008-11-21
  * \author agebreak
@@ -910,7 +910,7 @@ protected:
 
 /**
  * \ingroup NtlSimulation
- * \brief 몹이 변신 스킬을 사용할때 사용되는 클래스 (몹 한정)
+ * \brief Class used when a mob uses transformation skills (mobs only)
  *
  * \date 2009-01-16
  * \author agebreak
@@ -928,7 +928,7 @@ public:
     virtual void Update(RwReal fElapsed);
     virtual RwUInt32 HandleEvents(RWS::CMsg &pMsg);   
 
-    void    SetAnimation(RwUInt32 uiAction, RwUInt32 uiActionLoop);       ///< 애니메이션을 세팅한다.
+    void    SetAnimation(RwUInt32 uiAction, RwUInt32 uiActionLoop);       ///< Set the animation.
 protected:
 
 protected:

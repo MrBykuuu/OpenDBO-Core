@@ -1,30 +1,30 @@
 /******************************************************************************
-* File			: CharMakePartGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2007. 10. 10
-* Abstract		: 
+*File           : CharMakePartGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : 2007. 10. 10
+*Abstract		: 
 *****************************************************************************
-* Desc			: 캐릭터를 만들기 위해 캐릭터의 각 부분을 선택하는 클래스
+*Desc           : A class that selects each part of the character to create the character.
 *****************************************************************************/
 
 #pragma once
 
 #include <list>
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// gui
+// Gui
 #include "gui_button.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "Inputhandler.h"
 
-// dbo
+// Dbo
 #include "Windowby3.h"
 #include "SlotGui.h"
 #include "CharMakeDisplayPart.h"
@@ -52,8 +52,8 @@ public:
 
 	struct sCHAR_ATTRIBUTE
 	{
-		RwUInt8				byValue;		///< 현재 선택된 값
-		RwUInt8				byPostValue;	///< 이전에 선택된 값
+		RwUInt8				byValue;		///< currently selected value
+		RwUInt8				byPostValue;	///< Previously selected value
 		RwUInt8				byMaxValue;
 
 		VOID Select(RwUInt8 byIndex)
@@ -108,9 +108,9 @@ protected:
 	gui::CSlot			m_slotPaint;
 	gui::CSlot			m_slotPostPaint;
 
-	CWindowby3			m_Background;	///< 배경 상단
+	CWindowby3			m_Background;	///< Top of background
 
-	gui::CButton*		m_pRendomButton;	///< 자동 선택 버튼
+	gui::CButton*		m_pRendomButton;	///< Auto selection button
 
 	gui::CStaticBox*	m_pTitleStatic;
 

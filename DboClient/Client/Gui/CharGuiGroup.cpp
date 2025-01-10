@@ -54,16 +54,16 @@ RwBool CCharGuiGroup::Create(void)
 	gui::CResourceManager* pResMgr = CNtlPLGuiManager::GetInstance()->GetReourceManager();
 	pResMgr->AddPage("gui\\Lobby.rsr");
 
-	// 캐릭터 만들기 	
+	// Create a character 	
     AddGuiMacro(m_pCharCreate, CCharCreateGuiGui, "CharCreate");
 
-	// 캐릭터 셀렉트	
+	// character selection	
     AddGuiMacro(m_pCharSelect, CCharSelectGui, "CharSelect");
 
-	// 서버 셀렉트	
+	// server select	
     AddGuiMacro(m_pServerSelect, CServerSelectGui, "ServerSelect");
 
-	// 로비 화면 전환 이펙트	
+	// Lobby screen transition effect	
     AddGuiMacro(m_pTurnOverBackboard, CBackboardGui, "LobbyTurnOver");
 
 	NTL_RETURN(TRUE);

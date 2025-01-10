@@ -1,7 +1,7 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlWorldConceptScramble.h"
 
-// simulation
+// Simulation
 #include "NtlSobAvatar.h"
 #include "NtlSobManager.h"
 #include "NtlSobGroup.h"

@@ -1,22 +1,23 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlBehaviorChar.h"
 
-// shared 
+// Shared 
+
 #include "NtlMovement.h"
 #include "NtlBattle.h"
 #include "SkillTable.h"
 #include "NtlCharacter.h"
 #include "DboNavi.h"
 
-// sound
+// Sound
 #include "NtlSoundDefines.h"
 #include "NtlSoundManager.h"
 
 
-// core
+// Core
 #include "NtlMath.h"
 
-// presentation
+// Presentation
 #include "NtlPLSceneManager.h"
 #include "NtlPLCharacter.h"
 #include "NtlPLEvent.h"
@@ -26,7 +27,7 @@
 #include "NtlPLEntityBlend.h"
 
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSobActor.h"
 #include "NtlSLLogic.h"
@@ -58,18 +59,18 @@
 #define SPAWN_DELAY_TIME				2.0f
 #define SPAWN_DELAY_SPECIAL_TIME		0.2f
 
-// push data 속성.
+// push data attribute.
 #define MAX_PUSH_TIME					0.3f
 
-// sliding data 속성.
+// sliding data attribute.
 #define MAX_SLIDING_TIME				0.667f
 #define MAX_SLIDING_DIST				4.0f
 
-// hit shock data 속성.
+// hit shock data attribute.
 #define MAX_SHOCK_TIME					0.1f
 #define MAX_SHOCK_DIST					0.2f
 
-// knock donw data 속성.
+// knock donw data attribute.
 #define MAX_KNOCKDOWN_SLIDING_TIME		0.7f
 #define MAX_KNOCKDOWN_FALLDOWN_TIME		1.1f
 
@@ -149,7 +150,7 @@ void CNtlBehaviorCharSpawn::Enter(void)
 		EnterSpecialSpawn();
 	}
 	
-	// 나중에 base class enter를 호출한다.
+	// Later, base class enter is called.
 	CNtlBehaviorBase::Enter(); 
 }
 
@@ -206,7 +207,7 @@ void CNtlBehaviorCharSpawn::UpdateNormalSpawn(RwReal fElapsed)
 		return;
 	}
 
-	// 현재 pet 이면... 
+	// If you are currently a pet... 
 	if(m_pActor->GetClassID() == SLCLASS_PET)
 	{
 		m_fTime += fElapsed;
@@ -301,7 +302,7 @@ void CNtlBehaviorCharSpawn::SetNormalSpawnVisualEffect(void)
 {
 	if(m_pActor->GetClassID() != SLCLASS_PET && !m_bSpawnAnimExist)
 	{
-        // GM 이면 이펙트를 표시하지 않는다.
+        // If it is GM, the effect is not displayed.
         if(m_pActor->GetClassID() == SLCLASS_PLAYER)
         {
             CNtlFSMCharActAgent* pAgent = (CNtlFSMCharActAgent*)m_pActor->GetFSMLayer()->GetFSMAgent();
@@ -317,7 +318,7 @@ void CNtlBehaviorCharSpawn::SetSpecialSpawnVisualEffect(void)
 {
 	if(m_pActor->GetClassID() != SLCLASS_PET && !m_bSpawnAnimExist)
 	{
-        // GM 이면 이펙트를 표시하지 않는다.
+        // If it is GM, the effect is not displayed.
         if(m_pActor->GetClassID() == SLCLASS_PLAYER)
         {
             CNtlFSMCharActAgent* pAgent = (CNtlFSMCharActAgent*)m_pActor->GetFSMLayer()->GetFSMAgent();
@@ -372,13 +373,13 @@ void CNtlBehaviorSmoothHeading::Enter(void)
 
 	SetAnim(pCtrlStuff->uExtra.sRotate.fDeltaAngleY, pCtrlStuff->uExtra.sRotate.fDeltaAngleX);
 	
-	// 나중에 base class enter를 호출한다.
+	// Later, base class enter is called.
 	CNtlBehaviorBase::Enter(); 
 }
 
 void CNtlBehaviorSmoothHeading::Exit(void)
 {
-	// 나중에 base class exit를 호출한다.
+	// Later, the base class exit is called.
 	CNtlBehaviorBase::Exit(); 
 }
 
@@ -595,7 +596,7 @@ void CNtlBehaviorCharNormalAttack::Enter(void)
 	}
 	
 	
-	// 나중에 base class enter를 호출한다.
+	// Later, base class enter is called.
 	CNtlBehaviorBase::Enter(); 
 }
 
@@ -716,7 +717,7 @@ void CNtlBehaviorCharNormalAttack::SetAnim(const SAttackStuff *pAttackStuff)
 	if(pAttackStuff->uiType.bitChainAttack)
 	{
 		sITEM_TBLDAT *pItemTblData = Logic_GetEquipedWeaponItemTableData(m_pActor);
-        if(Logic_IsTransformGreatNamek(m_pActor))  // 변신
+        if(Logic_IsTransformGreatNamek(m_pActor))  // transformation
         {
             uiAnimId = TRANS_ATK_DEF_1 + NtlRandomNumber(0, 1);
         }
@@ -735,7 +736,7 @@ void CNtlBehaviorCharNormalAttack::SetAnim(const SAttackStuff *pAttackStuff)
 				uiAnimId = ATK_DEF_1 + pAttackStuff->byAttSeq - NTL_BATTLE_CHAIN_ATTACK_START_PLAYER;
 		}
 
-		// 공격 animation 속도를 setting 한다.
+		// Set the attack animation speed.
 		m_pActor->GetSobProxy()->SetAnimSpeed(Logic_GetAttackAnimSpeed(m_pActor));
 	}
 	else
@@ -745,7 +746,7 @@ void CNtlBehaviorCharNormalAttack::SetAnim(const SAttackStuff *pAttackStuff)
 		if(pAttackStuff->uiType.bitLogic == NTL_ATTACK_LOGIC_NORMAL)
 		{
 			sITEM_TBLDAT *pItemTblData = Logic_GetEquipedWeaponItemTableData(m_pActor);
-            if(Logic_IsTransformGreatNamek(m_pActor))  // 변신
+            if(Logic_IsTransformGreatNamek(m_pActor))  // transformation
             {
                 uiAnimId = TRANS_ATK_DEF_1 + NtlRandomNumber(0, 1);
             }
@@ -759,7 +760,7 @@ void CNtlBehaviorCharNormalAttack::SetAnim(const SAttackStuff *pAttackStuff)
 
 			m_pActor->GetSobProxy()->SetAnimSpeed(m_fAnimSpeed);
 		}
-		else // NTL_ATTACK_LOGIC_SKILL
+		else // Ntl attack logic skill
 		{
 			CSkillTable *pSkillTbl = API_GetTableContainer()->GetSkillTable();
 			sSKILL_TBLDAT *pSkillTblData = reinterpret_cast<sSKILL_TBLDAT*>( pSkillTbl->FindData(pAttackStuff->uiAttrLogicTblId) );
@@ -910,7 +911,7 @@ void CNtlBehaviorCharNormalAttack::CalcHitStuff(const SAttackStuff *pAttackStuff
 	if(pAnimPlayInfo == NULL)
 		return;
 	
-	// 현재 animation 시간을 구한다.
+	// Find the current animation time.
 	m_fAnimTime = pPLCharacter->GetBaseDurationAnimTime();
 	m_iHitNum = pAnimPlayInfo->vecAnimHit.size();
 
@@ -932,7 +933,7 @@ void CNtlBehaviorCharNormalAttack::CalcHitStuff(const SAttackStuff *pAttackStuff
 		pTempHit->Reset();
 
 		//-------------------------------------------------------
-		// hit 속성 data
+		// hit attribute data
 
 		pTempHit->hAttackerSerialId			= pAttackStuff->hAttackerSerialId;
 		pTempHit->hDefenderSerialId			= pAttackStuff->hDefenderSerialId;
@@ -973,7 +974,7 @@ void CNtlBehaviorCharNormalAttack::CalcHitStuff(const SAttackStuff *pAttackStuff
 		pTempHit->pProjExtData			= &pAnimHit->uEffectTypeExtraData;
 
 		//-------------------------------------------------------
-		// damage 계산.
+		// Calculate damage.
 		//	pHitStuff[i].uiDamage = pAnimHit->uiDamage * pAttackStuff->uiDamage / 100;
 		if(i < m_iHitNum-1)
 		{
@@ -1011,7 +1012,7 @@ void CNtlBehaviorCharNormalAttack::CalcHitStuff(const SAttackStuff *pAttackStuff
 		}
 
 		//-------------------------------------------------------
-		// 공격 속성 정의.
+		// Attack attribute definition.
 		pTempHit->uiAttr.bitResult		= pAttackStuff->uiType.bitResult;
 		pTempHit->uiAttr.bitCritical	= pAttackStuff->uiType.bitCritical;
 		pTempHit->uiAttr.bitPowerEffect = pAnimHit->bPowerEffect;
@@ -1026,12 +1027,12 @@ void CNtlBehaviorCharNormalAttack::CalcHitStuff(const SAttackStuff *pAttackStuff
 		{
 			pTempHit->uiAttr.bitPhysic = NTL_ATTACK_PHYSIC_MELEE;
 
-			// 형석
+			// fluorite
 			if(pAttackStuff->uiType.bitResult == NTL_ATTACK_RESULT_BLOCK)
 				strcpy_s(pTempHit->chTargetEffName, NTL_MAX_EFFECT_NAME, NTL_VID_TARGET_BLOCK);
 			else
 			{
-				// 스킬 공격이 아닌 일반 공격 이면...
+				// If it is a normal attack rather than a skill attack...
 				if(pAttackStuff->uiType.bitLogic == NTL_ATTACK_LOGIC_NORMAL)
 				{
 					strcpy_s(pTempHit->chTargetEffName, Logic_GetVisualHitMark(m_pActor, pAnimHit->eAttackType, pTempHit->uiAttr.bitCritical, pTempHit->uiAttr.bitPowerEffect));
@@ -1040,7 +1041,7 @@ void CNtlBehaviorCharNormalAttack::CalcHitStuff(const SAttackStuff *pAttackStuff
 		}
 		else
 		{
-            // 에너지 공격은 타겟 이펙트가 없을때만 디폴트 이펙트를 표시한다.
+            // Energy attacks display default effects only when there is no target effect.
             if(pAttackStuff->uiType.bitLogic == NTL_ATTACK_LOGIC_NORMAL && strlen(pAnimHit->chTargetEffectName) == 0)
             {
                 strcpy_s(pTempHit->chTargetEffName, Logic_GetVisualHitMark(m_pActor, pAnimHit->eAttackType, pTempHit->uiAttr.bitCritical, pTempHit->uiAttr.bitPowerEffect));
@@ -1050,7 +1051,7 @@ void CNtlBehaviorCharNormalAttack::CalcHitStuff(const SAttackStuff *pAttackStuff
 		}
 
 		//-------------------------------------------------------
-		// target behavior 설정.
+		// Set target behavio
 
 		RwUInt8 byAttResult = pAttackStuff->uiType.bitResult;
 
@@ -1092,7 +1093,7 @@ void CNtlBehaviorCharNormalAttack::CalcHitStuff(const SAttackStuff *pAttackStuff
 			else*/ if(pAnimHit->eTargetBehavior == TARGET_BEHAVIOR_KNOCK_DOWN)
 				pTempHit->uiAttr.bitBehavior = NTL_ATTACK_SLIDING;
 
-			// 하드코딩...(HTB 을 blocking으로 막았을 때)
+			// Hard coding... (when HTB is blocked by blocking)
 			if(pAttackStuff->uiType.bitBlocking == DBO_GUARD_TYPE_HTB)
 			{
 				if(i == m_iHitNum - 1)
@@ -1116,11 +1117,11 @@ void CNtlBehaviorCharNormalAttack::CalcHitStuff(const SAttackStuff *pAttackStuff
 		}*/
 
 		//-------------------------------------------------------
-		// push direction 설정.
+		// Set push direction.
 		RwV3dAssignMacro(&pTempHit->vPushDir, &pAttackStuff->vPushDir);
 
 		//-------------------------------------------------------
-		// 카메라 셰이크
+		// camera shake
 		pTempHit->bCameraShake = pAnimHit->bCameraShake;
         pTempHit->fShakeFactor = pAnimHit->fCameraShakeFactor;
         pTempHit->fShakeMaxHeight = pAnimHit->fCameraShakeMaxHeight;
@@ -1155,7 +1156,7 @@ void CNtlBehaviorCharNormalAttack::CalcHitStuff(const SAttackStuff *pAttackStuff
 	}
 
 	//-------------------------------------------------------
-	// Sync Event 연결.
+	// Sync Event connection.
 	if(pAttackStuff->uiSyncEventId != INVALID_SYNCEVENT_ID)
 	{
 		CNtlSobStatusAnimSyncManager *pAnimSyncManager = GetNtlSobManager()->GetAnimSyncManager();
@@ -1215,7 +1216,7 @@ void CNtlBehaviorCharNormalAttack::DeletePushFollow(void)
 
 void CNtlBehaviorCharNormalAttack::EventProcPhysicHit(SHitStuff *pHitStuff, RwUInt8 byHitIdx)
 {
-	// 카메라 흔들기.
+	// Shake the camera.
 	if(pHitStuff->uiAttr.bitResult != NTL_ATTACK_RESULT_DODGE)
 	{
 		if(pHitStuff->bCameraShake && m_pActor->GetFlags() & SLFLAG_CAMERASHAKE_ENABLE)
@@ -1229,8 +1230,8 @@ void CNtlBehaviorCharNormalAttack::EventProcPhysicHit(SHitStuff *pHitStuff, RwUI
 
 	// by daneos: Disabled the knockdown cinematic
 
-	// matrix 연출.
-	//RwBool bMatrixDirect = FALSE;
+	// matrix production.
+	//RwBool ??bMatrixDirect = FALSE;
 
 
 	//if(m_pActor->GetClassID() == SLCLASS_AVATAR && pHitStuff->uiAttr.bitBehavior == NTL_ATTACK_KNOCKDOWN)
@@ -1245,7 +1246,7 @@ void CNtlBehaviorCharNormalAttack::EventProcPhysicHit(SHitStuff *pHitStuff, RwUI
 		pHitStuff = m_ppHit[i][byHitIdx];
 		CNtlSLEventGenerator::SobHit(pHitStuff->hDefenderSerialId, pHitStuff);
 
-		// avatar가 공격했을 경우.
+		// If the avatar is attacked.
 	//	if(bMatrixDirect)
 	//	{
 	//		CNtlSob *pSobObj = GetNtlSobManager()->GetSobObject(pHitStuff->hDefenderSerialId);
@@ -1255,7 +1256,7 @@ void CNtlBehaviorCharNormalAttack::EventProcPhysicHit(SHitStuff *pHitStuff, RwUI
 	//		}
 	//	}
 
-		// avatar가 맞았을 경우.
+		// If avatar is correct.
 		//if(pHitStuff->hDefenderSerialId == hAvatarSerialId && pHitStuff->uiAttr.bitBehavior == NTL_ATTACK_KNOCKDOWN)
 		//{
 			// by daneos: Disabled the knockdown animation
@@ -1289,7 +1290,7 @@ void CNtlBehaviorCharNormalAttack::EventProcHit(RwBool bOneStepFollow)
 		
 	SHitStuff *pHitStuff = m_ppHit[0][m_iHitIdx];
 
-	// avater나 avatar의 pet종류가 아니면 ? 
+	// What if it is not an avatar or an avatar's pet type? 
 	if( !(m_pActor->GetFlags() & SLFLAG_SERVER_SENDER) )
 	{
 		if( !Logic_IsCreateHitEffect() )
@@ -1298,7 +1299,7 @@ void CNtlBehaviorCharNormalAttack::EventProcHit(RwBool bOneStepFollow)
 		}
 	}
 
-	// status animation sync 처리.
+	// Status animation sync processing.
 	if(pHitStuff->hSyncEventId != INVALID_SYNCEVENT_ID)
 	{
 		CNtlSobStatusAnimSyncManager *pAnimSyncManager = GetNtlSobManager()->GetAnimSyncManager();
@@ -1318,8 +1319,8 @@ void CNtlBehaviorCharNormalAttack::EventProcHit(RwBool bOneStepFollow)
 
 		if(pHitStuff->byShotType == BONE_SUB_WEAPON)
 		{
-            // 넉다운 속성인경우, 서브웨폰에서도 발생해버리면 넉다운이 중복되어 시간 계산이 중복된다.
-            // 여기서 넉다운 속성을 없애야 한다.
+            //In the case of the knockdown attribute, if it occurs on a subweapon, the knockdown is duplicated and the time calculation is duplicated.
+            //The knockdown property must be removed here.
             pHitStuff->uiAttr.bitBehavior = NTL_ATTACK_NORMAL;
 
 			if(pHitStuff->bySubWeaponShotFlag & SUB_WEAPON_PROJECTILE_2)
@@ -1380,7 +1381,7 @@ void CNtlBehaviorCharPushFollow::Enter(void)
 {
 	m_fCurrDist = 0.0f;
 
-	// 나중에 base class enter를 호출한다.
+	// Later, base class enter is called.
 	CNtlBehaviorBase::Enter(); 
 }
 
@@ -1529,7 +1530,7 @@ void CNtlBehaviorCharPush::Enter(void)
 	// time sequence setting
 	CreateTimeSequence();
 				
-	// 나중에 base class enter를 호출한다.
+	// Later, base class enter is called.
 	CNtlBehaviorBase::Enter(); 
 }
 
@@ -1553,7 +1554,7 @@ void CNtlBehaviorCharPush::Exit(void)
 
     if(m_pActor->GetClassID() == SLCLASS_AVATAR)
     {
-        // 서버에 마지막 위치를 알려준다.
+        // Notifies the server of the last location.
         API_GetSLPacketGenerator()->SendCharLocAfterPushNfy(m_pActor->GetPosition(), m_pActor->GetDirection());
     }
 }
@@ -1595,14 +1596,14 @@ void CNtlBehaviorCharPush::UpdatePosition(RwReal fElapsed)
     RwReal fDelta = (fDist - m_fPrevDist) * m_fDistScale;	    
     RwV3d vPos = m_pActor->GetPosition() + m_vPushDir * fDelta;
 
-    // 충돌 체크를 한다
+    // Check for collisions
     RwBool bCollMoveImpossible = FALSE;
     Logic_CharacterCollisionEx(m_pActor, &vPos, fDelta / fElapsed, vPos, bCollMoveImpossible, fElapsed);
-    if(bCollMoveImpossible) // 어딘가에 충돌했다. 
+    if(bCollMoveImpossible) // It crashed somewhere. 
     {
         if(m_pActor->GetClassID() == SLCLASS_AVATAR)
         {
-            // 서버에 자신이 충돌했다는 패킷을 보낸다.
+            // It sends a packet to the server indicating that it has crashed.
             API_GetSLPacketGenerator()->SendCharLocAfterPushNfy(vPos, m_pActor->GetDirection());
         }
     }
@@ -1639,7 +1640,7 @@ CNtlBehaviorCharSliding::~CNtlBehaviorCharSliding()
 
     if(m_pActor->GetClassID() == SLCLASS_AVATAR)
     {
-        // 종료시에 서버에 자신의 위치를 알려준다.
+        // When finished, it informs the server of its location.
         API_GetSLPacketGenerator()->SendCharLocAfterSlidingNfy(m_pActor->GetPosition(), m_pActor->GetDirection());
     }
 }
@@ -1732,14 +1733,14 @@ void CNtlBehaviorCharSliding::UpdatePosition(RwReal fElapsed)
 	RwReal fDelta = (fDist - m_fPrevDist) * m_fDistScale;
 	RwV3d vPos = m_pActor->GetPosition() + m_vPushDir * fDelta;
 
-    // 충돌 체크를 한다
+    //Check for collisions
     RwBool bCollMoveImpossible = FALSE;
     Logic_CharacterCollisionEx(m_pActor, &vPos, fDelta / fElapsed, vPos, bCollMoveImpossible, fElapsed);
-    if(bCollMoveImpossible) // 어딘가에 충돌했다. 
+    if(bCollMoveImpossible) //crashed somewhere.
     {
         if(m_pActor->GetClassID() == SLCLASS_AVATAR)
         {
-            // 서버에 자신이 충돌했다는 패킷을 보낸다.
+            //Send a packet to the server indicating that it has crashed.
             API_GetSLPacketGenerator()->SendCharLocAfterSlidingNfy(vPos, m_pActor->GetDirection());
         }
     }
@@ -1781,7 +1782,7 @@ void CNtlBehaviorCharSliding::Enter(void)
 	CNtlMath::MathRwV3dAssign(&vOffset, 0.0f, 0.0f, 0.0f);
 	pSobProxy->CreatePLChildEffect(NTL_VID_TARGET_SLIDING, vOffset);
 
-	// 나중에 base class enter를 호출한다.
+	//Call base class enter later.
 	CNtlBehaviorBase::Enter(); 
 }
 
@@ -1978,7 +1979,7 @@ void CNtlBehaviorCharShock::Enter(void)
 	// time sequence setting
 	CreateTimeSequence();
 				
-	// 나중에 base class enter를 호출한다.
+	//Call base class enter later.
 	CNtlBehaviorBase::Enter(); 
 }
 
@@ -2146,7 +2147,7 @@ void CNtlBehaviorCharKnockDown::UpdateFallUp(RwReal fElapsed)
     CNtlMath::MathRwV2dAssign(&m_vPrevDist, ps2DDist->fX, ps2DDist->fY);	
     CNtlMath::MathRwV3dAdd(&vPos, m_vKnockDownDir.x * m_vFallDelta.x, 0.0f, m_vKnockDownDir.z * m_vFallDelta.x);
 
-    // 충돌 체크
+    //Collision check
     vPos = UpdatePosition(fElapsed, vPos, m_vFallDelta.x / fElapsed);
 	
 	SWorldHeightStuff sHStuff;
@@ -2178,7 +2179,7 @@ void CNtlBehaviorCharKnockDown::UpdateFallDown(RwReal fElapsed)
 	vPos.x += m_vKnockDownDir.x * m_vFallDelta.x;
 	vPos.z += m_vKnockDownDir.z * m_vFallDelta.x;
 
-    // 충돌 체크
+    //Collision check
     vPos = UpdatePosition(fElapsed, vPos, m_vFallDelta.x / fElapsed);
 
 	SWorldHeightStuff sHStuff;
@@ -2249,7 +2250,7 @@ void CNtlBehaviorCharKnockDown::CalcLanding(RwReal fElapsed)
 	vPos.x += m_vKnockDownDir.x * fDeltaX;
 	vPos.z += m_vKnockDownDir.z * fDeltaX;
 
-    // 충돌 체크
+    // collision check
     vPos = UpdatePosition(fElapsed, vPos, fDeltaX / fElapsed);
 
 	SWorldHeightStuff sHStuff;
@@ -2349,8 +2350,8 @@ void CNtlBehaviorCharKnockDown::ChangeKnockDownState(RwUInt32 uiState)
 
 void CNtlBehaviorCharKnockDown::Enter(void)
 {
-	// ground fly actor이면?
-	// knock down일 경우 잠시 뺴준다. (SLFLAG_CAN_GROUND_FLY)
+	// What if it is a ground fly actor?
+	// In case of knock down, it is removed for a while. (SLFLAG_CAN_GROUND_FLY)
 	if(Logic_IsGroundFlyActor(m_pActor))
 	{
 		RwUInt32 uiFlags = m_pActor->GetFlags();
@@ -2378,14 +2379,14 @@ void CNtlBehaviorCharKnockDown::Enter(void)
         CNtlSLEventGenerator::KnockDownNfy();
     }
 				
-	// 나중에 base class enter를 호출한다.
+	//Call base class enter later.
 	CNtlBehaviorBase::Enter(); 
 }
 
 void CNtlBehaviorCharKnockDown::Exit(void)
 {
     // ground fly actor이면?
-    // 빼주었던 ground fly 기능(SLFLAG_CAN_GROUND_FLY)을 다시 넣어준다.
+    // Reinsert the ground fly function (SLFLAG_CAN_GROUND_FLY) that was removed.
     if(Logic_IsGroundFlyActor(m_pActor))
     {
         RwUInt32 uiFlags = m_pActor->GetFlags();
@@ -2403,7 +2404,7 @@ void CNtlBehaviorCharKnockDown::Exit(void)
     {
         CNtlSLEventGenerator::KnockDownWakeUpNfy();
 
-        // 서버에 자신이 충돌했다는 패킷을 보낸다.
+        // Send a packet to the server telling it that it has collided.
         API_GetSLPacketGenerator()->SendCharLocAfterKnockdownNfy(m_pActor->GetPosition(), m_pActor->GetDirection());
     }        
 }
@@ -2489,16 +2490,16 @@ RwV3d CNtlBehaviorCharKnockDown::UpdatePosition(RwReal fElapsed, RwV3d& vPos, Rw
 {
     RwReal fOrgPosY = vPos.y;
 
-    // 충돌 체크를 한다
+    //Check for collisions
     RwBool bCollMoveImpossible = FALSE;
     Logic_CharacterCollisionEx(m_pActor, &vPos, fSpeed, vPos, bCollMoveImpossible, fElapsed);
     vPos.y = fOrgPosY;
 
-    if(bCollMoveImpossible) // 어딘가에 충돌했다. 
+    if(bCollMoveImpossible) //collided somewhere. 
     {
         if(m_pActor->GetClassID() == SLCLASS_AVATAR)
         {
-            // 서버에 자신이 충돌했다는 패킷을 보낸다.
+            //It sends a packet to the server indicating that it has collided.
             API_GetSLPacketGenerator()->SendCharLocAfterKnockdownNfy(vPos, m_pActor->GetDirection());
         }
     } 
@@ -2595,13 +2596,13 @@ void CNtlBehaviorCharHurt::Enter(void)
 	CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
 	SHitStuff *pHitStuff = pBeData->GetHitStuff();
 	
-	// transform
+	// Transform
 	SetTrans(pHitStuff);
 
-	// animation
+	// Animation
 	SetAnim(pHitStuff);
 
-	// 나중에 base class enter를 호출한다.
+	// Later call base class enter.
 	CNtlBehaviorBase::Enter(); 
 }
 
@@ -2747,7 +2748,7 @@ void CNtlBehaviorCharHurtTossUp::Enter(void)
 	// animation setting
 	SetAnim();
 
-	// 나중에 base class enter를 호출한다.
+	// Later, base class enter is called.
 	CNtlBehaviorBase::Enter(); 
 }
 
@@ -2755,13 +2756,13 @@ void CNtlBehaviorCharHurtTossUp::Exit(void)
 {
 	DeleteTimeSequence();
 
-	// 나중에 base class exit를 호출한다.
+	// Later, the base class exit is called.
 	CNtlBehaviorBase::Exit();
 }
 
 void CNtlBehaviorCharHurtTossUp::Update(RwReal fElapsed)
 {
-// HTB (toss up) - CNtlBehaviorCharHurtTossUp::CreateTimeSequence function table 참조.
+// HTB (toss up) - see CNtlBehaviorCharHurtTossUp::CreateTimeSequence function table.
 	if(m_byTossUpState == TOSS_UP_UP)
 		UpdateUp(fElapsed);
 	else if(m_byTossUpState == TOSS_UP_IDLE)
@@ -2824,7 +2825,7 @@ void CNtlBehaviorCharHurtTossDown::SetAnim(void)
 
 void CNtlBehaviorCharHurtTossDown::UpdateDown(RwReal fElapsed)
 {
-	// HTB (toss down) - CNtlBehaviorCharHurtTossDown::CreateTimeSequence function table 참조.
+	// HTB (toss down) - see CNtlBehaviorCharHurtTossDown::CreateTimeSequence function table.
 #define MAX_TOSS_DOWN_SPEED			46.0f
 
 	RwV3d vPos = m_pActor->GetPosition();
@@ -2854,8 +2855,8 @@ void CNtlBehaviorCharHurtTossDown::UpdateIdle(RwReal fElapsed)
 
 void CNtlBehaviorCharHurtTossDown::Enter(void)
 {
-    // ground fly actor이면?
-    // knock down일 경우 잠시 뺴준다. (SLFLAG_CAN_GROUND_FLY)
+    // What if it is a ground fly actor?
+    // In case of knockdown, take it out for a while. (SLFLAG_CAN_GROUND_FLY)
     if(Logic_IsGroundFlyActor(m_pActor))
     {
         RwUInt32 uiFlags = m_pActor->GetFlags();
@@ -2865,14 +2866,14 @@ void CNtlBehaviorCharHurtTossDown::Enter(void)
 
 	SetAnim();
 
-	// 나중에 base class enter를 호출한다.
+	// Later, base class enter is called.
 	CNtlBehaviorBase::Enter(); 
 }
 
 void CNtlBehaviorCharHurtTossDown::Exit(void)
 {
-    // ground fly actor이면?
-    // 빼주었던 ground fly 기능(SLFLAG_CAN_GROUND_FLY)을 다시 넣어준다.
+    // What if it is a ground fly actor?
+    // Reinsert the ground fly function (SLFLAG_CAN_GROUND_FLY) that was removed.
     if(Logic_IsGroundFlyActor(m_pActor))
     {
         RwUInt32 uiFlags = m_pActor->GetFlags();
@@ -2880,7 +2881,7 @@ void CNtlBehaviorCharHurtTossDown::Exit(void)
         m_pActor->SetFlags(uiFlags);
     }
 
-	// 나중에 base class enter를 호출한다.
+	// Later, base class enter is called.
 	CNtlBehaviorBase::Exit(); 
 }
 
@@ -2983,13 +2984,13 @@ void CNtlBehaviorCharHomingUp::Enter(void)
 		m_vOldTargetPos = pTargetSobObj->GetPosition();
 	}
 
-	// 나중에 base class enter를 호출한다.
+	// Later, base class enter is called.
 	CNtlBehaviorBase::Enter(); 
 }
 
 void CNtlBehaviorCharHomingUp::Exit(void)
 {
-	// 나중에 base class enter를 호출한다.
+	// Later, base class enter is called.
 	CNtlBehaviorBase::Exit(); 
 }
 
@@ -3133,7 +3134,7 @@ void CNtlBehaviorCharHomingDown::Enter(void)
 
 	SetAnim();
 
-	// 나중에 base class enter를 호출한다.
+	// Later, base class enter is called.
 	CNtlBehaviorBase::Enter(); 
 }
 
@@ -3146,7 +3147,7 @@ void CNtlBehaviorCharHomingDown::Exit(void)
 	CNtlPLCharacter *pPLCharacter = reinterpret_cast<CNtlPLCharacter*>( pSobProxy->GetPLMainEntity() );
 	pPLCharacter->SetBlend(BLEND_TWEEN);
 
-	// 나중에 base class enter를 호출한다.
+	// Later, base class enter is called.
 	CNtlBehaviorBase::Exit(); 
 }
 
@@ -3155,7 +3156,7 @@ void CNtlBehaviorCharHomingDown::UpdateHomingDown(RwReal fElapsed)
 	if(m_bLandingEnd)
 		return;
 
-	// HTB (homing down) - CNtlBehaviorCharHomingDown::CreateTimeSequence function table 참조.
+	// HTB (homing down) - see CNtlBehaviorCharHomingDown::CreateTimeSequence function table.
 #define MAX_HOMMING_DOWN_TIME				0.866f
 
 	m_fTime += fElapsed;
@@ -3218,7 +3219,7 @@ void CNtlBehaviorCharHomingDown::UpdateHomingDown(RwReal fElapsed)
 
 void CNtlBehaviorCharHomingDown::UpdateIdleDown(RwReal fElapsed)
 {
-	// HTB (homing down) - CNtlBehaviorCharHomingDown::CreateTimeSequence function table 참조.
+	// HTB (homing down) - see CNtlBehaviorCharHomingDown::CreateTimeSequence function table .
 #define MAX_HOMMING_DOWN_TIME				0.866f
 
 	RwReal fDist = *(reinterpret_cast<RwReal*>(m_pSeq->GetData(m_fTime)));
@@ -3349,7 +3350,7 @@ void CNtlBehaviorCharJumpingUp::Enter(void)
 
 	SetAnim();
 
-	// 나중에 base class enter를 호출한다.
+	// Later, base class enter is called.
 	CNtlBehaviorBase::Enter(); 
 }
 
@@ -3357,7 +3358,7 @@ void CNtlBehaviorCharJumpingUp::Exit(void)
 {
 	DeleteTimeSequence();
 
-	// 나중에 base class enter를 호출한다.
+	// Later, base class enter is called.
 	CNtlBehaviorBase::Exit(); 
 }
 
@@ -3433,7 +3434,7 @@ void CNtlBehaviorCharStretchAttack::Enter( void )
 
     m_pCharacter = (CNtlPLCharacter*)m_pActor->GetSobProxy()->GetPLMainEntity();    
 
-    // 애니메이션을 멈춘다.    
+    // Stop the animation.    
     m_pCharacter->GetBoneData()->bBoneScale = TRUE;
     m_pCharacter->SetAnimUpdate(FALSE);
 
@@ -3489,7 +3490,7 @@ void CNtlBehaviorCharStretchAttack::Update( RwReal fElapsed )
         m_fStretchPullingSpeed = m_pStretchEvent->fStretchSpeed;
         m_bPulling = TRUE;
 
-        // 타겟 이펙트
+        // target effect
         if(strlen(m_pStretchEvent->szTargetEffect) > 0)
         {
             CNtlInstanceEffect* pEffect =(CNtlInstanceEffect*)GetSceneManager()->CreateEntity(PLENTITY_EFFECT, m_pStretchEvent->szTargetEffect);
@@ -3498,15 +3499,15 @@ void CNtlBehaviorCharStretchAttack::Update( RwReal fElapsed )
     }
 
 
-    m_fStretchPullingSpeed += m_fStretchPullingSpeed * m_pStretchEvent->fAccel * fElapsed;      // 가속도 
-    if(m_bPulling)              // 당겨오는 상태
+    m_fStretchPullingSpeed += m_fStretchPullingSpeed * m_pStretchEvent->fAccel * fElapsed;      // acceleration 
+    if(m_bPulling)              // state of being pulled
     {
-        // NOTE : 어린애는 이미 Bone이 조절되어 있기 때문에, 아마 겹치는 문제가 생길지도 모른다.
-        // 우선 성인 캐릭터용 스킬로 사용하고, 차후에 어린상태에서도 사용하게 된다면 그때 수정을 생각한다. (by agebreak 08.10.20)
+        // NOTE: Since children already have their bones adjusted, overlapping problems may occur.
+        // First, use it as a skill for an adult character, and if you decide to use it as a child in the future, consider modifying it then. (by agebreak 08.10.20)
         if(fabs(fTargetDist) <= DBO_SYSTEM_EFFECT_PULL_DISTANCE || m_pCharacter->GetBoneData()->BoneScale[uiBone1].fLength <= 0.0f ||
             fTargetDist > 30.0f || m_pCharacter->GetBoneData()->BoneScale[uiBone2].fLength <= 0.0f)
         {
-            // 마지막 위치는 이동 싱크를 위해서 강제로 맞춘다.
+            // The final position is forced to be set for movement synchronization.
             RwV3d vTargetDir = posTarget - posActor;
             RwV3dNormalize(&vTargetDir, &vTargetDir);
             RwReal fActorRadius = max(m_pActor->GetSobProxy()->GetPLEntityWidth(), m_pActor->GetSobProxy()->GetPLEntityDepth());
@@ -3525,7 +3526,7 @@ void CNtlBehaviorCharStretchAttack::Update( RwReal fElapsed )
                
         if(m_pStretchEvent->eType == E_STRETCH_PULLING) // If hit, the target is not pulled.
         {
-            // 타겟의 위치
+            // location of target
             SWorldHeightStuff hStuff;
             RwV3d vHandPos = pMatHand->pos;
             Logic_GetWorldHeight(&vHandPos, hStuff);
@@ -3537,7 +3538,7 @@ void CNtlBehaviorCharStretchAttack::Update( RwReal fElapsed )
         m_pCharacter->GetBoneData()->BoneScale[uiBone2].fLength -= m_fStretchPullingSpeed * fElapsed;
         
     }
-    else    // 뻗어나가는 상태                        
+    else    // state of being stretched out                        
     {
         m_pCharacter->GetBoneData()->BoneScale[uiBone1].fLength += m_fStretchPullingSpeed * fElapsed;
         m_pCharacter->GetBoneData()->BoneScale[uiBone1].fWidth = m_pStretchEvent->fWidth;
@@ -3563,7 +3564,7 @@ RwUInt32 CNtlBehaviorCharStretchAttack::HandleEvents( RWS::CMsg &pMsg )
             m_vTargetPos.y += pTargetActor->GetSobProxy()->GetPLEntityHeight() * 0.8f;
             m_pCharacter->SetSBoneStretchTargetPos(m_vTargetPos, m_pStretchEvent->szAxisBone);
 
-            // 기존 Bone 정보 저장            
+            // Save existing bone information            
             RwUInt32 uiScaleBoneIndex = m_pCharacter->GetBoneIndex(m_pStretchEvent->szScaleBone);
             RwUInt32 uiBone1 = m_pCharacter->GetBoneIndex(m_pStretchEvent->szBoneName[0]);
             RwUInt32 uiBone2 = m_pCharacter->GetBoneIndex(m_pStretchEvent->szBoneName[1]);
@@ -3591,7 +3592,7 @@ RwReal CNtlBehaviorCharStretchAttack::GetTargetDistance(CNtlSobActor* pTargetAct
     if(!pTargetActor)
         return 0.0f;
 
-    // 서버에서는 살과살 거리(Radius)라고 계산한다. 클라도 맞춰서 계산한다.
+    // The server calculates it as the radius. Clado is also calculated accordingly.
     RwReal fDistance = CNtlMath::GetLength(m_pActor->GetPosition(), pTargetActor->GetPosition());
     fDistance -= max(m_pActor->GetSobProxy()->GetPLEntityWidth(), m_pActor->GetSobProxy()->GetPLEntityDepth());
     fDistance -= max(m_pActor->GetSobProxy()->GetPLEntityWidth(), m_pActor->GetSobProxy()->GetPLEntityDepth());
@@ -3846,13 +3847,13 @@ RwUInt32 CNtlBehaviorCharTransform::HandleEvents( RWS::CMsg &pMsg )
 
         if(pAnimEnd->uiBaseAnimKey == m_uiAnimAction)
         {
-            // 일반 Anim이 끝나면 Loop Anim을 재생한다.
+            // When the normal Anim is finished, the Loop Anim is played.
             m_pActor->GetSobProxy()->SetBaseAnimation(m_uiAnimLoop);
         }        
     }
     else if(pMsg.Id == g_EventMobTransform)
     {
-        // 변신 패킷이 날라오면 상태를 종료한다.         
+        // When the transformation packet arrives, the state ends.         
         Finish();
     }
 

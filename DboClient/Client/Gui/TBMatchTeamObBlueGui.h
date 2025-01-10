@@ -1,11 +1,11 @@
 /*****************************************************************************
-* File			: TBMatchTeamObBlueGui.h
-* Author		: Haesung, Cho
-* Copyright		: (주)NTL
-* Date			: 2008. 11. 24
-* Abstract		: 천하제일 무도회 관전자 팀전 블루팀 GUI
+*File			: TBMatchTeamObBlueGui.h
+*Author		    : Haesung, Cho
+*Copyright		: (주)NTL
+*Date			: 2008. 11. 24
+*Abstract		: World's Best Martial Arts Spectator Team Battle Blue Team GUI
 *****************************************************************************
-* Desc         : 
+*Desc         : 
 *****************************************************************************/
 
 #ifndef __TB_MATCH_TEAM_OB_BLUE_GUI_H__
@@ -23,7 +23,7 @@
 
 
 /**
-* \brief 각 멤버들의 GUI
+* \brief GUI of each member
 */
 class CTBMatchTeamBlueMemberGui : public CNtlPLGui, RWS::CEventHandler
 {
@@ -61,7 +61,7 @@ protected:
 };
 
 /**
-* \brief Blue 팀의 GUI
+* \brief Blue Team's GUI
 */
 class CTBMatchTeamObBlueGui : public CNtlPLGui, RWS::CEventHandler
 {

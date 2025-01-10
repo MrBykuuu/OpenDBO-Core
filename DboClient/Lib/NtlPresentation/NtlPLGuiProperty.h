@@ -2,7 +2,7 @@
  *
  * File			: NtlPLGuiProperty.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2005. 8. 22	
  * Abstract		: Presentation layer gui property class
  *****************************************************************************
@@ -18,8 +18,8 @@
 
 /**
  * \ingroup NtlPresentation
- * CNtlPLGui에 해당하는 property class이다.
- * property data는 xml file로 작성되어져 있다.
+ *This is a property class corresponding to CNtlPLGui.
+ *Property data is written as an xml file.
  *
  */
 
@@ -29,7 +29,7 @@ public:
 
 	static unsigned int m_strVer;			/* gui property file version **/
 	static std::string m_strScriptPath;		/* gui script path name **/ 
-	static std::string m_strTexPath;		/* gui texture file의 path name **/ 
+	static std::string m_strTexPath;		/* path name of gui texture file **/ 
 	
 	std::string m_strResFile;				/* gui resource script file name **/ 
 	std::string m_strSurFile;				/* gui surface script file name **/ 
@@ -50,17 +50,17 @@ public:
 	virtual ~CNtlPLGuiProperty();
 
 	/**
-    *  xml file로부터 object property data를 loading하는 함수
-	*  \param pDoc는 xml wrapping class pointer.
-	*  \param pNod는 유효한 xml node.
+    *Function to load object property data from xml file
+	*  \param pDoc is an xml wrapping class pointer.
+	*  \param pNod is a valid xml node.
     *
     */
 	virtual RwBool	Load(CNtlXMLDoc *pDoc, IXMLDOMNode *pNode);
 
 	/**
-    *  xml file로 object property data를 save하는 함수
-	*  \param pDoc는 xml wrapping class pointer.
-	*  \param pNod는 유효한 xml node.
+    *Function to save object property data to xml file
+	*  \param pDoc is an xml wrapping class pointer.
+	*  \param pNod is a valid xml node.
     *
     */
 	virtual RwBool	Save(CNtlXMLDoc *pDoc, IXMLDOMNode *pNode );

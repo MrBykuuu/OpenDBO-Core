@@ -1,19 +1,19 @@
 #include "precomp_dboclient.h"
 #include "CursorManager.h"
 
-// share
+// Share
 #include "NtlCharacter.h"
 #include "NtlRide.h"
 #include "NPCTable.h"
 
-// framework
+// Framework
 #include "NtlApplication.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLSceneManager.h"
 
-// simulation
+// Simulation
 #include "NtlWorldconcept.h"
 #include "NtlSobTriggerObject.h"
 #include "NtlSobDynamicObject.h"
@@ -25,7 +25,7 @@
 #include "NtlSLEvent.h"
 
 
-// dbo
+// Dbo
 #include "DboDef.h"
 #include "DboGlobal.h"
 #include "HpGui.h"
@@ -260,7 +260,7 @@ void CCursorManager::WorldCursorProc(CNtlSob* pSobObj)
 				CNtlSobNpcAttr* pSobNPCAttr = reinterpret_cast<CNtlSobNpcAttr*>( pSobNPC->GetSobAttr() );
 				sNPC_TBLDAT* pNPC_TBLDAT = pSobNPCAttr->GetNpcTbl();
 
-				// 아바타가 버스 요금을 가지고 있고 탈 수 있는 거리인지 조사
+				// Check if the avatar has bus fare and can take the bus
 				if( Logic_GetZenny() >= pNPC_TBLDAT->amerchant_Tblidx[0] )
 				{
 					if( Logic_InFollowRange(reinterpret_cast<CNtlSobActor*>(pAvatar), pActor, (RwReal)NTL_MAX_BUS_DISTANCE) )
@@ -278,7 +278,7 @@ void CCursorManager::WorldCursorProc(CNtlSob* pSobObj)
 			}
 			else
 			{
-				// 아바타가 타고 있는 버스가 아닌 다른 버스에 마우스 커서를 옮겼다
+				// The mouse cursor was moved to a bus other than the one the avatar was riding.
 				SetMouseCursor( CS_DEAL_SHOP );	
 			}
 		}		
@@ -365,14 +365,14 @@ VOID CCursorManager::SetMouseCursor( STATE eState )
 
 	m_eCurCursor = (RwUInt8)eState;
 
-	// 바로 커서를 변경하기 위해
+	// To change the cursor immediately
 	SetCursor(m_hMouseCursor[m_eCurCursor]);
 
-	// 커서 등록
+	// Register cursor
 	SetClassLong( CNtlApplication::GetInstance()->GetHWnd(), GCL_HCURSOR, (LONG)m_hMouseCursor[m_eCurCursor] );
 
 	if( eState == CS_BATTLE_TARGET )
-	{	// 타겟 선택시
+	{	// When selecting a target
 		Logic_PlayGUISound( GSD_SYSTEM_ENEMY_FOUSE );
 	}
 }

@@ -1,28 +1,28 @@
 /******************************************************************************
-* File			: TMQBoardGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2007. 7. 3
-* Update		: 1/24/2019
-* Abstract		: 
+*File			: TMQBoardGui.h
+*Author		    : Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2007. 7. 3
+*Update		: 1/24/2019
+*Abstract		: 
 *****************************************************************************
-* Desc			: 진행 예정인 타임머신 퀘스트의 리스트를 보여준다
+*Desc			: Shows a list of scheduled time machine quests.
 *****************************************************************************/
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// share
+// Share
 #include "NtlTimeQuest.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// dbo
+// Dbo
 #include "SurfaceGui.h"
 #include "SlotGui.h"
 
@@ -42,7 +42,7 @@ public:
 
 	SERIAL_HANDLE	GetNPCHandle();
 
-	int			SwitchDialog(bool bOpen);			///< DialogManager에서의 Open/Close
+	int			SwitchDialog(bool bOpen);			///< Open/Close in DialogManager
 
 protected:
 

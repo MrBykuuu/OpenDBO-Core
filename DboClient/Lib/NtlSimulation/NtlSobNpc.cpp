@@ -1,22 +1,22 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobNpc.h"
 
-// shared
+// Shared
 #include "NpcTable.h"
 #include "NtlCharacter.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// presentation
+// Presentation
 #include "NtlPLSceneManager.h"
 #include "NtlPLCharacter.h"
 #include "NtlPLPlayerName.h"
 #include "NtlPLHelpers.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "TableContainer.h"
 #include "NtlSobManager.h"
 #include "NtlSobAttrFactory.h"
@@ -55,7 +55,7 @@ RwBool CNtlSobNpc::Create(void)
 {
 	NTL_FUNCTION("CNtlSobNpc::Create");
 
-	// proxy 설정
+	//proxy settings
 	m_pSobProxy = NTL_NEW CNtlSobCharProxy;
 	m_pSobProxy->Create(0);
 	m_pSobProxy->SetSobObj(this);
@@ -68,7 +68,7 @@ RwBool CNtlSobNpc::Create(void)
 		NTL_RETURN(FALSE);
 	}
 
-	// class name 설정.
+	//Set class name.
 	SetClassName(SLCLASS_NAME_NPC);
 
 	NTL_RETURN(TRUE);
@@ -117,7 +117,7 @@ void CNtlSobNpc::HandleEvents(RWS::CMsg &pMsg)
 		// proxy setting
 		GetSobProxy()->HandleEvents(pMsg);
 
-		// 좌표와 방향 세팅.
+		//Setting coordinates and direction.
 		RwV3d vLoc, vDir;
 		RwV3dAssignMacro(&vLoc, &pSobCreate->vLoc); 
 		RwV3dAssignMacro(&vDir, &pSobCreate->vDir); 
@@ -148,7 +148,7 @@ void CNtlSobNpc::HandleEvents(RWS::CMsg &pMsg)
 			ActiveQuestMark( TRUE );
 		}
 
-		// 공격을 당할 때 heading을 change 해야 하는지 판단.
+		// Determine whether heading should be changed when attacked.
 		CNtlSobNpcAttr *pNpcAttr = reinterpret_cast<CNtlSobNpcAttr*>( GetSobAttr() );
 		sNPC_TBLDAT *pNpcTable = pNpcAttr->GetNpcTbl();
 		if(pNpcTable)
@@ -181,7 +181,7 @@ void CNtlSobNpc::HandleEvents(RWS::CMsg &pMsg)
 	}
     else if(pMsg.Id == g_EventAnimEnd)
     {
-        // 상점 이용시 이벤트 애니메이션 재생후 루프로 변경
+        //When using the store, play the event animation and change it to a loop
         SNtlEventAnimEnd* pData = (SNtlEventAnimEnd*)pMsg.pData;
         if(pData->uiSerialId == GetSerialID() && (pData->uiBaseAnimKey == SOC_NO || pData->uiBaseAnimKey == SOC_BYE || pData->uiBaseAnimKey == SOC_AGREE))
         {
@@ -274,7 +274,7 @@ void CNtlSobNpc::QeustMarkCheck(RwReal fElapsed)
 			if( ( m_byQuestMark != byQuestMark ) ||
 				( byQuestMark == EQuestMarkBalloonNew && m_tID != tID ) )
 			{
-				// event 발생.	
+				//event occurs.
 				m_byQuestMark = byQuestMark;
 				m_tID = tID;
 				CNtlSLEventGenerator::QuestMark(GetSerialID(), m_byQuestMark, (void*)pQuestInfo);
@@ -292,7 +292,7 @@ void CNtlSobNpc::ActiveQuestMark(RwBool bQuestMark)
 	{
 		if(m_byQuestMark != EQuestMarkNone)
 		{
-			// none을 보낸다.
+			//Send none.
 			m_byQuestMark = EQuestMarkNone;
 			CNtlSLEventGenerator::QuestMark(GetSerialID(), m_byQuestMark, NULL);
 		}

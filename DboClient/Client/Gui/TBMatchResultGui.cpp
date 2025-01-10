@@ -1,26 +1,26 @@
 #include "precomp_dboclient.h"
 #include "TBMatchResultGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// share
+// Share
 
-// table
+// Table
 #include "ItemTable.h"
 #include "GraphicDataTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEvent.h"
 #include "NtlSobAvatar.h"
 #include "NtlWorldConceptTB.h"
 
-// client
+// Client
 #include "DboGlobal.h"
 #include "DboEvent.h"
 #include "InfoWndManager.h"
@@ -122,7 +122,7 @@ RwBool CTBMatchResultGui::Create( eMATCHWORLD_TYPE eMatchType )
 
 	CRectangle rtScreen = m_pThis->GetScreenRect();
 
-	// 초기위치 설정
+	// Initial position setting
 	m_rtRewardItem[BLUE][0].SetRectWH( MATCHREWARD_BLUE_ICON_X, MATCHREWARD_ICON_Y, DBOGUI_ICON_SIZE, DBOGUI_ICON_SIZE );
 	m_rtRewardItem[RED][0].SetRectWH( MATCHREWARD_RED_ICON_X, MATCHREWARD_ICON_Y, DBOGUI_ICON_SIZE, DBOGUI_ICON_SIZE );
 
@@ -237,9 +237,9 @@ VOID CTBMatchResultGui::Destroy(VOID)
 {
 	GetNtlGuiManager()->RemoveUpdateFunc( this );
 
-	OnMouseLeave( NULL ); // 인포윈도우 닫기.
+	OnMouseLeave( NULL ); // Close the info window.
 
-	DeleteAllRewardItem(); // 아이템 아이콘 삭제.
+	DeleteAllRewardItem(); // Delete item icon.
 
 	switch( m_eMatchType )
 	{		
@@ -581,7 +581,7 @@ RwBool CTBMatchResultGui::SetResultData( VOID* pData )
 		}
 	}
 
-	// WaitTime
+	// Wait time
 	m_fWaitTime = (RwReal)pTBWorldConcept->GetMatchTbl()->dwMatchFinishTime + 0.99f; 
 	
 	m_bTournamentTrigger = TRUE;
@@ -714,7 +714,7 @@ VOID CTBMatchResultGui::SetFlashResult( FLASHRESULT eResult )
 	CNtlWorldConceptTB* pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 	NTL_ASSERT( pTBWorldConcept, "CNtlTBudokai::HandleEvents : must World concept is valid" );	
 
-	// 참가자가 아니라면
+	// Unless you are a participant
 	if( !pTBWorldConcept->GetMyTeam() )
 		eResult = NONE;
 

@@ -1,14 +1,14 @@
 #include "precomp_dboclient.h"
 #include "ClassExplainGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLDef.h"
 #include "NtlPLGuiManager.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DisplayStringManager.h"
@@ -38,14 +38,14 @@ RwBool CClassExplainGui::Create()
 
 	CRectangle rect;
 
-	// 배경
+	// background
 	m_Background.SetType(CWindowby3::WT_HORIZONTAL);
 	m_Background.SetSurface(0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharCreate_Explain.srf", "srfBackgroundUp" ));
 	m_Background.SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharCreate_Explain.srf", "srfBackgroundCenter" ));
 	m_Background.SetSurface(2, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharCreate_Explain.srf", "srfBackgroundBottom" ));	
 	m_Background.SetSize(225, 298);
 
-	// 클래스 이름 배경
+	// class name background
 	m_srtClassNameBack.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharCreate_Explain.srf", "srfNameBar" ));
 
 
@@ -55,20 +55,20 @@ RwBool CClassExplainGui::Create()
 	m_pTitleStatic->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_CHAR_CLASS"));
 
 
-	// 종족 이름
+	// race name
 	rect.SetRect(28, 37, 197, 62);
 	m_pClassName = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER );
 	m_pClassName->CreateFontStd( DEFAULT_FONT, 110, DEFAULT_FONT_ATTR);
 	m_pClassName->SetTextColor( RGB(255, 192, 0) );
 	m_pClassName->Enable(false);
 
-	// 클래스 설명
+	// class description
 	m_pExplainHtml = (gui::CHtmlBox*)GetComponent("hbxConv");
 	m_pExplainHtml->SetLineSpace(8);
 
 	Show(false);
 
-	// sig
+	// Signals
 	m_slotPaint			= m_pThis->SigPaint().Connect( this, &CClassExplainGui::OnPaint );
 
 	LinkMsg(g_EventCharMake);

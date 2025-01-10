@@ -1,6 +1,6 @@
 #include "precomp_ntlpresentation.h"
 
-// core
+// Core
 #include "NtlAtomic.h"
 #include "NtlMath.h"
 #include "NtlProfiler.h"
@@ -42,7 +42,7 @@ RpCollisionTriangle* CollisionWeatherTriangle(RpIntersection* pInters, RpCollisi
 
 		SWorldIntersect* pWorldIntersect = (SWorldIntersect*)pData;
 
-		// 연산을 줄인다. Dist 연산을 하지 않는다.
+		// Reduce computation. Dist operation is not performed.
 		if (fRatio < pWorldIntersect->fMinDist)
 		{
 			RwLine* pLine		= &pInters->t.line;
@@ -70,7 +70,7 @@ RpCollisionTriangle* CollisionWeatherTriangleAttrCheck(RpIntersection* pInters, 
 
 	SWorldIntersect* pWorldIntersect = (SWorldIntersect*)pData;
 	
-	// 연산을 줄인다. Dist 연산을 하지 않는다.
+	// Reduce computation. Dist operation is not performed.
 	if (fRatio < pWorldIntersect->fMinDist)
 	{
 		RwLine* pLine		= &pInters->t.line;
@@ -359,7 +359,7 @@ RwBool CNtlPLWeatherController::Create(CNtlPLWeatherProperty* pWeatherProperty, 
 			tSoundParam.iChannelGroup	= CHANNEL_GROUP_WEATHER_MUSIC;
 			tSoundParam.pcFileName		= (char*)m_pWeatherEmitter->strGlobalSound.c_str();
 
-			// SOUNDRESULT_OK CHECK 해야 한다. eSoundResultType가 추가 되면 그 때 같이 넣자.
+			// SOUNDRESULT_OK Must be checked. When eSoundResultType is added, add it at that time.
 			if (SOUNDRESULT_OK != GetSoundManager()->Play(&tSoundParam) )
 			{
 			}
@@ -419,7 +419,7 @@ RwBool CNtlPLWeatherController::Update(RwReal fElapsed, RwReal fFade)
 		{
 			SPLWeatherParticle*& pParticle = *it;
 
-			// UpdateParticleFrustom에서는 보이지 않는 객체에 대하여 임의적으로 가중치를 주어 업데이트를 시킨다.
+			// UpdateParticleFrustom updates invisible objects by randomly assigning weights to them.
 			UpdateParticleFrustom(pParticle, fElapsed);
 			UpdateParticleTime(pParticle, fElapsed);
 			UpdateParticlePos(pParticle, fElapsed);
@@ -430,7 +430,7 @@ RwBool CNtlPLWeatherController::Update(RwReal fElapsed, RwReal fFade)
 				{
 				case EPLWEATHER_PARTICLE_MOTION_STATIC:
 					{
-						// Static은 움직이지 않으므로 XRay 방식으로 딱 1번 충돌 체크 한다.
+						// Static does not move, so collision is checked only once using the XRay method.
 						if (!(pParticle->eCollisionFlag & EPLWEATHER_PARTICLE_COLLISION_COMPLETE) && iCollisionCalcCount < iCollisionCalcMax)
 						{
 							(this->*m_CBParticleCollisionXRay)(pParticle);
@@ -440,15 +440,15 @@ RwBool CNtlPLWeatherController::Update(RwReal fElapsed, RwReal fFade)
 					break;
 				case EPLWEATHER_PARTICLE_MOTION_TSNAP:
 					{
-						// Terrain Snap으로 동작하는 Particle은 충돌처리를 달리 해 준다.
-						// TSNAP은 계속 움직이므로 EPLWEATHER_PARTICLE_COLLISION_COMPLETE 비교하지 않는다.
+						// Particles that operate with Terrain Snap handle collisions differently.
+						// Because TSNAP continues to move, it does not compare EPLWEATHER_PARTICLE_COLLISION_COMPLETE.
 						(this->*m_CBParticleCollisionXRay)(pParticle);
 					}
 					break;
 				case EPLWEATHER_PARTICLE_MOTION_LINE:
 				case EPLWEATHER_PARTICLE_MOTION_SPLINE:
 					{
-						// Line과 Spline은 Collision DeltaTime을 계산해 낸다. 딱 1번 충돌 체크 한다.
+						// Line and Spline calculate Collision DeltaTime. Check for collision just once.
 						if (!(pParticle->eCollisionFlag & EPLWEATHER_PARTICLE_COLLISION_COMPLETE) && iCollisionCalcCount < iCollisionCalcMax)
 						{
 							(this->*m_CBParticleCollisionTime)(pParticle);
@@ -459,13 +459,13 @@ RwBool CNtlPLWeatherController::Update(RwReal fElapsed, RwReal fFade)
 				}
 			}
 
-			// CollisionTime이나 ParticleTime을 연산한 후 지워야 하는 Particle일 경우 Effect나 Sound 처리를 같이 해 준다.
+			// If the particle needs to be erased after calculating CollisionTime or ParticleTime, Effect or Sound processing is performed together.
 			if (UpdateParticleDelete(pParticle, it))
 			{
 				continue;
 			}
 
-			// Particle의 기본적인 정보를을 업데이트 한다.
+			// Update the basic information of the particle.
 			if (m_eWeatherUpdateFlag & EPLWEATHER_UPDATE_MATRIX)
 			{
 				UpdateParticleMatrix(pParticle, fElapsed);
@@ -767,7 +767,7 @@ RwBool CNtlPLWeatherController::UpdateParticlePos(SPLWeatherParticle* pParticle,
 
 	if (pParticle->fDist2dSquared >= m_pWeatherEmitter->fParticleFrustumLengthSquared)
 	{
-		// UpdateParticleFrustom 먼저 위치가 이동되었다.
+		// UpdateParticleFrustom First, the location was moved.
 		NTL_RPROFILE(TRUE)
 	}
 

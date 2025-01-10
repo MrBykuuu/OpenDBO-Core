@@ -1,11 +1,11 @@
 /******************************************************************************
-* File			: ScouterGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 11. 17
-* Abstract		: 
+*File           : ScouterGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : November 17, 2008
+*Abstract		: 
 *****************************************************************************
-* Desc			: GM 게임 단축 메뉴 인터페이스
+*Desc           : GM game shortcut menu interface
 *****************************************************************************/
 
 #pragma once
@@ -13,13 +13,13 @@
 class CGMPopupGui;
 class CPlayerInfoGui;
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
 
@@ -91,26 +91,26 @@ protected:
 	gui::CSlot			m_slotReturn;
 	gui::CSlot			m_slotMove;
 
-	gui::CButton*		m_pCharShowButton;				///< GM 캐릭터 보이기 버튼
-	gui::CButton*		m_pCharHideButton;				///< GM 캐릭터 숨기기 버튼
-	gui::CButton*		m_pTenkaichiButton;				///< 천하제일 무도회 메뉴 상위 버튼
-	gui::CButton*		m_pPortalButton;				///< 아바타 이동 버튼
-	gui::CButton*		m_pFreeCameraButton;			///< 프리 카메라 버튼
-	gui::CButton*		m_pNormalCameraButton;			///< 3인칭 카메라 버튼
+	gui::CButton*		m_pCharShowButton;				///< Show GM character button
+	gui::CButton*		m_pCharHideButton;				///< GM character hide button
+	gui::CButton*		m_pTenkaichiButton;				///< World's Best Martial Arts Menu Top Button
+	gui::CButton*		m_pPortalButton;				///< Avatar movement button
+	gui::CButton*		m_pFreeCameraButton;			///< Free camera button
+	gui::CButton*		m_pNormalCameraButton;			///< Third-person camera button
 
-	gui::CButton*		m_pTenkaichi_CameraLocButton;	///< 천하제일 무도회 카메라 위치 변경 버튼
-	gui::CButton*		m_pTenkaichi_CameraMoveButton;	///< 천하제일 무도회 카메라 이동 버튼
-	gui::CButton*		m_pTenkaichi_MenuShowButton;	///< 천하제일 무도회 정해진 메뉴 Show 버튼
-	gui::CButton*		m_pTenkaichi_MenuHideButton;	///< 천하제일 무도회 정해진 메뉴 Hide 버튼
-	gui::CButton*		m_pTenkaichi_PlayerButton;		///< 천하제일 무도회 선수 정보 버튼
-	gui::CButton*		m_pTenkaichi_TournamentButton;	///< 천하제일 무도회 대진표 보기 버튼
-	gui::CButton*		m_pReturnButton;				///< 돌아가기 버튼
+	gui::CButton*		m_pTenkaichi_CameraLocButton;	///< World's Best Ballroom Camera Position Change Button
+	gui::CButton*		m_pTenkaichi_CameraMoveButton;	///< World's Best Ballroom Camera Movement Button
+	gui::CButton*		m_pTenkaichi_MenuShowButton;	///< The World's Best Martial Arts Club's designated menu Show button
+	gui::CButton*		m_pTenkaichi_MenuHideButton;	///< World's Best Martial Arts Menu Hide Button
+	gui::CButton*		m_pTenkaichi_PlayerButton;		///< World's Best Martial Arts Player Information Button
+	gui::CButton*		m_pTenkaichi_TournamentButton;	///< View World's Best Martial Arts Tournament bracket button
+	gui::CButton*		m_pReturnButton;				///< Return button
 
-	CGMPopupGui*		m_pPopupGui;					///< GM Popup 메뉴
+	CGMPopupGui*		m_pPopupGui;					///< GM Popup Menu
 
 	eMenuGroup			m_eMenuGroup;
 	RwBool				m_bAvatarShow;
-	RwInt8				m_byPopupSlot;					///< 팝업 메뉴가 나온 슬롯의 인덱스
+	RwInt8				m_byPopupSlot;					///< Index of the slot where the pop-up menu appears
 
 	MAP_POPUP			m_mapPlayerInfo;
 };

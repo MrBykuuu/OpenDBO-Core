@@ -1,22 +1,22 @@
 #include "precomp_dboclient.h"
 #include "VehicleGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "VehicleTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSobItemAttr.h"
 #include "NtlSLApi.h"
 #include "NtlSLPacketGenerator.h"
 
-// cleint
+// Client
 #include "DialogManager.h"
 #include "InfoWndManager.h"
 #include "DboGlobal.h"
@@ -128,7 +128,7 @@ RwBool CVehicleGui::Create()
 	}
 
 
-	// sig
+	// Signals
 	m_slotExitButton	= m_pExitButton->SigClicked().Connect(this, &CVehicleGui::OnClicked_ExitButton);	
 	m_slotMouseDown		= m_pThis->SigMouseDown().Connect(this, &CVehicleGui::OnMouseDown );
 	m_slotMouseUp		= m_pThis->SigMouseUp().Connect(this, &CVehicleGui::OnMouseUp);
@@ -391,7 +391,7 @@ VOID CVehicleGui::Fuel_SetGauge()
 
 VOID CVehicleGui::Fuel_LockUnlock_in_Bag()
 {
-	// 기존에 가방의 연료에 걸려있던 아이템 락이 푼다
+	// The item lock that was previously on the bag's fuel is unlocked.
 	SET_LOCKED_BAGSLOT::iterator it_ex = m_tFuel.setLockedBagSlot.begin();
 	for( ; it_ex != m_tFuel.setLockedBagSlot.end() ; ++it_ex )
 	{
@@ -404,7 +404,7 @@ VOID CVehicleGui::Fuel_LockUnlock_in_Bag()
 		}
 	}
 
-	// 새로이 가방의 연료에 아이템 락을 건다
+	// Add a new item lock to the fuel in your bag.
 	SET_LOCKED_BAGSLOT::iterator it_new = m_tFuel.setNewLockBagSlot.begin();	
 	for( ; it_new != m_tFuel.setNewLockBagSlot.end() ; ++it_new )
 	{
@@ -417,7 +417,7 @@ VOID CVehicleGui::Fuel_LockUnlock_in_Bag()
 		}
 	}
 
-	// 새로운 락 정보를 보관한다
+	// Store new lock information
 	m_tFuel.setLockedBagSlot.clear();
 	m_tFuel.setLockedBagSlot = m_tFuel.setNewLockBagSlot;
 	m_tFuel.setNewLockBagSlot.clear();
@@ -430,7 +430,7 @@ VOID CVehicleGui::Vehicle_Start()
 		DBO_FAIL("Not eixst file : " << dENGINE_WORKING_FLASH << ". You can continue the game.");
 	}*/
 
-	// 플래쉬의 위치를 맞추기 위해
+	// To adjust the position of the flash
 	OnMove(0, 0);
 
 	//m_pflashEngineWorking->PlayMovie( TRUE );
@@ -438,7 +438,7 @@ VOID CVehicleGui::Vehicle_Start()
 
 VOID CVehicleGui::Vehicle_Stop()
 {
-//	m_pflashEngineWorking->Unload();
+	//	m_pflashEngineWorking->Unload();
 
 	if( m_tVehicle.fFuelGaugeElapsed == 0.f )
 	{		

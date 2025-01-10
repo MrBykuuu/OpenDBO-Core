@@ -1,13 +1,13 @@
 #include "precomp_dboclient.h"
 #include "RBGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "NtlRankBattle.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
 // Simulation
@@ -300,11 +300,11 @@ VOID CRBGui::HandleEvents( RWS::CMsg& msg )
 		{
 			if( pState->uiState == WORLD_STATE_ENTER )
 			{
-				// UI 감추기
+				// Hide UI
 				GetDialogManager()->CloseDialog( DIALOG_WORLDMAP );
 				GetDialogManager()->CloseDialog( DIALOG_MINIMAP );
 
-				// RB UI 생성
+				// Create RB UI
 				Create();
 
 				DirectionMode( TRUE );				
@@ -316,7 +316,7 @@ VOID CRBGui::HandleEvents( RWS::CMsg& msg )
 			}
 		}
 	}
-	//else if( msg.Id == g_EventSobCreate ) // Dummy코드, 캐릭터 부활시 없어지는 게이지를 살리기 찍기 위함.
+	//else if(msg.Id == g_EventSobCreate) //Dummy code, to save the gauge that disappears when the character is revived.
 	//{
 	//	SNtlEventSobPlayerCreate* pData = reinterpret_cast<SNtlEventSobPlayerCreate*>( msg.pData );
 

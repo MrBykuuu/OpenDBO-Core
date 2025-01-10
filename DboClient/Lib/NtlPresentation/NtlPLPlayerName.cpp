@@ -39,7 +39,7 @@ CNtlPLPlayerName::CNtlPLPlayerName()
 	m_posNickNameSize.SetPos( 0, 0 );
 	m_posTitleNameSize.SetPos(0, 0);
 
-	// World Position 초기화
+	// Reset World Position
 	CNtlMath::MathRwV3dAssign(&m_v3WorldPosition, 0.0f, 0.0f, 0.0f);
 
 	SetLayer(PLENTITY_LAYER_PLAYERNAME);
@@ -59,8 +59,8 @@ CNtlPLPlayerName::~CNtlPLPlayerName()
 
 /**
 * \brief Create
-* \param pParam		(SPLEntityCreateParam*) Entity의 Create 파라메터 구조체
-* \return 성공여부
+* \param pParam (SPLEntityCreateParam*) Entity's Create parameter structure
+* \return Success or not
 */
 RwBool CNtlPLPlayerName::Create( const SPLEntityCreateParam * pParam )
 {
@@ -161,15 +161,15 @@ void CNtlPLPlayerName::Destroy(void)
 
 /**
 * \brief Update
-* \param fElapsed	(RwReal) 이전 업데이트에서 경과된 시간
+* \param fElapsed (RwReal) Time elapsed from previous update.
 */
 RwBool CNtlPLPlayerName::Update(RwReal fElapsed)
 {
-	// Entity가 현재 보이는 상태가 아니라면 Update하지 않는다.
+	// If the entity is not currently visible, it is not updated.
 	if(!IsVisible())
 		return TRUE;
 
-	// 카메라 컬링 체크
+	// Camera culling check
 	RwSphere sphere;
 	sphere.center = m_v3WorldPosition;
 	sphere.radius = PLAYERNAME_CAMERA__BOUNDING_RADIUS;
@@ -200,7 +200,7 @@ RwBool CNtlPLPlayerName::Update(RwReal fElapsed)
 		}
 	}
 
-	// Flag에 따라서 다른 함수를 적용한다.
+	// Different functions are applied depending on the flag.
 	if( m_byFlag & dNTL_PL_FLAG_EMBLEM )
 		EmblemVertexAssign();
 	else
@@ -246,7 +246,7 @@ RwBool CNtlPLPlayerName::Update(RwReal fElapsed)
 		}
 	}
 
-	// Alpha 의 가중치가 1.0f 아니라면 Entity의 알파 가중치 값에 현재 엔티티의 알파값을 적용한다.
+	// If the weight of Alpha is not 1.0f, the current entity's alpha value is applied to the entity's alpha weight value.
     if(GetWeightAlpha() != 1.0f)
     {
         RwUInt8 byAlpha = (RwUInt8)(m_byAlpha * GetWeightAlpha());
@@ -261,7 +261,7 @@ RwBool CNtlPLPlayerName::Update(RwReal fElapsed)
 
 /**
 * \brief Render
-* 이름과 Emblem을 렌더링한다.
+*Render the name and emblem.
 */
 RwBool CNtlPLPlayerName::Render(void)
 {
@@ -276,8 +276,8 @@ RwBool CNtlPLPlayerName::Render(void)
 }
 
 /**
-* \brief PlayerName Entity에 알파를 지정한다.
-* \param byValue	(RwUInt8) 알파값
+* \brief Specifies alpha for PlayerName Entity.
+* \param byValue (RwUInt8) Alpha value
 */
 void CNtlPLPlayerName::SetAlpha(RwUInt8 byValue)
 {
@@ -300,9 +300,9 @@ void CNtlPLPlayerName::SetAlpha(RwUInt8 byValue)
 }
 
 /**
-* \brief new 연산자 오버로딩
-* \param size	(size_t) 메모리 사이즈
-* \return (void*) CNtlPLEntityFreeList의 Alloc의 리턴값
+* \brief new operator overloading
+* \param size (size_t) memory size
+* \return (void*) Return value of Alloc of CNtlPLEntityFreeList
 */
 void* CNtlPLPlayerName::operator new(size_t size)
 {
@@ -312,8 +312,8 @@ void* CNtlPLPlayerName::operator new(size_t size)
 }
 
 /**
-* \brief delte 연산자 오버로딩
-* \param pObj	(void*) CNtlPLEntityFreeList의 Free로 해제해줘야 하는 객체의 void pointer
+* \brief delte operator overloading
+* \param pObj (void*) void pointer of the object that needs to be freed in CNtlPLEntityFreeList
 */
 void CNtlPLPlayerName::operator delete(void *pObj)
 {
@@ -321,7 +321,7 @@ void CNtlPLPlayerName::operator delete(void *pObj)
 }
 
 /**
-* \brief 모든 버텍스 정보를 0으로 초기화한다.
+* \brief Initializes all vertex information to 0.
 */
 void CNtlPLPlayerName::AllVertexInit( void ) 
 {
@@ -334,7 +334,7 @@ void CNtlPLPlayerName::AllVertexInit( void )
 }
 
 /**
-* \brief PlayerName에서 쓰이는 모든 버텍스들의 UV와 RGB값을 셋팅
+* \brief Set UV and RGB values ??of all vertices used in PlayerName.
 */
 void CNtlPLPlayerName::VertexAssign( void ) 
 {
@@ -399,7 +399,7 @@ void CNtlPLPlayerName::VertexAssign( void )
 }
 
 /**
-* \brief PlayerName 이나 Guild Name 까지만 출력할때 사용되는 버텍스 정렬
+* \brief Vertex alignment used when outputting only PlayerName or Guild Name.
 */
 void CNtlPLPlayerName::NameVertexAssign(void) 
 {
@@ -536,20 +536,20 @@ void CNtlPLPlayerName::NickNameVertexAssign( void )
 }
 
 /**
-* \brief Texture 사이즈가 가장 잘 보일만한 폴리곤의 사이즈를 리턴한다.
-* \param nSize	(RwInt32) 텍스쳐의 가로 사이즈
-* \return (RwReal) 폴리곤의 사이즈
+* \brief Texture Returns the size of the polygon that is most visible.
+* \param nSize (RwInt32) Horizontal size of texture
+* \return (RwReal) Size of polygon
 */
 RwReal CNtlPLPlayerName::GetAdjustPolygonWidth( RwInt32 nSize ) 
 {
-	// Texture Size 1 을 기준으로 구하는 폴리곤 사이즈
+	// Polygon size obtained based on Texture Size 1
 	return nSize * PLAYERNAME_BOX_BASIS_CX;
 }
 
 /**
-* \brief Texture 사이즈가 가장 잘 보일만한 폴리곤의 사이즈를 리턴한다.
-* \param nSize	(RwInt32) 텍스쳐의 높이 사이즈
-* \return (RwReal) 폴리곤의 사이즈
+* \brief Texture Returns the size of the polygon that is most visible.
+* \param nSize (RwInt32) Height size of texture
+* \return (RwReal) Size of polygon
 */
 RwReal CNtlPLPlayerName::GetAdjustPolygonHeight( RwInt32 nSize ) 
 {
@@ -557,9 +557,9 @@ RwReal CNtlPLPlayerName::GetAdjustPolygonHeight( RwInt32 nSize )
 }
 
 /**
-* \brief 이름의 텍스쳐를 생성한다. (이름의 크기만 고려)
-* \param pName	(const WCHAR*) 이름의 문자열 포인터
-* \return (RwBool) 성공 여부
+* Creates a texture named \brief. (Considering only the size of the name)
+* \param pName (const WCHAR*) Pointer to a string named
+* \return (RwBool) Success or not
 */
 RwBool CNtlPLPlayerName::CreateNameTexture( const WCHAR* pName ) 
 {
@@ -656,9 +656,9 @@ RwBool CNtlPLPlayerName::CreateTitleNameTexture(const WCHAR * pTitleName)
 }
 
 /**
-* \brief 길드 이름까지 출력하는 텍스쳐를 만든다.
-* \param pGuildName	(const WCHAR*) 길드이름의 문자열
-* \return 성공여부
+* \brief Create a texture that outputs the guild name.
+* \param pGuildName (const WCHAR*) String of guild name
+* \return Success or not
 */
 RwBool CNtlPLPlayerName::CreateGuildNameTexture(const WCHAR* pGuildName) 
 {
@@ -700,9 +700,9 @@ RwBool CNtlPLPlayerName::CreateGuildNameTexture(const WCHAR* pGuildName)
 }
 
 /**
-* \brief 길드 엠블렘의 텍스쳐를 만든다. ( EmblemMaker에서 만들어진 텍스쳐의 포인터만 가지고 온다.)
-* \param pEmblemFactor	(sEmblemFactor*) 엠블렘 정보 구조체
-* \return 성공여부
+* \brief Creates a texture for the guild emblem. (Only pointers to textures created in EmblemMaker are brought in.)
+* \param pEmblemFactor (sEmblemFactor*) Emblem information structure
+* \return Success or not
 */
 RwBool CNtlPLPlayerName::CreateGuildEmblemTexture(sEmblemFactor *pEmblemFactor) 
 {
@@ -723,7 +723,7 @@ RwBool CNtlPLPlayerName::CreateGuildEmblemTexture(sEmblemFactor *pEmblemFactor)
 
 RwBool CNtlPLPlayerName::CreateNickNameTexture( const WCHAR* pNickName )
 {
-	// 길드 이름의 폰트를 만든다.
+	// Create a font for the guild name.
 	m_pNickFont = g_FontMgr.CreateGuiFont( DEFAULT_FONT, dNTL_PLAYERNAME_FONTSIZE_NICK, DEFAULT_FONT_ATTR ); 
 	if(m_pNickFont == NULL)
 	{
@@ -737,7 +737,7 @@ RwBool CNtlPLPlayerName::CreateNickNameTexture( const WCHAR* pNickName )
 		m_pNickTexture = NULL;
 	}
 
-	// 글자의 사이즈를 저장하고 사이즈에 알맞은 텍스쳐를 만든다.
+	// Saves the size of the letters and creates a texture appropriate for the size.
 	CPos size = m_pNickFont->GetTextWSize( pNickName, (int)wcslen(pNickName)); 
 	m_posNickNameSize.SetPos( size.x, size.y );
 
@@ -763,7 +763,7 @@ RwBool CNtlPLPlayerName::RenderName( void )
 	else
 	{
 		RwD3D9SetTexture(NULL, 0);
-		return FALSE; // m_pTexture가 NULL이면 렌더링하지 않는다.
+		return FALSE; // If m_pTexture is NULL, it is not rendered.
 	}
 
 	RwUInt32 nTransformFlags = rwIM3D_VERTEXUV | rwIM3D_ALLOPAQUE;
@@ -779,8 +779,8 @@ RwBool CNtlPLPlayerName::RenderName( void )
 }
 
 /**
-* \brief 엠블렘을 렌더링한다.
-* \param 성공 여부
+* \brief Render the emblem.
+* \param success or not
 */
 RwBool CNtlPLPlayerName::RenderEmblem( void ) 
 {
@@ -792,7 +792,7 @@ RwBool CNtlPLPlayerName::RenderEmblem( void )
 	else
 	{
 		RwD3D9SetTexture(NULL, 0);
-		return FALSE; // m_pTexture가 NULL이면 렌더링하지 않는다.
+		return FALSE; // If m_pTexture is NULL, it is not rendered.
 	}
 
 	RwUInt32 nTransformFlags = rwIM3D_VERTEXUV | rwIM3D_ALLOPAQUE;
@@ -814,7 +814,7 @@ RwBool CNtlPLPlayerName::RenderNick( void )
 	else
 	{
 		RwD3D9SetTexture(NULL, 0);
-		return FALSE; // m_pNickTexture가 NULL이면 렌더링하지 않는다.
+		return FALSE; // If m_pNickTexture is NULL, it is not rendered.
 	}
 
 	RwUInt32 nTransformFlags = rwIM3D_VERTEXUV | rwIM3D_ALLOPAQUE;
@@ -830,22 +830,22 @@ RwBool CNtlPLPlayerName::RenderNick( void )
 }
 
 /**
-* \brief 이름과 엠블렘 포지션을 업데이트 한다.
-* \param pPos	(const RwV3d) 정렬의 기준이 될 포지션
+* \brief Updates the name and emblem position.
+* \param pPos (const RwV3d) Position to be the basis for sorting
 */
 void CNtlPLPlayerName::SetPosition(const RwV3d *pPos)
 {
-	// position을 update 안할 경우.
+	// If the position is not updated.
 	if(!IsVisible())
 		return;
 
-	// World Position을 지정
+	// Specify World Position
 	m_v3WorldPosition = *pPos;
 }
 
 /**
-* \brief 현재 월드 행렬의 좌표를 리턴
-* \return 월드 행렬의 좌표 ( 카메라의 역행렬 )
+* \brief Returns the coordinates of the current world matrix.
+* \return Coordinates of the world matrix (camera inverse matrix)
 */
 RwV3d CNtlPLPlayerName::GetPosition(void)
 {
@@ -876,12 +876,12 @@ void CNtlPLPlayerName::SetNameColor(const WCHAR* pwcName, COLORREF color)
 }
 
 /**
-* \brief 이름과 컬러를 지정해준다.
-* \param pwcName		(const WCHAR*) 이름
-* \param color			(COLORREF) 이름의 색상
-* \param pwcGuildName	(const WCHAR*) 길드 이름
-* \param guildcolor		(COLORREF) 길드 이름의 색상
-* \param pEmblemFactor	(sEmblemFactor*) 엠블렘 정보의 구조체
+* \brief Specifies the name and color.
+* \param pwcName (const WCHAR*) name
+* \param color (COLORREF) Color by name.
+* \param pwcGuildName (const WCHAR*) Guild name
+* \param guildcolor (COLORREF) Color of guild name.
+* \param pEmblemFactor (sEmblemFactor*) Structure of emblem information
 */
 void CNtlPLPlayerName::SetNameColor( const WCHAR* pwcName, COLORREF color, const WCHAR* pwcGuildName, COLORREF guildcolor
 									,sEmblemFactor* pEmblemFactor, const WCHAR* pwcTitleName, COLORREF titlecolor)
@@ -903,7 +903,7 @@ void CNtlPLPlayerName::SetNameColor( const WCHAR* pwcName, COLORREF color, const
 
 	WCHAR wchGuildName[NTL_MAX_SIZE_GUILD_NAME * 2 + 1];
 
-	// judgment
+	// Judgment
 	if( pwcGuildName == NULL )
 	{
 		if( CreateNameTexture( pwcName ) )
@@ -1096,7 +1096,7 @@ void CNtlPLPlayerName::SetVisible( RwBool bVisible )
 {
 	if( bVisible )
 	{
-		// SetVisible(TRUE) 를 했을 때 NameVisible 이 TRUE 라면 이름을 보여준다.
+		// When you setVisible(TRUE), if NameVisible is TRUE, the name is displayed.
 		if( m_bNameVisible )
 		{
 			CNtlPLEntity::SetVisible( bVisible );
@@ -1104,7 +1104,7 @@ void CNtlPLPlayerName::SetVisible( RwBool bVisible )
 	}
 	else
 	{
-		// SetVisible(FALSE) 를 했을 때는 무조건 꺼준다.
+		// When SetVisible(FALSE) is set, it is unconditionally turned off.
 		CNtlPLEntity::SetVisible( bVisible );
 	}
 }
@@ -1131,7 +1131,7 @@ void CNtlPLPlayerName::SetNickNameColor( const WCHAR* pwcTitle, COLORREF color )
 	if( m_pNickTexture )
 		m_pNickTexture->FillClear();
 
-	// 이름 유효성 판단
+	// validate name
 	if( pwcTitle == NULL || (RwInt32)wcslen( pwcTitle ) <= 0 )
 	{
 		if( m_pNickTexture )
@@ -1143,7 +1143,7 @@ void CNtlPLPlayerName::SetNickNameColor( const WCHAR* pwcTitle, COLORREF color )
 		return;
 	}	
 
-	// 판단
+	// judgment
 	if( CreateNickNameTexture( pwcTitle ) )
 	{
 		m_byFlag |= dNTL_PL_FLAG_NICK;
@@ -1163,7 +1163,7 @@ void CNtlPLPlayerName::SetNickNameColor( const WCHAR* pwcTitle, COLORREF color )
 		rect.right	= rect.left + size.x;
 		rect.bottom = rect.top + size.y;
 
-		// texture에 string copy
+	// copy string to texture
 		g_FontMgr.BitmapToTexture(m_pNickTexture, rect, color, TE_OUTLINE, 0, 2);
 	}
 }

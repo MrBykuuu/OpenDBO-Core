@@ -1,21 +1,21 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobDynamicObjectProxy.h"
 
-// shared
+// Shared
 #include "DynamicObjectTable.h"
 #include "NtlObject.h"
 
-// core
+// Core
 #include "NtlMath.h"
 
-//// presentation
+//// Presentation
 #include "NtlPLEvent.h"
 #include "NtlPLEntity.h"
 #include "NtlPLSceneManager.h"
 #include "NtlPLSceneManager.h"
 #include "NtlPLHelpers.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSob.h"
 #include "NtlSobDynamicObject.h"
@@ -88,7 +88,7 @@ void CNtlSobDynamicObjectProxy::HandleEvents( RWS::CMsg& msg )
 		CDynamicObjectTable* pDynamicObjectTbl = API_GetTableContainer()->GetDynamicObjectTable();
 		NTL_ASSERT(pDynamicObjectTbl, "CNtlSobDynamicObjectProxy::HandleEvents => Dynamic ObjectTable is null" );
 
-		// Index 가져오기
+		// Get Index
 		TBLIDX idxDynamicObject = INVALID_TBLIDX;
 		switch( pSobCreate->byType )
 		{
@@ -129,7 +129,7 @@ void CNtlSobDynamicObjectProxy::HandleEvents( RWS::CMsg& msg )
 
 		UpdateState( pSobCreate->byState );
 
-		//// 이름 생성
+		//// Create a name
 		CreatePLObjectName();
 	}
 	else if( msg.Id == g_EventSobTargetSelect )
@@ -158,7 +158,7 @@ void CNtlSobDynamicObjectProxy::HandleEvents( RWS::CMsg& msg )
 
 		if( pData->uiSerialId == m_pSobObj->GetSerialID() )
 		{
-			// Spawn 이후 애니메이션 상태가 업데이트 되지 않을 때
+			// When the animation state is not updated after spawning
 			sDYNAMIC_OBJECT_TBLDAT* pDynamicTbl = ((CNtlSobDynamicObjectAttr*)m_pSobObj->GetSobAttr())->GetDynamicObjectTbl();
 
 			if ( pData->uiBaseAnimKey == pDynamicTbl->spawnAnimation )
@@ -261,10 +261,10 @@ CNtlPLObject* CNtlSobDynamicObjectProxy::CreateDynamicObject( const RwV3d& vLoc,
 	sParam.bLoadMap = false;
 	sParam.pPos = &vLoc;
 
-	// 스케쥴 로딩을 끈다.
+	// Turn off scheduled loading.
 	GetNtlResourceManager()->SetLoadScheduling(FALSE);
 
-	// 프로퍼티가 없어서 임시로 하드코딩된 모델 데이타를 체크인한다.
+	// Since there are no properties, temporarily hard-coded model data is checked in.
 	pObject = (CNtlPLObject*)(GetSceneManager()->CreateEntity( PLENTITY_OBJECT, pTblDat->szModelName, &sParam ));
 
 	GetNtlResourceManager()->SetLoadScheduling(TRUE);
@@ -324,14 +324,14 @@ void CNtlSobDynamicObjectProxy::CreatePLTargetMark( void )
 {
 	DestroyPLTargetMark();
 
-	// SobObj 가 존재하면 타겟마크를 생성해주고 아니라면 생성하지 않는다.
+	// If SobObj exists, a target mark is created; otherwise, it is not created.
 
 	CNtlSobDynamicObjectAttr* pAttrObj = dynamic_cast< CNtlSobDynamicObjectAttr* > ( m_pSobObj->GetSobAttr() );
 	if ( NULL == pAttrObj ) return;
 
     if(m_pShareTargetMark && m_pShareTargetMark->IsShareTargeting())
     {
-        // 공유 타겟 설정이 되어 있으면 일반 마크는 뜨지 않는다.
+        // If the sharing target is set, the general mark does not appear.
         CreateShareTargetMark(m_pShareTargetMark->GetSlot(), CNtlShareTargetMark::SHARE_TARGET_TARGET);
         return;
     }
@@ -367,7 +367,7 @@ void CNtlSobDynamicObjectProxy::UpdateState( RwUInt8 byState )
 {
 	m_byMainState = byState;
 	
-	// State에 알맞은 Animation을 적용한다.
+	// Apply animation appropriate to the state.
 	sDYNAMIC_OBJECT_TBLDAT* pDynamicTbl = ((CNtlSobDynamicObjectAttr*)m_pSobObj->GetSobAttr())->GetDynamicObjectTbl();
 
 	RwUInt32 uiAniKey = pDynamicTbl->idleAnimation;
@@ -413,7 +413,7 @@ void CNtlSobDynamicObjectProxy::SobShareTargetSelectHandler( RWS::CMsg& pMsg )
     SNtlEventShareTargetSelect* pData = (SNtlEventShareTargetSelect*)pMsg.pData;
     if(pData->hSerialId == m_pSobObj->GetSerialID())
     {
-        // 기존 타겟 마크를 삭제하기 전에 현재 상태를 저장해둔다        
+        // Save the current state before deleting the existing target mark.        
         RwBool bTargetMode = m_pTargetMark ? TRUE : FALSE;
 
         DestroyPLTargetMark(); 

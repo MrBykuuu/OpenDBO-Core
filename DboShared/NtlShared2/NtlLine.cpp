@@ -18,7 +18,7 @@
 
 CNtlLine::CNtlLine()
 {
-	// 초기화를 하지 않는다
+	// Do not initialize
 }
 
 

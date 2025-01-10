@@ -1,7 +1,7 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSkillContainer.h"
 
-// shared
+// Shared
 #include "SkillTable.h"
 #include "HTBSetTable.h"
 #include "ActionTable.h"
@@ -9,10 +9,10 @@
 #include "NPCTable.h"
 #include "TableContainer.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSLGlobal.h"
@@ -438,7 +438,7 @@ void CNtlAvatarSkillContainer::SkillAction(RWS::CMsg &pMsg)
 		return;
 	}
 
-	// RpBonusType에 따른 쿨타임 감소효과가 추가되었기 때문에 스킬아이콘 쿨타임은 밑의 함수를 이용해야 한다.
+	//Since the cool time reduction effect according to RpBonusType has been added, the skill icon cool time must use the function below.
 	CNtlSobSkillIcon *pSobSkillIcon = reinterpret_cast<CNtlSobSkillIcon*>( pSobSkill->GetIcon() );
 	pSobSkillIcon->SetSkillIconState( CNtlSobSkillIcon::ICON_STATE_COOLING, pSkillAction->byRpBonusType, TRUE );
 }
@@ -682,7 +682,7 @@ void CNtlPetSkillContainer::HandleEvents(RWS::CMsg &pMsg)
 	{
 		SNtlEventSobPetCreate *pPetCreate = reinterpret_cast<SNtlEventSobPetCreate*>( pMsg.pData );
 
-		// Skill의 AI 조건을 읽기 위해 NPC 테이블을 읽어놓는다.
+		// Read the NPC table to read the AI ??conditions of the skill.
 		sNPC_TBLDAT *pNpcTblData;
 		CNPCTable *pNpcTable = API_GetTableContainer()->GetNpcTable();
 
@@ -707,12 +707,12 @@ void CNtlPetSkillContainer::HandleEvents(RWS::CMsg &pMsg)
 
 			SetSkillSerial(pSummonPetSkillInfo->aSkillInfo[i].skillIndex, pSobSkill->GetSerialID());
 			
-			// Table Index와 매칭되는 AI 데이타를 읽어서 Skill에 세팅한다.
+			// Read AI data that matches the Table Index and set it in Skill.
 			for(RwInt32 j = 0; j < NTL_MAX_NPC_HAVE_SKILL; ++j )
 			{
 				if( pSummonPetSkillInfo->aSkillInfo[i].tblidx == pNpcTblData->use_Skill_Tblidx[j] )
 				{
-					// AI 세팅
+					// AI settings
 					SetSkillUseBasis( pSummonPetSkillInfo->aSkillInfo[i].skillIndex, pNpcTblData->byUse_Skill_Basis[j] );
 					SetSkillUseLp( pSummonPetSkillInfo->aSkillInfo[i].skillIndex, pNpcTblData->wUse_Skill_LP[j] );
 					SetSkillUseTime( pSummonPetSkillInfo->aSkillInfo[i].skillIndex, pNpcTblData->wUse_Skill_Time[j] );
@@ -728,7 +728,7 @@ void CNtlPetSkillContainer::HandleEvents(RWS::CMsg &pMsg)
 			return;
 
 		CNtlSobSkillIcon *pSobSkillIcon = reinterpret_cast<CNtlSobSkillIcon*>( pSobSkill->GetIcon() );
-		// Skill Icon 의 쿨링 타임
+		// Cooling time of Skill Icon
 		pSobSkillIcon->SetSkillIconState( CNtlSobSkillIcon::ICON_STATE_COOLING, INVALID_BYTE, TRUE );
 	}
 }

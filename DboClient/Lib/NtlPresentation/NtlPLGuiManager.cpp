@@ -85,8 +85,8 @@ void CNtlPLGuiManager::Destroy(void)
 		NTL_DELETE(m_pResMgr);
 	}
 
-	// 여기는 더 점검을 해 봐야 한다...
-	// 왜 이렇게 만들었쥐? 이해가 안되네... 내가 하고서리...;; 
+	// I need to check more here...
+	// Why did you make it like this? I don't understand... I did it...;; 
 	CEventListener_Win32::RemoveAll();
 
 	/*
@@ -213,7 +213,7 @@ RwBool CNtlPLGuiManager::LoadUserOption(CNtlSerializer& s)
 		unit_s.Refresh();
 		gui_s.Out(unit_s, iUnitSize);
 
-		// PL gui를 찾는다.
+		// Find PL GUI.
 		pPLGui = FindPLGui(chName);
 		if(pPLGui)
 		{
@@ -243,7 +243,7 @@ RwBool CNtlPLGuiManager::SaveUserOption(CNtlSerializer& s)
 			RwInt32 iUnitNameSize = strlen(pPLGui->GetName());
 			NTL_ASSERT(iUnitNameSize != 0, "CNtlPLGuiManager::SaveUserOption => PLGui name is null !!!");
 
-			// unit 이름.
+			// unit name.
 			gui_s << iUnitNameSize;
 			gui_s << pPLGui->GetName();
 

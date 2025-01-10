@@ -2,11 +2,11 @@
  *
  * File			: NtlDTCinematicManager.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: (?)NTL
  * Date			: 2007. 06. 27	
  * Abstract		: direct cinematic node manager
  *****************************************************************************
- * Desc         : cinematic 연출을 위한 node의 관리자.
+ * Desc         : Node manager for cinematic production.
  *
  *****************************************************************************/
 

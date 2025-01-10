@@ -1,13 +1,13 @@
 #include "precomp_dboclient.h"
 #include "NetPySideIconGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DboPacketGenerator.h"
@@ -83,8 +83,8 @@ VOID CNetPySideIconGui::OnIconButtonClicked( gui::CComponent* pComponent )
 {
     CSideIconGui::GetInstance()->CloseSideView(SIDEVIEW_NETPY);
 
-	// 기획팀에서 요청하기 전까지 활성화 시키지 않는다.
-	// 09. 08. 17 월요일 기획팀 김종완씨의 요청으로 클라이언트팀 조해성 작업함
+	// It will not be activated until requested by the planning team.
+	// 09. 08. 17 Monday. At the request of Jongwan Kim of the planning team, Haeseong Jo of the client team worked.
     if (!GetDialogManager()->IsOpenDialog(DIALOG_NETPYSHOP))
         GetDboGlobal()->GetGamePacketGenerator()->SendShopNetPyItemStartReq();
     else
@@ -108,7 +108,7 @@ void CNetPySideIconGui::OnMouseLeave(gui::CComponent* pComponent)
 
 void CNetPySideIconGui::Show( bool bShow ) 
 {
-    // 현재 NetPy가 0이면 Side Icon을 보이지 않는다.
+    // If the current NetPy is 0, the Side Icon is not displayed.
     if(!m_bNetmarbleMemberShip && Logic_GetNetPy() < 0)
     {
         __super::Show(FALSE);

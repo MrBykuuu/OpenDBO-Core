@@ -1,9 +1,9 @@
 /*****************************************************************************
 * File			: DboPackethandler_GUVehicle.cpp
 * Author		: Hong sungbock
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2009. 1. 6
-* Abstract		: Vechicle 관련 패킷
+* Abstract		: Vehicle-related packets
 *****************************************************************************
 * Desc         : 
 *****************************************************************************/

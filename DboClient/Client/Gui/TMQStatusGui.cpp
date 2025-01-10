@@ -1,24 +1,24 @@
 #include "precomp_dboclient.h"
 #include "TMQStatusGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// share
+// Share
 #include "TimeQuestTable.h"
 #include "TableContainer.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEventfunc.h"
 #include "NtlSLTMQ.h"
 #include "NtlSobAvatar.h"
 #include "NtlSLGlobal.h"
 #include "NtlWorldconceptTMQ.h"
 
-// dbo
+// Dbo
 #include "DialogManager.h"
 #include "IconMoveManager.h"
 #include "DisplayStringManager.h"
@@ -27,7 +27,7 @@
 #include "SideDialogManager.h"
 #include "LittleQuestContainer.h"
 
-// test
+// Test
 #include "GUISoundDefine.h"
 
 namespace
@@ -78,50 +78,50 @@ RwBool CTMQStatusGui::Create()
 	m_pCurPoint->SetText(L"0%");
 	m_pQuest->SetText(GetDisplayStringManager()->GetString("DST_TMQ_STATUS_QUEST"));
 
-	// 스테이지 정보
+	// Stage information
 	m_pStageButton = (gui::CButton*)GetComponent( "btnStageInfo" );
 	m_pStageButton->SetToolTip(GetDisplayStringManager()->GetString("DST_TMQ_STATUS_STATUS_INFO"));
 	m_slotStageButton = m_pStageButton->SigClicked().Connect(this, &CTMQStatusGui::OnClicked_InfoButton);
 
-	// 최소화 버튼
+	// minimize button
 	m_pMinimizeButton = (gui::CButton*)GetComponent( "btnMinimize" );
 	m_slotMinimizeButton = m_pMinimizeButton->SigClicked().Connect(this, &CTMQStatusGui::OnClicked_MinimizeButton);
 
-	// 시나리오 버튼
+	// scenario button
 	m_pSenarioButton = (gui::CButton*)GetComponent( "btnSenario" );
 	m_pSenarioButton->SetToolTip(GetDisplayStringManager()->GetString("DST_TMQ_STATUS_SENARIO"));
 	m_slotSenarioButton = m_pSenarioButton->SigClicked().Connect(this, &CTMQStatusGui::OnClicked_SenarioButton);	
 
-	// 다음 퀘스트 버튼
+	// Next quest button
 	m_pNextButton = (gui::CButton*)GetComponent( "btnNextQuest" );
 	m_slotNextButton = m_pNextButton->SigClicked().Connect(this, &CTMQStatusGui::OnClicked_NextButton);
 
-	// 시나리오 버튼 업데이트 알림
+	// Scenario button update notification
 	gui::CSurface surface = GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "TMQStatus.srf", "srfButtonEffect" );
 	m_SenarioButtonFlicker.SetSurface( surface );
 	m_SenarioButtonFlicker.SetTime( 1000.0f, 0.5f );
 	m_SenarioButtonFlicker.SetAlpha( 0, 255 );
 
-	// 스테이지 버튼 업데이트 알림
+	// Stage button update notification
 	surface = GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "TMQStatus.srf", "srfButtonEffect" );
 	m_StageButtonFlicker.SetSurface( surface );
 	m_StageButtonFlicker.SetTime( 1000.0f, 0.5f );
 	m_StageButtonFlicker.SetAlpha( 0, 255 );
 
-	// TMQ 포인트 게이지
+	// TMQ Point Gauge
 	m_pTMQGauge = (gui::CProgressBar*)GetComponent( "TMQGauge" );
 	m_pTMQGauge->SetToolTip(GetDisplayStringManager()->GetString("DST_TMQ_STATUS_EXPLAIN_POINT"));
 
-	// TMQ 포인트 배경
+	// TMQ Point Background
 	m_srfGaugeBack.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "TMQStatus.srf", "srfGaugeBack" ));
 	m_srfGaugeBack.SetPositionfromParent(8, 116);
 
-	// 쿠폰 슬롯
+	// coupon slot
 	m_CouponSlot.Create(m_pThis, SDIALOG_TMQ_STATUS, REGULAR_SLOT_SIMPLE_ICON, SDS_COUNT);
 	m_CouponSlot.SetIcon(dCOUPON_ICON_NAME, 0);
 	m_CouponSlot.SetPosition_fromParent(122, 93);
 
-	// 구분선
+	// contour
 	m_srfTMQContourLine_1.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GameCommon.srf", "srfSideContourLine" ));
 	m_srfTMQContourLine_2.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GameCommon.srf", "srfSideContourLine" ));
 	m_srfTMQContourLine_3.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GameCommon.srf", "srfSideContourLine" ));
@@ -130,7 +130,7 @@ RwBool CTMQStatusGui::Create()
 	m_srfTMQContourLine_2.SetPositionfromParent(0, 72);
 	m_srfTMQContourLine_3.SetPositionfromParent(0, 135);
 
-	// 쿠폰 슬롯 배경
+	// coupon slot background
 	m_srfCouponSlot.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "TMQStatus.srf", "srfCouponSlot" ));
 	m_srfCouponSlot.SetPositionfromParent(120, 91);
 
@@ -141,7 +141,7 @@ RwBool CTMQStatusGui::Create()
 
 	GetNtlGuiManager()->AddUpdateFunc( this );
 
-	// sig	
+	// Signals	
 	m_slotMove			= m_pThis->SigMove().Connect( this, &CTMQStatusGui::OnMove );
 	m_slotMouseMove		= m_pThis->SigMouseMove().Connect( this, &CTMQStatusGui::OnMouseMove );
 	m_slotMouseLeave	= m_pThis->SigMouseLeave().Connect( this, &CTMQStatusGui::OnMouseLeave );	

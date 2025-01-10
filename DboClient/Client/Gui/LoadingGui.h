@@ -1,22 +1,22 @@
 /******************************************************************************
-* File			: LoadingGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 6. 22
-* Abstract		: 
+*File			: LoadingGui.h
+*Author		    : Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2008. 6. 22
+*Abstract		: 
 *****************************************************************************
-* Desc			: 
+*Desc			: 
 *****************************************************************************/
 
 #pragma once
 
-// shard
+// Shard
 #include "NtlSharedType.h"
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
 
@@ -71,6 +71,6 @@ protected:
 
 	eLOADING_PAGE_TYPE	m_eLoadingPageType;
 
-	TBLIDX				m_idxStart;			///< 게임 팁을 설명할 테이블을 검색할 시작 인덱스
-	TBLIDX				m_idxEnd;			///< 게임 팁을 설명할 테이블을 검색할 마지막 인덱스
+	TBLIDX				m_idxStart;			///< Starting index to search for table that explains game tips
+	TBLIDX				m_idxEnd;			///< Last index to search for table explaining game tips
 };

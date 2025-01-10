@@ -1,9 +1,9 @@
 /*****************************************************************************
 * File			: DboPackethandler_GURankBattle.cpp
 * Author		: Hong sungbock
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2007. 1. 16
-* Abstract		: 랭크 배틀 관련 패킷 핸들
+* Abstract		: Rank battle related packet handle
 *****************************************************************************
 * Desc         : 
 *****************************************************************************/
@@ -54,7 +54,7 @@
 //
 //	sGU_RANKBATTLE_ROOM_CREATE_RES* pResult = (sGU_RANKBATTLE_ROOM_CREATE_RES*)pPacket;
 //
-//	// 생성되지 않았을때 메세지 표시, 파티원 누구때문인지도 표시.
+//	//Displays a message when not created, and also displays who the party member is responsible for.
 //	if( pResult->wResultCode != GAME_SUCCESS )
 //	{
 //		CNtlSLEventGenerator::SysMsg(INVALID_SERIAL_ID, pResult->wResultCode);
@@ -86,7 +86,7 @@
 //		return;
 //	}
 //	
-//	// 사이드 아이콘 표시
+//	//Show side icon
 //	//CNtlSLEventGenerator::RBRoomEvent(SNtlEventRBRoom::ROOM_CREATE, pResult->rankBattleTblidx, pResult->roomId);
 //}
 
@@ -94,14 +94,14 @@
 //{
 //	sGU_RANKBATTLE_ROOM_CREATE_NFY* pResult = (sGU_RANKBATTLE_ROOM_CREATE_NFY*)pPacket;
 //
-//	// 생성되지 않았을때 메세지 표시
+//	//Display message when not created
 //	if( pResult->wResultCode != GAME_SUCCESS )
 //	{
 //		CNtlSLEventGenerator::SysMsg(INVALID_SERIAL_ID, pResult->wResultCode);
 //		return;
 //	}
 //
-//	// 사이드 아이콘 표시
+//	//Show side icon
 //	//CNtlSLEventGenerator::RBRoomEvent(SNtlEventRBRoom::ROOM_CREATE, pResult->rankBattleTblidx, pResult->roomId);
 //}
 
@@ -117,7 +117,7 @@
 //		return;
 //	}
 //
-//	// 방에서 나갔다는 메세지를 메세지 박스로 표현
+//	//Express the message that you left the room in a message box
 //	//CNtlSLEventGenerator::RBRoomEvent(SNtlEventRBRoom::ROOM_LEAVE);
 //}
 //
@@ -125,7 +125,7 @@
 //{
 //	sGU_RANKBATTLE_ROOM_LEAVE_NFY* pResult = (sGU_RANKBATTLE_ROOM_LEAVE_NFY*)pPacket;
 //
-//	// 방에서 나갔다는 메세지를 메세지 박스로 표현
+//	//Express the message that you left the room in a message box
 //	//CNtlSLEventGenerator::RBRoomEvent(SNtlEventRBRoom::ROOM_LEAVE);
 //}
 //
@@ -138,7 +138,7 @@
 //	//else if( pResult->byTeamType == RANKBATTLE_TEAM_CHALLENGER )
 //	//	CNtlSLEventGenerator::RBRoomEvent(SNtlEventRBRoom::ROOM_JOIN_CHALLENGE, pResult->rankBattleTblidx, pResult->roomId);
 //	
-//	// 다른 경우는 무시.
+//	//Ignore all other cases.
 //}
 
 //void PacketHandler_GSRBRoomChallengeRes(void* pPacket)
@@ -147,7 +147,7 @@
 //
 //	sGU_RANKBATTLE_ROOM_CHALLENGE_RES* pResult = (sGU_RANKBATTLE_ROOM_CHALLENGE_RES*)pPacket;
 //
-//	// 생성되지 않았을때 메세지 표시, 파티원 누구때문인지도 표시.
+//	//Displays a message when not created, and also displays who the party member is responsible for.
 //	if( pResult->wResultCode != GAME_SUCCESS )
 //	{
 //		CNtlSLEventGenerator::SysMsg(INVALID_SERIAL_ID, pResult->wResultCode);
@@ -181,7 +181,7 @@
 //		return;
 //	}
 //
-//	// 사이드 아이콘 생성
+//	//Create side icon
 //	//CNtlSLEventGenerator::RBRoomEvent(SNtlEventRBRoom::ROOM_CHALLENGE, pResult->rankBattleTblidx, pResult->roomId);
 //}
 //	 
@@ -196,7 +196,7 @@
 //		return;
 //	}
 //
-//	// 사이드 아이콘 생성
+//	//Create side icon
 //	//CNtlSLEventGenerator::RBRoomEvent(SNtlEventRBRoom::ROOM_CHALLENGE, pResult->rankBattleTblidx, pResult->roomId);
 //}
 //
@@ -209,7 +209,7 @@
 //		CNtlSLEventGenerator::SysMsg(INVALID_SERIAL_ID, pResult->wResultCode);		
 //	}
 //
-//	// 진입 대기창 띄우기
+//	//Open the entry waiting window
 //	//CNtlSLEventGenerator::RBMatchEvent(SNtlEventRBMatch::MATCH_READY, pResult->asMemberResult, pResult->byMemberCount);
 //}
 //
@@ -234,7 +234,7 @@
 //		return;
 //	}	
 //
-//	// 사이드 아이콘 원래 상태로 되돌림. 메세지 출력
+//	//Return the side icon to its original state. Message output
 //	//CNtlSLEventGenerator::RBMatchEvent( SNtlEventRBMatch::MATCH_CANCEL );
 //	GetAlarmManager()->AlarmMessage( DST_RANKBATTLE_CANCELED );
 //}
@@ -342,7 +342,7 @@ void PacketHandler_GSRBBattlePlayerStateNfy(void* pPacket)
 {
 	sGU_RANKBATTLE_BATTLE_PLAYER_STATE_NFY* pResult = (sGU_RANKBATTLE_BATTLE_PLAYER_STATE_NFY*)pPacket;
 //	DBO_WARNING_MESSAGE("sGU_RANKBATTLE_BATTLE_PLAYER_STATE_NFY: pResult->byPCState = " << (int)pResult->byPCState);
-	// 점수 업데이트.
+	//Update score.
 	CNtlSLEventGenerator::RBBattlePlayerState( pResult->hPc, pResult->byPCState );
 }
 
@@ -350,7 +350,7 @@ void PacketHandler_GSRBBattleKillScoreUpdateNfy(void* pPacket)
 {
 	sGU_RANKBATTLE_BATTLE_KILLSCORE_UPDATE_NFY* pResult = (sGU_RANKBATTLE_BATTLE_KILLSCORE_UPDATE_NFY*)pPacket;
 //	DBO_WARNING_MESSAGE("sGU_RANKBATTLE_BATTLE_KILLSCORE_UPDATE_NFY");
-	// 킬수 업데이트.
+	//Update kill count.
 	CNtlSLEventGenerator::RBBattleKillScoreUpdate( pResult->byOwnerKillScore, pResult->byChallengerKillScore );	
 }
 
@@ -358,7 +358,7 @@ void PacketHandler_GSRBBattleStageFinishNfy(void* pPacket)
 {
 	sGU_RANKBATTLE_BATTLE_STAGE_FINISH_NFY* pResult = (sGU_RANKBATTLE_BATTLE_STAGE_FINISH_NFY*)pPacket;
 //	DBO_WARNING_MESSAGE("sGU_RANKBATTLE_BATTLE_STAGE_FINISH_NFY");
-	// 점수 업데이트.
+	//Update score.
 	CNtlSLEventGenerator::RBBattleStageFinish( pResult->byBattleResult, (void*)&pResult->sStageScore );	
 }
 
@@ -366,7 +366,7 @@ void PacketHandler_GSRBBattleMatchFinishNfy(void* pPacket)
 {
 	sGU_RANKBATTLE_BATTLE_MATCH_FINISH_NFY* pResult = (sGU_RANKBATTLE_BATTLE_MATCH_FINISH_NFY*)pPacket;
 //	DBO_WARNING_MESSAGE("sGU_RANKBATTLE_BATTLE_MATCH_FINISH_NFY");
-	// 점수 업데이트.
+	//Update score.
 	CNtlSLEventGenerator::RBBattleMatchFinish( (void*)&pResult->sMatchResult );
 }
 
@@ -387,6 +387,6 @@ void PacketHandler_GSRBTotalScoreUpdateNfy(void* pPacket)
 {
 	sGU_RANKBATTLE_TOTAL_SCORE_UPDATE_NFY* pResult = (sGU_RANKBATTLE_TOTAL_SCORE_UPDATE_NFY*)pPacket;
 //	DBO_WARNING_MESSAGE("sGU_RANKBATTLE_TOTAL_SCORE_UPDATE_NFY");
-	// 토탈 점수 업데이트. 
+	//Update total score.
 	CNtlSLEventGenerator::RBTotalScoreUpdate( pResult->byBattlemode, (void*)&pResult->sTotalScore );	
 }

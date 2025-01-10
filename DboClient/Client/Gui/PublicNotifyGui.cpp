@@ -1,21 +1,21 @@
 #include "precomp_dboclient.h"
 #include "PublicNotifyGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// table
+// Table
 #include "TableContainer.h"
 #include "TextAllTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLApi.h"
 
 // Dbo
@@ -32,6 +32,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CPublicNotifyGui
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 CPublicNotifyGui::CPublicNotifyGui(VOID)
 {
 	Init();

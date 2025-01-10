@@ -87,7 +87,7 @@ void CNtlPLWorldLight_Sphere::SetRadius(RwReal fRadius)
 
 	if(m_pNtlPLObj)
 	{
-		// Sphere Model이 지름이 1이기 때문에 연산해 주자.
+		//Let’s calculate it because the Sphere Model has a diameter of 1.
 		RwV3d vScale;
 		vScale.x = vScale.y = vScale.z = fRadius * 2.0f;
 		m_pNtlPLObj->SetScale(&vScale);		

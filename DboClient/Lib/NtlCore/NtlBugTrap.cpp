@@ -26,7 +26,7 @@ int NewHandler( size_t )
 CNtlBugTrap::CNtlBugTrap(void)
 {
     // Setup bug trapper
-    // 버그트랩을 사용할 각 프로그램에서 다시 설정하면 변경된다.
+    // The bug trap can be changed by resetting it in each program that will use it.
     // BT_SetAppName(_T("BugTrap Report"));
     // BT_SetSupportEMail(_T("agebreak@ntl-inc.com"));
     // BT_SetFlags(BTF_DETAILEDMODE | BTF_EDITMAIL | BTF_ATTACHREPORT | BTF_SCREENCAPTURE | BTF_INTERCEPTSUEF);
@@ -36,12 +36,12 @@ CNtlBugTrap::CNtlBugTrap(void)
     // BugTrapServer ===========================================
     // BT_SetSupportServer(_T("localhost"), 9999);
 
-    // C 표준함수에 대한 잘못된 인자 사용
+    // Invalid argument use for C standard functions
     _set_invalid_parameter_handler(InvalidParameterHandler);
 
-    // 잘못된 순수 가상함수 호출
+    // Invalid pure virtual function call
     _set_purecall_handler(PurecallHandler);
 
-    // 너무 큰 메모리 할당 시 New 연산자의 실패
+    // New operator fails when allocating too much memory
     _set_new_handler( NewHandler );
 }

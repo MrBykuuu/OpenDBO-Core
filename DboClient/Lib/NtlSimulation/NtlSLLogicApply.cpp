@@ -1,10 +1,10 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSLLogic.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// sound
+// Sound
 #include "NtlSoundDefines.h"
 #include "NtlSoundManager.h"
 
@@ -38,7 +38,7 @@ bool Logic_ApplyNtlStorageUnit( CNtlStorageUnit* pUnit, unsigned int uiFlags )
 			// This flag is not checked by eNTL_STRORAG_APPLY_ALL.
 			if( uiFlags & eNTL_STORAGE_APPLY_PRESENTATION_INITONCE )
 			{
-				// �ؽ��� �ػ� ����
+				// Adjust texture resolution
 
 				RwInt32 nTextureLevel = pUnit->GetIntData( dSTORAGE_GRAPHIC_TEXTURE_LEVEL );
 				RwUInt32 uiTextureQualityFactor = 0 /* Default value */ ;
@@ -65,7 +65,7 @@ bool Logic_ApplyNtlStorageUnit( CNtlStorageUnit* pUnit, unsigned int uiFlags )
 				else
 					CNtlPostEffectCamera::SetPostEffectFilters(POST_EFFECT_FILTER_NONE);
 
-				// ���� �þ߰Ÿ� ( 1lv : 200, 2lv : 300, 3lv : 400, 4lv : 512 )
+				// Terrain viewing distance (1lv : 200, 2lv : 300, 3lv : 400, 4lv : 512, 5lv : 1024 )
 				RwInt32 nTerrainRangeLevel = pUnit->GetIntData( dSTORAGE_GRAPHIC_TERRAIN_RANGE );
 				RwReal fTerranRange = 512.f;
 				switch( nTerrainRangeLevel )
@@ -80,7 +80,7 @@ bool Logic_ApplyNtlStorageUnit( CNtlStorageUnit* pUnit, unsigned int uiFlags )
 				if( GetNtlPLOptionManager()->GetTerrainFar() != fTerranRange )
 					GetNtlPLOptionManager()->SetTerrainFar( fTerranRange );
 
-				// �繰 �þ߰Ÿ� : 200, 300, 400, 512 )
+				// Object viewing distance: 200, 300, 400, 512, 1024 )
 				RwInt32 nObjectRangeLevel = pUnit->GetIntData( dSTORAGE_GRAPHIC_OBJECT_RANGE );
 				RwReal fObjectRange = 512.f;
 				switch( nObjectRangeLevel )
@@ -97,21 +97,21 @@ bool Logic_ApplyNtlStorageUnit( CNtlStorageUnit* pUnit, unsigned int uiFlags )
 					GetNtlPLOptionManager()->SetObjectFar( fObjectRange );
 
 
-				// ���� �׸���
+				// terrain shadow
 				RwBool bTerrainShadow = pUnit->GetBoolData( dSTORAGE_GRAPHIC_TERRAIN_SHADOW );
 				if( GetNtlPLOptionManager()->GetTerrainShadow() != bTerrainShadow )
 					GetNtlPLOptionManager()->SetTerrainShadow( bTerrainShadow );
 
-				// �� ȿ��
+				// water effect
 				RwBool bWaterEffect = pUnit->GetBoolData( dSTORAGE_GRAPHIC_WATER_EFFECT );
 				if( GetNtlPLOptionManager()->GetWaterSpecular() != bWaterEffect )
 					GetNtlPLOptionManager()->SetWaterSpecular( bWaterEffect );
 
-				// ĳ���� ���׷��̵� ȿ��
+				// Character upgrade effect
 				/*RwBool bCharacterUpgrade = pUnit->GetBoolData( dSTORAGE_GRAPHIC_CHARACTER_EFFECT );
 				CNtlPLCharacter::ToggleEMUVAni(bCharacterUpgrade);*/
 
-				// ĳ���� �ܰ���
+				// character outline
 				RwBool bCharacterEdge = pUnit->GetBoolData( dSTORAGE_GRAPHIC_CHARACTER_EDGE );
 				if( bCharacterEdge )
 					CNtlPLCharacter::SetSkipEdge( FALSE );
@@ -156,7 +156,7 @@ bool Logic_ApplyNtlStorageUnit( CNtlStorageUnit* pUnit, unsigned int uiFlags )
 
 			if( uiFlags & eNTL_STORAGE_APPLY_SIMULATION )
 			{
-				//// ĳ���� �þ߰Ÿ� ( 20, 60, 100, 150 )
+				////Character viewing distance ( 20, 60, 100, 150 )
 				//RwInt32 nCharacterRangeLevel = pUnit->GetIntData( dSTORAGE_GRAPHIC_CHARACTER_RANGE );
 				//RwReal fCharacterRange = 150.f;
 				//switch( nCharacterRangeLevel )
@@ -307,7 +307,7 @@ bool Logic_ApplyNtlStorageUnit( CNtlStorageUnit* pUnit, unsigned int uiFlags )
 				CNtlSLEventGenerator::GameChatOption(OPTION_CHAT_SHOUT, 2, pUnit->GetBoolData(dSTORAGE_CHAT_EXTEND2_SHOUT));
 				CNtlSLEventGenerator::GameChatOption(OPTION_CHAT_SYSTEM, 2, pUnit->GetBoolData(dSTORAGE_CHAT_EXTEND2_SYSTEM));
 
-				// Chat Option�� ���������϶�.
+				// Refresh Chat Options.
 				CNtlSLEventGenerator::GameChatOption( OPTION_CHAT_REFRESH, OPTION_CHAT_REFRESH );
 			}
 		}
@@ -316,7 +316,7 @@ bool Logic_ApplyNtlStorageUnit( CNtlStorageUnit* pUnit, unsigned int uiFlags )
 		{
 			if( uiFlags & eNTL_STORAGE_APPLY_CLIENT )
 			{
-				// ������ ���� �̺�Ʈ
+				// Quick Slot related events
 				CNtlSLEventGenerator::QuickSlotGuiMode( pUnit->GetBoolData( dSTORAGE_ETC_EX_QUICKSLOT1 ), pUnit->GetBoolData( dSTORAGE_ETC_EX_QUICKSLOT2 ) );
 				CNtlSLEventGenerator::QuickSlotLockMode( pUnit->GetBoolData( dSTORAGE_ETC_QUICKSLOT_LOCK ) );
 			}

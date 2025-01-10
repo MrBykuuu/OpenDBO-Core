@@ -1,22 +1,22 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlFSMCharController.h"
 
-//shared
+//Shared
 #include "NtlMovement.h"
 #include "NtlResultCode.h"
 #include "NtlSkill.h"
 
-//core
+//Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// presentation
+// Presentation
 #include "NtlPLPicking.h"
 
-// table
+// Table
 #include "SkillTable.h"
 
-// simulation
+// Simulation
 #include "NtlFSMDef.h"
 #include "NtlFSMLayer.h"
 #include "NtlFSMStateBase.h"
@@ -245,11 +245,11 @@ void CNtlSummonPetAI::UpdateObservation(RwReal fElapsed)
 
 		if(IsOwnerFighting())
 		{
-			// owner 가 target 하고 있는 객체가 적군이냐?
+			// Is the object the owner is targeting an enemy?
 			m_hBattleSerialId = SearchFightingTarget();
 			if(m_hBattleSerialId != INVALID_SERIAL_ID)
 			{
-				// target을 설정하고... 공격을 한다.
+				// Set a target... and attack.
 				ChangeState(ESPS_BATTLE);
 			}
 			else
@@ -364,13 +364,13 @@ void CNtlSummonPetAI::UpdateBattle(RwReal fElapsed)
 				}
 			/*}*/
 
-			// owner와 position이 겹쳐 있는가? 겹쳐 있다면 BATTLE_POSITION_SET 상태를 줘서
-			// 전투를 할 수 있는 곳으로 재이동 하게 한다.
+			// Do the owner and position overlap? If there is overlap, give BATTLE_POSITION_SET status
+			// Have them re-move to a place where they can fight.
 			if(BattleWander())
 				ChangeState(ESPS_BATTLE_POSITION_SET);
 		}
 
-		// 현재 펫이 스킬을 사용가능한 상태이면 스킬을 사용하는 AI 판단을 한다.
+		// If the pet is currently able to use the skill, the AI ??determines whether to use the skill.
 		if(Logic_CanSkillUse(GetActor()))
 			SkillAction();
 
@@ -380,7 +380,7 @@ void CNtlSummonPetAI::UpdateBattle(RwReal fElapsed)
 
 void CNtlSummonPetAI::UpdateBattlePositionSet(RwReal fElapsed)
 {
-	// Battle Position Set에서 현재 멈추고 있다.
+	// Currently stopped at Battle Position Set.
 	if(m_fThinkingTimer >= 0.1f)
 	{
 		RwUInt32 uiStateId = GetActorStateId();
@@ -429,9 +429,9 @@ void CNtlSummonPetAI::Update(RwReal fElapsed)
 		m_fSkillTimer[i] += fElapsed;
 
 	
-	// Skill Timer를 증가시킨다.
-	
+	// Increases Skill Timer.
 
+	
 //	CalcOwnerTrace();
 }
 
@@ -457,7 +457,7 @@ void CNtlSummonPetAI::EnterState(CNtlSummonPetAI::ESummonPetState eState)
 	}
 	else if(m_eState == ESPS_BATTLE)
 	{
-		// BAttle에 들어가면 초기화한다.
+		// When you enter BAttle, it is initialized.
 		for(int i=0; i<NTL_MAX_NPC_HAVE_SKILL; ++i)
 			m_fSkillTimer[i] = 0.0f;
 		
@@ -557,7 +557,7 @@ void CNtlSummonPetAI::ResetSkillTimer(RwInt32 iSlotIdx)
 
 RwBool CNtlSummonPetAI::IsThinking(void)
 {
-	// 생각하는 타임이 너무 짧아서 공격을 하지 못한다.
+	// The thinking time is too short to attack.
 	if(m_fThinkingTimer > 0.2f)
 		return TRUE;
 
@@ -620,7 +620,7 @@ RwBool CNtlSummonPetAI::IsRoundInOwner(RwReal& fDist)
 	RwV3d vActorPos = pActor->GetPosition();
 	RwV3d vOwnerPos = pOwnerActor->GetPosition();
 
-    // 타겟이 수영하는 액터인 경우에는 y무시
+    // Ignore y if the target is a swimming actor.
     SWorldHeightStuff hStuff;
     if(Logic_IsSwimmingActor(pOwnerActor, &pOwnerActor->GetPosition(), hStuff))
     {
@@ -769,34 +769,34 @@ RwBool CNtlSummonPetAI::BattleWander(void)
 }
 
 /**
-* \brief 스킬을 사용할지 안할지 판단하여 스킬을 사용한다.
-* \return 스킬 성공, 실패 여부
+* \brief Use the skill by deciding whether to use it or not.
+* \return Skill success or failure
 */
 RwBool CNtlSummonPetAI::SkillAction(void)
 {
-	// 펫은 세가지의 스킬을 가지고 있다.
+	// Pets have three skills.
 	/*CNtlSobPet *pSobPet = reinterpret_cast<CNtlSobPet*>( GetActor() );*/
 	
-	// 스킬 마다 사용 여부를 판단하여 스킬을 사용하려고 마음 먹은 것이 여러개라면
-	// 그 중에서 하나를 랜덤으로 사용한다. ( 우선 순위 같은 건 없다. )
+	// Determine whether or not to use each skill, and if you decide to use the skill for several purposes,
+	// Use one of them at random. (There is no such thing as priority.)
 	for(int i=0; i< NTL_MAX_NPC_HAVE_SKILL; ++i)
 	{
 		if( IsThinkingUseSkill( i ) )
 		{
-			// 사용 여부 판단
+			// Determine whether to use it or not
 			m_vecUseSlotIdx.push_back( i );
 		}
 	}
 
-	// 하나도 선택 안했다는 판단
+	// Judgment that nothing was chosen
 	if( m_vecUseSlotIdx.empty() )
 		return FALSE;
 
-	// 아니라면 선택을 했다는 것이므로 랜덤으로 선택해준다.
+	// If not, it means you have made a choice and the selection is made at random.
 	RwInt32 iSize = (RwInt32)m_vecUseSlotIdx.size();
 	RwInt32 iUseSlotIdx = m_vecUseSlotIdx[rand()%iSize];
 
-	// 선택된 스킬들을 지워준다.
+	// Deletes selected skills.
 	m_vecUseSlotIdx.clear();
 
 	return SkillAction( iUseSlotIdx );
@@ -853,9 +853,9 @@ RwBool CNtlSummonPetAI::SkillAction(RwInt32 iSlotIdx)
 
 
 /**
-* \brief SkillContainer의 iSlotIdx번째 위치한 스킬이 AI의 판단 조건이 되는지 확인한다.
-* \param iSlotIdx	(RwInt32) 스킬 슬롯
-* \return TRUE: 사용한다. FALSE: 사용하지 않는다.
+* \brief Check whether the skill located at iSlotIdx of SkillContainer is the AI's judgment condition.
+* \param iSlotIdx (RwInt32) skill slot
+* \return TRUE: Use. FALSE: Not used.
 */
 RwBool CNtlSummonPetAI::IsThinkingUseSkill(RwInt32 iSlotIdx)
 {
@@ -865,18 +865,18 @@ RwBool CNtlSummonPetAI::IsThinkingUseSkill(RwInt32 iSlotIdx)
 	CNtlSobPet *pSobPet = reinterpret_cast<CNtlSobPet*>( GetActor() );
 	CNtlPetSkillContainer *pSkillContainer = pSobPet->GetSkillContainer();
 	
-	// 스킬 컨테이너에 스킬이 없다면 사용한다고 판단을 내릴 수 없다.
+	// If there is no skill in the skill container, it cannot be determined that it is being used.
 	if( pSkillContainer->GetSkillCount() < iSlotIdx )
 		return FALSE;
 
-	// Skill 의 AI Basis Time 을 확인하여 아직 판단할 타임이 아니라면 스킬을 사용하지 않는다.
+	// Check the skill's AI Basis Time and do not use the skill if it is not yet time to judge.
 	if( m_fSkillTimer[iSlotIdx] < pSkillContainer->GetSkillUseTime( iSlotIdx ) )
 		return FALSE;
 
-	// 타임 초기화
+	// Time reset
 	ResetSkillTimer( iSlotIdx );
 
-	// Basis 확인
+	// Check the basis
 	RwUInt8 byUseBasis = pSkillContainer->GetSkillUseBasis( iSlotIdx );
 	
 	// enum eSKILLPRIORITY ( NtlSkill.h )
@@ -884,19 +884,19 @@ RwBool CNtlSummonPetAI::IsThinkingUseSkill(RwInt32 iSlotIdx)
 	{
 	case SKILLPRIORITY_CALL:
 	case SKILLPRIORITY_START:
-	case SKILLPRIORITY_FAINTING:	// CALL, START, FAINTING 사용안함
+	case SKILLPRIORITY_FAINTING:	// Do not use CALL, START, FAINTING
 		return FALSE;
 		
-	case SKILLPRIORITY_LP:			// 자기 자신의 LP 의 조건과 일치한다면 무조건 사용
+	case SKILLPRIORITY_LP:			// If it matches the conditions of your LP, use it unconditionally.
 		{
 			RwUInt16 wUseLp = pSkillContainer->GetSkillUseLp( iSlotIdx );
 
 			CNtlSobPetAttr* pAttr = reinterpret_cast<CNtlSobPetAttr*>( pSobPet->GetSobAttr() );
 			
-			// 현재 펫의 LP 정보
+			// Current pet's LP information
 			RwReal fLpRate = ( (RwReal)pAttr->GetLp() / (RwReal)pAttr->GetMaxLp()) * 100.0f;
 
-			// 현재 펫의 LP보다 사용 조건이 맞지 않는다면 사용하지 않는다.
+			// If it does not meet the usage conditions better than the current pet's LP, do not use it.
 			if( (RwReal)wUseLp < fLpRate )
 			{
 				return FALSE;
@@ -904,14 +904,14 @@ RwBool CNtlSummonPetAI::IsThinkingUseSkill(RwInt32 iSlotIdx)
 		}
 		break;
 
-	case SKILLPRIORITY_GIVE:		// 주인의 LP 수치가 조건을 만족한다면 무조건 사용
+	case SKILLPRIORITY_GIVE:		// If the owner's LP level satisfies the conditions, it can be used unconditionally.
 		{
 			RwUInt16 wUseLp = pSkillContainer->GetSkillUseLp( iSlotIdx );
 
 			CNtlSobPlayer* pSobPlayer = reinterpret_cast<CNtlSobPlayer*>(GetNtlSobManager()->GetSobObject(pSobPet->GetOwnerID()));
 			CNtlSobPlayerAttr* pSobPlayerAttr = reinterpret_cast<CNtlSobPlayerAttr*>(pSobPlayer->GetSobAttr());
 
-			// 현재 주인의 LP 정보
+			// Current owner's LP information
 			RwReal fLpRate = ( (RwReal)pSobPlayerAttr->GetLp() / (RwReal)pSobPlayerAttr->GetMaxLp() ) * 100.0f;
 
 			if( (RwReal)wUseLp < fLpRate )
@@ -927,7 +927,7 @@ RwBool CNtlSummonPetAI::IsThinkingUseSkill(RwInt32 iSlotIdx)
 
 			RwInt32 iRate = rand()%100;
 
-			// 확률 발동
+			// Probability activated
 			if( iRate > wUseTime)
 			{
 				return FALSE;
@@ -935,22 +935,22 @@ RwBool CNtlSummonPetAI::IsThinkingUseSkill(RwInt32 iSlotIdx)
 		}
 	
 		break;
-	default:						// Table Data의 이상
+	default:						// Table Data Error
 		return FALSE;
 	}
 
-	// 스킬의 AI 조건은 만족했으니 스킬을 사용할 수 있는 상태인지 아닌지 확인한다.
+	// Since the AI ??conditions for the skill are satisfied, check whether the skill can be used.
 	CNtlSobSkill* pSobSkill = pSkillContainer->GetSkill( iSlotIdx );
 	CNtlSobSkillAttr* pSobSkillAttr = reinterpret_cast<CNtlSobSkillAttr*>(pSobSkill->GetSobAttr());
 	sSKILL_TBLDAT* pSkillTbl = pSobSkillAttr->GetSkillTbl();
 
-	// 사용 가능한 EP가 안됨
+	// No EP available
 	if( Logic_GetEp( pSobPet ) < pSkillTbl->wRequire_EP )
 		return FALSE;
 
 	CNtlSobSkillIcon* pSobSkillIcon = reinterpret_cast<CNtlSobSkillIcon*>(pSobSkill->GetIcon());
 	
-	// 쿨타임 중
+	// During cooldown
 	if( pSobSkillIcon->GetIconState() != CNtlSobSkillIcon::ICON_STATE_USEABLE )
 		return FALSE;
 
@@ -989,9 +989,9 @@ void CNtlSummonPetAI::JumpPosition(void)
 
 SERIAL_HANDLE CNtlSummonPetAI::SearchFightingTarget(void)
 {
-	// 1. owner를 가장 최근에 공격한 target을 찾는다.
-	// 2. owner의 target을 찾는다.
-	// 3. 없으면 공격하지 않는다. 
+	// 1. Find the target that most recently attacked the owner.
+	// 2. Find the owner’s target.
+	// 3. If it is not there, do not attack. 
 
 	CNtlSobActor *pActor = GetActor();
 	CNtlSobActor *pOwnerActor = reinterpret_cast<CNtlSobActor*>( GetNtlSobManager()->GetSobObject(pActor->GetOwnerID()) );

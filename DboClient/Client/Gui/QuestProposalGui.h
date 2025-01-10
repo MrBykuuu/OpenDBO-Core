@@ -4,7 +4,7 @@
 //
 // 2006.10.21 Peessi@hitel.net   
 //
-// To Be Desired: Quest Progress, Quest Reward Gui와 통합할 것인가 추후 결정.
+// To Be Desired: Quest Progress, will be integrated with Quest Reward Gui to be determined.
 //	
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -62,10 +62,10 @@ private:
 
 	//! Variables
 	gui::CStaticBox*	m_pstbConversationTitle;
-	gui::CHtmlBox*		m_phbxConversation;		// Quest 대화
+	gui::CHtmlBox*		m_phbxConversation;		// Quest conversation
 
 	gui::CStaticBox*	m_pstbAimTitle;		
-	gui::CHtmlBox*		m_phbxAim;				// Quest 목표
+	gui::CHtmlBox*		m_phbxAim;				// Quest Goal
 
 	gui::CButton*		m_pbtnQuestConfirm;
 	gui::CButton*		m_pbtnQuestReject;

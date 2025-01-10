@@ -2,7 +2,7 @@
 //	File		:	NtlEffectSystemFreeList.h
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -141,9 +141,9 @@ RpMaterial* AddAnimatedMaterialToList(RpMaterial *material, void *data)
 }
 //------------------------------------------------------------------
 //	FuncName	: API_AddAnimatedMaterialsList();
-//	Desc		: UVAnim이 적용된 Material을 찾아서 리스트에 담는다.
+//	Desc		: Find the material to which UVAnim is applied and add it to the list.
 //	Parameter	: 
-//	Return		: UVAnim이 적용도니 Material들의 List
+//	Return		: List of materials to which UVAnim has been applied
 //------------------------------------------------------------------
 RwSList* API_AddAnimatedMaterialsList(RwSList* pList, RpClump* pClump)
 {
@@ -157,7 +157,7 @@ RwSList* API_AddAnimatedMaterialsList(RwSList* pList, RpClump* pClump)
 
 //------------------------------------------------------------------
 //	FuncName	: API_MaterialsInterpolatorsAddAnimTime();
-//	Desc		: UVAnim을 업데이트한다. (시간을 더한다)
+//	Desc		: Updates UVAnim. (add time)
 //	Parameter	: 
 //	Return		: 
 //------------------------------------------------------------------
@@ -172,9 +172,9 @@ void API_MaterialsInterpolatorsAddAnimTime(RwSList *animatedMaterials, RwReal de
 }
 
 /**
- * UVAnim을 업데이트 한다. (현재 시간을 적용한다)
- * \param animatedMaterials 업데이트할 Material List
- * \param fTime 적용한 Time 
+ *Update UVAnim. (Apply the current time)
+ * \param animatedMaterials Material List to update
+ * \param fTime Applied Time 
  */
 void API_MaterialsInterpolatorsSetCurrentTime(RwSList* animatedMaterials, RwReal fTime)
 {

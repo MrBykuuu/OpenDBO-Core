@@ -1,12 +1,12 @@
 /*****************************************************************************
  *
- * File			: GameStage.h
- * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
- * Date			: 2005. 8. 17	
- * Abstract		: Game stage class
+ *File			: GameStage.h
+ *Author	    : HyungSuk, Jang
+*Copyright	    : NTL Co., Ltd.
+ *Date			: 2005. 8. 17	
+ *Abstract		: Game stage class
  *****************************************************************************
- * Desc         : 
+ *Desc         : 
  *
  *****************************************************************************/
 
@@ -80,7 +80,7 @@ private:
 	CHARSET_HANDLE m_hCharsetFightingMode;
 	CHARSET_HANDLE m_hCharsetAirMode;
 
-	// woody1019
+	// Woody1019
 	CNtlPLWorldEntity* m_pWorldEntity;
 
 	EGameUpdateType		m_eUpdageType;
@@ -92,21 +92,21 @@ private:
 
 public:
 	// Multi thread loading
-		// 메인 쓰레드가 호출하는 함수
-		// 용도 : 쓰레드 데이터 로딩을 시작하기 전 사전 작업을 수행한다
+		// Function called by main thread
+		// Purpose: Performs preliminary work before starting thread data loading.
 	void PreMutiThreadLoading( void );
-		// 데이터 로딩 쓰레드가 호출하는 함수
-		// 용도 : 쓰레드를 이용해 데이터 로딩을 수행한다
+		// Function called by the data loading thread
+		// Purpose: Perform data loading using threads.
 	void MutiThreadLoading( void );
-		// 메인 쓰레드가 호출하는 함수
-		// 용도 : 쓰레드 데이터 로딩 후 사후 작업을 수행한다
+		// Function called by main thread
+		// Purpose: Perform post-processing after loading thread data.
 	void PostMutiThreadLoading( void );
 
 	virtual void PostRender(void);
 
 protected:
 
-	// woody1019
+	// Woody1019
 	void	CreateWorld(RwV3d& vAvatarPos);
 	void	UpdateWorld(RwV3d& vAvatarPos);
 	void	DeleteWorld();
@@ -136,7 +136,7 @@ protected:
 	void	UpdateTeleportLoadingSpawnReadyScene(RwReal fElapsed);
 	void	UpdateTeleportLoadingLoadFinishScene(RwReal fElapsed);
 
-    void    UpdateSoundListener();                              ///< 상황에 따른 사운드 리스너를 세팅한다.
+    void    UpdateSoundListener();                              ///< Set the sound listener according to the situation.
 	
 	void	UpdateDebugDisplay(RwReal fElapsed);
 
@@ -161,7 +161,7 @@ public:
 
 	virtual void HandleEvents(RWS::CMsg &pMsg);
 
-	// input
+	// Input
 	int KeyboardDownHandler(unsigned int uiKeyData);
 };
 

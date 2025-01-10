@@ -38,7 +38,7 @@ RwBool CGuiFunctor::Calc3DPosTo2D(const RwV3d& v3DPos, RwReal fHeight, CPos* vOf
 
 	if( vOffset )
 	{
-		// 후에 재정리.
+		// Reorganize after.
 		//RwV3d*	pvCamera;
 		//RwV3d	vResult;
 		//pvCamera = RwMatrixGetPos( RwFrameGetMatrix( RwCameraGetFrame( CNtlPLGlobal::m_RwCamera ) ) );			

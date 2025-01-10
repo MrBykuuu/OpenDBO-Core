@@ -26,7 +26,7 @@ class CComboBox : public CComponent
 public:
 //! Constructor:
 	CComboBox( CComponent *pParent,CSurfaceManager *pSurfaceManager );
-	// rtRect는 ListBox를 제외한 크기.
+	//rtRect is the size excluding ListBox.
 	CComboBox( const CRectangle &rtRect, CComponent *pParent, CSurfaceManager *pSurfaceManager,
 			   INT nMarginX = 0, INT nMarginY = 0, INT nButtonWidth = COMBOBOX_DEFAULT_BUTTON_WSIZE, INT nButtonHeight = COMBOBOX_DEFAULT_BUTTON_WSIZE,
 			   INT nListHeight = COMBOBOX_DEFAULT_LIST_HSIZE, INT nMaxVisibleItems = COMBOBOX_DEFAULT_VISIBLEITEM );

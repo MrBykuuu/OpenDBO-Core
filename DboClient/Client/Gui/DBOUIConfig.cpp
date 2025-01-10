@@ -33,7 +33,7 @@ RwBool CDBOUIConfig::Load()
 		if( pData == NULL )
 			return FALSE;
 		
-		// 버퍼 +1 생성
+		// Create buffer +1
 		char* pBuffer = NTL_NEW char[nSize+1];
 		memcpy( pBuffer, pData, sizeof(char) * nSize );
 		pBuffer[nSize] = '\0';
@@ -76,7 +76,7 @@ RwBool CDBOUIConfig::Reflash()
 
 RwBool CDBOUIConfig::LoadTeleCast(TELECAST_TYPE eType)
 {
-    // 타입 비교는 하지 않는다. (리로드)
+    // No type comparison is performed. (Reload)
     m_TeleCast.m_eTelecastType = eType;
 
     std::string strHeader;
@@ -99,7 +99,7 @@ RwBool CDBOUIConfig::LoadTeleCast(TELECAST_TYPE eType)
     std::string strBalloon = strHeader + "DIALOG_BALLOON/BALLOON_RES";    
     std::string strSlide    = strHeader + "SLIDE";    
 
-    // POS
+    // Pos
     IXMLDOMNode* pNodePos = SelectSingleNode((char*)strPos.c_str());
     if(GetTextWithAttributeName(pNodePos, "Y_POS", szBuf, sizeof(szBuf)))
     {
@@ -111,7 +111,7 @@ RwBool CDBOUIConfig::LoadTeleCast(TELECAST_TYPE eType)
     }
     pNodePos->Release();
 
-    // FADE
+    // Fade
     IXMLDOMNode* pNodeFade = SelectSingleNode((char*)strFade.c_str());
     if(GetTextWithAttributeName(pNodeFade, "FLASH", szBuf, sizeof(szBuf)))
     {
@@ -155,7 +155,7 @@ RwBool CDBOUIConfig::LoadTeleCast(TELECAST_TYPE eType)
     }
     pNodeShake->Release();
 
-    // SLIDE
+    // Slide
     IXMLDOMNode* pNodeSlide = SelectSingleNode((char*)strSlide.c_str());
     if(GetTextWithAttributeName(pNodeSlide, "START_VELOCITY", szBuf, sizeof(szBuf)))
     {
@@ -167,7 +167,7 @@ RwBool CDBOUIConfig::LoadTeleCast(TELECAST_TYPE eType)
     }
     pNodeSlide->Release();
 
-    // 말풍선     
+    // speech bubble     
     IXMLDOMNodeList* pBalloonRes = SelectNodeList((char*)strBalloon.c_str());
     long lCount = 0;
     pBalloonRes->get_length(&lCount);    
@@ -198,7 +198,7 @@ RwBool CDBOUIConfig::LoadTeleCast(TELECAST_TYPE eType)
         m_TeleCast.mapBalloonRes[nIndex] = sTeleCastBalloon;
     }
 
-    // 서버 알림창용 설정
+    // Settings for server notification window
     if(eType == TELECAST_TYPE_SERVER_NOTIFY)
     {
         std::string strNPCID    = strHeader + "NPC_TBLID";
@@ -235,7 +235,7 @@ RwBool CDBOUIConfig::LoadBroadCast()
 	std::string strShake_Warning = strShake + "/WARNING";
 	std::string strShake_Danger = strShake +"/DANGER";
 	
-	// POS
+	// Pos
 
 	IXMLDOMNode* pNodePos = SelectSingleNode((char*)strPos.c_str());
 	if(GetTextWithAttributeName(pNodePos, "X_POS", szBuf, sizeof(szBuf)))
@@ -359,25 +359,25 @@ RwBool CDBOUIConfig::LoadNotify()
 	std::string strTerritory	= strHeader + "TERRITORY";
 	std::string strCaution		= strHeader + "CAUTION";	
 
-	// ACTION
+	// Action
 	IXMLDOMNode* pNodeAction = SelectSingleNode((char*)strAction.c_str());
 	if(GetTextWithAttributeName(pNodeAction, "YPOSRATE", szBuf, sizeof(szBuf)))
 		m_Notify.fActionNotify_YPosRate = (RwReal)atof(szBuf);
 	pNodeAction->Release();
 
-	// PUBLIC
+	// Public
 	IXMLDOMNode* pNodePublic = SelectSingleNode((char*)strPublic.c_str());
 	if(GetTextWithAttributeName(pNodePublic, "YPOSRATE", szBuf, sizeof(szBuf)))
 		m_Notify.fPublicNotify_YPosRate = (RwReal)atof(szBuf);
 	pNodePublic->Release();
 
-	// TERRITORY
+	// Territory
 	IXMLDOMNode* pNodeTerritory = SelectSingleNode((char*)strTerritory.c_str());
 	if(GetTextWithAttributeName(pNodeTerritory, "YPOSRATE", szBuf, sizeof(szBuf)))
 		m_Notify.fTerritoryNotify_YPosRate = (RwReal)atof(szBuf);
 	pNodeTerritory->Release();
 
-	// CAUTION
+	// Caution
 	IXMLDOMNode* pNodeCaution = SelectSingleNode((char*)strCaution.c_str());
 	if(GetTextWithAttributeName(pNodeCaution, "YPOSRATE", szBuf, sizeof(szBuf)))
 		m_Notify.fCautionNotiry_YPosRate = (RwReal)atof(szBuf);

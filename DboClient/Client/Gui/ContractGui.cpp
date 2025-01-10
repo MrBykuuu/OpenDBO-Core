@@ -1,17 +1,17 @@
 #include "precomp_dboclient.h"
 #include "ContractGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlStorageManager.h"
 
-// dbo
+// Dbo
 #include "DboEventGenerator.h"
 #include "DboGlobal.h"
 #include "LoginStageState.h"
@@ -44,14 +44,14 @@ RwBool CContractGui::Create()
 
 	CRectangle rect;
 
-	// 약관 설명
+	// Terms and Conditions Description
 	m_pContractHtml = (gui::CHtmlBox*)GetComponent("hbxContract");
 	m_pContractHtml->SetLineSpace(8);
 
 	m_pTitleText = (gui::CStaticBox*)GetComponent("stbDialogName");
 	m_pTitleText->SetText(GetDisplayStringManager()->GetString("DST_CONTRACT_TITLE"));
 
-	// 계약 내용을 읽어 달라는 내용
+	// Request to read the contract
 	m_pPleaseRead = (gui::CStaticBox*)GetComponent("stbPleaseRead");
 	m_pPleaseRead->SetText( GetDisplayStringManager()->GetString("DST_CONTRACT_PLEASE_READ") );
 
@@ -65,12 +65,12 @@ RwBool CContractGui::Create()
 	m_pOKButton->SetText( GetDisplayStringManager()->GetString("DST_LOBBY_OK") );
 	m_slotAgreementButton = m_pOKButton->SigClicked().Connect( this, &CContractGui::OnClicked_OKButton);
 
-	// Cancel 버튼
+	// Cancel button
 	m_pCancelButton = (gui::CButton*)GetComponent("btnCancel");
 	m_pCancelButton->SetText( GetDisplayStringManager()->GetString("DST_CONTRACT_NOT_ACCEPT") );
 	m_slotCancelButton = m_pCancelButton->SigClicked().Connect( this, &CContractGui::OnClicked_CancelButton);
 
-	// 검은 배경
+	// black background
 	m_srfBackground.SetColor(0, 0, 0, 100);
 
 	// default value
@@ -81,7 +81,7 @@ RwBool CContractGui::Create()
 
 	LocateComponent(GetDboGlobal()->GetScreenWidth(), GetDboGlobal()->GetScreenHeight());
 
-	// sig	
+	// Sig
 	m_slotServerScrollChanged		= m_pContractHtml->GetScrollBar()->SigValueChanged().Connect( this, &CContractGui::OnScrollChanged );
 	m_slotServerScrollSliderMoved	= m_pContractHtml->GetScrollBar()->SigSliderMoved().Connect( this, &CContractGui::OnScrollChanged );
 	m_slotCaptureWheelMove			= GetNtlGuiManager()->GetGuiManager()->SigCaptureWheelMove().Connect( this, &CContractGui::OnCaptureWheelMove );

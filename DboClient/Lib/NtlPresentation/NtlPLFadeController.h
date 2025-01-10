@@ -2,18 +2,18 @@
 *
 * File			: NtlPLFadeController.h
 * Author		: agebreak
-* Copyright		: (ÁÖ)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2007. 11. 21	
-* Abstract		: Fade In/Out¿ë °ªÀ» À§ÇÑ ÄÁÆ®·Ñ·¯
+* Abstract		: Controller for values â€‹â€‹for Fade In/Out
 *****************************************************************************
-* Desc         : Entity¿¡´Â AlphaWeight¶ó´Â ÄÁÆ®·Ñ·¯°¡ ÀÖÁö¸¸, Entity¿Ü¿¡´Â
-*                Àû¿ëÇÒ ¼ö ¾ø±â ¶§¹®¿¡ »õ·Î ¸¸µç´Ù.
+* Desc          : Entity has a controller called AlphaWeight, but other than Entity,
+*                Create a new one because it cannot be applied.
 *
 *****************************************************************************/
 
 #pragma once
 
-/// Fade °ª °è»ê¿ë ÄÁÆ®·Ñ·¯
+/// Controller for calculating fade values
 class CNtlPLFadeController
 {
 public:
@@ -23,14 +23,14 @@ public:
     void Set(RwReal fOrgValue, RwReal fDestValue, RwReal fFadeTime);
     void Update(RwReal fElapsedTime);
     
-    RwReal GetValue() {return m_fValue;}    ///< ÇöÀçÀÇ Fade °ªÀ» ¹ÝÈ¯ÇÑ´Ù.
-    RwBool IsEnd() {return m_bEnd;}         ///< Fade°¡ ³¡³µ´ÂÁö¸¦ ¹ÝÈ¯ÇÑ´Ù.
+    RwReal GetValue() {return m_fValue;}    ///< Returns the current Fade value.
+    RwBool IsEnd() {return m_bEnd;}         ///< Returns whether Fade has ended.
 
 protected:
-    RwReal m_fOrgValue;                     ///< ¿øº»°ª
-    RwReal m_fDestValue;                    ///< ³¡°ª
-    RwReal m_fValue;                        ///< ÇöÀç°ª
+    RwReal m_fOrgValue;                     ///< Original value
+    RwReal m_fDestValue;                    ///< end value
+    RwReal m_fValue;                        ///< Current value
     RwReal m_fFadeTime;                     ///< Fade Time
-    RwReal m_fTime;                         ///< ÇöÀç Time
-    RwBool m_bEnd;                          ///< Fade°¡ ³¡³µ´ÂÁö ¿©ºÎ
+    RwReal m_fTime;                         ///< Current Time
+    RwBool m_bEnd;                          ///< Whether Fade is finished
 };

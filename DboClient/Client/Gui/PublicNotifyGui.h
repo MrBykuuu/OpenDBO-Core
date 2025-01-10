@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: PublicNotifyGui.h
-// Desc: 별 기능이 없기 때문에 일단 Public과 Action Notify를 혼용.
+// Desc: Since it has no special function, Public and Action Notify are used together.
 //
 // 2007.02.14 Peessi@hitel.net   
 //

@@ -1,4 +1,4 @@
-// peessi : SCViewer로 빌드할때는 밑의 precomp include를 주석처리하고, SCVIEWER_MODE 정의를 활성화 한다.
+// peessi: When building with SCViewer, comment out the precomp include below and activate the SCVIEWER_MODE definition.
 #include "precomp_dboclient.h"
 //#define SCVIEWER_MODE
 
@@ -38,7 +38,7 @@
 
 #define SKILLCUSTOMIZE_SUFACEPAGE	"gui\\SkillCustomize.srf"
 
-#define LINE_OFFSET			4		// 마스터리 스킬과, 일반스킬의 리소스 차에서 오는 크기.
+#define LINE_OFFSET			4		// The size comes from the difference in resources between mastery skills and general skills.
 
 
 CSkillCustomizeLineItem::CSkillCustomizeLineItem( gui::CComponent* pParent, RwUInt8 byLineType, RwUInt8 byBeginPos, RwUInt8 byEndPos,
@@ -53,7 +53,7 @@ CSkillCustomizeLineItem::CSkillCustomizeLineItem( gui::CComponent* pParent, RwUI
 		CRectangle rtLine;
 		CRectangle rtArrow;
 
-		// Begin Down, End Up으로 고정.
+		// Fixed with Begin Down, End Up.
 		RwInt32 nXPos = rtBegin.left + ( rtEnd.right - rtBegin.left ) /  2 - UPGRADELINE_WIDTH / 2;
 		rtLine.SetRectWH( nXPos, rtBegin.bottom, UPGRADELINE_WIDTH, rtEnd.top - rtBegin.bottom - UPGRADELINE_HEIGHT );
 		SetLineSurface( GetLineSurface( UPGRADELINE_BAR ), GetLineSurface( UPGRADELINE_BAR_ACTIVE ), rtLine );
@@ -170,7 +170,7 @@ VOID CSkillCustomizeLineItem::GetLinePath( stLINE_PATH* pLinePath, RwUInt8 byLin
 {
 	CRectangle rect = pSkill->GetSkillPosition();
 
-	// begin 값 지정.
+	// Specify the begin value.
 	pLinePath->byDirection = byLinePos;
 
 	switch( byLinePos )
@@ -200,7 +200,7 @@ RwBool CSkillCustomizeLineItem::CalcLinePath( stLINE_PATH* pCurrentPath, stLINE_
 	gui::CSurface surface;
 	CRectangle rtLine;	
 
-	// 방향 결정.
+	// Decide on direction.
 	switch( pCurrentPath->byDirection )
 	{
 	case LINE_POS_LEFT:
@@ -229,19 +229,19 @@ RwBool CSkillCustomizeLineItem::CalcLinePath( stLINE_PATH* pCurrentPath, stLINE_
 
 					rtLine.SetRectWH( pDestPath->nX, pCurrentPath->nY, byLineSize, byLineSize );
 					if( pDestPath->nY - pCurrentPath->nY > 0 )
-					{// Dest가 더 밑에 있다.
+					{// Dest is further down.
 						SetLineSurface( GetLineSurface( OPTIONLINE_RIGHTDOWN ), GetLineSurface( OPTIONLINE_RIGHTDOWN_ACTIVE ), rtLine );
 						pCurrentPath->SetLinePath( LINE_POS_DOWN, pDestPath->nX, pCurrentPath->nY + byLineSize );
 					}
 					else
-					{// Dest가 더 위에 있다.
+					{// Dest is higher.
 						SetLineSurface( GetLineSurface( OPTIONLINE_RIGHTUP ), GetLineSurface( OPTIONLINE_RIGHTUP_ACTIVE ), rtLine );
 						pCurrentPath->SetLinePath( LINE_POS_UP, pDestPath->nX, pCurrentPath->nY );
 					}
 				}
 			}
 			else
-			{// 역위치
+			{// reverse position
 				bEnd = TRUE;
 				LineError( strLineName, strReport );				
 			}			
@@ -265,7 +265,7 @@ RwBool CSkillCustomizeLineItem::CalcLinePath( stLINE_PATH* pCurrentPath, stLINE_
 				}
 			}
 			else
-			{// 역위치
+			{// reverse position
 				bEnd = TRUE;
 				LineError( strLineName, strReport );
 			}		
@@ -289,13 +289,13 @@ RwBool CSkillCustomizeLineItem::CalcLinePath( stLINE_PATH* pCurrentPath, stLINE_
 				}
 			}
 			else
-			{// 역위치
+			{// reverse position
 				bEnd = TRUE;
 				LineError( strLineName, strReport );
 			}
 			break;
 		case LINE_POS_LEFT:
-			// 역위치
+			// reverse position
 			bEnd = TRUE;
 			LineError( strLineName, strReport );
 			break;
@@ -327,19 +327,19 @@ RwBool CSkillCustomizeLineItem::CalcLinePath( stLINE_PATH* pCurrentPath, stLINE_
 
 					rtLine.SetRectWH( pDestPath->nX - byLineSize, pCurrentPath->nY, byLineSize, byLineSize );
 					if( pDestPath->nY - pCurrentPath->nY > 0 )
-					{// Dest가 더 밑에 있다.
+					{// Dest is further down.
 						SetLineSurface( GetLineSurface( OPTIONLINE_LEFTDOWN ), GetLineSurface( OPTIONLINE_LEFTDOWN_ACTIVE ), rtLine );
 						pCurrentPath->SetLinePath( LINE_POS_DOWN, pDestPath->nX - byLineSize, pCurrentPath->nY + byLineSize );
 					}
 					else
-					{// Dest가 더 위에 있다.
+					{// Dest is higher.
 						SetLineSurface( GetLineSurface( OPTIONLINE_LEFTUP ), GetLineSurface( OPTIONLINE_LEFTUP_ACTIVE ), rtLine );
 						pCurrentPath->SetLinePath( LINE_POS_UP, pDestPath->nX - byLineSize, pCurrentPath->nY );
 					}
 				}
 			}
 			else
-			{// 역위치
+			{// reverse position
 				bEnd = TRUE;
 				LineError( strLineName, strReport );
 			}
@@ -363,7 +363,7 @@ RwBool CSkillCustomizeLineItem::CalcLinePath( stLINE_PATH* pCurrentPath, stLINE_
 				}
 			}
 			else
-			{// 역위치
+			{// reverse position
 				bEnd = TRUE;
 				LineError( strLineName, strReport );
 			}
@@ -387,13 +387,13 @@ RwBool CSkillCustomizeLineItem::CalcLinePath( stLINE_PATH* pCurrentPath, stLINE_
 				}
 			}
 			else
-			{// 역위치
+			{// reverse position
 				bEnd = TRUE;					 
 				LineError( strLineName, strReport );
 			}
 			break;
 		case LINE_POS_RIGHT:
-			// 역위치
+			// reverse position
 			bEnd = TRUE;
 			LineError( strLineName, strReport );
 			break;
@@ -425,19 +425,19 @@ RwBool CSkillCustomizeLineItem::CalcLinePath( stLINE_PATH* pCurrentPath, stLINE_
 
 					rtLine.SetRectWH( pCurrentPath->nX, pDestPath->nY, byLineSize, byLineSize );
 					if( pDestPath->nX - pCurrentPath->nX > 0 )
-					{// Dest가 더 오른쪽에 있다.
+					{// Dest is further to the right.
 						SetLineSurface( GetLineSurface( OPTIONLINE_RIGHTDOWN ), GetLineSurface( OPTIONLINE_RIGHTDOWN_ACTIVE ), rtLine );
 						pCurrentPath->SetLinePath( LINE_POS_RIGHT, pCurrentPath->nX + byLineSize, pDestPath->nY );
 					}
 					else
-					{// Dest가 더 왼쪽에 있다.
+					{// Dest is further to the left.
 						SetLineSurface( GetLineSurface( OPTIONLINE_LEFTDOWN ), GetLineSurface( OPTIONLINE_LEFTDOWN_ACTIVE ), rtLine );
 						pCurrentPath->SetLinePath( LINE_POS_LEFT, pCurrentPath->nX, pDestPath->nY );
 					}
 				}
 			}
 			else
-			{// 역위치
+			{// reverse position
 				bEnd = TRUE;
 				LineError( strLineName, strReport );				
 			}
@@ -461,7 +461,7 @@ RwBool CSkillCustomizeLineItem::CalcLinePath( stLINE_PATH* pCurrentPath, stLINE_
 				}
 			}
 			else
-			{// 역위치
+			{// reverse position
 				bEnd = TRUE;
 				LineError( strLineName, strReport );				
 			}
@@ -485,13 +485,13 @@ RwBool CSkillCustomizeLineItem::CalcLinePath( stLINE_PATH* pCurrentPath, stLINE_
 				}
 			}
 			else
-			{// 역위치
+			{// reverse position
 				bEnd = TRUE;
 				LineError( strLineName, strReport );				
 			}
 			break;
 		case LINE_POS_UP:
-			// 역위치
+			// reverse position
 			bEnd = TRUE;
 			LineError( strLineName, strReport );				
 			break;		
@@ -520,12 +520,12 @@ RwBool CSkillCustomizeLineItem::CalcLinePath( stLINE_PATH* pCurrentPath, stLINE_
 
 					rtLine.SetRectWH( pCurrentPath->nX, pDestPath->nY - byLineSize, byLineSize, byLineSize );
 					if( pDestPath->nX - pCurrentPath->nX > 0 )
-					{// Dest가 더 오른쪽에 있다.
+					{// Dest is further to the right.
 						SetLineSurface( GetLineSurface( OPTIONLINE_RIGHTUP ), GetLineSurface( OPTIONLINE_RIGHTUP_ACTIVE ), rtLine );
 						pCurrentPath->SetLinePath( LINE_POS_RIGHT, pCurrentPath->nX + byLineSize, pDestPath->nY - byLineSize );
 					}
 					else
-					{// Dest가 더 왼쪽에 있다.
+					{// Dest is further to the left.
 						SetLineSurface( GetLineSurface( OPTIONLINE_LEFTUP ), GetLineSurface( OPTIONLINE_LEFTUP_ACTIVE ), rtLine );
 						pCurrentPath->SetLinePath( LINE_POS_LEFT, pCurrentPath->nX, pDestPath->nY - byLineSize );
 					}
@@ -533,7 +533,7 @@ RwBool CSkillCustomizeLineItem::CalcLinePath( stLINE_PATH* pCurrentPath, stLINE_
 			}
 			else
 			{
-				// 역위치
+				// reverse position
 				bEnd = TRUE;
 				LineError( strLineName, strReport );				
 			}
@@ -557,7 +557,7 @@ RwBool CSkillCustomizeLineItem::CalcLinePath( stLINE_PATH* pCurrentPath, stLINE_
 				}
 			}
 			else
-			{// 역위치
+			{// reverse position
 				bEnd = TRUE;
 				LineError( strLineName, strReport );				
 			}
@@ -581,7 +581,7 @@ RwBool CSkillCustomizeLineItem::CalcLinePath( stLINE_PATH* pCurrentPath, stLINE_
 				}
 			}
 			else
-			{// 역위치
+			{// reverse position
 				bEnd = TRUE;
 				LineError( strLineName, strReport );				
 			}
@@ -1266,7 +1266,7 @@ CSkillCustomizeParser::CSkillCustomizeParser( const RwChar* szFileName )
 
 	enum EParseState
 	{
-		PARSE_GLOBAL,			// 전체 frame
+		PARSE_GLOBAL,			// full frame
 		PARSE_COMPONENT_TYPE,   // component type
 		PARSE_COMPONENT_NAME,   // component name
 		PARSE_COMPONENT,
@@ -1518,7 +1518,7 @@ RwBool CSkillCustomizeParser::GenerateGuiItem( gui::CComponent* pParent )
 
 		CSkillCustomizeLineItem* pLineItem = NTL_NEW CSkillCustomizeLineItem( pParent, pData->byLineType, pData->byBeginLinePos, pData->byEndLinePos, pBeginSkillItem, pEndSkillItem, iterline->first, m_strError );
 
-		// peessi : 업그레이드 여부는 End쪽에서 검사. Option Line은 Begin쪽에서 관리.
+		// peessi: Check whether to upgrade or not at the end. Option Line is managed on the Begin side.
 		if( pData->byLineType == LINE_TYPE_UPGRADE )
 			pEndSkillItem->SetLine( pLineItem );
 		else
@@ -1533,7 +1533,7 @@ RwBool CSkillCustomizeParser::GenerateGuiItem( gui::CComponent* pParent )
 	DeleteParsedItem();
 
 #ifdef SCVIEWER_MODE
-	//	부모 높이 설정은 기본적으로 안보이는 스킬 때문에 하부로 이동... 뷰어모드로 빌드할때는 다 보이게 한다. 
+	//	The parent height setting is moved to the bottom due to the skill being invisible by default... When building in viewer mode, make everything visible. 
 	if( nYLimit > pParent->GetHeight() )
 		pParent->SetHeight( nYLimit );
 #endif

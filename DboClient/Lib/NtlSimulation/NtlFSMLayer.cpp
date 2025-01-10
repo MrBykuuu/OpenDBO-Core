@@ -81,7 +81,7 @@ RwUInt32 CNtlFSMLayer::HandleEvents(RWS::CMsg &pMsg)
 	RwUInt32 uiNotifyParam1 = 0;
 	RwUInt32 uiNotifyParam2 = 0;
 
-	// agent의 event 처리.
+	// Agent's event processing.
 	uiRes = m_pAgent->HandleEvents(pMsg);
 	if(uiRes == NTL_FSM_EVENTRES_BLOCK)
 	{
@@ -99,7 +99,7 @@ RwUInt32 CNtlFSMLayer::HandleEvents(RWS::CMsg &pMsg)
 		}
 		else 
 		{
-			// 다음 상태를 state 자신은 모르는 경우. agent한테 물어본다.
+			//If the state itself does not know the next state. Ask the agent.
 			RwUInt32 uiCurrStateId = m_pState->GetStateId();
 			RwUInt32 uiNextStateId = m_pAgent->GetNextStateId();
 
@@ -117,12 +117,12 @@ RwUInt32 CNtlFSMLayer::HandleEvents(RWS::CMsg &pMsg)
 	}
 	else
 	{	
-		// state의 event 처리.
+		//Processing state events.
 		if(m_pState)
 		{
 			uiRes = m_pState->HandleEvents(pMsg); 
 
-			// 다음 상태를 state 자신은 모르는 경우. agent한테 물어본다.
+			//If the state itself does not know the next state. Ask the agent.
 			RwUInt32 uiCurrStateId = m_pState->GetStateId();
 			RwUInt32 uiNextStateId = m_pState->GetNextStateId();
 

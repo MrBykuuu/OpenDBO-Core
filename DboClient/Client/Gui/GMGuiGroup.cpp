@@ -1,13 +1,13 @@
 #include "precomp_dboclient.h"
 #include "GMGuiGroup.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// cleint
+// Client
 #include "GMQuickSlotGui.h"
 #include "QuickSlotGui.h"
 

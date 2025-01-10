@@ -2,7 +2,7 @@
 //	File		:	NtlResourceParticleSystem.cpp
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -446,7 +446,7 @@ RwBool CNtlResourceParticleSystem::Load(FILE* pFile)
 		break;
 	}
 
-    // Trail Action 추가 (버젼 6)
+    // Added Trail Action (version 6)
     if(CNtlResourceEffect::m_nVersion >= 0x00000006 && IsEmitterDataFlag(rpPRTSTDEMITTERDATAFLAGTRAIL))
     {
 		if (CNtlResourceEffect::m_nVersion >= 0x00000067)
@@ -482,9 +482,9 @@ RwBool CNtlResourceParticleSystem::Load(FILE* pFile)
 	return TRUE;
 }
 
-// 파티클이 생성위치를 나타다닐지 Flag를 설정한다.
-// 이 Flag의 영향은 InstanceParticle 클래스안에서 설정된다(Update시)
-// 이 Flag는 m_nPointEmitterDataFlag 필드에 설정된다.
+// Set a flag to indicate where particles are created.
+// The effect of this Flag is set in the InstanceParticle class (when updated).
+// This Flag is set in the m_nPointEmitterDataFlag field.
 void CNtlResourceParticleSystem::SetFollowFlag(BOOL bFollow)
 {
     if(bFollow)

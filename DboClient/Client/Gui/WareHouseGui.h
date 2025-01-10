@@ -1,32 +1,32 @@
 /******************************************************************************
-* File			: CWarehouseGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2006. 11. 20
-* Abstract		: 
+*File			: CWarehouseGui.h
+*Author		    : Hong SungBock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2006. 11. 20
+*Abstract		: 
 *****************************************************************************
-* Desc			: CWarehouseGui
-*				  한 캐릭터가 가지는 16칸의 일반창고 3개
-*				  한 계정의 모든 캐릭터가 공유하는 16칸의 공유창고를 구현
-*				  제니는 공유창고에만 저장되는 것으로써 한 계정의 모든 캐릭터
-*				  가 공유한다
+*Desc			: CWarehouseGui
+*				  One character has three 16-space general warehouses.
+*                 Implement a 16-space shared warehouse shared by all characters on one account
+*                 Zenny is stored only in the shared warehouse, so all characters in one account
+*                 shares
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// share
+// Share
 #include "NtlItem.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// dbo
+// Dbo
 #include "SlotGui.h"
 
 
@@ -43,7 +43,7 @@ public:
 	RwBool		Create();
 	VOID		Destroy();
 
-	RwInt32		SwitchDialog(bool bOpen);		///< DialogManager에서의 Open/Close
+	RwInt32		SwitchDialog(bool bOpen);		///< Open/Close in DialogManager
 
 	VOID		RegisterWarehouseIndex(RwUInt8 byIndex);
 	VOID		ShowDisableSlot(RwBool bShow, RwUInt8 bySlot);
@@ -56,7 +56,7 @@ protected:
 
 	VOID			UpdateItems();
 
-	RwInt8			PtinSlot(RwInt32 iX, RwInt32 iY);				///< 마우스가 영역으로 들어온 슬롯을 찾는다.
+	RwInt8			PtinSlot(RwInt32 iX, RwInt32 iY);				///< Find the slot where the mouse entered the area.
 	VOID			FocusEffect( RwBool bPush, RwInt32 iSlotIdx = -1);
 	VOID			SelectEffect( RwBool bPush, RwInt32 iSlotIdx = -1);	
 	VOID			CheckInfoWindow();
@@ -82,23 +82,23 @@ protected:
 	gui::CSlot			m_slotCloseButton;
 	gui::CSlot			m_slotCaptureMouseDown;
 
-	gui::CButton*		m_pExitButton;		///< 창닫기 버튼
+	gui::CButton*		m_pExitButton;		///< Close window button
 
 	RwInt8				m_byInfoWindowIndex;
-	RwInt32				m_iMouseDownSlot;	///< 마우스로 눌린 슬롯의 인덱스
-	RwInt32				m_iSelectedSlot;	///< 셀렉트 이펙트 슬롯
-	RwInt32				m_iClickEffectedSlot;///< 현재 클릭 이펙트가 생긴 슬롯
+	RwInt32				m_iMouseDownSlot;	///< Index of the slot pressed by the mouse
+	RwInt32				m_iSelectedSlot;	///< Select effect slot
+	RwInt32				m_iClickEffectedSlot;///< Slot with current click effect
 
-	gui::CStaticBox*	m_pDialogName;		///< 다이얼로그의 이름 스태틱
+	gui::CStaticBox*	m_pDialogName;		///< Dialog name static
 
-	CSurfaceGui			m_FocusEffect;		///< 슬롯 포커스 이펙트
-	CSurfaceGui			m_SelectEffect;		///< 슬롯 셀렉트 이펙트
+	CSurfaceGui			m_FocusEffect;		///< Slot focus effect
+	CSurfaceGui			m_SelectEffect;		///< Slot select effect
 
-	RwUInt8				m_byWarehouseIndex;	///< 몇 번째 창고인지
+	RwUInt8				m_byWarehouseIndex;	///<What warehouse is it?
 
-	RwBool				m_bFocus;			///< 포커스를 얻었다.
+	RwBool				m_bFocus;			///< Got focus.
 
-	CRegularSlotGui			m_Slot[NTL_MAX_BANK_ITEM_SLOT];	///< 아이템 슬롯
+	CRegularSlotGui			m_Slot[NTL_MAX_BANK_ITEM_SLOT];	///< Item slot
 };
 
 
@@ -134,11 +134,11 @@ protected:
 	gui::CStaticBox*	m_pZenny;
 	gui::CTexture*		m_pMoneyIconTexture;
 
-	CSurfaceGui			m_srfZennySlotDestination;	///< 제니 슬롯 Destination 이미지
+	CSurfaceGui			m_srfZennySlotDestination;	///< Zenny Slot Destination Image
 
 	RwBool				m_bZennySlotDestination;
 	RwUInt32			m_uiZenny;
-	SERIAL_HANDLE		m_hNPCSerial;		///< 창고지기 NPC Serial
+	SERIAL_HANDLE		m_hNPCSerial;		///< Warehouse Keeper NPC Serial
 };
 
 
@@ -155,7 +155,7 @@ public:
 	RwBool		Create();
 	VOID		Destroy();
 
-	RwInt32		SwitchDialog(bool bOpen);		///< DialogManager에서의 Open/Close
+	RwInt32		SwitchDialog(bool bOpen);		///< Open/Close in DialogManager
 
 	VOID		RegisterWarehouse(RwUInt8 byIndex, CWarehouseGui* pWarehouseGui);
 	SERIAL_HANDLE	GetNPCSerial();
@@ -183,11 +183,11 @@ protected:
 	gui::CSlot			m_slotCloseButton;
 	gui::CSlot			m_slotCaptureMouseDown;
 
-	gui::CButton*		m_pWarehouseBtn[NTL_MAX_BANKSLOT_COUNT];///< 창고 버튼
-	gui::CButton*		m_p_All_Button;		///< 모든 창고 버튼
-	gui::CButton*		m_pExitButton;		///< 창닫기 버튼
+	gui::CButton*		m_pWarehouseBtn[NTL_MAX_BANKSLOT_COUNT];///< warehouse button
+	gui::CButton*		m_p_All_Button;		///< All warehouses button
+	gui::CButton*		m_pExitButton;		///< Close window button
 	
-	SERIAL_HANDLE		m_hNPCSerial;		///< 창고지기 NPC Serial
+	SERIAL_HANDLE		m_hNPCSerial;		///< Warehouse Keeper NPC Serial
 
 	CWarehouseGui*		m_pWareHouseGui[NTL_MAX_BANKSLOT_COUNT];
 };

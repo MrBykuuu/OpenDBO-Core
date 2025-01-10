@@ -1,18 +1,18 @@
 #include "precomp_dboclient.h"
 #include "DeliberationRankGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// framework
+// Framework
 #include "NtlStage.h"
 #include "StageManager.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 #include "NtlPLGuiManager.h"
 
-// client
+// Client
 #include "DboGlobal.h"
 #include "DialogManager.h"
 #include "AlarmManager.h"
@@ -162,7 +162,7 @@ VOID CDeliberationRankContainer::Destroy()
 
 VOID CDeliberationRankContainer::Update(RwReal fElapsed)
 {
-	// 일정 시간이 지나면 잠시동안 등급표시를 한다
+	// After a certain period of time, the grade is displayed for a while.
 	if( !m_tALARM_INFO.bGameStage )
 		return;
 

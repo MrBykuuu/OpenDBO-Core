@@ -1,12 +1,12 @@
 /*****************************************************************************
  *
- * File			: DboPacketGenerator.h
- * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
- * Date			: 2005. 9. 27	
- * Abstract		: DBO packet generator
+ *File			: DboPacketGenerator.h
+ *Author	    : HyungSuk, Jang
+*Copyright	    : NTL Co., Ltd.
+ *Date			: 2005. 9. 27	
+ *Abstract		: DBO packet generator
  *****************************************************************************
- * Desc         : 
+ *Desc         : 
  *
  *****************************************************************************/
 
@@ -69,7 +69,7 @@ public:
 	bool SendServerChangeReq(void);
 	bool SendChannelChangeReq(RwUInt8 byChannelID);
 
-	// item..
+	// Item..
 	bool SendItemMoveReq(RwUInt8 bySrcPlace, RwUInt8 bySrcSlotPos, RwUInt8 byDestPlace, RwUInt8 byDestSlostPos);
 	bool SendItemStackMoveReq(RwUInt8 bySrcPlace, RwUInt8 bySrcPos, RwUInt8 byDestPlace, RwUInt8 byDestPos, RwUInt8 byStackCount);
 	bool SendItemDeleteReq(RwUInt8 bySrcPlace, RwUInt8 bySrcPos, RwBool* pPacketLock );
@@ -100,14 +100,14 @@ public:
 	// party select
 	bool SendPartySelectStateReq(BYTE bySelectState);
 
-	// ud
+	// UD
 	bool SendUltimateDungeonEnterReq(HOBJECT hNpc, BYTE byDifficulty);
 
-	// ccbd
+	// CCBD
 	bool SendBattleDungeonEnterReq(HOBJECT hNpc, HOBJECT hItem);
 	bool SendBattleDungeonLeaveReq();
 
-	//
+	//POPO REVIVAL???
 	bool SendCharRevivalReq(RwUInt8 byType);
 	bool SendCharCrescentPopoRevivalReq(BYTE byPlace, BYTE byPos);
 
@@ -165,7 +165,7 @@ public:
 	bool SendPartyZennyDivision(RwUInt8 byDivision);
 	bool SendPartyItemDivision(RwUInt8 byDivision);
 
-	bool SendPartyShareTargetReq(RwUInt8 bySlot, RwUInt32 hTarget);                ///< 파티 공유 타겟 선택을 서버에 요청한다.
+	bool SendPartyShareTargetReq(RwUInt8 bySlot, RwUInt32 hTarget);                ///< Requests the server to select a party sharing target.
 
 	bool SendPartyDungeonChangeReq(RwUInt32 uiPartyDungeonState);
 	bool SendPartyDungeonInitReq(void);
@@ -197,7 +197,7 @@ public:
 
 	bool SendCharRenameReq(const WCHAR* pwcCharName, BYTE byPlace, BYTE byPos);
 
-	// guild
+	// Guild
 	bool SendGuildCreateReq(RwUInt32 uiNPCSerial, const WCHAR* pcGuildName);
 	bool SendGuildInviteReq(RwUInt32 uiTargetSerial);
 	bool SendGuildFunctionAddReq(RwUInt32 uiNPCSerial, RwUInt8 byFunction);
@@ -212,14 +212,14 @@ public:
 	bool SendGuildWarehouseZennyReq(RwUInt32 uiNPCSerial, RwUInt32 uiZenny, RwBool bSave);
 	bool SendGuildWarehouseEnd();
 
-	// 도장
+	// coating
 	bool SendDojo_CreateReq(RwUInt32 uiNPCHandle);
 	bool SendDojo_FunctionAddReq(RwUInt32 uiGuildManagerHandle, RwUInt8 byFunction, RwUInt8 byPlace, RwUInt8 byPos);
 	bool SendDojo_ScrambleReq(RwUInt32 uiNPCHandle);
 	bool SendDojo_ScrambleResponseReq(bool bAccept);
 	bool SendDojo_NPCInfoReq(RwUInt32 uiNPCSerial);
 
-	// 도복
+	// gi
 	bool SendDogi_CreateReq(RwUInt32 uiHandle, void* pDogiData);
 	bool SendDogi_ChagneReq(RwUInt32 uiHandle, void* pDogiData);
 	bool SendGuildDogi_CreateReq(RwUInt32 uiHandle, void* pDogiData);
@@ -230,7 +230,7 @@ public:
 	bool SendTutorialWaitCancelReq();
 	bool SendTutorialPlayQuitReq();
 
-	//tmq
+	//Tmq
 	bool SendTimeQuestEnterReq(HOBJECT hNpc, BYTE byDifficulty);
 
 	// Rank Battle 
@@ -245,7 +245,7 @@ public:
 	//bool SendRBMatchCancelReq(void);
 	
 	// PrivateShop
-	//bool SendPrivateShopCreateReq(); // SL로 이동
+	//bool SendPrivateShopCreateReq(); //Go to SL
 	bool SendPrivateShopExitReq();
 	bool SendPrivateShopOpenReq(const WCHAR* pwcPrivateShopName, const WCHAR* pwcNotice, bool bIsOwnerEmpty);
 	bool SendPrivateShopCloseReq();
@@ -261,14 +261,14 @@ public:
 	bool SendDBCCheckReq(RwUInt32 uiAltarHandle, sITEM_POSITION_DATA sData[NTL_ITEM_MAX_DRAGONBALL]);
 	bool SendDBCRewardReq(RwUInt32 uiAltarHandle, TBLIDX tblIdx);
 
-	// MailSystem
+	// Mail system
 	bool SendMailStartReq(RwUInt32 hSerialID/*Mail Object or Scouter Part*/);
 	bool SendMailSendReq(RwUInt32 hSerialID, const WCHAR* pwcTargetName, const WCHAR* pwcText, RwUInt8 uiMailType, sITEM_POSITION_DATA* pItemData, RwUInt32 uiZenny, RwUInt8 uiDay);
 	bool SendMailReadReq(RwUInt32 hSerialID, MAILID mailID);
 	bool SendMailDelReq(RwUInt32 hSerialID, MAILID mailID);
 	bool SendMailReturnReq(RwUInt32 hSerialID, MAILID mailID);
 	bool SendMailReloadReq(RwUInt32 hSerialID);
-	//bool SendMailLoadReq(RwUInt32 hSerialID, MAILID mailID); // SL 로 이동
+	//bool SendMailLoadReq(RwUInt32 hSerialID, MAILID mailID); //Go to SL
 	bool SendMailItemReceiveReq(RwUInt32 hSerialID, MAILID mailID);
 	bool SendMailLockReq(RwUInt32 hSerialID, MAILID mailID, bool bIsLock);
 	bool SendCharAwayReq(bool bIsAway);
@@ -281,23 +281,23 @@ public:
 	bool	SendAuctionHouseBuyReq(ITEMID nItem);
 
     // Portal System
-    bool SendPortalStartReq(RwUInt32 hSerialID, RwBool* pPacketLock);                    ///< 포탈 NPC를 클릭했다는 패킷을 보낸다.
-    bool SendPortalAddReq(RwUInt32 hSerialID);                      ///< 포탈 NPC에 설정된 포인트의 등록을 요청한다.
-    bool SendPortalReq(RwUInt32 hSerialID, BYTE byPoint);           ///< 포탈 이동을 요청한다.
+    bool SendPortalStartReq(RwUInt32 hSerialID, RwBool* pPacketLock);                    ///< A packet is sent indicating that the portal NPC has been clicked.
+    bool SendPortalAddReq(RwUInt32 hSerialID);                      ///< Request registration of points set at the portal NPC.
+    bool SendPortalReq(RwUInt32 hSerialID, BYTE byPoint);           ///< Request to move the portal.
 
-	// WarFog
+	// War will
 	bool SendWarFogUpdateReq(RwUInt32 uiTriggerObjectIndex);
 
 	// Block Mode
 	bool SendBlockModeReq(bool bIsOn);
 
 	// KnockDown Recovery
-	bool SendCharKnockDownReleaseNfy();								///< 넉다운을 회복한다고 요청한다.
+	bool SendCharKnockDownReleaseNfy();								///< Request to recover from knockdown.
 
-    // 변신    
-    bool SendTransformCancelReq();                              ///< 변신 취소를 요청한다.
+    // transformation    
+    bool SendTransformCancelReq();                              ///< Request to cancel transformation.
 
-	// 천하제일 무도회 신청 관련
+	// Regarding application for World's Martial Arts 
 	bool SendBudokaiJoinIndividualReq();
 	bool SendBudokaiLeaveIndividualReq();
 	bool SendBudokaiJoinTeamInfoReq();
@@ -309,7 +309,7 @@ public:
 	bool SendBudokaiPrizeWinnerNameReq();
 	bool SendBudokaiPrizeTeamWinnerNameReq();
 
-	// 주사위
+	// dice
 	bool SendRoolReq();
 	bool SendItemDiceReq(HOBJECT hItemHandle, BYTE byDice);
 
@@ -319,7 +319,7 @@ public:
 	// Teleport
 	bool SendTeleportConfirmReq(bool bTeleport, RwUInt8 byTeleportIndex);
 
-	// 스킬초기화
+	// Skill reset
 	bool SendSkillInitReq(RwUInt32 hSerialID);
 	bool SendSkillResetPlusReq(BYTE byPlace, BYTE byPos);
 
@@ -333,7 +333,7 @@ public:
 	// Hoipoi
 	bool SendHoipoiMixItemCreateReq(HOBJECT hObject, TBLIDX idxRecipe, BYTE byMaterialCount, void* aMaterialSlot);
 
-	// bus
+	// Bus
 	bool SendBusWorldMapStatus(bool bIsWorldMapOpen);
 
 	// NetPyShop
@@ -385,7 +385,7 @@ public:
 	bool SendPetitionChatEndNfy(RwUInt32 uiGMAccountID);
 	bool SendPetitionSatisfaction(RwUInt32 uiPetitionID, RwUInt8 bySatisfactionRate);
 
-	// guild
+	// Guild
 	bool SendGuild_Disband_Req();
 	bool SendGuild_Disband_Cancle_Req();
 	bool SendGuild_Response_Invitation(RwUInt8 byResponse);
@@ -397,16 +397,16 @@ public:
 	bool SendGuild_Notice_Req(RwUInt16 wNoticeLength, const WCHAR* pwcNotice);
 
     // Friend System
-    bool SendFriend_Add_Req(const WCHAR* pName);              ///< 친구 추가를 요청한다.
-    bool SendFriend_Del_Req(RwUInt32 uiTargetID, const WCHAR* pName);             ///< 친구 삭제를 요청한다.
-    bool SendFriend_Move_Req(RwUInt32 uiTargetID, const WCHAR* pName);            ///< 친구 리스트->블랙리스트 이동을 요청한다.
-    bool SendFriend_Black_Add_Req(const WCHAR* pName);        ///< 블랙 리스트 추가를 요청한다.
-    bool SendFriend_Black_Del_Req(RwUInt32 uiTargetID, const WCHAR* pName);       ///< 블랙 리스트 삭제를 요청한다.
+    bool SendFriend_Add_Req(const WCHAR* pName);              ///< Request to be added as a friend.
+    bool SendFriend_Del_Req(RwUInt32 uiTargetID, const WCHAR* pName);             ///< Request to delete friend.
+    bool SendFriend_Move_Req(RwUInt32 uiTargetID, const WCHAR* pName);            ///<Friend list->Request to move to blacklist.
+    bool SendFriend_Black_Add_Req(const WCHAR* pName);        ///< Request to be added to the blacklist.
+    bool SendFriend_Black_Del_Req(RwUInt32 uiTargetID, const WCHAR* pName);       ///< Request for blacklist deletion.
 
 	// Ranking Board
-	bool SendRankBattle_Rank_List_Req( RwInt32 dwPage, RwInt8 byCompareDay );	// 랭킹 보드 리스트를 요청한다.
-	bool SendRankBattle_Rank_Find_Character_Req( RwInt32 dwPage, RwInt8 byCompareDay, const WCHAR *pCharName );	// 검색할 캐릭터가 있는 리스트를 요청한다.
-	bool SendRankBattle_Rank_Compare_Day_Req( RwInt32 dwPage, RwInt8 byCompareDay );	// 비교날짜에 따른 리스트를 요청한다.
+	bool SendRankBattle_Rank_List_Req( RwInt32 dwPage, RwInt8 byCompareDay );	// Request a list of ranking boards.
+	bool SendRankBattle_Rank_Find_Character_Req( RwInt32 dwPage, RwInt8 byCompareDay, const WCHAR *pCharName );	// Request a list containing the character to search for.
+	bool SendRankBattle_Rank_Compare_Day_Req( RwInt32 dwPage, RwInt8 byCompareDay );	// Request a list based on comparison date.
 
 	bool SendTMQ_Record_List_Req( RwUInt32 tmqTblidx, RwUInt8 byDifficult );
 	bool SendTMQ_Member_List_Req( RwUInt32 tmqTblidx, RwUInt8 byDifficult, RwUInt8 byRank );
@@ -417,7 +417,7 @@ public:
 	bool SendBudokaiTournamentTeamListReq( RwUInt8 byReceivedListCount );
 	bool SendBudokaiTournamentTeamInfoReq( RwUInt16 wJoinID1, RwUInt16 wJoinID2 );	
 
-	// 도장
+	// Dojo
 	bool SendDojo_BudokaiSeedAddReq(const WCHAR* pwcCharName);
 	bool SendDojo_NoticeChangeReq(RwUInt16 wNoticeLengthInUnicode, WCHAR* awcNotice);
 

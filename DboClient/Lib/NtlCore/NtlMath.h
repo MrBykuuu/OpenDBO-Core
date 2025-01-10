@@ -2,9 +2,9 @@
  *
  * File			: NtlMath.h
  * Author		: HongHoDong
- * Copyright	: (주)NTL
+ * Copyright	: ntl Co., Ltd.
  * Date			: 2005. 9. 21	
- * Abstract		: Math관련 함수들
+ * Abstract		: Math-related functions
  *****************************************************************************
  * Desc         : 
  *
@@ -128,7 +128,7 @@ public:
 
 /**
  * \ingroup Core
- * Math관련 함수들의 집합
+ *A set of Math-related functions
  * 
  */
 class CNtlMath
@@ -172,28 +172,28 @@ public:
 	static RwReal	DWtoF(DWORD w) { return *((FLOAT*)&w); }
 
     
-    static RwRGBA Interpolation(const RwRGBA& startColor, const RwRGBA& endColor, const RwReal fDelta);    // RwRGBA값의 보간값을 구한다 (delta : 0.0 ~ 1.0 까지의 값)
-    static RwReal Interpolation(const RwReal fStart, const RwReal fEnd, const RwReal fDelta);               // Real값의 보간값을 구한다. (delta : 0.0 ~ 1.0 까지의 값)
-    static RwV3d  Interpolation(const RwV3d& vStart, const RwV3d& vEnd, const RwReal fDelta);               // RwV3d값의 선형 보간값을 구한다.
+    static RwRGBA Interpolation(const RwRGBA& startColor, const RwRGBA& endColor, const RwReal fDelta);    //Find the interpolation value of RwRGBA value (delta: value from 0.0 to 1.0)
+    static RwReal Interpolation(const RwReal fStart, const RwReal fEnd, const RwReal fDelta);               //Find the interpolation value of the real value. (delta: value from 0.0 to 1.0)
+    static RwV3d  Interpolation(const RwV3d& vStart, const RwV3d& vEnd, const RwReal fDelta);               //Obtain the linear interpolation value of RwV3d value.
 
 	static RwBool LineSphereCollisionTestPixelRay(RwCamera *pCamera, RwSphere *pSphere, RwInt32 iPixelX, RwInt32 iPixelY, RwReal fRayDist, RwReal& fDistance); 
 
 	static RwBool BBoxBBoxCollision(const RwBBox *pBox1, const RwBBox *pBox2);
 
-    // 값을 범위내로 잘라서 반환한다. 
+    // Returns a value clamped within a range. 
     static RwReal Range(const RwReal fValue, const RwReal fMin, const RwReal fMax);
 
-    // 행렬로부터 스케일값을 추출한다. (균등 스케일인경우에만 적용된다)
+    // Extract scale value from matrix (only applies in case of uniform scaling) /Uniform scaling means the object is scaled equally in all dimensions (X, Y, and Z)
     static RwReal ScaleFromRwMatrix(const RwMatrix& matrix);
     
-    // 벡터V의  1 / V를 계산한다.
+    // Calculate 1 / V of vector V.
     static RwV3d RwV3dInverse(const RwV3d& v3d);
 
 	static RwInt32 GetSafeIdx3D(RwV3d& vPos, RwInt32 iHalfSize, RwInt32 iChunkSize, RwInt32 iChunkNum);
 };
 
 //////////////////////////////////////////////////////////////////////////
-// 연산자 오버로딩 (2006.09.13 by agebreak)
+// Operator Overloading (2006.09.13 by agebreak)
 //////////////////////////////////////////////////////////////////////////
 const RwV3d operator+(const RwV3d& lhs, const RwV3d& rhs);
 const RwV3d operator-(const RwV3d& lhs, const RwV3d& rhs);
@@ -216,13 +216,13 @@ const RwV2d operator/(const RwV2d& lhs, const RwReal& rhs);
 const void	operator*=(RwV2d& lhs, const RwReal& rhs);
 
 /************************************************************************/
-/* Spline 보간 계산 함수                                                */
+/* Spline Interpolation Calculation Functions                                                */
 /************************************************************************/
 
-// u : Weight 값
-// u2 : Weight의 제곱값
-// u3 : Weight의 삼제곱값
-// Cntrl : 컨트롤 포인트들 
+// u : Weight value
+// u2 : Weight squared
+// u3 : Weight cubed
+// Cntrl : control points 
 
 #define _XSL_B_SPLINE(u, u_2, u_3, cntrl0, cntrl1, cntrl2, cntrl3)		\
     (																	\

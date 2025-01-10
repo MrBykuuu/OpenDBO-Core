@@ -14,7 +14,7 @@
 
 /**
  * \ingroup Client
- * Camera 관련 Helper 함수들 이다.
+ * These are camera-related helper functions.
  * 
  */
 

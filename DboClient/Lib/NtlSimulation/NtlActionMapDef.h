@@ -97,11 +97,11 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// ActionMap Key 상태
+// ActionMap Key Status
 ///////////////////////////////////////////////////////////////////////////////
 
 #define NTL_ALT_BIT   0x0100
-#define NTL_CTRL_BIT  0x0200			// 조합키
+#define NTL_CTRL_BIT  0x0200			// combination key
 #define NTL_SHIFT_BIT 0x0400
 
 #define NTL_KEY_UPDATE 0x4000
@@ -113,150 +113,151 @@
 
 enum eACTION
 {
-	// 0 ~ 19 까지 아바타 행동
-	ACTION_AVATAR_FORWARD = 0,		///< 전진
-	ACTION_AVATAR_BACKWARD,			///< 후진
-	ACTION_AVATAR_LEFTTURN,			///< 좌회전
-	ACTION_AVATAR_RIGHTTURN,		///< 우회전
-	ACTION_AVATAR_SITDOWN,			///< 앉기
-	ACTION_AVATAR_JUMP,				///< 점프
-	ACTION_AVATAR_AUTORUN,			///< 자동달리기
-	ACTION_AVATAR_SCOUTER,			///< 스카우터 사용하기
-	ACTION_AVATAR_CHARGE,			///< 기 모으기
-	ACTION_AVATAR_LOOTING,			///< 아이템 줍기
-	ACTION_AVATAR_BLOCKING,			///< 아바타 블록킹
+	// Avatar behavior from 0 to 19
+	ACTION_AVATAR_FORWARD = 0,		///< forward
+	ACTION_AVATAR_BACKWARD,			///< Reverse
+	ACTION_AVATAR_LEFTTURN,			///< Turn left
+	ACTION_AVATAR_RIGHTTURN,		///< Turn right
+	ACTION_AVATAR_SITDOWN,			///< sit
+	ACTION_AVATAR_JUMP,				///< jump
+	ACTION_AVATAR_AUTORUN,			///< Auto run
+	ACTION_AVATAR_SCOUTER,			///< Using Scouter
+	ACTION_AVATAR_CHARGE,			///< Collect energy
+	ACTION_AVATAR_LOOTING,			///< Pick up items
+	ACTION_AVATAR_BLOCKING,			///< Avatar blocking
 	ACTION_AVATAR_LEFTSIDE,
 	ACTION_AVATAR_RIGHTSIDE,
 	ACTION_AVATAR_FREEDOWN,
 
-	// 20 ~ 39 까지 타겟 행동
-	ACTION_TARGET_SELF = 20,		///< 자신 선택
-	ACTION_TARGET_1STPARTY,			///< 파티원1 선택
-	ACTION_TARGET_2NDPARTY,			///< 파티원2 선택
-	ACTION_TARGET_3RDPARTY,			///< 파티원3 선택
-	ACTION_TARGET_4THPARTY,			///< 파티원4 선택
+	// Target actions from 20 to 39
+	ACTION_TARGET_SELF = 20,		///< Choose yourself
+	ACTION_TARGET_1STPARTY,			///< Select party member 1
+	ACTION_TARGET_2NDPARTY,			///< Select party member 2
+	ACTION_TARGET_3RDPARTY,			///< Select party member 3
+	ACTION_TARGET_4THPARTY,			///< Select party member 4
 	ACTION_TARGET_MEMBER,
-	ACTION_TARGET_AUTO,				///< 가까운 적 선택
-	ACTION_TARGET_AUTOATK,			///< 자동공격
-	ACTION_TARGET_AUTOFOLLOW,		///< 자동 따라가기
-	ACTION_TARGET_MARKING_1,		///< 공유 타겟1 지정
-	ACTION_TARGET_MARKING_2,		///< 공유 타겟2 지정
-	ACTION_TARGET_MARKING_3,		///< 공유 타겟3 지정
-	ACTION_TARGET_MARKING_4,		///< 공유 타겟4 지정
-	ACTION_TARGET_MARKING_5,		///< 공유 타겟5 지정
-	ACTION_TARGET_SELECTING_1,		///< 공유 타겟1 선택
-	ACTION_TARGET_SELECTING_2,		///< 공유 타겟2 선택
-	ACTION_TARGET_SELECTING_3,		///< 공유 타겟3 선택
-	ACTION_TARGET_SELECTING_4,		///< 공유 타겟4 선택
-	ACTION_TARGET_SELECTING_5,		///< 공유 타겟5 선택
-	ACTION_TARGET_AUTOTARGET_PARTY,	///< 파티원 자동 선택
+	ACTION_TARGET_AUTO,				///< Select a nearby enemy
+	ACTION_TARGET_AUTOATK,			///<Auto attack
+	ACTION_TARGET_AUTOFOLLOW,		///< Auto follow
+	ACTION_TARGET_MARKING_1,		///< Specify shared target 1
+	ACTION_TARGET_MARKING_2,		///< Specify shared target 2
+	ACTION_TARGET_MARKING_3,		///< Specify sharing target 3
+	ACTION_TARGET_MARKING_4,		///< Specify shared target 4
+	ACTION_TARGET_MARKING_5,		///< Specify share target 5
+	ACTION_TARGET_SELECTING_1,		///< Select sharing target 1
+	ACTION_TARGET_SELECTING_2,		///< Select sharing target 2
+	ACTION_TARGET_SELECTING_3,		///< Select sharing target 3
+	ACTION_TARGET_SELECTING_4,		///< Select sharing target 4
+	ACTION_TARGET_SELECTING_5,		///< Select sharing target 5
+	ACTION_TARGET_AUTOTARGET_PARTY,	///< Automatic selection of party members
 
-	// 40 ~ 59 까지 퀵 행동
-	ACTION_QUICK_1 = 40,			///< 퀵슬롯1번
-	ACTION_QUICK_2,					///< 퀵슬롯2번
-	ACTION_QUICK_3,					///< 퀵슬롯3번
-	ACTION_QUICK_4,					///< 퀵슬롯4번
-	ACTION_QUICK_5,					///< 퀵슬롯5번
-	ACTION_QUICK_6,					///< 퀵슬롯6번
-	ACTION_QUICK_7,					///< 퀵슬롯7번
-	ACTION_QUICK_8,					///< 퀵슬롯8번
-	ACTION_QUICK_9,					///< 퀵슬롯9번
-	ACTION_QUICK_0,					///< 퀵슬롯0번
-	ACTION_QUICK_MIN,				///< 퀵슬롯-번
-	ACTION_QUICK_PLUS,				///< 퀵슬롯+번
-	ACTION_QUICK_PREV,				///< 이전 퀵슬롯
-	ACTION_QUICK_NEXT,				///< 다음 퀵슬롯
-	ACTION_QUICK_2NDCAP,			///< 2번 캡슐키트
-	ACTION_QUICK_3RDCAP,			///< 3번 캡슐키트
-	ACTION_QUICK_4THCAP,			///< 4번 캡슐키트
-	ACTION_QUICK_5THCAP,			///< 5번 캡슐키트
+	// Quick actions from 40 to 59
+	ACTION_QUICK_1 = 40,			///< Quick slot no. 1
+	ACTION_QUICK_2,					///< Quick Slot No. 2
+	ACTION_QUICK_3,					///< Quick slot 3
+	ACTION_QUICK_4,					///< Quick slot 4
+	ACTION_QUICK_5,					///< Quick slot 5
+	ACTION_QUICK_6,					///< Quick slot 6
+	ACTION_QUICK_7,					///< Quick slot 7
+	ACTION_QUICK_8,					///< Quick slot 8
+	ACTION_QUICK_9,					///< Quick slot 9
+	ACTION_QUICK_0,					///< Quick slot 0
+	ACTION_QUICK_MIN,				///< Quick Slot-Burn
+	ACTION_QUICK_PLUS,				///< Quick Slot + Burn
+	ACTION_QUICK_PREV,				///< Previous Quick Slot
+	ACTION_QUICK_NEXT,				///< Next quick slot
+	ACTION_QUICK_2NDCAP,			///< Capsule Kit No. 2
+	ACTION_QUICK_3RDCAP,			///< Capsule Kit No. 3
+	ACTION_QUICK_4THCAP,			///< Capsule Kit No. 4
+	ACTION_QUICK_5THCAP,			///< No. 5 Capsule Kit
 
-	// 60 ~ 79 까지 윈도우 행동
-	ACTION_WINDOW_PROFILE = 60,			///< 상세정보 윈도우
-	ACTION_WINDOW_SKILL,			///< 스킬정보 윈도우
-	ACTION_WINDOW_QUEST,			///< 퀘스트 윈도우
-	ACTION_WINDOW_MINIMAP,			///< 미니맵
-	ACTION_WINDOW_WORLDMAP,			///< 월드맵
-	ACTION_WINDOW_MAINCAP,			///< 메인 캡슐키트
-	ACTION_WINDOW_PARTY,			///< 파티정보					///< 기획 단계에서 사라짐
-	ACTION_WINDOW_GUILD,			///< 길드정보
-	ACTION_WINDOW_FRIEND,			///< 친구정보
-	ACTION_WINDOW_OPTION,			///< 옵션
-	ACTION_WINDOW_HELP,				///< 도움말
-	ACTION_WINDOW_MAIN,				///< 메인메뉴
-	ACTION_WINDOW_RANKBOARD,		///< 랭크보드
+	// Windows behavior from 60 to 79
+	ACTION_WINDOW_PROFILE = 60,			///< Detailed Information Window
+	ACTION_WINDOW_SKILL,			///< Skill information window
+	ACTION_WINDOW_QUEST,			///< Quest Window
+	ACTION_WINDOW_MINIMAP,			///< Minimap
+	ACTION_WINDOW_WORLDMAP,			///< World Map
+	ACTION_WINDOW_MAINCAP,			///< Main Capsule Kit
+	ACTION_WINDOW_PARTY,			///< Party information ///< Disappeared during planning stage
+	ACTION_WINDOW_GUILD,			///< Guild information
+	ACTION_WINDOW_FRIEND,			///< Friend information
+	ACTION_WINDOW_OPTION,			///< Options
+	ACTION_WINDOW_HELP,				///< Help
+	ACTION_WINDOW_MAIN,				///< Main menu
+	ACTION_WINDOW_RANKBOARD,		///< Rank Board
+
 	ACTION_WINDOW_HOIPOIMIX,
 	ACTION_WINDOW_MASCOT,
 	ACTION_WINDOW_DWC,
 
-	// 80 ~ 159 까지 빈자리 예약
-	ACTION_QUICK_1_EX = 80,				///< 퀵슬롯 첫번째 확장 1번
-	ACTION_QUICK_2_EX,					///< 퀵슬롯2번
-	ACTION_QUICK_3_EX,					///< 퀵슬롯3번
-	ACTION_QUICK_4_EX,					///< 퀵슬롯4번
-	ACTION_QUICK_5_EX,					///< 퀵슬롯5번
-	ACTION_QUICK_6_EX,					///< 퀵슬롯6번
-	ACTION_QUICK_7_EX,					///< 퀵슬롯7번
-	ACTION_QUICK_8_EX,					///< 퀵슬롯8번
-	ACTION_QUICK_9_EX,					///< 퀵슬롯9번
-	ACTION_QUICK_0_EX,					///< 퀵슬롯0번
-	ACTION_QUICK_MIN_EX,				///< 퀵슬롯-번
-	ACTION_QUICK_PLUS_EX,				///< 퀵슬롯+번
-	ACTION_QUICK_1_EX2,					///< 퀵슬롯 첫번째 확장 1번
-	ACTION_QUICK_2_EX2,					///< 퀵슬롯2번
-	ACTION_QUICK_3_EX2,					///< 퀵슬롯3번
-	ACTION_QUICK_4_EX2,					///< 퀵슬롯4번
-	ACTION_QUICK_5_EX2,					///< 퀵슬롯5번
-	ACTION_QUICK_6_EX2,					///< 퀵슬롯6번
-	ACTION_QUICK_7_EX2,					///< 퀵슬롯7번
-	ACTION_QUICK_8_EX2,					///< 퀵슬롯8번
-	ACTION_QUICK_9_EX2,					///< 퀵슬롯9번
-	ACTION_QUICK_0_EX2,					///< 퀵슬롯0번
-	ACTION_QUICK_MIN_EX2,				///< 퀵슬롯-번
-	ACTION_QUICK_PLUS_EX2,				///< 퀵슬롯+번
+	// Reserve empty seats from 80 to 159
+	ACTION_QUICK_1_EX = 80,				///< Quick slot first expansion number 1
+	ACTION_QUICK_2_EX,					///< Quick Slot No. 2
+	ACTION_QUICK_3_EX,					///< Quick slot 3
+	ACTION_QUICK_4_EX,					///< Quick slot 4
+	ACTION_QUICK_5_EX,					///< Quick slot 5
+	ACTION_QUICK_6_EX,					///< Quick slot 6
+	ACTION_QUICK_7_EX,					///< Quick slot 7
+	ACTION_QUICK_8_EX,					///< Quick slot 8
+	ACTION_QUICK_9_EX,					///< Quick slot 9
+	ACTION_QUICK_0_EX,					///< Quick slot 0
+	ACTION_QUICK_MIN_EX,				///< Quick Slot-Burn
+	ACTION_QUICK_PLUS_EX,				///< Quick Slot + Burn
+	ACTION_QUICK_1_EX2,					///< Quick slot first expansion number 1
+	ACTION_QUICK_2_EX2,					///< Quick Slot No. 2
+	ACTION_QUICK_3_EX2,					///< Quick slot 3
+	ACTION_QUICK_4_EX2,					///< Quick slot 4
+	ACTION_QUICK_5_EX2,					///< Quick slot 5
+	ACTION_QUICK_6_EX2,					///< Quick slot 6
+	ACTION_QUICK_7_EX2,					///< Quick slot 7
+	ACTION_QUICK_8_EX2,					///< Quick slot 8
+	ACTION_QUICK_9_EX2,					///< Quick slot 9
+	ACTION_QUICK_0_EX2,					///< Quick slot 0
+	ACTION_QUICK_MIN_EX2,				///< Quick Slot-Burn
+	ACTION_QUICK_PLUS_EX2,				///< Quick Slot + Burn
 	ACTION_QUICK_SUMMON,
 	ACTION_QUICK_SUMMON2,
 
-	// 160 ~ 169 까지 미니맵 관련
-	ACTION_MINIMAP_ZOOMOUT = 160,			///< 미니맵 축소
-	ACTION_MINIMAP_ZOOMIN,					///< 미니맵 확대
+	// Minimap related from 160 to 169
+	ACTION_MINIMAP_ZOOMOUT = 160,			///< Zoom out minimap
+	ACTION_MINIMAP_ZOOMIN,					///< Enlarge minimap
 
-	// 170 ~ 179 까지 채팅창 관련
-	ACTION_CHAT_PGUP = 170,				///< 채팅창 이전 페이지
-	ACTION_CHAT_PGDN,					///< 채팅창 다음 페이지
+	// 170 to 179 related to chat window
+	ACTION_CHAT_PGUP = 170,				///< Previous page of chat window
+	ACTION_CHAT_PGDN,					///<Chat window next page
 
-	// 180 ~ 199 까지 전체 명령 관련
-	ACTION_GLOBAL_CANCLE = 180,			///< 취소(Targeting, Windows, Main Menu)
-	ACTION_GLOBAL_SNAPSHOT,				///< 스크린샷
-	ACTION_GLOBAL_CHAT,					///< 채팅입력
+	// Related to all commands from 180 to 199
+	ACTION_GLOBAL_CANCLE = 180,			///< Cancel (Targeting, Windows, Main Menu)
+	ACTION_GLOBAL_SNAPSHOT,				///< Screenshot
+	ACTION_GLOBAL_CHAT,					///< Chat input
 	ACTION_GLOBAL_RENDERGUI,
 
 	ACTION_NUMS = 255,
-	ACTION_INVALID = ACTION_NUMS, 				///< 액션 ID의 끝번호
+	ACTION_INVALID = ACTION_NUMS, 				///< Last number of action ID
 };
 
-#define dNTL_KEY_EMPTY		0x8000		// 정의된 키가 없다.
-#define dNTL_KEY_INVALID	0xffff		// 키 값이 INVALID.
+#define dNTL_KEY_EMPTY		0x8000		// There is no key defined.
+#define dNTL_KEY_INVALID	0xffff		// The key value is INVALID.
 
 /**
-* \breif NTL의 키 타입
+*\breif NTL key type
 * NTL Define:
 * 0 0 0 0 0 0 0 0    00000000
 * E           C A    Key Data
-* 상위 8비트 : C = CTRL, A = ALT
-* 하위 8비트 : Key Data
+*Upper 8 bits: C = CTRL, A = ALT
+*Lower 8 bits: Key Data
 */
 typedef union _uNtlKey
 {
 	unsigned short key;			// 16Bit
 
 	/**
-	* key를 상위 비트와 하위 비트로 나뉘어서 사용하는 공용 구조체
+	*A common structure that divides the key into high-order bits and low-order bits.
 	*/
 	struct _BIT
 	{
-		unsigned short ori:8;	// 오리지널 Key에 사용
-		unsigned short bit8:1;	// 조합키로 사용되는 Bit flags
+		unsigned short ori:8;	// Used for original key
+		unsigned short bit8:1;	// Bit flags used as combination keys
 		unsigned short bit7:1;
 		unsigned short bit6:1;
 		unsigned short bit5:1;
@@ -268,61 +269,61 @@ typedef union _uNtlKey
 } uNtlKey;
 
 /**
-* \brief ACTIONMAP의 Action과 Key를 저장하는 데이타형
+* \brief Data type that stores Action and Key of ACTIONMAP
 * KEY		: unsigned short
 * DATA		: unsigned short 
 */
 typedef std::map< unsigned short, unsigned short > ACTIONMAP;
 
 /**
-* \brief 액션을 저장하고 있기 위한 벡터
+* \brief Vector for storing actions
 */
 typedef std::vector< unsigned short > ACTIONVEC;
 
 /**
-* \brief 액션맵을 Setting 하는데의 Result
+* \brief Result of setting action map
 */
 enum eACTIONMAP_SET_RESULT
 {
-	SET_RESULT_FAILED = 0,					// 알수 없는 에러
-	SET_RESULT_FIXED_KEY,					// 키가 고정되어 있어서 변경하지 못한다.
-	SET_RESULT_FIXED_ACTION,				// 액션이 변경하지 못하는 액션이다.
-	SET_RESULT_NOT_COMBINE_ACTION,			// 조합키를 사용하지 못하는 액션이다.
-	SET_RESULT_ALREADY_KEY,					// Key가 이미 존재함		(기존에 있던 Key는 잃어버림)
-	SET_RESULT_ALREADY_ACTION,				// Action이 이미 존재함		(기존에 있던 Action은 잃어버림)
-	SET_RESULT_SAME_KEY,					// 같은 Key가 세팅되어 있었음
-	SET_RESULT_NEGATIVE_MODE,				// 불가능한 모드
-	SET_RESULT_OK,							// 정상적으로 성공
-	SET_RESULT_NUMS,						// RESULT 갯수
+	SET_RESULT_FAILED = 0,					// unknown error
+	SET_RESULT_FIXED_KEY,					// The key is fixed and cannot be changed.
+	SET_RESULT_FIXED_ACTION,				// An action is an action that cannot be changed.
+	SET_RESULT_NOT_COMBINE_ACTION,			// This is an action that cannot use combination keys.
+	SET_RESULT_ALREADY_KEY,					// Key already exists (existing key will be lost)
+	SET_RESULT_ALREADY_ACTION,				// Action already exists (existing Action will be lost)
+	SET_RESULT_SAME_KEY,					// The same key was set
+	SET_RESULT_NEGATIVE_MODE,				// impossible mode
+	SET_RESULT_OK,							// Succeeded normally
+	SET_RESULT_NUMS,						// RESULT Quantity
 	SET_RESULT_INVALID = SET_RESULT_NUMS
 };
 
 /**
-* \brief 액션맵의 에러 코드를 담고 있는 벡터
+* \brief Vector containing error code of action map
 */
 typedef std::vector< BYTE > RESULTVEC;
 
 /**
-* \brief 액션맵의 속성 ( KEY와 ACTION 둘다 가능 )
-* 추가될 수 있다.
+* \brief Action map properties (both KEY and ACTION possible)
+* May be added.
 */
-// #define TYPE_NONE			0x00000000		// 아무 속성이 없다.
-#define TYPE_FIXED			0x00000001		// 고정된 타입, 변경하지 못한다.
-#define TYPE_COMBINE		0x00000002		// 조합키로 사용되는지의 여부
-#define TYPE_EXCLUSIVE		0x00000004		// 조합키로는 사용하지 못하는 액션
+// #define TYPE_NONE 0x00000000 //No properties.
+#define TYPE_FIXED			0x00000001		// Fixed type, cannot be changed.
+#define TYPE_COMBINE		0x00000002		// Whether or not it is used as a combination key
+#define TYPE_EXCLUSIVE		0x00000004		// Actions that cannot be used with combination keys
 
 /**
-* \brief 키나 액션의 속성을 저장하고 있는 맵
+* \brief Map storing key or action properties
 */
 typedef std::map< unsigned short, int >		TYPEMAP;
 
 /**
-* \brief 키의 이름을 보관하고 있는 맵
+* \brief Map containing the names of keys
 */
 typedef std::map<unsigned short, std::wstring> KEYNAMEMAP;
 
 /**
-* \brief ACTIONMAP을 사용하는 모드를 열거한다.
+* \brief Lists the modes that use ACTIONMAP.
 */
 enum eACTIONMAP_MODE
 {
@@ -333,7 +334,7 @@ enum eACTIONMAP_MODE
 	ACTIONMAP_MODE_INVALID = ACTIONMAP_MODE_NUMS
 };
 
-// 키가 무제한으로 무시되어야 할 때 사용되는 Count Define
+// Count Define used when keys should be ignored indefinitely
 #define ACTIONMAP_IGNORE_KEY_UNLIMITED_IGNORE	0xFF
 
 #endif//__NTL_ACTIONMAP_DEF_H__

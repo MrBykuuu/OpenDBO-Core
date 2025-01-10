@@ -2,7 +2,7 @@
 //	File		:	NtlInstanceMeshSystem.h
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -39,10 +39,10 @@ public:
 	virtual RwBool	Update(RwReal fElapsedTime);
 	virtual RwBool	Render();
 
-	RwBool		    Finish();                                                       ///< 이펙트의 삭제 작업을 처리한다.
+	RwBool		    Finish();                                                       ///< Processes the deletion of the effect.
 
 	virtual void	SetWorldMatrix(const RwMatrix& matWorld);
-	virtual void    SetAlpha(RwUInt8 byValue);                                      ///< 이펙트의 Alpha값을 적용한다.
+	virtual void    SetAlpha(RwUInt8 byValue);                                      ///< Apply the Alpha value of the effect.
     virtual void	SetScale(RwReal fScale);
 
     static void    CreateToonData(RpClump* pClump, SToonData* pToonData);
@@ -52,7 +52,7 @@ protected:
     void	UpdateSize(RwReal fDeltaTime);
     void	UpdateColor(RwReal fDeltaTime);
     void	UpdateRotate(RwReal fDeltaTime);
-    virtual RwBool  UpdateFinish(RwReal fElapsedTime);          ///< Finish 작업을 처리한다.
+    virtual RwBool  UpdateFinish(RwReal fElapsedTime);          ///< Finish Processes the task.
     void    CalcBoundingSphere();
     
 
@@ -72,10 +72,10 @@ protected:
 
     RwBool							m_bUpdateRenderMatrix;
 
-    RwMatrix*                       m_pMatEmitter;                   ///< Attach Option이 False 상태일때 처음 Emitter의 Matrix
-    RwMatrix                        m_matInvScale;                   ///< Scale 행렬의 역행렬. Spline 계산시 사용된다.
-    RpHAnimHierarchy*               m_pAnimhierarchy;                ///< Clump의 Hierarchy (Animation이 있을때만 사용)
+    RwMatrix*                       m_pMatEmitter;                   ///< Matrix of the first emitter when Attach Option is False
+    RwMatrix                        m_matInvScale;                   ///< Inverse matrix of the Scale matrix. Used when calculating spline.
+    RpHAnimHierarchy*               m_pAnimhierarchy;                ///< Clump Hierarchy (only used when animation is present)
 
     CNtlInstanceTrailSystem*        m_pTrailSystem;                  ///< Trail System (Trail Action)
-    SToonData*                      m_pToonData;                     ///< 툰이 적용된 메시를 위한 툰 정보
+    SToonData*                      m_pToonData;                     ///< Toon information for meshes with toons applied
 };

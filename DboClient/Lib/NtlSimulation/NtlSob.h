@@ -31,7 +31,7 @@ class CNtlSobElapsedController;
 // simualtion object factory macro
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// 잠시 주석처리(장형석)
+//Comment out for a moment (Jang Hyung-seok)
 /*
 class CNtlSLFactory
 {
@@ -85,7 +85,7 @@ protected:
 	SERIAL_HANDLE m_hLastAttackerID;		/** LastAttacker id */
 	RwUInt32 m_uiVisualLuaID;				/** visual lua id */
 
-	CNtlSob *m_pSobParent;					/** owner id와는 다르다 */
+	CNtlSob *m_pSobParent;					/**Different from owner id */
 	CNtlSobAttr *m_pSobAttr;				/** simulation object attribute */
 	CNtlSobProxy *m_pSobProxy;				/** simulation object rendering proxy */
 
@@ -94,11 +94,11 @@ protected:
 	RwV3d m_vDirection;						/** direction */
 
 	// weight elapsed time
-	RwReal m_fWeightElapsedTime;			/** 가중치 elapsed time */
+	RwReal m_fWeightElapsedTime;			/**Weight elapsed time */
 
 	RwBool m_bEventHook;
 
-	// 생성자.
+	//constructor.
 	CNtlSob(); 
 
 public:
@@ -199,13 +199,13 @@ public:
 
 public:
 	
-	// 움직일 수 있는가?
+	//Can it move?
 	virtual RwBool CanMove(void);
 
-	// 공격할 수 있는가?
+	//Can we attack?
 	virtual RwBool CanAttack(void);
 
-	// 공격 받을 수 있는가?
+	//Can I be attacked?
 	virtual RwBool CanHurted(void);
 };
 

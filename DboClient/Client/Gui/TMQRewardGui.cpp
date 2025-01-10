@@ -1,26 +1,26 @@
 #include "precomp_dboclient.h"
 #include "TMQRewardGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// share
+// Share
 #include "TimeQuestTable.h"
 #include "TableContainer.h"
 #include "SkillTable.h"
 #include "HTBSetTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLEventfunc.h"
 #include "NtlSLTMQ.h"
 #include "NtlSobAvatar.h"
 #include "NtlSLGlobal.h"
 
-// dbo
+// Dbo
 #include "DialogManager.h"
 #include "IconMoveManager.h"
 #include "DisplayStringManager.h"
@@ -39,7 +39,7 @@ namespace
 	#define dNUMEFFECT_END_RATE				1.f
 	#define dNUMEFFECT_TIME					0.5f
 
-	// 각 CNumberGui가 한자리 숫자만을 표시하기에 부득이 여기서 하드코딩으로 숫자간 간격을 조절한다
+	// Since each CNumberGui displays only a single digit, the spacing between numbers must be adjusted here by hard coding.
 	#define dNUM_GAP						-2
 };
 
@@ -254,13 +254,13 @@ VOID CTMQRewardGui::OnMove(RwInt32 iOldX, RwInt32 iOldY)
 
 	m_pConfirmButton->SetPosition(iPibotX + 300, iPibotY + 60);
 
-	// 배경 플래쉬
+	// background flash
 	rtRect = rtScreen;
 	rtRect.top		= (rtScreen.GetHeight() - m_pFlashResult->GetHeight())/2;
 	rtRect.bottom	= rtRect.top + m_pFlashBackground->GetHeight();
 	m_pFlashBackground->SetPosition(rtRect);
 
-	// 결과 플래쉬
+	// result flash
 	m_pFlashResult->SetPosition((rtScreen.GetWidth() - m_pFlashResult->GetWidth())/2,
 								(rtScreen.GetHeight() - m_pFlashResult->GetHeight())/2);
 
@@ -324,7 +324,7 @@ VOID CTMQRewardGui::HandleEvents( RWS::CMsg &msg )
 		GetDialogManager()->CloseAll();
 		SwitchDialog(true);
 
-		// NPC 나레이션
+		// NPC narration
 		if( !m_pNarrationGui )
 		{
 			m_pNarrationGui = NTL_NEW CResultNarrationGui("TMQNarrationGui");
@@ -346,7 +346,7 @@ VOID CTMQRewardGui::HandleEvents( RWS::CMsg &msg )
 	{
 		SNtlEventTMQNotify* pEvent = reinterpret_cast<SNtlEventTMQNotify*>( msg.pData );
 
-		// 제한시간
+		// time limit
 		if( pEvent->uiEventType == TET_TIME_UNTIL_TELEPORT_TO_MAINWORLD )
 		{
 			float fLimitedTime = (float)pEvent->uiValue/1000.f;

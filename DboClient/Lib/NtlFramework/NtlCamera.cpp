@@ -25,12 +25,12 @@ CNtlCamera::~CNtlCamera(void)
 }
 
 /**
- * Camera 생성
- * \param width FrameBuffer ZBuffer의 가로 크기
- * \param height FrameBuffer ZBuffer의 세로 크기
- * \param fNearClipPlane NearPlane 거리
- * \param fFarClipPlane FarPlane 거리
- * \return Camera 생성 성공시 RwCamera or Null
+ *Create Camera
+ * \param width Horizontal size of FrameBuffer ZBuffer
+ * \param height Vertical size of FrameBuffer ZBuffer
+ * \param fNearClipPlane NearPlane distance
+ * \param fFarClipPlane FarPlane distance
+ * \return If Camera creation is successful, RwCamera or Null
  */
 RwCamera* CNtlCamera::Create(RwInt32 width, 
 							 RwInt32 height, 
@@ -71,9 +71,9 @@ RwCamera* CNtlCamera::Create(RwInt32 width,
 }
 
 /**
- * Camera의 Buffer들의 크기 설정 및 Fov에 따른 설정
- * Window 창이 바뀔 때 불리어지는 함수이다.
- * \param rect Camera의 가로, 세로 Size
+ *Setting the size of the camera's buffers and setting according to FOV
+ *Window This is a function called when the window changes.
+ * \param rect Camera's horizontal and vertical Size
  */
 void CNtlCamera::SetCameraSize(RwRect* rect)
 {
@@ -81,9 +81,9 @@ void CNtlCamera::SetCameraSize(RwRect* rect)
 }
 
 /**
- * Camera의 Buffer들의 크기 설정 및 Fov에 따른 설정
- * \param pCamera Camera의 설정을 할 Camera
- * \param rect Camera의 가로, 세로 Size
+ *Setting the size of the camera's buffers and setting according to FOV
+ * \param pCamera Camera to set camera settings
+ * \param rect Camera's horizontal and vertical Size
  */
 void CNtlCamera::SetCameraResize(RwCamera* pCamera, RwRect* rect)
 {
@@ -167,7 +167,7 @@ void CNtlCamera::SetCalcFov(RwReal fFov)
 }
 
 /**
- * Camera의 소멸
+ *Camera disappearance
  */
 void CNtlCamera::Destroy()
 {
@@ -362,7 +362,7 @@ RwCamera* RpNtlActiveCameraSetFarDistance(RwReal fFarDistance)
 
 		RwCameraSetFarClipPlane(pCamera, fFarDistance);	
 
-		pCamera = RwCameraBeginUpdate(pCamera); // BeginUpdate 시 Fog 거리가 변경된다.
+		pCamera = RwCameraBeginUpdate(pCamera); // At BeginUpdate, the Fog distance changes.
 
 		RwD3D9SetRenderState(D3DRS_FOGSTART, uiFogStart);
 		RwD3D9SetRenderState(D3DRS_FOGEND, uiFogEnd);
@@ -382,7 +382,7 @@ RwCamera* RpNtlActiveCameraSetFarDistance(RwReal fFarDistance)
 // 				RwD3D9GetRenderState(D3DRS_FOGSTART, (void*)&uiFogStart);
 // 				RwD3D9GetRenderState(D3DRS_FOGEND, (void*)&uiFogEnd);
 // 
-// 				pCamera = RwCameraBeginUpdate(pCamera); // BeginUpdate 시 Fog 거리가 변경된다.
+// 				pCamera = RwCameraBeginUpdate(pCamera); //Fog distance changes during BeginUpdate.
 // 
 // 				RwD3D9SetRenderState(D3DRS_FOGSTART, uiFogStart);
 // 				RwD3D9SetRenderState(D3DRS_FOGEND, uiFogEnd);

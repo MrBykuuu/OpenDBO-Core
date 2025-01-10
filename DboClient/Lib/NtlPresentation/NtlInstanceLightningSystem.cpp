@@ -2,7 +2,7 @@
 //	File		:	NtlInstanceLightningSystem.cpp
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -117,9 +117,9 @@ RwBool CNtlInstanceLightningSystem::Create(CNtlResourceEffect* pResourceEffect, 
 
 	BuildEmitterStandard(&m_pResourceLightningSystem->m_EmitterStandard);
 
-    // Start, End Point 설정
+    // Start, End Point settings
     m_vStartPoint = m_pResourceLightningSystem->m_vPosition;
-    m_vEndPoint   = m_pResourceLightningSystem->m_vRotate; // 사용하지 않는 Rotate값을 EndPoint 값으로 사용한다.
+    m_vEndPoint   = m_pResourceLightningSystem->m_vRotate; //Use the unused Rotate value as the EndPoint value.
     m_vFinishPoint = m_vStartPoint;
     
     UpdateVertices();
@@ -176,7 +176,7 @@ RwBool CNtlInstanceLightningSystem::Update(RwReal fElapsedTime)
 			m_bReady	= TRUE;
 			m_bUpdate	= TRUE;
 
-			// 스타트가 되면 라이프 타임을 초기화 한다.
+			//When starting, initialize the life time.
 			m_fLifeTime = fElapsedTime;
 		}
 		else
@@ -403,7 +403,7 @@ RwBool CNtlInstanceLightningSystem::UpdateFinish( RwReal fElapsedTime )
 
     if(m_pResourceLightningSystem->m_EmitterPrtFinish.m_nFinishTypeFlag & FINISH_TYPE_FOLLOW)
     {
-        // 방향 벡터를 구해서. 그 방향으로 보간될 길이만큼 StartPoint를 옮긴다.
+        //Find the direction vector. Move StartPoint by the length to be interpolated in that direction.
 
         RwV3d vDir = m_vEndPoint - m_vFinishPoint;
         RwReal vLength = RwV3dLength(&vDir) * fElapsedTime / m_pResourceLightningSystem->m_EmitterPrtFinish.m_fFinishTime; 

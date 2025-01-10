@@ -1,7 +1,7 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlWorldConceptTB.h"
 
-// shared
+// Shared
 #include "WorldTable.h"
 #include "TableContainer.h"
 #include "NtlResultCode.h"
@@ -11,7 +11,7 @@
 #include "GUISoundDefine.h"
 #include "NtlSoundEventGenerator.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSobManager.h"
 #include "NtlSLEvent.h"
@@ -43,7 +43,7 @@ CNtlWorldConceptTB::~CNtlWorldConceptTB(void)
 
 RwBool CNtlWorldConceptTB::IsEnableAction( EAvatarAction eAction )
 {
-	// 각 상태에 맞게 세팅
+	// Setting for each condition
 	switch(eAction)
 	{
 	case E_ACTION_CAN_COMMUNICATION:
@@ -80,11 +80,11 @@ void CNtlWorldConceptTB::ChangeState( RwInt32 eState )
 	switch( eState )
 	{
 	case WORLD_STATE_ENTER: 
-		// WorldConcept 초기에 해야할 세팅. 혹은 생성자.
-		// 여기서 테이블을 읽어서 현재 월드타입을 세팅해야함.		
+		// Settings to be done at the beginning of WorldConcept. Or a constructor.
+		// Here you need to read the table and set the current world type.		
 		break;
 	case WORLD_STATE_EXIT:	
-		// WorldConcept 마지막에 해야할 세팅. 혹은 소멸자.
+		// WorldConcept Final settings to be done. Or a destructor.
 		CNtlWorldConceptController::ChangeState( WORLD_STATE_NONE );
 		break;
 	}
@@ -280,7 +280,7 @@ RwBool CNtlWorldConceptTB::CanUseSkill(RwUInt32 hSerialID, RwUInt32& uiResultCod
 
 	if(bRingOut)
 	{
-		// result code를 적재한다.
+		// Load result code.
 		uiResultCode = GAME_MATCH_CAN_NOT_USE_SKILL_IN_OUTOFAREA;
 
 		return FALSE;
@@ -538,11 +538,13 @@ void CNtlWorldConceptTB::MajorResetCamera( VOID )
 	if( !pMember )
 		return;
 
-	// 멤버의 Index를 알아야 한다.
-	// 멤버의 Index와 TeamType으로 aMajorLoc의 좌표를 읽어온다.
+	// You need to know the member's index.
+	// Read the coordinates of aMajorLoc using the member's Index and TeamType.
 
-	// MajocLoc 참조
-	// FinalResetCamera 역시 동일 세팅
+
+	// See MajocLoc
+	// FinalResetCamera also has the same settings
+
 	RwV3d vDir;
 	if( pMember->pTeam->wTeamType == MATCH_TEAM_TYPE_TEAM1 )
 	{
@@ -582,11 +584,11 @@ void CNtlWorldConceptTB::FinalResetCamera( VOID )
 	if( !pMember )
 		return;
 
-	// 멤버의 Index를 알아야 한다.
-	// 멤버의 Index와 TeamType으로 aMajorLoc의 좌표를 읽어온다.
+	// You need to know the member's index.
+	// Read the coordinates of aMajorLoc using the member's Index and TeamType.
 
-	// MajocLoc 참조
-	// FinalResetCamera 역시 동일 세팅
+	// See MajocLoc
+	// FinalResetCamera also has the same settings
 	RwV3d vDir;
 	if( pMember->pTeam->wTeamType == MATCH_TEAM_TYPE_TEAM1 )
 	{
@@ -742,10 +744,11 @@ void CNtlWorldConceptTB::EventHandler_MinorMatchPlayerState(void* pData)
 
 	//// peessitemp : for debug
 	//WCHAR buf[256];
-	//WCHAR* string[6] = { L"NONE", L"NORMAL", L"FAINT", L"OUTOFAREA", L"GIVEUP", L"NOAPPLY" };
+	//WCHAR*string[6] = { L"NONE", L"NORMAL", L"FAINT", L"OUTOFAREA", L"GIVEUP", L"NOAPPLY" };
 	//swprintf_s( buf, 256, L"((MinorMatchPlayerState)) hPC = %u, State = %s", pPlayerState->hPlayer, string[pPlayerState->byPcState] );
 	//CNtlSLEventGenerator::SysMsg( buf, SNtlEventSysStringMsg::ACTION_NOTIFY | SNtlEventSysStringMsg::TYPE_CHAT_NOTICE );
 	////
+
 }
 
 void CNtlWorldConceptTB::EventHandler_MinorMatchUpdateScore(void* pData)
@@ -780,11 +783,11 @@ void CNtlWorldConceptTB::EventHandler_MinorMatchTeamScore( void* pData )
 
 void CNtlWorldConceptTB::EventHandler_MinorMatchStageFinish(void* pData)
 {
-	//SNtlEventMinorMatchStageFinish* pStageFinish = reinterpret_cast<SNtlEventMinorMatchStageFinish*>( pData );
+	//SNtlEventMinorMatchStageFinish*pStageFinish = reinterpret_cast<SNtlEventMinorMatchStageFinish*>( pData );
 
 	//// peessitemp : for debug
 	//WCHAR buf[256];
-	//WCHAR* string[4] = { L"SUCCESS", L"DRAW", L"WIN", L"TIMEOVER" };
+	//WCHAR*string[4] = { L"SUCCESS", L"DRAW", L"WIN", L"TIMEOVER" };
 	//swprintf_s( buf, 256, L"((MinorMatchStageFinish)) Result = %s, TeamType = %d", string[pStageFinish->byStageResult], pStageFinish->wStageWinner );
 	//CNtlSLEventGenerator::SysMsg( buf, SNtlEventSysStringMsg::ACTION_NOTIFY | SNtlEventSysStringMsg::TYPE_CHAT_NOTICE );
 
@@ -796,6 +799,7 @@ void CNtlWorldConceptTB::EventHandler_MinorMatchMatchFinish(void* pData)
 	//// peessitemp : for debug
 	//CNtlSLEventGenerator::SysMsg( L"((MinorMatchFinish))", SNtlEventSysStringMsg::ACTION_NOTIFY | SNtlEventSysStringMsg::TYPE_CHAT_NOTICE );
 	////
+
 }
 
 void CNtlWorldConceptTB::EventHandler_MajorMatchStateUpdate(void* pData)
@@ -932,7 +936,7 @@ void CNtlWorldConceptTB::EventHandler_MajorMatchPlayerState(void* pData)
 
 	//// peessitemp : for debug
 	//WCHAR buf[256];
-	//WCHAR* string[6] = { L"NONE", L"NORMAL", L"FAINT", L"OUTOFAREA", L"GIVEUP", L"NOAPPLY" };
+	//WCHAR*string[6] = { L"NONE", L"NORMAL", L"FAINT", L"OUTOFAREA", L"GIVEUP", L"NOAPPLY" };
 	//swprintf_s( buf, 256, L"((MajorMatchPlayerState)) hPC = %u, State = %s", pPlayerState->hPlayer, string[pPlayerState->byPcState] );
 	//CNtlSLEventGenerator::SysMsg( buf, SNtlEventSysStringMsg::ACTION_NOTIFY | SNtlEventSysStringMsg::TYPE_CHAT_NOTICE );
 	////
@@ -940,7 +944,7 @@ void CNtlWorldConceptTB::EventHandler_MajorMatchPlayerState(void* pData)
 
 void CNtlWorldConceptTB::EventHandler_MajorMatchUpdateScore(void* pData)
 {
-	//SNtlEventMajorMatchUpdateScore* pUpdateScore = reinterpret_cast<SNtlEventMajorMatchUpdateScore*>( pData );
+	//SNtlEventMajorMatchUpdateScore*pUpdateScore = reinterpret_cast<SNtlEventMajorMatchUpdateScore*>( pData );
 
 	//// peessitemp : for debug
 	//WCHAR buf[256];
@@ -951,7 +955,7 @@ void CNtlWorldConceptTB::EventHandler_MajorMatchUpdateScore(void* pData)
 
 void CNtlWorldConceptTB::EventHandler_MajorMatchStageFinish(void* pData)
 {
-	//SNtlEventMajorMatchStageFinish* pStageFinish = reinterpret_cast<SNtlEventMajorMatchStageFinish*>( pData );
+	//SNtlEventMajorMatchStageFinish*pStageFinish = reinterpret_cast<SNtlEventMajorMatchStageFinish*>( pData );
 	
 	//// peessitemp : for debug
 	//WCHAR buf[256];
@@ -962,7 +966,7 @@ void CNtlWorldConceptTB::EventHandler_MajorMatchStageFinish(void* pData)
 
 void CNtlWorldConceptTB::EventHandler_MajorMatchMatchFinish(void* pData)
 {
-	//SNtlEventMajorMatchMatchFinish* pMatchFinish = reinterpret_cast<SNtlEventMajorMatchMatchFinish*>( pData );
+	//SNtlEventMajorMatchMatchFinish*pMatchFinish = reinterpret_cast<SNtlEventMajorMatchMatchFinish*>( pData );
 
 	//// peessitemp : for debug
 	//WCHAR buf[256];
@@ -978,7 +982,7 @@ void CNtlWorldConceptTB::EventHandler_FinalMatchStateUpdate(void* pData)
 
 	if( GetEnterState() )
 	{
-		// peessitemp:
+		// Peessitemp:
 		if( pStateUpdate->byMatchState == BUDOKAI_FINALMATCH_STATE_DIRECTION )
 		{
 			m_byMatchDepth = BUDOKAI_MATCH_DEPTH_4;
@@ -1112,7 +1116,7 @@ void CNtlWorldConceptTB::EventHandler_FinalMatchPlayerState(void* pData)
 
 	//// peessitemp : for debug
 	//WCHAR buf[256];
-	//WCHAR* string[6] = { L"NONE", L"NORMAL", L"FAINT", L"OUTOFAREA", L"GIVEUP", L"NOAPPLY" };
+	//WCHAR*string[6] = { L"NONE", L"NORMAL", L"FAINT", L"OUTOFAREA", L"GIVEUP", L"NOAPPLY" };
 	//swprintf_s( buf, 256, L"((FinalMatchPlayerState)) hPC = %u, State = %s", pPlayerState->hPlayer, string[pPlayerState->byPcState] );
 	//CNtlSLEventGenerator::SysMsg( buf, SNtlEventSysStringMsg::ACTION_NOTIFY | SNtlEventSysStringMsg::TYPE_CHAT_NOTICE );
 	////
@@ -1120,7 +1124,7 @@ void CNtlWorldConceptTB::EventHandler_FinalMatchPlayerState(void* pData)
 
 void CNtlWorldConceptTB::EventHandler_FinalMatchUpdateScore(void* pData)
 {
-	//SNtlEventFinalMatchUpdateScore* pUpdateScore = reinterpret_cast<SNtlEventFinalMatchUpdateScore*>( pData );
+	//SNtlEventFinalMatchUpdateScore*pUpdateScore = reinterpret_cast<SNtlEventFinalMatchUpdateScore*>( pData );
 
 	//// peessitemp : for debug
 	//WCHAR buf[256];
@@ -1131,7 +1135,7 @@ void CNtlWorldConceptTB::EventHandler_FinalMatchUpdateScore(void* pData)
 
 void CNtlWorldConceptTB::EventHandler_FinalMatchStageFinish(void* pData)
 {
-	//SNtlEventFinalMatchStageFinish* pStageFinish = reinterpret_cast<SNtlEventFinalMatchStageFinish*>( pData );
+	//SNtlEventFinalMatchStageFinish*pStageFinish = reinterpret_cast<SNtlEventFinalMatchStageFinish*>( pData );
 
 	//// peessitemp : for debug
 	//WCHAR buf[256];
@@ -1142,7 +1146,7 @@ void CNtlWorldConceptTB::EventHandler_FinalMatchStageFinish(void* pData)
 
 void CNtlWorldConceptTB::EventHandler_FinalMatchMatchFinish(void* pData)
 {
-	//SNtlEventFinalMatchMatchFinish* pMatchFinish = reinterpret_cast<SNtlEventFinalMatchMatchFinish*>( pData );
+	//SNtlEventFinalMatchMatchFinish*pMatchFinish = reinterpret_cast<SNtlEventFinalMatchMatchFinish*>( pData );
 
 	//// peessitemp : for debug
 	//WCHAR buf[256];
@@ -1163,7 +1167,7 @@ void	CNtlWorldConceptTB::UpdateState_MinorMatch_Stage_Finish( RwReal fElapsed ){
 void	CNtlWorldConceptTB::UpdateState_MinorMatch_Match_Finish( RwReal fElapsed ){}
 void	CNtlWorldConceptTB::UpdateState_MinorMatch_End( RwReal fElapsed )
 {
-	// lleo52
+	// Lleo52
 	CNtlSLEventGenerator::TSBudokai();
 }
 
@@ -1177,7 +1181,7 @@ void	CNtlWorldConceptTB::UpdateState_MajorMatch_Stage_Finish( RwReal fElapsed ){
 void	CNtlWorldConceptTB::UpdateState_MajorMatch_Match_Finish( RwReal fElapsed ){}
 void	CNtlWorldConceptTB::UpdateState_MajorMatch_End( RwReal fElapsed )
 {
-	// lleo52
+	// Lleo52
 	CNtlSLEventGenerator::TSBudokai();
 }
 
@@ -1193,6 +1197,6 @@ void	CNtlWorldConceptTB::UpdateState_FinalMatch_Final_Direction( RwReal fElapsed
 void	CNtlWorldConceptTB::UpdateState_FinalMatch_Awarding( RwReal fElapsed ){}
 void	CNtlWorldConceptTB::UpdateState_FinalMatch_End( RwReal fElapsed )
 {
-	// lleo52
+	// Lleo52
 	CNtlSLEventGenerator::TSBudokai();
 }

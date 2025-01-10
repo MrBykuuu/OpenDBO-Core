@@ -2,7 +2,7 @@
  *
  * File			: TimeFixedNotifyGui.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: (?)NTL
  * Date			: 2006. 12. 06	
  * Abstract		: DBO time fixed notify gui.
  *****************************************************************************
@@ -13,12 +13,12 @@
 #ifndef __TIMEFIXED_NOTIFY_GUI_H__
 #define __TIMEFIXED_NOTIFY_GUI_H__
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlCallbackWidget.h"
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
 #define CAUTION_NOTIFY_DEFAULT_ALPHA	255
@@ -34,7 +34,7 @@ class CCautionNotifyGui;
 
 /**
 * \ingroup client
-* \brief IntervalTime 마다 Callback을 날리는 Timer
+* \brief Timer that sends a callback every IntervalTime
 */
 class CNotifyTimer
 {
@@ -68,7 +68,7 @@ void CNotifyTimer::LinkIntervalTimer(Callbackclass *cbclass, int (Callbackclass:
 
 /**
 * \ingroup client
-* \brief 매시간마다 일정하게 출력되는 Caution Notify
+* \brief Caution Notify that is output consistently every hour
 */
 class CCautionNotifyContinuance
 {
@@ -92,7 +92,7 @@ protected:
 
 /**
 * \ingroup client
-* \brief 화면 중앙에 뜨는 경고 메시지를 띄우는 GUI, 누적되면 Caution SideIcon쪽으로 메시지를 보낸다.
+* \brief GUI that displays a warning message in the center of the screen. When accumulated, a message is sent to the Caution SideIcon.
 */
 class CCautionNotifyGui : public CNtlPLGui, public RWS::CEventHandler
 {

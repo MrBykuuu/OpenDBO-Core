@@ -1,11 +1,11 @@
 /******************************************************************************
 * File			: GUISoundDefine.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: (?)NTL
 * Date			: 2007. 2. 21
 * Abstract		: 
 *****************************************************************************
-* Desc			: System에서 쓰이는 사운드 파일의 이름을 정의
+* Desc			: Defines the name of the sound file used in the system.
 *****************************************************************************/
 
 #pragma once
@@ -20,62 +20,62 @@
 ///< The sound when I picked Icon.
 
 #define GSD_SYSTEM_ICON_WASTE				"System\\SYSTEM_ICON_WASTE.wav"	
-///< Icon를 Quick Slot로부터 버렸을 때의 소리.「카삭」.(종이를 쓰레기통에 넣었을 때의 이미지로.)
+///< The sound made when an Icon is thrown away from the Quick Slot. “Kasak”. (Image of paper being put into the trash can.)
 
 #define GSD_SYSTEM_BUTTON_CLICK				"System\\SYSTEM_BUTTON_CLICK.wav"
-///< Button를 눌렀을 때의 Click음.「카치」.
+///< Click sound when the Button is pressed.「Kachi」.
 
 #define GSD_SYSTEM_BUTTON_CANCEL			"System\\SYSTEM_BUTTON_CANCEL.wav"
-///< Cancel를 눌렀을 때의 소리.「트」.
+///<Sound when Cancel is pressed.「Tut」.
 
 #define GSD_SYSTEM_BUTTON_FOCUS				"System\\SYSTEM_Button_Focus.wav"
-///< 버튼 Focus 되었을 때의 소리.
+///< Sound when the button is focused.
 
 #define GSD_SYSTEM_BUTTON_DISABLE			"System\\SYSTEM_Button_Disable_Alarm.wav"
-///< Disable 버튼 Click 되었을 때의 소리.
+///< Sound when the Disable button is clicked.
 
 #define GSD_SYSTEM_WINDOW_OPEN				"System\\SYSTEM_WINDOW_OPEN.wav"
-///< Window가 열릴 때의 소리.「슨」.
+///< The sound when a window opens. “Sun”.
 
 #define GSD_SYSTEM_WINDOW_CLOSE				"System\\SYSTEM_WINDOW_CLOSE.wav"
-///< Window가 닫을 때의 소리.「삭」.
+///< The sound when a window closes.「Shock」.
 
 #define GSD_SYSTEM_ITEM_REPAIR				"System\\SYSTEM_ITEM_REPAIR.wav"
-///< Item 수리 때의 소리.「캔」.(대장간의 이미지로.)
+///< Sound when repairing an item. “Can”. (With the image of a blacksmith shop.)
 
 #define GSD_SYSTEM_WINDOW_ALERT				"System\\SYSTEM_WINDOW_ALART.wav"
-///< 경고 Window가 나올 때의 소리.「곤」.
+///< The sound when the warning window appears.「Gon」.
 
 #define GSD_SYSTEM_NOTICE					"System\\SYSTEM_NOTICE.wav"
-///< 화면에 좋은 것을 알리는 Message가 나왔을 때의 소리.「핀!」.
+///< The sound made when a message indicating a good thing appears on the screen.「Pin!」.
 
 #define GSD_SYSTEM_ITEM_SPEND				"System\\SYSTEM_ITEM_SPEND.wav"
-///< 소비 Item를 사용을 결정했을 때의 소리.「포원」.
+///< Sound when deciding to use a consumption item. “For one.”
 
 #define GSD_SYSTEM_ITEM_EQUIP				"System\\SYSTEM_ITEM_EQUIP.wav"
-///< 장비 Item를 장비했을 때의 소리.「사삭」.(옷에 소매를 통하는 이미지.)
+///< Sound when equipping an equipment item. “Sasak”. (Image of sleeves going through clothes.)
 
 #define GSD_SYSTEM_ITEM_TAKEOFF				"System\\SYSTEM_ITEM_TAKEOFF.wav"
-///< 장비 Item를 해제했을 때의 소리.「삭」.(옷에 소매를 통하는 이미지.)
+///< Sound when releasing an equipment item. “Sock”. (Image of sleeves going through clothes.)
 
 #define GSD_SYSTEM_TAB_CLICK				"System\\SYSTEM_TAB_CLICK.wav"
-///< Tab를 선택했을 때의 Sound.「삭」.(종이를 갈아넣은 이미지.)
+///< Sound when selecting Tab. “Sak”. (Image of paper being replaced.)
 
-//******************************************대화가 필요한.....?
+//******************************************Need to talk..... ?
 #define GSD_SYSTEM_POPUPWINDOW_OPEN			"System\\SYSTEM_POPWIN_OPEN.wav"
-///< PopWindow 열릴 때의 소리
+///< Sound when PopupWindow opens
 
 #define GSD_SYSTEM_POPUPWINDOW_CLOSE		"System\\SYSTEM_POPWIN_CLOSE.wav"
-///< PopWindow 닫을 때의 소리
+///< Sound when PopWindow is closed
 
 #define GSD_SYSTEM_TAB_FOCUS				"System\\SYSTEM_TAB_FOCUS.wav"
-//< Tab 마우스가 올라갔을때 소리
+//< Sound when the mouse moves up the tab
 
 #define GSD_SYSTEM_TREE_OPEN				"System\\SYSTEM_TREE_OPEN.wav"
-//< 트리가 펼쳐질때
+//< When the tree unfolds
 
 #define GSD_SYSTEM_TREE_CLOSE				"System\\SYSTEM_TREE_CLOSE.wav"
-//< 트리가 닫혀질때
+//< When the tree is closed
 
 #define GSD_SYSTEM_TUTORIAL_MSGBOX			"System\\TUTORIAL_MSGBOX.wav"
 //< tutorial msgbox 
@@ -83,135 +83,135 @@
 #define GSD_SYSTEM_TUTORIAL_OK				"System\\TUTORIAL_OK.wav"
 
 #define GSD_SYSTEM_CHECKBOX					"System\\GENERAL_CHKBOX.wav"
-//< 체크박스 체크될때
+//< When the checkbox is checked
 
-//******************************************완료
+//******************************************complete
 
 #define GSD_SYSTEM_MESSAGEBOX				"System\\SYSTEM_MSGBOX.wav"
-//#define GSD_SYSTEM_MESSAGEBOX				""
-/////< MES Box 나올때의 소리.
+//#define GSD_SYSTEM_MESSAGEBOX ""
+/////< The sound when MES Box comes out.
 //
 #define GSD_SYSTEM_ENEMY_SELECT				"System\\SYSTEM_ENEMY_FOCUS.wav"	
-////<적을선택했을때
+////<When choosing an enemy
 //
 #define GSD_SYSTEM_ENEMY_FOUSE				"System\\SYSTEM_ENEMY_SELECT.wav"	
-////<적에 마우스를 올려 놓았을때
+////<When hovering the mouse over an enemy
 //
 #define GSD_SYSTEM_CHARACTER_ROTATE			"System\\SYSTEM_CHAR_ROTATE.wav"
-/////< Character  회전
+/////< Rotate Character
 //
 #define GSD_SYSTEM_PARTS_EQUIP				"System\\SYSTEM_EQUIP.wav"	
-////< 스카우트 파츠 장착할때
+////< When equipping scout parts
 //
 #define GSD_SYSTEM_ABILITY_UI_OPEN			"System\\SYSTEM_SKILL_OPEN.wav"
-////< 스킬 어빌리티 UI나타날때
+////< When the skill ability UI appears
 //
 #define GSD_SYSTEM_GUARD_GAGE				"System\\SYSTEM_GUARD_GAGEDOWN.wav"
-////< 가드 게이지가 줄어들때
+////< When the guard gauge decreases
 //
 #define GSD_SYSTEM_GUARD_GAGE_END			"System\\SYSTEM_GUARD_GAGEDOWN_END.wav"
-////< 가드 게이지가 줄어들때
+////< When the guard gauge decreases
 //
 
 #define GSD_SYSTEM_PUBLIC_NOTIFY			"System\\SYSTEM_NOTICE.wav"	
-///< 공지가 뜰때 알람음
+///< Alarm sound when a notice appears
 
 #define GSD_SYSTEM_ACTION_NOTIFY			"System\\SYSTEM_NOTICE_ACTION.wav"
-/////< 어떤 행동의 결과에 따라 나오는 알림음
+/////< Notification sound that appears depending on the result of an action
 //
 #define GSD_SYSTEM_WARNING_NOTIFY			"System\\SYSTEM_NOTICE_WARNING.wav"
-/////< 해서는 안되는 행동을 했을 때의 알림음				ps. Class 는 CCautionNotifyGui 임
+/////< Notification sound when you do something you shouldn't do ps. Class is CCautionNotifyGui
 //
 #define GSD_SYSTEM_PARTY_NOTIFY				"System\\SYSTEM_NOTICE_PARTY.wav"
-/////< 파티또는 길드에서 유저를 부를 때의 알림음
+/////< Notification sound when calling a user from a party or guild
 //
 #define GSD_SYSTEM_TERRAIN_NOTIFY			"System\\SYSTEM_NOTICE_TERRAIN.wav"	
 
-/////< 새로운 지형에 갔을때 지형이름을 알려주는 알림음
+/////< When you go to a new terrain, a notification sound informs you of the terrain name.
 //
 #define GSD_SYSTEM_ITEM_LIGHT_ON			"System\\SYSTEM_ITEM_UPGRADE.wav"
 
-////< 속성에 맞는 색으로 변할때 ( 업그레이드 가능한 공간으로 이동시 )
+////< When the color changes to suit the attribute (when moving to an upgradeable space)
 
 #define GSD_SYSTEM_KEY_DOWN					"System\\GENERAL_TEXTINPUT.wav"
-//< 타자 치는 소리
+//< sound of typing
 
 //
 #define GSD_SYSTEM_DRAGOBALL_UI_OPEN		"System\\SYSTEM_DB_OPEN.wav"	
 
-////< 드래곤볼 제단 열릴때
+////< When the Dragon Ball altar opens
 //
 #define GSD_SYSTEM_DRAGOBALL_UI_CLOSE		"System\\SYSTEM_DB_CLOSE.wav"	
 	
-////< 드래곤볼 제단 닫힐때
+////< When the Dragon Ball altar closes
 //
 #define GSD_SYSTEM_POTAL_ICON_MOUSE_OVER	"System\\SYSTEM_PORTAL_MOUSE_OVER.wav"
 
 #define GSD_SYSTEM_MOUSE_CLICK_HV			"System\\SYSTEM_MOUSE_CLICK_HV.wav"
 
-////< 포탈 탈수 있는 위치의 아이콘에 마우스를 올려 놓았을 때
+////< When you hover the mouse over the icon where you can enter the portal
 //
 
 #define GSD_SYSTEM_DRAGOBALL_REGISTRATION	"System\\SYSTEM_DB_REG.wav"	
-//< 드래곤볼이 돌에 박힐때
+//< When the dragon ball gets stuck in the stone
 
 #define GSD_SYSTEM_DRAGOBALL_UI_LIGHT		"System\\SYSTEM_DB_LIGHT.wav"	
 
-////< 드래곤볼 제단에 불이 켜질때
+////< When the lights turn on at the Dragon Ball altar
 //
 //
 #define GSD_SYSTEM_NEW_MAIL_ALRAM			"System\\SYSTEM_NEW_MAIL.wav"	
 
-////< 새로운 편지가 도착했을때
+////< When a new letter arrives
 //
 #define GSD_SYSTEM_MAIL_SEND				"System\\SYSTEM_SEND_MAIL.wav"	
 
-////< 메일을 보낼때
+////< When sending an email
 //
 #define GSD_SYSTEM_SCOUTER_LOOP				"System\\GENERAL_Scouter_Loop.wav"
-//< 스카우트 측정증
+//< Scout measurement certificate
 
 #define GSD_SYSTEM_SCOUTER_SCAN				"System\\GENERAL_Scouter_Scan.wav"
-//< 스카우트 타겟 설정시
-//******************************************완료
+//< When setting scout target
+//******************************************complete
 
 #define GSD_SYSTEM_USE_MONEY				"System\\SYSTEM_USE_MONEY.wav"
-///< Money를 사용했을 때의 Sound.기분 좋은 소리로, 「차 인」.
+///< Sound when using Money. A pleasant sound, “Chain”.
 
 #define GSD_SYSTEM_DROP_NORMAL				"System\\SYSTEM_DROP_NORMAL.wav"
-///< Item Drop - Mob가 사라져 Capsule와 Zenny가 떨어지는 Sound.별로 귀에 거슬리는 소리가 되지 않는 소리로, 「본」.
+///< Item Drop -The sound of Mob disappearing and Capsule and Zenny falling. A sound that is not too harsh to the ear, “Born”.
 
 #define GSD_SYSTEM_DROP_LUCKY				"System\\SYSTEM_DROP_LUCKY.wav"
-///< Item Drop - Lucky!! 운이 좋아서 평소보다 좋은 Capsule와 많은 Zenny가 떨어지는 Sound.별로 귀에 거슬리는 소리가 되지 않는 소리로, 「보욘」.
+///< Item Drop -Lucky!! I was lucky enough to have a better Capsule than usual and a sound with more Zenny. A sound that didn't bother my ears at all, "Boyon".
 
 #define GSD_SYSTEM_DROP_DBALL				"System\\SYSTEM_DROP_DBALL.wav"
-///< Item Drop - Sound effect for dropping the dragon ball.
+///< Item Drop -Sound effect for dropping the dragon ball.
 
 #define GSD_SYSTEM_DROP_POWER				"System\\SYSTEM_DROP_POWER.wav"
-///< Item Drop - Sound effect for dropping the stone.
+///< Item Drop -Sound effect for dropping the stone.
 
 #define GSD_SYSTEM_ITEM_GET					"System\\SYSTEM_ITEM_GET.wav"
-///< Item Drop - Drop가 된 Item를 얻었을 때의 Sound.「슨」.
+///< Item Drop -Sound when the dropped item is obtained. “Sun”.
 
 #define GSD_SYSTEM_SKILL_LEARN				"BGM\\JINGLE_SKILL_GET.ogg"
-///< Skill를 배웠을 때의 Sound.교회의 종과 같은 소리로, 「곤」.
+///< Sound when learning the skill. A sound like a church bell, “gon”.
 
 #define GSD_SYSTEM_SKILL_RESETONE			"System\\SYSTEM_CANCEL_HV.wav"
 
 #define GSD_SYSTEM_SKILL_DISABLE			"System\\SYSTEM_SKILL_DISABLE.wav"
-///< Skill나 Item를 사용할 수 없을 때의 Sound.귀에 거슬리는 소리가 되지 않는 소프트인 낮은 소리로, 「곤」.
+///< Sound when a skill or item cannot be used. A soft, low sound that does not bother the ears, “gon”.
 
 #define GSD_SYSTEM_QUEST_GIVE_UP			"System\\SYSTEM_QUEST_GIVE_UP.wav"
-///< Quest를 Give up 할 때의 Sound.유감스러운 소리로, 「워···」.
+///< Sound when giving up a Quest. A regretful sound, “Whoa...”.
 
 #define GSD_SYSTEM_TRIGGER_OBJECT_CLICK		"System\\GENERAL_Click_01.wav"
-///< Trigger object를 클릭 했을 때 나는 소리
+///< Sound made when clicking on the trigger object
 
 #define GSD_JINGLE_QUEST_START				"BGM\\JINGLE_QUEST_START.ogg"
-///< Quest를 시작할 때 의지를 담은 느낌을 주는 용감한 느낌.
+///< A brave feeling that gives you a sense of determination when you start the Quest.
 
 #define GSD_JINGLE_QUEST_FINISH				"BGM\\JINGLE_QUEST_FINISH.ogg"
-///< Quest를 끝냈을때 칭송하는것 같은 축복의 음악
+///< Blessing music that seems to praise you when you finish a quest
 
 #define GSD_JINGLE_LEVEL_UP					"BGM\\JINGLE_LEVEL_UP.ogg"
 ///< LevelUp
@@ -237,16 +237,16 @@
 
 #define GSD_SCOUTER_CLOSE					"System\\GENERAL_Scouter_Off_s.wav"
 
-#define GSD_HEART_BEAT						"Syatem\\GENERAL_Radar.wav"	// 임시
-///< HeartBeat HP저하시 반복
+#define GSD_HEART_BEAT						"Syatem\\GENERAL_Radar.wav"	// temporary
+///< Repeat when HeartBeat HP decreases
 
-/// 용신 등장시의 배경음악
+/// Background music when the Dragon God appears
 #define GSD_JINGLE_DRAGON                   "BGM\\JINGLE_SHENRON.ogg"
 
-///< 주의가 필요하여 사용자에게 알림성 효과음
+///< Sound effect to alert the user that caution is required
 #define GSD_SYSTEM_WINDOW_ALREAT			"System\\SYSTEM_WINDOW_ALART.wav"
 
-///< 짤깍짤깍
+///< click click click
 #define GSD_GENERAL_CLOCK_SECOND			"System\\GENERAL_Clock_Second.wav"
 
 ///< Music when you catch a HERO BOSS in a dungeon
@@ -270,7 +270,7 @@
 
 
 //////////////////////////////////////////////////////////////////////////
-//						천하제일 무도회									//
+//						Tenkaichi Budokai //
 //////////////////////////////////////////////////////////////////////////
 
 #define GSD_BGM_TB_STANDBY					"BGM\\BGM_TB_STANDBY.ogg"
@@ -283,7 +283,7 @@
 
 
 //////////////////////////////////////////////////////////////////////////
-//						도장 쟁탈전										//
+//						Dojo Battle //
 //////////////////////////////////////////////////////////////////////////
 
 #define GSD_BGM_DOJO_SCRAMBLE_READY			"BGM\\BGM_PROLOGE_B.ogg"

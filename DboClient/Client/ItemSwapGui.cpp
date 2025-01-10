@@ -1,7 +1,7 @@
 #include "precomp_dboclient.h"
 #include "ItemSwapGui.h"
 
-// shared
+// Shared
 #include "TableContainer.h"
 #include "NPCTable.h"
 #include "ItemTable.h"
@@ -9,17 +9,17 @@
 #include "MerchantTable.h"
 #include "GraphicDataTable.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// presetation
+// Presetation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEvent.h"
 #include "NtlSLLogic.h"
@@ -97,7 +97,7 @@ RwBool CItemSwapGui::Create()
 
 	rect = GetPosition();
 
-	// background
+	// Background
 	m_BackLineSurface.SetType(CWindowby3::WT_HORIZONTAL);
 	m_BackLineSurface.SetSurface(0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("ItemSwap.srf", "srfBackLineTop"));
 	m_BackLineSurface.SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("ItemSwap.srf", "srfBackLineCenter"));
@@ -128,7 +128,7 @@ RwBool CItemSwapGui::Create()
 	m_MoneyBackPanel.SetPositionfromParent(194, 439);
 
 
-	// ItemPanel
+	// Item panel
 	std::string fullName = "";
 	char acPanelName[] = "ItemPanel";
 	char acNum[3] = "";
@@ -216,7 +216,7 @@ RwBool CItemSwapGui::Create()
 	m_pCurrentPage->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pCurrentPage->SetTextColor(RGB(255, 192, 0));
 
-	// PrePageButton
+	// Pre page button
 	m_pPrePageButton = (gui::CButton*)GetComponent("PrePageButton");
 	m_slotPrePageButton = m_pPrePageButton->SigClicked().Connect(this, &CItemSwapGui::ClickedPrePageButton);
 
@@ -225,7 +225,7 @@ RwBool CItemSwapGui::Create()
 	m_slotNextPageButton = m_pNextPageButton->SigClicked().Connect(this, &CItemSwapGui::ClickedNextPageButton);
 
 
-	// Sig
+	// Signals
 	m_slotMouseDown = m_pThis->SigMouseDown().Connect(this, &CItemSwapGui::OnMouseDown);
 	m_slotMouseUp = m_pThis->SigMouseUp().Connect(this, &CItemSwapGui::OnMouseUp);
 	m_slotMove = m_pThis->SigMove().Connect(this, &CItemSwapGui::OnMove);
@@ -287,16 +287,16 @@ VOID CItemSwapGui::OpenShop(SERIAL_HANDLE hNPC, sNPC_TBLDAT* pNPC_TBLDAT)
 	CTextTable* pMerchantTextTable = API_GetTableContainer()->GetTextAllTable()->GetMerchantTbl();
 	CTextTable* pItemTextTable = API_GetTableContainer()->GetTextAllTable()->GetItemTbl();
 
-	// NPC 번호
+	// NPC number
 	m_hNPCSerial = hNPC;
 
-	// 상점 이름
+	// store name
 	m_pShopTitle->SetText(pNPCTextTable->GetText(pNPC_TBLDAT->Name).c_str());
 
-	// 전체 수리 툴팁
+	// Full repair tooltip
 	SetRepairAllTooltip();
 
-	// 현재 상점에서 팔 수 있는 아이템 최대 4종류의 목록을 읽어온다.
+	// Reads a list of up to 4 types of items currently available for sale in the store.
 	ShopItem shopItem;
 	char acBuffer[256] = "";
 	for (RwInt32 iTabIndex = 0; iTabIndex < NTL_MAX_MERCHANT_TAB_COUNT; ++iTabIndex)
@@ -304,18 +304,18 @@ VOID CItemSwapGui::OpenShop(SERIAL_HANDLE hNPC, sNPC_TBLDAT* pNPC_TBLDAT)
 		if (pNPC_TBLDAT->amerchant_Tblidx[iTabIndex] <= 0)
 			continue;
 
-		// 각 Tab 별 등록된 아이템을 읽어온다.
+		// The registered items for each tab are read.
 		sMERCHANT_TBLDAT* pMERCHANT_TBLDAT = Logic_GetMerchantDataFromTable(pNPC_TBLDAT->amerchant_Tblidx[iTabIndex]);
 		if (!pMERCHANT_TBLDAT)
 			continue;
 
-		// Tab 이름			
+		// Tab name			
 		const wchar_t* pwcMerchantName = pMerchantTextTable->GetText(pMERCHANT_TBLDAT->Tab_Name).c_str();
 		WideCharToMultiByte(GetACP(), 0, pwcMerchantName, -1, acBuffer, 256, NULL, NULL);
 		std::string str = acBuffer;
 		m_pTabButton->AddTab(str);
 
-		// 각 Tab별 등록된 아이템을 ShopItem에 등록한다			
+		// Register items registered for each tab in ShopItem			
 		sITEM_TBLDAT* pITEM_DATA;
 		for (RwInt32 iMerchantIndex = 0; iMerchantIndex < NTL_MAX_MERCHANT_COUNT; ++iMerchantIndex)
 		{
@@ -323,7 +323,7 @@ VOID CItemSwapGui::OpenShop(SERIAL_HANDLE hNPC, sNPC_TBLDAT* pNPC_TBLDAT)
 			if (!pITEM_DATA)
 				continue;
 
-			// 실제 ShopItem 데이터				
+			// Actual ShopItem data				
 			if (pMERCHANT_TBLDAT->aitem_Tblidx[iMerchantIndex] == 0)
 			{
 				m_aShopItem[iTabIndex][iMerchantIndex].hItem = INVALID_SERIAL_ID;
@@ -352,7 +352,7 @@ VOID CItemSwapGui::OpenShop(SERIAL_HANDLE hNPC, sNPC_TBLDAT* pNPC_TBLDAT)
 	m_pPocketMoneytitle->SetText(GetDisplayStringManager()->GetString("DST_NPCSHOP_MYZENNY"));
 
 
-	// 최초 탭
+	// first tab
 	m_pTabButton->SelectTab(0);
 	UpdateTabContent(0);
 
@@ -772,7 +772,7 @@ VOID CItemSwapGui::OnMove(RwInt32 iOldX, RwInt32 iOldY)
 	m_MoneyBackPanel.SetPositionbyParent(rtScreen.left, rtScreen.top);
 	m_PageBackPanel.SetPositionbyParent(rtScreen.left, rtScreen.top);
 
-	// NPCShop 다이얼로그가 움직일 때	
+	// When the NPCShop dialog moves	
 	for (RwInt32 i = 0; i < dMAX_ITEM_PANEL; ++i)
 	{
 		m_ItemPanel[i].slot.SetParentPosition(rtScreen.left, rtScreen.top);
@@ -906,7 +906,7 @@ RwInt32 CItemSwapGui::SwitchDialog(bool bOpen)
 	}
 	else
 	{
-		// NPC 애니메이션
+		// NPC Animation
 		Logic_SetActorAnimation(m_hNPCSerial, NML_IDLE_LOOP, TRUE);
 
 		CNtlWorldConceptController* pWorldConcept = GetNtlWorldConcept()->FindGradeExtController(WORLD_CONCEPT_SECOND_GRADE);

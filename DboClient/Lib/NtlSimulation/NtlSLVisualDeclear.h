@@ -2,7 +2,7 @@
 *
 * File			: NtlSobGroup.h
 * Author		: HyungSuk, Jang
-* Copyright	: (주)NTL
+* Copyright	    : (??)NTL
 * Date			: 2005. 8. 23	
 * Abstract		: Simulation layer visual entity id declear
 *****************************************************************************
@@ -16,34 +16,34 @@
 
 
 // visual effect key name
-#define NTL_VID_MARK_COMMON_MOVE            "GME_Cursor_Ground"             // 마우스 이동 위치 effect(공용)
-#define NTL_VID_MARK_TARGET					"GME_Cursor_Target"		        // object target mark 머리위
-#define NTL_VID_MARK_TARGET_02              "GME_Cursor_Target_02"          // 발밑 데칼
-#define NTL_VID_MARK_ATTACK					"GME_Cursor_Attack"		        // object attack mark 머리위
-#define NTL_VID_MARK_ATTACK_02              "GME_Cursor_Attack_02"          // 발밑 데칼
+#define NTL_VID_MARK_COMMON_MOVE            "GME_Cursor_Ground"             // Mouse movement position effect (common)
+#define NTL_VID_MARK_TARGET					"GME_Cursor_Target"		        // object target mark overhead
+#define NTL_VID_MARK_TARGET_02              "GME_Cursor_Target_02"          // foot decal
+#define NTL_VID_MARK_ATTACK					"GME_Cursor_Attack"		        // object attack mark overhead
+#define NTL_VID_MARK_ATTACK_02              "GME_Cursor_Attack_02"          // foot decal
 #define NTL_VID_MARK_BOUNDARY				"GME_Cursor_Boundary"			// object attack mark
-#define NTL_VID_MARK_CAUTION                "GME_Recognize"                 // 몹이 플레이어를 발각했을때 이펙트
-#define NTL_VID_MARK_HELPME_REQUESTER       "GME_Mob_SOS_01"                // 도움을 요청하는 몹 이펙트
-#define NTL_VID_MARK_HELPME_REQUESTEE       "GME_Mob_SOS_02"                // 도움을 요청받은 몹 이펙트
-#define NTL_VID_MARK_TARGET_MARKING         "M_TPP_MEGADODON_TARGET_01"    // 몹에게 타겟으로 설정됐을때의 이펙트 (메가 도동파)
+#define NTL_VID_MARK_CAUTION                "GME_Recognize"                 // Effect when a mob detects the player
+#define NTL_VID_MARK_HELPME_REQUESTER       "GME_Mob_SOS_01"                // Mob effect asking for help
+#define NTL_VID_MARK_HELPME_REQUESTEE       "GME_Mob_SOS_02"                // Mob effect requested for help
+#define NTL_VID_MARK_TARGET_MARKING         "M_TPP_MEGADODON_TARGET_01"    // Effect when targeted by a mob (Mega Dodongpa)
 
-#define NTL_VID_MARK_SHARE_TARGET_0_NORAML	"GME_Cursor_Party_Assign_01"	// 공유 타겟 마크 1
-#define NTL_VID_MARK_SHARE_TARGET_1_NORAML	"GME_Cursor_Party_Assign_02"	// 공유 타겟 마크 1
-#define NTL_VID_MARK_SHARE_TARGET_2_NORAML	"GME_Cursor_Party_Assign_03"	// 공유 타겟 마크 1
-#define NTL_VID_MARK_SHARE_TARGET_3_NORAML	"GME_Cursor_Party_Assign_04"	// 공유 타겟 마크 1
-#define NTL_VID_MARK_SHARE_TARGET_4_NORAML	"GME_Cursor_Party_Assign_05"	// 공유 타겟 마크 1
+#define NTL_VID_MARK_SHARE_TARGET_0_NORAML	"GME_Cursor_Party_Assign_01"	// Share target mark 1
+#define NTL_VID_MARK_SHARE_TARGET_1_NORAML	"GME_Cursor_Party_Assign_02"	// Share target mark 1
+#define NTL_VID_MARK_SHARE_TARGET_2_NORAML	"GME_Cursor_Party_Assign_03"	// Share target mark 1
+#define NTL_VID_MARK_SHARE_TARGET_3_NORAML	"GME_Cursor_Party_Assign_04"	// Share target mark 1
+#define NTL_VID_MARK_SHARE_TARGET_4_NORAML	"GME_Cursor_Party_Assign_05"	// Share target mark 1
 
-#define NTL_VID_MARK_SHARE_TARGET_0_TARGET	"GME_Cursor_Party_Target_01"	// 공유 타겟 마크 1
-#define NTL_VID_MARK_SHARE_TARGET_1_TARGET	"GME_Cursor_Party_Target_02"	// 공유 타겟 마크 1
-#define NTL_VID_MARK_SHARE_TARGET_2_TARGET	"GME_Cursor_Party_Target_03"	// 공유 타겟 마크 1
-#define NTL_VID_MARK_SHARE_TARGET_3_TARGET	"GME_Cursor_Party_Target_04"	// 공유 타겟 마크 1
-#define NTL_VID_MARK_SHARE_TARGET_4_TARGET	"GME_Cursor_Party_Target_05"	// 공유 타겟 마크 1
+#define NTL_VID_MARK_SHARE_TARGET_0_TARGET	"GME_Cursor_Party_Target_01"	// Share target mark 1
+#define NTL_VID_MARK_SHARE_TARGET_1_TARGET	"GME_Cursor_Party_Target_02"	// Share target mark 1
+#define NTL_VID_MARK_SHARE_TARGET_2_TARGET	"GME_Cursor_Party_Target_03"	// Share target mark 1
+#define NTL_VID_MARK_SHARE_TARGET_3_TARGET	"GME_Cursor_Party_Target_04"	// Share target mark 1
+#define NTL_VID_MARK_SHARE_TARGET_4_TARGET	"GME_Cursor_Party_Target_05"	// Share target mark 1
 
-#define NTL_VID_MARK_SHARE_TARGET_0_ATTACK	"GME_Cursor_Party_Attack_01"	// 공유 타겟 마크 1
-#define NTL_VID_MARK_SHARE_TARGET_1_ATTACK	"GME_Cursor_Party_Attack_02"	// 공유 타겟 마크 1
-#define NTL_VID_MARK_SHARE_TARGET_2_ATTACK	"GME_Cursor_Party_Attack_03"	// 공유 타겟 마크 1
-#define NTL_VID_MARK_SHARE_TARGET_3_ATTACK	"GME_Cursor_Party_Attack_04"	// 공유 타겟 마크 1
-#define NTL_VID_MARK_SHARE_TARGET_4_ATTACK	"GME_Cursor_Party_Attack_05"	// 공유 타겟 마크 1
+#define NTL_VID_MARK_SHARE_TARGET_0_ATTACK	"GME_Cursor_Party_Attack_01"	// Share target mark 1
+#define NTL_VID_MARK_SHARE_TARGET_1_ATTACK	"GME_Cursor_Party_Attack_02"	// Share target mark 1
+#define NTL_VID_MARK_SHARE_TARGET_2_ATTACK	"GME_Cursor_Party_Attack_03"	// Share target mark 1
+#define NTL_VID_MARK_SHARE_TARGET_3_ATTACK	"GME_Cursor_Party_Attack_04"	// Share target mark 1
+#define NTL_VID_MARK_SHARE_TARGET_4_ATTACK	"GME_Cursor_Party_Attack_05"	// Share target mark 1
 
 #define NTL_VID_WORLD_IN					"GME_Spawn1"
 #define NTL_VID_TELEPORT_SPAWN				"GME_Spawn2"
@@ -162,9 +162,9 @@
 #define NTL_VID_QUEST_ACCEPT_REWARD_03		"GME_Quest_Clear_Effect_03"
 #define NTL_VID_QUEST_ACCEPT_REWARD_04		"GME_Quest_Clear_Effect_04"
 
-// PVP
-#define NTL_VID_FREEPVP_MARK				"N_REF_A1"                      ///< 심판 캐릭터 NPC 
-#define NTL_VID_FREEPVP_BOUND_EFFECT        "N_REF_001"                     ///< PVP 바운드 이펙트
+// Pvp
+#define NTL_VID_FREEPVP_MARK				"N_REF_A1"                      ///< Referee Character NPC 
+#define NTL_VID_FREEPVP_BOUND_EFFECT        "N_REF_001"                     ///< PVP bound effect
 
 // TMQ Direction
 #define NTL_VID_DIRECTOR_EFFECT             "GME_Direction_Arrow"
@@ -202,11 +202,11 @@
 #define NTL_VID_PURE_MAJIN_CHANGE           "MAJ_SKL_AVE_001"
 #define NTL_VID_PURE_MAJIN_CHANGE_ORG       "MAJ_SKL_AVE_001_02"
 
-// 계왕권
+// Kaioken
 #define NTL_VID_KAIOUKEN_SMALL              "COM_SKL_AVE_011_01"
 #define NTL_VID_KAIOUKEN_BIG                "COM_SKL_AVE_011_02"
 
-// 캔디 변신
+// candy transformation
 #define NTL_VID_CANDY_CHANGE_ORG            "GME_ITM_BOMB"
 
 // Class Change
@@ -227,22 +227,22 @@
 // foot step
 #define SOUND_FOOTSTEP_1					"GENERAL_FOOTSTEP_WATER1.wav"
 #define SOUND_FOOTSTEP_2					"GENERAL_FOOTSTEP_WATER2.wav"
-#define NAMING_SOUND_FOOTSTEP				"Footsteps\\SE_FOOTSTEP"		// SE_FOOTSTEP_[MATERIALTYPE(0-7)]_[RAND(0-3)]
-#define NAMING_EFFECT_FOOTSTEP				"GME_FOOTSTEP"					// GME_FOOTSTEP_[MATERIALTYPE(0-7)]_[STEP(L,R)]_[RAND(0-1)]
+#define NAMING_SOUND_FOOTSTEP				"Footsteps\\SE_FOOTSTEP"		// Se footstep [materialtype(0 7)] [rand(0 3)]
+#define NAMING_EFFECT_FOOTSTEP				"GME_FOOTSTEP"					// Gme footstep [materialtype(0 7)] [step(l,r)] [rand(0 1)]
 
-// 칭호 이펙트
+// Title effect
 #define NTL_VID_TENKAICHI_WINNNER_01        "GME_TENKAICHI_WINNER_01"
 #define NTL_VID_TENKAICHI_WINNNER_02        "GME_TENKAICHI_WINNER_02"
 #define NTL_VID_TENKAICHI_WINNNER_03        "GME_TENKAICHI_WINNER_03"
 
 // Vehicle
-#define NTL_VID_VEHICLE_SPAWN				"GME_CAPSULE_SPAWN_01"			// GME_CAPSULE_SPAWN_01
-#define NTL_VID_VEHICLE_RIDEOFF				"GME_CAPSULE_SPAWN_01"			// GME_CAPSULE_SPAWN_01
-#define NTL_VID_VEHICLE_HURT_RIDEOFF		"GME_Vehicle_Crash"				// GME_Vehicle_Crash
-#define NTL_VID_VEHICLE_RUN_SMOKE			"GME_Vehicle_RunSmoke"			// GME_Vehicle_RunSmoke
-#define NTL_VID_VEHICLE_RUN_SPRAY			"GME_Vehicle_RunSpray"			// GME_Vehicle_RunSpray
-#define NTL_VID_VEHICLE_LANDING_NORMAL		"GME_Smoke_JumpLanding"			// GME_Smoke_JumpLanding
-#define NTL_VID_VEHICLE_LANDING_WATER		"GME_Vehicle_LandingWater"		// GME_Vehicle_LandingWater
+#define NTL_VID_VEHICLE_SPAWN				"GME_CAPSULE_SPAWN_01"			// Gme capsule spawn 01
+#define NTL_VID_VEHICLE_RIDEOFF				"GME_CAPSULE_SPAWN_01"			// Gme capsule spawn 01
+#define NTL_VID_VEHICLE_HURT_RIDEOFF		"GME_Vehicle_Crash"				// Gme vehicle crash
+#define NTL_VID_VEHICLE_RUN_SMOKE			"GME_Vehicle_RunSmoke"			// Gme vehicle run smoke
+#define NTL_VID_VEHICLE_RUN_SPRAY			"GME_Vehicle_RunSpray"			// Gme vehicle run spray
+#define NTL_VID_VEHICLE_LANDING_NORMAL		"GME_Smoke_JumpLanding"			// Gme smoke jump landing
+#define NTL_VID_VEHICLE_LANDING_WATER		"GME_Vehicle_LandingWater"		// Gme vehicle landing water
 
 // Dojo seal
 #define NTL_VID_DOJO_SEAL_NO_TEAM			"obj_dojo_change_01"

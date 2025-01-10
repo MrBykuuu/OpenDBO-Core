@@ -574,7 +574,7 @@ void CNtlPostEffectCamera::Update_FakeHDRFiltering(RwRGBA& color)
 	RwRenderStateSet(rwRENDERSTATECULLMODE,	(void *)rwCULLMODECULLNONE);
 
 	// ==========================================
-	// 화면 축소하기
+	// Zoom out the screen
 	// ==========================================
 	m_lpEffect->BeginPass(EFFECT_PASS_NONE);
 	RwCameraClear(m_pReductionCamera, &color, rwCAMERACLEARZ|rwCAMERACLEARIMAGE);
@@ -593,7 +593,7 @@ void CNtlPostEffectCamera::Update_FakeHDRFiltering(RwRGBA& color)
 
 
 	// ==========================================
-	// 축소화면 블러 먹이기
+	// Adding blur to the reduced screen
 	// ==========================================
 	m_lpEffect->BeginPass(EFFECT_PASS_16BOX);
 	m_lpEffect->SetFloat(m_hMapWidth, (RwReal)m_nTextureReductionSize);
@@ -632,7 +632,7 @@ void CNtlPostEffectCamera::Update_FakeHDRFiltering(RwRGBA& color)
 
 
 	// ==========================================
-	// 화면 확대하기
+	// Zoom in on the screen
 	// ==========================================
 	m_lpEffect->BeginPass(EFFECT_PASS_NONE);
 	RwCameraClear(m_pTempCamera, &color, rwCAMERACLEARZ|rwCAMERACLEARIMAGE);
@@ -661,7 +661,7 @@ void CNtlPostEffectCamera::Update_FakeHDRFiltering(RwRGBA& color)
 RwBool CNtlPostEffectCamera::BeginCameraUpdate(RwRGBA& color)
 {
 	// ==========================================
-	// 최종적으로 그리기
+	// Finally drawing
 	// ==========================================
 	RwCameraClear(m_pBlurCamera, &color, rwCAMERACLEARZ|rwCAMERACLEARIMAGE);
 	if(RwCameraBeginUpdate(m_pBlurCamera))
@@ -761,7 +761,7 @@ void CNtlPostEffectCamera::EndCameraUpdate(RwRGBA& color)
 
 //-------------------------------------------------------------
 // Name: CreateReductionTexture()
-// Desc: 가중치 계산
+// Desc: Weight calculation
 //-------------------------------------------------------------
 void CNtlPostEffectCamera::CreateReductionTexture(RwInt32 nTextureSize)
 {

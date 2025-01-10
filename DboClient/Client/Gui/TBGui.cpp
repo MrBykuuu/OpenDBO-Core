@@ -1,13 +1,13 @@
 #include "precomp_dboclient.h"
 #include "TBGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
 // shared
 //#include "NtlRankBattle.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
@@ -45,7 +45,7 @@
 #include "ResultNarrationGui.h"
 #include "CounterGui.h"
 
-// DBO(Observer)
+// Dbo(Observer)
 #include "TBMatchIndiObRedGui.h"
 #include "TBMatchIndiObBlueGui.h"
 #include "TBMatchTeamObRedGui.h"
@@ -450,7 +450,7 @@ VOID CTBGui::Destroy(VOID)
 
 VOID CTBGui::CreateBudokaiNewsOnce()
 {
-	// 천하제일 무도회 정보가 CLOSE가 아니라면 Open한다.
+	// If the World's Best Martial Arts information is not CLOSE, it is Open.
 	STenkaichiBudokaiInfo* pBudokaiState = GetNtlSLGlobal()->GetTBudokaiStateInfo();
 
 	if( pBudokaiState->sStateInfo.byState != BUDOKAI_STATE_JUNIOR_CLOSE ||
@@ -460,7 +460,7 @@ VOID CTBGui::CreateBudokaiNewsOnce()
 
 VOID CTBGui::CreateBudokaiNews()
 {
-	// 천하제일 무도회 소식지
+	// World’s Best Martial Arts Newsletter
 	if( m_pNewsGui == NULL )
 	{
 		m_pNewsGui = NTL_NEW CTBNewsGui( "TBNewsGui" );
@@ -476,7 +476,7 @@ VOID CTBGui::CreateBudokaiNews()
 		}
 	}
 
-	// 천하제일 무도회 신청서
+	// World's Best Martial Arts Application Form
 	if( m_pRequestGui == NULL )
 	{
 		m_pRequestGui = NTL_NEW CTBRequestGui( "TBRequestGui" );
@@ -598,7 +598,7 @@ VOID CTBGui::HandleEvents( RWS::CMsg& msg )
 		CNtlWorldConceptTB* pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 		DBO_ASSERT( pTBWorldConcept, "CNtlTBudokai::HandleEvents : must World concept is valid" );	
 
-		// 참가자와 관전자를 구분하여 처리한다.
+		// Participants and spectators are treated separately.
 		stTBudokaiMember* pMember = pTBWorldConcept->FindMember( Logic_GetAvatarHandle() );
 		if( pMember )
 			HandleEventMinorMatchStateUpdateEntrance( msg );
@@ -678,7 +678,7 @@ VOID CTBGui::HandleEvents( RWS::CMsg& msg )
 		{
 			if( pState->uiState == WORLD_STATE_IDLE )
 			{
-				// peessi: WORLD_STATE_ENTER 상태에서는 MINOR,MAJOR,FINAL 판별이 불가능. IDLE이 한번만 들어오기 때문에 이용. 
+				// peessi: MINOR, MAJOR, FINAL determination is not possible in WORLD_STATE_ENTER state. Used because IDLE comes in only once. 
 				CNtlWorldConceptTB* pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 				DBO_ASSERT( pTBWorldConcept, "CTBGui::HandleEvents : must World concept is valid" );		
 	
@@ -811,7 +811,7 @@ VOID CTBGui::HandleEventMajorMatchStateUpdateObserver( RWS::CMsg& msg )
 		{
 			DirectionMode( FALSE );
 
-			// 불필요한 UI들을 닫는다.
+			// Close unnecessary UI.
 			GetDialogManager()->CloseDialog( DIALOG_HP );
 			GetDialogManager()->CloseDialog( DIALOG_TARGER_UI );
 			GetDialogManager()->CloseDialog( DIALOG_TIME_NOTIFY );
@@ -867,7 +867,7 @@ VOID CTBGui::HandleEventFinalMatchStateUpdateObserver( RWS::CMsg& msg )
 		{
 			DirectionMode( FALSE );
 
-			// 불필요한 UI들을 닫는다.
+			// Close unnecessary UI.
 			GetDialogManager()->CloseDialog( DIALOG_HP );
 			GetDialogManager()->CloseDialog( DIALOG_TARGER_UI );
 			GetDialogManager()->CloseDialog( DIALOG_TIME_NOTIFY );
@@ -888,7 +888,7 @@ VOID CTBGui::HandleEventFinalMatchStateUpdateObserver( RWS::CMsg& msg )
 }
 
 /**
-* \brief 객체가 소멸하고 다시 생성되었을 때 매치 중의 Battle Gauge를 다시 세팅해주기 위해 사용된다.
+* \brief Used to reset the Battle Gauge during a match when the object is destroyed and re-created.
 */
 VOID CTBGui::HandleEventSobCreate( RWS::CMsg& msg )
 {
@@ -1021,8 +1021,8 @@ VOID CTBGui::UnsetBattleGauge(VOID)
 }
 
 /**
-* \brief 상황에 맞춘 Notify를 출력한다.
-* \param byMsgId	(RwUInt8) NtlBudokai.h 에 정의되어 있는 상황들
+* \brief Outputs a Notify tailored to the situation.
+* \param byMsgId (RwUInt8) Situations defined in NtlBudokai.h
 */
 VOID CTBGui::ProgressMessageNotify( RwUInt8 byMsgId )
 {

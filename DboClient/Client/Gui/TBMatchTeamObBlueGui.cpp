@@ -64,7 +64,7 @@ RwBool CTBMatchTeamBlueMemberGui::Create( const WCHAR* pCharName, SERIAL_HANDLE 
 	// Member Data Update
 	UpdateMemberData( hMemberSerial );
 
-	// 이름, 레벨 및 각종 Status 세팅
+	// Name, level and various status settings
 	CNtlSobPlayer* pPlayer = reinterpret_cast<CNtlSobPlayer*>(GetNtlSobManager()->GetSobObject( hMemberSerial ));
 	if( pPlayer == NULL )
 	{
@@ -134,7 +134,7 @@ VOID CTBMatchTeamBlueMemberGui::HandleEvents( RWS::CMsg& msg )
 
 VOID CTBMatchTeamBlueMemberGui::UpdateMemberData( SERIAL_HANDLE hSerial )
 {
-	// 이름, 레벨 및 각종 Status 세팅
+	// Name, level and various status settings
 	CNtlSobPlayer* pPlayer = reinterpret_cast<CNtlSobPlayer*>(GetNtlSobManager()->GetSobObject( hSerial ));
 	if( pPlayer == NULL )
 	{
@@ -217,7 +217,7 @@ VOID CTBMatchTeamObBlueGui::Destroy()
 
 VOID CTBMatchTeamObBlueGui::CreateMemberGui()
 {
-	// 블루팀의 인원을 읽어온다.
+	// Reads the number of blue team members.
 	CNtlWorldConceptTB* pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 	DBO_ASSERT( pTBWorldConcept, "CTBMatchIndiObBlueGui : must World concept is valid" );		
 
@@ -227,11 +227,11 @@ VOID CTBMatchTeamObBlueGui::CreateMemberGui()
 	// Size
 	m_byMemberNums = (RwUInt8)pBlueTeam->vecpMember.size();
 	
-	// 멤버가 0이라면 리턴
+	// Returns if member is 0
 	if( m_byMemberNums == 0 )
 		return;
 
-	// Size수에 맞춰서 생성
+	// Created according to size
 	m_pMemberGui = NTL_NEW CTBMatchTeamBlueMemberGui[m_byMemberNums];
 
 	for(RwInt32 i=0; i < m_byMemberNums; ++i )
@@ -239,7 +239,7 @@ VOID CTBMatchTeamObBlueGui::CreateMemberGui()
 		m_pMemberGui[i].Create( pBlueTeam->vecpMember[i]->wstrName.c_str(), pBlueTeam->vecpMember[i]->hSerial );
 	}
 
-	// 전체화면에서 중간에 맞추기 위하여
+	// To fit in the middle in full screen
 	int nHeight = (m_byMemberNums * dTEAMMEMBER_GUI_OFFSET_Y) - (dTEAMMEMBER_GUI_OFFSET_Y - dTEAMMEMBER_GUI_HEIGHT);
 	int nStartPosY = (GetDboGlobal()->GetScreenHeight()/2) - (nHeight/2);
 	int nStartPosX = (GetDboGlobal()->GetScreenWidth()-dTEAMMEMBER_GUI_WIDTH);
@@ -266,7 +266,7 @@ VOID CTBMatchTeamObBlueGui::DestroyMemberGui()
 
 /**
 * \brief Update
-* \param fElapsed	(RwReal) 이전 업데이트에서 경과한 시간
+* \param fElapsed (RwReal) Time elapsed from previous update.
 */
 VOID CTBMatchTeamObBlueGui::Update( RwReal fElapsed )
 {
@@ -292,19 +292,19 @@ VOID CTBMatchTeamObBlueGui::HandleEvents( RWS::CMsg& msg )
 
 		if( pData->bEnterState )
 		{
-			// READY, RUN, FINISH 상태가 아니라면 해제한다.
+			// Release it if it is not in READY, RUN, or FINISH status.
 			if( pData->byMatchState == BUDOKAI_MAJORMATCH_STATE_STAGE_READY ||
 				pData->byMatchState == BUDOKAI_MAJORMATCH_STATE_STAGE_RUN	||
 				pData->byMatchState == BUDOKAI_MAJORMATCH_STATE_STAGE_FINISH )
 			{
 				if( !m_bCreate )
 				{
-					// 참가자라면 리턴				
+					// Return if you are a participant				
 					stTBudokaiMember* pMember = pTBWorldConcept->FindMember( Logic_GetAvatarHandle() );
 					if( pMember )
 						return;
 
-					// 싱글 플레이 중이라면 리턴
+					// Return if playing single
 					if( !pTBWorldConcept->IsPartyBattle() )
 						return;
 
@@ -326,23 +326,23 @@ VOID CTBMatchTeamObBlueGui::HandleEvents( RWS::CMsg& msg )
 
 		if( pData->bEnterState )
 		{	
-			// READY, RUN, FINISH 상태가 아니라면 해제한다.
+			// Release it if it is not in READY, RUN, or FINISH status.
 			if( pData->byMatchState == BUDOKAI_FINALMATCH_STATE_STAGE_READY ||
 				pData->byMatchState == BUDOKAI_FINALMATCH_STATE_STAGE_RUN	||
 				pData->byMatchState == BUDOKAI_FINALMATCH_STATE_STAGE_FINISH )
 			{
 				if( !m_bCreate )
 				{
-					// 참가자라면 리턴				
+					// Return if you are a participant				
 					stTBudokaiMember* pMember = pTBWorldConcept->FindMember( Logic_GetAvatarHandle() );
 					if( pMember )
 						return;
 
-					// 싱글 플레이 중이라면 리턴
+					// Return if playing single
 					if( !pTBWorldConcept->IsPartyBattle() )
 						return;
 
-					// Team Info가 들어오면 생성한다.
+					// Created when Team Info comes in.
 					CreateMemberGui();
 				}
 			}

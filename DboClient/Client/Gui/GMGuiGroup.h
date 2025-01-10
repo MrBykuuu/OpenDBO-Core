@@ -1,16 +1,16 @@
 /******************************************************************************
-* File			: GMGuiGroup.h
-* Author		: Haesung, Cho
-* Copyright		: (주)NTL
-* Date			: 2008. 11. 18
-* Abstract		: 
+*File           : GMGuiGroup.h
+*Author		    : Haesung, Cho
+*Copyright	    : NTL Co., Ltd.
+*Date           : November 18, 2008
+*Abstract		: 
 *****************************************************************************
-* Desc			: GM Mode로 들어갔을 때 사용되는 Gui의 Group
+*Desc           : Group of GUI used when entering GM Mode
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
 /**

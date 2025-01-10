@@ -1,13 +1,13 @@
 #include "precomp_ntlpresentation.h"
 #include "NtlPLEmblemStuffList.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// gui
+// Gui
 #include "gui_precomp.h"
 
-// presentation
+// Presentation
 #include "NtlPLEmblemMaker.h"
 
 #define dEMBLEM_STUFF_FILE_NAME		".\\script\\emblemstuff.dat"
@@ -76,7 +76,7 @@ VOID CNtlPLEmblemStuffList::LoadScript()
 			return;
 		}
 
-		// 버퍼 + 1 생성
+		// Create buffer + 1
 		pBuffer = NTL_NEW RwChar[iSize + 1];
         ZeroMemory(pBuffer, sizeof(RwChar) * (iSize + 1));
 		memcpy(pBuffer, pcData, sizeof(char) * iSize);

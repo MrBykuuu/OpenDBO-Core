@@ -22,7 +22,7 @@ class CMailSystemMsg;
 
 /**
 * \ingroup client
-* \brief 메일에서 사용될 Message Box의 타입등을 정의한다.
+* \brief  Defines the type of Message Box to be used in the mail, etc.
 */
 class CMailSystemMsg
 {
@@ -80,7 +80,7 @@ public:
 
 /**
 * \ingroup client
-* \brief MailSystem에서의 Mail Slot등을 정의한다.
+* \brief Defines mail slots in the MailSystem, etc.
 */
 class CMailSlotGui : public CNtlPLGui
 {
@@ -99,7 +99,7 @@ protected:
 	gui::CStaticBox*		m_pStbContent;
 	gui::CStaticBox*		m_pStbDay;
 	gui::CButton*			m_pBtnLock;
-	gui::CButton*			m_pBtnCheck;			///< 체크박스
+	gui::CButton*			m_pBtnCheck;			///< checkbox
 
 	gui::CSlot				m_slotMove;
 	gui::CSlot				m_slotPaintBtnSlot;

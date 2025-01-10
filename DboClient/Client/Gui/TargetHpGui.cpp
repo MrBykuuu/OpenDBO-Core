@@ -1,13 +1,13 @@
 #include "precomp_dboclient.h"
 
-// core
+// Core
 #include "TargetHpGui.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation 
+// Simulation 
 #include "NtlSLEvent.h"
 #include "NtlSobNpc.h"
 #include "NtlSobPlayer.h"
@@ -37,7 +37,7 @@
 #include "NtlStorageManager.h"
 #include "NtlStorageGroupScouter.h"
 
-// GameTable
+// Game Table
 #include "NPCTable.h"
 #include "MobTable.h"
 #include "ItemTable.h"
@@ -164,7 +164,7 @@ RwBool CTargetHpGui::Create(VOID)
 	m_slotMouseLeaveTargetsTarget = m_pbtTargetIcon->SigMouseLeave().Connect(this, &CTargetHpGui::OnMouseLeaveTargetsTarget);
 
 
-	// event 등록.
+	// Event registration.
 	LinkMsg(g_EventSobTargetInfoUpdate, 0);
 	LinkMsg(g_EventSobTargetChanged);
 	LinkMsg(g_EventSobInfoUpdate, 0);
@@ -501,13 +501,13 @@ void CTargetHpGui::HandleEvents(RWS::CMsg &pMsg)
 		{
 			if( pPacket->nWorkId == PMW_PARTY_INVITE )
 			{
-				// 이미 나의 파티원이 아니라면
+				// Unless you are already a member of my party
 				if( GetNtlSLGlobal()->GetSobAvatar()->GetParty()->IsMember(pPacket->uiSerial) == false )
 				{
 					CNtlSob* pSob = GetNtlSobManager()->GetSobObject(pPacket->uiSerial);
 					CNtlSobPlayer* pPlayer = reinterpret_cast<CNtlSobPlayer*>(pSob);
 
-					// 플레이어만이 파티로 초대 가능하다
+					// Only players can be invited to the party
 					if( pPlayer->GetClassID() != SLCLASS_PLAYER)
 						NTL_RETURNVOID();
 
@@ -517,12 +517,12 @@ void CTargetHpGui::HandleEvents(RWS::CMsg &pMsg)
 			}
 			else if( pPacket->nWorkId == PMW_PARTY_LEADER_CHANGE )
 			{				
-				// 파티장 위임
+				// Party leader delegation
 				GetDboGlobal()->GetGamePacketGenerator()->SendPartyChangeLeader(pPacket->uiSerial);
 			}
 			else if(pPacket->nWorkId == PMW_PARTY_KICK_OUT)
 			{
-				// 파티 강퇴
+				// party withdrawal
 				GetDboGlobal()->GetGamePacketGenerator()->SendPartyKickOut(pPacket->uiSerial);
 			}
 			else if( pPacket->nWorkId == PMW_PVP_REQUEST_FIGHT )
@@ -545,7 +545,7 @@ void CTargetHpGui::HandleEvents(RWS::CMsg &pMsg)
 						CNtlSobPlayerAttr* pSobPlayerAttr = reinterpret_cast<CNtlSobPlayerAttr*>( pSobPlayer->GetSobAttr() );
 						NTL_ASSERT(pSobPlayerAttr, "CTargetHpGui::HandleEvents, g_EventIconPopupResult, pPacket->nWorkId == PMW_USER_TRADE, Not exist player attr of handle : " << m_pTargetSobObj->GetSerialID());
 
-						// %s님에게 거래를 요청하였습니다
+						// A transaction was requested from %s.
 						GetAlarmManager()->FormattedAlarmMessage("DST_TRADE_REQUEST_START", FALSE, NULL, pSobPlayerAttr->GetName());
 					}
 				}
@@ -675,7 +675,7 @@ RwBool CTargetHpGui::TargetUpdateProc(VOID)
 		m_sttHp->Format( "%u / %u", uiHp, uiMaxHp );
 		m_sttEp->Format( "%u / %u", uiEp, uiMaxEp );
 
-		// 종족 아이콘
+		// race icon
 		CNtlSobAvatarAttr* pSobAvatarAttr = reinterpret_cast<CNtlSobAvatarAttr*>( m_pTargetSobObj->GetSobAttr() );
 		SetRaceIcon( pSobAvatarAttr->GetRace() );	
 	}
@@ -732,7 +732,7 @@ RwBool CTargetHpGui::TargetUpdateProc(VOID)
 			m_pBuff->Show( false );
 		}
 
-		// 종족 아이콘		
+		// race icon		
 		SetRaceIcon( pSobPlayerAttr->GetRace() );
 	}
 	else if( m_pTargetSobObj->GetClassID() == SLCLASS_MONSTER )
@@ -831,7 +831,7 @@ RwBool CTargetHpGui::TargetUpdateProc(VOID)
 			m_ppnlNpcJob->SetToolTip(std::wstring(pJobText));
 		}
 
-		// 종족 아이콘
+		// race icon
 		sNPC_TBLDAT* pNpcData = pAttr->GetNpcTbl();
 
 		SetMobNpcTypeIcon( pNpcData->byNpcType );
@@ -863,7 +863,7 @@ RwBool CTargetHpGui::TargetUpdateProc(VOID)
 		m_sttHp->Format( "%u / %u", uiHp, uiMaxHp );
 		m_sttEp->Format( "%u / %u", uiEp, uiMaxEp );	
 
-		// 종족 아이콘( Pet 은 NPC )
+		// Race icon (Pet is NPC)
 		CNtlSobPetAttr* pPetAttr = reinterpret_cast<CNtlSobPetAttr*>( m_pTargetSobObj->GetSobAttr() );
 		sNPC_TBLDAT* pPetData = pPetAttr->GetNpcTbl();
 
@@ -919,7 +919,7 @@ RwBool CTargetHpGui::TargetUpdateProc(VOID)
 	}
 	else 
 	{
-		// Pet 말고 다른 것 출력할게 있나? 
+		// Is there anything else to print besides Pet? 
 		NTL_ASSERT( FALSE, "CTargetHpGui::TargetUpdateProc - Invalid SobObj's Class ID" );
 	}
 
@@ -951,7 +951,7 @@ VOID CTargetHpGui::OnClickShareTargetBtn( gui::CComponent* pComponent )
 {
 	RwInt32 iAdjust = 37;
 	CRectangle rect = m_pThis->GetScreenRect();
-	CDboEventGenerator::IconPopupShow( TRUE, m_pTargetSobObj->GetSerialID(), PLACE_SUB_TARGETUI, 1, rect.right - iAdjust, -iAdjust );		// nSrcSlotId로  ShareTarget인지 Menu인지 구분.
+	CDboEventGenerator::IconPopupShow( TRUE, m_pTargetSobObj->GetSerialID(), PLACE_SUB_TARGETUI, 1, rect.right - iAdjust, -iAdjust );		// Distinguish between ShareTarget and Menu by nSrcSlotId.
 }
 
 VOID CTargetHpGui::OnMouseUpTargetsTarget(const CKey & key)
@@ -1126,7 +1126,7 @@ VOID CTargetHpGui::SetTargetMobNpcTypeIcon(RwUInt8 byType)
 }
 
 VOID CTargetHpGui::SetMobGrade( RwUInt8 byMobGrade )
-{ // Show 여부도 판단
+{ // Determine whether to show or not
 	gui::CSurface	surface;
 	std::wstring	wstrToolTip;
 

@@ -5,10 +5,10 @@
 * Date			: 2008. 12. 19
 * Abstract		: 
 *****************************************************************************
-* Desc			: 언어별, 국가별 상황에 따른 단어 혹은 글자의 변경을 한다.
-*				  예) 한국어의 을/를, 이/가 등등..
-*
-*				  일본어는 적용 대상이 없다.
+* Desc: Change the word or letter according to the situation of each language or country.
+* Example) Change Korean's 을/를, 이/가, etc...
+* *
+* Japanese is not applicable.
 *****************************************************************************/
 
 #pragma once
@@ -37,7 +37,7 @@ public:
 	CStringLocalConverter() {}
 	virtual ~CStringLocalConverter() {}
 
-	///< 언어별 상황에 따라 변경된 스트링을 반환한다
+	///< Returns a language-specific context-modified string
 	const WCHAR*	LocalStringCovert(const WCHAR* pwcText);
 
 protected:

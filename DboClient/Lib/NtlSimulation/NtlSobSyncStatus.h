@@ -6,10 +6,10 @@
  * Date			: 2005. 11. 16	
  * Abstract		: Simulation Status object
  *****************************************************************************
- * Desc         : 서버에서 내려주는 damage와 hp/mp/cp 채우기 packet에 동기화 처리에 사용한다.
- *				  서버에서 먼저 damage를 내려주어도, 공격 animation 동기화로 인하여, 나중에 처리될 수 있다.
-                  이런 경우에 current hp를 그대로 actor에 적용한다면, avatar gui hp bar가 들쑥날쑥 이상해
-				  보인다. 이런 경우에 animation 동기화 damage 및 hp/mp/cp 처리를 하기 위하여 만들었다.
+ * Desc         : It is used to synchronize damage and hp/mp/cp fill packets sent from the server.
+ *                Even if the server deals damage first, it can be processed later due to attack animation synchronization.
+                  In this case, if you apply the current hp to the actor as is, the avatar gui hp bar will be jagged and strange.
+				  It seems. In this case, it was created to handle animation synchronization damage and hp/mp/cp.
  *****************************************************************************/
 
 #ifndef __NTL_SOB_SYNC_STATUS_H__
@@ -27,14 +27,14 @@ protected:
 	RwBool m_bFinish;
 	
 	/**
-	* 생성자
+	*constructor
 	*/
 	CNtlSobSyncStatus();
 	
 public:
 
 	/**
-	* 소멸자
+	*destructor
 	*/
 	virtual ~CNtlSobSyncStatus();
 

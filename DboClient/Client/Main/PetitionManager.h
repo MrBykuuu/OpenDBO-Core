@@ -1,11 +1,11 @@
 /******************************************************************************
 * File			: PetitionManager.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2008. 10. 16
 * Abstract		: 
 *****************************************************************************
-* Desc			: 게임중 발생하는 유저의 진정에 관한 일을 맡아 한다
+* Desc			: Responsible for user complaints that occur during the game
 *****************************************************************************/
 
 #pragma once

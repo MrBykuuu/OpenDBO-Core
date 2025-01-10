@@ -77,7 +77,7 @@ RwBool CNtlPLLightIndoor::Create(const SPLEntityCreateParam *pParam)
 	SetRotate(pCreateParam->vRotate.x, pCreateParam->vRotate.y, pCreateParam->vRotate.z);
 
 	//CNtlWorldRpLightManager::GetInstance()->RequestCreateRpLight(m_pLight, this);
-	SetRealLight(pCreateParam->bRealLight); // SetRealLight 에서 위의 이벤트를 호출한다.
+	SetRealLight(pCreateParam->bRealLight); // Call the above event in SetRealLight.
 
 
 	m_rpLightType	= pCreateParam->rpLightType;

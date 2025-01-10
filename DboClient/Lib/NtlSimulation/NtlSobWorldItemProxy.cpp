@@ -1,19 +1,19 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobWorldItemProxy.h"
 
-// shared
+// Shared
 #include "ItemTable.h"
 #include "TableContainer.h"
 #include "DragonBallTable.h"
 
-// core
+// Core
 #include "NtlMath.h"
 
-//// presentation
+//// Presentation
 #include "NtlPLSceneManager.h"
 #include "NtlPLItem.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSob.h"
 #include "NtlSobWorldItem.h"
@@ -56,7 +56,7 @@ RwBool CNtlSobWorldItemProxy::Create(RwUInt32 uiCompType)
 	return TRUE;
 }
 
-/*Human_Male*/
+/*Human male*/
 VOID CNtlSobWorldItemProxy::Destroy(VOID)
 {
 	DeletePLWorldItem();
@@ -94,7 +94,7 @@ VOID CNtlSobWorldItemProxy::CreatePLWorldItem( RWS::CMsg& msg )
 		{
 			if( pAttr->IsDragonBall() )
 			{
-                // 드래곤볼 타입을 판단한다.
+                // Determine the dragon ball type.
                 sITEM_TBLDAT* pTblDat = pAttr->GetItemTbl();
                 if(!pTblDat)
                     return;
@@ -105,7 +105,6 @@ VOID CNtlSobWorldItemProxy::CreatePLWorldItem( RWS::CMsg& msg )
 
                 eDRAGON_BALL_TYPE byType = pDBTable->GetDropItemType(pTblDat->tblidx);
         //        NTL_ASSERT(byType != DRAGON_BALL_TYPE_NONE, __FUNCTION__ << "DragonBall Drop Type Invalid" );
-
 				if (byType == DRAGON_BALL_TYPE_NONE) // by daneos
 				{
 					szModelName = WORLDITEM_MODELNAME_DRANGONBALL_BASIC;

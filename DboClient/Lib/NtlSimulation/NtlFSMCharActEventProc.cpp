@@ -1,7 +1,7 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlFSMCharActEventProc.h"
 
-// shared
+// Shared
 #include "NtlBattle.h"
 #include "NtlPacketGU.h"
 #include "NtlMovement.h"
@@ -9,18 +9,18 @@
 #include "SystemEffectTable.h"
 #include "TableContainer.h"
 
-// sound
+// Sound
 #include "NtlSoundDefines.h"
 #include "NtlSoundManager.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// presentation
+// Presentation
 #include "NtlAnimEventData.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSobActor.h"
 #include "NtlBehaviorDef.h"
@@ -87,7 +87,7 @@ void FillAttackStuff(SAttackStuff *pAttStuff, SERIAL_HANDLE hAttackerSerialId, S
 		bSkillConsider = FALSE;
 	}
 	
-	// skill 사용시 DH or HOT or DB or BB or DC or CB
+	// skill when use DH or HOT or DB or BB or DC or CB
 	if(bSkillConsider && byLogicType == NTL_ATTACK_LOGIC_SKILL)
 	{
 		CSkillTable *pSkillTbl = API_GetTableContainer()->GetSkillTable();
@@ -236,7 +236,7 @@ RwUInt8 JumpKeyStopMapping(RwUInt8 byCurrKey)
 
 void HitTargetEffectDirect(CNtlSobActor *pActor, const SHitStuff *pHitStuff)
 {
-	// Guard Block을 성공했으면...
+	//If the guard block is successful...
 	RwUInt8 byBlocking			= pHitStuff->uiAttr.bitBlocking;
 	RwUInt8 byTargetEffectDir	= pHitStuff->byTargetEffectDir;
 
@@ -246,17 +246,17 @@ void HitTargetEffectDirect(CNtlSobActor *pActor, const SHitStuff *pHitStuff)
 	}
 
 	//-------------------------------------------------
-	// effect를 출력한다.
+	// Outputs the effect.
 	CNtlSobProxy *pSobProxy = pActor->GetSobProxy();
 	RwV3d vPos = pActor->GetPosition();
 
-	// 기본 attack effect
+	// Basic attack effect
 	RwV3d vTargetEffPos;
 	CNtlPLEntity *pPLTarEntity = NULL;
 	if(pHitStuff->bCreateHitStuffEffect && strlen(pHitStuff->chTargetEffName) > 0)
 	{
         vTargetEffPos = vPos;
-		// physic 공격(miss 일때는 타격 이펙트를 뺀다.)
+		// physics attack (in case of a miss, the hitting effect is subtracted)
 		if(pHitStuff->uiAttr.bitPhysic == NTL_ATTACK_PHYSIC_MELEE)
 		{
 			if(pHitStuff->uiAttr.bitResult != NTL_ATTACK_RESULT_DODGE)
@@ -285,7 +285,7 @@ void HitTargetEffectDirect(CNtlSobActor *pActor, const SHitStuff *pHitStuff)
 					
 			}
 		}
-		// energy attack.(healing, buff 전부 포함)
+		// energy attack. (including healing and buffs)
 		else
 		{
 			
@@ -303,7 +303,7 @@ void HitTargetEffectDirect(CNtlSobActor *pActor, const SHitStuff *pHitStuff)
 		}
 	}
 
-	// target effect 방향을 설정한다.)
+	// Set the target effect direction.)
 	if(pPLTarEntity)
 	{
 		if(byTargetEffectDir != TARGET_EFFECT_TYPE_NONE)
@@ -344,7 +344,7 @@ void HitResultDirect(CNtlSobActor *pActor, const SHitStuff *pHitStuff)
 	RwV3d vPos = pActor->GetPosition();
 	RwV3d vTargetEffPos;
 
-	// heal or buff skill이 아니면?
+	// What if it's not a heal or buff skill?
 	RwUInt8 byResult	= pHitStuff->uiAttr.bitResult;
 	RwUInt8 byBlocking	= pHitStuff->uiAttr.bitBlocking;
 
@@ -499,17 +499,17 @@ void HitResultDirect(CNtlSobActor *pActor, const SHitStuff *pHitStuff)
 		}
 		else if(byResult == NTL_ATTACK_RESULT_HEALING)
 		{
-			// damage를 출력한다.
+			// Prints damage.
 			pSobProxy->CreatePLDamageBox(vPos, pHitStuff->sDamageStuff.iDamage, TRUE);
 		}
 	}
 
 	//---------------------------------------------------
-	// blocking effect 출력.
+	// Blocking effect output.
 		
 	if(byBlocking != DBO_GUARD_TYPE_INVALID)
 	{
-		// effect 연출.
+		// Effect production.
 
 		RwReal fPLEntityHalfWidth = pSobProxy->GetPLEntityWidth()/2.0f;
 		RwReal fPLEntityHeight = pSobProxy->GetPLEntityHeight();
@@ -565,7 +565,7 @@ void HitResultDirect(CNtlSobActor *pActor, const SHitStuff *pHitStuff)
 
 void HitStatusStealSkillDirect(CNtlSobActor *pActor, const SHitStuff *pHitStuff)
 {
-	if(pHitStuff->uiAttr.bitResult == NTL_ATTACK_RESULT_STEAL ||            // 이 플래그는 Projectile 전용이다. (Client 처리용) 아래 코드 참조
+	if(pHitStuff->uiAttr.bitResult == NTL_ATTACK_RESULT_STEAL ||            // This flag is for Projectile only. (For client processing) See code below
        pHitStuff->uiAttr.bitResult == NTL_ATTACK_RESULT_BLOCK ||
        pHitStuff->uiAttr.bitReserved == NTL_ATTACK_RESULT_DODGE)
 		return;
@@ -630,7 +630,7 @@ void HitStatusStealSkillDirect(CNtlSobActor *pActor, const SHitStuff *pHitStuff)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// event 처리 함수.
+// event processing function.
 
 void FSMEvent_CharActActionMapJump(CNtlSobActor *pActor, SNtlEventActionMapJump *pJump, CNtlFSMStateBase *pStateBase)
 {
@@ -792,7 +792,7 @@ void FSMEvent_CharActActionMapAutoFollow(CNtlSobActor *pActor, SNtlEventActionMa
 	pMoveStuff->byFormFlag = NTL_MOVE_FLAG_RUN;
 	pMoveStuff->hFollowSerialId = pAutoFollow->hTargetSerialId;
 
-    // 현재 위치가 육지인지 물속인지 파악한다.    
+    // Determine whether the current location is on land or underwater.    
     SWorldHeightStuff hStuff;
     if(Logic_IsSwimmingActor(pActor, &pActor->GetPosition(), hStuff))
         pMoveStuff->byForm = NTL_MOVEFORM_SWIMMING;

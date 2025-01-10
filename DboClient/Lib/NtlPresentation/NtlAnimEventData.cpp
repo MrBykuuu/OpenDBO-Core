@@ -46,7 +46,7 @@ void SEventAnimHit::SaveSerialize(CNtlSerializer& sOut)
         break;
     }
 
-    // 카메라 셰이크
+    // camera shake
     if(bCameraShake)
     {
         sOut<<fCameraShakeFactor;

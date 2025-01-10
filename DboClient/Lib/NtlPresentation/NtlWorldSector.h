@@ -168,7 +168,7 @@ public:
 	RwBool m_bCullCheck;
 
 	// Occlusion
-	//RwBool m_IsOccluded; // -> COccluderManager 에게 Query 한다.
+	//RwBool m_IsOccluded; // -> COccluderManager to Query  .
 
 	// Tile transparency
 	RwBool m_IsTileTransparency;

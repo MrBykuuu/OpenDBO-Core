@@ -1,7 +1,7 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobHTBSkillIcon.h"
 
-// shared
+// Shared
 #include "NtlSkill.h"
 #include "HTBSetTable.h"
 #include "NtlResultCode.h"
@@ -9,7 +9,7 @@
 #include "SkillTable.h"
 #include "TableContainer.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
@@ -80,7 +80,7 @@ RwBool CNtlSobHTBSkillIcon::IsUsePossible(void)
 		}
 	}
 
-	// 비히클, 스피닝어택중일때는 HTB스킬은 사용하지 못한다
+	//HTB skills cannot be used when using a vehicle or spinning attack.
 	if(Logic_IsTransform(GetNtlSLGlobal()->GetSobAvatar()))
 	{
 		DWORD flag = pSkillData->dwTransform_Use_Info_Bit_Flag;        
@@ -153,7 +153,7 @@ RwBool CNtlSobHTBSkillIcon::Use(SERIAL_HANDLE hTargetSerialId, RwUInt32 uiRPBonu
 	}
 
 	//-----------------------------------------------------------------
-	// casting 검사.
+	// casting inspection.
 
 	if(m_byIconState == ICON_STATE_COOLING)
 	{
@@ -162,9 +162,9 @@ RwBool CNtlSobHTBSkillIcon::Use(SERIAL_HANDLE hTargetSerialId, RwUInt32 uiRPBonu
 	}
 
 	//-----------------------------------------------------------------
-	// target 유효 검사.
+	// target validation.
 
-	// 자기 자신을 click하고 사용했을 경우.
+	// If you click on yourself and use it.
 	if(m_pSobObj->GetOwnerID() == hTargetSerialId)
 	{
 		CNtlSLEventGenerator::SysMsg(m_pSobObj->GetOwnerID(), "GAME_SKILL_INVALID_TARGET_APPOINTED");
@@ -227,8 +227,8 @@ RwBool CNtlSobHTBSkillIcon::Use(SERIAL_HANDLE hTargetSerialId, RwUInt32 uiRPBonu
 	}
 
 	//-----------------------------------------------------------------
-	// event 보내기.
-
+	// Send event.
+	
 	CNtlSLEventGenerator::ActionMapHTBUse(pSobHTBSkill->GetOwnerID(), hTargetSerialId, pSobHTBSkill->GetSerialID(),
 											fSkillRange, pSobHTBSkill->GetSlotIdx());
 

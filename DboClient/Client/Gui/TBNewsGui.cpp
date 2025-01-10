@@ -17,7 +17,7 @@
 #include "BudokaiTable.h"
 #include "TableContainer.h"
 
-// DBO
+// Dbo
 #include "DboEvent.h"
 #include "DialogManager.h"
 #include "DboGlobal.h"
@@ -30,7 +30,7 @@
 
 /**
 * \brief Construction
-* \param pName	(const RwChar*) GUI의 이름
+* \param pName	(const RwChar*) Name of the GUI
 */
 CTBNewsGui::CTBNewsGui( const RwChar* pName )
 : CNtlPLGui(pName)
@@ -202,8 +202,8 @@ void CTBNewsGui::Update( RwReal fElapsed )
 		sBUDOKAI_UPDATE_MATCH_STATE_INFO* pIndividualMatch;
 		sBUDOKAI_UPDATE_MATCH_STATE_INFO* pTeamMatch;
 
-		// NULL 일 때는 아바타 생성 전에 정보가 들어왔을 경우
-		// NULL이 아닐 때는 정상적으로 데이터가 셋팅 되었을 경우
+		// If NULL, the information was received before avatar creation.
+		// If it is not NULL, the data is set normally.
 		if( pSobAvatar == NULL )
 		{
 			pMainStateInfo = &GetNtlSLGlobal()->GetTBudokaiStateInfo()->sStateInfo;
@@ -223,7 +223,7 @@ void CTBNewsGui::Update( RwReal fElapsed )
 			pTeamMatch->byState == BUDOKAI_MATCHSTATE_MATCH_END &&
 			IsBudokaiOpen( pMainStateInfo->byState ) )
 		{
-			// 무도사 마을 입장 종료 : %s 남았습니다.
+			// Entry to Martial Artist Village ends: %s remain.
 			WCHAR awcBuffer[128];
 			swprintf_s( awcBuffer, 128, GetDisplayStringManager()->GetString( "DST_BUDOKAI_NEWS_MUDOSA_ENTER_LEFT_TIME" ), 
 				pIndividualMatch->tmRemainTime > pTeamMatch->tmRemainTime ? Logic_GetTBRemainTimeString( pIndividualMatch->tmRemainTime ) : Logic_GetTBRemainTimeString( pTeamMatch->tmRemainTime ) );
@@ -244,12 +244,12 @@ RwInt32 CTBNewsGui::SwitchDialog( bool bOpen )
 		UpdateInterface();
 		UpdateButtons();
 		
-		// 정보 박스의 정보가 업데이트 되는지 안되는지의 여부
+		// Whether the information in the information box is updated or not
 		UpdateInstanceInfo();
 	}
 	else
 	{
-		// 소식지를 닫으면 때 신청서도 같이 닫긴다.
+		// When you close the newsletter, the application form also closes.
 		if( GetDialogManager()->IsOpenDialog( DIALOG_BUDOKAI_REQUEST ) )
 			GetDialogManager()->CloseDialog( DIALOG_BUDOKAI_REQUEST );
 	}
@@ -275,7 +275,7 @@ void CTBNewsGui::HandleEvents( RWS::CMsg& msg )
 			UpdateButtons();
 		}
 	}
-	// Match의 State가 변경되었을 때는 뉴스를 Setting해주고 Update해준다.
+	// When the state of the match changes, the news is set and updated.
 	else if( msg.Id == g_EventBudokaiUpdateMatchStateNfy )
 	{
 	
@@ -300,7 +300,7 @@ void CTBNewsGui::HandleEvents( RWS::CMsg& msg )
 	}
 	else if( msg.Id == g_EventBudokaiLeaveTeamNfy )
 	{
-		// 팀의 리더가 천하제일 무도회 신청을 취소하였습니다.
+		// The team leader canceled the application for the World's Best Martial Arts Club.
 		GetAlarmManager()->AlarmMessage( "DST_BUDOKAI_TEAM_LEAVE_NOTIFY" );
 
 		if( GetDialogManager()->IsOpenDialog( DIALOG_BUDOKAI_NEWS ) )
@@ -334,11 +334,11 @@ void CTBNewsGui::HandleEvents( RWS::CMsg& msg )
 		// get sVARIABLE_DATA
 		sVARIABLE_DATA* pVarData = reinterpret_cast<sVARIABLE_DATA*>(pData->pData);
 
-		// 우승자
+		// winner
 		int nWinnerSize = pVarData->GetSize( pData->wWinner );
 		::CopyMemory( awcWinnerName, pVarData->Read( pData->wWinner ), nWinnerSize );
 
-		// 준우승자 이름
+		// Runner-up Name
 		int nSecondWinnerSize = pVarData->GetSize( pData->wSecondWinner );
 		::CopyMemory( awcSecondWinnerName, pVarData->Read( pData->wSecondWinner ), nSecondWinnerSize );
 
@@ -349,8 +349,8 @@ void CTBNewsGui::HandleEvents( RWS::CMsg& msg )
 		sBUDOKAI_UPDATE_MATCH_STATE_INFO* pIndividualMatch;
 		sBUDOKAI_UPDATE_MATCH_STATE_INFO* pTeamMatch;
 
-		// NULL 일 때는 아바타 생성 전에 정보가 들어왔을 경우
-		// NULL이 아닐 때는 정상적으로 데이터가 셋팅 되었을 경우
+		// If NULL, the information was received before avatar creation.
+		// If it is not NULL, the data is set normally.
 		if( pSobAvatar == NULL )
 		{
 			pMainStateInfo = &GetNtlSLGlobal()->GetTBudokaiStateInfo()->sStateInfo;
@@ -395,7 +395,7 @@ void CTBNewsGui::HandleEvents( RWS::CMsg& msg )
 }
 
 /**
-* \brief 유저 인터페이스 세팅
+* \brief User interface settings
 */
 void CTBNewsGui::UpdateInterface()
 {
@@ -409,8 +409,8 @@ void CTBNewsGui::UpdateInterface()
 	sBUDOKAI_UPDATE_MATCH_STATE_INFO* pIndividualMatch;
 	sBUDOKAI_UPDATE_MATCH_STATE_INFO* pTeamMatch;
 	
-	// NULL 일 때는 아바타 생성 전에 정보가 들어왔을 경우
-	// NULL이 아닐 때는 정상적으로 데이터가 셋팅 되었을 경우
+	// If NULL, the information was received before avatar creation.
+	// If it is not NULL, the data is set normally.
 	if( pSobAvatar == NULL )
 	{
 		pMainStateInfo = &GetNtlSLGlobal()->GetTBudokaiStateInfo()->sStateInfo;
@@ -426,12 +426,12 @@ void CTBNewsGui::UpdateInterface()
 		pTeamMatch = pSobAvatar->GetTenkaichiBudokai()->GetTeamMatchStateInfo();
 	}
 
-	// 제 %d 회 천하제일 무도회
+	// %d World's Best Ballroom
 	WCHAR awcBuffer[128];
 	swprintf_s( awcBuffer, 128, GetDisplayStringManager()->GetString( "DST_BUDOKAI_NEWS_TITLE" ), pMainStateInfo->wSeasonCount );
 	m_pStbTitle->SetText( awcBuffer );
 
-	// 천하제일 무도회 테이블
+	// The best ballroom table in the world
 	CBudokaiTable* pBudokaiTable = API_GetTableContainer()->GetBudokaiTable();
 	if( !pBudokaiTable )
 	{
@@ -439,7 +439,7 @@ void CTBNewsGui::UpdateInterface()
 		return;
 	}
 	
-	// 부도카이 테이블 정보
+	// Budokai table information
 	sBUDOKAI_TBLINFO* pBudokaiTblInfo = pBudokaiTable->GetBudokaiTblInfo();
 	if( !pBudokaiTblInfo )
 	{
@@ -447,7 +447,7 @@ void CTBNewsGui::UpdateInterface()
 		return;
 	}
 
-	// 메인 스테이트에 따른 업데이트
+	// Update according to main state
 	switch( pMainStateInfo->byState )
 	{
 		// Notice
@@ -456,7 +456,7 @@ void CTBNewsGui::UpdateInterface()
 		{
 			UpdateNoticeImage( NIT_STATE_GUIDE );
 
-			// 예선 신청 기간 구하기
+			// Find the preliminary application period
 			tm tmMinorStart;
 			tm tmMinorEnd;
 			tm tmDojoStart;
@@ -491,11 +491,11 @@ void CTBNewsGui::UpdateInterface()
 				DBO_FAIL( "UpdateuserInterface - " << timeMinorEnd );
 			}
 
-			// 도장 추천 기간
+			// Dojo recommendation period
 			m_pStbNoticeText[TL_1]->SetText( GetDisplayStringManager()->GetString( "DST_BUDOKAI_NEWS_NOTICE_GUIDE_DOJO_TITLE" ) );
 			m_pStbNoticeText[TL_2]->SetText( Logic_GetTBDateToDateString( tmDojoStart, tmDojoEnd ) );
 
-			// 예선 신청 기간
+			// Preliminary application period
 			m_pStbNoticeText[TL_3]->SetText( GetDisplayStringManager()->GetString( "DST_BUDOKAI_NEWS_NOTICE_GUIDE_MINOR_TITLE" ) );
 			m_pStbNoticeText[TL_4]->SetText( Logic_GetTBDateToDateString( tmMinorStart, tmMinorEnd ) );
 		}
@@ -546,11 +546,11 @@ void CTBNewsGui::UpdateInterface()
 				DBO_FAIL( "UpdateInterface - "<< timeMinorEnd );
 			}
 
-			// 도장 추천 기간
+			// Dojo recommendation period
 			m_pStbNoticeText[TL_1]->SetText( GetDisplayStringManager()->GetString( "DST_BUDOKAI_NEWS_NOTICE_GUIDE_DOJO_TITLE" ) );
 			m_pStbNoticeText[TL_2]->SetText( Logic_GetTBDateToDateString( tmDojoStart, tmDojoEnd ) );
 
-			// 예선 신청 기간
+			// Preliminary application period
 			m_pStbNoticeText[TL_3]->SetText( GetDisplayStringManager()->GetString( "DST_BUDOKAI_NEWS_NOTICE_GUIDE_MINOR_TITLE" ) );
 			m_pStbNoticeText[TL_4]->SetText( Logic_GetTBDateToDateString( tmMinorStart, tmMinorEnd ) );
 		}
@@ -579,7 +579,7 @@ void CTBNewsGui::UpdateInterface()
 	if( GetBudokaiType(pMainStateInfo->byState) == BUDOKAI_TYPE_ADULT )
 	{
 		m_pStbNewsMark->AddSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface("TBNewsGui.srf", "srfTBNewsAdultTab" ) );
-		// 리소스 작업이 끝나면 색상을 맞춰서 업데이트 하도록 한다.
+		// After completing the resource work, update the color to match.
 		/*m_pStbNewsMark->SetText( GetDisplayStringManager()->GetString( DST_BUDOKAI_TYPE_ADULT_TITLE ) ); */
 	}
 	else
@@ -590,7 +590,7 @@ void CTBNewsGui::UpdateInterface()
 }
 
 /**
-* \brief 현재의 상태에서 알맞은 버튼을 출력한다.
+* \brief Prints the appropriate button in the current state.
 */
 void CTBNewsGui::UpdateButtons()
 {
@@ -614,7 +614,7 @@ void CTBNewsGui::UpdateButtons()
 		pMainStateInfo->byState != BUDOKAI_STATE_JUNIOR_OPEN )
 		return;
 	
-	// 신청 버튼 및 접수증 버튼
+	// Application button and receipt button
 	if( pJoinInfo->byJoinState == BUDOKAI_JOIN_STATE_PLAY )
 	{
 		if( pIndividualMatch->byState != BUDOKAI_MATCHSTATE_MATCH_END &&
@@ -632,7 +632,7 @@ void CTBNewsGui::UpdateButtons()
 			m_pBtnPartyRequest->Show( true );
 	}
 
-	// 대진표 버튼
+	// bracket button
 	if( pIndividualMatch->byState >= BUDOKAI_MATCHSTATE_MAJORMATCH_32 &&
 		pIndividualMatch->byState <= BUDOKAI_MATCHSTATE_MATCH_END)
 	{
@@ -646,7 +646,7 @@ void CTBNewsGui::UpdateButtons()
 }
 
 /**
-* \brief 닫기
+* \brief Close
 */
 void CTBNewsGui::OnClickedBtnClose( gui::CComponent* pComponent )
 {
@@ -654,7 +654,7 @@ void CTBNewsGui::OnClickedBtnClose( gui::CComponent* pComponent )
 }
 
 /**
-* \brief 신청서 GUI 열기
+* \brief Open application GUI
 */
 void CTBNewsGui::OnClickedBtnSoloRequest( gui::CComponent* pComponent )
 {
@@ -674,7 +674,7 @@ void CTBNewsGui::OnClickedBtnPartyRequest( gui::CComponent* pComponent )
 {
 	if( !Logic_I_am_PartyLeader() )
 	{
-		// 파티리더만 신청할 수 있습니다.
+		// Only party leaders can apply.
 		GetAlarmManager()->AlarmMessage( "DST_BUDOKAI_NEWS_CAN_ONLY_LEADER" );
 		return;
 	}
@@ -713,7 +713,7 @@ void CTBNewsGui::OnClickedBtnLicense( gui::CComponent* pComponent )
 }
 
 /**
-* \brief 대진표 GUI 열기
+* \brief Open Bracket GUI
 */
 void CTBNewsGui::OnClickedBtnTournenment( gui::CComponent* pComponent )
 {
@@ -721,13 +721,13 @@ void CTBNewsGui::OnClickedBtnTournenment( gui::CComponent* pComponent )
 }
 
 /**
-* \brief Info Box의 위치를 초기화한다.
+* \brief Initializes the location of the Info Box.
 */
 void CTBNewsGui::InitInfoBox()
 {
 	CRectangle rtScreen = m_pDlgInfo->GetScreenRect();
 
-	// StaticBox  위치의 초기화
+	// Initialization of StaticBox position
 	m_fBoxPresentPosX[0] = (RwReal)rtScreen.GetWidth();
 	m_paStbInfoBox[0]->SetPosition( (RwInt32)m_fBoxPresentPosX[0], 0 );
 	m_paStbInfoBox[0]->GetFitWidthToString();
@@ -737,7 +737,7 @@ void CTBNewsGui::InitInfoBox()
 }
 
 /**
-* \brief 다음 상태에 대한 메시지를 가져온다.
+* \brief Gets messages about the following status.
 */
 WCHAR* CTBNewsGui::GetNextStepString( RwUInt8 byMatchType )
 {
@@ -851,9 +851,9 @@ WCHAR* CTBNewsGui::GetNextStepString( RwUInt8 byMatchType )
 }
 
 /**
-* \brief InfoBox의 번호와 컴포넌트로 인포박스의 현재 상태에 맞는 텍스트를 출력한다.
-* \param byInfoBoxNum			(RwUInt8) 정보 박스의 번호
-* \param pStbInfoBox			(gui::CStaticBox*) 컴포넌트의 포인터
+* \brief Outputs text that matches the current state of the infobox using the number and component of the infobox.
+* \param byInfoBoxNum (RwUInt8) Number of information box
+* \param pStbInfoBox (gui::CStaticBox*) Pointer to the component.
 */
 void CTBNewsGui::SetInfoBox( RwUInt8 byInfoBoxNum, gui::CStaticBox* pStbInfoBox )
 {
@@ -863,15 +863,15 @@ void CTBNewsGui::SetInfoBox( RwUInt8 byInfoBoxNum, gui::CStaticBox* pStbInfoBox 
 		{
 			CNtlSobAvatar* pSobAvatar = GetNtlSLGlobal()->GetSobAvatar();
 			
-			// NULL 일 때는 아바타 생성 전에 정보가 들어왔을 경우
-			// NULL이 아닐 때는 정상적으로 데이터가 셋팅 되었을 경우
+			// If NULL, the information was received before avatar creation.
+			// If it is not NULL, the data is set normally.
 			sBUDOKAI_JOIN_INFO* pJoinInfo = pSobAvatar->GetTenkaichiBudokai()->GetBudokaiJoinInfo();
 			if( pSobAvatar == NULL )
 				pJoinInfo = &GetNtlSLGlobal()->GetTBudokaiStateInfo()->sJoinInfo;
 			else
 				pJoinInfo = pSobAvatar->GetTenkaichiBudokai()->GetBudokaiJoinInfo();	
 
-			// 신청 버튼
+			// apply button
 			if( pJoinInfo->byJoinState == INVALID_BUDOKAI_JOIN_STATE )
 			{
 				pStbInfoBox->SetText( GetDisplayStringManager()->GetString( "DST_BUDOKAI_NEWS_YOU_ARE_NOT_ENTRANT" ) );
@@ -919,7 +919,7 @@ void CTBNewsGui::SetInfoBox( RwUInt8 byInfoBoxNum, gui::CStaticBox* pStbInfoBox 
 }
 
 /**
-* \brief 지금 현재 뜨고 있는 정보의 텍스트가 변경되어야 한다면 변경해주고 위치를 맞춰준다.
+* \brief If the text of the information currently displayed needs to be changed, change it and adjust the position.
 */
 void CTBNewsGui::UpdateInstanceInfo()
 {
@@ -928,7 +928,7 @@ void CTBNewsGui::UpdateInstanceInfo()
 		RwInt32 nOldWidth = m_paStbInfoBox[i]->GetScreenRect().GetWidth();
 		SetInfoBox( m_aBoxPresentInfo[i], m_paStbInfoBox[i] );
 
-		// 만약 크기가 변경되었는데 현재의 박스가 첫번째 박스라면 뒤에 있는 박스의 위치를 맞춰준다.
+		// If the size has changed and the current box is the first box, the position of the box behind it is adjusted.
 		if( nOldWidth != m_paStbInfoBox[i]->GetScreenRect().GetWidth() )
 		{
 			RwInt32 nOtherBox = (i+1) % dTBNEWS_INFO_BOX_NUMS;
@@ -949,7 +949,7 @@ void CTBNewsGui::UpdateInstanceInfo()
 
 void CTBNewsGui::SetNews( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchState )
 {
-	// 천하제일 무도회 테이블
+	// The best ballroom table in the world
 	CBudokaiTable* pBudokaiTable = API_GetTableContainer()->GetBudokaiTable();
 	if( !pBudokaiTable )
 	{
@@ -957,7 +957,7 @@ void CTBNewsGui::SetNews( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchState )
 		return;
 	}
 
-	// 부도카이 테이블 정보
+	// Budokai table information
 	sBUDOKAI_TBLINFO* pBudokaiTblInfo = pBudokaiTable->GetBudokaiTblInfo();
 	if( !pBudokaiTblInfo )
 	{
@@ -989,10 +989,10 @@ void CTBNewsGui::SetNews( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchState )
 		}
 		else
 		{
-			// Set 헤드라인
+			// Set headlines
 			m_pStbHeadLine->SetText( GetDisplayStringManager()->GetString( "DST_BUDOKAI_NEWS_HEADLINE_MAJOR" ) );
 
-			// 랜덤 Html
+			// Random Html
 			RwUInt8 byRandomNews = (RwUInt8)gui::RandomNumber( 0, BUDOKAI_NEW_FILE_COUNT-1 );
 
 			CHAR acBuffer[256];
@@ -1015,8 +1015,8 @@ void CTBNewsGui::SetMatchNotice( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchSt
 	sBUDOKAI_UPDATE_MATCH_STATE_INFO* pIndividualMatch;
 	sBUDOKAI_UPDATE_MATCH_STATE_INFO* pTeamMatch;
 
-	// NULL 일 때는 아바타 생성 전에 정보가 들어왔을 경우
-	// NULL이 아닐 때는 정상적으로 데이터가 셋팅 되었을 경우
+	// If NULL, the information was received before avatar creation.
+	// If it is not NULL, the data is set normally.
 	if( pSobAvatar == NULL )
 	{
 		pMainStateInfo = &GetNtlSLGlobal()->GetTBudokaiStateInfo()->sStateInfo;
@@ -1032,7 +1032,7 @@ void CTBNewsGui::SetMatchNotice( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchSt
 		pTeamMatch = pSobAvatar->GetTenkaichiBudokai()->GetTeamMatchStateInfo();
 	}
 
-	// 천하제일 무도회 테이블
+	// The best ballroom table in the world
 	CBudokaiTable* pBudokaiTable = API_GetTableContainer()->GetBudokaiTable();
 	if( !pBudokaiTable )
 	{
@@ -1040,7 +1040,7 @@ void CTBNewsGui::SetMatchNotice( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchSt
 		return;
 	}
 
-	// 부도카이 테이블 정보
+	// Budokai table information
 	sBUDOKAI_TBLINFO* pBudokaiTblInfo = pBudokaiTable->GetBudokaiTblInfo();
 	if( !pBudokaiTblInfo )
 	{
@@ -1092,7 +1092,7 @@ void CTBNewsGui::SetMatchNotice( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchSt
 		return;
 	}
 
-	// Upper 공지는 개인전 상태에 따라 일정을 공지한다.
+	// Upper notice announces the schedule depending on the status of the individual exhibition.
 	if( byIndiMatchState == BUDOKAI_MATCHSTATE_REGISTER )
 	{
 		UpdateNoticeImage( NIT_STATE_GUIDE );
@@ -1105,7 +1105,7 @@ void CTBNewsGui::SetMatchNotice( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchSt
 		}
 		else
 		{
-			// 개인전 예선 신청 안내
+			// Information on application for individual competition preliminary round
 			tm tmWaitStart;
 			tm tmWaitEnd;
 
@@ -1129,7 +1129,7 @@ void CTBNewsGui::SetMatchNotice( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchSt
 	{
 		switch( byIndiMatchState )
 		{
-		case BUDOKAI_MATCHSTATE_WAIT_MINOR_MATCH:		// 예선전 대기			
+		case BUDOKAI_MATCHSTATE_WAIT_MINOR_MATCH:		// Waiting for preliminaries			
 			{
 				UpdateNoticeImage( NIT_STATE_GUIDE );
 
@@ -1202,8 +1202,8 @@ void CTBNewsGui::SetMatchNotice( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchSt
 				}
 			}
 			break;
-		case BUDOKAI_MATCHSTATE_WAIT_SEMIFINAL_MATCH:	// 준결승 대기
-		case BUDOKAI_MATCHSTATE_WAIT_FINAL_MATCH:		// 결승 대기 : 사용하지 않음
+		case BUDOKAI_MATCHSTATE_WAIT_SEMIFINAL_MATCH:	// waiting for semifinals
+		case BUDOKAI_MATCHSTATE_WAIT_FINAL_MATCH:		// Wait for final: Not used
 			{
 				UpdateNoticeImage( NIT_STATE_GUIDE );
 
@@ -1241,9 +1241,9 @@ void CTBNewsGui::SetMatchNotice( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchSt
 		case BUDOKAI_MATCHSTATE_MAJORMATCH_08:
 		case BUDOKAI_MATCHSTATE_MAJORMATCH_16:
 		case BUDOKAI_MATCHSTATE_MAJORMATCH_32:
-		case BUDOKAI_MATCHSTATE_SEMIFINAL_MATCH:		// 준결승
-		case BUDOKAI_MATCHSTATE_MINOR_MATCH:			// 예선전 
-		case BUDOKAI_MATCHSTATE_FINAL_MATCH:			// 결승
+		case BUDOKAI_MATCHSTATE_SEMIFINAL_MATCH:		// semifinal
+		case BUDOKAI_MATCHSTATE_MINOR_MATCH:			// preliminaries 
+		case BUDOKAI_MATCHSTATE_FINAL_MATCH:			// finals
 			{
 				UpdateNoticeImage( NIT_STATE_GUIDE );
 
@@ -1251,10 +1251,10 @@ void CTBNewsGui::SetMatchNotice( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchSt
 				m_pStbNoticeText[TL_2]->SetText( Logic_GetStringTBMatchState( byIndiMatchState ) );
 			}
 			break;
-		case BUDOKAI_MATCHSTATE_MATCH_END:				// 끝. 유예시간
+		case BUDOKAI_MATCHSTATE_MATCH_END:				// end. grace time
 			m_pStbNoticeText[TL_1]->SetText( GetDisplayStringManager()->GetString("DST_BUDOKAI_NEWS_NOTICE_INDI_WINNER") );
 			m_pStbNoticeText[TL_2]->Clear();
-			//  패킷 요청
+			//  packet request
 			GetDboGlobal()->GetGamePacketGenerator()->SendBudokaiPrizeWinnerNameReq();
 			break;
 		}
@@ -1272,7 +1272,7 @@ void CTBNewsGui::SetMatchNotice( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchSt
 		}
 		else
 		{
-			// 개인전 예선 신청 안내
+			// Information on application for individual competition preliminary round
 			tm tmWaitStart;
 			tm tmWaitEnd;
 
@@ -1296,7 +1296,7 @@ void CTBNewsGui::SetMatchNotice( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchSt
 	{
 		switch( byTeamMatchState )
 		{
-		case BUDOKAI_MATCHSTATE_WAIT_MINOR_MATCH:		// 예선전 대기
+		case BUDOKAI_MATCHSTATE_WAIT_MINOR_MATCH:		// Waiting for preliminaries
 			{
 				UpdateNoticeImage( NIT_STATE_GUIDE );
 
@@ -1368,8 +1368,8 @@ void CTBNewsGui::SetMatchNotice( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchSt
 				}
 			}
 			break;
-		case BUDOKAI_MATCHSTATE_WAIT_SEMIFINAL_MATCH:	// 준결승 대기
-		case BUDOKAI_MATCHSTATE_WAIT_FINAL_MATCH:		// 결승 대기 : 사용하지 않음
+		case BUDOKAI_MATCHSTATE_WAIT_SEMIFINAL_MATCH:	// waiting for semifinals
+		case BUDOKAI_MATCHSTATE_WAIT_FINAL_MATCH:		// Wait for final: Not used
 			{
 				UpdateNoticeImage( NIT_STATE_GUIDE );
 
@@ -1404,11 +1404,11 @@ void CTBNewsGui::SetMatchNotice( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchSt
 				}
 			}
 			break;
-		case BUDOKAI_MATCHSTATE_MINOR_MATCH:				// 예선전 
+		case BUDOKAI_MATCHSTATE_MINOR_MATCH:				// preliminaries 
 		case BUDOKAI_MATCHSTATE_MAJORMATCH_16:
 		case BUDOKAI_MATCHSTATE_MAJORMATCH_08:
-		case BUDOKAI_MATCHSTATE_SEMIFINAL_MATCH:			// 준결승
-		case BUDOKAI_MATCHSTATE_FINAL_MATCH:				// 결승
+		case BUDOKAI_MATCHSTATE_SEMIFINAL_MATCH:			// semifinal
+		case BUDOKAI_MATCHSTATE_FINAL_MATCH:				// finals
 			{
 				UpdateNoticeImage( NIT_STATE_GUIDE );
 
@@ -1416,7 +1416,7 @@ void CTBNewsGui::SetMatchNotice( RwUInt8 byIndiMatchState, RwUInt8 byTeamMatchSt
 				m_pStbNoticeText[TL_4]->SetText( Logic_GetStringTBMatchState( byTeamMatchState ) );
 			}
 			break;
-		case BUDOKAI_MATCHSTATE_MATCH_END:				// 끝. 유예시간
+		case BUDOKAI_MATCHSTATE_MATCH_END:				// end. grace time
 			UpdateNoticeImage( NIT_STATE_GUIDE );
 
 			m_pStbNoticeText[TL_3]->SetText( GetDisplayStringManager()->GetString("DST_BUDOKAI_NEWS_NOTICE_TEAM_WINNER") );
@@ -1447,7 +1447,7 @@ void CTBNewsGui::SetPrizeText( eNoticeType eNitType, RwUInt8 byMatchType, gui::C
 
 		if( uiWinnerLength > 0 && uiSecondWinnerLength > 0 )
 		{
-			// 모두 출력
+			// output all
 			WCHAR awcPrizeWinner[128];
 			swprintf_s( awcPrizeWinner, 128, GetDisplayStringManager()->GetString( uiStrPrizeWinner ), awcWinner );
 
@@ -1461,15 +1461,15 @@ void CTBNewsGui::SetPrizeText( eNoticeType eNitType, RwUInt8 byMatchType, gui::C
 		}
 		else if( uiWinnerLength > 0 )
 		{
-			// 우승자만 출력
-			// 모두 출력
+			// Print only winners
+			// output all
 			WCHAR awcPrizeWinner[128];
 			swprintf_s( awcPrizeWinner, 128, GetDisplayStringManager()->GetString( uiStrPrizeWinner ), awcWinner );
 			pComponent->SetText( awcPrizeWinner );
 		}
 		else
 		{
-			// 수상자가 없습니다.
+			// There are no winners.
 			pComponent->SetText( GetDisplayStringManager()->GetString( uiStrNotPrize ) );
 		}
 	}
@@ -1488,7 +1488,7 @@ void CTBNewsGui::SetPrizeText( eNoticeType eNitType, RwUInt8 byMatchType, gui::C
 			uiMatchType = "DST_BUDOKAI_NOTICE_PARTY";
 		}
 
-		// 개인전 : 우승자 / 이름, 준 우승자 / 이름
+		// Individual Exhibition: Winner/name, Runner-up/name
 		// %s: %s / %s, %s / %s
 		if( uiWinnerLength > 0 && uiSecondWinnerLength > 0 )
 		{

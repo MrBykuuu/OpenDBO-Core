@@ -1,13 +1,13 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobEventObject.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSobAttr.h"
@@ -30,7 +30,7 @@ RwBool CNtlSobEventObject::Create(VOID)
 {
 	NTL_FUNCTION(__FUNCTION__);
 
-	// proxy 설정
+	// proxy settings
 	m_pSobProxy = NTL_NEW CNtlSobEventObjectProxy();
 	m_pSobProxy->Create(0);
 	m_pSobProxy->SetSobObj(this);
@@ -40,7 +40,7 @@ RwBool CNtlSobEventObject::Create(VOID)
 		NTL_RETURN(FALSE);
 	}
 
-	// class name 설정.
+	// Set class name.
 	SetClassName(SLCLASS_NAME_EVENT_OBJECT);
 
 	NTL_RETURN(TRUE);
@@ -72,7 +72,7 @@ void CNtlSobEventObject::HandleEvents( RWS::CMsg& pMsg )
 		// proxy setting
 		GetSobProxy()->HandleEvents(pMsg);
 
-		// 좌표와 방향 세팅.
+		// Coordinate and direction settings.
 		//RwV3dAssignMacro(&m_vPos, &pSobCreate->vLoc);		
 	}
 

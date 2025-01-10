@@ -1,18 +1,18 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSLApi.h"
 
-// shared
+// Shared
 #include "TableContainer.h"
 #include "TableFileNameList.h"
 #include "NtlXMLDoc.h"
 #include "NtlBitFlagManager.h"
 
-// presentation
+// Presentation
 #include "NtlPLDamageBox.h"
 #include "NtlPLResourcePack.h"
 #include "NtlPLHelpers.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "NtlSLGlobal.h"
 #include "TableContainer.h"
@@ -91,7 +91,7 @@ RwUInt8	API_LoadSLDevMasterInformation(void)
 
 	char chBuffer[1024];
     
-	// master operation을 얻어온다.
+	//Get the master operation.
 	IXMLDOMNode* pNode = doc.SelectSingleNode((char*)"/master_options/op");
 	
 	if(!doc.GetTextWithAttributeName(pNode, "key", chBuffer, 1024))
@@ -111,7 +111,7 @@ RwUInt8	API_LoadSLDevMasterInformation(void)
 	g_pDevMasterInfo->bPackFileUse = TRUE;
 	g_pDevMasterInfo->bThreadLoading = TRUE;
 
-	// master cheat을 얻어온다.
+	// Get the master cheat.
 
 	pNode = doc.SelectSingleNode((char*)"/master_options/cheat");
 
@@ -143,7 +143,7 @@ RwUInt8	API_LoadSLDevMasterInformation(void)
 	
 	pNode->Release(); 
 
-	// master camera을 얻어온다.
+	// Obtain a master camera.
 	
 	pNode = doc.SelectSingleNode((char*)"/master_options/camera");
 	if(!doc.GetTextWithAttributeName(pNode, "fov", chBuffer, 1024))
@@ -184,7 +184,7 @@ RwUInt8	API_LoadSLDevMasterInformation(void)
 	pNode->Release(); 
 
 
-	// master screen을 얻어온다.
+	// Get the master screen.
 
 	pNode = doc.SelectSingleNode((char*)"/master_options/screen");
 	if(!doc.GetTextWithAttributeName(pNode, "modechange", chBuffer, 1024))
@@ -441,7 +441,7 @@ RwBool API_SLInit(RwBool bVirtualNet, CNtlCamera *pCamera, RwUInt8 byLoadMethod,
 	g_pGameCameraManager->SetActiveCamera(pCamera);
 	g_pCamera = pCamera;
 
-	// event handler 등록.
+	// Register event handler.
 	CNtlSobCharProxy::RegisterEventHandler();
 
 	g_pSLGlobal = NTL_NEW CNtlSLGlobal;
@@ -457,7 +457,7 @@ RwBool API_SLInit(RwBool bVirtualNet, CNtlCamera *pCamera, RwUInt8 byLoadMethod,
 		NTL_RETURN(FALSE);
 	}
 
-	// Game clock 등록.
+	// Game clock registration.
 	g_pGameClock = NTL_NEW CNtlClock;
 
 	g_pDTCinematicManager = NTL_NEW CNtlDTCinematicManager;
@@ -472,7 +472,7 @@ RwBool API_SLInit(RwBool bVirtualNet, CNtlCamera *pCamera, RwUInt8 byLoadMethod,
 	}
 
 
-	// Callback 등록
+	// Callback registration
 	LinkCallback_GetDogiColorIndex(Logic_GetSobPlayerDogiColor);
 
 
@@ -543,7 +543,7 @@ void API_SLReset(void)
 		NTL_DELETE(g_pGameClock);
 	}
 
-	// 다시 생성
+	// recreate
 
 	g_pTriggerSyncManager = NTL_NEW CNtlTriggerSyncManager;
 	g_pTriggerSyncManager->Create();
@@ -573,7 +573,7 @@ void API_SLReset(void)
 	g_pWorldConcept = NTL_NEW CNtlWorldConcept;
 	g_pWorldConcept->Create();
 	
-	// Game clock 등록.
+	// Game clock registration.
 	g_pGameClock = NTL_NEW CNtlClock;
 
 	g_pDTCinematicManager = NTL_NEW CNtlDTCinematicManager;

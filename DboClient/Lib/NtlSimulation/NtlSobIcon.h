@@ -28,7 +28,7 @@ public:
 
 protected:
 
-	CNtlSob* m_pSobObj;		/** icon 을 소유하는 객체의 pointer => CNtlSobSkill, CNtlSobItem 등등*/ 
+	CNtlSob* m_pSobObj;		/** Pointer of the object that owns the icon => CNtlSobSkill, CNtlSobItem, etc.*/ 
 	void*    m_pImage;
 
 	CNtlSobIcon();
@@ -36,7 +36,7 @@ protected:
 	RwUInt8 m_byIconState;
 	RwReal  m_fCoolTime;
 	RwReal  m_fMaxCoolTime;
-    WORD    m_wErrorMsg;           ///< 에러 메시지 변수
+    WORD    m_wErrorMsg;           ///< Error message variable
 
 	static RwReal m_fCollingUpdateFactor;
 	

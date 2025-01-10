@@ -207,7 +207,7 @@ void CNtlPLCharacterParser::CreateKeyword()
         PC_TABLE_ADD(JUMP_LANDING_SHORT);
         PC_TABLE_ADD(JUMP_LANDING_LONG);
         PC_TABLE_ADD(RUN_FRONT);
-		PC_TABLE_ADD(WALK_FRONT); //by HongHoDong(2006. 5. 19) 기획서상에는 없지만 Mob과의 통일성을 위해서 넣어줘야 한다.
+		PC_TABLE_ADD(WALK_FRONT); //by HongHoDong (May 19, 2006) Although it is not in the plan, it must be included for unity with Mob.
         PC_TABLE_ADD(IDLE_RUN_FRONT);
         PC_TABLE_ADD(RUN_BACK);
         PC_TABLE_ADD(IDLE_RUN_BACK);
@@ -309,8 +309,8 @@ void CNtlPLCharacterParser::CreateKeyword()
         PC_TABLE_ADD(VEHICLE_SRP2_LANDING);
 
 
-//by HongHoDong 2006. 5. 19일 MobMatching Table 수정 그래픽팀과 같은 이름으로 하기로 결정
-//(아직 Aliena Brain의 문서와 다름)
+//by HongHoDong May 19, 2006 Fix MobMatching Table Decided to call it the same name as the graphics team.
+// (still different from Aliena Brain's documentation)
 #define MOB_TABLE_ADD(id) m_MobMatchTable.Add(#id, id)
 	MOB_TABLE_ADD(NML_SPAWN);
 	MOB_TABLE_ADD(NML_IDLE_LOOP);

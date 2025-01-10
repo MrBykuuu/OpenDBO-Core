@@ -1,15 +1,15 @@
 #include "precomp_dboclient.h"
 #include "ScouterPCInfoViewer.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
 #include "NtlSLEvent.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DialogManager.h"
@@ -89,51 +89,51 @@ RwBool CScouterPCInfoViewerGui::Create()
 	m_pStaticSpecial	->SetText(GetDisplayStringManager()->GetString("DST_SCOUTER_PC_VIEWER_SPECIAL"));
 	m_pstbCostume->SetText(GetDisplayStringManager()->GetString("DST_SCOUTER_PC_VIEWER_COSTUME"));
 
-	// 메인 무기
+	// main weapon
 	m_Item[EQUIP_SLOT_TYPE_HAND].SlotItem.Create(m_pThis, SDIALOG_SCOUTER_PC_VIEWER, REGULAR_SLOT_ITEM_TABLE);
 	m_Item[EQUIP_SLOT_TYPE_HAND].SlotItem.SetPosition_fromParent(44, 58);
 
-	// 보조 무기
+	// secondary weapon
 	m_Item[EQUIP_SLOT_TYPE_SUB_WEAPON].SlotItem.Create(m_pThis, SDIALOG_SCOUTER_PC_VIEWER, REGULAR_SLOT_ITEM_TABLE);
 	m_Item[EQUIP_SLOT_TYPE_SUB_WEAPON].SlotItem.SetPosition_fromParent(88, 58);
 
-	// 자켓
+	// jacket
 	m_Item[EQUIP_SLOT_TYPE_JACKET].SlotItem.Create(m_pThis, SDIALOG_SCOUTER_PC_VIEWER, REGULAR_SLOT_ITEM_TABLE);
 	m_Item[EQUIP_SLOT_TYPE_JACKET].SlotItem.SetPosition_fromParent(22, 121);
 
-	// 팬츠
+	// pants
 	m_Item[EQUIP_SLOT_TYPE_PANTS].SlotItem.Create(m_pThis, SDIALOG_SCOUTER_PC_VIEWER, REGULAR_SLOT_ITEM_TABLE);
 	m_Item[EQUIP_SLOT_TYPE_PANTS].SlotItem.SetPosition_fromParent(65, 121);
 
-	// 부츠
+	// boots
 	m_Item[EQUIP_SLOT_TYPE_BOOTS].SlotItem.Create(m_pThis, SDIALOG_SCOUTER_PC_VIEWER, REGULAR_SLOT_ITEM_TABLE);
 	m_Item[EQUIP_SLOT_TYPE_BOOTS].SlotItem.SetPosition_fromParent(110, 121);
 
-	// 목걸이
+	// necklace
 	m_Item[EQUIP_SLOT_TYPE_NECKLACE].SlotItem.Create(m_pThis, SDIALOG_SCOUTER_PC_VIEWER, REGULAR_SLOT_ITEM_TABLE);
 	m_Item[EQUIP_SLOT_TYPE_NECKLACE].SlotItem.SetPosition_fromParent(22, 184);
 
-	// 귀거리
+	// earring
 	m_Item[EQUIP_SLOT_TYPE_EARRING_1].SlotItem.Create(m_pThis, SDIALOG_SCOUTER_PC_VIEWER, REGULAR_SLOT_ITEM_TABLE);
 	m_Item[EQUIP_SLOT_TYPE_EARRING_1].SlotItem.SetPosition_fromParent(66, 184);
 
-	// 귀거리 2
+	// ears 2
 	m_Item[EQUIP_SLOT_TYPE_EARRING_2].SlotItem.Create(m_pThis, SDIALOG_SCOUTER_PC_VIEWER, REGULAR_SLOT_ITEM_TABLE);
 	m_Item[EQUIP_SLOT_TYPE_EARRING_2].SlotItem.SetPosition_fromParent(110, 184);
 
-	// 반지
+	// ring
 	m_Item[EQUIP_SLOT_TYPE_RING_1].SlotItem.Create(m_pThis, SDIALOG_SCOUTER_PC_VIEWER, REGULAR_SLOT_ITEM_TABLE);
 	m_Item[EQUIP_SLOT_TYPE_RING_1].SlotItem.SetPosition_fromParent(44, 223);
 
-	// 반지 2
+	// ring 2
 	m_Item[EQUIP_SLOT_TYPE_RING_2].SlotItem.Create(m_pThis, SDIALOG_SCOUTER_PC_VIEWER, REGULAR_SLOT_ITEM_TABLE);
 	m_Item[EQUIP_SLOT_TYPE_RING_2].SlotItem.SetPosition_fromParent(88, 223);
 
-	// scouter
+	// Scouter
 	m_Item[EQUIP_SLOT_TYPE_SCOUTER].SlotItem.Create(m_pThis, SDIALOG_SCOUTER_PC_VIEWER, REGULAR_SLOT_ITEM_TABLE);
 	m_Item[EQUIP_SLOT_TYPE_SCOUTER].SlotItem.SetPosition_fromParent(44, 285);
 
-	// quest
+	// Quest
 	m_Item[EQUIP_SLOT_TYPE_QUEST].SlotItem.Create(m_pThis, SDIALOG_SCOUTER_PC_VIEWER, REGULAR_SLOT_ITEM_TABLE);
 	m_Item[EQUIP_SLOT_TYPE_QUEST].SlotItem.SetPosition_fromParent(88, 285);
 
@@ -155,7 +155,7 @@ RwBool CScouterPCInfoViewerGui::Create()
 
 	GetNtlGuiManager()->AddUpdateFunc( this );
 
-	// sig	
+	// Signals	
 	m_slotPaint			= m_pThis->SigPaint().Connect( this, &CScouterPCInfoViewerGui::OnPaint );
 	m_slotMove			= m_pThis->SigMove().Connect( this, &CScouterPCInfoViewerGui::OnMove );	
 	m_slotMouseMove		= m_pThis->SigMouseMove().Connect( this, &CScouterPCInfoViewerGui::OnMouseMove );

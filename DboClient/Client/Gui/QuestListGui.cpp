@@ -371,9 +371,8 @@ VOID CQuestListGui::OnCaptureWheelMove( RwInt32 nFlag, RwInt16 sDelta, CPos& pos
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CQuestList
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 CQuestList::CQuestList( CQuestGui* pQuestGui )
 {
@@ -408,7 +407,7 @@ VOID CQuestList::RegistQuest( VOID* pData )
 {
 	SNtlEventRegQuest_Nfy* pAddData = reinterpret_cast<SNtlEventRegQuest_Nfy*>( pData );
 
-	// 같은 아이디가 있다면 먼저 지운다.///////////////////
+	//If the same ID exists, delete it first. /////////////////////
 	UnRegistQuest( pAddData->sTSKey.tID );
 	///////////////////////////////////////////////////////
 	
@@ -547,7 +546,7 @@ VOID CQuestList::ToggleIndicator( sTS_KEY& stTSKey, bool bToggle, RwBool bAuto /
 	
 RwInt32 CQuestList::RegionNameToID( std::wstring wstrRegion )
 {
-	static RwInt32 sRegionID = 0x00010000;		// QuestID는 Short;
+	static RwInt32 sRegionID = 0x00010000;		//QuestID is Short;
 
 	MAP_REGIONID::iterator it;
 
@@ -565,9 +564,9 @@ RwInt32 CQuestList::RegionNameToID( std::wstring wstrRegion )
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CRegionNode
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 CRegionNode::CRegionNode( CGuiLineTree* pTree, RwInt32 nRegionID, std::wstring wstrRegionName )
 : CGuiLineTreeNode( pTree, nRegionID ), m_pbtnExpand( NULL ), m_pbtnReduce( NULL )
@@ -659,9 +658,9 @@ VOID CRegionNode::OnClickReduce( gui::CComponent* pComponent )
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CQuestNode
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 CQuestNode::CQuestNode( CGuiLineTree* pTree, sTS_KEY stTSKey, std::wstring wstrTitle, RwUInt32 uiType, RwUInt32 uiState, bool bShare, bool bIsNew )
 : CGuiLineTreeNode( pTree, (RwInt32)stTSKey.tID ), m_pbtnIndicator( NULL ), m_pbtnTitle( NULL ), m_bShare( bShare ), 
@@ -677,7 +676,7 @@ CQuestNode::CQuestNode( CGuiLineTree* pTree, sTS_KEY stTSKey, std::wstring wstrT
 	m_pbtnTitle->SetTextCoord( QUESTNODE_TEXT_X, 0 );
 	m_pbtnTitle->SetTextStyle( COMP_TEXT_LEFT );
 
-	// 새로 생긴 녀석이거나, 이전 게임에서 새로 생긴 후 한번도 안내를 보지 않았으면 새퀘스트 처리
+//If this is a new guy or you haven't seen any guidance since he became a new guy in the previous game, process the new quest.
 		CNtlStorageGroupQuest* pGroupQuest = (CNtlStorageGroupQuest*)GetNtlStorageManager()->GetStorageGroup( eNTL_STORAGE_GROUP_QUEST );
 	SMemoryQuestData* pMemoryData = pGroupQuest->GetQuestData( stTSKey.tID );
 	m_wstrTitle = gui::GetHtmlFromMemoryString( wstrTitle.c_str(), wstrTitle.size() );
@@ -731,7 +730,7 @@ CQuestNode::CQuestNode( CGuiLineTree* pTree, sTS_KEY stTSKey, std::wstring wstrT
 	m_slotTitlePressed	= m_pbtnTitle->SigPressed().Connect( this, &CQuestNode::OnPressedCommand );
 	m_slotTitleReleased	= m_pbtnTitle->SigReleased().Connect( this, &CQuestNode::OnReleasedCommand );
 
-	// Key Data 입력.
+	//Key Data input.
 	m_TSKey = stTSKey;
 	m_uiSortType = uiType;
 	SetState( uiState );

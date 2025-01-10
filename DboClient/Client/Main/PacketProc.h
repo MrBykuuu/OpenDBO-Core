@@ -1,12 +1,12 @@
 /*****************************************************************************
  *
- * File			: PacketProc.h
- * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
- * Date			: 2005. 9. 14	
- * Abstract		: packet process 
+ *File			: PacketProc.h
+ *Author	    : HyungSuk, Jang
+ *Copyright   	: NTL Co., Ltd.
+ *Date			: 2005. 9. 14	
+ *Abstract		: packet process 
  *****************************************************************************
- * Desc         : 
+ *Desc          : 
  *
  *****************************************************************************/
 
@@ -59,22 +59,22 @@ public:
 	static CPacketProc* GetInstance(void);
 
 	/**
-	* network에서 온 packet data
+	*packet data from network
 	*/
 	void RecvPacketProc(void);
 
 	/**
-	* virtual server에서 온 packet
+	*Packet from virtual server
 	*/
 	void RecvVirualPackProc(void *pPacket);
 
 	/**
-	* packet 데이터를 꺼낼 것인가?
+	*Will the packet data be taken out?
 	*/
 	void ActivePop(RwBool bPop);
 
 	/**
-	* packet 데이터를 꺼낼 것인가?
+	*Will the packet data be taken out?
 	*/
 	RwBool IsActivePop(void) const;
 

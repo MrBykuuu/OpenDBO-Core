@@ -52,19 +52,19 @@ public:
 	virtual RwReal			GetUsedTime()		{ return m_fUsedTime; }
 	virtual ESCHEDULE_STEP	GetScheduleStep()	{ return m_eScheduleStep; }
 
-	// 스케쥴링 준비.
-	// RETURN : TRUE(준비성공)
-	//			FALSE(준비실패) - Scheduler의 List에서 제거 된다.
+	// Scheduling preparation.
+	// RETURN : TRUE (preparation Success)
+	//			FALSE (Preparation Failed) -Removed from the Scheduler List.
 	virtual RwBool	Begin() = 0;
 
-	// 스케쥴링을 실행.
-	// RETURN : TRUE(다음에 다시 한번 호출을 요구할때)
-	//          FALSE(스케쥴링 할 것이 없을 경우나 스케쥴링이 끝날 경우)
+	// Execute scheduling.
+	// RETURN : TRUE (when requesting a call again next time)
+	//          FALSE (if there is nothing to schedule or scheduling is finished)
 	virtual RwBool	Scheduling() = 0;
 
-	// 스케쥴링의 종료.
-	// RETURN : 스케쥴링이 끝나고 나서 호출된다. RETURN의 의미는 없다.
-	//          호출된 후 Scheduler의 List에서 제거 된다.  
+	// End of scheduling.
+	// RETURN : Called after scheduling is completed. RETURN has no meaning.
+	//          After being called, it is removed from the Scheduler List.  
 	virtual RwBool	End() = 0;
 
 	friend class CScheduler;

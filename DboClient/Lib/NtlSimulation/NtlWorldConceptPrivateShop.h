@@ -4,17 +4,18 @@
 
 /**
  * \ingroup NtlSimulation
- * \brief 개인상점 이용 할때의 제어 클래스 (현재는 아무것도 제어하지 않는다)
+ * \brief Control class when using a personal store (currently does not control anything)
  * \date 2007-07-11
  * \author Cz
  */
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// CNtlWorldConceptPrivateShop : 판매자
+// CNtlWorldConceptPrivateShop : seller
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class CNtlWorldConceptPrivateShop : public CNtlWorldConceptController
 {
-	RwUInt32 m_uiPrivateShopState; // ePRIVATESHOP_STATE
+	RwUInt32 m_uiPrivateShopState; // E privateshop state
+
 public:
 	CNtlWorldConceptPrivateShop(void);
 	~CNtlWorldConceptPrivateShop(void);
@@ -26,7 +27,7 @@ public:
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// CNtlWorldConceptPrivateShopVisitor : 구매자
+// CNtlWorldConceptPrivateShopVisitor : buyer
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class CNtlWorldConceptPrivateShopVisitor : public CNtlWorldConceptController
 {

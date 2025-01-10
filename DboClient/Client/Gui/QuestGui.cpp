@@ -21,7 +21,7 @@
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// DBO
+// Dbo
 #include "DboEvent.h"
 #include "QuestListGui.h"
 #include "QuestProgressGui.h"
@@ -77,7 +77,7 @@ RwBool CQuestGui::Create(VOID)
 	LinkMsg( g_EventMsgBoxResult );
 	LinkMsg( g_EventGameServerChangeOut );
 	
-	// Quest Indicator 타이밍
+	// Quest Indicator Timing
 	LinkMsg( g_EventChangeWorldConceptState, 0 ); // QuestIndicator show
 	//LinkMsg( g_EventRBMatch, 0 );				  // QuestIndicator hide
 	LinkMsg(g_EventResize);
@@ -187,7 +187,7 @@ VOID CQuestGui::Destroy(VOID)
 	UnLinkMsg( g_EventMsgBoxResult );
 	UnLinkMsg( g_EventGameServerChangeOut );
 
-	// Quest Indicator 타이밍
+	// Quest Indicator Timing
 	UnLinkMsg( g_EventChangeWorldConceptState );
 	//UnLinkMsg( g_EventRBMatch );
 	UnLinkMsg(g_EventResize);
@@ -263,7 +263,7 @@ VOID CQuestGui::HandleEvents( RWS::CMsg &msg )
 		m_pQuestList->HandleEvents( msg );
 		m_pQuestIndicator->HandleEvents( msg );
 
-		// 떠있는 퀘스트 관련 윈도우 삭제
+		// Delete floating quest-related windows
 		m_pQuestProposal->HandleEvents( msg );
 		m_pQuestProgress->HandleEvents( msg );
 		m_pQuestReward->HandleEvents( msg );
@@ -271,7 +271,7 @@ VOID CQuestGui::HandleEvents( RWS::CMsg &msg )
 	}
 	else if( msg.Id == g_EventTSRemovingTMQQuest_Nfy )
 	{
-		// TMQ Quest( List에 등록되지 않는 )시 윈도우 종료
+		// Windows closes when performing a TMQ Quest (not registered in the list)
 		m_pQuestProposal->HandleEvents( msg );
 		m_pQuestReward->HandleEvents( msg );
 		m_pMultiDialog->HandleEvents( msg );

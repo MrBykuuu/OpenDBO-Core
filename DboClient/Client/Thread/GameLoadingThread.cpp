@@ -1,14 +1,14 @@
 #include "precomp_dboclient.h"
 #include "GameLoadingThread.h"
 
-// core
+// Core
 #include "NtlLoadingController.h"
 
-// simulation
+// Simulation
 #include "NtlSLLogic.h"
 #include "NtlSLApi.h"
 
-// client
+// Client
 #include "GameStage.h"
 
 
@@ -34,7 +34,7 @@ CGameLoadingThread::CGameLoadingThread( CGameStage* pGameStage )
 
 	if(bThreadLoad)
 	{
-		// Thread 시작
+		// Start Thread
 		Create();
 		ResumeThread();
 	}
@@ -49,7 +49,7 @@ CGameLoadingThread::CGameLoadingThread( CGameStage* pGameStage )
 
 CGameLoadingThread::~CGameLoadingThread( void )
 {
-	// Thread 종료
+	// Thread termination
 	Delete();
 
 	CNtlLoadingController::GetInstance()->Delete();

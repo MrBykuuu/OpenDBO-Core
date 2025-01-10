@@ -1,19 +1,19 @@
 /*****************************************************************************
  *
- * File			: DumpCommand.h
- * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
- * Date			: 2005. 12. 26
- * Update		: 2006. 9. 29
- * Abstract		: DBO dump command manager
+ *File			: DumpCommand.h
+ *Author	    : HyungSuk, Jang
+*Copyright	    : NTL Co., Ltd.
+ *Date			: 2005. 12. 26
+ *Update		: 2006. 9. 29
+ *Abstract		: DBO dump command manager
  *****************************************************************************
- * Desc         : 클라이언트에서 디버그용 메세지를 입력할 수 있도록 수정하였다
- *				  DEBUG 모드에서만 동작한다
+ *Desc         : Modified to allow debugging messages to be entered from the client.
+ *               Operates only in DEBUG mode
  *				  
- * 사용법 예
- *	1) DUMP_DEBUG_MSG(DUMP_FLAG_MOVE, "좌표값이 잘못되었어요");
- *	2) DUMP_DEBUG_MSG(DUMP_FLAG_MOVE, MakeStr("좌표값(x : %d, y : %d)이 잘못되었습니다", 30, 40));
- *	3) DUMP_DEBUG_MSG(DUMP_FLAG_MOVE, MakeStr("%s가 없습니다", "몬스터"));
+ *Usage example
+ *1) DUMP_DEBUG_MSG(DUMP_FLAG_MOVE, "Coordinates are incorrect");
+ *2) DUMP_DEBUG_MSG(DUMP_FLAG_MOVE, MakeStr("Coordinate values ??(x: %d, y: %d) are incorrect", 30, 40));
+ *3) DUMP_DEBUG_MSG(DUMP_FLAG_MOVE, MakeStr("%s does not exist", "monster"));
  * 
  *****************************************************************************/
 
@@ -86,10 +86,10 @@ public:
 	RwBool Command(const RwChar *pCmd);
 	RwBool Command(const WCHAR *pCmd);
 
-	// 클라이언트의 콘솔로부터 입력받는 메세지이다
+	// This is a message received from the client’s console.
 	void CleintConsoleCommand(const RwChar *pCmd);
 	
-	// 클라이언트에서 메세지를 보여준다.
+	// A message is displayed on the client.
 	void OutPutClientMessage(eDUMP_TYPE eDumpType, const RwChar* pMessage);
 	void OutPutClientMessage(eDUMP_TYPE eDumpType, const WCHAR* pMessage);
 

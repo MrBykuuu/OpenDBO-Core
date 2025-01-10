@@ -22,8 +22,8 @@
 
 /**
  * \ingroup Client
- * client의 모든 simulation object에 system event를 보내는 객체이다.
- * 여기에는 free tick, 10 frame sync tick, 20 frame sync tick, 10 frame sync tick이 존재한다.
+ *This is an object that sends system events to all simulation objects on the client.
+ *Here, there are free tick, 10 frame sync tick, 20 frame sync tick, and 10 frame sync tick.
  *
  */
 
@@ -34,9 +34,9 @@ private:
 	bool m_bEnabled;			/**< tick의 enable 및 disable flag*/
 
 	float m_fFreeElapsed;		/**< free sync tick*/
-	float m_fSync30Elapsed;		/**< 30 frame sync tick에 사용되는 delta time 변수*/
-	float m_fSync20Elapsed;		/**< 20 frame sync tick에 사용되는 delta time 변수*/
-	float m_fSync10Elapsed;		/**< 10 frame sync tick에 사용되는 delta time 변수*/
+	float m_fSync30Elapsed;		/**< 30 delta time variable used for frame sync tick*/
+	float m_fSync20Elapsed;		/**< 20 delta time variable used for frame sync tick*/
+	float m_fSync10Elapsed;		/**< delta time variable used for 10 frame sync ticks*/
 	
 public:
 
@@ -47,8 +47,8 @@ public:
 
 	/**
 	* \ingroup Client
-	* client의 rendering 객체에 여러가지 sync의 tick event를 보낸다.
-	* 모든 simulation object는 tick event를 받아서 update를 한다.
+	* Send various sync tick events to the client's rendering object.
+	* All simulation objects receive tick events and update.
 	*
 	*/
 	void Update(float fElapsed);

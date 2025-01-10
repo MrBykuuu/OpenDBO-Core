@@ -75,236 +75,236 @@ extern "C" {
 	// lua register function
 	////////////////////////////////////////////////////////////////////////////
 
-	// lua 인자 : 
+	// lua arguments:
 	int LuaGlue_RegisterSLSetupData(lua_State *L);
 
-	// lua 인자 : serial id, sob key name
+	// lua arguments: serial id, sob key name
 	int LuaGlue_RegisterSobCreate(lua_State *L);
 
-	// lua 인자 : serial id, sob key name
+	// lua arguments: serial id, sob key name
 	int LuaGlue_RegisterSobDestroy(lua_State *L);
 
-	// lua 인자 : serial id, state key name
+	// lua arguments: serial id, state key name
 	int LuaGlue_RegisterCharStateEnter(lua_State *L);
 
-	// lua 인자 : serial id, state key name
+	// lua arguments: serial id, state key name
 	int LuaGlue_RegisterCharStateExit(lua_State *L);
 
-	// lua 인자 : serial id, behavior key name
+	// lua arguments: serial id, behavior key name
 	int LuaGlue_RegisterCharBehaviorEnter(lua_State *L);
 
-	// lua 인자 : serial id, behavior key name
+	// lua arguments: serial id, behavior key name
 	int LuaGlue_RegisterCharBehaviorExit(lua_State *L);
 
-	// lua 인자 : attack serial id, target serial id
+	// lua arguments: attack serial id, target serial id
 	int LuaGlue_RegisterAttack(lua_State *L);
 
-	// lua 인자 : attack serial id, target serial id
+	// lua arguments: attack serial id, target serial id
 	int LuaGlue_RegisterHurt(lua_State *L);
 
-	// lua 인자 : attack serial id, target serial id, skill key name
+	// lua argument : attack serial id, target serial id, skill key name
 	int LuaGlue_RegisterSkillCastingEnter(lua_State *L);
 
-	// lua 인자 : attack serial id, target serial id, skill key name
+	// lua argument : attack serial id, target serial id, skill key name
 	int LuaGlue_RegisterSkillCastingExit(lua_State *L);
 
-	// lua 인자 : attack serial id, target serial id, skill key name
+	// lua argument : attack serial id, target serial id, skill key name
 	int LuaGlue_RegisterSkillActionEnter(lua_State *L);
 
-	// lua 인자 : attack serial id, target serial id, skill key name
+	// lua argument : attack serial id, target serial id, skill key name
 	int LuaGlue_RegisterSkillActionExit(lua_State *L);
 
-	// lua 인자 : htb attack serial id, htb skill table id, set skill table id, current step id
+	// lua argument : htb attack serial id, htb skill table id, set skill table id, current step id
 	int LuaGlue_RegisterHTBSkillStepEnter(lua_State *L);
 
-	// lua 인자 : htb attack serial id, htb skill table id, set skill table id, current step id
+	// lua argument : htb attack serial id, htb skill table id, set skill table id, current step id
 	int LuaGlue_RegisterHTBSkillStepExit(lua_State *L);
 
-	// lua 인자 : htb table id
+	// lua argument: htb table id
 	int LuaGlue_RegisterHTBCameraStart(lua_State *L);
 
-	// lua 인자 : 
+	// lua arguments: 
 	int LuaGlue_RegisterDragonDNEnter(lua_State* L);
 
-	// lua 인자 : explosion id
+	// lua argument: explosion id
 	int LuaGlue_RegisterExplosionCamera(lua_State* L);
 
-    // lua 인자 : camera index
+    // lua argument: camera index
     int LuaGlue_RegisterObserverCamera(lua_State* L);
 
 	////////////////////////////////////////////////////////////////////////////
-	// lua : 물리적/논리적 객체 생성 함수
+	// lua: Physical/logical object creation function
 	////////////////////////////////////////////////////////////////////////////
 
-	// lua 인자 : key name, add object flag
+	// lua arguments: key name, add object flag
 	int LuaGlue_CreateEffect(lua_State *L);
 	
 	// lua 인자 : filename, add object flag
 	int LuaGlue_CreateSound(lua_State *L);
 
 	////////////////////////////////////////////////////////////////////////////
-	// lua : Data를 참조할 actor 객체 설정
+	// lua: Set actor object to refer to data
 	////////////////////////////////////////////////////////////////////////////
 
-	// lua 인자 : serial id
+	// lua argument: serial id
 	int LuaGlue_ActiveActor(lua_State *L);
 
-	// lua 인자 : serial id
+	// lua argument: serial id
 	int LuaGlue_ActiveObject(lua_State *L);
 
-	// lua 인자 : 없슴.
+	// lua argument: None.
 	int LuaGlue_ActiveActorEdit(lua_State *L);
 
-	// lua 인자 : 없슴.
+	// lua argument: None.
 	int LuaGlue_ActiveObjectEdit(lua_State *L);
 
 	////////////////////////////////////////////////////////////////////////////
-	// lua : transform position에 관련된 함수.
+	// lua: Function related to transform position.
 	////////////////////////////////////////////////////////////////////////////
 
-	// lua 인자 : 없슴.
+	// lua argument: None.
 	int LuaGlue_BeginTransform(lua_State *L);
 
-	// lua 인자 : 없슴.
+	// lua argument: None.
 	int LuaGlue_EndTransform(lua_State *L);
 
-	// lua 인자 : offset x, offset y, offset z
+	// lua arguments: offset x, offset y, offset z
 	int LuaGlue_SetPosition(lua_State *L);
 
 	// lua 인자 : bone name, offset x, offset y, offset z
 	int LuaGlue_SetBonePosition(lua_State *L);
 
-	// lua 인자 : offset x, offset y, offset z
+	// lua arguments: offset x, offset y, offset z
 	int LuaGlue_AddPosition(lua_State *L);
 
 	////////////////////////////////////////////////////////////////////////////
-	// lua : transform direction에 관련된 함수.
+	// lua: Function related to transform direction.
 	////////////////////////////////////////////////////////////////////////////
 
-	// lua 인자 : 없슴.
+	// lua argument: None.
 	int LuaGlue_SetDirection(lua_State *L);
 
 	////////////////////////////////////////////////////////////////////////////
-	// lua : transform scale에 관련된 함수.
+	// lua: Function related to transform scale.
 	////////////////////////////////////////////////////////////////////////////
 
-	// lua 인자 : scale x, scale y, scale z
+	// lua arguments: scale x, scale y, scale z
 	int LuaGlue_SetScale(lua_State *L);
 
 	////////////////////////////////////////////////////////////////////////////
-	// lua : attach에 관련된 함수.
+	// lua: Function related to attach.
 	////////////////////////////////////////////////////////////////////////////
 
-	// lua 인자 : offset x, offset y, offset z
+	// lua arguments: offset x, offset y, offset z
 	int LuaGlue_AttachWorld(lua_State *L);
 
-	// lua 인자 : bone name
+	// lua argument: bone name
 	int LuaGlue_AttachBone(lua_State *L);
 
 	////////////////////////////////////////////////////////////////////////////
-	// lua : actor 정보와 관련된 함수.
+	// lua: Function related to actor information.
 	////////////////////////////////////////////////////////////////////////////
 
-	// lua 인자 : actor serial id, actor height offset rate
+	// lua arguments: actor serial id, actor height offset rate
 	int LuaGlue_GetActorPosition(lua_State *L);
 
-	// lua 인자 : actor serial id, actor height offset rate, front distance
+	// lua argument : actor serial id, actor height offset rate, front distance
 	int LuaGlue_GetActorFrontPosition(lua_State *L);
 
-	// lua 인자 : actor serial id, actor height offset rate, back distance
+	// lua argument : actor serial id, actor height offset rate, back distance
 	int LuaGlue_GetActorBackPosition(lua_State *L);
 
-	// lua 인자 : actor serial id, actor height offset rate, left distance
+	// lua argument : actor serial id, actor height offset rate, left distance
 	int LuaGlue_GetActorLeftPosition(lua_State *L);
 
-	// lua 인자 : actor serial id, actor height offset rate, right distance
+	// lua argument : actor serial id, actor height offset rate, right distance
 	int LuaGlue_GetActorRightPosition(lua_State *L);
 	
 	////////////////////////////////////////////////////////////////////////////
-	// lua : camera에 관련된 함수.
+	// lua: Function related to camera.
 	////////////////////////////////////////////////////////////////////////////
 
 	int LuaGlue_CameraShake(lua_State *L);
 
-	// lua 인자 : shake weight, shake height
+	// lua argument : shake weight, shake height
 	int LuaGlue_SetCameraShakeFactor(lua_State *L);
 
-	// lua 인자 : 없슴.
+	// lua argument: None.
 	int LuaGlue_ResetCameraShakeFactor(lua_State *L);
 
-	// lua 인자 : fov value
+	// lua argument: fov value
 	int LuaGlue_SetCameraFov(lua_State *L);
 
-	// lua 인자 : camera direction node previous node에 attach 시키는 flag를 enable 한다.
+	// lua argument: camera direction node Enables the flag that attaches to the previous node.
 	int LuaGlue_CameraDirectChildBegin(lua_State *L);
 
-	// lua 인자 : camera direction node previous node에 attach 시키는 flag를 disable 한다.
+	// lua argument: camera direction node Disables the flag that attaches to the previous node.
 	int LuaGlue_CameraDirectChildEnd(lua_State *L);
 	
-	// lua 인자 : camera direction node clear
+	// lua argument: camera direction node clear
 	int LuaGlue_CameraDirectClear(lua_State *L);
 
-	// lua 인자 : keep time(유지시간)
+	// lua argument: keep time
 	int LuaGlue_AddCameraPauseNode(lua_State *L);
 
-	// lua 인자 : start position x, start position y, start position z, direct property key name
+	// lua argument : start position x, start position y, start position z, direct property key name
 	int LuaGlue_AddSplineCameraSelfNode(lua_State *L);
 
 	int LuaGlue_AddSkillSplineDynamicActorSelfNode(lua_State *L);
 
-	// lua 인자 : actor height offset, property key
+	// lua arguments: actor height offset, property key
 	int LuaGlue_AddSkillSplineDynamicLookAtNode(lua_State *L);
 
-	// lua 인자 : actor height offset, property key
+	// lua arguments: actor height offset, property key
 	int LuaGlue_AddSkillSplineDynamicLookAtCenterNode(lua_State *L);
 
 	int LuaGlue_AddSkillSplineStaticPosDynamicLookAtNode(lua_State *L);
 
-	// lua 인자 : direct property key name
+	// lua argument: direct property key name
 	int LuaGlue_AddSkillAttackerSplineCameraSelfNode(lua_State *L);
 
-	// lua 인자 : direct property key name
+	// lua argument: direct property key name
 	int LuaGlue_AddSkillTargetSplineCameraSelfNode(lua_State *L);
 
-	// lua 인자 : actor serial id, direct property key name
+	// lua arguments: actor serial id, direct property key name
 	int LuaGlue_AddSkillSplineActorRefSelfNode(lua_State *L);
 
 	////////////////////////////////////////////////////////////////////////////
 	// lua : Logic => actor
 	////////////////////////////////////////////////////////////////////////////
 
-	// lua 인자 : serial id
+	// lua argument: serial id
 	int LuaGlue_GetOwnerSerialId(lua_State *L);
 
-	// lua 인자 : serial id
+	// lua argument: serial id
 	int LuaGlue_GetActorType(lua_State *L);
 	
-	// lua 인자 : serial id
+	// lua argument: serial id
 	int LuaGlue_IsAvatarActor(lua_State *L);
 
 	////////////////////////////////////////////////////////////////////////////
-	// lua : Logic => HTB camera control 속성에 관련된 함수.
+	// lua : Logic => Function related to HTB camera control properties.
 	////////////////////////////////////////////////////////////////////////////
 
-	// lua 인자 : 없슴.
+	// lua argument: None.
 	int LuaGlue_GetSkillAttackSerialId(lua_State *L);
 
-	// lua 인자 : 없슴.
+	// lua argument: None.
 	int LuaGlue_GetSkillTargetSerialId(lua_State *L);
 
 	////////////////////////////////////////////////////////////////////////////
 	// lua : Presentation => day and night
 	////////////////////////////////////////////////////////////////////////////
 
-	// lua 인자 : delay time, duration time, start value, finish value, blend factor
+	// lua argument : delay time, duration time, start value, finish value, blend factor
 	int LuaGlue_AddDNNode(lua_State *L);
 
-	// lua 인자 : delay time, duration time, finish value, blend factor
+	// lua argument : delay time, duration time, finish value, blend factor
 	int LuaGlue_AddDNNodeCurrentStart(lua_State *L);
 
 
 	////////////////////////////////////////////////////////////////////////////
-	// lua : Logic => cinematic 연출에 관련된 함수.
+	// lua : Logic => Function related to cinematic directing.
 	////////////////////////////////////////////////////////////////////////////
 
 	int LuaGlue_BeginCinematic(lua_State *L);
@@ -442,7 +442,7 @@ extern "C" {
 	int LuaGlue_AddCNCinematicServerAck(lua_State *L);
 
 	////////////////////////////////////////////////////////////////////////////
-	// lua : Logic => Explosion camera 연출에 관련된 함수.
+	// lua : Logic => Function related to Explosion camera rendering.
 	////////////////////////////////////////////////////////////////////////////
 
 	int LuaGlue_AddSinExplosionAlgorithm_XAxis(lua_State *L);
@@ -459,7 +459,7 @@ extern "C" {
 
 
 	////////////////////////////////////////////////////////////////////////////
-	// 천하제일 무도회 관련 연출
+	// Direction related to World's Best Martial Arts
 	////////////////////////////////////////////////////////////////////////////
 
 	int LuaGlue_DTAddController(lua_State *L);

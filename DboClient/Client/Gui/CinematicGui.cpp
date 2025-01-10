@@ -1,10 +1,10 @@
 #include "precomp_dboclient.h"
 #include "CinematicGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "QuestTextDataTable.h"
 #include "NPCTable.h"
 #include "MobTable.h"
@@ -12,12 +12,12 @@
 #include "TableContainer.h"
 #include "DisplayStringManager.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 #include "NtlPLGuiManager.h"
 #include "NtlPLCinematicObject.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSLLogic.h"
@@ -29,7 +29,7 @@
 #include "NtlSobManager.h"
 #include "NtlDTCinematicManager.h"
 
-// dbo
+// Dbo
 #include "DialogManager.h"
 #include "AlarmManager.h"
 
@@ -65,7 +65,7 @@ VOID CCinematicGui::SetCinematicBalloon( void* pData )
 
 			if( !m_pCinematicObject->SetImageTexture( pNPCData->szILLust, pBalloonData->byEmotionType ) )
 			{
-				// 그림이 없으면 기본값 출력. 이래도 없으면 흰색 그림 출력
+				// If there is no picture, default value is displayed. If this doesn't work, a white picture is displayed.
 				m_pCinematicObject->SetImageTexture( pNPCData->szILLust, 0 );				
 			}
 			m_pCinematicObject->SetName( pNPCText->GetText( pNPCData->Name ).c_str() );			
@@ -80,7 +80,7 @@ VOID CCinematicGui::SetCinematicBalloon( void* pData )
 
 			if( !m_pCinematicObject->SetImageTexture( pMobData->szILLust, pBalloonData->byEmotionType ) )
 			{
-				// 그림이 없으면 기본값 출력. 이래도 없으면 흰색 그림 출력
+				// If there is no picture, default value is displayed. If this doesn't work, a white picture is displayed.
 				m_pCinematicObject->SetImageTexture( pMobData->szILLust, 0 );				
 			}
 			m_pCinematicObject->SetName( pMobText->GetText( pMobData->Name ).c_str() );

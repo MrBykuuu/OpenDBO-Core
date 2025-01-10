@@ -1,14 +1,14 @@
 #include "precomp_dboclient.h"
 #include "ObjectClickGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLPlayerName.h"
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSobProxy.h"
@@ -18,7 +18,7 @@
 #include "NtlSLGlobal.h"
 #include "NtlSobCharProxyDecoration.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DialogManager.h"
@@ -53,13 +53,13 @@ RwBool CObjectClickGui::Create()
 
 	m_TimeEffect.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "ObjectClick.srf", "srfBackCircle" ) );
 
-	// 바늘 그림
+	// needle picture
 	m_srfNeedle.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("ObjectClick.srf", "srfNeedle"));
 
-	// 반사광
+	// reflected light
 	m_srfReflectedLight.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("ObjectClick.srf", "srfReflectedLight"));
 
-	// sig	
+	// Signals	
 	m_slotPaint			= m_pThis->SigPaint().Connect( this, &CObjectClickGui::OnPaint );
 
 	Show(false);
@@ -172,7 +172,7 @@ VOID CObjectClickGui::HandleEvents( RWS::CMsg &msg )
 
 		if( pEvent->bShow )
 		{
-			// 밀리세컨드 단위가 들어온다
+			// The unit of milliseconds comes in.
 			m_fLastTime		= (RwReal)pEvent->uiPlayTime/1000.f;
 			m_fRemainTime	= (RwReal)pEvent->uiPlayTime/1000.f;
 

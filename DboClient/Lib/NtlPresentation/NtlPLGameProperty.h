@@ -44,7 +44,7 @@ public:
 protected:
 	RwUInt32		m_eShapeType;
 	RwV3d			m_vPos;
-	RwV3d			m_vSize;			// CIRCLE로 사용 시 m_vSize.x가 Radius를 뜻한다.
+	RwV3d			m_vSize;			// When used as a CIRCLE, m_vSize.x means Radius.
 	RwUInt32		m_uiProperty;
 
 #ifdef dNTL_WORLD_TOOL_MODE

@@ -4,7 +4,7 @@
 //
 //	Begin		:	2006-05-22
 //
-//	Copyright	:	ⓒ NTL-Inc Co., Ltd
+//	Copyright	:	? NTL-Inc Co., Ltd
 //
 //	Author		:	Hyun Woo, Koo   ( zeroera@ntl-inc.com )
 //
@@ -115,7 +115,7 @@ const char * s_character_condition_string[ CHARCONDITION_COUNT ] =
 
 
 //-----------------------------------------------------------------------------------
-// 상태 관련 함수 정의 : 
+// State-related function definitions: 
 //-----------------------------------------------------------------------------------
 const char * NtlGetCharStateString(BYTE byStateID)
 {
@@ -129,7 +129,7 @@ const char * NtlGetCharStateString(BYTE byStateID)
 
 
 //-----------------------------------------------------------------------------------
-// 상태 관련 함수 정의 : 
+// State-related function definitions: 
 //-----------------------------------------------------------------------------------
 const char * NtlGetAspectStateString(BYTE byStateID)
 {
@@ -143,7 +143,7 @@ const char * NtlGetAspectStateString(BYTE byStateID)
 
 
 //-----------------------------------------------------------------------------------
-// 상태 관련 함수 정의 : 
+// State-related function definitions: 
 //-----------------------------------------------------------------------------------
 const char * NtlGetConditionStateString(BYTE byStateID)
 {

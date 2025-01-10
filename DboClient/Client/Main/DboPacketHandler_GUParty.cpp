@@ -1,28 +1,28 @@
 /*****************************************************************************
-* File			: DboPackethandler_GUParty.cpp
-* Author		: Hong sungbock
-* Copyright		: (주)NTL
-* Date			: 2007. 1. 16
-* Abstract		: 파티 관련 패킷 핸들
+*File			: DboPackethandler_GUParty.cpp
+*Author		    : Hong sungbock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 1. 16
+*Abstract		: Party related packet handle
 *****************************************************************************
-* Desc         : 
+*Desc           : 
 *****************************************************************************/
 
 #include "precomp_dboclient.h"
 #include "DboPacketHandler.h"
 
-// shared
+// Shared
 #include "ItemTable.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// simulation
+// Simulation
 #include "NtlNetSender.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSLPacketGenerator.h"
 
-// dbo
+// Dbo
 #include "IconMoveManager.h"
 #include "DiceManager.h"
 
@@ -30,7 +30,7 @@ void PacketHandler_GSPartyCreateRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_PARTY_CREATE_RES );
 
-	// 자신이 요청한 파티 생성 결과를 알려준다.
+	// It notifies you of the party creation results you requested.
 	sGU_PARTY_CREATE_RES* pResult = (sGU_PARTY_CREATE_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -71,7 +71,7 @@ void PacketHandler_GSPartyDisbandRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_PARTY_DISBAND_RES );
 
-	// 자신이 파티를 해산한 결과를 알려준다.
+	// It informs you of the consequences of disbanding your party.
 	sGU_PARTY_DISBAND_RES* pResult = (sGU_PARTY_DISBAND_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -85,7 +85,7 @@ void PacketHandler_GSPartyDisbandRes(void *pPacket)
 
 void PacketHandler_GSPartyDisbandNfy(void *pPacket)
 {
-	// 파티가 해산되었음을 파티장이 아닌 맴버들에게 알려준다.
+	// Notify members, not the party leader, that the party has been disbanded.
 	//sGU_PARTY_DISBANDED_NFY* pResult = (sGU_PARTY_DISBANDED_NFY*)pPacket;
 
 	CNtlSLEventGenerator::PartyDisband();
@@ -95,7 +95,7 @@ void PacketHandler_GSPartyInviteRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_PARTY_INVITE_RES );
 
-	// 파티 리더에게 파티 초대 결과를 알려준다.	
+	// Notify the party leader of the party invitation results.	
 	sGU_PARTY_INVITE_RES* pResult = (sGU_PARTY_INVITE_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -104,13 +104,13 @@ void PacketHandler_GSPartyInviteRes(void *pPacket)
 		return;
 	}	
 
-	// %s님을 파티에 초대하였습니다
+	// %s has been invited to the party
 	GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_INVITE_SUCCESS", FALSE, NULL, pResult->wszTargetName);
 }
 
 void PacketHandler_GSPartyInviteNfy(void *pPacket)
 {
-	// 초대 대상에게 메세지를 보낸다.
+	// Send a message to the invitee.
 	sGU_PARTY_INVITE_NFY* pResult = (sGU_PARTY_INVITE_NFY*)pPacket;
 
 	if( wcslen(pResult->wszInvitorPcName) > 0)
@@ -123,7 +123,7 @@ void PacketHandler_GSPartyResponseInvitationRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_PARTY_RESPONSE_INVITATION_RES );
 
-	// 파티 초대의 응답에 대한 결과를 리더에게 보낸다.
+	// The results of the party invitation response are sent to the leader.
 	sGU_PARTY_RESPONSE_INVITATION_RES* pResult = (sGU_PARTY_RESPONSE_INVITATION_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -135,7 +135,7 @@ void PacketHandler_GSPartyResponseInvitationRes(void *pPacket)
 
 void PacketHandler_GSPartyMemberJoinedNfy(void *pPacket)
 {
-	// 새로운 파티원이 가입했음을 알려준다.
+	// Notifies that a new party member has joined.
 	sGU_PARTY_MEMBER_JOINED_NFY* pResult = (sGU_PARTY_MEMBER_JOINED_NFY*)pPacket;
 
 	CNtlSLEventGenerator::PartyMemberAdd(pResult->memberInfo.hHandle, pResult->memberInfo.awchMemberName,
@@ -144,13 +144,13 @@ void PacketHandler_GSPartyMemberJoinedNfy(void *pPacket)
 		pResult->memberInfo.wMaxEP, pResult->memberInfo.worldTblidx, pResult->memberInfo.worldId,
 		pResult->memberInfo.vCurLoc.x, pResult->memberInfo.vCurLoc.y, pResult->memberInfo.vCurLoc.z);
 
-	// %s님이 파티에 들어오셨습니다
+	// %s has joined the party
 	GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_NEW_MEMBER", FALSE, NULL, pResult->memberInfo.awchMemberName);
 }
 
 void PacketHandler_GSPartyInfo(void *pPacket)
 {
-	// 새로 가입한 파티원이 파티정보를 받는다.
+	// Newly joined party members receive party information.
 	sGU_PARTY_INFO* pResult = (sGU_PARTY_INFO*)pPacket;
 
 	CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
@@ -160,7 +160,7 @@ void PacketHandler_GSPartyInfo(void *pPacket)
 		return;
 	}
 
-	// 파티를 생성한다
+	// create a party
 	CNtlSLEventGenerator::PartyCreate(pResult->awchPartyName);
 
 	for(RwInt32 i = 0 ; i < pResult->byMemberInfoCount ; ++i )
@@ -174,41 +174,41 @@ void PacketHandler_GSPartyInfo(void *pPacket)
 			pResult->memberInfo[i].vCurLoc.x, pResult->memberInfo[i].vCurLoc.y, pResult->memberInfo[i].vCurLoc.z);
 	}	
 
-	// 파티 리스트에 자신을 추가시킨다	
+	// Add yourself to the party list	
 	CNtlSobAvatarAttr* pAvatarAttr = reinterpret_cast<CNtlSobAvatarAttr*>(pAvatar->GetSobAttr());
 	CNtlSLEventGenerator::PartyMemberAdd(pAvatar->GetSerialID(), (WCHAR*)pAvatarAttr->GetName());
 
-	// 파티장을 설정한다
+	// Set the party venue
 	CNtlSLEventGenerator::PartyLeaderChange(pResult->hLeader);
 
-	// 아이템 분배 방식
+	// Item distribution method
 	CNtlSLEventGenerator::PartyUpdate(PMT_ITEM_DIVISION, INVALID_SERIAL_ID, pResult->byItemLootingMethod);
 
-	// 제니 분배 방식
+	// Zenny distribution method
 	CNtlSLEventGenerator::PartyUpdate(PMT_ZENNY_DIVISION, INVALID_SERIAL_ID, pResult->byZennyLootingMethod);
 
-    // 공유 타겟 데이터    
+    // Shared target data    
     CNtlSLEventGenerator::PartyShareTargetNfy(pResult->sharetargetInfo);
 
-	// 파티 던전 정보
+	// Party Dungeon Information
 	CNtlSLEventGenerator::PartyUpdate(PMT_PARTY_DUNGEON_STATE, INVALID_SERIAL_ID, pResult->eDiff);	
 }
 
 void PacketHandler_GSPartyInviteDeclinedNfy(void *pPacket)
 {
-	// 초대한 대상이 거절했다.
+	// The invitee declined.
 	sGU_PARTY_INVITATION_DECLINED_NFY* pResult = (sGU_PARTY_INVITATION_DECLINED_NFY*)pPacket;	
 
-	// %s님이 초대를 거절하였습니다
+	// %s declined the invitation
 	GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_INVITE_DECLINE", FALSE, NULL, pResult->wszPlayerName);
 }
 
 void PacketHandler_GSPartyInviteExpiredNfy(void *pPacket)
 {
-	// 파티 초대를 했지만 일정 시간동안 응답이 없었다.
+	// I sent a party invitation, but there was no response for some time.
 	sGU_PARTY_INVITATION_EXPIRED_NFY* pResult = (sGU_PARTY_INVITATION_EXPIRED_NFY*)pPacket;
 
-	// %s님이 초대를 거절하였습니다
+	// %s declined the invitation
 	GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_INVITE_DECLINE", FALSE, NULL, pResult->wszPlayerName);
 }
 
@@ -216,7 +216,7 @@ void PacketHandler_GSPartyLeaveRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_PARTY_LEAVE_RES );
 
-	// 자신이 요청한 파티 탈퇴의 결과를 알려준다.
+	// It informs you of the consequences of leaving the party you requested.
 	sGU_PARTY_LEAVE_RES* pResult = (sGU_PARTY_LEAVE_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -232,7 +232,7 @@ void PacketHandler_GSPartyLeaveRes(void *pPacket)
 
 void PacketHandler_GSPartyMemberLeftNfy(void *pPacket)
 {
-	// 자신의 파티원이 떠났다.
+	// Your party member has left.
 	sGU_PARTY_MEMBER_LEFT_NFY* pResult = (sGU_PARTY_MEMBER_LEFT_NFY*)pPacket;
 
 	CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
@@ -252,7 +252,7 @@ void PacketHandler_GSPartyMemberLeftNfy(void *pPacket)
 
 	WCHAR* pwcText	= pMember->wszMemberName;
 
-	// %s님이 파티에서 탈퇴하였습니다
+	// %s has left the party
 	GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_LEAVE", FALSE, NULL, pwcText);
 	CNtlSLEventGenerator::PartyMemberDel(pResult->hMember);
 }
@@ -261,7 +261,7 @@ void PacketHandler_GSPartyKickOutRes(void* pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_PARTY_KICK_OUT_RES );
 
-	// 파티 맴버 강퇴 결과
+	// Result of party member expulsion
 	sGU_PARTY_KICK_OUT_RES* pResult = (sGU_PARTY_KICK_OUT_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -287,14 +287,14 @@ void PacketHandler_GSPartyKickOutRes(void* pPacket)
 
 	WCHAR* pwcText = pMember->wszMemberName;
 
-	// %s님이 파티에서 탈퇴하였습니다
+	// %s has left the party
 	GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_LEAVE", FALSE, NULL, pwcText);
 	CNtlSLEventGenerator::PartyMemberDel(pResult->hTargetMember);
 }
 
 void PacketHandler_GSPartyMemberKickedOutNfy(void *pPacket)
 {
-	// 파티 맴버가 강퇴된 것을 남아있는 파티원에게 알려준다.
+	// Notifies the remaining party members that a party member has been kicked out.
 	sGU_PARTY_MEMBER_KICKED_OUT_NFY* pResult = (sGU_PARTY_MEMBER_KICKED_OUT_NFY*)pPacket;
 
 	CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
@@ -314,7 +314,7 @@ void PacketHandler_GSPartyMemberKickedOutNfy(void *pPacket)
 
 	WCHAR* pwcText = pMember->wszMemberName;
 
-	// %s님이 파티에서 탈퇴하였습니다
+	// %s has left the party
 	GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_LEAVE", FALSE, NULL, pwcText);
 	CNtlSLEventGenerator::PartyMemberDel(pResult->hMember);
 }
@@ -323,7 +323,7 @@ void PacketHandler_GSPartyChangeLeaderRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_PARTY_CHANGE_LEADER_RES );
 
-	// 파티 리더에게 리더 변경 요청을 결과를 알려준다.
+	// Notifies the party leader of the leader change request result.
 	sGU_PARTY_CHANGE_LEADER_RES* pResult = (sGU_PARTY_CHANGE_LEADER_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -349,14 +349,14 @@ void PacketHandler_GSPartyChangeLeaderRes(void *pPacket)
 
 	WCHAR* pwcText = pMember->wszMemberName;
 
-	// %s님이 파티장이 되었습니다
+	// %s became the party leader
 	GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_CHANGE_LEADER", FALSE, NULL, pwcText);
 	CNtlSLEventGenerator::PartyLeaderChange(pResult->hNewLeader);
 }
 
 void PacketHandler_GSPartyChangedLeaderNfy(void *pPacket)
 {
-	// 파티 리더가 변경되었음을 파티 맴버에게 알려준다
+	// Notifies party members that the party leader has changed
 	sGU_PARTY_LEADER_CHANGED_NFY* pResult = (sGU_PARTY_LEADER_CHANGED_NFY*)pPacket;
 
 	CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
@@ -376,14 +376,14 @@ void PacketHandler_GSPartyChangedLeaderNfy(void *pPacket)
 
 	WCHAR* pwcText = pMember->wszMemberName;
 
-	// %s님이 파티장이 되었습니다
+	// %s became the party leader
 	GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_CHANGE_LEADER", FALSE, NULL, pwcText);
 	CNtlSLEventGenerator::PartyLeaderChange(pResult->hNewLeader);
 }
 
 void PacketHandler_GSPartyLevelUp(void* pPacket)
 {
-	// 파티원이 레벨업을 하였다
+	// Party member has leveled up
 	sGU_PARTY_MEMBER_LEVELED_UP_NFY* pResult = (sGU_PARTY_MEMBER_LEVELED_UP_NFY*)pPacket;
 
 	CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
@@ -405,14 +405,14 @@ void PacketHandler_GSPartyLevelUp(void* pPacket)
 
 void PacketHandler_GSPartyChangeClass(void* pPacket)
 {
-	// 파티원의 클래스가 바뀌었다
+	// Party member's class has changed
 	sGU_PARTY_MEMBER_CLASS_CHANGED_NFY* pResult = (sGU_PARTY_MEMBER_CLASS_CHANGED_NFY*)pPacket;
 	CNtlSLEventGenerator::PartyUpdate(PMT_CLASS, pResult->hMember, pResult->byNewClass);
 }
 
 void PacketHandler_GSPartyMember_LocationNfy(void* pPacket)
 {
-	// 파티 맴버의 위치를 업데이트 한다
+	// Update the location of party members
 	sGU_PARTY_MEMBER_LOCATION_NFY* pResult = (sGU_PARTY_MEMBER_LOCATION_NFY*)pPacket;
 
 	RwV3d vPos;
@@ -423,7 +423,7 @@ void PacketHandler_GSPartyMember_LocationNfy(void* pPacket)
 
 void PacketHandler_GSPartyMemberGainedItemNfy(void *pPacket)
 {
-	// 파티 맴버가 아이템을 주은 것을 알려준다
+	// Notifies when a party member gives an item
 	sGU_PARTY_MEMBER_GAINED_ITEM_NFY* pResult = (sGU_PARTY_MEMBER_GAINED_ITEM_NFY*)pPacket;
 
 	CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
@@ -445,12 +445,12 @@ void PacketHandler_GSPartyMemberGainedItemNfy(void *pPacket)
 
 	if(pResult->itemTblidx == INVALID_SERIAL_ID)
 	{
-		// %s님이 미확인 아이템을 획득하였습니다
+		// %s acquired an unidentified item
 		GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_INVEN_ADD_UNDEFINED_ITEM_OTHER", FALSE, NULL, pwcText);
 	}
 	else
 	{
-		// %s님의 획득 아이템 %s
+		// Item %s acquired by %s
 		sITEM_TBLDAT* pITEM_TBLDAT = Logic_GetItemDataFromTable(pResult->itemTblidx);
 		if( !pITEM_TBLDAT )
 		{
@@ -469,25 +469,25 @@ void PacketHandler_GSPartyMemberGainedItemNfy(void *pPacket)
 
 void PacketHandler_GSPartyMemberGainedZennyNfy(void *pPacket)
 {
-	// 제니를 분배받았다는 메세지
+	// A message saying that Zenny has been distributed
 	sGU_PARTY_MEMBER_GAINED_ZENNY_NFY* pResult = (sGU_PARTY_MEMBER_GAINED_ZENNY_NFY*)pPacket;
 
 	if( pResult->bIsShared )
 	{
-		// 다른 파티원이 제니를 주어서 분배받았다
-		// %d중 %d 제니를 분배받았습니다
+		// Another party member gave me Zenny, so I distributed it.
+		// %d Zenny out of %d was distributed
         if(pResult->dwBonusZenny == 0)
         {
 		    GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_GET_ZENNY", FALSE, NULL, Logic_FormatZeni(pResult->dwOriginalZenny), Logic_FormatZeni(pResult->dwZenny));
         }
-        else    // PC방 추가 획득
+        else    // Additional PC room acquisition
         {
             GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_GET_ZENNY_AND_BONUS", FALSE, NULL, Logic_FormatZeni(pResult->dwOriginalZenny), Logic_FormatZeni(pResult->dwAcquisitionZenny), Logic_FormatZeni(pResult->dwBonusZenny));
         }
 	}
 	else
 	{
-		// 다른 파티원이 제니를 주었다
+		// Another party member gave me Zenny.
 		CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
 		if( !pAvatar )
 		{
@@ -503,12 +503,12 @@ void PacketHandler_GSPartyMemberGainedZennyNfy(void *pPacket)
 			return;
 		}
 
-		// %s님이 %d 제니를 획득하였습니다
+		// %s obtained %d Zenny
         if(pResult->dwBonusZenny == 0)
         {
 		    GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_GET_ZENNY_OTHER", FALSE, NULL, pMember->wszMemberName, Logic_FormatZeni(pResult->dwZenny));
         }
-        else    // PC방 추가 획득
+        else    // Additional PC room acquisition
         {
             GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_GET_ZENNY_OTHER_AND_BONUS", FALSE, NULL, pMember->wszMemberName, Logic_FormatZeni(pResult->dwAcquisitionZenny), Logic_FormatZeni(pResult->dwBonusZenny));
         }
@@ -519,7 +519,7 @@ void PacketHandler_GSPartyChangeZennyLootinMethodRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_PARTY_CHANGE_ZENNY_LOOTING_METHOD_RES );
 
-	// 제니 분배 방식 변경 결과를 파티장에게 알려준다
+	// Notify the party leader of the change in Zenny distribution method.
 	sGU_PARTY_CHANGE_ZENNY_LOOTING_METHOD_RES* pResult = (sGU_PARTY_CHANGE_ZENNY_LOOTING_METHOD_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )	
@@ -530,18 +530,18 @@ void PacketHandler_GSPartyChangeZennyLootinMethodRes(void *pPacket)
 
 	CNtlSLEventGenerator::PartyUpdate(PMT_ZENNY_DIVISION, INVALID_SERIAL_ID, pResult->byNewLootingMethod);	
 
-	// 제니 분배방식이 %s로 변경되었습니다
+	// Zenny distribution method has been changed to %s.
 	GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_CHANGE_ZENNY_DIVISION", FALSE, NULL, Logic_GetPartyZeniLootingMethod(pResult->byNewLootingMethod));
 }
 
 void PacketHandler_GSPartyZennyLootingMethodChangedNfy(void *pPacket)
 {
-	// 파티장을 제외한 맴버들에게 제니 분배 방식 변경 알리기
+	// Notify members other than the party leader of the change in Zenny distribution method
 	sGU_PARTY_ZENNY_LOOTING_METHOD_CHANGED_NFY* pResult = (sGU_PARTY_ZENNY_LOOTING_METHOD_CHANGED_NFY*)pPacket;
 
 	CNtlSLEventGenerator::PartyUpdate(PMT_ZENNY_DIVISION, INVALID_SERIAL_ID, pResult->byNewLootingMethod);
 
-	// 제니 분배방식이 %s로 변경되었습니다
+	// Zenny distribution method has been changed to %s.
 	GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_CHANGE_ZENNY_DIVISION", FALSE, NULL, Logic_GetPartyZeniLootingMethod(pResult->byNewLootingMethod));
 }
 
@@ -549,7 +549,7 @@ void PacketHandler_GSPartyChangeItemLootinMethodRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_PARTY_CHANGE_ITEM_LOOTING_METHOD_RES );
 
-	// 아이템 분배 방식 변경 결과를 파티장에게 알려준다
+	// Notifies the party leader of the change in item distribution method.
 	sGU_PARTY_CHANGE_ITEM_LOOTING_METHOD_RES* pResult = (sGU_PARTY_CHANGE_ITEM_LOOTING_METHOD_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -560,22 +560,22 @@ void PacketHandler_GSPartyChangeItemLootinMethodRes(void *pPacket)
 
 	CNtlSLEventGenerator::PartyUpdate(PMT_ITEM_DIVISION, INVALID_SERIAL_ID, pResult->byNewLootingMethod);
 
-	// 아이템 분배방식이 %s로 변경되었습니다
+	// Item distribution method has been changed to %s
 	GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_CHANGE_ITEM_DIVISION", FALSE, NULL, Logic_GetPartyItemLootingMethod(pResult->byNewLootingMethod));
 }
 
 void PacketHandler_GSPartyItemLootingMethodChangedNfy(void *pPacket)
 {
-	// 파티장을 제외한 맴버들에게 제니 아이템 분배 방식 변경 알리기
+	// Notify members other than the party leader of the change in Zenny item distribution method
 	sGU_PARTY_ITEM_LOOTING_METHOD_CHANGED_NFY* pResult = (sGU_PARTY_ITEM_LOOTING_METHOD_CHANGED_NFY*)pPacket;
 
 	CNtlSLEventGenerator::PartyUpdate(PMT_ITEM_DIVISION, INVALID_SERIAL_ID, pResult->byNewLootingMethod);
 
-	// 아이템 분배방식이 %s로 변경되었습니다
+	// Item distribution method has been changed to %s
 	GetAlarmManager()->FormattedAlarmMessage("DST_PARTY_CHANGE_ITEM_DIVISION", FALSE, NULL, Logic_GetPartyItemLootingMethod(pResult->byNewLootingMethod));
 }
 
-// 파티 공유 타겟 요청에 대한 결과 패킷
+// Result packet for party shared target request
 void PacketHandler_GSPartyShareTargetRes( void* pPacket ) 
 {
     sGU_PARTY_SHARETARGET_RES* pData = (sGU_PARTY_SHARETARGET_RES*)pPacket;
@@ -588,7 +588,7 @@ void PacketHandler_GSPartyShareTargetRes( void* pPacket )
     CNtlSLEventGenerator::PartyShareTargetRes(pData->wResultCode);
 }
 
-// 파티 공유 타겟 선택에 대한 알림 패킷
+// Notification packet for party sharing target selection
 void PacketHandler_GSPartyShareTargetNfy( void* pPacket ) 
 {
     sGU_PARTY_SHARETARGET_NFY* pData = (sGU_PARTY_SHARETARGET_NFY*)pPacket;
@@ -598,7 +598,7 @@ void PacketHandler_GSPartyShareTargetNfy( void* pPacket )
 
 void PacketHandler_GSPartyDungeonDiffRes(void *pPacket)
 {
-	// 파티장에게 파티 던전의 난이도 변경 결과를 알린다
+	// Notify the party leader of the results of the party dungeon difficulty change.
 	API_GetSLPacketLockManager()->Unlock( GU_PARTY_DUNGEON_DIFF_RES );
 
 	sGU_PARTY_DUNGEON_DIFF_RES* pResult = (sGU_PARTY_DUNGEON_DIFF_RES*)pPacket;
@@ -623,7 +623,7 @@ void PacketHandler_GSPartyDungeonDiffRes(void *pPacket)
 
 void PacketHandler_GSPartyDungeonDiffNfy(void *pPacket)
 {
-	// 파티원들에게 파티 던전 난이도 변경을 알린다
+	// Notify party members of party dungeon difficulty changes
 	sGU_PARTY_DUNGEON_DIFF_NFY* pResult = (sGU_PARTY_DUNGEON_DIFF_NFY*)pPacket;
 
 	CNtlSLEventGenerator::PartyUpdate(PMT_PARTY_DUNGEON_STATE, INVALID_SERIAL_ID, pResult->eDiff);	
@@ -640,7 +640,7 @@ void PacketHandler_GSPartyDungeonDiffNfy(void *pPacket)
 
 void PacketHandler_GSPartyDungeonInitRes(void *pPacket)
 {
-	// 파티장에게 파티 던전 초기화 결과를 알린다
+	// Notify the party leader of the party dungeon reset results.
 	API_GetSLPacketLockManager()->Unlock( GU_PARTY_DUNGEON_INIT_RES );
 
 	sGU_PARTY_DUNGEON_INIT_RES* pResult = (sGU_PARTY_DUNGEON_INIT_RES*)pPacket;
@@ -658,7 +658,7 @@ void PacketHandler_GSPartyDungeonInitRes(void *pPacket)
 
 void PacketHandler_GSPartyDungeonInitNfy(void *pPacket)
 {
-	// 파티원에게 파티 던전 초기화를 알린다
+	// Notify party members of party dungeon reset
 	//sGU_PARTY_DUNGEON_INIT_NFY* pResult = (sGU_PARTY_DUNGEON_INIT_NFY*)pPacket;
 
 	GetAlarmManager()->AlarmMessage("DST_PARTY_DUNGEON_INITIALIZE");

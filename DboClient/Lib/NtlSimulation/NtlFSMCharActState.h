@@ -43,7 +43,7 @@ public:
 	CNtlFSMCharActCreateState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	* State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -68,7 +68,7 @@ public:
 	CNtlFSMCharActSpawnState();
 
 	/**
-    *  state의 update/event 처리 함수.
+    *  State update/event processing function.
     */
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -115,8 +115,10 @@ protected:
 	void UpdateTopDown(RwReal fElapsed);
 	void UpdateSlipping(RwReal fElapsed);
 	void UpdateLoop(RwReal fElapsed);
-    void UpdateCalcHeight(RwReal fElapsed);             ///< 높이를 다시 계산한다.
-    void UpdateTerror(RwReal fElapsed);                 ///< 공포인 경우 처리한다.
+    void UpdateCalcHeight(RwReal fElapsed);             ///< Recalculate the height.
+
+    void UpdateTerror(RwReal fElapsed);                 ///< In case of fear, handle it.
+
 
 	virtual void ChangeIdleState(RwUInt8 byState);
 
@@ -126,7 +128,7 @@ public:
 	~CNtlFSMCharActIdleState();
 
 	/**
-    *  state의 update/event 처리 함수.
+    *State update/event processing function.
     */
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -153,7 +155,7 @@ public:
 	~CNtlFSMCharActMoveState();
 
 	/**
-    *  state의 update/event 처리 함수.
+    *  State update/event processing function.
     */
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -174,7 +176,7 @@ public:
 	CNtlFSMCharActMoveSwimming();
 
 	/**
-    *  state의 update/event 처리 함수.
+    *  State update/event processing function.
     */
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -195,7 +197,7 @@ public:
 	CNtlFSMCharActAdjustMoveState();
 
 	/**
-	/* state의 update/event 처리 함수.                                                                     
+	/*  State update/event processing function.                                                                     
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -220,7 +222,7 @@ public:
 	CNtlFSMCharActDashState();
 
 	/**
-	/* state의 update/event 처리 함수.                                                                     
+	/*  State update/event processing function.                                                                     
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -241,7 +243,7 @@ public:
 	CNtlFSMCharActSitDownState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -262,7 +264,7 @@ public:
 	CNtlFSMCharActSitState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -283,7 +285,7 @@ public:
 	CNtlFSMCharActStandUpState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -305,7 +307,7 @@ public:
 	CNtlFSMCharActSmoothHeadingState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -332,7 +334,7 @@ public:
 	CNtlFSMCharActTriggerOperateState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -362,7 +364,7 @@ public:
 	~CNtlFSMCharActJumpState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -390,7 +392,7 @@ public:
 	~CNtlFSMCharActAirJumpState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -412,7 +414,7 @@ public:
 	CNtlFSMCharActFallingState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -438,7 +440,7 @@ public:
 	CNtlFSMCharActChargingState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -467,7 +469,7 @@ public:
 	CNtlFSMCharActBlockingState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -488,7 +490,7 @@ public:
 	CNtlFSMCharActFollowState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	  *State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -496,7 +498,7 @@ public:
 	virtual RwUInt32 HandleEvents(RWS::CMsg &pMsg);
 
 protected:
-    RwUInt8 m_byMoveForm;                       ///< 현재의 이동 객체 종류(지상/수영)
+    RwUInt8 m_byMoveForm;                       ///< Current moving object type (ground/swimming)
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -512,7 +514,7 @@ public:
 	CNtlFSMCharActFightingFollowState();
 
 	/**
-    *  state의 update/event 처리 함수.
+    *State update/event processing function.
     */
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -520,7 +522,7 @@ public:
 	virtual RwUInt32 HandleEvents(RWS::CMsg &pMsg);
 
 protected:
-    RwUInt8 m_byMoveForm;                       ///< 현재의 이동 객체 종류(지상/수영)
+    RwUInt8 m_byMoveForm;                       ///< Current moving object type (ground/swimming)
 };
 
 
@@ -535,7 +537,7 @@ class CNtlFSMCharActFightingPoseState : public CNtlFSMCharActStateBase
 private:
 
 	RwReal m_fTime;
-    RwBool m_bIsPlayInterAni;                   ///< 보간 애니메이션 플레이중인지 판단하는 플래그
+    RwBool m_bIsPlayInterAni;                   ///< Flag to determine whether interpolated animation is playing
 	RwBool m_bAdjustMoveCheck;
 
 public:
@@ -543,14 +545,14 @@ public:
 	CNtlFSMCharActFightingPoseState();
 
 	/**
-    *  state의 update/event 처리 함수.
+    *  State update/event processing function.
     */
 	virtual void Enter(void);
 	virtual void Exit(void);
 	virtual void Update(RwReal fElapsed);
     virtual RwUInt32 HandleEvents(RWS::CMsg &pMsg);
 
-    void    SetPose2IdleAnim();                 ///< Idle로의 보간 애니메이션을 플레이한다.
+    void    SetPose2IdleAnim();                 ///< Play the interpolated animation to Idle.
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -606,7 +608,7 @@ public:
 	CNtlFSMCharActFightingState();
 
 	/**
-    *  state의 update/event 처리 함수.
+    *  State update/event processing function.
     */
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -630,7 +632,7 @@ public:
 	CNtlFSMCharActFightingShrinkState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -651,7 +653,7 @@ public:
 	CNtlFSMCharActHurtState();
 
 	/**
-    *  state의 update/event 처리 함수.
+    *  State update/event processing function.
     */
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -667,14 +669,14 @@ class CNtlFSMCharActKnockDownState : public CNtlFSMCharActStateBase
 
 private:
 
-	RwBool m_bDirectEnd;   /** 서버에서 캐릭터 생성할 때 상태가 knockdown 상태일 경우. */
+	RwBool m_bDirectEnd;   /** When creating a character on the server, the status is knockdown. */
 
 public:
 
 	CNtlFSMCharActKnockDownState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -694,7 +696,7 @@ public:
 	CNtlFSMCharActSlidingState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -714,7 +716,7 @@ public:
 	CNtlFSMCharActStunState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	  *State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -722,12 +724,12 @@ public:
 	virtual RwUInt32 HandleEvents(RWS::CMsg &pMsg);
 
 protected:    
-    void    OnStone(RwBool bEffect);                      ///< 석화 상태 처리
-    void    OnCandy(RwBool bEffect);                      ///< 캔디 상태 처리
+    void    OnStone(RwBool bEffect);                      ///< Processing of petrified state
+    void    OnCandy(RwBool bEffect);                      ///< Candy state handling
 
 protected:
-    BYTE              m_byStunType;                               ///< Stun 타입 eDBO_STUN_TYPE
-    RwReal            m_fOrgAnimSpeed;                            ///< 원래 애니메이션 속도
+    BYTE              m_byStunType;                               ///< Stun type eDBO_STUN_TYPE
+    RwReal            m_fOrgAnimSpeed;                            ///< Original animation speed
     RwBool            m_bApplyStun;
 };
 
@@ -744,7 +746,7 @@ public:
 	CNtlFSMCharActSleepState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -765,7 +767,7 @@ public:
 	CNtlFSMCharActParalyzeState();
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -796,10 +798,10 @@ public:
 	virtual RwUInt32 HandleEvents(RWS::CMsg &pMsg);
 
 protected:
-    RwBool  CheckInFollowRange();               ///< 스킬 사용거리안에 들어왔는지 체크한다.
+    RwBool  CheckInFollowRange();               ///< Check whether you are within the skill usage range.
 
 protected:
-    RwUInt8 m_byMoveForm;                       ///< 현재의 이동 객체 종류(지상/수영)
+    RwUInt8 m_byMoveForm;                       ///< Current moving object type (ground/swimming)
 
 };
 
@@ -864,7 +866,7 @@ private:
 
 	RwUInt8 m_byCastingState;
 	RwBool	m_bSkillSuccess;
-    RwReal  m_fOcclusionCheckTime;                      ///< 캐스팅중에 오브젝트 오클류젼을 체크하는 타임
+    RwReal  m_fOcclusionCheckTime;                      ///< Time to check object occlusion during casting
 	
 private:
 
@@ -913,7 +915,7 @@ protected:
 
 /**
 * \ingroup NtlSimulation
-* \brief 스킬 Action Loop 상태
+* \brief Skill Action Loop status
 *
 * \date 2008-11-20
 * \author agebreak
@@ -1011,9 +1013,9 @@ private:
 	RwBool		m_bSimulationMode;
 	RwBool		m_byHTPStepState;
 	RwUInt8		m_byHTBNextStep;
-	RwUInt8		m_byFirstActiveStep;	// 처음으로 skill 이 연출되는 step
+	RwUInt8		m_byFirstActiveStep;	// The step where skill is produced for the first time
 	RwBool		m_bHTBSuccess;
-	RwUInt32	m_uiSkillTblId;		// 현재 사용하고 있는 htb set의 skill id
+	RwUInt32	m_uiSkillTblId;		// Skill ID of the htb set currently in use
 	RwUInt8		m_byHTBSetType;
 	CNtlSobElapsedController *m_pHTBElapController;
 	CNtlSobElapsedController *m_pSandbagElapController;
@@ -1050,7 +1052,7 @@ private:
 
 	RwBool	m_bFinishSandbag;
 	RwUInt8	m_bySetType;
-    RwBool  m_bSobFaint;                        ///< 맞는중에 사망했는지 유무    
+    RwBool  m_bSobFaint;                        ///< Did he die while being hit?    
 
 private:
 
@@ -1151,7 +1153,7 @@ private:
 		DIE_END
 	};
 
-	RwBool m_bDirectDie;		/**  캐릭터가 처음 생성하자마자 바로 die 상태로 가야할 경우 사용된다 */
+	RwBool m_bDirectDie;		/**  This is used when the character needs to go into a die state as soon as it is first created. */
 	RwUInt8 m_byDieState;		/**  die state */
 	
 	void UpdateFadeOut(RwReal fElapsed);
@@ -1310,8 +1312,8 @@ private:
 	void						UpdateNpcPortal(RwReal fElapsed);
 
 	void						ExitDragonBallNpc(void);
-    void						OnEffectDragonDespawn(void);                ///< 용신일 경우에 사용되는 소멸 이펙트 처리
-    void                        CreateDespawnEffect(CNtlSobActor* pActor);  ///< 디스폰 이펙트를 생성한다.
+    void						OnEffectDragonDespawn(void);                ///< Processing of extinction effect used in case of dragon god
+    void                        CreateDespawnEffect(CNtlSobActor* pActor);  ///< Creates a despawn effect.
 
 public:
 
@@ -1345,7 +1347,7 @@ public:
 	virtual RwUInt32 HandleEvents(RWS::CMsg &pMsg);
 };
 
-// 버스에 탄 상태
+// on the bus
 // 2008.04.07 by agebreak
 class CNtlFSMCharActOnBus : public CNtlFSMCharActStateBase
 {
@@ -1373,7 +1375,7 @@ protected:
     CNtlSobProxySystemEffect* m_pSystemEffect;
 };
 
-// 탈것에 탄 상태
+// on a vehicle
 // 2008.11.08 by lleo52
 class CNtlFSMCharActOnVehicle : public CNtlFSMCharActStateBase
 {
@@ -1400,7 +1402,7 @@ protected:
 	RwReal			m_fFallingSpeed;
 };
 
-// 버스(NPC)가 회전 하는 상태
+// State where the bus (NPC) is rotating
 // 2008.04.14 by agebreak
 class CNtlFSMCharActTurning : public CNtlFSMCharActStateBase
 {
@@ -1419,7 +1421,7 @@ protected:
     void    SetNextDirection(RwV3d& vDir);
 };
 
-// 초사이어인 변신후 변신 휴유증 상태
+// Transformation aftereffects after Super Saiyan transformation
 // 2008.04.17 by agebreak
 class CNtlFSMCharTransformSequela : public CNtlFSMCharActIdleState
 {
@@ -1443,7 +1445,7 @@ protected:
 
 /**
  * \ingroup NtlSimulation
- * \brief 회전 공격 상태
+ * \brief Spin Attack Status
  *
  * \date 2008-10-21
  * \author agebreak
@@ -1493,7 +1495,7 @@ protected:
 
 /**
  * \ingroup NtlSimulation
- * \brief 회전 공격을 당해서 Push 당하는 상태
+ * \brief State of being pushed by a spinning attack
  *
  * \date 2008-10-28
  * \author agebreak
@@ -1518,7 +1520,7 @@ protected:
 
 /**
 * \ingroup NtlSimulation
-* \brief Vehicle에 타거나 내리는 상태
+* \brief The state of getting on or off a vehicle
 *
 * \date 2008-11-06
 * \author lleo52

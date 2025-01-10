@@ -1,27 +1,27 @@
 #include "precomp_dboclient.h"
 #include "RBResultGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// share
+// Share
 #include "NtlSLRankBattle.h"
 
-// table
+// Table
 #include "RankBattleTable.h"
 #include "GraphicDataTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEvent.h"
 #include "NtlSobAvatar.h"
 #include "NtlSLRankBattle.h"
 
-// client
+// Client
 #include "DboGlobal.h"
 #include "DialogPriority.h"
 #include "DboEvent.h"
@@ -106,7 +106,7 @@ RwBool CRBResultGui::Create(VOID)
 
 	CRectangle rtScreen = m_pThis->GetScreenRect();
 
-	// 초기위치 설정
+	// Initial position setting
 	for( RwInt32 i = 0 ; i < TEAM_COUNT ; ++i )
 	{
 		if( i == BLUE )

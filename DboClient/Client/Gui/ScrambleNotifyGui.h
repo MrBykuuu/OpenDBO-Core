@@ -1,25 +1,25 @@
 /******************************************************************************
-* File			: ScrambleNotifyGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2009. 5. 6
-* Abstract		: 
+*File			: ScrambleNotifyGui.h
+*Author		    : Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2009. 5. 6
+*Abstract		: 
 *****************************************************************************
-* Desc			: 
+*Desc			: 
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// cleint
+// Client
 #include "SlotGui.h"
 
 class CResultNarrationGui;
@@ -44,10 +44,10 @@ class CScrambleNotifyGui : public CNtlPLGui, public RWS::CEventHandler
 	{
 		gui::CDialog*				pParentDialog;
 		gui::CFlash*				pFlash;
-		gui::CStaticBox*			pGuildNameStatic;				///< '유파이름'
-		gui::CStaticBox*			pDojoNameStatic;				///< '소유도장'
-		gui::CStaticBox*			pRewardReputationPointStatic;	///< '유파포인트'
-		gui::CStaticBox*			pRewardItemStatic;				///< '획득아이템'
+		gui::CStaticBox*			pGuildNameStatic;				///< 'U-file name'
+		gui::CStaticBox*			pDojoNameStatic;				///< ‘Ownership stamp’
+		gui::CStaticBox*			pRewardReputationPointStatic;	///< ‘Yupa Point’
+		gui::CStaticBox*			pRewardItemStatic;				///< ‘Acquired items’
 		gui::CStaticBox*			pGuildName;
 		gui::CStaticBox*			pDojoName;
 		gui::CStaticBox*			pRewardReputationPoint;

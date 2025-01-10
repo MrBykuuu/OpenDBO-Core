@@ -1,20 +1,20 @@
 #include "precomp_dboclient.h"
 #include "RBBoardGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// share
+// Share
 #include "NtlRankBattle.h"
 
-// table
+// Table
 #include "TableContainer.h"
 #include "RankBattleTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLApi.h"
 #include "NtlSLEvent.h"
@@ -22,10 +22,10 @@
 #include "NtlSobAvatar.h"
 #include "NtlSLRankBattle.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// client
+// Client
 #include "DboGlobal.h"
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
@@ -226,7 +226,7 @@ RwBool CRBBoardGui::Create(VOID)
 	m_pThis->Show( false );
 	m_ppnlFocusBar->Show( false );
 		
-	// Event연결
+	// Event connection
 	LinkMsg( g_EventRBBoardInfo );
 	LinkMsg( g_EventRBJoin );
 	LinkMsg( g_EventNPCDialogOpen );
@@ -486,7 +486,7 @@ VOID CRBBoardGui::SetBoardData( RwUInt8 byBattleType, RwUInt8 byArenaCount, sRAN
 	//if( pBoardData->byRoomCount == 0 )
 	//	m_ppnlFocusBar->Show( false );	
 	//else
-	//{// 기본선택
+	//{//Default
 	//	RwInt32 nFocusItemID = GetFocusItemID();
 
 	//	if( pBoardData->byRoomCount <= nFocusItemID )
@@ -495,19 +495,19 @@ VOID CRBBoardGui::SetBoardData( RwUInt8 byBattleType, RwUInt8 byArenaCount, sRAN
 	//		OnClickBoardItem( 0 );
 	//}	
 
-	//// 레벨제한 표시
+	//// Level limit display
 	////m_pstbCanEnterLevel->Format( GetDisplayStringManager()->GetString( DST_RB_LEVEL_LIMIT ), pRankBattleData->byMinLevel, pRankBattleData->byMaxLevel );
 	//
-	//// 페이지 표시
+	//// page display
 	////SetPage( pBoardData->wCurPage, pBoardData->wTotalPage );	
 	////m_pstbPage->Format( GetDisplayStringManager()->GetString( DST_RB_PAGE ), m_nCurrentPage + 1, ( m_nTotalPage == 0 ) ? m_nTotalPage + 1 : m_nTotalPage );
 	//
-	//// 아이템 표시
+	//// Show items
 	//for( RwInt32 i = 0 ; i < MAX_BOARD_ITEM ; ++i )
 	//{
 	//	if( i < pBoardData->byRoomCount )
 	//	{
-	//		// 아이템이 있는 경우
+	//		// If there is an item
 	//		m_BoardItem[i].Show( true );
 
 	//		if( pBoardData->byRoomType == RANKBATTLE_MODE_INDIVIDUAL )
@@ -528,7 +528,7 @@ VOID CRBBoardGui::SetBoardData( RwUInt8 byBattleType, RwUInt8 byArenaCount, sRAN
 	//	}
 	//	else
 	//	{
-	//		// 아이템이 없는 경우
+	//		// If there is no item
 	//		m_BoardItem[i].Show( false );
 	//	}
 	//}
@@ -710,7 +710,7 @@ VOID CRBBoardGui::OnClickBoardItem( RwInt32 nItemIndex, RwUInt32 uiFieldID )
 	}	
 	else
 	{
-		// peessitemp : 신청중에는 다른 것을 선택할 수 없다는 메시지 필요.
+		// peessitemp: A message is required indicating that no other selections can be made during application.
 
 	}
 }

@@ -1,28 +1,28 @@
 /******************************************************************************
-* File			: RaceExplainGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2006. 12. 8
-* Abstract		: 
+*File			: RaceExplainGui.h
+*Author		    : Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2006. 12. 8
+*Abstract		: 
 *****************************************************************************
-* Desc			: 로비에서 종족에 대한 설명을 보여준다
+*Desc			:Show descriptions of races in the lobby
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// gui
+// Gui
 #include "gui_button.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "Inputhandler.h"
 
-// dbo
+// Dbo
 #include "Windowby3.h"
 
 
@@ -47,12 +47,12 @@ protected:
 protected:
 	gui::CSlot			m_slotPaint;
 
-	CWindowby3			m_Background;		///< 배경
+	CWindowby3			m_Background;		///< background
 
-	CSurfaceGui			m_srtRaceNameBack;	///< 종족 이름 배경
+	CSurfaceGui			m_srtRaceNameBack;	///< Race name background
 
 	gui::CStaticBox*	m_pTitleStatic;
 
-	gui::CStaticBox*	m_pRaceName;		///< 종족 이름
-	gui::CHtmlBox*		m_pExplainHtml;		///< 종족 설명
+	gui::CStaticBox*	m_pRaceName;		///< Race name
+	gui::CHtmlBox*		m_pExplainHtml;		///< Race description
 };

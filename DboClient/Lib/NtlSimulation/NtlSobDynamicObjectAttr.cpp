@@ -30,12 +30,12 @@ void CNtlSobDynamicObjectAttr::HandleEvents( RWS::CMsg& pMsg )
 	{
 		SNtlEventSobDynamicObjectCreate* pDynamicObjectCreate = reinterpret_cast<SNtlEventSobDynamicObjectCreate*>( pMsg.pData );
 
-		// 1. Type 저장 TableIdx 저장
+		//1. Save Type Save TableIdx
 		m_byDynamicObjectType = pDynamicObjectCreate->byType;
 		m_idxTableForType = pDynamicObjectCreate->uiTableIndexForType;
 		
-		// 2. Type 에 맞춰서 테이블을 꺼낸다.
-		//  2-1. 이름을 세팅한다. ( 누구누구의 무슨무슨 머신을 고려해본다. )
+		//2. Take out the table according to the Type.
+		//2-1. Set the name. (Consider so-and-so's so-and-so machine.)
 		
 		CDynamicObjectTable* pDynamicObjectTbl = API_GetTableContainer()->GetDynamicObjectTable();
 		NTL_ASSERT(pDynamicObjectTbl, "CNtlSobDynamicObjectAttr::HandleEvents => Dynamic ObjectTable is null" );

@@ -1,22 +1,22 @@
 /******************************************************************************
-* File			: SideIconGui.h
-* Author		: Kim JinSung -> Cho HaeSung
-* Copyright		: (주)NTL
-* Date			: 2007. 6. 11
-* Abstract		: 
+*File			: SideIconGui.h
+*Author		    : Kim JinSung -> Cho HaeSung
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 6. 11
+*Abstract		: 
 *****************************************************************************
-* Desc			: DBO 사이드 아이콘 GUI
+*Desc			: DBO Side Icon GUI
 *****************************************************************************/
 
 #pragma once
 
 #include "SideIconDefine.h"
 
-// SideIcon들의 간격
+// Spacing between SideIcons
 #define dSIDEICON_MARGIN_WIDTH	5
 #define dSIDEICON_MARGIN_HEIGHT	5
 
-// Class 전방 선언
+// Class forward declaration
 class CSideIconGui;
 class CSideIconBase;
 class CSideViewBase;
@@ -64,7 +64,7 @@ class CNetPySideViewGui;
 
 /**
 * \ingroup client
-* \brief DBO상의 사이드 아이콘들을 생성 및 관리한다. (싱글톤)
+* \brief Creates and manages side icons on DBO. (singleton)
 */
 class CSideIconGui : public CNtlPLGui, public RWS::CEventHandler
 {
@@ -119,14 +119,14 @@ public:
 	static CSideIconGui* GetInstance() { return s_pSideIconGui; }
 	
 protected:
-	SIDEICONVEC			m_vecSideIcon;		// Number를 통해 정렬 한다.
+	SIDEICONVEC			m_vecSideIcon;		// Sort by Number.
 	SIDEICONMAP			m_mapSideIcon;
 	SIDEVIEWMAP			m_mapSideView;
 
 	CSideIconBase*		m_pPresentIcon;
 	CSideViewBase*		m_pPresentView;
 
-	eSideViewType		m_nPresentViewType;	// 현재 보여지고 있는 뷰의 Enum
+	eSideViewType		m_nPresentViewType;	// Enum of the currently displayed view
 
 	gui::CSlot			m_slotMove;
 
@@ -184,7 +184,7 @@ public:
 	virtual ~CSideIconBase();
 
 	virtual void	Show(bool bShow);
-	void			SetNumber(const RwUInt32& uiNumber); // uiNumber가 작을 수록 사이드 오른쪽에 출력
+	void			SetNumber(const RwUInt32& uiNumber); // The smaller the uiNumber, the output is on the right side of the side.
 	RwUInt32		GetNumber();
 
 	bool			IsDisplay()	{ return m_bDisplay; }

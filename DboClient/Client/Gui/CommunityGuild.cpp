@@ -56,28 +56,28 @@ CGuildMemberGui::CGuildMemberGui(CNtlPLGui* pParent)
 
 	m_pParent = pParent;
 
-	// 이름
+	// name
 	rect.SetRectWH(dMAGIN, dMAGIN, 109, 13);
 	m_pName = NTL_NEW gui::CStaticBox( rect, pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_pName->CreateFontStd( "detail", DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pName->Show(false);
 	m_pName->Enable(false);
 
-	// 레벨
+	// level
 	rect.SetRectWH(dMAGIN + 117, dMAGIN, 43, 13);
 	m_pLevel = NTL_NEW gui::CStaticBox( rect, pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER );
 	m_pLevel->CreateFontStd( "detail", DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pLevel->Show(false);
 	m_pLevel->Enable(false);
 
-	// 지역
+	// region
 	rect.SetRectWH(dMAGIN + 176, dMAGIN, 73, 13);
 	m_pArea = NTL_NEW gui::CStaticBox( rect, pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_pArea->CreateFontStd( "detail", DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pArea->Show(false);
 	m_pArea->Enable(false);
 
-	// 맴버 메뉴 버튼
+	// Member menu button
 	rect.SetRectWH(273, 151, 20, 20);
 	m_pMemberMenuButton = (gui::CButton*) NTL_NEW gui::CButton(rect, "",
 		GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "gui\\Community.srf", "srfDownArrowBtnUp" ),
@@ -89,7 +89,7 @@ CGuildMemberGui::CGuildMemberGui(CNtlPLGui* pParent)
 	m_pMemberMenuButton->Show(false);
 	m_slotMemberMenuButton = m_pMemberMenuButton->SigClicked().Connect(this, &CGuildMemberGui::ClickedMemberButton);
 
-	// 클래스 서페이스
+	// class surface
 	rect.SetRectWH(0, 0, dMARK_SIZE, dMARK_SIZE);
 	pTributarySimbol = NTL_NEW gui::CPanel( rect, m_pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager() );
 }
@@ -279,7 +279,7 @@ RwBool CGuildMemberGui::PtInRect(RwInt32 iXPos, RwInt32 iYPos)
 
 VOID CGuildMemberGui::ClickedMemberButton(gui::CComponent* pComponent)
 {
-	// 맴버 버튼 On/Off
+	// Member button On/Off
 	CRectangle rect = m_pParent->GetPosition();
 	CDboEventGenerator::IconPopupShow( TRUE, m_charID, PLACE_SUB_GUILD_DIALOG, 0,
 										rect.left + m_pMemberMenuButton->GetPosition().left,
@@ -318,17 +318,17 @@ RwBool CCommunityGuild::Create(CNtlPLGui* pParent)
 	CRectangle rect;
 	CRectangle rtParent = m_pParent->GetPosition();
 
-	// 길드 문장 버튼
+	// Guild Emblem Button
 	m_pEmblemButton = (gui::CButton*)m_pParent->GetComponent("GuildEmblemButton");
 	m_pEmblemButton->SetToolTip( GetDisplayStringManager()->GetString("DST_GUILD_EMBLEM_INFO") );
 	m_slotEmblemButton = m_pEmblemButton->SigClicked().Connect(this, &CCommunityGuild::ClickedEmblemButton);	
 
-	// 길드 문장 수정 버튼
+	// Guild emblem edit button
 	m_pEmblemModifyButton = (gui::CButton*)m_pParent->GetComponent("GuildEmblemModifyButton");
 	m_pEmblemModifyButton->SetToolTip( GetDisplayStringManager()->GetString("DST_GUILD_EMBLEM_MODIFY_INFO") );
 	m_slotEmblemModifyButton = m_pEmblemModifyButton->SigClicked().Connect(this, &CCommunityGuild::ClickedEmblemButton);	
 
-	// 길드 이름
+	// guild name
 	rect.SetRectWH(78, 71, 130, 13);
 	m_pGuildName = NTL_NEW gui::CStaticBox( rect, m_pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_pGuildName->CreateFontStd( "detail", DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);	
@@ -373,19 +373,19 @@ RwBool CCommunityGuild::Create(CNtlPLGui* pParent)
 	m_pCurGuildPoint->Enable(false);
 	m_pCurGuildPoint->Show(false);
 
-	// 길드 탈퇴 버튼
+	// Guild withdrawal button
 	m_pLeaveButton = (gui::CButton*)m_pParent->GetComponent("GuildLeaveButton");
 	m_pLeaveButton->SetToolTip( GetDisplayStringManager()->GetString("DST_GUILD_LEAVE") );
 	m_slotLeaveButton = m_pLeaveButton->SigClicked().Connect(this, &CCommunityGuild::ClickedLeaveButton);
 
-	// 길드 도장 버튼
+	// Guild stamp button
 	m_pGhymButton = (gui::CButton*)m_pParent->GetComponent("GuildGhymButton");
 	m_pGhymButton->SetToolTip( GetDisplayStringManager()->GetString("DST_GUILD_GYM") );
 	m_slotGhymButton = m_pGhymButton->SigClicked().Connect(this, &CCommunityGuild::ClickedGhymButton);
 
 
 
-	// 이름 정렬 버튼
+	// Name sort button
 	m_pNameButton = (gui::CButton*)m_pParent->GetComponent("GuildNameButton");
 	m_pNameButton->SetTextStyle(COMP_TEXT_CENTER);
 	m_pNameButton->SetTextUpColor(NTL_BUTTON_UP_COLOR);
@@ -395,7 +395,7 @@ RwBool CCommunityGuild::Create(CNtlPLGui* pParent)
 	m_pNameButton->ApplyText();
 	m_slotNameButton = m_pNameButton->SigClicked().Connect(this, &CCommunityGuild::ClickedNameButton);
 
-	// 레벨 정렬 버튼
+	// level sort button
 	m_pLevelButton = (gui::CButton*)m_pParent->GetComponent("GuildLevelButton");
 	m_pLevelButton->SetTextStyle(COMP_TEXT_CENTER);
 	m_pLevelButton->SetTextUpColor(NTL_BUTTON_UP_COLOR);
@@ -405,7 +405,7 @@ RwBool CCommunityGuild::Create(CNtlPLGui* pParent)
 	m_pLevelButton->ApplyText();
 	m_slotLevelButton = m_pLevelButton->SigClicked().Connect(this, &CCommunityGuild::ClickedLevelButton);
 
-	// 지역 정렬 버튼
+	// Region sort button
 	m_pAreaButton = (gui::CButton*)m_pParent->GetComponent("GuildAreaButton");
 	m_pAreaButton->SetTextStyle(COMP_TEXT_CENTER);
 	m_pAreaButton->SetTextUpColor(NTL_BUTTON_UP_COLOR);
@@ -415,7 +415,7 @@ RwBool CCommunityGuild::Create(CNtlPLGui* pParent)
 	m_pAreaButton->ApplyText();
 	m_slotAreaButton = m_pAreaButton->SigClicked().Connect(this, &CCommunityGuild::ClickedAreaButton);
 
-	// 길드 맴버 배경
+	// Guild member background
 	m_GuildMemBackSurface.SetSurface(0,  GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Community.srf", "srfMemberPanelLeft" ) );
 	m_GuildMemBackSurface.SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Community.srf", "srfMemberPanelCenter" ) );
 	m_GuildMemBackSurface.SetSurface(2, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Community.srf", "srfMemberPanelRight" ) );
@@ -424,11 +424,11 @@ RwBool CCommunityGuild::Create(CNtlPLGui* pParent)
 
 
 
-	// 사람 모양
+	// person shape
 	m_srfHumanShapeSurface.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Community.srf", "srfHumanShape" ) );
 	m_srfHumanShapeSurface.SetPositionfromParent(280, 336);
 
-	// 길드 인원
+	// guild personnel
 	rect.SetRectWH(203, 336, 65, 13);
 	m_pGuildNum = NTL_NEW gui::CStaticBox( rect, m_pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_RIGHT );
 	m_pGuildNum->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);	
@@ -440,23 +440,23 @@ RwBool CCommunityGuild::Create(CNtlPLGui* pParent)
 
 
 
-	// 길드 공지 바
+	// Guild Notice Bar
 	m_srfNoticeBar.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Community.srf", "PartyHeadLine" ) );
 	m_srfNoticeBar.SetPositionfromParent(10, 346);
 
-	// 길드 공지 배경
+	// Guild Notice Background
 	m_NoticeSurface.SetSurface(0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Community.srf", "srfNoticePanelLeft" ) );
 	m_NoticeSurface.SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Community.srf", "srfNoticePanelCenter" ) );
 	m_NoticeSurface.SetSurface(2, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Community.srf", "srfNoticePanelRight" ) );
 	m_NoticeSurface.SetSize(290, 90);
 	m_NoticeSurface.SetPositionfromParent(16, 365);
 
-	// 길드 공지 버튼
+	// Guild Notice Button
 	m_pNoticeButton = (gui::CButton*)m_pParent->GetComponent("GuildNoticeButton");
 	m_pNoticeButton->SetToolTip( GetDisplayStringManager()->GetString("DST_GUILD_NOTICE") );
 	m_slotNoticeButton = m_pNoticeButton->SigClicked().Connect(this, &CCommunityGuild::ClickedNoticeButton);
 
-	// '길드 공지'
+	// ‘Guild Notice’
 	rect.SetRectWH(31, 348, 123, 13);
 	m_pGuildNoticeStatic = NTL_NEW gui::CStaticBox( rect, m_pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_pGuildNoticeStatic->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);	
@@ -464,7 +464,7 @@ RwBool CCommunityGuild::Create(CNtlPLGui* pParent)
 	m_pGuildNoticeStatic->Enable(false);
 	m_pGuildNoticeStatic->Show(false);
 
-	// 공지 날짜
+	// Notice Date
 	rect.SetRectWH(31, 371, 140, 13);
 	m_pGuildNoticeTime = NTL_NEW gui::CStaticBox( rect, m_pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_pGuildNoticeTime->CreateFontStd( "detail", DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);	
@@ -473,7 +473,7 @@ RwBool CCommunityGuild::Create(CNtlPLGui* pParent)
 	m_pGuildNoticeTime->Enable(false);
 	m_pGuildNoticeTime->Show(false);
 
-	// 공지자
+	// notice
 	rect.SetRectWH(164, 371, 101, 13);
 	m_pGuildNoticer = NTL_NEW gui::CStaticBox( rect, m_pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_pGuildNoticer->CreateFontStd( "detail", DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);	
@@ -482,14 +482,14 @@ RwBool CCommunityGuild::Create(CNtlPLGui* pParent)
 	m_pGuildNoticer->Enable(false);
 	m_pGuildNoticer->Show(false);
 
-	// 공지 내용
+	// Notice
 	m_pNotice = (gui::COutputBox*)m_pParent->GetComponent("NoticeContent");
 	m_pNotice->CreateFontStd( "detail", DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);	
 	m_pNotice->SetLineSpace(3);
 	m_pNotice->SetTextColor(RGB(255, 210, 0));
 	m_pNotice->Show(false);
 	
-	// 스크롤
+	// scroll
 	m_pScrollbar = (gui::CScrollBar*)m_pParent->GetComponent("scbScroll");
 	m_pScrollbar->SetMaxValue(0);
 
@@ -499,14 +499,14 @@ RwBool CCommunityGuild::Create(CNtlPLGui* pParent)
 		m_aGuildMemberGui[i]->Show(false);
 	}
 
-	// 엠블렘 버튼 이미지
+	// emblem button image
 	CRectangle rtEmblemModifyButton = m_pEmblemButton->GetPosition();
 	m_pEmblemButtonImage = NTL_NEW CRwTextureGui;
 	m_pEmblemButtonImage->SetPositionfromParent(rtEmblemModifyButton.left, rtEmblemModifyButton.top);
 	m_pEmblemButtonImage->SetSize(rtEmblemModifyButton.GetWidth(), rtEmblemModifyButton.GetHeight());
 
 
-	// sig
+	// Signals
 	m_slotServerScrollChanged		= m_pScrollbar->SigValueChanged().Connect( this, &CCommunityGuild::OnScrollChanged );
 	m_slotServerScrollSliderMoved	= m_pScrollbar->SigSliderMoved().Connect( this, &CCommunityGuild::OnScrollChanged );
 	m_slotCaptureWheelMove			= GetNtlGuiManager()->GetGuiManager()->SigCaptureWheelMove().Connect( this, &CCommunityGuild::OnCaptureWheelMove );
@@ -670,7 +670,7 @@ VOID CCommunityGuild::AddMember(CHARACTERID charID)
 {
 	CNtlGuild* pGuild = GetNtlSLGlobal()->GetSobAvatar()->GetGuild();
 
-	// 스크롤 최대값 조정
+	// Adjust scroll maximum
 	m_pScrollbar->SetMaxValue( pGuild->GetMemberCount() - dVISIBLE_LIST_COUNT );
 
 	RefreshList(m_iVisibleStart);
@@ -692,7 +692,7 @@ VOID CCommunityGuild::DelMember(CHARACTERID charID)
 		}
 	}
 
-	// 스크롤 최대값 조정
+	// Adjust scroll maximum
 	m_pScrollbar->SetMaxValue( pGuild->GetMemberCount() - dVISIBLE_LIST_COUNT );
 
 	if( iDelIndex < m_pScrollbar->GetValue() + dVISIBLE_LIST_COUNT )
@@ -820,7 +820,7 @@ VOID CCommunityGuild::ClickedEmblemButton(gui::CComponent* pComponent)
 		return;
 	}
 
-	// 엠블렘 메이커 GUI
+	// Emblem Maker GUI
 	if( !m_pEmblemMakerGui )
 	{
 		CRectangle rtScreen = m_pParent->GetPosition();
@@ -850,21 +850,21 @@ VOID CCommunityGuild::ClickedLeaveButton(gui::CComponent* pComponent)
 
 	if( pGuild->IsHaveGroup() )
 	{
-		// 길드를 탈퇴한다
+		// Leave the guild
 		//const WCHAR* pwcText = GetDisplayStringManager()->GetString(DST_GUILD_LEAVE_ASK);
 		//CDboEventGenerator::MsgBoxShow(pwcText, MBW_GUILD_LEAVE, MBTF_OK | MBTF_CANCEL);	
 		GetAlarmManager()->AlarmMessage( "DST_GUILD_LEAVE_ASK" );
 	}
 	else
 	{
-		// 길드에 가입하지 않았습니다
+		// I haven't joined the guild
 		GetAlarmManager()->AlarmMessage("DST_GUILD_NOT_JOIN");
 	}
 }
 
 VOID CCommunityGuild::ClickedGhymButton(gui::CComponent* pComponent)
 {
-	// 길드 도장 GUI를 연다
+	// Open the Guild Dojo GUI
 	CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
 	if( !pAvatar )
 	{
@@ -883,7 +883,7 @@ VOID CCommunityGuild::ClickedGhymButton(gui::CComponent* pComponent)
 
 VOID CCommunityGuild::ClickedNameButton(gui::CComponent* pComponent)
 {
-	// 길드 리스트를 이름별로 정렬한다
+	// Sort the guild list by name
 	CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
 	if( !pAvatar )
 	{
@@ -900,7 +900,7 @@ VOID CCommunityGuild::ClickedNameButton(gui::CComponent* pComponent)
 }
 VOID CCommunityGuild::ClickedLevelButton(gui::CComponent* pComponent)
 {
-	// 길드 리스트를 레벨별로 정렬한다
+	// Sort the guild list by level
 	CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
 	if( !pAvatar )
 	{
@@ -917,7 +917,7 @@ VOID CCommunityGuild::ClickedLevelButton(gui::CComponent* pComponent)
 }
 VOID CCommunityGuild::ClickedAreaButton(gui::CComponent* pComponent)
 {
-	// 길드 리스트를 지역별로 정렬한다
+	// Sort the guild list by region
 	CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
 	if( !pAvatar )
 	{
@@ -983,7 +983,7 @@ VOID CCommunityGuild::EmblemButton_Change()
 	if( FALSE == Logic_GetEmblemFactor(&emblemFactor, GetNtlSLGlobal()->GetSobAvatar()) )
 		return;
 	
-	// 길드 문장 버튼의 아래에 깔릴 문장 이미지
+	// Emblem image to be placed below the guild emblem button
 	if( !m_pEmblemButtonImage )
 		return;
 
@@ -1034,7 +1034,7 @@ VOID CCommunityGuild::ClickedNoticeButton(gui::CComponent* pComponent)
 		return;
 	}
 
-	// 공지를 띄운다
+	// Put up a notice
 	if( !m_pNoticeGui )
 	{
 		CRectangle rtScreen = m_pParent->GetPosition();
@@ -1207,10 +1207,10 @@ VOID CCommunityGuild::HandleEvents( RWS::CMsg &msg )
 
 				RefreshList(0);
 
-				// 접속인원
+				// Number of people connected
 				SetOnlineMemberCount(pGuild);
 
-				// 해산 공지가 있다면
+				// If there is a notice of dissolution
 				if( pGuild->IsBeingDisband() )
 				{
 					sDetailTime detailTime;

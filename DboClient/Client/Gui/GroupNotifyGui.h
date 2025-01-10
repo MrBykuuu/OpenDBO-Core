@@ -1,20 +1,20 @@
 /******************************************************************************
-* File			: GroupNotifyGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 11. 5
-* Abstract		: 
+*File           : GroupNotifyGui.h
+*Author         : Hong SungBock
+*Copyright      : NTL Co., Ltd.
+*Date           : November 5, 2008
+*Abstract       : 
 *****************************************************************************
-* Desc			: 어떠한 커뮤니티 그룹 안에서 일정 권한 이상을 가진 사람이
-*				  다른 그룹원에게 알림 메세지를 보낼 때 사용
+*Desc           : A person with more than a certain level of authority within any community group
+*                 Used to send notification messages to other group members
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
 class CGroupNotifyGui : public CNtlPLGui, public RWS::CEventHandler

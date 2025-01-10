@@ -1,30 +1,30 @@
 /******************************************************************************
-* File			: CGuildWarehouseGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 2. 22
-* Abstract		: 
+*File           : CGuildWarehouseGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : February 22, 2008
+*Abstract		: 
 *****************************************************************************
-* Desc			: 기존의 작성된 CWarehouse 를 활용하지 않는다.
-*				  차후 GuildWarehouse만이 기획이 다르게 변할 경우 등을 생각하여
-*				  CWarehouse 클래스와는 연관성 없이 제작한다
+*Desc           :It does not utilize the existing CWarehouse.
+*                In case GuildWarehouse is planned differently in the future, etc.
+*                CWarehouse class in case the plan changes in the future.
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// share
+// Share
 #include "NtlItem.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// dbo
+// Dbo
 #include "SlotGui.h"
 
 
@@ -56,7 +56,7 @@ protected:
 
 	VOID			SetupItems();
 
-	RwInt8			PtinSlot(RwInt32 iX, RwInt32 iY);				///< 마우스가 영역으로 들어온 슬롯을 찾는다.
+	RwInt8			PtinSlot(RwInt32 iX, RwInt32 iY);				///< Find the slot where the mouse entered the area.
 	VOID			FocusEffect( RwBool bPush, RwInt32 iSlotIdx = -1);
 	VOID			SelectEffect( RwBool bPush, RwInt32 iSlotIdx = -1);
 	VOID			ShowDisableSlot(RwBool bShow, RwUInt8 bySlot);
@@ -83,23 +83,23 @@ protected:
 	gui::CSlot			m_slotCloseButton;
 	gui::CSlot			m_slotCaptureMouseDown;
 
-	gui::CButton*		m_pExitButton;		///< 창닫기 버튼
+	gui::CButton*		m_pExitButton;		///< Close window button
 
 	RwInt8				m_byInfoWindowIndex;
-	RwInt32				m_iMouseDownSlot;	///< 마우스로 눌린 슬롯의 인덱스
-	RwInt32				m_iSelectedSlot;	///< 셀렉트 이펙트 슬롯
-	RwInt32				m_iClickEffectedSlot;///< 현재 클릭 이펙트가 생긴 슬롯
+	RwInt32				m_iMouseDownSlot;	///< Index of the slot pressed by the mouse
+	RwInt32				m_iSelectedSlot;	///< Select effect slot
+	RwInt32				m_iClickEffectedSlot;///< Slot with current click effect
 
-	gui::CStaticBox*	m_pDialogName;		///< 다이얼로그의 이름 스태틱
+	gui::CStaticBox*	m_pDialogName;		///< Dialog name static
 
-	CSurfaceGui			m_FocusEffect;		///< 슬롯 포커스 이펙트
-	CSurfaceGui			m_SelectEffect;		///< 슬롯 셀렉트 이펙트
+	CSurfaceGui			m_FocusEffect;		///< Slot focus effect
+	CSurfaceGui			m_SelectEffect;		///< Slot select effect
 
-	RwUInt8				m_byWarehouseIndex;	///< 몇 번째 창고인지
+	RwUInt8				m_byWarehouseIndex;	///<What warehouse is it?
 
-	RwBool				m_bFocus;			///< 포커스를 얻었다.
+	RwBool				m_bFocus;			///< Got focus.
 
-	CRegularSlotGui			m_Slot[NTL_MAX_GUILD_ITEM_SLOT];	///< 아이템 슬롯
+	CRegularSlotGui			m_Slot[NTL_MAX_GUILD_ITEM_SLOT];	///< Item slot
 };
 
 
@@ -134,7 +134,7 @@ protected:
 	gui::CStaticBox*	m_pZenny;
 	gui::CTexture*		m_pMoneyIconTexture;
 
-	CSurfaceGui			m_srfZennySlotDestination;	///< 제니 슬롯 Destination 이미지
+	CSurfaceGui			m_srfZennySlotDestination;	///< Zenny Slot Destination Image
 
 	RwBool				m_bZennySlotDestination;
 };
@@ -156,7 +156,7 @@ public:
 	RwBool		Create();
 	VOID		Destroy();
 
-	RwInt32		SwitchDialog(bool bOpen);		///< DialogManager에서의 Open/Close
+	RwInt32		SwitchDialog(bool bOpen);		///< Open/Close in DialogManager
 
 protected:
 	CGuildWarehouseBar() {}
@@ -180,9 +180,9 @@ protected:
 	gui::CSlot			m_slotMove;
 	gui::CSlot			m_slotCaptureMouseDown;
 
-	gui::CButton*		m_pWarehouseBtn[NTL_MAX_GUILD_BANK_COUNT];///< 창고 버튼
-	gui::CButton*		m_p_All_Button;		///< 모든 창고 버튼
-	gui::CButton*		m_pExitButton;		///< 창닫기 버튼
+	gui::CButton*		m_pWarehouseBtn[NTL_MAX_GUILD_BANK_COUNT];///< warehouse button
+	gui::CButton*		m_p_All_Button;		///< All warehouses button
+	gui::CButton*		m_pExitButton;		///< Close window button
 
 	CGuildWarehouseGui*		m_pWareHouseGui[NTL_MAX_GUILD_BANK_COUNT];
 };

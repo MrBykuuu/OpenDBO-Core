@@ -2,12 +2,12 @@
 *
 * File			: NtlChannelGroup.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: (二�)NTL
 * Date			: 2006. 7. 11	
 * Abstract		: Sound channel group
 *****************************************************************************
-* Desc			: 게임 상에서의 사운드 Channel 성격에 따라 Group 지어진 channel
-*				을 일괄 관리할 수 있다.
+* Desc			: Channel grouped according to the nature of the sound channel in the game
+*                 can be managed in batches.
 *****************************************************************************/
 
 #pragma once
@@ -15,11 +15,11 @@
 #include <map>
 #include <string>
 
-// core
+// Core
 #include "fmod/fmod.h"
 #include "fmod/fmod.hpp"
 
-// sound
+// Sound
 #include "NtlSoundDefines.h"
 
 class CNtlSound;
@@ -40,8 +40,8 @@ public:
 
 
 	virtual bool			Create(FMOD::ChannelGroup* pChannelGroup, unsigned int uiSoundDuplicatoin = 0);
-	///< FMOD::System에 의해서 만들어진 채널 그룹을 등록한다
-	///< uiSoundDuplicatoin : 같은 사운드를 동시에 중복해서 연주할 수 있는 횟수
+	///< Registers the channel group created by FMOD::System
+	///< uiSoundDuplicatoin: Number of times the same sound can be played repeatedly at the same time
 
 	virtual void			Reset();
 	virtual void			Update(float fElapsed);
@@ -94,14 +94,14 @@ protected:
 	virtual void			ReleaseFinishedSound(float fElapsed);
 
 public:	
-	eChannelGroupType			m_eGroup;					///< 채널 그룹
-	unsigned int				m_uiSoundDuplication;		///< 같은 사운드를 동시에 중복해서 연주할 수 있는 횟수
+	eChannelGroupType			m_eGroup;					///< Channel group
+	unsigned int				m_uiSoundDuplication;		///< Number of times the same sound can be played repeatedly at the same time
 
 	sNtlVolume					m_tVolume;
 	sNtlPitch					m_tPitch;
 
-	float						m_fValidRange;				///< 연주 가능한 리스너로부터의 거리
-	RwBool						m_bProhibition;				///< Mute 기능이 아닌 아예 플레이를 하지 않는 상태	
+	float						m_fValidRange;				///< Distance from listener that can play
+	RwBool						m_bProhibition;				///< Not playing at all, not using the mute function	
 
 	CNtlSoundDSP*				m_pDSP;
 	FMOD::ChannelGroup*			m_pMasterLayer;				///< FMOD channel group master layer

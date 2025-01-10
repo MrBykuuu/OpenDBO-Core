@@ -1,10 +1,10 @@
 #include "precomp_dboclient.h"
 #include "DboExceptionHandler.h"
 
-// framework
+// Framework
 #include "NtlStage.h"
 
-// dbo
+// Dbo
 #include "callstack.h"
 #include "NtlCoreUtil.h"
 #include "DboGlobal.h"
@@ -13,19 +13,19 @@
 #include "StageManager.h"
 #include "DboLogic.h"
 
-//woody
+//Woody
 #include "NtlMaterialExt.h"
 
 VOID DboExceptionHandler( PEXCEPTION_POINTERS pExceptionInfo )
 {
-	// 게임 정보를 저장한다.
+	// Save game information.
 	CNtlStage *pStage = CStageManager::GetInstance()->GetActiveStage();
 	if(pStage)
 	{
 		std::string strStageName = pStage->GetName();
 		if(strStageName == GAME_STAGE_NAME)
 		{
-			/*Logic_SaveCharacterGameInformation();*/
+			/*Logic save character game information();*/
 			Logic_SaveAccountOption();
 			Logic_SaveGameOption();
 			Logic_SaveSystemOption();
@@ -35,7 +35,7 @@ VOID DboExceptionHandler( PEXCEPTION_POINTERS pExceptionInfo )
 		}
 	}
 
-    // 추가 정보 로그 파일을 기록한다.
+    // Write additional information log files.
     CDboExtraErrorReport extraErrorReport;
     extraErrorReport.WriteInfo("USER_ID", CDboGlobal::GetInstance()->GetUserData()->wchUserID);
 

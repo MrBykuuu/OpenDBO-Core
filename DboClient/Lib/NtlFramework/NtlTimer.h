@@ -17,7 +17,7 @@
 
 /**
  * \ingroup Util
- * Time을 계산 하는 함수 이다.
+ *This is a function that calculates time.
  *
  * 
  */

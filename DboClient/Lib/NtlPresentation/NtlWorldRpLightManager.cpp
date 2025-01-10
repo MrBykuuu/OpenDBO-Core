@@ -115,7 +115,7 @@ void CNtlWorldRpLightManager::Destroy()
 void CNtlWorldRpLightManager::SaveSwap()
 {
 #ifdef dNTL_WORLD_TOOL_MODE
-	//Sector가 삭제 되면서 자동으로 삭제 된다. 하지만 리스트는 삭제 되지 않는다. 정보만 저장한다.
+	//It is automatically deleted when the sector is deleted. However, the list is not deleted. Only save information.
 // 	for (int z = -dGET_WORLD_PARAM()->WorldSizeHalf; z < dGET_WORLD_PARAM()->WorldSizeHalf; z += dGET_WORLD_PARAM()->WorldSectorSize)
 // 	{
 // 		for (int x = -dGET_WORLD_PARAM()->WorldSizeHalf; x < dGET_WORLD_PARAM()->WorldSizeHalf; x += dGET_WORLD_PARAM()->WorldSectorSize)
@@ -304,7 +304,7 @@ void CNtlWorldRpLightManager::Render()
 {
 #ifdef dNTL_WORLD_TOOL_MODE
 	
-	//RenderRpLightList()를 쓰지 않은 이유는 근처 Sector 만 그려주기 위해서다.
+	//The reason RenderRpLightList() is not used is to draw only nearby Sectors.
 	RwV3d vCur;
 	if (GetSceneManager()->GetWorld()->GetPlayerPosition(vCur))
 	{

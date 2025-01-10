@@ -23,7 +23,7 @@ class CNtlDTProp;
 class CNtlInstanceEffect;
 struct SNtlEventSobMoveSync;
 
-// move
+// Move
 #define SLOW_MOVE_RANGE						1.0f
 #define SLOW_MOVE_SPEED						2.0f
 #define SLOW_MOVE_TIME						0.5f
@@ -32,14 +32,14 @@ struct SNtlEventSobMoveSync;
 #define MOVE_POSITION_CHANGE_LIMIT_RANGE	0.2f
 #define COLLISION_MOVE_IMPOSSIBLE_COUNT		3
 
-// dash 
-#define DASH_LANDING_TIME					0.166f  // 0.8초에 DASH_LANDING_DIST 만큼 간다.
+// Dash 
+#define DASH_LANDING_TIME					0.166f  // It goes as far as DASH_LANDING_DIST in 0.8 seconds.
 
-// jump
+// Jump
 #define JUMP_GRAVITY_SPEED					11.0f
 #define JUMP_UP_VELOCITY					6.0f
 
-// falling
+// Falling
 #define FALLING_CHECK_LEN					1.0f
 #define FALLING_WALK_LEN					1.0f
 
@@ -62,15 +62,15 @@ public:
 	void	AddPathNode(RwV3d vPos);
 	RwBool	PopPathNode(RwV3d& vPos);
 	void	ClearPathNode(void);
-    RwBool  IsMoveSyncState();                                  ///< MoveSync을 맞춰야하는 상태인지를 반환한다 (다른 캐릭터용)
-    RwBool  IsMoveSyncSend();                                   ///< MoveSync 패킷을 보내야하는 상태인지를 반환한다 (아바타용)
+    RwBool  IsMoveSyncState();                                  ///< Returns whether MoveSync is required (for other characters)
+    RwBool  IsMoveSyncSend();                                   ///< Returns whether the status requires sending a MoveSync packet (for avatar)
 
     virtual RwUInt32 HandleEvents(RWS::CMsg &pMsg);    
 
 protected:    
     virtual void	 UpdateAnimSpeed(void);    
-    virtual RwReal   GetMoveSpeed(RwUInt8 byMoveFlag);          ///< Move Flag에 맞는 속도를 반환한다.
-    virtual RwBool   IsMoveSyncEmpty();                         ///< 현재 MoveSyncQ에 Sync할 데이터가 있는지를 반환한다.
+    virtual RwReal   GetMoveSpeed(RwUInt8 byMoveFlag);          ///< Returns the speed corresponding to the Move Flag.
+    virtual RwBool   IsMoveSyncEmpty();                         ///< Returns whether there is currently data to sync in MoveSyncQ.
 
 protected:    
 

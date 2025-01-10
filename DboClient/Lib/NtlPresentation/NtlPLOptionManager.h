@@ -3,7 +3,7 @@
 //|-------------------------------------------------------------------------------------------------------------------
 //|	Topic	| CNtlPLOptionManager
 //|---------|---------------------------------------------------------------------------------------------------------
-//|	Content | Visual Option Test를 위한 Class
+//|	Content | Class for Visual Option Test
 //|---------|---------------------------------------------------------------------------------------------------------
 //|	Author	| Cz
 //|-------------------------------------------------------------------------------------------------------------------
@@ -28,34 +28,34 @@ public:
 	RwBool		Update(const RwCamera* pCameram, RwReal fElapsed);
 
 public:
-	// Object 가시거리
+	// Object viewing distance
 	void		SetObjectFar(RwReal fFar);
 	RwReal		GetObjectFar();	
 	
-	// Terrain 가시거리
+	// Terrain visibility
 	void		SetTerrainFar(RwReal fFar);
 	RwReal		GetTerrainFar();
 
-	// Terrain Shadow Render 유무
+	// Presence of Terrain Shadow Render
 	void		SetTerrainShadow(RwBool bRender);
 	RwBool		GetTerrainShadow();
 
 	void		SetWaterSpecular(RwBool bRender);
 	RwBool		GetWaterSpecular();
 
-	// 날씨 세부 묘사
+	// weather details
 	void		SetWeatherLevel(RwUInt32 uiLevel);
 	RwUInt32	GetWeatherLevel();
 
-	// 풀 가시거리
+	// full visibility
 	void		SetPlantClipDist(RwReal fDist);
 	RwReal		GetPlantClipDist();
 
-	// 아지랑이 유무
+	// presence or absence of haze
 	void		SetHeatHaze(RwBool bUse);
 	RwBool		GetHeatHaze();
 
-	// 텍스쳐 레벨 // 낮을수록 높음. 0 == 원본.
+	// Texture level //the lower the higher. 0 == original.
 	void		SetTextureQuality(RwUInt32 uiQualityLevel);
 	RwUInt32	GetTextureQuality();
 

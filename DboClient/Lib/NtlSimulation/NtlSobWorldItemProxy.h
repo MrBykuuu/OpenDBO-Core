@@ -2,7 +2,7 @@
 *
 * File			: CNtlSobWorldItemProxy
 * Author		: Peessi
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2006. 7. 12	
 * Abstract		: Simulation World Item Proxy
 *****************************************************************************
@@ -31,7 +31,7 @@ private:
 protected:
 
 	/** 
-	* character 생성
+	*Character creation
 	*/
 	VOID CreatePLWorldItem( RWS::CMsg& msg );
 	VOID DeletePLWorldItem(VOID);
@@ -48,18 +48,18 @@ public:
 public:
 
 	//---------------------------------------------------
-	// main presentation entity에 관련된 함수 
+	// Functions related to the main presentation entity
 	//---------------------------------------------------
 
 	/**
-	* world에 add 및 remove 관련된 함수.
+	*Functions related to add and remove in the world.
 	*/
 
 	virtual void	AddWorld(void);
 	virtual void	RemoveWorld(void);
 
 	/**
-	* transform에 관현된 함수.
+	*Function related to transform.
 	*/
 
 	virtual void	SetPosition(const RwV3d *pPos);
@@ -67,7 +67,7 @@ public:
 	virtual void	SetAngleY(RwReal fAngle);
 
 
-	// animation
+	// Animation
 	void			SetBaseAnimation(RwUInt32 uiAnimKey, RwBool bLoop = TRUE, RwReal fStartTime = 0.0f);
 
 	// 

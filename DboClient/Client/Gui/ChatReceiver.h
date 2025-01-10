@@ -1,22 +1,22 @@
 /******************************************************************************
 * File			: ChatLog.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: (二�)NTL
 * Date			: 2008. 7. 2
 * Abstract		: 
 *****************************************************************************
-* Desc			: 채팅 로그를 기록
+* Desc			: Records chat logs
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// dbo
+// Dbo
 #include "ChatDefine.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
 class CChatGui;
@@ -63,6 +63,6 @@ private:
 protected:
 	CChatGui*			m_pChatGui;
 
-	LIST_CHATLOG		m_listChatLog;			///< 채팅 로그
-	LIST_NOTIFY			m_listNotify;			///< 채팅 내용이 갱신되거나 했을 때의 알림
+	LIST_CHATLOG		m_listChatLog;			///< Chat log
+	LIST_NOTIFY			m_listNotify;			///< Notification when chat contents are updated
 };

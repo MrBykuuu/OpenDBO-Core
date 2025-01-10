@@ -1,22 +1,22 @@
 /*****************************************************************************
-* File			: GuildNoticeGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 3. 23
-* Abstract		: 
+*File           : GuildNoticeGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : March 23, 2008
+*Abstract		: 
 *****************************************************************************
-* Desc			: 길드 공지 작성창
+*Desc           : Guild notice writing window
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// dbo
+// Dbo
 #include "Windowby3.h"
 
 class CGuildNoticeGui : public CNtlPLGui, public RWS::CEventHandler
@@ -65,9 +65,9 @@ protected:
 	gui::CButton*		m_pOKButton;
 	gui::CButton*		m_pCancelButton;
 
-	gui::CInputBox*		m_pNoticeInput;						///< 공지 입력란
+	gui::CInputBox*		m_pNoticeInput;						///< Notice field
 
-	CWindowby3			m_srfBackboard;						///< 뒷 배경
+	CWindowby3			m_srfBackboard;						///< Background
 
 	eNOTICE_TYPE		m_eNoticeType;
 };

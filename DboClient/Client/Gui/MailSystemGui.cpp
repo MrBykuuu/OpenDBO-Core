@@ -1,18 +1,18 @@
 #include "precomp_dboclient.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "CEventHandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLDef.h"
 #include "NtlPLGui.h"
 #include "NtlPLGuiManager.h"
 
-// framework
+// Framework
 #include "NtlApplication.h"
 
-// simulation
+// Simulation
 #include "InputActionMap.h" 
 #include "NtlSLEvent.h"
 #include "NtlSLGlobal.h"
@@ -24,12 +24,12 @@
 #include "NtlSobItem.h"
 #include "NtlSobItemAttr.h"
 
-// table
+// Table
 #include "ItemTable.h"
 #include "TextAllTable.h"
 #include "TableContainer.h"
 
-// dbo
+// Dbo
 #include "ChatGui.h"
 #include "DboGlobal.h"
 #include "DboDef.h"
@@ -46,14 +46,14 @@
 #include "InfoWndManager.h"
 #include "MailSystemGui.h"
 
-// etc
+// Etc
 
 /**
-* \brief eTYPE에 맞춰서 가변인자를 매개변수로 받아서 채팅창에 출력한다.
-* 가변인자를 받아서 vswprintf_s() 함수를 사용하여 문자열을 만든 후 그 문자열을
-* 채팅창에 출력하는 Event를 보낸다.
-* \param eType	eMAILSYSTEM_MSG_SAY_TYPE
-* \param ...	가변인자
+* \brief Receives variable arguments as parameters according to eTYPE and outputs them in the chat window.
+*After receiving variable arguments and creating a string using the vswprintf_s() function,
+*Send an Event that is displayed in the chat window.
+* \param eType eMAILSYSTEM_MSG_SAY_TYPE
+* \param ... variable argument
 */
 void CMailSystemMsg::MsgSay(eMAILSYSTEM_MSG_SAY_TYPE eType, ...)
 {
@@ -94,9 +94,9 @@ void CMailSystemMsg::MsgSay(eMAILSYSTEM_MSG_SAY_TYPE eType, ...)
 }
 
 /**
-* \breif TYPE과 가변인자를 받아서 타입에 알맞은 MessageBox를 띄운다.
-* \param eType	eMAILSYSTEM_MSG_BOX_TYPE
-* \param ...	가변 인자
+*\breif Receives TYPE and variable arguments and displays a MessageBox appropriate for the type.
+* \param eType eMAILSYSTEM_MSG_BOX_TYPE
+* \param ... variable arguments
 */
 void CMailSystemMsg::MsgBox(eMAILSYSTEM_MSG_BOX_TYPE eType, ...)
 {
@@ -770,7 +770,7 @@ RwBool CMailSystemGui::Create()
 		NTL_RETURN(FALSE);
 	}
 
-	// Dialog Moved Mode를 대비하여 OnMove 호출
+	// Call OnMove in preparation for Dialog Moved Mode
 	CRectangle rtDlgAttach = m_pDlgAttach->GetScreenRect();
 	OnMoveDlgAttach( rtDlgAttach.left, rtDlgAttach.top );
 
@@ -957,7 +957,7 @@ void CMailSystemGui::Destroy()
 
 	GetNtlGuiManager()->RemoveUpdateFunc(this);
 
-	// 돈 아이콘
+	// money icon
 	Logic_DeleteTexture( m_pMoneyIconTexture );
 	m_pMoneyIconTexture = NULL;
 	
@@ -1067,7 +1067,7 @@ void CMailSystemGui::HandleEvents(RWS::CMsg& msg)
 			GetDboGlobal()->GetGamePacketGenerator()->SendMailStartReq(pEvent->hSerialId);
 		}
 	}
-	// 계산기로 입력한 값이 나왔을 경우
+	// If the value entered using the calculator is displayed
 	else if (msg.Id == g_EventCalcPopupResult)
 	{
 		SDboEventCalcPopupResult* pEvent = reinterpret_cast<SDboEventCalcPopupResult*>(msg.pData);
@@ -1256,7 +1256,7 @@ void CMailSystemGui::HandleEvents(RWS::CMsg& msg)
 			if( !pSobItemAttr )
 				NTL_RETURNVOID();
 
-			// 탭 전환
+			// switch tabs
 			SelectTab( TAB_SENDMAIL );
 			SetSendMailItem( pData->hHandle, (RwUInt8)Logic_WhichBagHasItem( pData->hHandle ), (RwUInt8)pData->uiPos, pSobItemAttr->GetStackNum() );
 		}
@@ -1265,7 +1265,7 @@ void CMailSystemGui::HandleEvents(RWS::CMsg& msg)
 	{
 		SDboEventMailSlotUpdate* pData = reinterpret_cast<SDboEventMailSlotUpdate*>( msg.pData );
 
-		// Mail slot Lock Update 일 경우
+		// In case of Mail slot Lock Update
 		if( pData->byType == eMAILSLOT_UPDATE_LOCK )
 		{
 			RwInt32 nDelIdx = 0;
@@ -1468,8 +1468,8 @@ void CMailSystemGui::OnKeyUp(gui::CComponent* pComponenet, CInputDevice* pDevice
 
 void CMailSystemGui::OnCharChangedIpbMailContent(int iLength)
 {
-	// 메일 콘텐츠 하단에 현재 글자수와 최대 글자수를 출력해주고 입력시 현재글자수가
-	// 최대글자수를 넘었다면 더이상 입력이 안되게 한다.
+	// The current number of characters and the maximum number of characters are displayed at the bottom of the email content, and when entered, the current number of characters is
+	// If the maximum number of characters is exceeded, no further input is allowed.
 	CalcSendMailContentMaxNum();
 	if( iLength >= m_pIpbMailContent->GetMaxLength() )
 	{
@@ -1506,13 +1506,13 @@ void CMailSystemGui::OnToggledBtnAttachReq(gui::CComponent* pComponent, bool bDo
 }
 
 /**
-* \brief Mail 쓰기에서 제니 버튼을 클릭하였을 때 
+* \brief When you click the Zenny button in Write Mail 
 */
 void CMailSystemGui::OnClickedBtnAttachZenny(gui::CComponent* pComponent)
 {
 	RwUInt32 uiSerial;
 	
-	// 청구하기
+	// Make a claim
 	if (m_pBtnAttachReq->IsDown())
 	{
 		uiSerial = MAILSYSTEM_ATTACH_REQ;
@@ -1522,12 +1522,12 @@ void CMailSystemGui::OnClickedBtnAttachZenny(gui::CComponent* pComponent)
 		CDboEventGenerator::CalcPopupShow(TRUE, uiSerial, PLACE_SUB_MAILSYSTEM_ZENNY, rect.left - dMAILSYSTEM_UI_CALC_OFFSET, rect.top, NTL_MAX_MAIL_SEND_ZENNY_AMOUNTS);
 	}
 
-	// 송금하기
+	// Send money
 	else if (m_pBtnAttachSend->IsDown())
 	{
 		uiSerial = MAILSYSTEM_ATTACH_SEND;
 					
-		// Icon에 무엇인가 들고 있다면 PutDown 처리
+		// If the Icon is holding something, PutDown is processed.
 		if( GetIconMoveManager()->IsActive() )
 		{
 			GetIconMoveManager()->IconMovePutDown( PLACE_SUB_MAILSYSTEM_ZENNY, INVALID_SERIAL_ID, INVALID_DWORD );
@@ -1541,7 +1541,7 @@ void CMailSystemGui::OnClickedBtnAttachZenny(gui::CComponent* pComponent)
 	}
 	else
 	{
-		// 청구하기 또는 송금하기를 선택하지 않았을 경우 선택해달라는 메시지를 출력
+		// If you do not select billing or remittance, a message asking you to select will be displayed.
 		CMailSystemMsg::MsgBox(CMailSystemMsg::MAIL_MSG_BOX_SELECT_REQ_OR_SEND);
 	}
 }
@@ -1784,7 +1784,7 @@ void CMailSystemGui::OnMouseUpDlgAttachItem(const CKey& key)
 				return;
 			}
 
-			// 가방이 아니면 Attach 되지 않도록 수정한다.
+			// Modify so that attachment is not possible unless it is a bag.
 			if( GetIconMoveManager()->IsActive() && GetIconMoveManager()->GetSrcPlace() != PLACE_BAG )
 			{
 				return;
@@ -1950,7 +1950,7 @@ void CMailSystemGui::SetSendMailZenny(bool bIsAttachSend, bool bIsAttachReq, RwU
 
 	m_uiSendMailZenny = uiZenny;
 	
-	// 둘다 같은 경우는 둘 다 False 일 경우
+	// If both are the same, both are False.
 	if (bIsAttachSend == bIsAttachReq)
 	{
 		m_pStbAttachZenny->Clear();
@@ -2680,7 +2680,7 @@ void CMailSystemReadGui::UpdateReadMail()
 	CheckReplyEnable();
 	CheckReturnEnable();
 	CheckDeleteEnable();
-	CheckAttachActionEffect(); // 꼭 마지막에 체크해야함.
+	CheckAttachActionEffect(); // Be sure to check at the end.
 }
 
 void CMailSystemReadGui::DisplayReadMailInit()
@@ -2723,18 +2723,18 @@ void CMailSystemReadGui::DisplayReadMailBasic()
 	RwUInt32 uiMinute	= m_sMailProfile.tCreateTime.minute;
 	RwUInt32 uiHour;
 
-	//%u년 %u월 %u일 %s %u시 %u분
+	//Day %u, Month %u, Year %u, Minute %u, Hour %u, %s
 	if( m_sMailProfile.tCreateTime.hour > 12 )
 	{
 		uiHour = m_sMailProfile.tCreateTime.hour - 12;
-		// 오후
+		// afternoon
 		m_pStbSendDate->Format(GetDisplayStringManager()->GetString("DST_MAILSYSTEM_MAIL_SENDDATE"), uiYear, uiMonth, uiDay,
 			GetDisplayStringManager()->GetString( "DST_BUDOKAI_NEWS_NOTICE_GUIDE_TIME_PM" ), uiHour, uiMinute);
 	}
 	else
 	{
 		uiHour = m_sMailProfile.tCreateTime.hour;
-		// 오전
+		// morning
 		m_pStbSendDate->Format(GetDisplayStringManager()->GetString("DST_MAILSYSTEM_MAIL_SENDDATE"), uiYear, uiMonth, uiDay,
 			GetDisplayStringManager()->GetString( "DST_BUDOKAI_NEWS_NOTICE_GUIDE_TIME_AM" ), uiHour, uiMinute);
 	}

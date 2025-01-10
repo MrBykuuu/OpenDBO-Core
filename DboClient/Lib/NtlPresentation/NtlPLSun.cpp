@@ -11,7 +11,7 @@
 #include "NtlDNController.h"
 #include "ntlworldcommon.h"
 
-/// 안전하게 싱글톤 객체를 가져오는 매크로 함수
+///Macro function to safely retrieve a singleton object
 #define GetSafeInstance(class) if(class::GetInstance()) class::GetInstance()
 
 
@@ -46,7 +46,7 @@ CNtlPLSun::CNtlPLSun(void)
 	SetLayer(PLENTITY_LAYER_SKY);
 	SetMinimapLayer(NTL_PLEFLAG_MINIMAP_LAYER_ONE);
 	SetClassType(PLENTITY_SUN);
-	// 디폴트 값을 Not Visible로 세팅한다. SceneManager에서 랜더링하는게 아니라, CNtlPLSky에서 따로 렌더링 하기 때문이다.
+	// Set the default value to Not Visible. This is because it is not rendered in SceneManager, but separately in CNtlPLSky.
 	// 2007.08.06 by agebreak
 	SetFlags(NTL_PLEFLAG_NOT_ADD_WORLD | NTL_PLEFLAG_NOT_PROPERTY_USED  | NTL_PLEFLAG_ATTACH | NTL_PLEFLAG_NOT_VISIBLE);	
 }
@@ -80,7 +80,7 @@ RwBool CNtlPLSun::SetProperty( const CNtlPLProperty *pData )
 
 RwBool CNtlPLSun::Create( const SPLEntityCreateParam * pParam /*= NULL */ ) 
 {
-	// Vertex Buffer를 생성한다.
+	// Create a Vertex Buffer.
 	CreateVertexBuffer();
 
 	if(pParam)
@@ -88,7 +88,7 @@ RwBool CNtlPLSun::Create( const SPLEntityCreateParam * pParam /*= NULL */ )
 		SPLSunCreateParam* pSunParam = (SPLSunCreateParam*)pParam;
 		if(pSunParam->bAttachLensFlare)
 		{
-			// LensFlare를 생성한다.
+			// Create a LensFlare.
 			m_pLensFlare = NTL_NEW CNtlPLLensFlare();
 			m_pLensFlare->Create();
 			
@@ -163,7 +163,7 @@ RwBool CNtlPLSun::Update( RwReal fElapsed )
 
 	if(m_pLensFlare)
 	{
-		// Sun의 실제 위치는 카메라 + 절대좌표 값이다. 그 값에 맞게 LensFlare의 광원위치도 설정한다.
+		// The actual position of the Sun is the camera + absolute coordinate value. Set the light source position of LensFlare according to that value.
 		RwMatrix matLensFlare = m_matWorld;
 		RwV3d vPosCamera = *RwMatrixGetPos(RwFrameGetMatrix(RwCameraGetFrame(CNtlPLGlobal::m_RwCamera)));	
 		*RwMatrixGetPos(&matLensFlare) = vPosCamera + m_vPos;
@@ -177,15 +177,15 @@ RwBool CNtlPLSun::Update( RwReal fElapsed )
 
 RwBool CNtlPLSun::Render( void ) 
 {
-	// 카메라의 Far Plane 값을 변경한다. (태양이 멀리 있어도 찍히게)
+	// Change the far plane value of the camera. (So ??that you can take pictures even if the sun is far away)
 	RwReal fOldFarPlane = RwCameraGetFarClipPlane(CNtlPLGlobal::m_RwCamera);
 /*
 	RwCameraEndUpdate(CNtlPLGlobal::m_RwCamera);
-	// 10000 미터로 Far Plane을 세팅한다.
+	// Set the Far Plane to 10000 meters.
 	RwCameraSetFarClipPlane(CNtlPLGlobal::m_RwCamera, 5000.0f);
 	RwCameraBeginUpdate(CNtlPLGlobal::m_RwCamera);
 */
-	// 빌보드와 위치값을 적용한다.
+	// Apply billboard and location values.
 	RwMatrix matRender = *RwFrameGetMatrix(RwCameraGetFrame(CNtlPLGlobal::m_RwCamera));	
 	
 	RwV3d vPosCamera = *RwMatrixGetPos(&matRender);				
@@ -195,7 +195,7 @@ RwBool CNtlPLSun::Render( void )
 	vScale.x = vScale.y = vScale.z = m_fScale;
 	RwMatrixScale(&matRender, &vScale, rwCOMBINEPRECONCAT);
 
-	//BeginSunState();	
+	//Begin sun state();	
 
 	if(m_pTexture)
 	{
@@ -215,7 +215,7 @@ RwBool CNtlPLSun::Render( void )
 	RwCameraSetFarClipPlane(CNtlPLGlobal::m_RwCamera, fOldFarPlane);
 	RwCameraBeginUpdate(CNtlPLGlobal::m_RwCamera);
 */
-	// LensFlare의 Render는 PostEffectCamera에서 한다.	
+	// LensFlare's render is done by PostEffectCamera.	
 	
 	return TRUE;
 }
@@ -227,7 +227,7 @@ void CNtlPLSun::SetColor( RwRGBA color )
 	RwRGBAReal colorReal;
 	RwRGBARealFromRwRGBA(&colorReal, &color);
 
-	if(GetDnController()->IsDNEffectApplied())	// D&N이 켜져있으면 알파값으로 영향을 받는다
+	if(GetDnController()->IsDNEffectApplied())	// If D&N is on, it is affected by alpha value.
 	{
 		RwReal TFactor = static_cast<RwReal>(dGET_WORLD_PARAM()->ClrDayAndNight & 0x000000ff) / 255.0f;
 		TFactor = 1.0f - TFactor * CNtlPLGlobal::m_fLensFlareForDNRatio;
@@ -308,7 +308,7 @@ void CNtlPLSun::UpdateFadeColor( RwReal fElapsedTime )
 	color = CNtlMath::Interpolation(m_OriginColor, m_FadeColor, fDeltaTime);
 	SetColor(color);
 
-	// 렌즈 플레어 Fade
+	// Lens Flare Fade
 	if(m_pLensFlare)
 	{
 		RwReal fAlpha = color.alpha / 255.0f;
@@ -324,7 +324,7 @@ void CNtlPLSun::ReFreshLensFlareData()
 		NTL_DELETE(m_pLensFlare);		
 	}
 
-	// LensFlare를 생성한다.
+	// Create a LensFlare.
 	m_pLensFlare = NTL_NEW CNtlPLLensFlare();
 	m_pLensFlare->Create();
 	m_pLensFlare->SetVisible(m_bVisible);

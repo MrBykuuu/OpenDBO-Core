@@ -1,23 +1,23 @@
 /*****************************************************************************
-* File			: DboPackethandler_TU.cpp
-* Author		: Hong sungbock
-* Copyright		: (주)NTL
-* Date			: 2007. 1. 16
-* Abstract		: 
+*File			: DboPackethandler_TU.cpp
+*Author		    : Hong sungbock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 1. 16
+*Abstract		: 
 *****************************************************************************
-* Desc         : 커뮤니티 서버 패킷 핸들
+*Desc           : Community server packet handle
 *****************************************************************************/
 
 #include "precomp_dboclient.h"
 #include "DboPacketHandler.h"
 
-// simulation
+// Simulation
 #include "NtlNetSender.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSLPacketGenerator.h"
 #include "NtlBudokai.h"
 
-// cleint
+// Client
 #include "PetitionManager.h"
 #include "GMChatGui.h"
 #include "DialogManager.h"
@@ -40,9 +40,9 @@ void PacketHandler_TSChatEnterRes(void *pPacket)
 
 void PacketHandler_TSChatDisconnectNfy(void *pPacket)
 {
-	// 커뮤니티 서버 끊겼을 때는 아무런 처리를 하지 않기로 하였다.
-	// 길드, 천하제일무도회, 채팅 등의 제약사항이 생긴다
-	//sTU_DISCONNECTED_NFY* pEnterRes = (sTU_DISCONNECTED_NFY*)pPacket; 
+	// We decided not to take any action when the community server was disconnected.
+	// There are restrictions on guilds, World's Best Martial Arts Club, chatting, etc.
+	//sTU_DISCONNECTED_NFY*pEnterRes = (sTU_DISCONNECTED_NFY*)pPacket; 
 
 	SConnectData* pConnectData = GetDboGlobal()->GetConnectData();
 	pConnectData->sChatCon.bBanishment = TRUE;
@@ -52,7 +52,7 @@ void PacketHandler_TSChatMsgSay(void *pPacket)
 {
     sTU_CHAT_MESSAGE_SAY *pMsgSay = (sTU_CHAT_MESSAGE_SAY*)pPacket;
     
-    // 블랙리스트(차단) 체크 
+    // Blacklist (blocking) check 
     if(GetNtlSLGlobal()->GetSobAvatar()->GetBlackList()->GetMemberbyName(pMsgSay->awchSenderCharName))
         return;
 
@@ -63,7 +63,7 @@ void PacketHandler_TSChatMsgShout(void *pPacket)
 {
 	sTU_CHAT_MESSAGE_SHOUT *pMsgShout = (sTU_CHAT_MESSAGE_SHOUT*)pPacket;
 
-    // 블랙리스트(차단) 체크 
+    // Blacklist (blocking) check 
     if(GetNtlSLGlobal()->GetSobAvatar()->GetBlackList()->GetMemberbyName(pMsgShout->awchSenderCharName))
         return;
 
@@ -98,7 +98,7 @@ void PacketHandler_TSChatMsgParty(void *pPacket)
 {
 	sTU_CHAT_MESSAGE_PARTY *pMsgParty = (sTU_CHAT_MESSAGE_PARTY*)pPacket;
 
-    // 블랙리스트(차단) 체크 
+    // Blacklist (blocking) check 
     if(GetNtlSLGlobal()->GetSobAvatar()->GetBlackList()->GetMemberbyName(pMsgParty->awchSenderCharName))
         return;
 
@@ -112,7 +112,7 @@ void PacketHandler_TSChatMsgGuild(void *pPacket)
 {
 	sTU_CHAT_MESSAGE_GUILD *pMsgGuild = (sTU_CHAT_MESSAGE_GUILD*)pPacket;
 
-    // 블랙리스트(차단) 체크 
+    // Blacklist (blocking) check 
     if(GetNtlSLGlobal()->GetSobAvatar()->GetBlackList()->GetMemberbyName(pMsgGuild->wszSenderCharName))
         return;
 
@@ -149,7 +149,7 @@ void PacketHandler_TSPetitionUserInsertRes(void *pPacket)
 	API_GetSLPacketLockManager()->Unlock(TU_PETITION_USER_INSERT_RES);
 	CDboEventGenerator::PetitionEvent(PETITON_ENABLE_PETITON_GUI);
 
-	// 유저가 보낸 진정이 접수 됬는지 여부
+	// Whether the complaint sent by the user has been accepted
 	sTU_PETITION_USER_INSERT_RES* pResult = (sTU_PETITION_USER_INSERT_RES*)pPacket;
 
 	if( pResult->wResultCode != CHAT_SUCCESS )
@@ -168,7 +168,7 @@ void PacketHandler_TSPetitionModifyRes(void *pPacket)
 	API_GetSLPacketLockManager()->Unlock(TU_PETITION_CONTENT_MODIFY_RES);
 	CDboEventGenerator::PetitionEvent(PETITON_ENABLE_PETITON_GUI);
 
-	// 이미 보낸 진정의 수정 결과
+	// Result of correction of complaint already sent
 	sTU_PETITION_CONTENT_MODIFY_RES* pResult = (sTU_PETITION_CONTENT_MODIFY_RES*)pPacket;
 
 	if( pResult->wResultCode != CHAT_SUCCESS )
@@ -185,7 +185,7 @@ void PacketHandler_TSPetitionUserCancelRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock(TU_PETITION_USER_CANCEL_RES);
 
-	// 진정 취소
+	// 진정 취소 PETITON CANCEL
 	sTU_PETITION_USER_CANCEL_RES* pResult = (sTU_PETITION_USER_CANCEL_RES*)pPacket;
 
 	if( pResult->wResultCode != CHAT_SUCCESS )
@@ -202,7 +202,7 @@ void PacketHandler_TSPetitionUserCancelRes(void *pPacket)
 
 void PacketHandler_TSPetitionFinishNfy(void *pPacket)
 {
-	//sTU_PETITION_FINISH_NFY* pResult = (sTU_PETITION_FINISH_NFY*)pPacket;
+	//sTU_PETITION_FINISH_NFY*pResult = (sTU_PETITION_FINISH_NFY*)pPacket;
 
 	GetPetitionManager()->FinishPetition();
 
@@ -212,7 +212,7 @@ void PacketHandler_TSPetitionFinishNfy(void *pPacket)
 
 void PacketHandler_TSPetitionChatStartReq(void *pPacket)
 {
-	// GM으로 부터 GM 채팅 요청을 받았다.
+	// I received a GM chat request from GM.
 	sTU_PETITION_CHAT_START_REQ* pResult = (sTU_PETITION_CHAT_START_REQ*)pPacket;
 	
 	GetPetitionManager()->StartGMChatting(pResult->petitionID, pResult->gmAccountID, pResult->awchGMCharName_Consult, pResult->bNeedSatisfactionRate);
@@ -221,19 +221,19 @@ void PacketHandler_TSPetitionChatStartReq(void *pPacket)
 
 void PacketHandler_TSPetitionChatGMSayReq(void *pPacket)
 {
-	// GM으로 부터 GM 채팅 메세지를 받았다
+	// I received a GM chat message from GM.
 	sTU_PETITION_CHAT_GM_SAY_REQ* pResult = (sTU_PETITION_CHAT_GM_SAY_REQ*)pPacket;
 
 	if( GetPetitionManager()->GetChattingGMID() == INVALID_ACCOUNTID )
 	{
-		// TU_PETITION_CHAT_START_REQ패킷을 유저가 아직 받지 않았다
+		// TU_PETITION_CHAT_START_REQ The user has not received the packet yet
 		GetDboGlobal()->GetChatPacketGenerator()->SendPetitionChatGMSayRes(PETITION_NOT_STARTED_CLEINT_GM_CHAT, pResult->gmAccountID);
 		return;
 	}
 
 	if( GetPetitionManager()->GetChattingGMID() != pResult->gmAccountID )
 	{
-		// 이미 채팅중인 GM의 ID가 아니다
+		// This is not the ID of the GM you are already chatting with.
 		GetDboGlobal()->GetChatPacketGenerator()->SendPetitionChatGMSayRes(PETITION_DIFFERENT_CHAATING_GM_ID, pResult->gmAccountID);
 		return;
 	}
@@ -249,7 +249,7 @@ void PacketHandler_TSPetitionChatGMSayReq(void *pPacket)
 
 void PacketHandler_TSPetitionChatUserSayRes(void *pPacket)
 {
-	// GM에게 보낸 자신의 메세지의 결과
+	// Result of his message to GM
 	sTU_PETITION_CHAT_USER_SAY_RES* pResult = (sTU_PETITION_CHAT_USER_SAY_RES*)pPacket;
 
 	if( pResult->wResultCode != CHAT_SUCCESS )
@@ -261,7 +261,7 @@ void PacketHandler_TSPetitionChatUserSayRes(void *pPacket)
 
 void PacketHandler_TSPetitionChatGMEndNfy(void *pPacket)
 {
-	// GM이 GM 채팅을 종료하였다
+	// GM has ended GM chat
 	//sTU_PETITION_CHAT_GM_END_NFY* pResult = (sTU_PETITION_CHAT_GM_END_NFY*)pPacket;
 
 	CDboEventGenerator::PetitionEvent(PETITON_CHATTING_END);

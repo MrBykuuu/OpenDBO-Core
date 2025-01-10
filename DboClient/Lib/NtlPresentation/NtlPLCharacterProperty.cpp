@@ -35,9 +35,9 @@ CNtlPLCharacterProperty::~CNtlPLCharacterProperty()
 }
 
 /**
- *  xml file로 object property data를 save하는 함수
- *  \param pDoc는 xml wrapping class pointer.
- *  \param pNod는 유효한 xml node.
+ *Function to save object property data to xml file
+ *  \param pDoc is an xml wrapping class pointer.
+ *  \param pNod is a valid xml node.
  *
  */
 RwBool CNtlPLCharacterProperty::Save(CNtlXMLDoc *pDoc, IXMLDOMNode *pNode)
@@ -46,9 +46,9 @@ RwBool CNtlPLCharacterProperty::Save(CNtlXMLDoc *pDoc, IXMLDOMNode *pNode)
 }
 
 /**
-  *  xml file로부터 object property data를 loading하는 함수
-  *  \param pDoc는 xml wrapping class pointer.
-  *  \param pNod는 유효한 xml node.
+  *Function to load object property data from xml file
+  *  \param pDoc is an xml wrapping class pointer.
+  *  \param pNod is a valid xml node.
   *
   */
 RwBool CNtlPLCharacterProperty::Load(CNtlXMLDoc *pDoc, IXMLDOMNode *pNode)

@@ -1,13 +1,13 @@
 #include "precomp_dboclient.h"
 #include "HLSSideIconGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DboPacketGenerator.h"

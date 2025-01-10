@@ -14,7 +14,7 @@ void CStringLocalConverter_Korean::LocalStringCovert(WCHAR* pwcOutput, const WCH
 	RwInt32 iCount = 0;
 	RwInt32 iTextLength = (RwInt32)wcslen(pwcText);
 
-	// 조사가 붙으려면 최소한 2글자 이상이여야 한다
+	//To add a particle, it must be at least 2 characters long.
 	if( iTextLength < 2 )
 	{
 		memcpy(pwcOutput, pwcText, sizeof(WCHAR) * wcslen(pwcText) );
@@ -106,13 +106,13 @@ RwInt32 CStringLocalConverter_Korean::GetKoreanThirdSound(const WCHAR* pwcText)
 
 	int iIndex_from_HangulFirst = pwcText[0] - dUNICODE_HANGULE_SYLLABLES_FIRST;
 
-	// 유니코드상 한글 음절의 범위 검사
+	//Check the range of Korean syllables in Unicode
 	if( iIndex_from_HangulFirst < 0 || iIndex_from_HangulFirst >= 11172 )
 		return 0;
 
-	//int iFirstSound	= iIndex_from_HangulFirst / (21*28);				///< 초성 순서값
-	//int iSecondSound	= iIndex_from_HangulFirst % (21*28) / 28;			///< 중성 순서값
-	int iThirdSound		= iIndex_from_HangulFirst % (21*28) % 28;			///< 종성 순서값
+	//int iFirstSound	= iIndex_from_HangulFirst / (21*28);				///< Initial consonant order value
+	//int iSecondSound	= iIndex_from_HangulFirst % (21*28) / 28;			///< neutral ordinal value
+	int iThirdSound		= iIndex_from_HangulFirst % (21*28) % 28;			///< final order value
 
 	return iThirdSound;
 }

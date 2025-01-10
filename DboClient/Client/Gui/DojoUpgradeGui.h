@@ -1,25 +1,25 @@
 /******************************************************************************
-* File			: DojoUpgradeGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2009. 4. 6
-* Abstract		: 
+*File: DojoUpgradeGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : April 6, 2009
+*Abstract		: 
 *****************************************************************************
-* Desc			: 도장 업그레이드 GUI
+*Desc: Seal upgrade GUI
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// client
+// Client
 #include "SurfaceGui.h"
 #include "Windowby3.h"
 #include "SlotGui.h"
@@ -115,19 +115,19 @@ protected:
 	gui::CButton*		m_pBtnUpgrade;
 
 	gui::CStaticBox*	m_pDialogName;
-	gui::CStaticBox*	m_pDojoNameStatic;					///< '도장 이름'
+	gui::CStaticBox*	m_pDojoNameStatic;					///< 'Stamp name'
 	gui::CStaticBox*	m_pDojoName;
 	gui::CStaticBox*	m_pDojoCurLevel;
 	gui::CStaticBox*	m_pDojoNextLevel;
-	gui::CStaticBox*	m_pNeedGuildPointStatic;			///< '필요한 유파 포인트'
+	gui::CStaticBox*	m_pNeedGuildPointStatic;			///< ‘Necessary school points’
 	gui::CStaticBox*	m_pNeedGuildPoint;
-	gui::CStaticBox*	m_pConsumptionGuildPointStatic;		///< '소모 유파 포인트'
+	gui::CStaticBox*	m_pConsumptionGuildPointStatic;		///< ‘Consumption school point’
 	gui::CStaticBox*	m_pConsumptionGuildPoint;
-	gui::CStaticBox*	m_pNeedZennyStatic;					///< '필요한 제니'
+	gui::CStaticBox*	m_pNeedZennyStatic;					///< 'Necessary Zenny'
 	gui::CStaticBox*	m_pNeedZenny;
-	gui::CStaticBox*	m_pConsumptionZennyStatic;			///< '소모 제니'
+	gui::CStaticBox*	m_pConsumptionZennyStatic;			///< ‘SZennyenny’
 	gui::CStaticBox*	m_pConsumptionZenny;
-	gui::CStaticBox*	m_pNeedItemStatic;					///< '필요한 아이템'
+	gui::CStaticBox*	m_pNeedItemStatic;					///< 'Necessary items'
 	gui::CStaticBox*	m_pNeedItem;
 
 	CSurfaceGui			m_srfDojo[NUM_DOJO_VISUAL_LEVEL];

@@ -86,7 +86,7 @@ void CNtlPLObjectTypeHasProperty::Update(RwReal fElapsed)
 		return;
 	}
 
-	// WorldState에서 한번 처리 해도 될 것 같다.
+	// I think this can be handled once in the WorldState.
 	if (m_fObjectPropVariationRestTime == dMINI_INDOOR_EFFECT_SWITCHING_TIME)
 	{
 		// send change world space without delay
@@ -135,7 +135,7 @@ void CNtlPLObjectTypeHasProperty::SetObjectProperty(sNTL_FIELD_PROP& sNtlFieldPr
 			memcpy(&m_pNtlObjectProp->_RGBSkyColor[1], &sNtlFieldProp._RGBSkyColor[1], sizeof(RwRGBA));
 			memcpy(&m_pNtlObjectProp->_RGBSkyColor[2], &sNtlFieldProp._RGBSkyColor[2], sizeof(RwRGBA));
 
-			m_pNtlObjectProp->_NewSkyValue = sNtlFieldProp._NewSkyValue; // new
+			m_pNtlObjectProp->_NewSkyValue = sNtlFieldProp._NewSkyValue; // New
 	
 			strcpy_s(m_pNtlObjectProp->_BaseSkyTexName, sNtlFieldProp._BaseSkyTexName);
 			m_pNtlObjectProp->_BaseSkySpeed = sNtlFieldProp._BaseSkySpeed;

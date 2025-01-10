@@ -16,12 +16,12 @@ protected:
     CNtlPLEntity		*m_pPLSwimFront;
     CNtlPLEntity		*m_pPLSwimBack;
 
-    // possible 변화 check
+    // check possible changes
     RwReal m_fPosChangeTime;
     RwUInt8 m_byPosChangeCnt;
     RwV3d m_vChangeOldPos;
 
-    // collision
+    // Collision
     RwUInt8 m_byCollMoveImpossCnt;		// collision move impossible count
 
 protected:
@@ -39,12 +39,12 @@ protected:
     void	DestroySwimFrontEffect(void);
     void	DestroySwimBackEffect(void);
 
-    // position 변화 check
+    // check position change
     void	LimitPositionChangeCheck(RwReal fElapsed);
 
     RwBool	UpdateDirectionMove(RwReal fElapsed);
     RwBool	UpdateLocationMove(RwReal fElapsed);
-    RwBool  UpdateTargetMove(RwReal fElapsed);              ///< 물에서 타겟을 따라갈때
+    RwBool  UpdateTargetMove(RwReal fElapsed);              ///< When following a target in water
 
     void	UpdateSwimEffect(void);
 

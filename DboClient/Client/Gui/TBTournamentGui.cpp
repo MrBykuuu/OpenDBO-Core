@@ -1,17 +1,17 @@
 #include "precomp_dboclient.h"
 #include "TBTournamentGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "NtlBudokai.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// client
+// Client
 #include "DboGlobal.h"
 #include "DboPacketGenerator.h"
 #include "DboEvent.h"
@@ -428,7 +428,7 @@ VOID CTBTournamentInfoGroup::OnFSCallBack( const RwChar* szCommand, const RwChar
 		{
 			pFightInfo->EndOfAnimation();
 
-			// 최상위 라인인 경우 이름을 출력
+			// If it is the top line, print the name
 			if( byDepth == m_byTopOfDepth )
 			{
 				sBUDOKAI_TOURNAMENT_ENTRY_TEAM_INFO* pData = NULL;
@@ -453,7 +453,7 @@ VOID CTBTournamentInfoGroup::OnFSCallBack( const RwChar* szCommand, const RwChar
 				}				
 			}
 
-			// 상위단의 모든 차일드의 애니메이션이 종료되었으면 상위단의 애니메이션 시작
+			// When the animation of all children at the upper level has ended, the animation at the upper level starts.
 			CTBTournamentFightInfo* pAboveFightInfo = pFightInfo->GetAboveFightInfo();
 			if( pAboveFightInfo && pAboveFightInfo->IsEnableToStartAnimation() )
 				DrawLine( pAboveFightInfo->GetMatchLevel(), pAboveFightInfo->GetMatchNumber(), pAboveFightInfo->GetWinnerPosition() );				
@@ -522,7 +522,7 @@ VOID CTBTournamentFinalInfoGroup::CreateFightData( RwUInt8 byIndex, CTBTournamen
 {
 	CTBTournamentInfoGroup::CreateFightData( byIndex, pAboveFightInfo, byMatchLevel, byMatchNumber );
 
-	// 맨 밑단의 녀석은 Entry True로 만들어주기 위해. 결승전 전용.
+	// To make the one at the bottom an Entry True. For finals only.
 	if( byMatchLevel == m_byEndOfDepth )
 	{
 		m_ppFightInfo[byIndex]->SetEntryData( MATCH_TEAM_TYPE_TEAM1, INVALID_WORD );
@@ -578,7 +578,7 @@ VOID CTBTournamentFinalInfoGroup::OnFinalFSCallBack( const RwChar* szCommand, co
 
 		CTBTournamentFightInfo* pFightInfo = GetDepthNumberTeamFromFlashArgs( szArgs, &byDepth, &byNumber, &byTeam );
 
-		// 애니메이션이 끝나면 해당하는 선수 이름 출력
+		// When the animation ends, the corresponding player name is displayed.
 		if( pFightInfo && byDepth == BUDOKAI_MATCH_DEPTH_4 )
 		{
 			sBUDOKAI_TOURNAMENT_ENTRY_TEAM_INFO* pData = NULL;
@@ -680,7 +680,7 @@ RwBool CTBTournamentGui::Create(VOID)
 
 	m_pbtnClose = reinterpret_cast<gui::CButton*>( GetComponent( "btnClose" ) );
 
-	// peessiTODO: 실제 회차에 맞게 수정. 실제 Infomation루틴 작성.
+	// peessi TO DO: Modified to suit the actual episode. Create actual Infomation routine.
 	m_pstbTitle->Format( GetDisplayStringManager()->GetString( "DST_BUDOKAI_NEWS_TITLE" ), 1 );
 	m_pstbInfomation->SetText( GetDisplayStringManager()->GetString( "DST_BUDOKAI_TOURNAMENT_INFO_1" ) );
 
@@ -694,7 +694,7 @@ RwBool CTBTournamentGui::Create(VOID)
 	m_slotClickPartyBtn = m_pbtnParty->SigClicked().Connect( this, &CTBTournamentGui::OnClickPartyBtn );
 	m_slotClickIndividualBtn = m_pbtnIndividual->SigClicked().Connect( this, &CTBTournamentGui::OnClickIndividualBtn );
 
-	// 토너먼트 컴포넌트 생성.
+	// Creating tournament components.
 	CreateFightDataGroup();
 
 	Show( false );
@@ -714,7 +714,7 @@ VOID CTBTournamentGui::Destroy(VOID)
 {
 	GetDialogManager()->CloseDialog( DIALOG_BUDOKAI_TOURNAMENT );
 
-	// 토너먼트 컴포넌트 해제
+	// Disable tournament component
 	DeleteFightDataGroup();
 
 	m_mapIndividualEntryInfo.clear();
@@ -1062,7 +1062,7 @@ VOID CTBTournamentGui::SetPage( ePage ePageType )
 		m_pstbIndividualGroupType->Show( false );		
 		m_pInfoGroup[TOURNAMENT_PARTY]->Show( true );
 
-		// 버튼 세팅
+		// Button Settings
 		m_pbtnParty->ClickEnable( FALSE );
 		m_pbtnIndividual->ClickEnable( TRUE );
 
@@ -1090,7 +1090,7 @@ VOID CTBTournamentGui::SetPage( ePage ePageType )
 			m_pInfoGroup[TOURNAMENT_INDIVIDUAL_FINAL]->Show( true );
 		}
 
-		// 버튼 세팅
+		// Button Settings
 		m_pbtnIndividual->ClickEnable( FALSE );
 		m_pbtnParty->ClickEnable( TRUE );
 

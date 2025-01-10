@@ -2,7 +2,7 @@
 //	File		:	NtlResourceLightningSystem.cpp
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -17,7 +17,7 @@ CNtlResourceLightningSystem::CNtlResourceLightningSystem(const RwChar* strName) 
 
 	memset(&m_EmitterStandard, 0, sizeof(SNtlLightningEmitterStandard));       
 
-    // 사용하지 않는 Rotate값을 EndPoint 값으로 사용한다.
+    // Use the unused Rotate value as the EndPoint value.
     m_vRotate.x = m_vRotate.y = 0.0f;
     m_vRotate.z = 5.0f;
 }

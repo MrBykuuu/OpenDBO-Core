@@ -4,70 +4,70 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// 커스텀 리얼 타임 타입 인포메이션 입니다.
-// 일단 템플릿, 다중상속 검증 안됬습니다. 일반 상속 완벽 구현되구여
-// 참고 서적은 게임 코딩 컴플릿 이구여
-// 스트링 비교해서 적용하는거니까 실시간은 하지 마시구여
-// 구현은 밑에 보세여
+//This is custom real-time type information.
+//First of all, template, multiple inheritance has not been verified. General inheritance is fully implemented.
+//The reference book is Game Coding Complete.
+//Since it is applied by comparing strings, do not do it in real time.
+//See the implementation below.
 //
-// 우선 헤더에서여 다음과 같이 너주구여 mfc랑 비슷합니다.
+//First of all, in the header, it is similar to MFC.
 //   
 //
 /*
-class C호동
+class CHodong
 {
 	NTL_RTTI_SYSTEM_DECL;
 };
 
-class C형석 : public C호동
+class CHyungseok: public CHodong
 {
 	NTL_RTTI_SYSTEM_DECL;
 
-	void 호동씨쵝오();
+	void HodongIsTheBest();
 };
 
-class C우디 : public C호동
+class CWoody: public CHodong
 {
 	NTL_RTTI_SYSTEM_DECL;
 
-	void 우동동바보();
+	void UdongdongIsFool();
 };
 
-class C준철 : public C호동
+class CJuncheol: public CHodong
 {
 	NTL_RTTI_SYSTEM_DECL;
 
-	void 맨날나만가지구머라그래();
+	void WhyAlwaysNagOnlyMe();
 };
 */
-// 구현부에서는 다음과 같이 해줍니다.
+// The implementation department does the following:
 //
-// 우리는 우동동을 부모로 상속 받았다고 합니다.
+// It is said that we inherited Hodong from our parents.
 //
-// NTL_RTTI_SYSTEM_IMPL_NOPARENT(C호동);
-// NTL_RTTI_SYSTEM_IMPL(C형석, C호동);
-// NTL_RTTI_SYSTEM_IMPL(C우디, C호동);
-// NTL_RTTI_SYSTEM_IMPL(C준철, C호동);
+// NTL_RTTI_SYSTEM_IMPL_NOPARENT (CHodong);
+// NTL_RTTI_SYSTEM_IMPL(CHyungseok, CHodong)
+// NTL_RTTI_SYSTEM_IMPL(Cwoody, CHodong);
+// NTL_RTTI_SYSTEM_IMPL(CJuncheol, CHodong);
 
 
-// 이렇게 해놓구여
-// C호동 *pATM1 = new C형석;
-// C호동 *pATM2 = new C우디;
-// C호동 *pATM3 = new C준철;
+// Do it like this
+// CHodong *pATM1 = new CHyungseok;
+// CHodong *pATM2 = new CWoody;
+// CHodong *pATM3 = new CJuncheol;
 //
-// 대충 이렇게 되겠져 그담에 실시간에 임의의 호동포인터가 먼지를 알아내려면
-// 다음과 같습니다.
+// It would roughly go like this. Then, if a random pointer were to find out the dust in real time,
+// It is as follows:
 //
-// void On호동명령L버튼클릭()
+// void OnHodongCmdLBtnClick ()
 //{
 //
-//	// 현재 호동 포인터가 준철 포인터진 알려면
-//	if(pATM->GetCRTTIS().DerivesFrom(C준철::s_CRTTIS))
+//	// If you want to know if the current Hodong pointer is Juncheol pointer,
+//	if(pATM->GetCRTTIS().DerivesFrom(Cjuncheol::s_CRTTIS))
 //  {
-//      // 그리구 여기서 타입 캐스트 하고 준철씨의 함수를 부릅니다.
-//      reinterpret_cast<C준철*>(pATM3)->맨날나만가지구머라그래();
+//      // And here, we type cast and call Juncheol’s function.
+//      reinterpret_cast<CJuncheol*>(pATM3)->WhyAlwaysNagOnlyMe();
 //	    
-//      // 이렇게 됩니다.
+//      // It goes like this.
 //  }
 //
 //}

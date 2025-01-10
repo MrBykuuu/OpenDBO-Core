@@ -38,11 +38,11 @@ private:
     CNtlPLCharacter				*m_pPLCharacter;						/** character resource */
     SEquipItem					m_arrSlotItem[NTL_MAX_EQUIP_ITEM_SLOT];
     RwBool						m_bSunWeaponReCreate;
-    CNtlSubWeaponController		*m_pSubWeaponController;				/** gem 과 같이 sub weapon control이 필요한 경우 */
+    CNtlSubWeaponController		*m_pSubWeaponController;				/** When sub weapon control is needed, such as gem */
 
     RwBool						m_bActiveSubWeapon;
-    RwUInt8						m_byStorageWeaponNum;					/** sub weapon 을 사용하면서 보관중인 main weapon 갯수 */
-    SStorageEquipItem			m_sStorageWeapon[EMaxStorageWeapon];	/** sub weapon 을 사용하면서 보관할 main weapon buffer */
+    RwUInt8						m_byStorageWeaponNum;					/** Number of main weapons stored while using sub weapons */
+    SStorageEquipItem			m_sStorageWeapon[EMaxStorageWeapon];	/** main weapon buffer to store while using sub weapon */
 
     RwBool						m_bVisible;
     RwBool						m_bResLoaded;
@@ -71,7 +71,7 @@ private:
 
     void			UpdateResourceLoadCheck(RwReal fElapsed);
 
-    void            SetAnimationCostumeItem(CNtlPLItem* pItem);                     ///< 코스튬 아이템에 애니메이션을 세팅한다 (등뒤에지는 특수한 아이템들의 애니메이션)
+    void            SetAnimationCostumeItem(CNtlPLItem* pItem);                     ///< Set animations on costume items (animation of special items worn on the back)
 
 public:
     CNtlSobCharEquipProxy();

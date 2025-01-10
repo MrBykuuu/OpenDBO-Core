@@ -1,11 +1,11 @@
 ﻿#include "precomp_dboclient.h"
 #include "WorldMap.h"
 
-// core
+// Core
 #include "NtlMath.h"
 #include "NtlDebug.h"
 
-// share
+// Share
 #include "LandMarkTable.h"
 #include "WorldTable.h"
 #include "WorldMapTable.h"
@@ -15,16 +15,16 @@
 #include "NPCTable.h"
 #include "TableContainer.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 #include "WorldSoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLWorldEntity.h"
 #include "NtlPlVisualManager.h"
 
-// simulation
+// Simulation
 #include "NtlSobAvatar.h"
 #include "NtlSobAvatarAttr.h"
 #include "NtlSLAPI.h"
@@ -40,7 +40,7 @@
 #include "NtlSobNpcAttr.h"
 #include "NtlWorldConceptScramble.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboLogic.h"
 #include "DialogDefine.h"
@@ -77,9 +77,9 @@
 #define dLANDMARK_SIZE_4		128
 
 // Warfog
-#define dWARFOG_SCHEDULE_WAIT_OPEN_DIALOG	3.f		///< 워포그가 밝혀지기전 월드맵이 뜨기까지의 시간
-#define dWARFOG_SCHEDULE_DELAY				.5f		///< 월드맵이 뜨고 워포그가 사라지기 전의 지연시간
-#define dWARFOG_SCHEDULE_DISSAPEAR			3.f		///< 워포그가 밝아지는 시간
+#define dWARFOG_SCHEDULE_WAIT_OPEN_DIALOG	3.f		///< Time until the world map appears before the warfog is revealed
+#define dWARFOG_SCHEDULE_DELAY				.5f		///< Delay time before the world map appears and the warfog disappears
+#define dWARFOG_SCHEDULE_DISSAPEAR			3.f		///< The time when warfogs become bright
 
 #define dWARFOG_SCHEDULE_TIME_BY_DISSAPEAR	(dWARFOG_SCHEDULE_WAIT_OPEN_DIALOG + dWARFOG_SCHEDULE_DELAY)
 #define dWARFOR_SCHEDULE_TOTAL_TIME			(dWARFOG_SCHEDULE_WAIT_OPEN_DIALOG + dWARFOG_SCHEDULE_DELAY + dWARFOG_SCHEDULE_DISSAPEAR)
@@ -231,7 +231,7 @@ RwBool CWorldMapGui::Create()
 
 	std::wstring wstrText;
 
-	// "우리 유파 보기 버튼"
+	// “View our school button”
 	wstrText = GetDisplayStringManager()->GetString("DST_WORLDMAP_SHOW_OUR_GUILD");
 	m_pVisibleOurGuildMemberButton = (gui::CButton*)GetComponent( "btnVisibleOurGuildMember" );
 	m_pVisibleOurGuildMemberButton->SetToolTip(wstrText);
@@ -239,7 +239,7 @@ RwBool CWorldMapGui::Create()
 	m_pVisibleOurGuildMemberButton->SetDown(true);
 	m_slotVisibleOurGuildMemberButton = m_pVisibleOurGuildMemberButton->SigToggled().Connect(this, &CWorldMapGui::OnToggle_VisibleOurGuildMemberButton);
 
-	// "우리 유파 미니맵에 보기 버튼"
+	// “View button on our school’s minimap”
 	wstrText = GetDisplayStringManager()->GetString("DST_WORLDMAP_SHOW_OUR_GUILD_IN_MINIMAP");
 	m_pVisibleOurGuildMemberMiniMapButton = (gui::CButton*)GetComponent( "btnVisibleOurGuildMemberMiniMap" );
 	m_pVisibleOurGuildMemberMiniMapButton->SetToolTip(wstrText);
@@ -247,12 +247,12 @@ RwBool CWorldMapGui::Create()
 	m_pVisibleOurGuildMemberMiniMapButton->SetDown(true);
 	m_slotVisibleOurGuildMemberMiniMapButton = m_pVisibleOurGuildMemberMiniMapButton->SigToggled().Connect(this, &CWorldMapGui::OnToggle_VisibleOurGuildMemberMiniMapButton);
 
-	// "우리 유파"
+	// “Our school”
 	m_pOurGuild = (gui::CStaticBox*)GetComponent( "stbOurGuild" );;
 	m_pOurGuild->SetText( GetDisplayStringManager()->GetString("DST_WORLDMAP_SHOW_OUR_GUILD_MEMBER") );
 
 
-	// "상대 유파 보기 버튼"
+	// “View opponent’s school button”
 	wstrText = GetDisplayStringManager()->GetString("DST_WORLDMAP_SHOW_OTHER_GUILD");
 	m_pVisibleOtherGuildMemberButton = (gui::CButton*)GetComponent( "btnVisibleOtherGuildMember" );
 	m_pVisibleOtherGuildMemberButton->SetToolTip(wstrText);
@@ -260,7 +260,7 @@ RwBool CWorldMapGui::Create()
 	m_pVisibleOtherGuildMemberButton->SetDown(true);
 	m_slotVisibleOtherGuildMemberButton = m_pVisibleOtherGuildMemberButton->SigToggled().Connect(this, &CWorldMapGui::OnToggle_VisibleOtherGuildMemberButton);
 
-	// "상대 유파 미니맵에 보기 버튼"
+	// “View button on the minimap of the opposing school”
 	wstrText = GetDisplayStringManager()->GetString("DST_WORLDMAP_SHOW_OTHER_GUILD_IN_MINIMAP");
 	m_pVisibleOtherGuildMemberMiniMapButton = (gui::CButton*)GetComponent( "btnVisibleOtherGuildMemberMiniMap" );
 	m_pVisibleOtherGuildMemberMiniMapButton->SetToolTip(wstrText);
@@ -268,17 +268,17 @@ RwBool CWorldMapGui::Create()
 	m_pVisibleOtherGuildMemberMiniMapButton->SetDown(true);
 	m_slotVisibleOtherGuildMemberMiniMapButton = m_pVisibleOtherGuildMemberMiniMapButton->SigToggled().Connect(this, &CWorldMapGui::OnToggle_VisibleOtherGuildMemberMiniMapButton);
 
-	// "상대 유파"
+	// “Relative school”
 	m_pOtherGuild = (gui::CStaticBox*)GetComponent( "stbOtherGuild" );
 	m_pOtherGuild->SetText( GetDisplayStringManager()->GetString("DST_WORLDMAP_SHOW_OTHER_GUILD_MEMBER") );	
 
 
 
-	// "투명도"
+	// "transparency"
 	m_pTransparency = (gui::CStaticBox*)GetComponent( "stbTransparency" );
 	m_pTransparency->SetText( GetDisplayStringManager()->GetString("DST_WORLDMAP_TRANSPARENCY") );	
 
-	// 월드맵의 틀
+	// World map framework
 	m_MapFrameUp.SetSurface(0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "WorldMap.srf", "srfFrameUL" ) );	
 	m_MapFrameUp.SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "WorldMap.srf", "srfFrameUC" ) );	
 	m_MapFrameUp.SetSurface(2, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "WorldMap.srf", "srfFrameUR" ) );		
@@ -290,19 +290,19 @@ RwBool CWorldMapGui::Create()
 	m_MapFrameDown.SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "WorldMap.srf", "srfFrameBC" ) );	
 	m_MapFrameDown.SetSurface(2, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "WorldMap.srf", "srfFrameBR" ) );	
 
-	// DBO 지도간 비율
+	// DBO Map to Map Ratio
 	/*m_surDboRate[MAP_DBO_1].SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "WorldMap.srf", "srfMapRate1" ) );
 	m_surDboRate[MAP_DBO_1_25].SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "WorldMap.srf", "srfMapRate125" ) );
 	m_surDboRate[MAP_DBO_1_5].SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "WorldMap.srf", "srfMapRate15" ) );
 	m_surDboRate[MAP_DBO_2].SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "WorldMap.srf", "srfMapRate2" ) );
 	m_surDboRate[MAP_DBO_4].SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("WorldMap.srf", "srfMapRate2"));*/
 
-	// (피아구분)팀을 나누어서 싸우는 경우의 사람들
+	// (Fia division) People who fight by dividing into teams
 	m_surCamp[CAMP_PEOPLE_MY_PARTY]		.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "WorldMap.srf", "srfCampParty" ) );
 	m_surCamp[CAMP_PEOPLE_MY_TEAM]		.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "WorldMap.srf", "srfCampMyTeam" ) );
 	m_surCamp[CAMP_PEOPLE_EMENY_TEAM]	.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "WorldMap.srf", "srfCampEnemy" ) );
 
-	// 도장전 인장
+	// Seal before painting
 	m_surScrambleSeal[DBO_TEAM_MY_TEAM]		.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "WorldMap.srf", "srfSeal_MyTeam" ) );
 	m_surScrambleSeal[DBO_TEAM_ENEMY]		.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "WorldMap.srf", "srfSeal_Enemy" ) );
 	m_surScrambleSeal[DBO_TEAM_NEUTRAILITY]	.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "WorldMap.srf", "srfSeal_NoTeam" ) );
@@ -478,7 +478,7 @@ RwBool CWorldMapGui::Create()
 	ShowScrambleCampComponent(false);
 
 
-	// sig
+	// Signals
 	m_slotAlphaScrollChanged		= m_pAlphaScrollbar->SigValueChanged().Connect( this, &CWorldMapGui::OnScrollChanged );
 	m_slotAlphaScrollSliderMoved	= m_pAlphaScrollbar->SigSliderMoved().Connect( this, &CWorldMapGui::OnScrollChanged );
 	m_slotMouseDown		= m_pThis->SigMouseDown().Connect( this, &CWorldMapGui::OnMouseDown );
@@ -673,7 +673,7 @@ VOID CWorldMapGui::Update(RwReal fElapsed)
 	// by daneos: remove the if from UpdateChangeZoneMap, to fix avatar mark, quest marks, etc.
 	UpdateChangeZoneMap(fElapsed);
 
-	// 연산량을 줄이기 위해 일정시간마다 Update
+	// Update at regular intervals to reduce computation amount
 	if( m_fElapsedTime < WORLDMAP_UPDATETIME )
 	{
 		m_fElapsedTime += fElapsed;
@@ -720,8 +720,8 @@ RwBool CWorldMapGui::UpdateChangeZoneMap(RwReal fElapsed)
 
 	if( idxAreaInfoIndex == 0xffffffff )
 	{
-		// avooo's commnet : 아마도 맵네임인덱스가 지정되지 않은 곳일 것이다.
-		// 월드 모드로 열어주자
+		// avooo's commnet: This is probably a place where the map name index is not specified.
+		// Let's open it in world mode
 		idxAreaInfoIndex	= 200100000;
 		byTempMapMode		= WORLDMAP_TYPE_WORLD;
 
@@ -762,9 +762,9 @@ VOID CWorldMapGui::UpdateWarfogEffect(RwReal fElapsed)
 		if( m_WarFogDisappearEvent.fElapsed < dWARFOG_SCHEDULE_WAIT_OPEN_DIALOG ||
 			m_WarFogDisappearEvent.bActiveEffect )
 		{
-			// 월드맵이 열릴 때 지도, 워포그, 랜드마크 등의 텍스처를 디스크에서 읽기에 느리다.
-			// SwitchDialog에서 텍스처를 모두 로딩한 후 m_WarFogDisappearEvent.bActiveEffect이 true가 된다
-			// 따라서, 텍스처 로딩 중 공연히 워포그 이벤트 업데이트 시간이 흐르지 않는다
+			// When the world map is opened, it is slow to read textures such as maps, warfogs, and landmarks from disk.
+			// After loading all textures in SwitchDialog, m_WarFogDisappearEvent.bActiveEffect becomes true.
+			// Therefore, the Warfog event update time does not pass during texture loading.
 			m_WarFogDisappearEvent.fElapsed += fElapsed;
 		}
 
@@ -775,14 +775,14 @@ VOID CWorldMapGui::UpdateWarfogEffect(RwReal fElapsed)
 
 		if( m_WarFogDisappearEvent.fElapsed >= dWARFOG_SCHEDULE_WAIT_OPEN_DIALOG )
 		{
-			// 일정 시간이 지나면 자동으로 열린다
+			// Automatically opens after a certain period of time
 			if( GetDialogManager()->IsOpenDialog(DIALOG_WORLDMAP) == FALSE )
 				GetDialogManager()->OpenDialog(DIALOG_WORLDMAP);
 		}
 
 		if( m_WarFogDisappearEvent.fElapsed >= dWARFOG_SCHEDULE_TIME_BY_DISSAPEAR )
 		{
-			// 지연 시간이 지나고 워포그가 사라진다
+			// The delay time passes and the warfog disappears.
 			for(RwUInt8 i = 0 ; i < DBO_WORLD_MAP_TABLE_COUNT_WORLD_WARFOG ; ++i)
 			{
 				if( m_WarFog[i].bShow &&
@@ -799,7 +799,7 @@ VOID CWorldMapGui::UpdateWarfogEffect(RwReal fElapsed)
 			}
 		}
 
-		// 워포그 사라지기 이벤트 종료
+		// Warfog Vanishing Event Ends
 		if( m_WarFogDisappearEvent.fElapsed == m_WarFogDisappearEvent.fRemainTime )
 		{
 			for(RwUInt8 i = 0 ; i < DBO_WORLD_MAP_TABLE_COUNT_WORLD_WARFOG ; ++i)
@@ -952,7 +952,7 @@ VOID CWorldMapGui::UpdateBusPosition()
 
 	CNtlOtherParam* pOtherParam = GetNtlSLGlobal()->GetSobAvatar()->GetOtherParam();
 
-	// 아바타 주위의 Sob 객체중 버스 NPC 업데이트
+	// Bus NPC updates among Sob objects around the avatar
 	CNtlSobGroup::MapObject::iterator it_sobGroup;
 	CNtlSobGroup* pSobGroup = GetNtlSobManager()->GetSobGroup( SLCLASS_NPC );
 	if( pSobGroup )
@@ -990,13 +990,13 @@ VOID CWorldMapGui::UpdateBusPosition()
 	}
 
 
-	// 아바타 주위에 없는 Sob 객체중 버스 NPC 업데이트	
+	// Bus NPC update among Sob objects that are not around the avatar	
 	for( MAP_BUS_ROUTE_ITER it = pOtherParam->GetBusRouteBegin() ; it != pOtherParam->GetBusRouteEnd(); ++it )
 	{
 		sBusPosition busPosition;
 		sBusRoute& rBusRoute = it->second;
 
-		// 아바타 주위(클라이언트 내부 정보)에 있는 정보를 가지고 이미 위치를 업데이트 했다
+		// The location has already been updated using information about the avatar's surroundings (client internal information).
 		BUS_POS_ITER it_BusPos = m_mapBusPos.find(rBusRoute.hBus);
 		if( it_BusPos != m_mapBusPos.end() )
 			continue;
@@ -1108,7 +1108,7 @@ VOID CWorldMapGui::UpdateWarFog()
 {
 	UnloadWarFogTexture();	
 
-	// 존모드에서만 워포그가 나온다
+	// Warfogs only appear in zone mode.
 	if( m_byMapMode != WORLDMAP_TYPE_ZONE && m_byMapMode != WORLDMAP_TYPE_ZONE2)
 		return;
 
@@ -1141,7 +1141,7 @@ VOID CWorldMapGui::UpdateWarFog()
 				{
 					if( Logic_IsUIDevInfoVisible() )
 					{
-						// 테이블 상의 워포그의 텍스처 리소스가 존재하지 않는다
+						// There are no texture resources for the warfog on the table.
 						WCHAR awcBuffer[128] = L"";
 						wprintf(awcBuffer, 128, L"Not exist warfog file : fog_%05d.dds", pWORLD_MAP_TBLDAT->wWarfog[i]);
 						GetAlarmManager()->AlarmMessage(awcBuffer, CAlarmManager::ALARM_TYPE_CHAT_WARN);
@@ -1204,7 +1204,7 @@ RwBool CWorldMapGui::LoadingMapSurface(RwUInt8 byMapMode)
 	CWorldTable* pWorldTable = API_GetTableContainer()->GetWorldTable();
 	sWORLD_TBLDAT* pWORLD_TBLDAT = reinterpret_cast<sWORLD_TBLDAT*>( pWorldTable->FindData( m_uiRenderingWorldID ) );
 	
-	if(NULL == pWORLD_TBLDAT)/// woosungs_test 
+	if(NULL == pWORLD_TBLDAT)/// Woosungs test 
 	{
 		DBO_WARNING_MESSAGE("CWorldMapGui::LoadingMapSurface(RwUInt8 byMapMode): \
 						Not Found pWorldTable->FindData(" << m_uiRenderingWorldID);
@@ -1223,7 +1223,7 @@ RwBool CWorldMapGui::LoadingMapSurface(RwUInt8 byMapMode)
 	{
 		case WORLDMAP_TYPE_WORLD:
 		{
-			// 월드 이름
+			// world name
 			sWORLD_MAP_TBLDAT* pWORLD_MAP_TBLDAT = GetWorldMapTable(m_uiRenderingWorldID, m_uiRenderingZoneID);
 
 			if ( NULL == pWORLD_MAP_TBLDAT )
@@ -1235,21 +1235,21 @@ RwBool CWorldMapGui::LoadingMapSurface(RwUInt8 byMapMode)
 
 			m_pstbRecommendedLevel->Clear();
 
-			// 맵의 좌상단(리터칭된 좌상단)
+			// Top left corner of the map (retouched top left corner)
 			m_v2MapPos.x = pWORLD_MAP_TBLDAT->vStandardLoc.x;
 			m_v2MapPos.y = pWORLD_MAP_TBLDAT->vStandardLoc.z;
 
-			// 텍스처 이름
+			// texture name
 			sprintf_s(acFileName, 128, "world");
 
-			// 맵 스케일
+			// map scale
 			m_fMapScale = (RwReal)pWORLD_MAP_TBLDAT->fWorldmapScale;
 		}
 		break;
 		case WORLDMAP_TYPE_ZONE:
 		case WORLDMAP_TYPE_ZONE2:
 		{
-			// 존 이름
+			// john name
 			sWORLD_MAP_TBLDAT* pWORLD_MAP_TBLDAT = GetWorldMapTable(m_uiRenderingWorldID, m_uiRenderingZoneID);
 
 			if ( NULL == pWORLD_MAP_TBLDAT )
@@ -1261,20 +1261,20 @@ RwBool CWorldMapGui::LoadingMapSurface(RwUInt8 byMapMode)
 
 			m_pstbRecommendedLevel->Format(GetDisplayStringManager()->GetString("DST_WORLDMAP_RECOMMENDED_LEVEL"), pWORLD_MAP_TBLDAT->byRecomm_Min_Level, pWORLD_MAP_TBLDAT->byRecomm_Max_Level);
 
-			// 맵의 시작점(좌상단)
+			// Starting point of the map (top left)
 			m_v2MapPos.x = pWORLD_MAP_TBLDAT->vStandardLoc.x;
 			m_v2MapPos.y = pWORLD_MAP_TBLDAT->vStandardLoc.z;
 
-			// 텍스처 이름
+			// texture name
 			sprintf_s(acFileName, 128, "%02d", m_uiRenderingZoneID);
 
-			// 맵 스케일
+			// map scale
 			m_fMapScale = (RwReal)pWORLD_MAP_TBLDAT->fWorldmapScale;
 		}
 		break;
 		case WORLDMAP_TYPE_CITY:
 		{
-			// 섹션 이름
+			// section name
 			sWORLD_MAP_TBLDAT* pWORLD_MAP_TBLDAT = GetWorldMapTable(m_uiRenderingWorldID, m_uiRenderingZoneID);
 
 			if ( NULL == pWORLD_MAP_TBLDAT )
@@ -1286,20 +1286,20 @@ RwBool CWorldMapGui::LoadingMapSurface(RwUInt8 byMapMode)
 
 			m_pstbRecommendedLevel->Clear();
 
-			// 맵의 시작점(좌상단)
+			// Starting point of the map (top left)
 			m_v2MapPos.x = pWORLD_MAP_TBLDAT->vStandardLoc.x;
 			m_v2MapPos.y = pWORLD_MAP_TBLDAT->vStandardLoc.z;
 
-			// 텍스처 이름
+			// texture name
 			sprintf_s(acFileName, 128, "%02d", m_uiRenderingZoneID);
 
-			// 맵 스케일
+			// map scale
 			m_fMapScale = (RwReal)pWORLD_MAP_TBLDAT->fWorldmapScale;
 		}
 		break;
 		case WORLDMAP_TYPE_INSTANCE_MAP:
 		{
-			// 존 이름
+			// john name
 			sWORLD_MAP_TBLDAT* pWORLD_MAP_TBLDAT = GetWorldMapTable(m_uiRenderingWorldID, m_uiRenderingZoneID);
 
 			if ( NULL == pWORLD_MAP_TBLDAT )
@@ -1321,14 +1321,14 @@ RwBool CWorldMapGui::LoadingMapSurface(RwUInt8 byMapMode)
 				}
 			}
 
-			// 맵의 시작점(좌상단)
+			// Starting point of the map (top left)
 			m_v2MapPos.x = pWORLD_MAP_TBLDAT->vStandardLoc.x;
 			m_v2MapPos.y = pWORLD_MAP_TBLDAT->vStandardLoc.z;
 
-			// 텍스처 이름
+			// texture name
 			sprintf_s(acFileName, 128, "%02d", m_uiRenderingZoneID);
 
-			// 맵 스케일
+			// map scale
 			m_fMapScale = (RwReal)pWORLD_MAP_TBLDAT->fWorldmapScale;
 		}
 		break;
@@ -1636,7 +1636,7 @@ VOID CWorldMapGui::LoadingLandMark()
 			m_pLandMarkName[byIndex]->SetText(wstr.c_str());
 			m_pLandMarkName[byIndex]->Show(true);
 
-			// 랜드마크 이름 위치
+			// Landmark Name Location
 			if( landMark.pLAND_MARK_TBLDAT->byIconSize == 0 )
 			{
 				SetLandMarkNamePosition(m_pLandMarkName[byIndex], landMark.iPosX , landMark.iPosY, dLANDMARK_SIZE_1);
@@ -1665,7 +1665,7 @@ VOID CWorldMapGui::SetLandMarkNamePosition(gui::CStaticBox* pStatic, RwInt32 iX,
 	RwInt32 iLandMarkNameHalfHeight = pStatic->GetHeight()/2;
 
 
-	// 랜드마크 이름이 지도의 하단경계를 벗어나면 랜드마크의 오른쪽 혹은 왼쪽에 이름을 위치시킨다
+	// If the landmark name is outside the bottom border of the map, the name is placed to the right or left of the landmark.
 	if( m_iMapStartY + 600 - dMAPADJUST_INMAP < iY + iLandMarkNameHalfHeight )
 	{
 		if( iX >= 512 )
@@ -1679,7 +1679,7 @@ VOID CWorldMapGui::SetLandMarkNamePosition(gui::CStaticBox* pStatic, RwInt32 iX,
 
 	RwInt32 iCompare, iCompare2;
 
-	// 랜드마크 이름이 지도의 왼쪽경계를 벗어나면
+	// If the landmark name is outside the left border of the map,
 	iCompare = m_iMapStartX + dMAPADJUST_INMAP;
 	iCompare2 = iX - iLandMarkNameHalfWidth;
 	if( iCompare > iCompare2 )
@@ -1746,7 +1746,7 @@ VOID CWorldMapGui::LocateComponent()
 
 	m_surBack.SetRectWH(0, 0, rtScreen.GetWidth(), rtScreen.GetHeight());
 
-	// 월드맵 프레임
+	// world map frame
 	m_MapFrameUp	.SetPosition(m_iMapStartX, m_iMapStartY);
 	m_MapFrameLC	.SetPosition(m_iMapStartX, m_iMapStartY + m_MapFrameUp.GetHeight());
 	m_MapFrameRC	.SetPosition(m_iMapStartX + dMAP_WIDTH - m_MapFrameRC.GetWidth() - 1, m_iMapStartY + m_MapFrameUp.GetHeight());
@@ -1765,7 +1765,7 @@ VOID CWorldMapGui::LocateComponent()
 	m_pExitButton		->SetPosition(m_iMapStartX + 785, m_iMapStartY + 5);
 
 
-	// 유파쟁탈전 체크 버튼
+	// School battle check button
 	RwInt32 iCheckButtonWidth = m_pVisibleOtherGuildMemberButton->GetWidth();	
 	RwInt32 iCheckPosX = m_iMapStartX + 763;
 	RwInt32 iCheckPosY = m_iMapStartY + 551;
@@ -1790,7 +1790,7 @@ VOID CWorldMapGui::LocateComponent()
 	m_pOurGuild->SetPosition(iCheckPosX, iCheckPosY - 3);
 
 	
-	// title
+	// Title
 	m_pDialogName->SetPosition(m_iMapStartX + DBOGUI_DIALOG_TITLE_X, m_iMapStartY + DBOGUI_DIALOG_TITLE_Y);
 
 	// map name
@@ -1817,7 +1817,7 @@ VOID CWorldMapGui::LocateComponent()
 	m_pstbPopoStone->SetPosition(m_pbtnQuestInfoOnOff->GetPosition().right + 10, m_iMapStartY + 574);
 	m_pbtnPopoStone->SetPosition(m_pstbPopoStone->GetPosition().right + 10, m_iMapStartY + 574 - 2);
 
-	// portals
+	// Portals
 	m_pstbPortal->SetPosition(m_pbtnPopoStone->GetPosition().right + 10, m_iMapStartY + 574);
 	m_pbtnPortal->SetPosition(m_pstbPortal->GetPosition().right + 10, m_iMapStartY + 574 - 2);
 
@@ -1923,7 +1923,7 @@ VOID CWorldMapGui::OnMouseDown( const CKey& key )
 		//	}
 		//}
 
-		// 존 클릭
+		// Click Zone
 		m_uiPressedZoneIndex = m_FocusZoneID;
 		m_uiPressedMapIndex = m_FocusMapID;
 	//	DBO_WARNING_MESSAGE("m_uiPressedZoneIndex: " << m_uiPressedZoneIndex << ", m_uiPressedMapIndex: " << m_uiPressedMapIndex);
@@ -2043,7 +2043,7 @@ VOID CWorldMapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 
 	if( m_tScrambleVisible.bShowOurTeam || m_tScrambleVisible.bShowOtherTeam )
 	{
-		// (피아구분)팀을 나누어서 싸우는 경우의 사람들
+		// (Friend classification) people who are divided into teams and fighting
 		LIST_CAMP::iterator it_Camp = m_listCamp.begin();
 		for( ; it_Camp != m_listCamp.end() ; ++it_Camp )
 		{
@@ -2076,7 +2076,7 @@ VOID CWorldMapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 
 	if( !m_tScrambleVisible.bScramble )
 	{
-		// 파티원
+		// party member
 		for(RwInt8 i = 0 ; i < (NTL_MAX_MEMBER_IN_PARTY - 1) ; ++i )
 		{
 			if( !m_aPartyMember[i].bShow )
@@ -2100,7 +2100,7 @@ VOID CWorldMapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 		}	
 	}	
 
-	// 랜드마크
+	// landmark
 	RwBool bFocusLandMark = FALSE;
 
 	LANDMARK_ITER it_landmark = m_listLandMark.begin();
@@ -2130,12 +2130,12 @@ VOID CWorldMapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 				}
 			}
 
-			// 랜드마크 포커싱
+			// Landmark focusing
 			bFocusLandMark = TRUE;
 			m_uiFocusLandMarkIndex = iIndex;
 			
 
-			// 툴팁
+			// tooltip
 			if( landMark.pLAND_MARK_TBLDAT->Note != INVALID_INDEX )
 			{
 				sMINIMAPINFO info;
@@ -2164,7 +2164,7 @@ VOID CWorldMapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 	if( !bFocusLandMark )
 		m_uiFocusLandMarkIndex = INVALID_INDEX;
 
-	// 다음 진행 퀘스트
+	// Next quest
 	NEXTQUEST_ITER it_nextQuest = m_listNextQuest.begin();
 	for( ; it_nextQuest != m_listNextQuest.end() ; ++it_nextQuest )
 	{
@@ -2184,7 +2184,7 @@ VOID CWorldMapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 
 				info.iType = MMIT_QUEST;
 
-				// ex) [metatag =5]재배맨 ==> 재배맨
+				// ex) [metatag =5] Cultivation Man ==> Cultivation Man
 				const WCHAR* pwcText = wcschr(nextQuest.pwcText, L']');
 				if( pwcText )
 				{
@@ -2253,7 +2253,7 @@ VOID CWorldMapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 		}
 	}
 
-	// 도장전 인장
+	// Seal before painting
 	if( m_tScrambleVisible.bScramble )
 	{
 		MAP_SCRAMBLE_SEAL_MARK::iterator it_ScrambleSealMark = m_mapScrambleSealMark.begin();
@@ -2402,20 +2402,20 @@ VOID CWorldMapGui::OnPaint()
 {
 	m_surBack.Render();
 
-	// 지도
+	// map
 	m_srfMap.Render();
 
-	// 월드맵상의 존 포커스
+	// Zone focus on the world map
 	if( m_byFocusArea != MWFT_NONE  && m_byFocusArea <= NUM_MWFT)
 		m_aMainWorldFocus[m_byFocusArea].surface.Render();
 
 
-	// 버스 노선
+	// bus route
 	if( CanRenderBusRoute() )
 		m_srfBusRoute.Render();
 
 
-	// 랜드마크
+	// landmark
 	RwUInt32 uiIndex = 0;
 	LANDMARK_ITER it_landmark = m_listLandMark.begin();
 	for( ; it_landmark != m_listLandMark.end() ; ++it_landmark, ++uiIndex )
@@ -2504,7 +2504,7 @@ VOID CWorldMapGui::OnPaint()
 			m_WarFog[i].srfWarFog.Render();
 	}	
 
-	// 지도틀
+	// map frame
 	m_MapFrameUp.Render();
 	m_MapFrameLC.Render();
 	m_MapFrameRC.Render();
@@ -2521,11 +2521,11 @@ VOID CWorldMapGui::OnPostPaint()
 	SCtrlStuff *pCtrlStuff = pBeData->GetCtrlStuff();
 	SERIAL_HANDLE hBus_with_Avatar = pCtrlStuff->sRide.hTargetSerialId;
 
-	// 바인드 포인트
+	// bind point
 	if( m_BindInfo.bShow )
 		m_surBindMark.Render();
 
-	// 도장전 인장
+	// Seal before painting
 	if( m_tScrambleVisible.bScramble )
 	{
 		MAP_SCRAMBLE_SEAL_MARK::iterator it_ScrambleSealMark = m_mapScrambleSealMark.begin();
@@ -2545,7 +2545,7 @@ VOID CWorldMapGui::OnPostPaint()
 		}
 	}	
 
-	// 다음 진행 퀘스트
+	// Next quest
 	NEXTQUEST_ITER it_nextQuest = m_listNextQuest.begin();
 	for( ; it_nextQuest != m_listNextQuest.end() ; ++it_nextQuest )
 	{
@@ -2558,7 +2558,7 @@ VOID CWorldMapGui::OnPostPaint()
 		m_surNextQuestMark[nextQuest.eTargetType].Render();
 	}
 
-	// 파티원
+	// party member
 	if( !m_tScrambleVisible.bScramble )
 	{
 		for( RwInt8 i = 0 ; i < (NTL_MAX_MEMBER_IN_PARTY - 1) ; ++i )
@@ -2566,7 +2566,7 @@ VOID CWorldMapGui::OnPostPaint()
 			if( !m_aPartyMember[i].bShow )
 				continue;
 
-			// 지도 영역 안에 있는지 검사해야 한다
+			// We need to check if we are within the map area.
 			if( IsinMap((RwInt32)m_aPartyMember[i].v2Pos.x, (RwInt32)m_aPartyMember[i].v2Pos.y) )
 			{
 				m_surMarkPartryMember.SetCenterPosition((RwInt32)m_aPartyMember[i].v2Pos.x + m_iMapStartX,
@@ -2577,7 +2577,7 @@ VOID CWorldMapGui::OnPostPaint()
 		}	
 	}	
 
-	// (피아구분)팀을 나누어서 싸우는 경우의 사람들
+	// (Fia division) People who fight by dividing into teams
 	LIST_CAMP::iterator it_Camp = m_listCamp.begin();
 	for( ; it_Camp != m_listCamp.end() ; ++it_Camp )
 	{
@@ -2586,7 +2586,7 @@ VOID CWorldMapGui::OnPostPaint()
 		if( tCAMP_PEOPLE.ePeopleType >= NUM_CAMP_PEOPLE )
 			continue;
 
-		// 지도 영역 안에 있는지 검사해야 한다
+		// We need to check if we are within the map area.
 		if( IsinMap((RwInt32)tCAMP_PEOPLE.v2Pos.x, (RwInt32)tCAMP_PEOPLE.v2Pos.y) )
 		{
 			m_surCamp[tCAMP_PEOPLE.ePeopleType].SetCenterPosition((RwInt32)tCAMP_PEOPLE.v2Pos.x, (RwInt32)tCAMP_PEOPLE.v2Pos.y);
@@ -2594,7 +2594,7 @@ VOID CWorldMapGui::OnPostPaint()
 		}
 	}
 
-	// 아바타
+	// avatar
 	if( INVALID_SERIAL_ID == hBus_with_Avatar ||
 		FALSE == CanRenderBusRoute() )
 	{
@@ -2947,13 +2947,13 @@ RwInt32 CWorldMapGui::SwitchDialog(bool bOpen)
 		CheckInfoWindow();
 		ShowScrambleCampComponent(false);
 
-		// 워포그가 사라지는 이벤트는 창이 닫히면 바로 종료한다
+		// The event where the warfog disappears ends as soon as the window is closed.
 		m_WarFogDisappearEvent.bActiveEffect = FALSE;
 		m_WarFogDisappearEvent.uiWarfogIndex = INVALID_SERIAL_ID;
 		m_WarFogDisappearEvent.fRemainTime	= 0.f;
 		m_WarFogDisappearEvent.fElapsed		= 0.f;		
 
-		// 월드맵을 그리지 않으면 별도의 텍스처로 분리되어 있는 리소스는 전부 해제한다
+		// If the world map is not drawn, all resources separated into separate textures are released.
 		UnLoadWorldFocus();
 		UnloadLandMark();
 		UnloadWarFogTexture();
@@ -2998,7 +2998,7 @@ VOID CWorldMapGui::HandleEvents( RWS::CMsg &msg )
 			NTL_RETURNVOID();
 		}
 
-		// avooo's commnet : 바인드 할 수 있는 지역이라면 무조건 월드 ID와 월드테이블 Index가 동일하다
+		// avooo's commnet: If it is a bindable region, the world ID and world table index are always the same.
 
 		m_BindInfo.byBindType		= pBindInfo->byBindType;
 		m_BindInfo.WorldID			= pBindInfo->BindedWorldID;
@@ -3047,10 +3047,10 @@ VOID CWorldMapGui::HandleEvents( RWS::CMsg &msg )
 			}			
 
 
-			// 워포그 데이터 저장
+			// Warfog data storage
 			pOtherParam->SetWarFolgValue(pOBJECT_TBLDAT->contentsTblidx);
 
-			// 월드상 나메칸 사인에 이펙트를 연출한다
+			// Create effects on namekan signs in the world
 			CNtlPLEntity *pPLEntity = GetSceneManager()->CreateEntity(PLENTITY_EFFECT, dWARFOG_NAMEKSIGN_EFFECT);
 			if( pPLEntity )
 			{
@@ -3062,13 +3062,13 @@ VOID CWorldMapGui::HandleEvents( RWS::CMsg &msg )
 				DBO_FAIL("Not exist effect of name : " << dWARFOG_NAMEKSIGN_EFFECT);
 			}			
 
-			// 월드맵에서 워포그가 사라지는 이펙트
+			// Effect of warfog disappearing from the world map
 			m_WarFogDisappearEvent.bActiveEffect = FALSE;
 			m_WarFogDisappearEvent.uiWarfogIndex = pOBJECT_TBLDAT->contentsTblidx;
 			m_WarFogDisappearEvent.fRemainTime	= dWARFOR_SCHEDULE_TOTAL_TIME;
 			m_WarFogDisappearEvent.fElapsed		= 0.f;
 
-			// 존 모드에서만 보여준다
+			// Shown only in zone mode
 			m_byMapMode = WORLDMAP_TYPE_ZONE;
 		}
 	}
@@ -3078,7 +3078,7 @@ VOID CWorldMapGui::HandleEvents( RWS::CMsg &msg )
 
 	//	if( pEvent->iType == SCOUTER_EVENT_QUEST_SEARCH )
 	//	{
-	//		// 이미 퀘스트 서치중
+	//		// Already searching for quest
 	//		if( m_pQuestSearch )
 	//			NTL_RETURNVOID();
 
@@ -3222,7 +3222,7 @@ VOID CWorldMapGui::HandleEvents( RWS::CMsg &msg )
 		}
 		else if( DOJO_EVENT_SCRAMBLE_CHANGE_SEAL_OWNER == pEvent->byDojoEvent )
 		{
-			// 인장의 상태가 변경되었음을 판단한다
+			// Determine that the status of the seal has changed
 			TBLIDX		dojoTblidx		= pEvent->uiParam;
 			TBLIDX		idxObject		= *(TBLIDX*)pEvent->pExData;
 

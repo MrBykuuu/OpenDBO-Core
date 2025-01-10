@@ -1,22 +1,22 @@
 #include "precomp_dboclient.h"
 #include "TerritoryNotifyGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// table
+// Table
 #include "TableContainer.h"
 #include "MobTable.h"
 #include "TextAllTable.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLApi.h"
 #include "NtlSobMonsterAttr.h"
 
@@ -155,7 +155,7 @@ VOID CTerritoryNotifyGui::HandleEvents( RWS::CMsg& msg )
 
 		Logic_PlayGUISound(GSD_SYSTEM_TERRAIN_NOTIFY);		
 
-		// 위치는 다시 지정해야한다.
+		// The location must be specified again.
 		SetPosition( CRectangle( 0, 0, m_pmdbNotifyText->GetWidth(), m_pmdbNotifyText->GetHeight() ) );
 		PositionAlign( GetDboGlobal()->GetScreenWidth(), GetDboGlobal()->GetScreenHeight() );		
 	}
@@ -207,7 +207,7 @@ VOID CTerritoryNotifyGui::HandleEvents( RWS::CMsg& msg )
 		Show( true );
 		SetUpdateState( FADE_IN );
 
-		// 위치는 다시 지정해야한다.
+		// The location must be specified again.
 		SetPosition( CRectangle( 0, 0, m_pmdbNotifyText->GetWidth(), m_pmdbNotifyText->GetHeight() ) );
 		PositionAlign( GetDboGlobal()->GetScreenWidth(), GetDboGlobal()->GetScreenHeight() );		
 	}

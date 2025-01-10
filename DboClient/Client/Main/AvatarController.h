@@ -1,12 +1,12 @@
 /*****************************************************************************
  *
- * File			: AvatarController.h
- * Author		: HongHoDong
- * Copyright	: (주)NTL
- * Date			: 2005. 11. 13	
- * Abstract		: NTl CAvatarController
+ *File			: AvatarController.h
+ *Author	    : HongHoDong
+*Copyright	    : NTL Co., Ltd.
+ *Date			: 2005. 11. 13	
+ *Abstract		: NTl CAvatarController
  *****************************************************************************
- * Desc         : 
+ *Desc         : 
  *
  *****************************************************************************/
 
@@ -36,9 +36,9 @@ enum ECameraRotateFlag
 
 /**
 * \ingroup Client
-* Keyboard 및 Mouse의 입력으로 Camera를 갱신 하며, Camera의 이동 및 회전에
-* 에 대해서 Avatar에게 Event를 보내는 기능을 한다. 그리고 Keyboard와 Mouse가
-* 동시에 눌렸을 때의 처리 또한 하며 ActionMap에 대한 Event도 이곳에서 보낸다
+*Updates the camera with input from the keyboard and mouse, and controls the movement and rotation of the camera.
+*It has the function of sending an event to the Avatar. And the Keyboard and Mouse
+*At the same time, it also handles when pressed and events for ActionMap are also sent here.
 * 
 */
 class CAvatarController : public RWS::CEventHandler
@@ -55,7 +55,7 @@ public:
 	void HandleEvents(RWS::CMsg &pMsg);
 	
 	/**
-	* mouse and keyboard hander 함수.	
+	* mouse and keyboard hander Function.	
 	*/
 
 	int	MouseWheelHandler(unsigned int uiMouseData);
@@ -66,10 +66,10 @@ public:
 	int	KeyboardDownHandler(unsigned int uiKeyData);
 	int KeyboardUpHandler(unsigned int uiKeyData);
 	
-	int RestoreHandler(void);		///< Device Restore 처리 함수
+	int RestoreHandler(void);		///< Device Restore processing function
 		
 	/**
-	*	input action map 처리 함수.
+	*Input action map processing function.
 	*/ 
 	int ActionMapKeyboardMove(unsigned int uiMoveFlags);
 	int ActionMapKeyboardDashMove(unsigned int uiMoveFlags);
@@ -94,60 +94,60 @@ private:
 	void TeleportReset(void);
 
 	/**
-	* picking pl world entity
+	*picking pl world entity
 	*/
 	void PickPLWorld(SWorldPickInfo& sPickInfo);
 
 	/**
-	* picking pl character entity
+	*picking pl character entity
 	*/
 	void PickPLObject(SWorldPickInfo& sPickInfo, int someEnum, RwInt32 nXPos, RwInt32 nYPos);
 	void PickPLObject(SWorldPickInfo& sPickInfo);
 
 	/**
-	* avatar를 카메라 방향을 참조하여 바로 방향을 바꿀 필요가 있는데, 기본 move flag를 변한한다.
+	*It is necessary to immediately change the direction of the avatar by referring to the camera direction, by changing the default move flag.
 	*/
 	RwUInt8 ConvertStraightMoveFlags(RwUInt8 uiMoveFlags);
 
 	/**
-	* avatar를 카메라 방향을 참조하여(현재 move flag와 조합하여) 바로 회전한다.
+	*Rotate the avatar directly with reference to the camera direction (in combination with the current move flag).
 	*/
 	RwReal CalcAvatarStraightRotate(RwUInt32 uiMoveFlags);
 
 	/**
-	* 카메라 회전 감도를 구한다.
+	*Find the camera rotation sensitivity.
 	*/
 	void CalcCameraRotateSensitivity(int iPosX, int iPosY, int iMouseDeltaX, int iMouseDeltaY);
 
 	/**
-	* 마우스 버튼이 아무것도 눌리지 않고,  keyboard로 캐릭터가 front and back 으로 움직일 경우
-	* 캐릭터 뒷편으로 카메라를 회전시킬 delta angle을 계산한다.
+	*When no mouse button is pressed and the character moves front and back using the keyboard
+	*Calculate the delta angle to rotate the camera behind the character.
 	*/
 	void CalcCameraRotateToCharBack(void);
 
 	/**
-	* 마우스 버튼이 아무것도 눌리지 않고,  keyboard로 캐릭터가 front and back 으로 움직일 경우
-	* 캐릭터 뒷편으로 카메라를 회전시켜준다.
+	*When no mouse button is pressed and the character moves front and back using the keyboard
+	*Rotate the camera behind the character.
 	*/
 	void UpdateCameraRotateToCharBack(RwReal fElapsed);
 
 	/**
-	* auto run일 경우.
+	*In case of auto run.
 	*/
 	void UpdateAutoRun(RwReal fElapsed);
 
 	/**
-	* move mark effect create 함수.
+	*move mark effect create function.
 	*/
 	void CreateMoveMark(const RwV3d *pPos);
 
 	/**
-	* move mark effect delete 함수.
+	*move mark effect delete function.
 	*/
 	void DeleteMoveMark(void);
 
 	/**
-	* move mark effect update 함수.
+	*move mark effect update function.
 	*/
 	void UpdateMoveMark(RwReal fElapsed);
 
@@ -156,37 +156,37 @@ private:
 	void UpdateMouse(RwReal fElapsed);
 	
 	/**
-	* move mark effect update 함수.
+	*move mark effect update function.
 	*/
 	void UpdateChangeHeading(RwReal fElapsed);
 
 	/*
-		* change x angle while flying
+		*change x angle while flying
 	*/
 	void UpdateFlightAngle(float fElapsed);
 
 	/**
-	* picking focus update 함수.
+	*picking focus update function.
 	*/
 	void UpdatePickFocus(RwReal fElapsed);
 
 	/**
-	* mouse left button up 일때 처리 함수.
+	*Processing function when mouse left button up.
 	*/
 	void MouseUpLBtnHandler(const SMouseData *pData);
 
 	/**
-	* mouse right button up 일때 처리 함수.
+	*Processing function when mouse right button up.
 	*/
 	void MouseUpRBtnHandler(const SMouseData *pData);
 
 	/**
-	* mouse move left button down 일때 처리 함수.
+	*Processing function when mouse move left button down.
 	*/
 	void MouseMoveLBtnHandler(int iPosX, int iPosY);
 
 	/**
-	* mouse move right button down 일때 처리 함수.
+	*Processing function when mouse move right button down.
 	*/
 	void MouseMoveRBtnHandler(int iPosX, int iPosY);
 
@@ -200,7 +200,7 @@ private:
 
 	bool			m_bHideMouse;
 
-	// picking
+	// Picking
 	SWorldPickInfo	m_sPickInfo;
 	sWorldPickInfo_for_Cursor	m_sPickInfo_for_Cursor;
 

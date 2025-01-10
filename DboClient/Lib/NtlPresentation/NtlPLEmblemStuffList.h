@@ -2,7 +2,7 @@
 *
 * File			: NtlPLEmblemStuffList.h
 * Author		: Hong sungbock
-* Copyright		: (주)NTL
+* Copyright		: (?)NTL
 * Date			: 2008. 4. 8
 * Abstract		: Presentation layer emblem stuff list
 *****************************************************************************
@@ -45,7 +45,7 @@ protected:
 	VOID		LoadScript();
 
 protected:
-	MAP_STUFF			m_mapStuff[NUM_EMBLEMTYPE];		///< 스크립트 데이터
+	MAP_STUFF			m_mapStuff[NUM_EMBLEMTYPE];		///< script data
 };
 
 #endif

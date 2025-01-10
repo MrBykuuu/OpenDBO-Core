@@ -1,25 +1,25 @@
 /*****************************************************************************
 *
-* File			: SkillAbilitySetGui.h
-* Author		: Cho HaeSung
-* Copyright		: (주)NTL
-* Date			: 2008. 11. 13
-* Abstract		: DBO Skill Ability Setting
+*File			: SkillAbilitySetGui.h
+*Author		    : Cho HaeSung
+*Copyright		: (주)NTL
+*Date			: 2008. 11. 13
+*Abstract		: DBO Skill Ability Setting
 *****************************************************************************
-* Desc          : 
+*Desc          : 
 *
 *****************************************************************************/
 
 #ifndef __SKILL_ABILITY_SET_GUI_H_
 #define __SKILL_ABILITY_SET_GUI_H_
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// shared
+// Shared
 #include "NtlSkill.h"
 #include "SkillTable.h"
 
@@ -29,7 +29,7 @@ public:
 	CSkillAbilitySetGui( const RwChar* pName );
 	~CSkillAbilitySetGui();
 
-	// 아이콘 위치
+	// Icon Location
 	enum eICONPOS
 	{
 		ICONPOS_FIRST_LEFT,
@@ -43,7 +43,7 @@ public:
 		INVALID_ICON = 0xFF
 	};
 
-	// 툴팁에 사용될 정보
+	// Information to be used in tooltips
 	struct SAbilityInfo
 	{
 		RwInt32		nX;

@@ -1,17 +1,17 @@
 #include "precomp_dboclient.h"
 #include "ChatOptionGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLLogic.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DisplayStringManager.h"
 #include "ChatGui.h"
@@ -46,17 +46,17 @@ RwBool CChatOptionGui::Create(CChatGui* pChatGui)
 
 	m_pChatGui = pChatGui;
 
-	// 닫기 버튼
+	// close button
 	m_pCloseButton = (gui::CButton*)GetComponent("btnClose");
 	m_slotCloseButton = m_pCloseButton->SigClicked().Connect(this, &CChatOptionGui::OnClicked_CloseButton);	
 
-	// 타이틀
+	// title
 	m_pTitle = (gui::CStaticBox*)GetComponent("stbTitle");
 	m_pTitle->SetTextColor(dENABLE_COLOR);
 	m_pTitle->SetText( GetDisplayStringManager()->GetString("DST_CHAT_OPTION_GUI_TITLE") );
 
 
-	// 일반
+	// common
 	m_pShoutcut[CHAT_TYPE_GENERAL]			= (gui::CStaticBox*)GetComponent("stbShortcutGeneral");
 	m_pShoutcutExplain[CHAT_TYPE_GENERAL]	= (gui::CStaticBox*)GetComponent("stbShortcutGeneralExplain");
 	m_pChatTypeButton[CHAT_TYPE_GENERAL]	= (gui::CButton*)GetComponent("btnGeneral");
@@ -66,7 +66,7 @@ RwBool CChatOptionGui::Create(CChatGui* pChatGui)
 	m_pShoutcutExplain[CHAT_TYPE_GENERAL]->SetText( GetDisplayStringManager()->GetString("DST_CHAT_MODE_GENERAL") );
 
 	
-	// 거래
+	// transaction
 	m_pShoutcut[CHAT_TYPE_TRADE]			= (gui::CStaticBox*)GetComponent("stbShortcutTrade");
 	m_pShoutcutExplain[CHAT_TYPE_TRADE]		= (gui::CStaticBox*)GetComponent("stbShortcutTradeExplain");
 	m_pChatTypeButton[CHAT_TYPE_TRADE]		= (gui::CButton*)GetComponent("btnTrade");
@@ -85,7 +85,7 @@ RwBool CChatOptionGui::Create(CChatGui* pChatGui)
 	m_pShoutcutExplain[CHAT_TYPE_FIND_PARTY]->SetText(GetDisplayStringManager()->GetString("DST_CHAT_MODE_FIND_PARTY"));
 
 
-	// 유파
+	// Guild
 	m_pShoutcut[CHAT_TYPE_GUILD]			= (gui::CStaticBox*)GetComponent("stbShortcutGuild");
 	m_pShoutcutExplain[CHAT_TYPE_GUILD]		= (gui::CStaticBox*)GetComponent("stbShortcutGuildExplain");
 	m_pChatTypeButton[CHAT_TYPE_GUILD]		= (gui::CButton*)GetComponent("btnGuild");	
@@ -95,7 +95,7 @@ RwBool CChatOptionGui::Create(CChatGui* pChatGui)
 	m_pShoutcutExplain[CHAT_TYPE_GUILD]->SetText( GetDisplayStringManager()->GetString("DST_CHAT_MODE_GUILD") );
 
 
-	// 파티
+	// party
 	m_pShoutcut[CHAT_TYPE_PARTY]			= (gui::CStaticBox*)GetComponent("stbShortcutParty");
 	m_pShoutcutExplain[CHAT_TYPE_PARTY]		= (gui::CStaticBox*)GetComponent("stbShortcutPartyExplain");
 	m_pChatTypeButton[CHAT_TYPE_PARTY]		= (gui::CButton*)GetComponent("btnParty");	
@@ -105,7 +105,7 @@ RwBool CChatOptionGui::Create(CChatGui* pChatGui)
 	m_pShoutcutExplain[CHAT_TYPE_PARTY]->SetText( GetDisplayStringManager()->GetString("DST_CHAT_MODE_PARTY") );
 
 
-	// 귓속말
+	// whisper
 	m_pShoutcut[CHAT_TYPE_WHISPER]			= (gui::CStaticBox*)GetComponent("stbShortcutWhisper");
 	m_pShoutcutExplain[CHAT_TYPE_WHISPER]	= (gui::CStaticBox*)GetComponent("stbShortcutWhisperExplain");
 	m_pChatTypeButton[CHAT_TYPE_WHISPER]	= (gui::CButton*)GetComponent("btnWhisper");	

@@ -60,14 +60,14 @@ private:
 	typedef std::map<const RWS::CRegisteredMsgs*, FuncEventHander> MapFuncEventHandler;
 	MapFuncEventHandler m_mapEventFunc;
 
-	// 특정 group에 visual proxy 처리.
+	// Process visual proxy for specific group.
 	typedef std::map<SERIAL_HANDLE, void*> MapVisible;
 	MapVisible m_mapGroupVisible[E_SOB_GROUP_VISIBLE_FILTER_END];
 
-	// Character 가시거리에 따른 visual proxy 처리.
+	// Visual proxy processing according to character viewing distance.
 	RwReal		m_fOptiionRangeTick;
 
-	// status animation sync 처리.
+	//Status animation sync processing.
 	CNtlSobStatusAnimSyncManager *m_pAnimSyncManager;
 
 	CNtlSobCharPerfController* m_pCharPerfCtrl;
@@ -146,8 +146,8 @@ public:
 	void GameOptionShadowOnOff(RwBool bShadowOnOff);
 
 	/**
-	*  simulation entity manager의 event handler
-	*  \param pMsg는 event가 발생할 경우 넘어오는 message.
+	*event handler of simulation entity manager
+	*  \param pMsg is the message sent when an event occurs.
 	*/
 	virtual void HandleEvents(RWS::CMsg &pMsg);
 
@@ -178,7 +178,7 @@ public:
 	void EventObjectThreadLoadCompleteEventHandler(RWS::CMsg& pMsg);
 
     // World Create
-    void EventCreateWorldHandler(RWS::CMsg& pMsg);                      ///< 월드가 생성/제거 될때의 이벤트
+    void EventCreateWorldHandler(RWS::CMsg& pMsg);                      ///< Event when world is created/deleted
 
 	// Naming
 	void ChangeCharName(RWS::CMsg& pMsg);

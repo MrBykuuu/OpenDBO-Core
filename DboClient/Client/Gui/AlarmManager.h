@@ -93,7 +93,7 @@ public:
 	VOID	FormattedAlarmMessage( WCHAR* szText, ... ); 
 	VOID	vFormattedAlarmMessage( WCHAR* szText, va_list ArgList );
 
-	/// MsgBox인 경우 Msg 및 Data의 교체만 이루어짐. 시간속성 사용 불가. 
+	/// In the case of MsgBox, only Msg and Data are replaced. Time attribute cannot be used. 
 	VOID	UpdateAlarmMessage(std::string& string, RwBool bServerSync /* = FALSE */, sMsgBoxData* pExData /* = NULL */ );
 	VOID	UpdateAlarmMessage(const WCHAR* text, std::string& strKey, RwBool bServerSync /* = FALSE */, sMsgBoxData* pExData /* = NULL */);
 	VOID	UpdateFormattedAlarmMessage(std::string string, RwBool bServerSync, sMsgBoxData* pExData, ... );

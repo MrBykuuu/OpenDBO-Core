@@ -47,8 +47,8 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 //////////////////////////////////////////////////////////////////////////
 //
 //	Event
-//	클라이언트에서는 이벤트에 한해서는 선 검사 처리가 되므로 이곳에서는
-//	검사를 실행하지 않는다
+//	In the client, line checking is processed only for events, so here
+//	Do not run tests
 //
 //////////////////////////////////////////////////////////////////////////
 
@@ -224,12 +224,12 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 			{
 				CSkillTable* pSkillTable = API_GetTableContainer()->GetSkillTable();
 
-				// Skill type 검사
+				// Skill type test
 				if ( eEVENT_SKILL_TYPE_SKILLIDX == pTParam->GetCtrl()->GetEventGenSkillUseInfo().eSkillType )
 				{
 					if ( 0xffffffff == ((CDboTSSkillUse*)pEntity)->GetSkillIdx() || ( pSkillTable->FindBasicSkillTblidx( ((CDboTSSkillUse*)pEntity)->GetSkillIdx() ) == pSkillTable->FindBasicSkillTblidx( pTParam->GetCtrl()->GetEventGenId() ) ) )
 					{
-						// Skill target 검사
+						// Skill target inspection
 						eEVENT_SKILL_TARGET_TYPE eTargetType = ((CDboTSSkillUse*)pEntity)->GetSkillTargetType();
 						if ( eEVENT_SKILL_TARGET_TYPE_ALL != eTargetType )
 						{
@@ -272,11 +272,11 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 					}
 				}
 
-				// Skill RP 검사
+				// Skill RP Check
 				{
 					unsigned int uiSkillRPFlags = ((CDboTSSkillUse*)pEntity)->GetSkillRPFlags();
 
-					// uiSkillRPFlags == 0 이면 RP 검사를 수행하지 않는다
+					// If uiSkillRPFlags == 0, RP check is not performed.
 					if ( 0 != uiSkillRPFlags )
 					{
 						unsigned char byRpBonusType = pTParam->GetCtrl()->GetEventGenSkillUseInfo().byRpBonusType;
@@ -620,7 +620,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 //////////////////////////////////////////////////////////////////////////
 //
 //	Condition
-//	클라이언트 모듈에서 처리 되어야 함
+//	Must be handled in client module
 //
 //////////////////////////////////////////////////////////////////////////
 
@@ -748,7 +748,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_COND_TYPE_ID_CHECK_STOCEVT:
 		{
-			// 이 조건은 퀘스트 전용이므로 트리거에서는 검사를 수행하지 않는다
+			// This condition is for quest use only, so no check is performed in the trigger.
 			CNtlTSLog::Log( "It must be only used in the quest trigger. Info[%d,%d,%d,%d]. [%s]",
 							pTParam->GetCtrl()->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -767,7 +767,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 			int nSumCnt = 0;
 
-			// Equip 창을 검색
+			// Search Equip window
 			for ( int i = 0; i < NTL_MAX_EQUIP_ITEM_SLOT; ++i )
 			{
 				CNtlSobItem* pSobItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pInventory->GetEquipItem( i ) ) );
@@ -780,7 +780,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 				}
 			}
 
-			// Bag 창을 검색
+			// Search Bag window
 			for ( int i = 0; i < NTL_MAX_BAGSLOT_COUNT; ++i )
 			{
 				CNtlSobItem* pSobItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pInventory->GetBagItem( i ) ) );
@@ -821,7 +821,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 			bool bFind = false;
 
-			// Equip 창을 검색
+			// Search Equip window
 			for ( int i = 0; i < NTL_MAX_EQUIP_ITEM_SLOT; ++i )
 			{
 				CNtlSobItem* pSobItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pInventory->GetEquipItem( i ) ) );
@@ -873,8 +873,8 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_COND_TYPE_ID_CHECK_OBJITEM:
 		{
-			// Object 가 아이템을 줄 수 있는지 검사하는 조건은
-			// 퀘스트에서는 동작하지 않는다
+			// The condition to check whether Object can give an item is
+			// Doesn't work in quests
 			CNtlTSLog::Log( "Not supported condition. Info[%d,%d,%d]. [%s]",
 							((CDboTSCTCtrl*)pTParam->GetCtrl())->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -910,7 +910,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_COND_TYPE_ID_CHECK_OBJ_STATE:
 		{
-			// 트리거에서는 동작하지 않는다
+			// Doesn't work with triggers
 			CNtlTSLog::Log( "Not supported condition. Info[%d,%d,%d]. [%s]",
 							((CDboTSCTCtrl*)pTParam->GetCtrl())->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -934,7 +934,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_COND_TYPE_ID_CHECK_OPERATEOBJECT:
 		{
-			// 트리거에서는 동작하지 않는다
+			// Doesn't work with triggers
 			CNtlTSLog::Log( "Not supported condition. Info[%d,%d,%d]. [%s]",
 							((CDboTSCTCtrl*)pTParam->GetCtrl())->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -947,7 +947,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_COND_TYPE_ID_CHECK_HASCOUPON:
 		{
-			// 트리거에서는 동작하지 않는다
+			// Doesn't work with triggers
 			CNtlTSLog::Log( "Not supported condition. Info[%d,%d,%d]. [%s]",
 							((CDboTSCTCtrl*)pTParam->GetCtrl())->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -960,7 +960,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_COND_TYPE_ID_CHECK_NPCDEAD:
 		{
-			// 트리거에서는 동작하지 않는다
+			// Doesn't work with triggers
 			CNtlTSLog::Log( "Not supported condition. Info[%d,%d,%d]. [%s]",
 							((CDboTSCTCtrl*)pTParam->GetCtrl())->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -973,7 +973,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_COND_TYPE_ID_CHECK_DIST_WITH_NPC:
 		{
-			// 트리거에서는 동작하지 않는다
+			// Doesn't work with triggers
 			CNtlTSLog::Log( "Not supported condition. Info[%d,%d,%d]. [%s]",
 							((CDboTSCTCtrl*)pTParam->GetCtrl())->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -986,7 +986,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_COND_TYPE_ID_CHECK_STOC_DELIVERTY:
 		{
-			// 트리거에서는 동작하지 않는다
+			// Doesn't work with triggers
 			CNtlTSLog::Log( "Not supported condition. Info[%d,%d,%d]. [%s]",
 							((CDboTSCTCtrl*)pTParam->GetCtrl())->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -999,7 +999,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_COND_TYPE_ID_CHECK_ATTACH_OBJ:
 		{
-			// Object trigger에서만 동작하는 condition
+			// Condition that operates only on object trigger
 			CNtlTSLog::Log( "Not supported condition. Info[%d,%d,%d]. [%s]",
 							((CDboTSCTCtrl*)pTParam->GetCtrl())->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -1084,7 +1084,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 //////////////////////////////////////////////////////////////////////////
 
 	case DBO_ACT_TYPE_ID_ACT_ITEM:
-		// 클라이언트에서는 동작하지 않는 서버 전용 액션
+		// Server-only action that does not work on the client
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_EXCEPT_TIMER_S:
@@ -1116,7 +1116,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_STOCEVT:
-		// 이 액션은 퀘스트 전용으로 트리거에서는 사용되지 않는다
+		// This action is for quest use only and is not used in triggers.
 		CNtlTSLog::Log( "It must be only used in the quest trigger. Info[%d,%d,%d,%d]. [%s]",
 						pTParam->GetCtrl()->GetTrigger()->GetID(),
 						((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -1126,7 +1126,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_QITEM:
-		// 클라이언트에서는 동작하지 않는 서버 전용 액션
+		// Server-only action that does not work on the client
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_NPCCONV:
@@ -1144,7 +1144,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_REGQINFO:
-		// 이 액션은 퀘스트 전용으로 트리거에서는 사용되지 않는다
+		// This action is for quest use only and is not used in triggers.
 		CNtlTSLog::Log( "It must be only used in the quest trigger. Info[%d,%d,%d,%d]. [%s]",
 						pTParam->GetCtrl()->GetTrigger()->GetID(),
 						((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -1155,7 +1155,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_DIR:
 		{
-			// 클라이언트에서는 아무것도 하지 않는다
+			// Does nothing on the client
 		}
 		break;
 
@@ -1217,19 +1217,19 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_PORTAL:
 		{
-			// 클라이언트에서 포탈은 동작하지 않는다
+			// Portal does not work on the client
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_OBJSTATE:
 		{
-			// 클라이언트에서 오브젝트의 상태를 변경하는 코드는 동작하지 않는다
+			// Code that changes the state of an object on the client does not work.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_CONC_CHECK:
 		{
-			// 클라이언트에서 동시 체크에 대한 동작은 하지 않는다
+			// The client does not perform simultaneous checks.
 		}
 		break;
 
@@ -1264,7 +1264,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 	case DBO_ACT_TYPE_ID_ACT_SEND_SVR_EVT:
 	case DBO_ACT_TYPE_ID_ACT_TMQ_STAGE:
 		{
-			// 클라이언트에서는 동작하지 않는 서버 전용 액션
+			// Server-only action that does not work on the client
 		}
 		break;
 
@@ -1284,43 +1284,43 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_TMQ_TIMEBONUS:
 		{
-			// 클라이언트에서 타임 보너스에 대한 동작은 하지 않는다
+			// The time bonus does not work on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_TELECAST:
 		{
-			// 클라이언트에서 방송에 대한 동작은 하지 않는다
+			// The client does not perform broadcasting operations.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_DIRINDICATOR:
 		{
-			// 클라이언트에서 방향 지시에 대한 동작은 하지 않는다
+			// The client does not perform any action for direction indication.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_OPERATEOBJECT:
 		{
-			// 클라이언트에서 오브젝트 동작에 대한 동작은 하지 않는다
+			// No action is taken on object operations on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_DROP:
 		{
-			// 클라이언트에서 드랍에 대한 동작은 하지 않는다
+			// There is no action on the drop from the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_RMV_COUPON:
 		{
-			// 클라이언트에서 쿠폰 관련해서는 동작 하지 않는다
+			// Coupons do not work in the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_ESCORT:
 		{
-			// 이 액션은 퀘스트 전용으로 트리거에서는 사용되지 않는다
+			// This action is for quest use only and is not used in triggers.
 			CNtlTSLog::Log( "It must be only used in the quest trigger. Info[%d,%d,%d,%d]. [%s]",
 							pTParam->GetCtrl()->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -1332,13 +1332,13 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_TMQINFOTYPE:
 		{
-			// 클라이언트에서 TMQ info type 관련해서는 동작 하지 않는다
+			// TMQ info type does not work on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_WORLDPLAYSCRIPT:
 		{
-			// 이 액션은 퀘스트 전용으로 트리거에서는 사용되지 않는다
+			// This action is for quest use only and is not used in triggers.
 			CNtlTSLog::Log( "It must be only used in the quest trigger. Info[%d,%d,%d,%d]. [%s]",
 							pTParam->GetCtrl()->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -1350,7 +1350,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_SWPROBSF:
 		{
-			// 클라이언트에서 Switch probability success fail 관련해서는 동작 하지 않는다
+			// Switch probability success fail does not work on the client.
 		}
 		break;
 
@@ -1370,7 +1370,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_CUSTOMEVT:
 		{
-			// 클라이언트에서 custom event에 관련해서는 동작 하지 않는다
+			// It does not work with custom events on the client.
 		}
 		break;
 
@@ -1390,13 +1390,13 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_TELMINORMATCH:
 		{
-			// 클라이언트에서 teleport minor match에 관련해서는 동작 하지 않는다
+			// It does not work in relation to teleport minor matches on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_PIDGN:
 		{
-			// 클라이언트에서 Party instance dungeon에 관련해서는 동작 하지 않는다
+			// It does not work in relation to Party instance dungeon on the client.
 		}
 		break;
 
@@ -1408,31 +1408,31 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_DO_SKILL:
 		{
-			// 클라이언트에서 Do skill 에 관련해서는 동작 하지 않는다
+			// It does not work regarding Do skill on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_TOBJ_FRIENDLY:
 		{
-			// 클라이언트에서 Trigger object friendly 에 관련해서는 동작 하지 않는다
+			// Trigger object friendly does not work on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_BROAD_MSG:
 		{
-			// 클라이언트에서 Broad message 에 관련해서는 동작 하지 않는다
+			// Broad messages do not work on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_MINI_NARRATION:
 		{
-			// 클라이언트에서 Mini narration 에 관련해서는 동작 하지 않는다
+			// Mini narration does not work on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_REG_C_TIMING:
 		{
-			// 이 액션은 퀘스트 전용으로 트리거에서는 사용되지 않는다
+			// This action is for quest use only and is not used in triggers.
 			CNtlTSLog::Log( "It must be only used in the quest trigger. Info[%d,%d,%d,%d]. [%s]",
 							pTParam->GetCtrl()->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -1444,7 +1444,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_EXC_C_GROUP:
 		{
-			// 이 액션은 퀘스트 전용으로 트리거에서는 사용되지 않는다
+			// This action is for quest use only and is not used in triggers.
 			CNtlTSLog::Log( "It must be only used in the quest trigger. Info[%d,%d,%d,%d]. [%s]",
 							pTParam->GetCtrl()->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -1456,7 +1456,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_SKIP_CONT:
 		{
-			// 이 액션은 퀘스트 전용으로 트리거에서는 사용되지 않는다
+			// This action is for quest use only and is not used in triggers.
 			CNtlTSLog::Log( "It must be only used in the quest trigger. Info[%d,%d,%d,%d]. [%s]",
 							pTParam->GetCtrl()->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -1468,7 +1468,7 @@ NTL_TSRESULT CDboTSCTRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_OBJ_WPS:
 		{
-			// 이 액션은 퀘스트 전용으로 트리거에서는 사용되지 않는다
+			// This action is for quest use only and is not used in triggers.
 			CNtlTSLog::Log( "It must be only used in the quest trigger. Info[%d,%d,%d,%d]. [%s]",
 							pTParam->GetCtrl()->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),

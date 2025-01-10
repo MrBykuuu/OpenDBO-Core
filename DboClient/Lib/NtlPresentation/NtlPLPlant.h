@@ -30,7 +30,7 @@ public:
 	void	OnLoad(CNtlWorldSector* pSector);
 	void	OnUnload(CNtlWorldSector* pSector);
 	
-	// World Editor에서 사용하기 위한 함수.
+	// Function for use in World Editor.
 #ifdef dNTL_WORLD_TOOL_MODE
 	void	OnCreate(CNtlWorldSector* pSector, RwInt32 iTileIdx, RwInt32 iSetIdx);
 	void	OnDelete(CNtlWorldSector* pSector, RwInt32 iTileIdx);

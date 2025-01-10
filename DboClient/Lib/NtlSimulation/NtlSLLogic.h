@@ -50,7 +50,7 @@ extern RwUInt8	g_byShadowRed;
 extern RwUInt8	g_byShadowGreen;
 extern RwUInt8	g_byShadowBlue;
 
-extern RwReal   g_fTestVal;             /// 다양한 테스트에 사용되는 전역 변수 
+extern RwReal   g_fTestVal;             /// Global variables used in various tests
 extern RwReal   g_fTestVal2;
 extern RwReal   g_fTestVal3;
 
@@ -58,7 +58,7 @@ extern RwInt32	g_nTestVal;
 
 extern RwInt32	g_nBroadCastGuiPosX;
 
-extern RwUInt32 g_uiTargetMarkingId;    ///< 현재 타겟 마케팅 객체의 ID
+extern RwUInt32 g_uiTargetMarkingId;    ///< ID of current target marketing object
 
 extern RwBool	g_bActiveAnimSync;
 
@@ -69,7 +69,7 @@ extern RwUInt32	g_uiCreateHitEffectRate;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 함수 포인터 등록
+// Register function pointer
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -105,15 +105,15 @@ RwBool Logic_IsUIDevInfoVisible(void);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // monster/player logic
-// 주의 : 속도는 table data와 상태 및 버프가 고려된 속도가 될것이다.
+// Note: Speed ??will be based on table data, status, and buffs.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// actor 속성 logic
+// actor attribute logic
 
-// name
+// Name
 const WCHAR* Logic_GetName(CNtlSob *pSobObj);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -232,7 +232,7 @@ float		Logic_GetMaxDashDistanceForward(CNtlSobActor *pActor);
 float		Logic_GetMaxDashDistanceBackLeftRight(CNtlSobActor *pActor);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// player 전직 
+// player job change 
 RwUInt8		Logic_GetPlayerRace(CNtlSobActor *pActor);
 
 RwUInt8		Logic_GetPlayerClass(CNtlSobActor *pActor);
@@ -247,7 +247,7 @@ RwUInt8		Logic_ConverClasstoRace(RwUInt8 byClass);
 
 RwBool		Logic_IsChild(CNtlSobActor *pActor);
 
-RwBool		Logic_IsFirstClass(CNtlSobPlayer* pPlayer);	// 1차직이냐.
+RwBool		Logic_IsFirstClass(CNtlSobPlayer* pPlayer);	// Is it a primary position?
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // attack , npc community , skill use range
@@ -258,7 +258,7 @@ RwReal		Logic_GetCommunityRange(CNtlSobActor *pActor);
 RwReal		Logic_GetCommunityOutRange(CNtlSobActor *pActor);
 void		Logic_BeginActorCommunity(CNtlSobActor *pActor, CNtlSobActor *pTarActor); 
 RwReal		Logic_GetSkillUseRange(sSKILL_TBLDAT *pSkillTblData);
-RwReal      Logic_GetSkillApplyRange(CNtlSobActor* pActor, RwUInt32 uiSkillTblidx);         /// 범위 스킬의 범위를 반환한다.
+RwReal      Logic_GetSkillApplyRange(CNtlSobActor* pActor, RwUInt32 uiSkillTblidx);         /// Range Returns the range of the skill.
 RwBool		Logic_IsMasterSkill(SERIAL_HANDLE hSkillSerial);
 RwReal		Logic_GetCurrentCastingTime(CNtlSobActor *pActor);
 RwReal		Logic_GetMaxCastingTime(CNtlSobActor *pActor);
@@ -280,37 +280,37 @@ RwReal		Logic_GetRequiredEPFactor(CNtlSobActor* pActor);
 //RwReal		Logic_GetCoolingTimeModifier(CNtlSobActor* pActor);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// actor의 상태 및 mode
+// State and mode of actor
 
-RwBool		Logic_IsCommunityActor(CNtlSobActor *pActor);           // actor가 community actor인가?(npc, trigger object, world item)
+RwBool		Logic_IsCommunityActor(CNtlSobActor *pActor);           // Is the actor a community actor? (npc, trigger object, world item)
 RwBool		Logic_IsGambleActor(CNtlSobActor *pActor);
-RwBool		Logic_IsOperationTriggerActor(CNtlSobActor *pActor);    // operation trigger actor 인가?
+RwBool		Logic_IsOperationTriggerActor(CNtlSobActor *pActor);    // Is it an operation trigger actor?
 RwUInt32	Logic_GetDirectIdTriggerActor(CNtlSobActor *pActor);
-RwUInt32	Logic_GetActorStateId(CNtlSobActor *pActor);            // actor의 state id를 넘겨준다.
-RwUInt32    Logic_GetActorStateFlags(CNtlSobActor* pActor);          // Actor의 현재 State Flag를 넘겨준다.
-SERIAL_HANDLE Logic_GetActorTargetSerialId(CNtlSobActor *pActor);   // actor가 target 하고 있는 serial id
-RwBool		Logic_IsActorBattleMode(CNtlSobActor *pActor);          // actor 현재 전투중인가?
-RwBool		Logic_CanSkillUse(CNtlSobActor *pActor);                // actor가 skill 사용이 가능한가?
+RwUInt32	Logic_GetActorStateId(CNtlSobActor *pActor);            // Pass the actor's state id.
+RwUInt32    Logic_GetActorStateFlags(CNtlSobActor* pActor);          // Returns the Actor's current State Flag.
+SERIAL_HANDLE Logic_GetActorTargetSerialId(CNtlSobActor *pActor);   // The serial id that the actor is targeting
+RwBool		Logic_IsActorBattleMode(CNtlSobActor *pActor);          // actor Are you currently in combat?
+RwBool		Logic_CanSkillUse(CNtlSobActor *pActor);                // Is the actor able to use skills?
 RwBool		Logic_IsNotFollowMoveSkill(CNtlSobActor *pActor, RwUInt8 bySlotIdx);
 void		Logic_GetAvatarSkillApplyArea(CNtlSobActor *pActor, SERIAL_HANDLE hTargetSerial, RwUInt8 bySlotIdx, std::list<SERIAL_HANDLE>& listApplyActor);      // area skill
 void		Logic_GetAvatarSkillApplyArea(SERIAL_HANDLE hTargetSerial, RwUInt32 uiSkillId, std::list<SERIAL_HANDLE>& listApplyActor);       // area skill 
-RwBool		Logic_IsEnemyTargetFromActor(CNtlSobActor *pActor, SERIAL_HANDLE hTargetSerial);        // target이 actor에 대하여 적인가?
-RwBool		Logic_IsEnemyTargetFromAvatarActor(SERIAL_HANDLE hTargetSerial);        // target이 avatar에 대하여 적인가?
-RwBool		Logic_IsEnemyTagetFromPetActor(CNtlSobActor *pActor, SERIAL_HANDLE hTargetSerial);      // target이 pet actor에 대하여 적인가?
-RwBool      Logic_isEnemyTargetOcclusion(SERIAL_HANDLE hTargetSerial);  ///< 타겟이 차폐물에 가려져 있는가?
-CNtlSobActor* Logic_FindNearEnemyFromAvatarActor(void);             // avatar에 대하여 가장 가까운 적을 찾는다.
-CNtlSobActor* Logic_GetAutoTarget(CNtlSobActor* pActor);            ///< 자동 타겟팅 상대를 찾는다.
-RwBool      Logic_IsBlackList(RwUInt32 uiSerialID);                 // 상대 캐릭터가 나의 차단리스트에 있는지 확인한다.
-RwBool      Logic_IsDirectMode(CNtlSobActor* pActor);               ///< Direct Mode(제어 불능)인지 확인한다.
-RwBool      Logic_CanTranslateIdleState(CNtlSobActor* pActor);      ///< Idle 상태로 전이가 가능한가? 
-RwBool      Logic_CanTargetted(CNtlSobActor* pActor);               ///< 타겟팅이 가능한가?
+RwBool		Logic_IsEnemyTargetFromActor(CNtlSobActor *pActor, SERIAL_HANDLE hTargetSerial);        // Is the target an enemy to the actor?
+RwBool		Logic_IsEnemyTargetFromAvatarActor(SERIAL_HANDLE hTargetSerial);        // Is the target hostile to the avatar?
+RwBool		Logic_IsEnemyTagetFromPetActor(CNtlSobActor *pActor, SERIAL_HANDLE hTargetSerial);      // Is the target an enemy to the pet actor?
+RwBool      Logic_isEnemyTargetOcclusion(SERIAL_HANDLE hTargetSerial);  ///< Is the target covered by a shield?
+CNtlSobActor* Logic_FindNearEnemyFromAvatarActor(void);             // Finds the nearest enemy for an avatar.
+CNtlSobActor* Logic_GetAutoTarget(CNtlSobActor* pActor);            ///< Find automatic targeting partner.
+RwBool      Logic_IsBlackList(RwUInt32 uiSerialID);                 // Check if the other character is on your blocked list.
+RwBool      Logic_IsDirectMode(CNtlSobActor* pActor);               ///< Check if it is in Direct Mode (out of control).
+RwBool      Logic_CanTranslateIdleState(CNtlSobActor* pActor);      ///< Is it possible to transition to the Idle state? 
+RwBool      Logic_CanTargetted(CNtlSobActor* pActor);               ///< Is targeting possible?
 RwBool      Logic_CanAttacked(CNtlSobActor* pActor);		//< Check if target can be attacked
-void        Logic_SetTargetMarkingID(RwUInt32 uiSerialId);          ///< 타겟 마킹된 ID 체크
+void        Logic_SetTargetMarkingID(RwUInt32 uiSerialId);          ///< Check target marked ID
 RwUInt32    Logic_GetTargetMarkingID();
 void		Logic_GetSkillFinalLocation(CNtlSobActor *pActor, SERIAL_HANDLE hTargetSerial, RwUInt8 bySlotIdx, RwV3d* vFinalLoc, RwV3d* vFinalSubjectLoc);
 void		Logic_GetSkillFinalLocation2(SERIAL_HANDLE hTargetSerial, sSKILL_TBLDAT *pSkillTblData, RwV3d * vFinalLoc, RwV3d * vFinalSubjectLoc);
 
-void        Logic_SetActorAnimation(RwUInt32 uiSerialID, RwUInt32 uiAnimID, RwBool bLoop);             ///<  애니메이션을 세팅한다.
+void        Logic_SetActorAnimation(RwUInt32 uiSerialID, RwUInt32 uiAnimID, RwBool bLoop);             ///< Set the animation.
 
 RwBool		Logic_IsMovePatternApply(CNtlSobActor* pActor);
 void		Logic_GetMovePatternSync(RwUInt32 uiSerialID, RwUInt8 byPatternId);
@@ -338,12 +338,12 @@ void		Logic_MakeMobSpawnState(sCHARSTATE *pState, RwV3d vLoc, RwV3d vDir);
 
 void		Logic_MakeNPCSpawnState(sCHARSTATE *pState, RwV3d vLoc, RwV3d vDir);
 
-///< NPC Serial 번호로 테이블 데이터를 반환한다.
+///< Returns table data with NPC Serial number.
 sNPC_TBLDAT* Logic_GetNPCDataFromSob(SERIAL_HANDLE hSerial);
 
 TBLIDX		Logic_GetNPCTriggerId(CNtlSob *pSobObj);
 
-// 현재 quest npc가 떨어져 
+// Current quest NPC is gone 
 RwReal		Logic_GetQuestNpcDistanceFromAvatar(CNtlSob *pSobNpc);
 
 RwBool		Logic_IsDragonBallNPC(TBLIDX tblidx);
@@ -353,7 +353,7 @@ RwBool		Logic_IsDragonBallNPCActor(SERIAL_HANDLE hSerialId);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Trigger object
 
-// quest 및 trigger agency
+// quest and trigger agency
 
 RwBool		Logic_IsTriggerActive(CNtlSob *pSobObj);
 
@@ -373,39 +373,39 @@ TBLIDX		Logic_GetDynamicObjTriggerId(CNtlSob* pSobObj);
 
 void			Logic_SetItemStack(CNtlSobItem* pSobItem, RwUInt8 ucStackNum);
 
-// weapon equip slot에 장착된 item table을 구한다.
+// Obtain the item table mounted on the weapon equip slot.
 sITEM_TBLDAT*	Logic_GetEquipedWeaponItemTableData(CNtlSob *pSobObj);
 
-// 해당하는 equip slot에 장착된 item serial을 구한다.
+// Obtain the item serial mounted on the corresponding equip slot.
 SERIAL_HANDLE	Logic_GetEquipedItemSerial(CNtlSob *pSobObj, RwUInt8 bySlotIdx);
 
-// item table이 staff weapon인가?
+// Is the item table a staff weapon?
 RwBool			Logic_IsEquipedStaffWeapon(sITEM_TBLDAT *pItemTblData);
 
-RwUInt32        Logic_GetIdleAnimationID(CNtlSob* pSobObj);     ///< 무기 장착 상태에 맞는 IDLE 애니메이션을 반환한다.
+RwUInt32        Logic_GetIdleAnimationID(CNtlSob* pSobObj);     ///< Returns an IDLE animation appropriate for the weapon equipped state.
 
-// sub weapon equip slot에 장착된 item serial을 구한다.
+// Obtain the item serial mounted on the sub weapon equip slot.
 SERIAL_HANDLE	Logic_GetEquipedSubWeaponItemSerial(CNtlSob *pSobObj);
 
-// 움직일 수 있는 sub weapon 이냐?
+// Is it a movable sub weapon?
 RwBool			Logic_IsMoveableSubWeapon(sITEM_TBLDAT *pItemTblData); 
 
-// 움직일 수 있는 sub weapon 이냐?
+// Is it a movable sub weapon?
 RwBool			Logic_IsMoveableSubWeapon(TBLIDX tblidx);
 
-// sub weapon이 active 상태에서 character에 attach 되지 않아야 하는가?
+// Shouldn't the sub weapon be attached to the character in the active state?
 RwBool			Logic_IsActiveNotAttachSubWeapon(TBLIDX tblidx);
 
-// main weapon과 change해야 하는 sub weapon인가?
+// Is it a sub weapon that needs to be changed from the main weapon?
 RwBool			Logic_IsWeaponChangeSubWeapon(TBLIDX tblidx);
 
 //Getting item grade -Makoto
 RwUInt8         Logic_GetBootsGrade(CNtlSob* pSobObj);
 
-// costume item 인가?
+// Is it a costume item?
 RwBool			Logic_IsCostumeItem(sITEM_TBLDAT *pItemTblData);
 
-// 현재의 아이템이 hide 되어야 하는가?
+// Should the current item be hidden?
 RwBool			Logic_IsHideCostumeItem(RwUInt16 wHideBigFlags, void *pData);
 
 // With items that can be sold
@@ -418,67 +418,67 @@ RwBool			Logic_IsCanDiscardItem(sITEM_TBLDAT* pITEM_TBLDAT);
 RwBool			Logic_IsCanDiscardItem(CNtlSobItemAttr* pSobItemAttr);
 RwBool			Logic_IsCanDiscardItem(sITEM_PROFILE* pItemProfile);
 
-// 유저간 거래할 수 있는 아이템인가
+// Is this an item that can be traded between users?
 RwBool			Logic_IsCanUserTradeItem(sITEM_TBLDAT* pITEM_TBLDAT);
 RwBool			Logic_IsCanUserTradeItem( CNtlSobItemAttr* pSobItemAttr );
 RwBool			Logic_IsCanUserTradeItem( sITEM_PROFILE* pItemProfile );
 
 RwBool			Logic_IsCanUserAuctionItem(CNtlSobItemAttr* pSobItemAttr);
 
-// 창고에 저장할 수 있는 아이템인가
+// Is this an item that can be stored in the warehouse?
 RwBool			Logic_IsCanSaveWarehouse(sITEM_TBLDAT* pITEM_TBLDAT);
 RwBool			Logic_IsCanSaveWarehouse( CNtlSobItemAttr* pSobItemAttr );
 RwBool			Logic_IsCanSaveWarehouse( sITEM_PROFILE* pItemProfile );
 
-// 공유창고에 저장할 수 있는 아이템인가
+// Is this an item that can be stored in a shared warehouse?
 RwBool			Logic_IsCanSaveCommonWarehouse(sITEM_TBLDAT* pITEM_TBLDAT);
 RwBool			Logic_IsCanSaveCommonWarehouse( CNtlSobItemAttr* pSobItemAttr );
 RwBool			Logic_IsCanSaveCommonWarehouse( sITEM_PROFILE* pItemProfile );
 
-// 사용기간 아이템인가
+// Is it an item with an expiration date?
 RwBool			Logic_IsTimeLimitItem( CNtlSobItemAttr* pItemAttr );
 RwBool			Logic_IsTimeLimitItem( sITEM_PROFILE* pItemProfile );
 RwBool			Logic_IsTimeLimitItem( sITEM_TBLDAT* pITEM_TBLDAT );
 
 
 
-// 모든 가방의 비어있는 슬롯의 갯수를 반환한다
+// Returns the number of empty slots in all bags
 RwInt32			Logic_GetCountEmptySlotofBag();
 
-// 첫 번째 가방부터 비어있는 첫 번째 슬롯을 찾아서 반환한다
+// Starting from the first bag, find the first empty slot and return it.
 void			Logic_GetFirstEmptySlot_of_Bag(RwUInt32& uiBagIndex, SERIAL_HANDLE& hBagHandle, RwUInt32& uiSlot_of_bag);
 
-// 첫 번째 창고부터 비어있는 첫 번째 슬롯을 찾아서 반환한다
+// Finds and returns the first empty slot starting from the first warehouse.
 void			Logic_GetFirstEmptySlot_of_Warehouse(RwUInt8& byWarehouseIndex, SERIAL_HANDLE& hWarehouseHandle,
 													 RwUInt8& bySlot_of_warehouse);
 
-// 인자로 받은 핸들의 아이템이 창고에 있다면 인덱스와 슬롯 번호를 반환한다
+// If the item with the handle received as an argument is in the warehouse, the index and slot number are returned.
 RwBool			Logic_FindWarehouseItem(SERIAL_HANDLE hItem, RwUInt8& byWarehouseIndex, RwUInt8& bySlot_of_warehouse);
 
-// 첫 번째 길드 창고부터 비어있는 첫 번째 슬롯을 찾아서 반환한다
+// Finds and returns the first empty slot starting from the first guild warehouse.
 void			Logic_GetFirstEmptySlot_of_GuildWarehouse(RwUInt8& byGuildWarehouseIndex, RwUInt8& bySlot_of_GuildWarehouse);
 
-// 비어있는 스카우터의 첫 번째 슬롯
+// First slot of empty scouter
 RwUInt8			Logic_GetFirstEmptyScouterSlot();
 
-// 인자로 받은 아이템 인덱스와 같은 가방안의 첫번째 아이템의 핸들을 반환한다
+// Returns the handle of the first item in the bag equal to the item index received as an argument.
 SERIAL_HANDLE	Logic_FirstItem_in_Bag(TBLIDX index);
 
 
-///< Charm Serial 번호로 테이블 데이터를 반환한다.
+///< Returns table data with Charm Serial number.
 sCHARM_TBLDAT*	Logic_GetCharmDataFromTable(TBLIDX index);
 
-///< MERCHANT Serial 번호로 테이블 데이터를 반환한다.
+///< Returns table data by MERCHANT Serial number.
 sMERCHANT_TBLDAT* Logic_GetMerchantDataFromTable(TBLIDX index);
 
-///< Item Serial 혹은 Sob 번호로 테이블 데이터를 반환한다.
+///< Returns table data by Item Serial or Sob number.
 sITEM_TBLDAT*	Logic_GetItemDataFromTable(TBLIDX index);
 sITEM_TBLDAT*	Logic_GetItemDataFromSob(SERIAL_HANDLE hSerial);
 
-///< Item Serial로 SobItemAttr을 반환한다.
+///< Returns SobItemAttr as Item Serial.
 CNtlSobItemAttr* Logic_GetItemSobAttrFromSobSerial( SERIAL_HANDLE hSerial );
 
-// 해당하는 스카우터 파츠타입을 장착했는지 검사한다.
+// Check whether the corresponding scouter part type is installed.
 bool			Logic_ExistScouterEffect(int nEffectCode);
 
 bool			Logic_IsValidScouterEquipped(bool bShowByDefault);
@@ -492,13 +492,13 @@ RwReal			Logic_GetItemSystemEffectValue(sITEM_TBLDAT* pITEM_TBLDAT, RwUInt32 uiS
 // Skill
 
 sSKILL_TBLDAT*	Logic_GetSkillDataFromTable(TBLIDX index);
-RwBool          Logic_IsSkillSystemEffectCode(TBLIDX index, RwUInt32 uiSystemEffect);               ///< 스킬의 시스템 이펙트 코드가 있는지 확인한다.
-RwReal          Logic_GetSkillSystemEffectValue(TBLIDX index, RwUInt32 uiSystemEffect);             ///< 스킬의 시스템 이펙트 값을 반환한다.
+RwBool          Logic_IsSkillSystemEffectCode(TBLIDX index, RwUInt32 uiSystemEffect);               ///< Check if there is a system effect code for the skill.
+RwReal          Logic_GetSkillSystemEffectValue(TBLIDX index, RwUInt32 uiSystemEffect);             ///< Returns the skill’s system effect value.
 void			Logic_SetSkillExp(RwUInt32 uiSkillSlotIdx, RwUInt16 wExp);
 void			Logic_SetActiveRpSkillBonus(RwUInt8 byRpBonusType);
 RwUInt8			Logic_GetActiveRpSkillBonus(void);
-RwBool          Logic_IsCastingTargetSkill(TBLIDX tblidx);                      ///< 캐스팅 타겟을 표시하는 스킬인가 (메가도동파)
-RwBool			Logic_IsStrongCastSkill(TBLIDX tblidx);							///< 스트롱 캐스팅 스킬인가
+RwBool          Logic_IsCastingTargetSkill(TBLIDX tblidx);                      ///< Is this a skill that displays the casting target? (Mega Dodongpa)
+RwBool			Logic_IsStrongCastSkill(TBLIDX tblidx);							///< Is this a strong casting skill?
 RwBool			Logic_IsSkillUseAfterAttack(SERIAL_HANDLE hSkillSerial);
 
 void			Logic_SkillInfoText(WCHAR* wchMsg, unsigned int uiColor, BYTE byMsgType);
@@ -506,7 +506,7 @@ void			Logic_SkillInfoText(WCHAR* wchMsg, unsigned int uiColor, BYTE byMsgType);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Target
 
-// Avatar serial
+// serial avatar
 
 CNtlSobActor*	Logic_GetAvatarActor(void);
 
@@ -518,17 +518,17 @@ bool			Logic_SobTarget(RwUInt32 hTargetSerial, BYTE byFollow);
 
 const WCHAR*	Logic_GetAvatarName(void);
 
-// target actor와의 heading을 구하는 함수.
+// A function to find the heading with the target actor.
 void			Logic_CharHeading(CNtlSobActor *pActor, SERIAL_HANDLE uiTargetSeriaIId);
 
-// target이 현재 죽어 있는가?
+// Is the target currently dead?
 RwBool			Logic_CharIsDie(SERIAL_HANDLE uiTargetSeriaIId);
 
 void			Logic_AvatarTargetStateChange(SERIAL_HANDLE uiTargetSeriaIId);
 
 void			Logic_AvatarStateChange(void);
 
-RwBool          Logic_IsBehind(CNtlSob* pSob, RwV3d& vTargetPos);   /// 뒤에 있는가를 판별한다.
+RwBool          Logic_IsBehind(CNtlSob* pSob, RwV3d& vTargetPos);   /// Determine if you are behind.
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -572,8 +572,8 @@ void			Logic_EnableCharacterCollisionSlant(RwBool bSlantCheck);
 void			Logic_EnableCharacterSlipping(RwBool bSlippingCheck);
 RwUInt8			Logic_CharacterCollisionEx(CNtlSobActor *pActor, const RwV3d *pDestPos, RwReal fSpeed, RwV3d& vNewPos, RwBool& bCollMoveImPossible, RwReal fElapsed, RwBool bJump = FALSE);
 RwBool			Logic_CharacterSlipping(CNtlSobActor *pActor, RwV3d& vNewPos, RwReal fElapsed);
-RwBool			Logic_IsMoveWorldArea(CNtlSobActor *pActor, RwV3d vCurrPos, RwV3d vDestPos);                    ///< 지형속성을 조사해서 이동 가능 영역인지 판단한다
-RwBool          Logic_IsCollisionLine(RwV3d& vStartPos, RwV3d& vEndPos, OUT CNtlPLEntity* pColEntity = NULL);                                        ///< 두 지점 사이에 오브젝트 충돌 여부를 체크한다.
+RwBool			Logic_IsMoveWorldArea(CNtlSobActor *pActor, RwV3d vCurrPos, RwV3d vDestPos);                    ///< Examine terrain properties to determine whether the area is moveable.
+RwBool          Logic_IsCollisionLine(RwV3d& vStartPos, RwV3d& vEndPos, OUT CNtlPLEntity* pColEntity = NULL);                                        ///< Checks whether there is an object collision between two points.
 
 RwUInt8			Logic_VehicleCollisionEx(CNtlSobVehicle *pActor, const RwV3d *pDestPos, RwReal fSpeed, RwV3d& vNewPos, RwBool& bCollMoveImPossible, RwReal fElapsed, RwBool bJump = FALSE);
 
@@ -586,23 +586,23 @@ CNtlSobPlayer*	Logic_GetPlayer_from_CharID(CHARACTERID charID);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Commuity
 
-// 자신이 파티의 리더인지 여부
+// Whether you are the leader of the party
 RwBool			Logic_I_am_PartyLeader();
 
-// 자신과 같은 파티원인지 여부
+// Whether you are a member of the same party as yourself
 RwBool			Logic_IsMyPartyMember(SERIAL_HANDLE hSerial);
 
 RwBool			Logic_CanPartyLeave();
 
 RwBool			Logic_CanPartyInvite();
 
-// 자신이 길드장인지 여부
+// Whether you are a guild leader
 RwBool			Logic_I_am_GuildLeader();
 
-// 자신이 부길드장인지 여부
+// Whether you are a deputy guild leader
 RwBool			Logic_I_am_SecondGuildLeader();
 
-// 파티 공유 타겟에 포함되어 있는지 확인한다. 포함되어 있다면 slot 번호를, 포함되어 있지않다면 -1을 반환한다.
+// Check if it is included in the party sharing target. If included, the slot number is returned; if not, -1 is returned.
 RwInt32         Logic_isPartyShareTarget(SERIAL_HANDLE hSerial);
 RwUInt32        Logic_GetShareTargetSerial(RwInt32 nSlot);
 RwInt32         Logic_GetShareTargetBlankSlot();
@@ -628,14 +628,14 @@ RwUInt32		Logic_GetActiveWorldTableId(void);
 
 const RwChar*	Logic_GetActiveWorldName(void);
 
-// Entity 상태에 따라 월드상 Entity 위의 이름 색상 지정
+// Color the name above an entity in the world based on the entity's state.
 void			Logic_SetHeadNameColor(CNtlSob* pSob);
 
 void			Logic_SetNickNameColor(CNtlSob* pSob);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // privateshop
-// 상점을 열수 있는가?
+// Can I open a store?
 RwBool			Logic_IsCanCreatePrivateShop();
 
 
@@ -648,13 +648,13 @@ RwBool			Logic_IsTMQBoarding(CNtlSobActor *pActor);
 RwBool			Logic_IsCoolTimeUpdate(CNtlSobActor *pActor);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 연출 처리 함수.
+// Direction processing function.
 
 RwBool			Logic_ProcKnockdownMatrixDirection(CNtlSob *pSobObj, RwUInt32 uiMatrixSerialId, const SHitStuff *pHitStuff);
-RwBool          Logic_IsCinematic();            ///< 현재 시네마틱 연출중인지 유무를 반환한다.
+RwBool          Logic_IsCinematic();            ///< Returns whether a cinematic is currently being produced.
 
 
-// 클릭 가능 유무 설정
+// Setting whether clickable or not
 void            Logic_SetClickDisable(CNtlSobActor* pActor, RwBool bDisable);
 RwBool          Logic_IsClickDisable();
 
@@ -662,15 +662,15 @@ RwBool          Logic_IsClickDisable();
 void			Logic_SetAutoRun(RwBool bAutoRun);
 
 //////////////////////////////////////////////////////////////////////////
-// 버스및 탈것 관련 로직
-RwBool          Logic_IsBus(CNtlSobActor* pSobObj);             /// 해당 오브젝트가 버스인지 확인한다.
+// Logic related to buses and vehicles
+RwBool          Logic_IsBus(CNtlSobActor* pSobObj);             /// Check whether the object is a bus.
 RwBool			Logic_IsBus(SERIAL_HANDLE hHandle);
 
-RwBool          Logic_IsVehicleDriver(CNtlSobActor* pSobObj);   /// 해당 액터가 탈것의 운전자인지 확인한다.
+RwBool          Logic_IsVehicleDriver(CNtlSobActor* pSobObj);   /// Check whether the actor in question is the driver of the vehicle.
 RwBool			Logic_IsVehicleDriver(SERIAL_HANDLE hHandle);
 
-// TRUE		: 탑승 가능 또는 해당 아이템이 Vehicle 아이템이 아님
-// FALSE	: 탑승 불가
+// TRUE: Rideable or the item is not a Vehicle item
+// FALSE: Boarding is not possible
 RwBool			Logic_CanRideOnVehicle(SERIAL_HANDLE hHandle, CNtlSobItem* pSobItem);
 
 TBLIDX			Logic_GetRegisterFuelItemTableIndex();
@@ -678,21 +678,21 @@ TBLIDX			Logic_GetRegisterFuelItemTableIndex();
 bool			Logic_IsAirMode(CNtlSobActor* pSobObj); //is flying
 
 //////////////////////////////////////////////////////////////////////////
-// 플래그
+// flag
 void			Logic_SetFlags(RwChar* pcFlags, RwUInt32 uiIndex, RwUInt32 uiMaxIndex);
 void			Logic_UnsetFlags(RwChar* pcFlags, RwUInt32 uiIndex, RwUInt32 uiMaxIndex);
 RwBool			Logic_IsExistFlag(RwChar* pcFlags, RwUInt32 uiIndex, RwUInt32 uiMaxIndex);
 
 //////////////////////////////////////////////////////////////////////////
-// 변신 관련 로직
-RwBool          Logic_IsTransform(CNtlSobActor* pSobActor);         ///< 변신을 했는지 확인한다.
-RwUInt32        Logic_IsTransformSkill(RwUInt32 uiSkillTblId);      ///< 스킬이 변신 스킬인지 확인한다.
-RwBool          Logic_IsTransformGreatNamek(CNtlSobActor* pSobActor);    ///< 거대 나멕인지 확인한다.         (팀장님 요청에 따라 따로 만듬 by agebreak)
-RwBool          Logic_IsTransformSpinAttack(CNtlSobActor* pSobActor);   ///< 회전 공격 중인지 확인한다.      (회전 공격은 서버에서 변신상태)
+// Transformation-related logic
+RwBool          Logic_IsTransform(CNtlSobActor* pSobActor);         ///< Check whether the transformation has occurred.
+RwUInt32        Logic_IsTransformSkill(RwUInt32 uiSkillTblId);      ///< Check whether the skill is a transformation skill.
+RwBool          Logic_IsTransformGreatNamek(CNtlSobActor* pSobActor);    ///< Check if it is a giant Namek.         (Made separately at the request of the team leader by agebreak)
+RwBool          Logic_IsTransformSpinAttack(CNtlSobActor* pSobActor);   ///< Check to see if a rotation attack is in progress.      (Rotation attack is transformed on the server)
 RwBool          Logic_IsTransformRollingAttack(CNtlSobActor* pSobActor);
 
 //////////////////////////////////////////////////////////////////////////
-// 튜토리얼
+// tutorial
 RwBool			Logic_CanMouseInput_in_Tutorial(ETL_MOUSE_INPUT_TYPE byType);
 RwBool			Logic_CanKeybaordInput_in_Tutorial(ETL_KEYBOARD_INPUT_TYPE byType);
 RwBool			Logic_CanAttack_in_Tutorial(ETL_ATTACK_TYPE byType);
@@ -703,29 +703,29 @@ void			Logic_SendTutorialCondition(ETL_CONDITION_TYPE byType, RwUInt32 uiParam1 
 BYTE			 Logic_GetServerState(CNtlSobActor* pActor);
 
 //////////////////////////////////////////////////////////////////////////
-// 컨디션 처리 관련
-RwBool      Logic_IsCondition(CNtlSobActor* pActor, RwUInt64 uiConditon);         ///< 해당 컨디션이 있는지 확인한다.
-RwBool      Logic_RandomMove(CNtlSobActor* pActor, RwReal fDistance);             ///< 랜덤으로 액터를 이동시킨다.
+// Condition processing related
+RwBool      Logic_IsCondition(CNtlSobActor* pActor, RwUInt64 uiConditon);         ///< Check if the relevant condition exists.
+RwBool      Logic_RandomMove(CNtlSobActor* pActor, RwReal fDistance);             ///< Moves the actor randomly.
 
 
 void		Logic_ShowHTBRPSelectGui(CNtlSobActor* pActor, SERIAL_HANDLE hTargetSerial);
 void		Logic_ShowSandBagRPSelectGUI(CNtlSobActor* pActor);
 
 //////////////////////////////////////////////////////////////////////////
-// Apply 함수
+// Apply function
 bool		Logic_ApplyNtlStorageUnit( CNtlStorageUnit* pUnit, unsigned int uiFlags );
 
 
 //////////////////////////////////////////////////////////////////////////
-// PC방 관련 함수
+// PC room related functions
 void        Logic_SetNetPy(DWORD dwNetPy);
 DWORD       Logic_GetNetPy();
 
 //////////////////////////////////////////////////////////////////////////
-// Sob 객체 비주얼 관련
+// Sob object visual related
 
-// 캐릭터의 실제 보여지는 도복의 색상을 바꾸거나 색상을 얻어온다.
-// SobPlayer 객체의 도복 색상은 SobPlayer의 함수로 직접 바꾸어야 한다
+// Change the color of the character's actual uniform or obtain the color.
+// The uniform color of the SobPlayer object must be changed directly using the SobPlayer function.
 RwUInt8		Logic_GetSobPlayerDogiColor(RwUInt32 hSobPlayerHandle);
 RwUInt8		Logic_GetDogiItemColor(CNtlSobPlayer* pSobPlayer, RwBool bUICharacter = FALSE);
 RwBool		Logic_SetDogiItemColor(CNtlSobPlayer* pSobPlayer, RwUInt8 byColorIndex, RwBool bUICharacter = FALSE, RwBool bForce = FALSE);
@@ -733,15 +733,15 @@ RwBool		Logic_SetDogiItemColor(CNtlSobPlayer* pSobPlayer, RwUInt8 byColorIndex, 
 RwBool		Logic_GetEmblemFactor(sEmblemFactor* pOutEmblemFactor, CNtlSobActor* pSobActor);
 
 //////////////////////////////////////////////////////////////////////////
-// 수량 / 인덱스 관련
+// Quantity/index related
 
-// 저장을 할 수 있는 인덱스인지 검사
+// Check whether the index can be saved
 RwBool Logic_IsSavableIndex(RwUInt32 uiIndex, RwUInt32 uiMaxIndex);
 
-// Invalid값을 포함하여 저장을 할 수 있는 인덱스인지 검사
+// Check whether the index can be stored including invalid values.
 RwBool Logic_IsSavableIndex(RwUInt32 uiIndex, RwUInt32 uiMaxIndex, RwUInt32 uiInvalidIndex);
 
-// 실제로 참조를 하기위해 쓸 수 있는 인덱스인지 검사
+// Check whether the index can actually be used for reference.
 RwBool Logic_IsUsableIndex(RwUInt32 uiIndex, RwUInt32 uiMaxIndex);
 RwBool Logic_IsUsableIndex(RwUInt32 uiIndex, RwUInt32 uiMaxIndex, RwUInt32 uiInvalidIndex);
 
@@ -753,11 +753,11 @@ void	Logic_CancelNpcFacing();
 
 
 //////////////////////////////////////////////////////////////////////////
-// 사운드 관련
+// sound related
 
 SOUND_HANDLE	Logic_PlayGUISound(char* pcFileName);
 
-// 일반 슬롯에서 아이템을 집거나 놓았을 때의 소리를 낸다
+// Makes a sound when picking up or placing an item in a normal slot.
 void			Logic_PlayItemPickUpSound(sITEM_TBLDAT* pITEM_TBLDAT);
 void			Logic_PlayItemPutDownSound(sITEM_TBLDAT* pITEM_TBLDAT, RwUInt8 byDestPlace = 0);
 

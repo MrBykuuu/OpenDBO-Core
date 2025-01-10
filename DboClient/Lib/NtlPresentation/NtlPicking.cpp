@@ -169,7 +169,7 @@ bool CNtlPicking::Pick( RwCamera* pCamera, RpWorld* pWorld, RwV2d& v2ScrPos, RwR
 
     m_bCharacterExclusion = sPickInfo.bCharacterExclusion ? true : false;
 
-	// Picking ray를 계산한다
+	// Calculate picking ray
 	RwLine PickRay;
 	RwCameraCalcPixelRay( pCamera, &PickRay, &v2ScrPos );
 
@@ -221,7 +221,7 @@ bool CNtlPicking::Pick( RwCamera* pCamera, RpWorld* pWorld, RwV2d& v2ScrPos, RwR
 	{
 		//////////////////////////////////////////////////////////////////////////
 		//
-		// Polygon check routine << Bounding box와 충돌된 Atomic만 렌더링한다 >>
+		// Polygon check routine << Only renders the atomic that collides with the bounding box >>
 		//
 		//////////////////////////////////////////////////////////////////////////
 
@@ -232,7 +232,7 @@ bool CNtlPicking::Pick( RwCamera* pCamera, RpWorld* pWorld, RwV2d& v2ScrPos, RwR
 			RwCameraEndUpdate( pOldCamera );
 		}
 
-		// Polygon rendering 시작
+		// Start polygon rendering
 		UpdateCamera_Begin( pCamera );
 
 		// Initialize to an invalid PLEntity value
@@ -241,7 +241,7 @@ bool CNtlPicking::Pick( RwCamera* pCamera, RpWorld* pWorld, RwV2d& v2ScrPos, RwR
 			// Render atomic detected BBox collision at the top
 			if ( RwCameraBeginUpdate( pCamera ) )
 			{
-				// Project matrix 조작
+				// Project matrix manipulation
 				D3DXMATRIX matOldProj;
 				RwD3D9GetTransform( D3DTS_PROJECTION, &matOldProj );
 
@@ -258,14 +258,14 @@ bool CNtlPicking::Pick( RwCamera* pCamera, RpWorld* pWorld, RwV2d& v2ScrPos, RwR
 				// Render atomics
 				RenderPickedAtoms( m_pPickPipeline );
 
-				// Project matrix 복구
+				// Project matrix recovery
 				RwD3D9SetTransform( D3DTS_PROJECTION, &matOldProj );
 
 				RwCameraEndUpdate( pCamera );
 			}
 		}
 
-		// Polygon rendering 종료 
+		// End of polygon rendering 
 		UpdateCamera_End( pCamera );
 
 		if (pOldCamera)
@@ -275,7 +275,7 @@ bool CNtlPicking::Pick( RwCamera* pCamera, RpWorld* pWorld, RwV2d& v2ScrPos, RwR
 
 		//////////////////////////////////////////////////////////////////////////
 		//
-		// 해당 Rasterize를 대상으로 충돌 검사
+		// Conflict check against Rasterize
 		//
 		//////////////////////////////////////////////////////////////////////////
 
@@ -293,7 +293,7 @@ bool CNtlPicking::Pick( RwCamera* pCamera, RpWorld* pWorld, RwV2d& v2ScrPos, RwR
 
 	//////////////////////////////////////////////////////////////////////////
 	//
-	// 최상의 Picking entity를 찾는다
+	// Find the best picking entity
 	//
 	//////////////////////////////////////////////////////////////////////////
 
@@ -487,7 +487,7 @@ RpAtomic* CNtlPicking::PickAtomicBoundBoxCB( RpIntersection* pInters, RpWorldSec
 
 	if ( pPLEntity )
 	{
-		// Object의 경우 Polygon 검사를 실행 한다
+		// In case of object, perform polygon check.
 		if ( pPLEntity->GetClassType() == PLENTITY_OBJECT )
 		{
             CNtlPLObject* pObject = (CNtlPLObject*)pPLEntity;
@@ -768,7 +768,7 @@ void CNtlPicking::RenderPickedAtoms( RxPipeline* pPipeLine )
 
 //////////////////////////////////////////////////////////////////////////
 //
-//	Bounding box resizing 최적의 크기를 구하기 위한 테스트용 클래스
+//	Bounding box resizing Test class to find the optimal size
 //
 //////////////////////////////////////////////////////////////////////////
 

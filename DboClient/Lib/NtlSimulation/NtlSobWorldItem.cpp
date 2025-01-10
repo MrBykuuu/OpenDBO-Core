@@ -2,18 +2,18 @@
 #include "NtlSobWorldItem.h"
 
 
-// shared
+// Shared
 #include "GraphicDataTable.h"
 
-// core
+// Core
 #include "NtlMath.h"
 
-// presentation
+// Presentation
 #include "NtlPLGlobal.h"
 #include "NtlPLSceneManager.h"
 
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSobAttr.h"
@@ -48,12 +48,12 @@ RwBool CNtlSobWorldItem::Create(void)
 		NTL_RETURN(FALSE);
 	}
 
-	// proxy 설정
+	// proxy settings
 	m_pSobProxy = NTL_NEW CNtlSobWorldItemProxy;
 	m_pSobProxy->Create( NTL_SLPROXY_COMP_EQUIP_ITEM );
 	m_pSobProxy->SetSobObj(this);
 
-	// class name 설정.
+	// Set class name.
 	SetClassName(SLCLASS_NAME_WORLD_ITEM);
 
 	NTL_RETURN(TRUE);
@@ -118,7 +118,7 @@ void CNtlSobWorldItem::HandleEvents(RWS::CMsg &pMsg)
 		// World item create event handler.
 		CreateEventHandler(pMsg);
 
-		// 초기 좌표 setting
+		// Initial coordinate setting
 		RwV3dAssignMacro( &m_vDestPos, &pWorldItemCreate->vLoc );
 
 		SWorldHeightStuff sHStuff;
@@ -127,7 +127,7 @@ void CNtlSobWorldItem::HandleEvents(RWS::CMsg &pMsg)
 		
 		SetPosition( &m_vDestPos );
 
-		// DropEffect
+		// Drop effect
 		if (pWorldItemCreate->eObjType == OBJTYPE_DROPITEM
 			|| pWorldItemCreate->eObjType == OBJTYPE_DROPMONEY)
 		{
@@ -234,7 +234,7 @@ VOID CNtlSobWorldItem::State_ActDropUpdate(VOID)
 
 	if( m_fTime > m_fDestTime )
 	{
-		//Time Sequence 삭제
+		//Delete Time Sequence
 		CNtlDistTimeSequence *pTempSeq;
 		CNtlDistTimeSequence *pSeq = m_pSeq;
 
@@ -258,7 +258,7 @@ VOID CNtlSobWorldItem::State_ActDropUpdate(VOID)
 		}
 	}	
 	
-	// 좌표 setting
+	// Coordinate setting
 	SetPosition(&vLoc);
 	SetAngleY( m_fTime * m_fDestAngle );
 

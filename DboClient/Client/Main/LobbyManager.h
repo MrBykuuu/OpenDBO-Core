@@ -1,12 +1,12 @@
 /******************************************************************************
 * File			: LobbyManager.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2009. 8. 6
 * Abstract		: 
 * Update		: 
 *****************************************************************************
-* Desc			: 실제 본 게임전까지의 로비를 관리한다
+* Desc			:Manage the lobby leading up to the actual game.
 *****************************************************************************/
 
 #pragma once
@@ -58,7 +58,7 @@ public:
 
 	RwBool			IsWaitingServerListInfo();
 	RwBool			IsWaitingChannelInfo();	
-	RwBool			IsFistAcceptServer();				//< t: 유저가 접속했던 서버가 없다
+	RwBool			IsFistAcceptServer();				//< t: There is no server the user connected to
 
 
 protected:

@@ -5,8 +5,8 @@
 
 /**
  * \ingroup NtlPresentation
- * CNtlPLPlant에 해당하는 property class이다.
- * property data는 xml file로 작성되어져 있다.
+ *This is a property class corresponding to CNtlPLPlant.
+ *Property data is written as an xml file.
  *
  */
 

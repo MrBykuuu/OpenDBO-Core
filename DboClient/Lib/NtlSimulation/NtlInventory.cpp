@@ -1,17 +1,17 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlInventory.h"
 
-// shared
+// Shared
 #include "ItemTable.h"
 #include "UseItemTable.h"
 #include "NtlItem.h"
 #include "QuestItemTable.h"
 #include "TableContainer.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
@@ -90,7 +90,7 @@ void CNtlInventoryBase::HandleEvents(RWS::CMsg &pMsg)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-// avatar 사용
+// use avatar
 
 CNtlInventory::CNtlInventory()
 {
@@ -444,10 +444,10 @@ void CNtlInventory::ItemMoveEventHandler(RWS::CMsg &pMsg)
 			CNtlSobItem *pDestParentBagSobItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( GetBagItem(byDestParentSlotIdx) ) );
 			NTL_ASSERT(pDestParentBagSobItem, "CNtlInventory::ItemMoveEventHandler : dest parent item instance is null !!!");
 
-			// source 이동.
+			// Go to source.
 			pSrcSobItem->SetParentItemSerial(GetBagItem(byDestParentSlotIdx));
 			pDestParentBagSobItem->SetChildSerial(pItemMove->byDestSlotIdx, pItemMove->hSrcSerial);
-			// dest 이동.
+			// move to dest.
 			SetBagItem(pItemMove->bySrcSlotIdx, pItemMove->hDestSerial);
 		}
 
@@ -465,10 +465,10 @@ void CNtlInventory::ItemMoveEventHandler(RWS::CMsg &pMsg)
 
 		if(pItemMove->byDestPlace == CONTAINER_TYPE_BAGSLOT)
 		{
-			// source 이동.
+			// Go to source.
 			pSrcSobItem->SetParentItemSerial(INVALID_SERIAL_ID);
 			pSrcParentBagSobItem->SetChildSerial(pItemMove->bySrcSlotIdx, pItemMove->hDestSerial);
-			// dest 이동.
+			// move to dest.
 			SetBagItem(pItemMove->byDestSlotIdx, pItemMove->hSrcSerial);
 		}
 
@@ -476,11 +476,11 @@ void CNtlInventory::ItemMoveEventHandler(RWS::CMsg &pMsg)
 		{
 			RwUInt8 byDestParentSlotIdx = (RwUInt8)(pItemMove->byDestPlace - CONTAINER_TYPE_BAG1);
 
-			// source 이동.
+			// Go to source.
 			pSrcSobItem->SetParentItemSerial(GetBagItem(byDestParentSlotIdx));
 			pSrcParentBagSobItem->SetChildSerial(pItemMove->bySrcSlotIdx, pItemMove->hDestSerial);
 
-			// dest 이동
+			// move to dest
 			if(pItemMove->hDestSerial != INVALID_SERIAL_ID)
 			{
 				CNtlSobItem *pDestSobItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pItemMove->hDestSerial ) );
@@ -495,11 +495,11 @@ void CNtlInventory::ItemMoveEventHandler(RWS::CMsg &pMsg)
 
 		else if(pItemMove->byDestPlace == CONTAINER_TYPE_EQUIP)
 		{
-			// source 이동.
+			// Go to source.
 			pSrcSobItem->SetParentItemSerial(INVALID_SERIAL_ID);
 			pSrcParentBagSobItem->SetChildSerial(pItemMove->bySrcSlotIdx, pItemMove->hDestSerial);
 
-			// dest 이동
+			// move to dest
 			SetEquipItem(pItemMove->byDestSlotIdx, pItemMove->hSrcSerial);
 			if( pItemMove->hDestSerial != INVALID_SERIAL_ID )
 			{
@@ -528,11 +528,11 @@ void CNtlInventory::ItemMoveEventHandler(RWS::CMsg &pMsg)
 			CNtlSobItem *pDestsParentBagSobItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( GetBagItem(byDestParentSlotIdx) ) );
 			NTL_ASSERT(pDestsParentBagSobItem, "CNtlInventory::ItemMoveEventHandler : dest bag item instance is null !!!");
 
-			// source 이동.
+			// Go to source.
 			pSrcSobItemSlot->SetParentItemSerial(GetBagItem(byDestParentSlotIdx));
 			SetEquipItem(pItemMove->bySrcSlotIdx, pItemMove->hDestSerial);
 
-			// dest 이동.
+			// move to dest.
 			pDestsParentBagSobItem->SetChildSerial(pItemMove->byDestSlotIdx, pItemMove->hSrcSerial);
 
 			Logic_PlayGUISound(GSD_SYSTEM_ITEM_TAKEOFF);
@@ -540,10 +540,10 @@ void CNtlInventory::ItemMoveEventHandler(RWS::CMsg &pMsg)
 
 		else if(pItemMove->byDestPlace == CONTAINER_TYPE_EQUIP)
 		{
-			// source 이동.
+			// Go to source.
 			SetEquipItem(pItemMove->bySrcSlotIdx, pItemMove->hDestSerial);
 
-			// dest 이동.
+			// move to dest.
 			SetEquipItem(pItemMove->byDestSlotIdx, pItemMove->hSrcSerial);
 
 			Logic_PlayGUISound(GSD_SYSTEM_ITEM_EQUIP);
@@ -606,7 +606,7 @@ void CNtlInventory::ItemStackMoveEventHandler(RWS::CMsg &msg)
 		pDestItem->HandleEvents( msg );
 	}
 
-	// 둘다 존재할 때
+	// When both exist
 	else
 	{
 		NTL_ASSERT( pSrcItem, "CNtlInventory::ItemStackMoveEventHandler : SrcItem is Null!!" );

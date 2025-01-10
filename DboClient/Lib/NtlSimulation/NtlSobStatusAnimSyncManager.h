@@ -2,9 +2,9 @@
 *
 * File			: NtlSobStatusSyncManager.h
 * Author		: HyungSuk, Jang
-* Copyright	: (주)NTL
+* Copyright	    : NTL Co., Ltd.
 * Date			: 2008. 11. 08	
-* Abstract		: Simulation object LP/EP Animation Hit Event 동기 관리자.
+* Abstract		: Simulation object LP/EP Animation Hit Event synchronization manager.
 *****************************************************************************
 * Desc         : 
 *

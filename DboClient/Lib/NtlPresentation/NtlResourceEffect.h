@@ -2,7 +2,7 @@
 //	File		:	NtlResourceEffect.h
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2006 by agebreak CO., Ltd
+//	Copyright	:	? 2006 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -40,13 +40,13 @@ public:
 
 			RwBool							Load(FILE* pFile);
 
-            RwBool                          IsAutoDelete();                 ///< 루프 이펙트인지 아닌지 반환한다.
+            RwBool                          IsAutoDelete();                 ///< Returns whether it is a loop effect or not.
 
 	virtual RwBool Load(CNtlXMLDoc *pDoc, IXMLDOMNode *pNode)		{ return FALSE; }
 	virtual RwBool Save(CNtlXMLDoc *pDoc, IXMLDOMNode *pNode)		{ return FALSE; }
 
 public:
     SEffectSoundEx        m_EffectSound;              ///< Effect Sound Property   
-    SEffectBoundingSphere m_EffectBoundingSphere;   ///< Effect의 바운딩 스피어
-	RwReal				m_fScaleForTool;			///< Tool에서 테스트를 위한 스케일 변수(저장은 되지 않는다)
+    SEffectBoundingSphere m_EffectBoundingSphere;   ///< Effect's Bounding Spear
+	RwReal				m_fScaleForTool;			///< Scale variable for testing in Tool (not saved)
 };

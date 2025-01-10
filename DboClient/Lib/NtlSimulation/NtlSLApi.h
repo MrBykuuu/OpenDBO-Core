@@ -2,7 +2,7 @@
  *
  * File			: NtlSLApi.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2006. 10. 25	
  * Abstract		: Simulation layer API Function
  *****************************************************************************
@@ -44,11 +44,11 @@ class CNtlDTContainer;
 
 typedef struct _SDevMasterInfo
 {
-	RwBool	bDevUser;				// user가 개발자 인가?
+	RwBool	bDevUser;				//Is the user a developer?
 	RwReal	fCoolingTimeFactor;		// cooling update time factor
 	RwBool	bLoadDataXml;			// loading data type xml
 	RwBool	bPackFileUse;			// pack file use
-	RwBool	bThreadLoading;			// thread loading을 할 것인가?
+	RwBool	bThreadLoading;			// Will you do thread loading?
 	RwReal	fCameraFov;				// camera fov
 	RwReal	fCameraNear;			// camera near
 	RwReal	fCameraFar;				// camera far

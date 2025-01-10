@@ -1,31 +1,31 @@
 /******************************************************************************
-* File			: TMQStatusGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2007. 10. 29
-* Abstract		: 
+*File			: TMQStatusGui.h
+*Author		    : Hong SungBock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 10. 29
+*Abstract		: 
 *****************************************************************************
-* Desc			: TMQ 진행 상태창
+*Desc			: TMQ progress window
 *****************************************************************************/
 
 #pragma once
 
 #include <list>
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// share
+// Share
 #include "NtlTimeQuest.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "NtlSLEvent.h"
 
-// dbo
+// Dbo
 #include "SurfaceGui.h"
 #include "SlotGui.h"
 #include "NumberGui.h"
@@ -87,33 +87,33 @@ protected:
 	gui::CSlot			m_slotPaint;
 	gui::CSlot			m_slotPostPaint;
 
-	gui::CStaticBox*	m_pDialogName;					///< 다이얼로그의 이름 스태틱
-	gui::CStaticBox*	m_pInfo;						///< '정보'
-	gui::CStaticBox*	m_pPoint;						///< '포인트'
-	gui::CStaticBox*	m_pCurPoint;					///< 현재 포인트
-	gui::CStaticBox*	m_pQuest;						///< '퀘스트'
-	gui::CStaticBox*	m_pQuestTitle;					///< 퀘스트 제목
-	gui::CStaticBox*	m_pQuestAim_1;					///< 퀘스트 목표 1
-	gui::CStaticBox*	m_pQuestAim_2;					///< 퀘스트 목표 2
-	gui::CStaticBox*	m_pQuestAim_3;					///< 퀘스트 목표 3
-	gui::CStaticBox*	m_pQuestAim_4;					///< 퀘스트 목표 4
+	gui::CStaticBox*	m_pDialogName;					///< Dialog name static
+	gui::CStaticBox*	m_pInfo;						///< 'Information'
+	gui::CStaticBox*	m_pPoint;						///< 'Point'
+	gui::CStaticBox*	m_pCurPoint;					///< Current point
+	gui::CStaticBox*	m_pQuest;						///< 'Quest'
+	gui::CStaticBox*	m_pQuestTitle;					///< Quest title
+	gui::CStaticBox*	m_pQuestAim_1;					///< Quest Goal 1
+	gui::CStaticBox*	m_pQuestAim_2;					///< Quest Objective 2
+	gui::CStaticBox*	m_pQuestAim_3;					///< Quest Goal 3
+	gui::CStaticBox*	m_pQuestAim_4;					///< Quest Goal 4
 	
-	gui::CButton*		m_pMinimizeButton;				///< 최소화 버튼
-	gui::CButton*		m_pStageButton;					///< 스테이지 정보
-	gui::CButton*		m_pSenarioButton;				///< 시나리오 버튼
-	gui::CButton*		m_pNextButton;					///< 다음 퀘스트 버튼
+	gui::CButton*		m_pMinimizeButton;				///< Minimize button
+	gui::CButton*		m_pStageButton;					///< Stage information
+	gui::CButton*		m_pSenarioButton;				///< Scenario button
+	gui::CButton*		m_pNextButton;					///< Next quest button
 
 	gui::CFlickerEffect	m_SenarioButtonFlicker;
 	gui::CFlickerEffect	m_StageButtonFlicker;
 
-	CSurfaceGui			m_srfGaugeBack;					///< TMQ 포인트 백서페이스
-	CSurfaceGui			m_srfTMQContourLine_1;			///< 구분선
-	CSurfaceGui			m_srfTMQContourLine_2;			///< 구분선
-	CSurfaceGui			m_srfTMQContourLine_3;			///< 구분선
-	CSurfaceGui			m_srfCouponSlot;				///< 쿠폰 슬롯
+	CSurfaceGui			m_srfGaugeBack;					///< TMQ Point White Paper
+	CSurfaceGui			m_srfTMQContourLine_1;			///< Divider line
+	CSurfaceGui			m_srfTMQContourLine_2;			///< Divider line
+	CSurfaceGui			m_srfTMQContourLine_3;			///< Divider line
+	CSurfaceGui			m_srfCouponSlot;				///< Coupon Slot
 
-	gui::CProgressBar*	m_pTMQGauge;					///< TMQ 게이지
+	gui::CProgressBar*	m_pTMQGauge;					///< TMQ Gauge
 
 	CLittleQuestContainer* m_pTMQQuestContainer;
-	CRegularSlotGui			m_CouponSlot;					///< 쿠폰 슬롯
+	CRegularSlotGui			m_CouponSlot;					///< Coupon Slot
 };

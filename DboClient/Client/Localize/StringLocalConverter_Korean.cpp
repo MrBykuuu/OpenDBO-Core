@@ -1,7 +1,7 @@
 #include "precomp_dboclient.h"
 #include "StringLocalConverter_Korean.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
 namespace
@@ -15,7 +15,7 @@ void CStringLocalConverter_Korean::LocalStringCovert(WCHAR* pwcOutput, const WCH
 	RwInt32 iCount = 0;
 	RwInt32 iTextLength = wcslen(pwcText);
 
-	// 조사가 붙으려면 최소한 2글자 이상이여야 한다
+	// A postposition must be at least 2 letters long.
 	if( iTextLength < 2 )
 	{
 		memcpy(pwcOutput, pwcText, sizeof(WCHAR) * wcslen(pwcText) );
@@ -31,7 +31,7 @@ void CStringLocalConverter_Korean::LocalStringCovert(WCHAR* pwcOutput, const WCH
 		{
 			int iThirdSound = GetKoreanThirdSound( &(pwcText[iCount - 1]) );
 
-			if( iThirdSound == 0 )	// 받침이 없다
+			if( iThirdSound == 0 )	// There is no support
 				memcpy(pwcOutput + iCount, L"가", sizeof(WCHAR));
 			else
 				memcpy(pwcOutput + iCount, L"이", sizeof(WCHAR));
@@ -43,7 +43,7 @@ void CStringLocalConverter_Korean::LocalStringCovert(WCHAR* pwcOutput, const WCH
 		{
 			int iThirdSound = GetKoreanThirdSound( &(pwcText[iCount - 1]) );
 
-			if( iThirdSound == 0 )	// 받침이 없다
+			if( iThirdSound == 0 )	// There is no support
 				memcpy(pwcOutput + iCount, L"를", sizeof(WCHAR));
 			else
 				memcpy(pwcOutput + iCount, L"을", sizeof(WCHAR));
@@ -55,7 +55,7 @@ void CStringLocalConverter_Korean::LocalStringCovert(WCHAR* pwcOutput, const WCH
 		{
 			int iThirdSound = GetKoreanThirdSound( &(pwcText[iCount - 1]) );
 
-			if( iThirdSound == 0 )	// 받침이 없다
+			if( iThirdSound == 0 )	// There is no support
 				memcpy(pwcOutput + iCount, L"는", sizeof(WCHAR));
 			else
 				memcpy(pwcOutput + iCount, L"은", sizeof(WCHAR));
@@ -67,7 +67,7 @@ void CStringLocalConverter_Korean::LocalStringCovert(WCHAR* pwcOutput, const WCH
 		{
 			int iThirdSound = GetKoreanThirdSound( &(pwcText[iCount - 1]) );
 
-			if( iThirdSound == 0 )	// 받침이 없다
+			if( iThirdSound == 0 )	// There is no support
 				memcpy(pwcOutput + iCount, L"와", sizeof(WCHAR));
 			else
 				memcpy(pwcOutput + iCount, L"과", sizeof(WCHAR));
@@ -79,7 +79,7 @@ void CStringLocalConverter_Korean::LocalStringCovert(WCHAR* pwcOutput, const WCH
 		{
 			int iThirdSound = GetKoreanThirdSound( &(pwcText[iCount - 1]) );
 
-			if( iThirdSound == 0 && iThirdSound == 8 )	// 받침이 없거나 'ㄹ' 이다
+			if( iThirdSound == 0 && iThirdSound == 8 )	// There is no consonant or it is ‘ㄹ’.
 			{
 				memcpy(pwcOutput + iCount, L"로", sizeof(WCHAR));
 				++iCount;
@@ -107,13 +107,13 @@ RwInt32 CStringLocalConverter_Korean::GetKoreanThirdSound(const WCHAR* pwcText)
 
 	int iIndex_from_HangulFirst = pwcText[0] - dUNICODE_HANGULE_SYLLABLES_FIRST;
 
-	// 유니코드상 한글 음절의 범위 검사
+	// Checking the range of Korean syllables in Unicode
 	if( iIndex_from_HangulFirst < 0 || iIndex_from_HangulFirst >= 11172 )
 		return 0;
 
-	//int iFirstSound	= iIndex_from_HangulFirst / (21*28);				///< 초성 순서값
-	//int iSecondSound	= iIndex_from_HangulFirst % (21*28) / 28;			///< 중성 순서값
-	int iThirdSound		= iIndex_from_HangulFirst % (21*28) % 28;			///< 종성 순서값
+	//int iFirstSound   = iIndex_from_HangulFirst /(21*28);				///< Initial consonant order value
+	//int iSecondSound  = iIndex_from_HangulFirst % (21*28) /28;			///< neutral ordinal value
+	int iThirdSound		= iIndex_from_HangulFirst % (21*28) % 28;			///< Final order value
 
 	return iThirdSound;
 }

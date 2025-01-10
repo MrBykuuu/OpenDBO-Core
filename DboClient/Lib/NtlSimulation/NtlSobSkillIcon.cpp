@@ -203,7 +203,7 @@ RwBool CNtlSobSkillIcon::Use(SERIAL_HANDLE hTargetSerialId, RwUInt32 uiRPBonusTy
 		NTL_RETURN(FALSE);
 	}
 
-	// Rp 검사 ( wRequire_RP 는 이제 일반스킬도 존재한다. )
+	//Rp check (wRequire_RP now also exists as a general skill.)
  	if(byCurrRpStock < pSkillTbl->byRequire_RP_Ball && uiRPBonusType != 0xFF )
  	{
  		CNtlSLEventGenerator::SysMsg(m_pSobObj->GetOwnerID(), "GAME_SKILL_NOT_ENOUGH_RP_BALL");
@@ -402,7 +402,7 @@ void CNtlSobSkillIcon::SetSkillIconState( RwUInt8 byIconState, RwUInt8 byRpBonus
 	CNtlSobSkillAttr* pSkillAttr = reinterpret_cast<CNtlSobSkillAttr*>( m_pSobObj->GetSobAttr() );
 	sSKILL_TBLDAT* pSkillData = pSkillAttr->GetSkillTbl();
 
-	// 스킬 쿨타임을 서버가 직접 제어하는 경우. 서버에서 새로 패킷이 날라오게 되어 있다. 
+	//When the server directly controls the skill cooldown. New packets are sent from the server.
 	if( bSpecialCoolTimeCheck && pSkillData->dwFunction_Bit_Flag & SKILL_FUNCTION_FLAG_SPECIAL_COOL_TIME_RULE )
 		return;
 

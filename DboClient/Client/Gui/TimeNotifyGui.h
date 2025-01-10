@@ -1,25 +1,25 @@
 /******************************************************************************
-* File			: TimeNotifyGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 1. 2
-* Abstract		: 
+*File			: TimeNotifyGui.h
+*Author		    : Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2008. 1. 2
+*Abstract		: 
 *****************************************************************************
-* Desc			: 시간에 관련된 사항을 알린다
+*Desc			: Announce information related to time
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// trigger
+// Trigger
 #include "DboTSCoreDefine.h"
 
-// dbo
+// Dbo
 #include "NumberGui.h"
 
 
@@ -48,8 +48,8 @@ public:
 		RwUInt8			byType;
 		RwReal			fElapsed;
 		
-		sTS_KEY					sTSKey;				///< TS키
-		RwUInt32				uiSortType;			///< 퀘스트 타입
+		sTS_KEY					sTSKey;				///< TS key
+		RwUInt32				uiSortType;			///< Quest type
 	};
 
 	CTimeNotifyGui(const RwChar* pName);

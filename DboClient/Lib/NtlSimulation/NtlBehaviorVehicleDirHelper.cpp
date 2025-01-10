@@ -225,7 +225,7 @@ RwBool CNtlBHVehicleAOIRideOn::Begin( void )
 	SWorldHeightStuff sHStuff;
 	Logic_GetWorldHeight( &vCurPos, sHStuff );
 	vCurPos.y = sHStuff.fFinialHeight;
-	vCurPos.y += m_pVehicle->GetRideOnHeight() / 100.f;	// Centimeter를 Meter로 환산한다
+	vCurPos.y += m_pVehicle->GetRideOnHeight() / 100.f;	//  Convert Centimeters to Meters
 
 	m_pVehicle->SetPosition( &vCurPos );
 
@@ -269,7 +269,7 @@ RwBool CNtlBHVehicleNoDirRideOn::Begin( void )
 	m_vSpawnPos.y = sHStuff.fFinialHeight;
 
 	m_vVehiclePos = m_vSpawnPos;
-	m_vVehiclePos.y += m_pVehicle->GetRideOnHeight() / 100.f;	// Centimeter를 Meter로 환산한다
+	m_vVehiclePos.y += m_pVehicle->GetRideOnHeight() / 100.f;	// Convert Centimeters to Meters
 
 	m_pDriver->GetSobProxy()->CreatePLEffect( NTL_VID_VEHICLE_SPAWN, &m_vSpawnPos );
 

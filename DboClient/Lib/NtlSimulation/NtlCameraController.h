@@ -2,7 +2,7 @@
  *
  * File			: NtlCameraController.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2006. 8. 08	
  * Abstract		: simulation layer camera controller
  *****************************************************************************
@@ -29,10 +29,10 @@ enum ECameraControlType
 	CAMERA_CONTROL_EXPLOSION,			/** Explosion camera control */
 	CAMERA_CONTROL_TIMEMACHINE_ARRIVE,	/** Timemachine arrive camera control */
 	CAMERA_CONTROL_KNOCKDOWN_MATRIX,	/** knockdown matrix 연출 camera control */
-    CAMERA_CONTROL_FPS,                 /** 1인칭 카메라 컨트롤러 */
+    CAMERA_CONTROL_FPS,                 /** First-person camera controller */
 	CAMERA_CONTROL_BUS,					/** bus camera control */
 	CAMERA_CONTROL_TURORIAL,			/** tutorial camera control */
-    CAMERA_CONTROL_OBSERVER,            ///< 천하제일 무도회에서 사용하는 구경용 카메라
+    CAMERA_CONTROL_OBSERVER,            ///< Aperture camera used at World's Best Martial Arts Club
 };
 
 // controller flags
@@ -45,12 +45,12 @@ class CNtlSobActor;
 class CNtl2DTimeSequence;
 class CNtl3DTimeSequence;
 
-/// 카메라 위치 정보를 담기위한 구조체
+///Structure to contain camera location information
 struct SCameraData                  
 {
-    RwReal fTime;                   ///< 시간
-    RwV3d  vPos;                    ///< 카메라 위치
-    RwV3d  vTargetPos;              ///< 카메라 타겟 위치        
+    RwReal fTime;                   ///< time
+    RwV3d  vPos;                    ///< Camera position
+    RwV3d  vTargetPos;              ///< Camera target position       
 };
 
 typedef std::vector<SCameraData> VecCamaraData;
@@ -72,7 +72,7 @@ protected:
 protected:
     CNtlCameraController();
 	virtual void UpdateCameraTrans(RwV3d *pCamPos, const RwV3d *pLookAt, RwReal fDistOffset = 0.0f);
-    virtual void SetVisibleAllObject( RwBool bVisible );            //< 객체들의 보임을 설정한다.
+    virtual void SetVisibleAllObject( RwBool bVisible );            //< Sets the visibility of objects.
 	RwReal GetActorOffset(CNtlSobActor *pActor);
 
 
@@ -173,18 +173,18 @@ private:
 		CAMERA_NORAML_SMOOTHING_STOP			= 0x05
 	};
 
-	RwUInt8 m_byUpdateFlags;		// camera의 update를 나타내는 flag.
-	RwUInt8	m_bySmoothingFlag;		// camera의 update smoothing 보간.
+	RwUInt8 m_byUpdateFlags;		// Flag indicating camera update.
+	RwUInt8	m_bySmoothingFlag;		// Camera update smoothing interpolation.
 	RwReal	m_fSmoothTime;			// smooth time.
 	RwReal	m_fSmoothDist;			// smooth distance
 	RwBool	m_bSmoothLookAtEnable;	// smooth look at enable
 	RwV3d	m_vSmoothLookAt;		// smooth look at position
 	RwV3d	m_vPrevActorPos;		// previous actor position.
-	
-	RwReal	m_fDesiredDist;		// 스프링 효과를 위해 썼다.
-	RwReal	m_fDeltaDist;		// 마우스 wheel delta distance.
-	RwV3d	m_vLerpPos;			// 카메라 보정 offset.
-	RwReal	m_fLerpSpeed;		// 카메라 보정 speed.
+
+	RwReal	m_fDesiredDist;		// Used for spring effect.
+	RwReal	m_fDeltaDist;		// Mouse wheel delta distance.
+	RwV3d	m_vLerpPos;			// Camera calibration offset.
+	RwReal	m_fLerpSpeed;		// Camera calibration speed.
 
 	CNtlSobActor *m_pActor;
 
@@ -219,8 +219,8 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////////
-// Create by agebreak 2008.02.11
-// 1인칭 카메라 컨트롤러
+// Created by agebreak 2008.02.11
+// First-person camera controller
 class CNtlCameraFPSController : public CNtlCameraController
 {
 public:
@@ -237,29 +237,29 @@ public:
     virtual void HandleEvents(RWS::CMsg &pMsg); 
     
     void    SetLookAtDir(RwV3d& vCurrLookAt, RwV3d& vTargetLookAt);
-    void    EnableZoomInOut(RwBool bEnable);               ///< 줌이 가능한지 설정한다 (스카우터는 줌이 안된다)    
+    void    EnableZoomInOut(RwBool bEnable);               ///< Set whether zooming is possible (Scouter does not zoom)    
     void    AddPitch(RwReal fDeltaPitch);
     void    AddYaw(RwReal fDeltaYaw);
 protected:
 
 protected:
-    CNtlSobActor *m_pActor;                 ///< 메인이 되는 Actor
-    RwBool        m_bEnableZoom;            ///< 줌 가능 플래그
-	RwReal		  m_fOldDist;				///< 이전 카메라 distance    
-    RwV3d         m_vStartPos;              ///< 원래 카메라 위치
-    RwV3d         m_vTargetPos;             ///< 변화될 1인칭 카메라 위치
-    RwV3d         m_vCurrLookAt;            ///< 원래 보고 있는 방향
-    RwV3d         m_vTargetLookAt;          ///< 변경될 보고 있는 방향
-    RwReal        m_fInterTime;             ///< 보간되는 시간 누적    
-    RwBool        m_bInter;                 ///< 현재 보간중인지 여부 플래그
-    RwReal        m_fOrgPitch;              ///< 원래 카메라 Pitch 값
-    RwReal        m_fOrgYaw;                ///< 원래 카메라 Yaw 값
-    RwUInt32      m_uiMoveFlag;             ///< 키보드 이동 Flag
+    CNtlSobActor *m_pActor;                 ///< Main Actor
+    RwBool        m_bEnableZoom;            ///< Zoomable flag
+	RwReal		  m_fOldDist;				///< Previous camera distance    
+    RwV3d         m_vStartPos;              ///< Original camera position
+    RwV3d         m_vTargetPos;             ///< First-person camera position to change
+    RwV3d         m_vCurrLookAt;            ///< Direction you are originally looking at
+    RwV3d         m_vTargetLookAt;          ///< Viewing direction to change
+    RwReal        m_fInterTime;             ///< Interpolated time accumulation    
+    RwBool        m_bInter;                 ///< Flag whether interpolation is currently in progress
+    RwReal        m_fOrgPitch;              ///< Original camera pitch value
+    RwReal        m_fOrgYaw;                ///< Original camera Yaw value
+    RwUInt32      m_uiMoveFlag;             ///< Keyboard movement Flag
 };
 
 //////////////////////////////////////////////////////////////////////////
-/// Create by agebreak 2007.11.27
-/// 자유롭게 이동할 수 있는 프리 카메라 컨트롤러 (DT 에디터에서 사용한다.)
+/// Created by agebreak 2007.11.27
+/// Free camera controller that can move freely (used in DT editor)
 class CNtlFreeCameraController : public CNtlCameraController
 {
 public:
@@ -269,22 +269,22 @@ public:
     virtual void	Enter(void);
     virtual void	Exit(void);
     virtual void    Update(RwReal fElapsed);    
-    virtual RwBool  IsCollisionCheck(void)	{ return FALSE; }           ///< 충돌체크를 하지 않는다.
+    virtual RwBool  IsCollisionCheck(void)	{ return FALSE; }           ///< No collision check.
 	virtual RwBool	IsInterpCheck(void)		{ return FALSE; }
 
     
-    void    Move(RwUInt32 moveType, RwReal fSpeed);          ///< 카메라를 이동시킨다.    
+    void    Move(RwUInt32 moveType, RwReal fSpeed);          ///< Move the camera.    
     void    Stop();
     void    UpdateRotate(const RwV3d& vCamPos);
 
-    static void    SetMoveSpeed(RwReal fSpeed) {m_fMoveSpeed = fSpeed;} ///< 카메라 이동 속도를 세팅한다.
-    static RwReal  GetMoveSpeed() {return m_fMoveSpeed;}                ///< 카메라 이동 속도를 반환한다.
+    static void    SetMoveSpeed(RwReal fSpeed) {m_fMoveSpeed = fSpeed;} ///< Set the camera movement speed.
+    static RwReal  GetMoveSpeed() {return m_fMoveSpeed;}                ///< Returns the camera movement speed.
     
 protected:
-    RwUInt32        m_vPrevMoveFlag;                        ///< 이전 무브 플래그를 저장한다. (키를 눌러도 지속적으로 플래그가 날라오지 않기때문에)
-    RwReal          m_fPrevSpeed;                           ///< 이전 속도를 저장한다.
-    static RwReal   m_fMoveSpeed;                           ///< 카메라 이동 속도
-    RwBBox          m_box;                                  ///< 카메라 이동 한계    
+    RwUInt32        m_vPrevMoveFlag;                        ///< Saves the previous move flag. (Because the flag does not fly continuously even if you press the key)
+    RwReal          m_fPrevSpeed;                           ///< Save the previous speed.
+    static RwReal   m_fMoveSpeed;                           ///< Camera movement speed
+    RwBBox          m_box;                                  ///< Camera movement limits    
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -394,7 +394,7 @@ inline void CNtlCameraDashController::SetDashDest(const RwV3d *pDest)
 
 /**
  * \ingroup NtlSimulation
- * \brief 상인 NPC를 클릭할 때 사용되는 카메라
+ * \brief Camera used when clicking on merchant NPC
  *
  * \date 2009-08-18
  * \author agebreak
@@ -442,8 +442,8 @@ private:
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 그래픽팀으로 받은 데이터를 이용하는 카메라 컨트롤러 추상 클래스. 
-// 관련 함수들이 구현되어 있다.
+// Camera controller abstract class that uses data received from the graphics team. 
+// Related functions are implemented.
 class CNtlCameraFromArtData : public CNtlCameraController
 {
 public:
@@ -460,7 +460,7 @@ public:
 
 protected:
     virtual void        AddCameraData(RwReal fTime, RwReal posX, RwReal posY, RwReal posZ, RwReal targetX, RwReal targetY, RwReal targetZ, VecCamaraData* pVecCameraData);
-    virtual void        CreateSequenceData(CNtl3DTimeSequence** ppSeqPos, CNtl3DTimeSequence** ppSeqTarget, VecCamaraData* pVecCamaraData);              ///< 시퀀스 데이터를 생성한다.
+    virtual void        CreateSequenceData(CNtl3DTimeSequence** ppSeqPos, CNtl3DTimeSequence** ppSeqTarget, VecCamaraData* pVecCamaraData);              ///< Create sequence data.
     virtual void        UpdateCameraTrans(RwV3d *pCamPos, const RwV3d *pLookAt, RwReal fDistOffset = 0.0f);
 
 protected:
@@ -497,7 +497,7 @@ public:
 protected:    
     void				UpdateStart(RwReal fElapsed);
     void				UpdateLoop(RwReal fElapsed);
-    void                UpdateScatter(RwReal fElapsed);         ///< 카메라 흩어질때의 카메라 연출
+    void                UpdateScatter(RwReal fElapsed);         ///< Camera direction when the camera scatters
     void				UpdateEnd(RwReal fElapsed);    
     void                CreateScatterData();    
 
@@ -511,11 +511,11 @@ protected:
     VecCamaraData       m_vecScatterData;
     SCameraData         m_DataIdle;
     
-    RwReal              m_fOrgFov;              ///< 원래 FOV값
+    RwReal              m_fOrgFov;              ///< Original FOV value
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 타임머신 연출용 카메라 컨트롤러
+// Camera controller for time machine production
 class CNtlCameraTimeMachineController : public CNtlCameraFromArtData
 {
 public:
@@ -724,7 +724,7 @@ public:
 		DT_SPLINE_POS_ACTOR_LOOKAT_TWO_ACTOR,
 		DT_SPLINE_POS_LOOKAT_ACTOR,
 		DT_SPLINE_SELF,
-		DT_SPLINE_ACTOR_REF							// 명령이 동작되는 시점의 actor의 정보.
+		DT_SPLINE_ACTOR_REF							// Information about the actor at the time the command is executed.
 	};
 
 	struct SSplineNodeLookAtActor
@@ -815,7 +815,7 @@ public:
 
 	virtual void	UpdateData(RwBool bUpdate = TRUE);
 
-	virtual RwBool  IsCollisionCheck(void)	{ return FALSE; }           ///< 충돌체크를 하지 않는다.
+	virtual RwBool  IsCollisionCheck(void)	{ return FALSE; }           ///< No collision check.
 
 	virtual RwBool	IsInterpCheck(void)		{ return FALSE; }
 
@@ -848,7 +848,7 @@ public:
 
 /**
 * \ingroup NtlSimulation
-* \brief 천하제일 무도회에서 사용하는 옵저버용 고정 카메라 컨트롤러
+* \brief Fixed camera controller for observers used in World's Best Martial Arts Club
 *
 * \date 2008-09-02
 * \author agebreak
@@ -862,17 +862,17 @@ public:
     virtual void	Enter(void);
     virtual void	Exit(void);
     virtual void    Update(RwReal fElapsed);    
-    virtual RwBool  IsCollisionCheck(void)	{ return FALSE; }           ///< 충돌체크를 하지 않는다.
+    virtual RwBool  IsCollisionCheck(void)	{ return FALSE; }           ///< No collision check.
     virtual RwBool	IsInterpCheck(void)		{ return FALSE; }
 
-    void    SetIndex(RwInt32 nType, RwInt32 nIndex);                    ///< 카메라의 인덱스를 설정한다.
+    void    SetIndex(RwInt32 nType, RwInt32 nIndex);                    ///< Set the camera index.
 
 protected:
-    RwBool  LoadObserverCameraData();                                   ///< XML 파일로부터 카메라 데이터를 로드한다.    
+    RwBool  LoadObserverCameraData();                                   ///< Load camera data from XML file.    
 
 protected:
     RwInt32 m_nIndex;
-    std::map<RwInt32, SObserverCameraData> m_mapPos;                    ///< 옵저버 카메라 위치 정보 벡터
+    std::map<RwInt32, SObserverCameraData> m_mapPos;                    ///< Observer camera location information vector
 
 };
 
@@ -1069,7 +1069,7 @@ public:
 	virtual void Enter(void);
 	virtual void Exit(void);
 	virtual void Update(RwReal fElapsed);
-	virtual RwBool  IsCollisionCheck(void)	{ return FALSE; }           ///< 충돌체크를 하지 않는다.
+	virtual RwBool  IsCollisionCheck(void)	{ return FALSE; }           ///< No collision check.
 	virtual RwBool	IsInterpCheck(void)		{ return FALSE; }
 
 	void AddSinExplosionAlgorithm_X( RwUInt32 uiExcuteID, RwReal fLifeTime, RwReal fFrequancy, RwReal fPhase, RwReal fAmp, RwReal fDescFactor );
@@ -1181,7 +1181,7 @@ public:
 	virtual void		Exit( void );
 	virtual void		Update( RwReal fElapsed );	
 	virtual void		SetActiveActor(const CNtlSobActor *pActor);
-	virtual RwBool		IsCollisionCheck(void)	{ return FALSE; }           ///< 충돌체크를 하지 않는다.
+	virtual RwBool		IsCollisionCheck(void)	{ return FALSE; }           ///< No collision check.
 	virtual RwBool		IsInterpCheck(void)		{ return FALSE; }
 
 	void				SetData(RwReal fLifeTime);
@@ -1237,7 +1237,7 @@ public:
 	virtual void		Enter( void );	
 	virtual void		Exit( void );
 	virtual void		Update( RwReal fElapsed );
-	virtual RwBool		IsCollisionCheck(void)	{ return TRUE; }           ///< 충돌체크를 하지 않는다.
+	virtual RwBool		IsCollisionCheck(void)	{ return TRUE; }           ///< No collision check.
 	virtual RwBool		IsInterpCheck(void)		{ return FALSE; }
 
 	virtual void		UserCameraControlEnable(RwBool bEnable);
@@ -1296,7 +1296,7 @@ public:
 	virtual void		Exit( void );
 	virtual void		Update( RwReal fElapsed );
 	virtual void		SetActiveActor( const CNtlSobActor *pActor );
-	virtual RwBool		IsCollisionCheck(void)	{ return FALSE; }           ///< 충돌체크를 하지 않는다.
+	virtual RwBool		IsCollisionCheck(void)	{ return FALSE; }           ///< No collision check.
 	virtual RwBool		IsInterpCheck(void)		{ return FALSE; }
 
 	void				SetData( RwUInt32 uiType, RwUInt32 uiTblIdx, RwV3d& vTargetPos );

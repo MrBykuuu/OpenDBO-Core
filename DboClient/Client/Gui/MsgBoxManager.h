@@ -33,20 +33,20 @@ public:
 
 	static CMsgBoxManager* GetInstance(VOID);
 	
-	// 삭제는 절대로 삭제함수만을 이용.
+	//For deletion, never use the delete function only.
 	VOID DeleteMsgBox(const char* strStringID );
 	VOID DeleteMsgBox( CMsgBoxGui* pDeletedMsgBox );
 	VOID DeleteAllMsgBoxExceptNetConnectBox(VOID);
 	VOID DeleteNetConnectBox(VOID);
 
-	// 복수개로 나올 수도 있음. 그럴때는 리스트포인터를 이용. 리턴은 가장 마지막으로 발견된 값. 
+	//May appear in plural. In that case, use a list pointer. Returns the last value found.
 	CMsgBoxGui* GetMsgBox(char* strStringID, LIST_MSGBOX* pList = NULL );
 
-	// 나레이션등 메시지 박스들을 단지 보여주거나 보여주지 않는 기능.
+	//Function to simply show or not show message boxes such as narration.
 	VOID ShowAllMsgBox( bool bShow );	
 
-	RwBool IsShowMsgBox(VOID);			// 전체메시지박스가 보일때
-	RwBool IsShowPopupMsgBox(VOID);		// 팝업메시지박스가 보일때
+	RwBool IsShowMsgBox(VOID);			//When the entire message box is visible
+	RwBool IsShowPopupMsgBox(VOID);		//When the pop-up message box is displayed
 
 private:
 	//! Implementation

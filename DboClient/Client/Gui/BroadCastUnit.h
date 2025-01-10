@@ -1,11 +1,11 @@
 /******************************************************************************
 * File			: BroadCastUnit.h
 * Author		: Haesung Cho
-* Copyright		: (주)NTL
+* Copyright		: (二�)NTL
 * Date			: 2008. 10. 27
 * Abstract		: 
 *****************************************************************************
-* Desc			: 게임 TS message, Server emergency, Mini narration을 담당하는 GUI의 Unit
+*Desc           : GUI unit responsible for game TS message, server emergency, and mini narration
 *****************************************************************************/
 
 #ifndef __BROAD_CAST_UNIT_H__

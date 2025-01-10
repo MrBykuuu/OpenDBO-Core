@@ -1,19 +1,19 @@
 /******************************************************************************
-* File			: GroupChatGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 10. 17
-* Abstract		: 
+*File           : GroupChatGui.h
+*Author         : Hong SungBock
+*Copyright      : NTL Co., Ltd.
+*Date           : October 17, 2008
+*Abstract		:  
 *****************************************************************************
-* Desc			: 채팅방을 생성하여 그 방안의 사람들과 이야기를 한다
+*Desc           : Create a chat room and talk to people in the room
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
 class CGroupChatGui : public CNtlPLGui

@@ -10,7 +10,7 @@ static float		g_fLastTime = 0.0f;
 static unsigned int g_dwFrames  = 0;
 
 static bool			g_bInterEalpsedTime = false;		// elapsed time 보간해야 하는가?
-static float		g_fTotInterTime		= 0.0f;			// 총 보간해야 할 시간.
+static float		g_fTotInterTime		= 0.0f;			// Total time to interpolate.
 static float		g_fTickInterTime	= 0.0f;			// tick당 보간해야 할 시간.
 static float		g_fInterTimeRate	= 1.1f;			// 보간 결정 비율.
 static float		g_fInterTimeMag		= 40.0f;		// interpolation time 배율.

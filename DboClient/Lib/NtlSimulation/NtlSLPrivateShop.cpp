@@ -1,9 +1,9 @@
 #include "precomp_ntlsimulation.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLLogic.h"
 #include "NtlSLGlobal.h"
@@ -68,18 +68,18 @@ void CNtlPrivateShop::HandleEvents_PrivateShopState(RWS::CMsg &pMsg)
 	{
 		switch (pShopState->uiEventType)
 		{
-		case PRIVATESHOP_EVENT_CREATE: // 상점 시작
+		case PRIVATESHOP_EVENT_CREATE: // Start a store
 			SetPrivateShopState((ePRIVATESHOP_STATE)pShopState->uiPrivateShopState, pShopState->pPrivateShopData);
 			ClearPrivateShopItem(true);
 			break;
-		case PRIVATESHOP_EVENT_EXIT: // 상점 끝
+		case PRIVATESHOP_EVENT_EXIT: // end of store
 			SetPrivateShopState((ePRIVATESHOP_STATE)pShopState->uiPrivateShopState, pShopState->pPrivateShopData);
 			ClearPrivateShopItem(true);
 			break;
-		case PRIVATESHOP_EVENT_OPEN: // 판매 개시
+		case PRIVATESHOP_EVENT_OPEN: // Sales start
 			SetPrivateShopState((ePRIVATESHOP_STATE)pShopState->uiPrivateShopState, pShopState->pPrivateShopData);
 			break;
-		case PRIVATESHOP_EVENT_CLOSE: // 판매 중지
+		case PRIVATESHOP_EVENT_CLOSE: // stop selling
 			SetPrivateShopState((ePRIVATESHOP_STATE)pShopState->uiPrivateShopState, pShopState->pPrivateShopData);
 			break;
 		}

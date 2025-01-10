@@ -168,7 +168,8 @@ RwBool CNtlSLEventHandler::Create(void)
 	RegisterMsg(g_EventItemSocketInsertBead, "g_EventItemSocketInsertBead", "SNtlEventItemSocketInsertBead");
 	RegisterMsg(g_EventItemSocketDestroyBead, "g_EventItemSocketDestroyBead", "SNtlEventItemSocketDestroyBead");
 
-    // 변신 관련 이벤트
+    // Transformation-related events
+
     RegisterMsg (g_EventTransform, "g_EventTransform", "SNtlEventTransform");
     RegisterMsg (g_EventMobTransform, "g_EventMobTransform", "SNtlEventMobTransform");
     RegisterMsg (g_EventTransformCandy, "g_EventTransformCandy", "SNtlEventTransformCandy");
@@ -176,7 +177,8 @@ RwBool CNtlSLEventHandler::Create(void)
 
 	RegisterMsg(g_EventCinematicScale, "g_EventCinematicScale", "SNtlEventSobCinematicScale");
 
-    // 컨디션 관련 이벤트
+    // Condition-related events
+
     RegisterMsg (g_EventAfterEffectRemainTimeNfy, "g_EventAfterEffectRemainTimeNfy", "SNtlEventAfterEffectRemainTimeNfy");
     RegisterMsg (g_EventSobCondTerror, "g_EventSobCondTerror", "SNtlEventCondTerror");
     RegisterMsg (g_EventSobCondConfused, "g_EventSobCondConfused", "SNtlEventCondConfused");
@@ -230,7 +232,8 @@ RwBool CNtlSLEventHandler::Create(void)
 	RegisterMsg (g_EventSetSkillPassiveEffect, "g_EventSetSiillPassiveEffec", "SNtlEventSetSkillPassiveEffect" );
 	RegisterMsg(g_EventSkillInfoText, "g_EventSkillInfoText", "SNtlEventSobSkillInfoText");
 	
-	// buff
+	// Buff
+
 	RegisterMsg (g_EventSobBuffAdd, "g_EventSobBuffAddStr", "SNtlEventSobBuffAdd");
 	RegisterMsg (g_EventSobBuffDrop, "g_EventSobBuffDropStr", "SNtlEventSobBuffDrop");
 	RegisterMsg (g_EventSobBuffRefreshAll, "g_EventSobBuffRefreshAllStr", "SNtlEventSobBuffRefreshAll");
@@ -243,6 +246,7 @@ RwBool CNtlSLEventHandler::Create(void)
 	RegisterMsg(g_EventSobFakeBuffActivate, "g_EventSobFakeBuffActivateStr", "SNtlEventSobBuffActivate");
 
 	// state transition
+
 	RegisterMsg (g_EventSobStateTransition, "g_EventSobStateTransitionStr", "SNtlEventSobStateTransition");
 	RegisterMsg (g_EventSobServerUpdateState, "g_EventSobServerUpdateStateStr", "SNtlEventSobServerUpdateState");
 	RegisterMsg (g_EventSobServerUpdateCondition, "g_EventSobServerUpdateConditionStr", "SNtlEventSobServerUpdateCondition");
@@ -250,7 +254,8 @@ RwBool CNtlSLEventHandler::Create(void)
 	RegisterMsg (g_EventSobFainting, "g_EventSobFaintingStr", "SNtlEventSobFainting");
     RegisterMsg (g_EventSobUpdateLPStatusNfy, "g_EventSobUpdateLPStatusNfy", "SNtlEventSobUpdateLPStatusNfy");
 
-	// party
+	// Party
+
 	RegisterMsg (g_EventPartyUpdate, "g_EventPartyUpdate", "SNtlEventPartyUpdate");
 	RegisterMsg (g_EventPartyCreate, "g_EventPartyCreate", "SNtlEventPartyCreate");
 	RegisterMsg (g_EventPartyLeave, "g_EventPartyLeave", "SNtlEventPartyLeave");
@@ -285,6 +290,7 @@ RwBool CNtlSLEventHandler::Create(void)
     RegisterMsg (g_EventPartyShareTargetNfy, "g_EVentpartyShareTargetNfy", "SNtlEventPartyShareNfy");
 
     // Friend List
+
     RegisterMsg (g_EventFriendAdd_Res, "g_EventFriendAdd_Res", "SNtlEventFriendAddRes");
     RegisterMsg (g_EventFriendDel_Res, "g_EventFriendDel_Res", "SNtlEventFriendDelRes");
     RegisterMsg (g_EventFriendMove_Res, "g_EventFriendMove_Res", "SNtlEventFriendMoveRes");
@@ -295,7 +301,8 @@ RwBool CNtlSLEventHandler::Create(void)
     RegisterMsg (g_EventFriendInfoChange, "g_EventFriendInfoChange", "SNtlEventFriendInfoChange");
     RegisterMsg (g_EventFriendInfoNotify, "g_EventFriendInfoNotify", "SNtlEventFriendInfoNotify");
 
-	// otherparam
+	// Otherparam
+
 	RegisterMsg (g_EventHelpHint, "g_EventHelpHint", "SNtlEventHelpHint");
 	RegisterMsg (g_EventRegisterQuestPosMark, "g_EventRegisterQuestPosMarkStr", "SNtlEventRegisterQuestPosMark" );
 	RegisterMsg (g_EventUnregisterQuestPosMark, "g_EventUnregisterQuestPosMarkStr", "SNtlEventUnregisterQuestPosMark" );
@@ -303,7 +310,8 @@ RwBool CNtlSLEventHandler::Create(void)
 	RegisterMsg (g_EventBind, "g_EventBind", "SNtlEventBind");
 	RegisterMsg (g_EventBindNotify, "g_EventBindNotify", "SNtlEventBindNotify");
 	
-	// PrivateShop
+	// Private shop
+
 	RegisterMsg(g_EventPrivateShopState, "g_EventPrivateShopState", "SNtlEventPrivateShopState");
 	RegisterMsg(g_EventPrivateShopStateVisitor, "g_EventPrivateShopStateVisitor", "SNtlEventPrivateShopStateVisitor");
 	RegisterMsg(g_EventPrivateShopItem, "g_EventPrivateShopItem", "SNtlEventPrivateShopItem");
@@ -312,13 +320,15 @@ RwBool CNtlSLEventHandler::Create(void)
 	RegisterMsg(g_EventPrivateShopItemBuying, "g_EventPrivateShopItemBuying", "SNtlEventPrivateShopItemBuying");
 	RegisterMsg(g_EventPrivateShopItemState, "g_EventPrivateShopItemState", "SNtlEventPrivateShopItemState");
 	
-	// TMQ
+	// Tmq
+
 	RegisterMsg(g_EventTMQEnterRes, "g_EventTMQEnterRes", "");
 	RegisterMsg (g_EventTMQ, "g_EventTMQ", "SNtlEventTMQ");
 	RegisterMsg (g_EventTMQNotify, "g_EventTMQNotify", "SNtlEventTMQNotify");
     RegisterMsg (g_EventDirectionNfy, "g_EventDirectionNfy", "SNtlEventDirectionNfy");
 
-	// UD
+	// Ud
+
 	RegisterMsg(g_EventUDEnterRes, "g_EventUDEnterRes", "");
 
 	// RankBattle
@@ -326,6 +336,7 @@ RwBool CNtlSLEventHandler::Create(void)
 	//RegisterMsg (g_EventRBRoomInfo, "g_EventRBRoomInfo", "SNtlEventRBRoomInfo" );
 	//RegisterMsg (g_EventRBRoom, "g_EventRBRoom", "SNtlEventRBRoom");
 	//RegisterMsg (g_EventRBMatch, "g_EventRBMatch", "SNtlEventRBMatch");
+
 	RegisterMsg (g_EventRBBoardInfo, "g_EventRBBoardInfo", "SNtlEventRBBoardInfo");
 	RegisterMsg (g_EventRBJoin, "g_EventRBBoardJoin", "SNtlEventRBBoardJoin");
 	RegisterMsg (g_EventRBBattleStateUpdate, "g_EventRBBattleStateUpdate", "SNtlEventRBBattleStateUpdate" );
@@ -338,7 +349,8 @@ RwBool CNtlSLEventHandler::Create(void)
 	RegisterMsg (g_EventRBTotalScoreUpdate, "g_EventRBTotalScoreUpdate", "SNtlEventRBTotalScoreUpdate" );
 	RegisterMsg (g_EventRBForcedEnd, "g_EventRBForcedEnd", "");
 
-	// MailSystem
+	// Mail system
+
 	RegisterMsg(g_EventMailStart, "g_EventMailStart", "SNtlEventMailStart");
 	RegisterMsg(g_EventMailLoadInfo, "g_EventMailLoadInfo", "SNtlEventMailLoadInfo");
 	RegisterMsg(g_EventMailLoadData, "g_EventMailLoadData", "SNtlEventMailLoadData");
@@ -356,21 +368,25 @@ RwBool CNtlSLEventHandler::Create(void)
 	RegisterMsg(g_EventMailMultiDelRes, "g_EventMailMultiDelRes", "SNtlEventMailMultiDelRes" );
 
 	// Char
+
 	RegisterMsg(g_EventCharAway, "g_EventCharAway", "SNtlEventCharAway");
 
 	// auction house
+
 	RegisterMsg(g_EventAuctionHouseListRes, "g_EventAuctionHouseListResStr", "SNtlEventAuctionHouseListRes");
 	RegisterMsg(g_EventAuctionHouseListData, "g_EventAuctionHouseListDataStr", "SNtlEventAuctionHouseListData");
 	RegisterMsg(g_EventAuctionHouseSellRes, "g_EventAuctionHouseSellRes", "SNtlEventAuctionHouseSellRes");
 	RegisterMsg(g_EventAuctionHouseSellCancelRes, "g_EventAuctionHouseSellCancelRes", "SNtlEventAuctionHouseSellCancelRes");
 	RegisterMsg(g_EventAuctionHouseBuyRes, "g_EventAuctionHouseBuyRes", "SNtlEventAuctionHouseBuyRes");
 
-	// ActionMap
+	// Action map
+
 	RegisterMsg(g_EventActionMapLoadInfo, "g_EventActionMapLoadInfo", "SNtlEventActionMapLoadInfo");
 	RegisterMsg(g_EventActionMapUpdateRes, "g_EventActionMapUpdateRes", "SNtlEventActionMapUpdateRes");
 	RegisterMsg(g_EventActionMapClientNotify, "g_EventActionMapClientNotify", "SNtlEventActionMapClientNotify");
 	
-	// simulation object 정보 update.
+	// simulation object information update.
+
 	RegisterMsg (g_EventSobInfoUpdate, "g_EventSobInfoUpdateStr", "SNtlEventSobInfoUpdate");
 	RegisterMsg (g_EventSobNpcCommunity, "g_EventSobNpcCommunityStr", "SNtlEventSobNpcCommunity");
 	RegisterMsg (g_EventSobTriggerObjCommunity, "g_EventSobTriggerObjCommunityStr", "SNtlEventSobTriggerObjCommunity");
@@ -385,12 +401,14 @@ RwBool CNtlSLEventHandler::Create(void)
 
 	RegisterMsg(g_EventPrivateShopNameTag, "g_EventPrivateShopNameTag", "SNtlEventPrivateShopNameTag");
 
-	// simulation object 정보 얻어오기.
+	// Obtain simulation object information.
+
 	RegisterMsg (g_EventSobGetState, "g_EventSobGetStateStr", "SNtlEventSobGetState");
 	RegisterMsg (g_EventSobGetFightingMode, "g_EventSobGetFightingModeStr", "SNtlEventSobGetFightingMode");	
 	RegisterMsg(g_EventSobGetAirMode, "g_EventSobGetAirModeStr", "SNtlEventSobGetAirMode");
 
 	// trigger => client event
+
 	RegisterMsg (g_EventScouter, "g_EventScouter", "SNtlEventScouter");
 	RegisterMsg (g_EventReloadTS, "g_EventReloadTS", "sNtlEventReloadTS");
 	RegisterMsg (g_EventRegQuest_Nfy, "g_EventRegQuest_Nfy", "SNtlEventRegQuest_Nfy");
@@ -431,6 +449,7 @@ RwBool CNtlSLEventHandler::Create(void)
 	RegisterMsg (g_EventTSSkipContainer, "g_EventTSSkipContainer", "SNtlEventTSSkipContainer");
 
 	// DragonBall Collection	
+
 	RegisterMsg (g_EventNightEffect, "g_EventNightEffect", "SNtlEventNightEffect");	
 	RegisterMsg (g_EventDBCNarration, "g_EventDBCNarration", "SNtlEventDBCNarration");
 	RegisterMsg (g_EventDBCNarrationEnd, "g_EventDBCNarrationEnd", "");	
@@ -466,46 +485,57 @@ RwBool CNtlSLEventHandler::Create(void)
 	RegisterMsg(g_EventTSDialogOpen, "g_EventTSDialogOpen", "SNtlEventTSDialogOpen");
 
 	// trigger direct system message
+
 	RegisterMsg (g_EventQuestDirectForward, "g_EventQuestDirectForward", "SNtlEventQuestDirectForward");	
 	RegisterMsg (g_EventQuestDirectEcho, "g_EventQuestDirectEcho", "SNtlEventQuestDirectEcho");	
 	RegisterMsg (g_EventQuestMark, "g_EventQuestMark", "SNtlEventQuestMark");	
 	
 	// trigger object
+
 	RegisterMsg (g_EventTObjectUpdateState, "g_EventTObjectUpdateState", "SNtlEventTObjectUpdateState");	
 
 	// Char Ready
+
 	RegisterMsg (g_EventCharReady, "g_EventCharReady", "" );
 
 	// SideIcon : HintIcon
+
 	RegisterMsg(g_EventRegSideHintIcon, "g_EventRegSideHintIcon", "SNtlEventRegSideHintIcon");
 	
 	// World Concept
+
 	RegisterMsg(g_EventChangeWorldConceptState, "g_EventChangeWorldConceptState", "SNtlEventChangeWorldConceptState");
 	RegisterMsg(g_EventTMQCleintState, "g_EventTMQCleintState", "SNtlEventTMQServerState");
 
-    // UI
+    // Ui
+
     RegisterMsg(g_EventToolTip, "g_EventToolTip", "SNtlEventToolTip");
     RegisterMsg(g_EventUIConfigReload, "g_EventUIConfigReload", "");
 
     // Portal System
+
     RegisterMsg(g_EventPortalInfoRes, "g_EventPortalInfoRes", "SNtlEventPortalInfoRes");
 	RegisterMsg(g_EventPortalAddReq, "g_EventPortalAddReq", "SNtlEventPortalAddReq");
     RegisterMsg(g_EventPortalAddRes, "g_EventPortalAddRes", "SNtlEventPortalAddRes");
     RegisterMsg(g_EventPortalRes, "g_EventPortalRes", "SNtlEventPortalRes");
 
 	// Operate object
+
 	RegisterMsg(g_EventOperateObjectTimeBar, "g_EventOperateObjectTimeBar", "SNtlEventOperateObjectTimeBar");
 
 	// Knockdown Notify -> WakeUp GUI
+
 	RegisterMsg(g_EventKnockDownNfy, "g_EventKnockDownNfy", " ");
 	RegisterMsg(g_EventKnockDownWakeUpNfy, "g_EventKnockDownWakeUpNfy", " ");
 	RegisterMsg(g_EventBlockingNfy, "g_EventBlockingNfy", "SNtlEventBlockingNfy");
 	RegisterMsg(g_EventChargingNfy, "g_EventChargingNfy", "SNtlEventChargingNfy");
 
 	// Popo Notify
+
 	RegisterMsg(g_EventPopoNotify, "g_EventPopoNotify", "SNtlEventPopoNotify" );
 
-    // 버스 및 탈것
+    // buses and vehicles
+
     RegisterMsg(g_EventSobOnBus, "g_EventSobOnBus", "SNtlEventSobOnBus");
 	RegisterMsg(g_EventSobOnVehicle, "g_EventSobOnVehicle", "SNtlEventSobOnVehicle");
 
@@ -517,6 +547,7 @@ RwBool CNtlSLEventHandler::Create(void)
 	RegisterMsg(g_EventBusMove, "g_EventBusMove", "SNtlEventBusMove");
 
 	// Tutorial
+
 	RegisterMsg(g_EventTLDefaultSkin, "g_EventTLDefaultSkin", "SNtlEventTLDefaultSkin");
 	RegisterMsg(g_EventTLGuideMsg_ShowHide, "g_EventTLGuideMsg_ShowHide", "SNtlEventTLGuideMsg_ShowHide");
 	RegisterMsg(g_EventTLGuideMsg_ChangeColor, "g_EventTLGuideMsg_ChangeColor", "SNtlEventTLGuideMsg_ChangeColor");
@@ -537,7 +568,8 @@ RwBool CNtlSLEventHandler::Create(void)
 	RegisterMsg(g_EventTLDisableDialogMoveOption, "g_EventTLDisableDialogMoveOption", "SNtlEventTLDisableDialogMoveOption");
 	RegisterMsg(g_EventTLEnableSkip, "g_EventTLEnableSkip", "SNtlEventTLEnableSkip");
 
-	// 천하제일 무도회
+	// The best ballroom in the world
+
 	RegisterMsg(g_EventMinorMatchStateUpdate, "g_EventMinorMatchStateUpdate", "SNtlMinorMatchStateUpdate");
 	RegisterMsg(g_EventMinorMatchTeamInfo, "g_EventMinorMatchTeamInfo", "SNtlMinorMatchTeamInfo");
 	RegisterMsg(g_EventMinorMatchPlayerState, "g_EventMinorMatchPlayerState", "SNtlMinorMatchPlayerState");
@@ -583,32 +615,40 @@ RwBool CNtlSLEventHandler::Create(void)
 	RegisterMsg(g_EventDialogMove, "g_EventDialogMove", "SNtlEventDialogMove" );
 
 	// Gamble
+
 	RegisterMsg(g_EventGambleAniStart, "g_EventGambleAniStart", "SNtlEventGambleAniStart" );
 	RegisterMsg(g_EventGambleAniEnd, "g_EventGambleAniEnd", "SNtlEventGambleAniEnd" );
 
 	// game server change
+
 	RegisterMsg(g_EventGameServerChangeOut, "g_EventGameServerChangeOut", "SNtlEventGameServerChangeOut" );
 	RegisterMsg(g_EventGameServerChangeIn, "g_EventGameServerChangeIn", "SNtlEventGameServerChangeIn" );
 	RegisterMsg(g_EventGameServerChannelChanged, "g_EventGameServerChannelChanged", "SNtlEventGameServerChannelChanged" );
 
 	// Game chat option
+
 	RegisterMsg(g_EventGameChatOption, "g_EventGameChatOption", "SNtlEventGameChatOption");
 
 	// Broad message
+
 	RegisterMsg(g_EventBroadMsgBegNfy, "g_EventBroadMsgBegNfy", "SNtlEventBroadMsgBegNfy" );
 	RegisterMsg(g_EventBroadMsgEndNfy, "g_EventBroadMsgEndNfy", "SNtlEventBroadMsgEndNfy" );
 
 	//Drop item
+
 	RegisterMsg(g_EventSobCreateDropItemInfo, "g_EventSobCreateDropItemInfo", "SNtlEventSobDropItemInfoCreate");
 
-	// Naming
+	// We
+
 	RegisterMsg(g_EventChangeCharName, "g_EventChangeCharName", "SNtlEventChangeCharName");
 	RegisterMsg(g_EventChangeNickName, "g_EventChangeNickName", "SNtlEventChangeNickName" );
 
-	// ChangeClassAuthorityChanged
+	// Change class authority changed
+
 	RegisterMsg(g_EventChangeClassAuthorityChangedNfy, "g_EventChangeClassAuthorityChangedNfy", "SNtlEventChangeClassAuthorityChanged" );
 
 	// Hoipoi Machine
+
 	RegisterMsg(g_EventDynamicObjectUpdateState, "g_EventDynamicObjectUpdateState", "SNtlEventDynamicObjectUpdateState" );
 	RegisterMsg(g_EventHoipoiMixRecipeRegNfy, "g_EventHoipoiMixRecipeRegNfy", "SNtlEventHoipoiMixRecipeRegNfy" );
 	RegisterMsg(g_EventHoipoiMixItemRecipeInfo, "g_EventHoipoiMixItemRecipeInfo", "SNtlEventHoipoiMixItemRecipeInfo" );
@@ -617,6 +657,7 @@ RwBool CNtlSLEventHandler::Create(void)
 
 
 	// Character Refresh Battle attribute Modifier
+
 	RegisterMsg(g_EventCharRefreshBattleAttributeModifier, "g_EventCharRefreshBattleAttributeModifier", "SNtlEventCharRefreshBattleAttributeModifier" );
 
 	RegisterMsg(g_EventCharRankPointResetNfy, "g_EventCharRankPointResetNfy", "");
@@ -893,7 +934,8 @@ void CNtlSLEventHandler::Destroy(void)
     UnRegisterMsg (g_EventFriendInfoChange);
     UnRegisterMsg (g_EventFriendInfoNotify);
 
-	// HelpHint
+	// Help hint
+
 	UnRegisterMsg (g_EventHelpHint);
 	UnRegisterMsg (g_EventRegisterQuestPosMark);
 	UnRegisterMsg (g_EventUnregisterQuestPosMark);
@@ -901,7 +943,8 @@ void CNtlSLEventHandler::Destroy(void)
 	UnRegisterMsg (g_EventBind);
 	UnRegisterMsg (g_EventBindNotify);
 
-	// PrivateShop
+	// Private shop
+
 	UnRegisterMsg(g_EventPrivateShopState);
 	UnRegisterMsg(g_EventPrivateShopStateVisitor);
 	UnRegisterMsg(g_EventPrivateShopItem);
@@ -922,6 +965,7 @@ void CNtlSLEventHandler::Destroy(void)
 	//UnRegisterMsg (g_EventRBRoomInfo);
 	//UnRegisterMsg (g_EventRBRoom);                              
 	//UnRegisterMsg (g_EventRBMatch);                             
+
 	UnRegisterMsg( g_EventRBBoardInfo );
 	UnRegisterMsg( g_EventRBJoin );
 	UnRegisterMsg (g_EventRBBattleStateUpdate);                 
@@ -934,7 +978,8 @@ void CNtlSLEventHandler::Destroy(void)
 	UnRegisterMsg (g_EventRBTotalScoreUpdate);                 
 	UnRegisterMsg (g_EventRBForcedEnd);
 
-	//MailSystem
+	//Mail system
+
 	UnRegisterMsg(g_EventMailStart);
 	UnRegisterMsg(g_EventMailLoadInfo);
 	UnRegisterMsg(g_EventMailLoadData);
@@ -951,15 +996,18 @@ void CNtlSLEventHandler::Destroy(void)
 	UnRegisterMsg(g_EventMailSystemNfy);
 	UnRegisterMsg(g_EventMailMultiDelRes);
 
-	// ActionMap
+	// Action map
+
 	UnRegisterMsg(g_EventActionMapLoadInfo);
 	UnRegisterMsg(g_EventActionMapUpdateRes);
 	UnRegisterMsg(g_EventActionMapClientNotify);
 
 	//Char
+
 	UnRegisterMsg(g_EventCharAway);
 
 	// auction house
+
 	UnRegisterMsg(g_EventAuctionHouseListRes);
 	UnRegisterMsg(g_EventAuctionHouseListData);
 	UnRegisterMsg(g_EventAuctionHouseSellRes);
@@ -983,6 +1031,7 @@ void CNtlSLEventHandler::Destroy(void)
 	UnRegisterMsg(g_EventSobGetAirMode);
 
 	// trigger => client event
+
 	UnRegisterMsg (g_EventScouter);
 	UnRegisterMsg (g_EventReloadTS);
 	UnRegisterMsg (g_EventRegQuest_Nfy);
@@ -1024,6 +1073,7 @@ void CNtlSLEventHandler::Destroy(void)
 	UnRegisterMsg (g_EventTSSkipContainer);
 
 	// DragonBall Collection	
+
 	UnRegisterMsg (g_EventNightEffect);
 	UnRegisterMsg (g_EventDBCNarration);
 	UnRegisterMsg (g_EventDBCNarrationEnd);	
@@ -1054,37 +1104,46 @@ void CNtlSLEventHandler::Destroy(void)
 	UnRegisterMsg (g_EventTSParty);
 
 	// trigger direct system message
+
 	UnRegisterMsg (g_EventQuestDirectForward);
 	UnRegisterMsg (g_EventQuestDirectEcho);
 	UnRegisterMsg (g_EventQuestMark);
 
 	// trigger object
+
 	UnRegisterMsg (g_EventTObjectUpdateState);
 
 	// Char Ready
+
 	UnRegisterMsg (g_EventCharReady);
 
 	// SideIcon : HintIcon
+
 	UnRegisterMsg(g_EventRegSideHintIcon);
 
 	// World Concept
+
 	UnRegisterMsg(g_EventChangeWorldConceptState);
 	UnRegisterMsg(g_EventTMQCleintState);
     
-    // UI
+    // Ui
+
     UnRegisterMsg(g_EventToolTip);
     UnRegisterMsg(g_EventUIConfigReload);
 
     // Portal 
+
     UnRegisterMsg(g_EventPortalInfoRes);
 	UnRegisterMsg(g_EventPortalAddReq);
     UnRegisterMsg(g_EventPortalAddRes);
     UnRegisterMsg(g_EventPortalRes);
 
 	// Operate object
+
 	UnRegisterMsg(g_EventOperateObjectTimeBar);
 
 	// KnockDown Notify -> Wakeup Gui
+
 	UnRegisterMsg(g_EventKnockDownNfy);
 	UnRegisterMsg(g_EventKnockDownWakeUpNfy);
 	UnRegisterMsg(g_EventBlockingNfy);
@@ -1092,7 +1151,8 @@ void CNtlSLEventHandler::Destroy(void)
 
 	UnRegisterMsg(g_EventPopoNotify);
 
-    // 버스 및 탈것
+    // buses and vehicles
+
     UnRegisterMsg(g_EventSobOnBus);
 	UnRegisterMsg(g_EventSobOnVehicle);
 	UnRegisterMsg(g_EventSobVehicleStart);
@@ -1102,6 +1162,7 @@ void CNtlSLEventHandler::Destroy(void)
 	UnRegisterMsg(g_EventBusMove);
 
 	// Tutorial
+
 	UnRegisterMsg(g_EventTLDefaultSkin);
 	UnRegisterMsg(g_EventTLGuideMsg_ShowHide);
 	UnRegisterMsg(g_EventTLGuideMsg_ChangeColor);
@@ -1122,7 +1183,8 @@ void CNtlSLEventHandler::Destroy(void)
 	UnRegisterMsg(g_EventTLDisableDialogMoveOption);
 	UnRegisterMsg(g_EventTLEnableSkip);
 
-	// 천하제일 무도회
+	// The best ballroom in the world
+
 	UnRegisterMsg(g_EventMinorMatchStateUpdate);
 	UnRegisterMsg(g_EventMinorMatchTeamInfo);
 	UnRegisterMsg(g_EventMinorMatchPlayerState);
@@ -1168,10 +1230,12 @@ void CNtlSLEventHandler::Destroy(void)
 	UnRegisterMsg(g_EventDialogMove);
 
 	// Gamble
+
 	UnRegisterMsg(g_EventGambleAniStart);
 	UnRegisterMsg(g_EventGambleAniEnd);
 
 	// game server change
+
 	UnRegisterMsg(g_EventGameServerChangeOut);
 	UnRegisterMsg(g_EventGameServerChangeIn);
 	UnRegisterMsg(g_EventGameServerChannelChanged);
@@ -1179,20 +1243,25 @@ void CNtlSLEventHandler::Destroy(void)
 	UnRegisterMsg(g_EventGameChatOption);
 
 	// Broad message
+
 	UnRegisterMsg(g_EventBroadMsgBegNfy);
 	UnRegisterMsg(g_EventBroadMsgEndNfy);
 
 	// Drop item
+
 	UnRegisterMsg(g_EventSobCreateDropItemInfo);
 
-	// Naming
+	// We
+
 	UnRegisterMsg(g_EventChangeCharName);
 	UnRegisterMsg(g_EventChangeNickName);
 
-	// ChangeClassAuthorityChanged
+	// Change class authority changed
+
 	UnRegisterMsg(g_EventChangeClassAuthorityChangedNfy);
 
 	// Dynamic Object
+
 	UnRegisterMsg(g_EventDynamicObjectUpdateState);
 	UnRegisterMsg(g_EventHoipoiMixRecipeRegNfy);
 	UnRegisterMsg(g_EventHoipoiMixItemRecipeInfo);
@@ -1200,9 +1269,11 @@ void CNtlSLEventHandler::Destroy(void)
 	UnRegisterMsg(g_EventHoipoiMixInfoUpdate);
 
 	// Character Refresh battle attribute modifier
+
 	UnRegisterMsg(g_EventCharRefreshBattleAttributeModifier);
 
 	// Character Rank point reset notify
+
 	UnRegisterMsg(g_EventCharRankPointResetNfy);
 
 	UnRegisterMsg( g_EventQuickSlotGuiMode );

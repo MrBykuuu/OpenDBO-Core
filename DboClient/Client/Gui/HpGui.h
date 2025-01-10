@@ -1,12 +1,12 @@
 ﻿/*****************************************************************************
  *
- * File			: HpGui.h
- * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
- * Date			: 2005. 9. 20	
- * Abstract		: DBO HP/MP/CP gui.
+ *File			: HpGui.h
+ *Author	    : HyungSuk, Jang
+ *Copyright	    : NTL Co., Ltd.
+ *Date			: 2005. 9. 20	
+ *Abstract		: DBO HP/MP/CP gui.
  *****************************************************************************
- * Desc         : 
+ *Desc          : 
  *
  *****************************************************************************/
 
@@ -64,7 +64,7 @@ private:
 	//CGaugeAnimation		m_LPGaugeAnimation;
 	//CGaugeAnimation		m_EPGagueAnimation;
 	
-	// Power // disable by daneos
+	// Power //disable by daneos
 	/*gui::CPanel*		m_ppnlPowerText;
 	CNumberGui			m_numPower;*/
 

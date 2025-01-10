@@ -1,10 +1,10 @@
 #include "precomp_ntlpresentation.h"
 #include "NtlPLCinematicObject.h"
 
-// gui
+// Gui
 #include "gui_renderer.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 #include "NtlPLGuiManager.h"
 #include "NtlPLEventGenerator.h"
@@ -18,7 +18,7 @@
 #define BALLOON_MARGIN_HEIGHT		83
 #define CINEMATIC_NAME_POS_Y		677
 
-#define CINIMATIC_BAR_HEIGHTRATE	0.16666667f // 768일때 
+#define CINIMATIC_BAR_HEIGHTRATE	0.16666667f // When it's 768 
 
 #define PCSELFOCUS_DELTA_FROM_SELBUTTON_X	5
 #define CINEMATIC_BACK_ALPHA		100
@@ -374,7 +374,7 @@ VOID CNtlPLCinematicObject::SetBalloonType( RwInt32 eBalloonType )
 	//CRectangle rtScreen = m_pBalloon->GetScreenRect();
 	//CRectangle rtClient = m_pBalloon->GetClientRect();
 
-	//// peessitemp 현재 말풍선이 하나임
+	//// peessitemp Currently there is only one speech bubble
 	//if( eBalloonType == BALLOON_TYPE_NORMAL )
 	//{
 	//	surface = GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Cinematic.srf", "srfBalloonType1Body" );
@@ -476,7 +476,7 @@ VOID CNtlPLCinematicObject::SetFocusOnNPCBar( RwBool bFocusOnNPC )
 	std::list<gui::CSurface>* pNPCSurfaceList = m_pNameBox->GetSurface();
 	std::list<gui::CSurface>* pPCSurfaceList = m_pdlgPCNameBar->GetSurface();
 
-	// peessi: 현재 Alpha값은 Surface만 저장되어 있으므로 문제. Alpha값을 저장하는 인터페이스를 만들지 검토.
+	// peessi: This is a problem because the current Alpha value is only stored on Surface. Consider creating an interface to store the Alpha value.
 	RwUInt8 byPCAlpha, byNPCAlpha;
 	
 	if( pNPCSurfaceList->empty() )
@@ -617,7 +617,7 @@ RwBool CNtlPLCinematicObject::IsFlashObjectUpdated(VOID)
 
 VOID CNtlPLCinematicObject::InitShowSetting(VOID)
 {
-	// 각 Begin State에서 한번씩 호출 후 조정. This는 DialogManager에서 조정.
+	// Adjusted after calling once in each Begin State. This is controlled by DialogManager.
 	m_pCinematicUpper->Show( true );
 	m_pCinematicLower->Show( true );
 	m_pHtmlText->Show( true );
@@ -627,18 +627,18 @@ VOID CNtlPLCinematicObject::InitShowSetting(VOID)
 	ShowImage( TRUE );
 	m_pBalloon->Show( true );	
 
-	// PC Dialog는 Quest에서만 사용하므로 기본적으로 Show False
+	// PC Dialog is only used by Quest, so it defaults to Show False
 	m_pfrmPCFrame->Show( false );
 }
 
 VOID CNtlPLCinematicObject::FitSizeToScreen( RwInt32 nWidth, RwInt32 nHeight )
 {
-	// 횡으로만 가운데 정렬, 종으로는 맨 밑에.
+	// Aligned horizontally in the center, vertically at the bottom.
 	RwInt32 nNewXPos, nNewYPos;	
 	nNewXPos = ( nWidth - CINEMATIC_DEFAULT_WIDTH ) / 2;
 	nNewYPos = nHeight - CINEMATIC_DEFAULT_HEIGHT;
 
-	// 몇픽셀 정도의 오차를 피할수 없다.
+	// An error of a few pixels cannot be avoided.
 	RwInt32 nBarHeight = (RwInt32)(nHeight * CINIMATIC_BAR_HEIGHTRATE + 0.5f);
 
 	// Cinematic LowerBar Fix Pos
@@ -710,16 +710,16 @@ VOID CNtlPLCinematicObject::FitSizeToScreen( RwInt32 nWidth, RwInt32 nHeight )
 		pFlash->GetFlashObject()->SetSize( nWidth, nHeight );
 	}	
 
-	// PCMessage
+	// Pc message
 	CRectangle rtPCFrame;
 	rtPCFrame = m_pfrmPCFrame->GetPosition();
 	rtPCFrame.SetRectWH( nNewXPos, nHeight - nBarHeight, rtPCFrame.GetWidth(), nBarHeight );
 	m_pfrmPCFrame->SetPosition( rtPCFrame );
 
-	RwInt32 nPCFrameTextRegionHeight = nBarHeight - 19;	// MagicalNumber : 이미지로 가리는 부분이 19 pixel 만큼.
+	RwInt32 nPCFrameTextRegionHeight = nBarHeight - 19;	// MagicalNumber: The area covered by the image is 19 pixels.
 	
 	CRectangle rtPCMessage = m_phtmlPCMessage->GetPosition();
-	RwInt32 nPCMessagePosY = ( nPCFrameTextRegionHeight - rtPCMessage.GetHeight() ) / 2 + 8; // MagicalNumber : 윗쪽 이미지는 8Pixel
+	RwInt32 nPCMessagePosY = ( nPCFrameTextRegionHeight - rtPCMessage.GetHeight() ) / 2 + 8; // MagicalNumber: Top image is 8Pixel
 	if( nPCMessagePosY < 8 )
 		nPCMessagePosY = 8;
 	m_phtmlPCMessage->SetPosition( rtPCMessage.left, nPCMessagePosY );

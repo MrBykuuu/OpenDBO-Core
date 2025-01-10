@@ -1,22 +1,22 @@
 #include "precomp_dboclient.h"
 #include "TMQBoard.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlPLDef.h"
 
-// shared
+// Shared
 #include "Table.h"
 #include "TimeQuestTable.h"
 #include "NtlRankBattle.h"
 #include "QuestTextDataTable.h"
 
-// simulation
+// Simulation
 #include "DboEvent.h"
 #include "NtlSoundManager.h"
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
@@ -51,14 +51,14 @@ CTMQPartyListItem::~CTMQPartyListItem()
 
 /**
 * \brief Create
-* \param pBoard		(CTMQBoard*) 현재의 GUI가 부모로 가지는 CBoard*
-* \param pParentGui	(gui::CComponent*) CTMQPartyListItem이 가지고 있는 Dialog의 부모 Component
-* \param byIndex	(RwUInt8) 파티 리스트의 인덱스 ( 순번 또는 순위 )
-* \param nTop		(RwInt32) 파티 리스트가 가지는 Dialog의 Y 좌표
+* \param pBoard (CTMQBoard*) The CBoard*that the current GUI has as its parent.
+* \param pParentGui (gui::CComponent*) Parent Component of the Dialog owned by CTMQPartyListItem
+* \param byIndex (RwUInt8) Index of party list (order number or rank)
+* \param nTop (RwInt32) Y coordinate of the dialog of the party list
 */
 VOID CTMQPartyListItem::Create( CTMQBoard* pBoard, gui::CComponent* pParentGui, RwUInt8 byIndex, RwInt32 nTop )
 {
-	// TMQ Board의 포인터와 인덱스를 저장하고 있는다.
+	// Stores the pointer and index of the TMQ Board.
 	m_pTMQBoard = pBoard;
 	m_byIndex = byIndex;
 
@@ -68,19 +68,19 @@ VOID CTMQPartyListItem::Create( CTMQBoard* pBoard, gui::CComponent* pParentGui, 
 	rect.SetRectWH( 13, nTop, 316, dRANKBOARD_TMQ_PARTYTIEM_HEIGHT );
 	m_pDlgPartyListItem = NTL_NEW gui::CDialog( &rect, pParentGui, GetNtlGuiManager()->GetSurfaceManager() );
 
-	// 파티 이름
+	// party name
 	rect.SetRectWH( 57, 6, 125, 20 );
 	m_pStbPartyName = NTL_NEW gui::CStaticBox( &rect, m_pDlgPartyListItem, GetNtlGuiManager()->GetSurfaceManager(),
 		COMP_TEXT_VERTICAL_CENTER | COMP_TEXT_CENTER );
 	m_pStbPartyName->CreateFontStd( DETAIL_FONT, dRANKBOARD_TMQ_PARTYITEM_FONT_HEIGHT, 0 );
 
-	// 클리어 시간
+	// clear time
 	rect.SetRectWH( 184, 6, 107, 20 );
 	m_pStbClearTime = NTL_NEW gui::CStaticBox( &rect, m_pDlgPartyListItem, GetNtlGuiManager()->GetSurfaceManager(),
 		COMP_TEXT_VERTICAL_CENTER | COMP_TEXT_CENTER );
 	m_pStbClearTime->CreateFontStd( DETAIL_FONT, dRANKBOARD_TMQ_PARTYITEM_FONT_HEIGHT, 0 );
 
-	// 밑줄
+	// underscore
 	rect.SetRectWH( 0, 33, 316, 1 );
 	m_pPanUnderLine = NTL_NEW gui::CPanel( &rect, m_pDlgPartyListItem, GetNtlGuiManager()->GetSurfaceManager() );
 
@@ -105,19 +105,19 @@ VOID CTMQPartyListItem::Destroy()
 }
 
 /**
-* \brief 파티 리스트 항목을 세팅한다.
-* \param nRank			(RwInt32) 순위
-* \param pwcPartyName	(const WCHAR*) 파티 이름
-* \param uiClearTime	(RwUInt32) 클리어 기록
+* \brief Sets party list items.
+* \param nRank (RwInt32) rank
+* \param pwcPartyName (const WCHAR*) Party name
+* \param uiClearTime (RwUInt32) Clear record
 */
 VOID CTMQPartyListItem::SetItem( RwInt32 nRank, const WCHAR* pwcPartyName, RwUInt32 uiClearTime )
 {
 	m_pStbPartyName->SetText( pwcPartyName );
 
-	// ClearTime은 ms 단위
+	// ClearTime is in ms
 	RwReal fSec = (RwReal)uiClearTime / 1000.f;
 
-	// 하루가 넘어가면 지정된 String을 출력한다.
+	// If one day passes, the specified String is output.
 	RwUInt32 uiDay = (RwUInt32)(fSec / 86400.f);
 	if( uiDay > 0 )
 		m_pStbClearTime->SetText( GetDisplayStringManager()->GetString( "DST_RANKBOARD_TMQ_OVER_TIME" ) );
@@ -126,7 +126,7 @@ VOID CTMQPartyListItem::SetItem( RwInt32 nRank, const WCHAR* pwcPartyName, RwUIn
 }
 
 /**
-* \brief 아이템을 초기화한다.
+* \brief Initializes the item.
 */
 VOID CTMQPartyListItem::ClearItem()
 {
@@ -135,8 +135,8 @@ VOID CTMQPartyListItem::ClearItem()
 }
 
 /**
-* \brief bEnable 아이템을 비활/활성화 시킨다. 아이템이 비활성화가 되면 마우스 UP을 처리하지 않는다.
-* \param bEnable	(RwBool) 가능
+* \brief bEnable Disables/activates the item. When an item is deactivated, mouse UP is not processed.
+* \param bEnable (RwBool) enabled
 */
 VOID CTMQPartyListItem::Enable( RwBool bEnable )
 {
@@ -147,12 +147,12 @@ VOID CTMQPartyListItem::Enable( RwBool bEnable )
 }
 
 /**
-* \brief 마우스의 UP을 받는다.
-* \param key	(CKey&) 마우스 정보의 구조체
+* \brief Receives mouse UP.
+* \param key (CKey&) Structure of mouse information
 */
 VOID CTMQPartyListItem::OnMouseUp( const CKey& key )
 {
-	// 정보가 없다면 Mouse Up을 처리하지 않는다.
+	// If there is no information, Mouse Up is not processed.
 	if( !m_pStbPartyName->GetText().compare( L"---" ) )
 		return;
 
@@ -182,9 +182,9 @@ CTMQPartyMemberItem::~CTMQPartyMemberItem()
 }
 
 /**
-* \brief 파티 멤버 리스트의 컴포넌트들을 동적으로 생성한다.
-* \param pParentGui	(gui::CComponent*) 부모의 GUI
-* \param nTop		(RwInt32) 현재 아이템의 Y 시작 위치
+* \brief Dynamically creates the components of the party member list.
+* \param pParentGui (gui::CComponent*) Parent's GUI
+* \param nTop (RwInt32) Y starting position of current item
 */
 VOID CTMQPartyMemberItem::Create( gui::CComponent* pParentGui, RwInt32 nTop )
 {
@@ -219,17 +219,17 @@ VOID CTMQPartyMemberItem::Destroy()
 }
 
 /**
-* \brief 멤버 아이템을 데이타로 세팅한다.
-* \param pwcMemberName	(const WCHAR*) 파티 멤버의 이름
-* \param nLevel			(RwInt32) 레벨
-* \param byClass		(RwUInt8) 클래스
+* \brief Sets member items as data.
+* \param pwcMemberName	(const WCHAR*) Name of the party member
+* \param nLevel			(RwInt32) level
+* \param byClass		(RwUInt8) class
 */
 VOID CTMQPartyMemberItem::SetItem( const WCHAR* pwcMemberName, RwInt32 nLevel, RwUInt8 byClass )
 {
 	m_pStbPartyMemberName->SetText( pwcMemberName );
 	m_pStbLevel->SetText( nLevel );
 	
-	// ToolTip 및 Class의 Icon을 달아준다.
+	// Add ToolTip and Class Icon.
 	m_pPanClass->DeleteToolTip();
 	m_pPanClass->GetSurface()->clear();
 	m_pPanClass->AddSurface( Logic_GetPCClassIconSurface( byClass, FALSE ) );
@@ -239,7 +239,7 @@ VOID CTMQPartyMemberItem::SetItem( const WCHAR* pwcMemberName, RwInt32 nLevel, R
 }
 
 /**
-* \brief 아이템을 초기화한다.
+* \brief Initializes the item.
 */
 VOID CTMQPartyMemberItem::ClearItem()
 {
@@ -275,9 +275,9 @@ CTMQBoard::~CTMQBoard()
 }
 
 /**
-* \brief TMQ Board를 생성한다.
-* \param eType		(eBoardType) 보드의 타입
-* \param pParentGui	(CRankBoardGui*) 랭킹 보드의 포인터
+* \brief Create a TMQ Board.
+* \param eType		(eBoardType) Type of board
+* \param pParentGui	(CRankBoardGui*) Pointer to the ranking board.
 */
 void CTMQBoard::Create( eBoardType eType, CRankBoardGui* pParentGui )
 {
@@ -320,11 +320,11 @@ void CTMQBoard::Create( eBoardType eType, CRankBoardGui* pParentGui )
 	m_slotOnItemSelect = m_pCbbTitle->SigSelected().Connect( this, &CTMQBoard::OnItemSelect );
 	m_slotListToggled = m_pCbbTitle->SigListToggled().Connect( this, &CTMQBoard::OnListToggled );
 
-	// 파티 리스트를 생성한다.
+	// Create a party list.
 	for( RwUInt8 i = 0; i< dRANKBOARD_TMQ_PARTYITEM_NUMS; ++i )
 		m_itemPartyList[i].Create( this, m_pTMQBoardDlg, i, (63) + (dRANKBOARD_TMQ_PARTYTIEM_HEIGHT*i));
 
-	// 멤버 리스트를 생성한다.
+	// Create a member list.
 	for( RwUInt8 i = 0; i< dRANKBOARD_TMQ_PARTYMEMBERITEM_NUMS; ++i )
 		m_itemPartyMember[i].Create( m_pTMQBoardDlg, (106) + (30*i) );
 
@@ -362,7 +362,7 @@ void CTMQBoard::Create( eBoardType eType, CRankBoardGui* pParentGui )
 }
 
 /**
-* \brief TMQ Board에서 생성한 아이템들을 삭제한다.
+* \brief Deletes items created in TMQ Board.
 */
 void CTMQBoard::Destroy()
 {
@@ -374,8 +374,8 @@ void CTMQBoard::Destroy()
 }
 
 /**
-* \brief 현재 보드가 가지고 있는 Dialog의 Show 여부 세팅
-* \param bShow	(RwBool) TRUE : 보임, FALSE : 보이지 않음
+* \brief Setting whether to show the dialog currently owned by the board
+* \param bShow (RwBool) TRUE: visible, FALSE: not visible
 */
 void CTMQBoard::Show( RwBool bShow /*= TRUE */ )
 {
@@ -385,8 +385,8 @@ void CTMQBoard::Show( RwBool bShow /*= TRUE */ )
 }
 
 /**
-* \brief 현재 보드의 활성화 여부 셋팅
-* \param bEnable	(RwBool) TRUE : 활성화   FALSE : 비활성화
+* \brief Setting whether the current board is active or not
+* \param bEnable (RwBool) TRUE: Enabled FALSE: Disabled
 */
 void CTMQBoard::Enable( RwBool bEnable /*= TRUE */ )
 {
@@ -410,27 +410,27 @@ void CTMQBoard::Enable( RwBool bEnable /*= TRUE */ )
 }
 
 /**
-* \brief 이벤티 처리 함수
-* \param msg	(RWS::CMsg*) 이벤트 구조체
+* \brief Event processing function
+* \param msg	(RWS::CMsg*) event structure
 */
 void CTMQBoard::MessageProc( RWS::CMsg& msg )
 {
-	// TMQ 기록의 리스트를 받는다.
+	// Get a list of TMQ records.
 	if( msg.Id == g_EventTMQRecordListRes )
 	{
 		SDboEventTMQRecordListRes* pResult = reinterpret_cast<SDboEventTMQRecordListRes*>(msg.pData);
 
-		// 난이도
+		// Difficulty level
 		SetDifficultButton( pResult->byDifficult );
 
 		sTIMEQUEST_TEAM_RANK_DATA* pTeamData = reinterpret_cast<sTIMEQUEST_TEAM_RANK_DATA*>( pResult->paTeam );
 
-		// 첫번째(Best) ClearTime이 0이라면 데이타가 없음
+		// If the first (Best) ClearTimeout is 0, there is no data.
 		if( pTeamData[0].dwClearTime == 0 )
 		{
 			SetDataResult( eDATA_NONE );
 			
-			// Select 는 0번을 해준다.
+			// Select is number 0.
 			CRectangle rect = m_itemPartyList[0].GetScreenRect();
 			CRectangle DialogRect = m_pTMQBoardDlg->GetScreenRect();
 
@@ -440,7 +440,7 @@ void CTMQBoard::MessageProc( RWS::CMsg& msg )
 			return;
 		}
 
-		// 데이터를 GUI에서 보관한다.
+		// Data is stored in the GUI.
 		m_byTeamCount = pResult->byTeamCount;
 		for( RwInt32 i = 0; i< pResult->byTeamCount; ++i )
 		{
@@ -451,13 +451,13 @@ void CTMQBoard::MessageProc( RWS::CMsg& msg )
 				sizeof(WCHAR) * NTL_MAX_SIZE_PARTY_NAME );
 		}
 
-		// 멤버를 성공적으로 받았으면 0 번째 멤버 리스트를 요청한다.
+		// If the member has been successfully received, the 0th member list is requested.
 		SelectMemberList( 0 );
 
-		//// 성공적으로 데이터를 받았다.
+		//// Data was received successfully.
 		//SetDataResult( eDATA_OK );
 	}
-	// MEMBER LIST를 받는다.
+	// Get MEMBER LIST.
 	else if( msg.Id == g_EventTMQMemberListRes )
 	{
 		SDboEventTMQMemberListRes* pResult = reinterpret_cast<SDboEventTMQMemberListRes*>(msg.pData);
@@ -486,24 +486,24 @@ void CTMQBoard::MessageProc( RWS::CMsg& msg )
 }
 
 /**
-* \brief 현재 페이지를 요청한다.
+* \brief Requests the current page.
 */
 void CTMQBoard::CurrentPage()
 {
 	if( m_nCurrentScenario >= (RwInt32)m_vecTblIdx.size() || m_nCurrentScenario < 0 )
 		return;
 	
-	// 현재 페이지 요청
+	// Current page request
 	GetDboGlobal()->GetChatPacketGenerator()->SendTMQ_Record_List_Req( m_vecTblIdx[m_nCurrentScenario], m_nCurrentDifficulty );
 	ClearPartyList();
 	m_pCbbTitle->SelectItem( m_nCurrentScenario );
 	
-	// Best의 멤버 리스트를 요청
-	/*SelectMemberList( 0 );*/
+	// Request a list of Best members
+	/*SelectMemberList(0);*/
 }
 
 /**
-* \brief 파티 리스트를 초기화한다.
+* \brief Initializes the party list.
 */
 VOID CTMQBoard::ClearPartyList()
 {
@@ -512,7 +512,7 @@ VOID CTMQBoard::ClearPartyList()
 }
 
 /**
-* \brief 멤버 리스트를 초기화한다.
+* \brief Initializes the member list.
 */
 VOID CTMQBoard::ClearMemberList()
 {
@@ -521,12 +521,12 @@ VOID CTMQBoard::ClearMemberList()
 }
 
 /**
-* \brief 멤버 리스트를 요청한다.
-* \param byPartyIndex	(RwUInt8) 선택 파티의 인덱스 번호 ( ex : 0, 1, 2, ... , 6)
+* \brief Requests a list of members.
+* \param byPartyIndex	(RwUInt8) Index number of the selected party ( ex : 0, 1, 2, ... , 6)
 */
 VOID CTMQBoard::SelectMemberList( RwUInt8 byPartyIndex )
 {
-	// 어떤 아이템을 셀렉했는지
+	// What item did you select?
 	CRectangle rect = m_itemPartyList[byPartyIndex].GetScreenRect();
 	CRectangle DialogRect = m_pTMQBoardDlg->GetScreenRect();
 
@@ -541,8 +541,8 @@ VOID CTMQBoard::SelectMemberList( RwUInt8 byPartyIndex )
 }
 
 /**
-* \brief 현재 TMQ 시나리오의 난이도를 설정한다.
-* \param byDifficult	(RwUInt8) 난이도 상수
+* \brief Sets the difficulty level of the current TMQ scenario.
+* \param byDifficult (RwUInt8) Difficulty constant
 */
 VOID CTMQBoard::SelectDifficult( RwUInt8 byDifficult )
 {
@@ -551,8 +551,8 @@ VOID CTMQBoard::SelectDifficult( RwUInt8 byDifficult )
 }
 
 /**
-* \brief 선택한 난이도의 버튼을 제외한 난이도 버튼을 활성화 시킨다.
-* \param byDifficult	(RwUInt8) 난이도 상수
+* \brief Activates the difficulty buttons except for the button of the selected difficulty level.
+* \param byDifficult (RwUInt8) Difficulty constant
 */
 VOID CTMQBoard::SetDifficultButton( RwUInt8 byDifficult )
 {
@@ -576,8 +576,8 @@ VOID CTMQBoard::SetDifficultButton( RwUInt8 byDifficult )
 }
 
 /**
-* \brief 서버에서 내려온 데이터의 유효성을 기록한다.
-* \param byDataResult	(RwUInt8) eDataResult
+* \brief Records the validity of data downloaded from the server.
+* \param byDataResult   (RwUInt8) eDataResult
 */
 VOID CTMQBoard::SetDataResult( RwUInt8 byDataResult )
 {
@@ -585,14 +585,14 @@ VOID CTMQBoard::SetDataResult( RwUInt8 byDataResult )
 }
 
 /**
-* \brief 가지고 있는 데이터를 적용한다. 만약 유효하지 않은 데이타라고 판단되면 알맞은 안내 메시지를 출력한다.
+* \brief Apply the data you have. If the data is judged to be invalid, an appropriate information message is output.
 */
 VOID CTMQBoard::ApplyData()
 {
 	ClearPartyList();
 	ClearMemberList();
 
-	// 활성화 되었을 경우 처리
+	// Processing if activated
 	switch( m_byDataResult )
 	{
 	case eDATA_OK:
@@ -622,8 +622,8 @@ VOID CTMQBoard::ApplyData()
 }
 
 /**
-* \brief 이전 버튼을 클릭하면 한 단계 이전의 시나리오를 선택한다.
-* \param pComponent		(gui::CComponent*) 클릭된 컴포넌트
+* \brief Clicking the previous button selects the scenario one level previous.
+* \param pComponent (gui::CComponent*) Clicked component
 */
 VOID CTMQBoard::OnClickedBtnPrev( gui::CComponent* pComponent )
 {
@@ -639,15 +639,15 @@ VOID CTMQBoard::OnClickedBtnPrev( gui::CComponent* pComponent )
 }
 
 /**
-* \brief 다음 버튼을 클릭하면 한 단계 다음의 시나리오를 선택한다.
-* \param pComponent		(gui::CCOmponent*) 클릭된 컴포넌트
+* \brief Clicking the Next button selects the next scenario.
+* \param pComponent (gui::CCOmponent*) Clicked component
 */
 VOID CTMQBoard::OnClickedBtnNext( gui::CComponent* pComponent )
 {
 	// Next
 	if( m_nCurrentScenario >= (RwInt32)m_vecTblIdx.size() )
 	{
-		// 없는 시나리오입니다.
+		// There is no scenario.
 		GetAlarmManager()->AlarmMessage( "DST_RANKBOARD_BOARD_MSGBOX_NONESCENARIO" );
 		return;
 	}
@@ -657,13 +657,13 @@ VOID CTMQBoard::OnClickedBtnNext( gui::CComponent* pComponent )
 }
 
 /**
-* \brief 리스트 박스를 토글하였을 때
-* \param bToggled	(RwBool) 토글의 여부
-* \param pComponent	(gui::CComponent*) 토글된 리스트박스의 컴포넌트
+* \brief When the list box is toggled
+* \param bToggled (RwBool) Whether toggled or not.
+* \param pComponent (gui::CComponent*) The component of the toggled listbox.
 */
 VOID CTMQBoard::OnListToggled( RwBool bToggled, gui::CComponent* pComponent )
 {
-	// 보여지고 있다면 다른 gui에 겹쳐지지 않게 Raise() 시켜준다.
+	// If it is visible, Raise() it so that it does not overlap with other gui.
 	if( bToggled )
 	{
 		pComponent->Raise();
@@ -671,7 +671,7 @@ VOID CTMQBoard::OnListToggled( RwBool bToggled, gui::CComponent* pComponent )
 }
 
 /**
-* \brief Easy 버튼을 클릭하였을 때
+* \brief When clicking the Easy button
 */
 VOID CTMQBoard::OnClickedBtnEasy( gui::CComponent* pComponent )
 {
@@ -680,7 +680,7 @@ VOID CTMQBoard::OnClickedBtnEasy( gui::CComponent* pComponent )
 }
 
 /**
-* \brief Normal 버튼을 클릭하였을 때
+* \brief When clicking the Normal button
 */
 VOID CTMQBoard::OnClickedBtnNormal( gui::CComponent* pComponent )
 {
@@ -689,7 +689,7 @@ VOID CTMQBoard::OnClickedBtnNormal( gui::CComponent* pComponent )
 }
 
 /**
-* \brief Hard 버튼을 클릭하였을 경우
+* \brief When the Hard button is clicked
 */
 VOID CTMQBoard::OnClickedBtnHard( gui::CComponent* pComponent )
 {
@@ -698,14 +698,14 @@ VOID CTMQBoard::OnClickedBtnHard( gui::CComponent* pComponent )
 }
 
 /**
-* \brief 리스트에서 시나리오를 선택했을 경우
+* When a scenario is selected from the \brief list
 */
 VOID CTMQBoard::OnItemSelect( RwInt32 nIndex )
 {
 	// Next
 	if( nIndex >= (RwInt32)m_vecTblIdx.size() )
 	{
-		// 없는 시나리오입니다.
+		// There is no scenario.
 		GetAlarmManager()->AlarmMessage( "DST_RANKBOARD_BOARD_MSGBOX_NONESCENARIO" );
 		return;
 	}

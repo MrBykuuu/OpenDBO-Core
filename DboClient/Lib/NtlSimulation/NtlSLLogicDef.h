@@ -125,11 +125,11 @@ struct SSkillAreaSortStuff
 enum EQuestMarkType
 {
 	EQuestMarkNone,
-	EQuestMarkNew,			// quest가 시작이지만 거리가 멀때.
-	EQuestMarkProgress,		// quest가 진행중일때
-	EQuestMarkReward,		// quest가 보상중일때
-	EQuestMarkVisit,		// quest 중 방문 서버 이벤트가 동작 중인 경우
-	EQuestMarkBalloonNew,	// quest가 시작이지만, 거리가 가까울때
+	EQuestMarkNew,			// When the quest begins but the distance is far away.
+	EQuestMarkProgress,		// When a quest is in progress
+	EQuestMarkReward,		// When the quest is being rewarded
+	EQuestMarkVisit,		// When a visited server event is active during a quest
+	EQuestMarkBalloonNew,	// The quest begins, but the distance is close
 };
 
 enum EQuestMarkFlag

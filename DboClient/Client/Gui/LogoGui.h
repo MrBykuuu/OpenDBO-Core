@@ -1,20 +1,20 @@
 /******************************************************************************
-* File			: LogoGui.h
-* Author		: Hong SungBock
-* Copyright		: (аж)NTL
-* Date			: 2008. 11. 12
-* Abstract		: 
-* Update		: 
+*File			: LogoGui.h
+*Author		    : Hong SungBock
+*Copyright		: (аж)NTL
+*Date			: 2008. 11. 12
+*Abstract		: 
+*Update		    : 
 *****************************************************************************
-* Desc			: NTL Logo
+*Desc			: NTL Logo
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
 class CLogoGui : public CNtlPLGui, public RWS::CEventHandler

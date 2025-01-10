@@ -6,7 +6,7 @@
 
 /**
 * \brief NTL Storage Define Mapping Table
-* 1번은 카테고리로 현재의 값이 카테고리임을 알린다.
+*Number 1 is a category and indicates that the current value is a category.
 */
 SNtlStorageMappingTableData CNtlStorageMTContainer::m_StorageMappingTable[] = {
 // Table rule
@@ -114,7 +114,7 @@ SNtlStorageMappingTableData CNtlStorageMTContainer::m_StorageMappingTable[] = {
 
 
 // You have to insert the table data after the current line. 
-// 반드시 현재 라인 다음에 추가하여야 합니다.
+// It must be added after the current line.
 
 // Table End ----------------------------------------------------------------------------
 };
@@ -131,26 +131,26 @@ CNtlStorageMTContainer::~CNtlStorageMTContainer(void)
 }
 
 /**
-* \brief 미리 테이블을 한번 순회하여 카테고리별, ID별 포인터를 저장하고 있는다.
+* \brief The table is traversed once in advance and pointers for each category and ID are stored.
 */
 bool CNtlStorageMTContainer::SortTable()
 {
-	// 테이블 갯수를 읽어들여서 저장해놓는다.
+	// Reads and stores the number of tables.
 	m_uiCount = _countof(m_StorageMappingTable);
 
 	for( unsigned int i=0; i < m_uiCount; ++i )
 	{
-		// 카테고리별로 등록
+		//Register by category
 		m_mmapCategory.insert(
 			std::make_pair( m_StorageMappingTable[i].byCategoryType,
 			&m_StorageMappingTable[i] ));
 
-		// KEY ID를 Key로 하여 등록
+		//Register using KEY ID as key
 		m_mapTable.insert(
 			std::make_pair( m_StorageMappingTable[i].uiKey,
 			&m_StorageMappingTable[i] ));
 
-		// STRING을 Key로 등록
+		//Register STRING as Key
 		std::string strKey;
 		strKey.append(m_StorageMappingTable[i].acKeyName);
 		
@@ -169,12 +169,12 @@ bool CNtlStorageMTContainer::SetUnitCheckFunc( unsigned int uiKey, NtlStorageUni
 	TABLEMAP::iterator it = m_mapTable.find( uiKey );
 	if( it == m_mapTable.end() )
 	{
-		// 테이블에 등록되어 있는 KEY가 없다.
+		//There is no KEY registered in the table.
 
 		return false;
 	}
 
-	// 새로운 함수 포인터 설정
+	//set new function pointer
 	SNtlStorageMappingTableData* pData = it->second;
 	pData->ntlStorageFunc = funcApply;
 
@@ -186,7 +186,7 @@ NtlStorageUnitCheckFunc CNtlStorageMTContainer::GetUnitCheckFunc( unsigned int u
 	TABLEMAP::iterator it = m_mapTable.find( uiKey );
 	if( it == m_mapTable.end() )
 	{
-		// 테이블에 등록되어 있는 KEY가 없다.
+		//There is no KEY registered in the table.
 
 		return NULL;
 	}
@@ -204,7 +204,7 @@ eNTL_STORAGE_VARIABLE_TYPE CNtlStorageMTContainer::GetVariableType( unsigned int
 	TABLEMAP::iterator it = m_mapTable.find( uiKey );
 	if( it == m_mapTable.end() )
 	{
-		// 테이블에 등록되어 있는 KEY가 없다.
+		//There is no KEY registered in the table.
 
 		return eNTL_STORAGE_VARIABLE_INVALID;
 	}
@@ -217,7 +217,7 @@ eNTL_STORAGE_TYPE CNtlStorageMTContainer::GetStorageType( unsigned int uiKey )
 	TABLEMAP::iterator it = m_mapTable.find( uiKey );
 	if( it == m_mapTable.end() )
 	{
-		// 테이블에 등록되어 있는 KEY가 없다.
+		//There is no KEY registered in the table.
 
 		return eNTL_STORAGE_INVALID;
 	}
@@ -230,7 +230,7 @@ const char* CNtlStorageMTContainer::GetString( unsigned int uiKey )
 	TABLEMAP::iterator it = m_mapTable.find( uiKey );
 	if( it == m_mapTable.end() )
 	{
-		// 테이블에 등록되어 있는 KEY가 없다.
+		//There is no KEY registered in the table.
 
 		return NULL;
 	}
@@ -243,7 +243,7 @@ const char* CNtlStorageMTContainer::GetDefaultString( unsigned int uiKey )
 	TABLEMAP::iterator it = m_mapTable.find( uiKey );
 	if( it == m_mapTable.end() )
 	{
-		// 테이블에 등록되어 있는 KEY가 없다.
+		//There is no KEY registered in the table.
 
 		return NULL;
 	}
@@ -256,7 +256,7 @@ bool CNtlStorageMTContainer::GetDefaultBool( unsigned int uiKey )
 	TABLEMAP::iterator it = m_mapTable.find( uiKey );
 	if( it == m_mapTable.end() )
 	{
-		// 테이블에 등록되어 있는 KEY가 없다.
+		//There is no KEY registered in the table.
 
 		return false;
 	}
@@ -274,7 +274,7 @@ int CNtlStorageMTContainer::GetDefaultInt( unsigned int uiKey )
 	TABLEMAP::iterator it = m_mapTable.find( uiKey );
 	if( it == m_mapTable.end() )
 	{
-		// 테이블에 등록되어 있는 KEY가 없다.
+		//There is no KEY registered in the table.
 
 		return 0xFFFFFFFF;
 	}
@@ -287,7 +287,7 @@ float CNtlStorageMTContainer::GetDefaultFloat( unsigned int uiKey )
 	TABLEMAP::iterator it = m_mapTable.find( uiKey );
 	if( it == m_mapTable.end() )
 	{
-		// 테이블에 등록되어 있는 KEY가 없다.
+		//There is no KEY registered in the table.
 
 		return 0.0f;
 	}

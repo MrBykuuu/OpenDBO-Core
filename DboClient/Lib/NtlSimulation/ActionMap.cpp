@@ -1,7 +1,7 @@
 ﻿#include "precomp_ntlsimulation.h"
 #include "ActionMap.h"
 
-// framework
+// Framework
 #include "NtlApplication.h"
 
 // Simulation
@@ -46,9 +46,9 @@ CActionMap::~CActionMap( void )
 }
 
 /**
-* \breif Key값으로 Action을 찾아서 리턴한다.
-* \param wKey (WORD) 만들어진 NTL Key
-* \return 찾은 ACTION의 ID ( Key가 없다면 ACTION_INVALID )
+*\breif Finds and returns Action by Key value.
+* \param wKey (WORD) Created NTL Key
+* \return ID of the ACTION found (ACTION_INVALID if there is no key)
 */
 WORD CActionMap::FindAction( WORD wKey ) 
 {
@@ -60,7 +60,7 @@ WORD CActionMap::FindAction( WORD wKey )
 }
 
 /**
-* \brief Action값으로 Key를 찾아서 리턴한다.
+* \brief Finds and returns the Key as the Action value.
 * \param wAction (WORD) ACTION ID
 * \return (WORD) KEY DATA
 */
@@ -74,23 +74,23 @@ WORD CActionMap::FindKey( WORD wAction )
 }
 
 /**
-* \brief 액션을 자료구조에 설정한다.
-* \param wKey		(WORD) 만들어진 NTL key
-* \param wAction	(WORD) ACTION ID
+* \brief Sets the action to the data structure.
+* \param wKey (WORD) Created NTL key
+* \param wAction (WORD) ACTION ID
 */
 BYTE CActionMap::SetAction( WORD wKey, WORD wAction ) 
 {
-	// 액션이 등록되어 있는지 확인한다.
+	// Check whether the action is registered.
 	uNtlKey uUseKey; 
 	uUseKey.key = FindKey( wAction );
 
-	// ADD : 기존에 자료구조에 없을 경우
+	// ADD: If it does not exist in the existing data structure
 	if( uUseKey.key == dNTL_KEY_INVALID )
 	{
-		// 현재의 키가 사용되고 있는지 확인한다.
+		// Check whether the current key is being used.
 		ACTIONMAP::iterator itActionMap = m_mapAction.find( wKey );
 
-		// 현재의 키가 사용되지 않는다면 추가를 한다.
+		// If the current key is not used, add it.
 		if( itActionMap == m_mapAction.end() )
 		{
 			m_mapKey[wAction] = wKey;
@@ -99,36 +99,36 @@ BYTE CActionMap::SetAction( WORD wKey, WORD wAction )
 			return SET_RESULT_OK;
 		}
 
-		// 현재의 키가 사용되고 있다면 기존에 등록되어 있던 Action을 저장하고 지운다.
+		// If the current key is being used, the previously registered Action is saved and deleted.
 		WORD wOldAction = (*itActionMap).second;
 		m_mapAction.erase( itActionMap );
 
-		// KeyMap에서 해당하는 액션의 Key를 None으로 설정한다.
+		// Set the Key of the corresponding action in KeyMap to None.
 		ACTIONMAP::iterator itKeyMap = m_mapKey.find( wOldAction );
 		(*itKeyMap).second = dNTL_KEY_EMPTY;
 
-		// 키를 잃어버린 액션을 벡터에 보관한다.
+		// Store actions that have lost their keys in a vector.
 		SetLastReleaseAction( wOldAction );
 
-		// 키와 액션을 등록한다.
+		// Register keys and actions.
 		m_mapKey[wAction] = wKey;
 		m_mapAction[wKey] = wAction;
 		
 		return SET_RESULT_ALREADY_KEY;
 	}
-	// UPDATE : 액션은 등록되어 있는데 키가 없는 경우
+	// UPDATE: If the action is registered but the key is missing
 	else if( uUseKey.key == dNTL_KEY_EMPTY )
 	{
-		// 현재의 키가 사용되고 있는지 확인한다.
+		// Check whether the current key is being used.
 		ACTIONMAP::iterator itActionMap = m_mapAction.find( wKey );
 		
-		// 현재의 키가 사용되지 않는다면 현재의 액션에 바로 변경을 해준다.
+		// If the current key is not used, it changes the current action immediately.
 		if( itActionMap == m_mapAction.end() )
 		{
-			// 키를 등록
+			// register the key
 			m_mapAction[wKey] = wAction;
 
-			// 액션을 등록
+			// Register an action
 			ACTIONMAP::iterator itKeyMap = m_mapKey.find( wAction );
 			if( itKeyMap != m_mapKey.end() )
 				(*itKeyMap).second = wKey;
@@ -136,81 +136,81 @@ BYTE CActionMap::SetAction( WORD wKey, WORD wAction )
 			return SET_RESULT_OK;
 		}
 		
-		// 현재의 키가 사용되고 있다면 기존에 등록되어 있던 Action을 저장하고 지운다.
+		// If the current key is being used, the previously registered Action is saved and deleted.
 		WORD wOldAction = (*itActionMap).second;
 		m_mapAction.erase( itActionMap );
 
-		// KeyMap에서 해당하는 액션의 Key를 None으로 설정한다.
+		// Set the Key of the corresponding action in KeyMap to None.
 		ACTIONMAP::iterator itKeyMap = m_mapKey.find( wOldAction );
 		(*itKeyMap).second = dNTL_KEY_EMPTY;
 
-		// 키를 잃어버린 액션을 벡터에 보관한다.
+		// Store actions that have lost their keys in a vector.
 		SetLastReleaseAction( wOldAction );
 
-		// 액션에 있는 값을 변경해준다.
+		// Changes the value in the action.
 		itKeyMap = m_mapKey.find( wAction );
 		if( itKeyMap != m_mapKey.end() )
 			(*itKeyMap).second = wKey;
 
-		// 키를 등록한다.
+		// Register the key.
 		m_mapAction[wKey] = wAction;
 
 		return SET_RESULT_ALREADY_KEY;
 	}
-	// UPDATE : 액션도 등록되어 있고 액션에 KEY도 존재하는 경우
-	// 그리고 그 KEY가 다른 액션에 존재하거나 하지 않는 경우
+	// UPDATE: When an action is registered and a KEY also exists in the action
+	// And if that KEY exists or does not exist in another action
 	else
 	{
-		// 기존에 등록되어 있던 키의 Action을 저장하고 지운다.
+		// Save and delete the action of the previously registered key.
 		ACTIONMAP::iterator itActionMap = m_mapAction.find( wKey );
 
-		// 키가 다른 액션에 존재하는 경우
+		// If the key exists in another action
 		if( itActionMap != m_mapAction.end() )
 		{
 			WORD wOldAction = (*itActionMap).second;
 
-			// 만약 기존에 키와 액션이 똑같다면
+			// If the existing key and action are the same
 			if( wOldAction == wAction && (*itActionMap).first == wKey)
 				return SET_RESULT_SAME_KEY;
 
 			m_mapAction.erase( itActionMap );
 
-			// KeyMap에서 해당하는 액션의 Key를 None으로 설정한다.
+			// Set the Key of the corresponding action in KeyMap to None.
 			ACTIONMAP::iterator itKeyMap = m_mapKey.find( wOldAction );
 			(*itKeyMap).second = dNTL_KEY_EMPTY;
 
-			// 키를 잃어버린 액션을 벡터에 보관한다.
+			// Store actions that have lost their keys in a vector.
 			SetLastReleaseAction( wOldAction );
 
-			// 새로 등록할 ACTION에 있는 예전의 KEY를 저장하고 변경된 키를 넣는다.
+			// Save the old KEY in the ACTION to be newly registered and insert the changed key.
 			ACTIONMAP::iterator itNewKey = m_mapKey.find( wAction );
 			WORD wOldKey = (*itNewKey).second;
 
 			(*itNewKey).second = wKey;
 
-			// 기존에 있던 ActionMap을 삭제해준다.
+			// Deletes the existing ActionMap.
 			itActionMap = m_mapAction.find( wOldKey );
 			if( itActionMap != m_mapAction.end() )
 				m_mapAction.erase( itActionMap );
 
-			// 새로 등록한다.
+			// Register again.
 			m_mapAction[wKey] = wAction;
 
 			return SET_RESULT_ALREADY_KEY;
 		}
 
-		// 현재 등록하려는 키가 다른 액션에 존재하지 않는 경우 ( 정상적인 처리 )
+		// When the key you are currently trying to register does not exist in another action (normal processing)
 		ACTIONMAP::iterator itNewKey = m_mapKey.find( wAction );
 		WORD wOldKey = (*itNewKey).second;
 
 		(*itNewKey).second = wKey;
 
-		// 기존에 있던 ActionMap을 삭제해준다.
+		// Deletes the existing ActionMap.
 		itActionMap = m_mapAction.find( wOldKey );
 		if( itActionMap != m_mapAction.end() )
 			m_mapAction.erase( itActionMap );
 
-		// 새로 등록한다.
+		// Register again.
 		m_mapAction[wKey] = wAction;
 
 		return SET_RESULT_OK;
@@ -226,7 +226,7 @@ VOID CActionMap::SetLastReleaseAction( WORD wOldAction )
 }
 
 /**
-* \brief 마지막으로 키가 해제된 Action을 리턴한다.
+* \brief Finally, returns the Action whose key has been released.
 */
 WORD CActionMap::GetLastReleaseAction() 
 {
@@ -240,7 +240,7 @@ WORD CActionMap::GetLastReleaseAction()
 }
 
 /**
-* \brief 자료구조를 초기화한다.
+* \brief Initializes the data structure.
 */
 VOID CActionMap::Clear() 
 {
@@ -250,7 +250,7 @@ VOID CActionMap::Clear()
 }
 
 /**
-* \brief 해제된 액션을 저장하는 자료구조를 초기화
+* \brief Initializes the data structure that stores released actions.
 */
 VOID CActionMap::ClearReleaseAction() 
 {
@@ -258,7 +258,7 @@ VOID CActionMap::ClearReleaseAction()
 }
 
 /**
-* \brief 들어온 데이터에 현재 데이터를 저장한다.
+* \brief Saves the current data to the incoming data.
 */
 VOID CActionMap::CaptureMap( CActionMap* pCaptureMap ) 
 {
@@ -267,7 +267,7 @@ VOID CActionMap::CaptureMap( CActionMap* pCaptureMap )
 }
 
 /**
-* \brief 들어온 데이터로 현재 데이터를 구성한다.
+* \brief Constructs the current data with the incoming data.
 */
 VOID CActionMap::RestoreMap( CActionMap* pCaptureMap ) 
 {
@@ -276,7 +276,7 @@ VOID CActionMap::RestoreMap( CActionMap* pCaptureMap )
 }
 
 /**
-* \brief = 연산자 오버로딩: rhs 항의 자료를 this 항으로 복사한다.
+* \brief = Operator overloading: Copy the data in the rhs term to the this term.
 */
 CActionMap& CActionMap::operator=(const CActionMap& rhs)
 {
@@ -287,49 +287,49 @@ CActionMap& CActionMap::operator=(const CActionMap& rhs)
 }
 
 /**
-* \brief 현재의 맵과 변동사항이 있는 것을 체크한다.
+* \brief Check the current map and any changes.
 */
 BOOL CActionMap::CheckMap( ACTIONMAP& mapCapture ) 
 {
-	// m_mapAction과 m_mapCapture가 같다면 변경된 점이 없는 것.
+	// If m_mapAction and m_mapCapture are the same, nothing has changed.
 	if( m_mapKey == mapCapture )
 		return FALSE;
 
 	ACTIONMAP::iterator itOriginal;
 	ACTIONMAP::iterator itCapture;
 
-	// 1. 액션맵을 원본으로 하여 검사
+	// 1. Inspection using the action map as the original
 	for(itOriginal = m_mapKey.begin(); itOriginal != m_mapKey.end(); ++itOriginal)
 	{
 		itCapture = mapCapture.find( itOriginal->first );
 
-		// 오리지날엔 있고 Capture엔 없는 경우
+		// If it is present in the original but not in Capture
 		if( itCapture == mapCapture.end() )
 		{
-			// 등록
+			// registration
 			m_pManager->AddUpdateData( eSHORTCUT_CHANGE_TYPE_ADD, itOriginal->first, itOriginal->second );
 		}
-		// 둘다 있는 경우
+		// If both exist
 		else
 		{
-			// 키가 다를 경우
+			// If the height is different
 			if( itOriginal->second != itCapture->second )
 			{
-				// 변경
+				// change
 				m_pManager->AddUpdateData( eSHORTCUT_CHANGE_TYPE_UPDATE, itOriginal->first, itOriginal->second );
 			}
 		}
 	}
 
-	// 2. 캡쳐맵을 원본으로 하여 검사
+	// 2. Inspection using the capture map as the original
 	for( itCapture = mapCapture.begin(); itCapture != mapCapture.end(); ++itCapture )
 	{
 		itOriginal = m_mapKey.find( itCapture->first );
 
-		// 캡쳐에는 있는데 오리지날엔 없는 경우
+		// If it is in the capture but not in the original
 		if( itOriginal == m_mapKey.end() )
 		{
-			// 삭제
+			// Delete
 			m_pManager->AddUpdateData( eSHORTCUT_CHANGE_TYPE_DEL, itCapture->first, itCapture->second );
 		}
 	}
@@ -394,13 +394,13 @@ VOID CActionMapManager::Destroy( VOID )
 }
 
 /**
-* \brief 기본적으로 사용되는 액션맵을 정의한다.
+* \brief Defines the action map used by default.
 */
 VOID CActionMapManager::InitDefaultActionMap() 
 {
 	m_pActionMap->Clear();
 
-	// Avatar 행동
+	// Avatar action
 	SetSingleKey( 'W', ACTION_AVATAR_FORWARD );
 	SetSingleKey( 'S', ACTION_AVATAR_BACKWARD );
 	SetSingleKey( 'A', ACTION_AVATAR_LEFTTURN );
@@ -415,7 +415,7 @@ VOID CActionMapManager::InitDefaultActionMap()
 	SetSingleKey( 'V', ACTION_AVATAR_LOOTING );
 	SetSingleKey( 'R', ACTION_AVATAR_BLOCKING );
 
-	// Target 선택 및 단축키 설정
+	// Target selection and shortcut key settings
 	SetSingleKey(NTL_KEY_WAVE, ACTION_TARGET_SELF);
 	SetCombineKey(NTL_ALT_BIT | NTL_KEY_NUMPAD1, ACTION_TARGET_1STPARTY);
 	SetCombineKey(NTL_ALT_BIT | NTL_KEY_NUMPAD2, ACTION_TARGET_2NDPARTY);
@@ -439,7 +439,7 @@ VOID CActionMapManager::InitDefaultActionMap()
 	SetCombineKey(NTL_CTRL_BIT | NTL_KEY_F5, ACTION_TARGET_SELECTING_5 );
 	SetCombineKey(NTL_CTRL_BIT | NTL_KEY_TAB, ACTION_TARGET_AUTOTARGET_PARTY );
 
-	// Quick Slot 단축키 설정
+	// Quick Slot shortcut key settings
 	SetSingleKey('1', ACTION_QUICK_1);
 	SetSingleKey('2', ACTION_QUICK_2);
 	SetSingleKey('3', ACTION_QUICK_3);
@@ -486,7 +486,7 @@ VOID CActionMapManager::InitDefaultActionMap()
 //	SetSingleKey('', ACTION_QUICK_SUMMON2);
 
 
-	// Window 단축키 설정
+	// Window Shortcut key settings
 	SetSingleKey('C', ACTION_WINDOW_PROFILE);
 	SetSingleKey('K', ACTION_WINDOW_SKILL);
 	SetSingleKey('J', ACTION_WINDOW_QUEST);
@@ -500,6 +500,7 @@ VOID CActionMapManager::InitDefaultActionMap()
 	SetSingleKey('H', ACTION_WINDOW_HELP);
 	SetCombineKey(NTL_CTRL_BIT | 'M', ACTION_WINDOW_MAIN);
 	SetSingleKey('B', ACTION_WINDOW_RANKBOARD);
+	//SetSingleKey('U', ACTION_WINDOW_SCOUTERUI); //added scouter shortcut
 	SetSingleKey('.', ACTION_WINDOW_HOIPOIMIX);
 	SetSingleKey(',', ACTION_WINDOW_MASCOT);
 
@@ -514,7 +515,7 @@ VOID CActionMapManager::InitDefaultActionMap()
 	SetSingleKey(NTL_KEY_SNAPSHOT, ACTION_GLOBAL_SNAPSHOT);
 	SetSingleKey(NTL_KEY_RETURN, ACTION_GLOBAL_CHAT);
 
-	// Default Map을 만들어놓는다.
+	// Create a default map.
 	m_pActionMap->CaptureMap( m_pDefaultMap );
 }
 
@@ -559,7 +560,7 @@ WORD CActionMapManager::FindAction( WORD wKey )
 }
 
 /**
-* \brief 액션으로 키를 찾는다.
+* Find the key with the \brief action.
 * \param wAction (WORD) ACTION ID
 * \return KEY DATA
 */
@@ -589,12 +590,12 @@ BOOL CActionMapManager::SetInputAction( WORD wAction )
 }
 
 /**
-* \brief 마지막 세팅 결과를 기록한다.
+* \brief Records the last setting result.
 * \param byResult (BYTE) eACTIONMAP_SET_RESULT
 */
 VOID CActionMapManager::SetLastResult( BYTE byResult ) 
 {
-	// 혹시나 모른 방어 코드.
+	// A defense code you might not know about.
 	if( (int)m_vecResult.size() > 10 )
 		m_vecResult.clear();
 
@@ -602,7 +603,7 @@ VOID CActionMapManager::SetLastResult( BYTE byResult )
 }
 
 /**
-* \brief 마지막 세팅 결과를 읽는다.
+* \brief Reads the last setting result.
 * \return eACTIONMAP_SET_RESULT
 */
 BYTE CActionMapManager::GetLastResult() 
@@ -617,7 +618,7 @@ BYTE CActionMapManager::GetLastResult()
 }
 
 /**
-* \brief 에러 코드를 클리어한다.
+* \brief Clears the error code.
 */
 VOID CActionMapManager::ClearResult() 
 {
@@ -625,16 +626,16 @@ VOID CActionMapManager::ClearResult()
 }
 
 /**
-* \brief 액션 ID로 키의 이름을 찾아온다.
+* \brief Retrieves the name of the key using the action ID.
 * \param usAction
-* \return 키의 이름(유니코드)
+* \return Name of key (Unicode)
 */
 std::wstring CActionMapManager::GetKeyName( WORD wAction ) 
 {
 	uNtlKey uKey;
 	memset( &uKey, 0, sizeof(uNtlKey) );
 
-	// Default 일 경우
+	// In case of default
 	if( m_byActionMapMode == ACTIONMAP_MODE_USERSETTING )
 	{
 		uKey.key = m_pActionMap->FindKey( wAction );
@@ -646,11 +647,11 @@ std::wstring CActionMapManager::GetKeyName( WORD wAction )
 
 	std::wstring wstrKeyName;
 
-	// 키가 정의가 안되어 있으면 공백을 리턴
+	// If the key is not defined, returns blank.
 	if( uKey.key == dNTL_KEY_EMPTY )
 		return wstrKeyName;
 
-	// 조합키가 들어 가있다면 조합키의 이름을 넣어준다.
+	// If a combination key is included, enter the name of the combination key.
 	if( uKey.BIT.bit8 == 0x1 )	// ALT
 	{
 		wstrKeyName += L"@";
@@ -660,7 +661,7 @@ std::wstring CActionMapManager::GetKeyName( WORD wAction )
 		wstrKeyName += L"^";
 	}
 
-	// 키가 있다면 키의 이름을 더하고 아니라면 등록되지 않은 키 이름이다.
+	// If a key exists, add the name of the key. If not, it is an unregistered key name.
 	if( m_mapKeyName.end() != m_mapKeyName.find( uKey.BIT.ori ) )
 	{
 		wstrKeyName += m_mapKeyName[uKey.BIT.ori];
@@ -681,20 +682,20 @@ std::wstring CActionMapManager::GetKeyName( WORD wAction )
 */
 WORD CActionMapManager::InputHandlerDown( BYTE byKey ) 
 {
-	// 액션맵의 매니저가 Input Mode라면 액션에 키를 대입한다.
+	// If the action map manager is Input Mode, assign the key to the action.
 	if( m_wInputAction != ACTION_INVALID )
 	{
-		//// 액션맵 매니저가 bInput이 TRUE일때만 키를 대입
+		//// The action map manager assigns the key only when bInput is TRUE.
 		//if( bInput )
 		//{
-		//	// 조합키라면 그냥 리턴
+		//	// If it is a combination key, just return
 		//	if( IsCombineKey( byKey ) )
 		//		return ACTION_INVALID;
 
-		//	// 주어진 키로 WORD형의 NTL Key Data를 만들고.
-		//	WORD wMakeKey = MakeKey( byKey );
+		//	// Create WORD-type NTL Key Data with the given key.
+		//	WORD wMakeKey = MakeKey(byKey);
 
-		//	// 키가 고정되어 있다면 에러 코드를 기록하고 리턴
+		//	// If the key is fixed, record an error code and return.
 		//	if( IsFixedKey( wMakeKey ) )
 		//	{
 		//		SetLastResult( SET_RESULT_FIXED_KEY );
@@ -702,7 +703,7 @@ WORD CActionMapManager::InputHandlerDown( BYTE byKey )
 		//		return ACTION_INVALID;
 		//	}
 
-		//	// 조합키를 사용하지 못하는 액션인데 조합키로 셋팅하려고 했다면
+		//	// This is an action that cannot use a combination key, but if you try to set it with a combination key,
 		//	if( IsExclusiveAction( m_wInputAction ) && wMakeKey > 0x00FF )
 		//	{
 		//		SetLastResult( SET_RESULT_NOT_COMBINE_ACTION );
@@ -719,10 +720,10 @@ WORD CActionMapManager::InputHandlerDown( BYTE byKey )
 		return ACTION_INVALID;
 	}
 
-	// NTL의 Key를 만든다.
+	// Create an NTL key.
 	WORD wMakeKey = MakeKey( byKey );
 
-	// 현재의 Key 중의 Original을 추출
+	// Extract the original from the current key
 	WORD wReturnAction = ACTION_INVALID;
 	WORD wFindOriginalKeyAction = FindAction( wMakeKey & 0x00FF );	
 	if( IsExclusiveAction( wFindOriginalKeyAction ) )
@@ -736,23 +737,23 @@ WORD CActionMapManager::InputHandlerDown( BYTE byKey )
 
 	InputActionDown( wReturnAction );
 
-	// 아니라면 조합된 키의 액션을 찾아서 리턴해준다.
+	// If not, the action for the combined key is found and returned.
 	return wReturnAction;
 }
 
 WORD CActionMapManager::InputHandlerUp( BYTE byKey, std::list< WORD >& listUpAction )
 {
-	// 액션맵의 매니저가 Input Mode라면 액션에 키를 대입한다.
+	// If the action map manager is Input Mode, assign the key to the action.
 	if( m_wInputAction != ACTION_INVALID )
 	{
-		// 조합키라면 그냥 리턴
+		// If it is a combination key, just return
 		if( IsCombineKey( byKey ) )
 			return ACTION_INVALID;
 
-		// 주어진 키로 WORD형의 NTL Key Data를 만들고.
+		// Create WORD-type NTL Key Data with the given key.
 		WORD wMakeKey = MakeKey( byKey );
 
-		// 키가 고정되어 있다면 에러 코드를 기록하고 리턴
+		// If the key is fixed, record an error code and return.
 		if( IsFixedKey( wMakeKey ) )
 		{
 			SetLastResult( SET_RESULT_FIXED_KEY );
@@ -760,7 +761,7 @@ WORD CActionMapManager::InputHandlerUp( BYTE byKey, std::list< WORD >& listUpAct
 			return ACTION_INVALID;
 		}
 
-		// 조합키를 사용하지 못하는 액션인데 조합키로 셋팅하려고 했다면
+		// This is an action that cannot use a combination key, but if you try to set it with a combination key,
 		if( IsExclusiveAction( m_wInputAction ) && wMakeKey > 0x00FF )
 		{
 			SetLastResult( SET_RESULT_NOT_COMBINE_ACTION );
@@ -768,7 +769,7 @@ WORD CActionMapManager::InputHandlerUp( BYTE byKey, std::list< WORD >& listUpAct
 			return ACTION_INVALID;
 		}
 
-		// SetAction
+		// Set Action
 		SetLastResult( m_pActionMap->SetAction( wMakeKey, m_wInputAction ) );
 
 		m_wInputAction = ACTION_INVALID;
@@ -786,10 +787,10 @@ WORD CActionMapManager::InputHandlerUp( BYTE byKey, std::list< WORD >& listUpAct
 	}
 	else
 	{
-		// NTL의 Key를 만든다.
+		// Create an NTL key.
 		WORD wMakeKey = MakeKey( byKey );
 
-		// 현재의 Key 중의 Original을 추출
+		// Extract the original from the current key
 		WORD wReturnAction = ACTION_INVALID;
 		WORD wFindOriginalKeyAction = FindAction( wMakeKey & 0x00FF );	
 		if( IsExclusiveAction( wFindOriginalKeyAction ) )
@@ -815,7 +816,7 @@ void CActionMapManager::InputActionDown( WORD wAction )
 
 	mapdef_InputAction::iterator it = m_mapInputAction.find( wAction );
 
-	// 못찾음
+	// Can't find it
 	if( it == m_mapInputAction.end() )
 	{
 		m_mapInputAction[wAction] = 1;
@@ -833,7 +834,7 @@ void CActionMapManager::InputActionUp( WORD wAction )
 
 	mapdef_InputAction::iterator it = m_mapInputAction.find( wAction );
 
-	// 못찾음
+	// Can't find it
 	if( it != m_mapInputAction.end() )
 	{
 		(*it).second--;
@@ -866,7 +867,7 @@ void CActionMapManager::CheckDownActionWithCombineKey( BYTE byKey, std::list< WO
 }
 
 /**
-* \brief 액션맵의 복사본을 만들어 놓는다.
+* \brief Make a copy of the action map.
 */
 VOID CActionMapManager::CaptureActionMap() 
 {
@@ -874,7 +875,7 @@ VOID CActionMapManager::CaptureActionMap()
 }
 
 /**
-* \brief 만들어둔 복사본으로 다시 돌린다.
+* \brief Return to the copy you made.
 */
 VOID CActionMapManager::RestoreActionMap() 
 {
@@ -882,10 +883,10 @@ VOID CActionMapManager::RestoreActionMap()
 }
 
 /**
-* \brief UpdateData를 추가한다.
-* \param byType		(BYTE) 0: ADD, 1: DEL, 2: UPDATE
-* \param wActionID	(WORD) ACTION ID
-* \param wKey		(WORD) KEY DATA
+* Add \brief UpdateData.
+* \param byType (BYTE) 0: ADD, 1: DEL, 2: UPDATE
+* \param wActionID (WORD) ACTION ID
+* \param wKey (WORD) KEY DATA
 */
 void CActionMapManager::AddUpdateData( BYTE byType, WORD wActionID, WORD wKey ) 
 {
@@ -897,9 +898,9 @@ void CActionMapManager::AddUpdateData( BYTE byType, WORD wActionID, WORD wKey )
 }
 
 /**
-* \breif UpdateData를 가져온다.
-* \param pData		(sSHORTCUT_UPDATE_DATA*)
-* \param byCount	(BYTE&)
+*\breif Gets UpdateData.
+* \param pData (sSHORTCUT_UPDATE_DATA*)
+* \param byCount(BYTE&)
 * \return
 */
 RwBool CActionMapManager::GetUpdateData( sSHORTCUT_UPDATE_DATA* pData , BYTE& byCount ) 
@@ -918,8 +919,8 @@ RwBool CActionMapManager::GetUpdateData( sSHORTCUT_UPDATE_DATA* pData , BYTE& by
 }
 
 /**
-* \brief 키를 NTL에서 사용되는 형식으로 만든다.
-* \param byKey	(BYTE) KEY DATA
+* Create the \brief key in the format used in NTL.
+* \param byKey (BYTE) KEY DATA
 * \return NTL KEY
 */
 WORD CActionMapManager::MakeKey( BYTE byKey ) 
@@ -927,22 +928,22 @@ WORD CActionMapManager::MakeKey( BYTE byKey )
 	uNtlKey uMakeKey;
 	memset( &uMakeKey, 0, sizeof( uNtlKey ) );
 
-	// 현재의 조합키를 셋팅
+	// Set the current combination key
 	MakeComposition( uMakeKey );
 
-	// 키를 셋팅
+	// setting the key
 	uMakeKey.BIT.ori = byKey;
 
 	return uMakeKey.key;
 }
 
 /**
-* \brief 조합키를 설정한다.
-* \param uMakeKey	(uNtlKey&) NtlActionMapDef.h에 선언된 공용체
+* \brief Set the combination key.
+* \param uMakeKey (uNtlKey&) Union declared in NtlActionMapDef.h
 */
 void CActionMapManager::MakeComposition( uNtlKey& uMakeKey ) 
 {
-	// 조합키를 확인
+	// Check the combination key
 	if( ( GetKeyState( VK_LMENU ) & 0x80 ) || ( GetKeyState( VK_RMENU ) & 0x80 ) )
 		uMakeKey.BIT.bit8 = 0x1;
 
@@ -951,7 +952,7 @@ void CActionMapManager::MakeComposition( uNtlKey& uMakeKey )
 }
 
 /**
-* \brief 각종 키의 이름을 하드 코딩 해놓는다.
+* \brief Hard-codes the names of various keys.
 */
 VOID CActionMapManager::RegisterKeyName( VOID ) 
 {
@@ -1029,7 +1030,7 @@ VOID CActionMapManager::RegisterKeyName( VOID )
 	m_mapKeyName[NTL_KEY_COMMA] = L",";
 	m_mapKeyName[NTL_KEY_OEM_2] = L"/";
 
-	// 일반키 A~Z , 0 ~ 9
+	// Normal keys A~Z , 0 ~ 9
 	WCHAR awcBuffer[32] = {0,};
 	for( unsigned short uiChar = 0x41 ; uiChar <= 0x5A; ++uiChar)
 	{
@@ -1043,13 +1044,13 @@ VOID CActionMapManager::RegisterKeyName( VOID )
 		m_mapKeyName[uiChar] = awcBuffer;
 	}
 
-	// 지정안됨
+	// Not specified
 	m_mapKeyName[NTL_KEY_EMPTY] = L" ";	
 	
 }
 
 /**
-* \brief 키의 속성을 정의한다.
+* \brief Defines key properties.
 */
 VOID CActionMapManager::RegisterKeyType( VOID ) 
 {
@@ -1066,7 +1067,7 @@ VOID CActionMapManager::RegisterKeyType( VOID )
 }
 
 /**
-* \brief 액션의 속성을 정의한다.
+* \brief Defines the properties of the action.
 */
 VOID CActionMapManager::RegisterActionType( VOID ) 
 {
@@ -1078,7 +1079,7 @@ VOID CActionMapManager::RegisterActionType( VOID )
 	m_mapActionType[ACTION_GLOBAL_SNAPSHOT]		= TYPE_FIXED;
 	m_mapActionType[ACTION_GLOBAL_CHAT]			= TYPE_FIXED;
 
-	// 이동 관련 액션은 다른 액션들과 배제되어야 
+	// Movement-related actions should be excluded from other actions 
 	m_mapActionType[ACTION_AVATAR_FORWARD]		= TYPE_EXCLUSIVE;
 	m_mapActionType[ACTION_AVATAR_BACKWARD]		= TYPE_EXCLUSIVE;
 	m_mapActionType[ACTION_AVATAR_LEFTTURN]		= TYPE_EXCLUSIVE;
@@ -1086,16 +1087,16 @@ VOID CActionMapManager::RegisterActionType( VOID )
 	m_mapActionType[ACTION_AVATAR_LEFTSIDE]		= TYPE_EXCLUSIVE;
 	m_mapActionType[ACTION_AVATAR_RIGHTSIDE]	= TYPE_EXCLUSIVE;
 
-	// 기 모으기 액션 역시 다른 액션들과의 배제
+	// The energy gathering action is also excluded from other actions.
 	m_mapActionType[ACTION_AVATAR_CHARGE]		= TYPE_EXCLUSIVE;
 }
 
 /**
-* \brief 지정된 맵에서 속성이 정의되어 있는지 확인한다.
-* \param nType		(int) NtlActionMapDef.h에 정의된 속성
-* \param wKeyType	(WORD) 액션인지 키인지 맵에 정의된 Key Type
-* \param mapType	(TYPEMAP&) 맵을 넘겨준다.
-* \return (BOOL) 정의되어 있는지의 여부
+* \brief Checks whether the attribute is defined in the specified map.
+* \param nType (int) Property defined in NtlActionMapDef.h
+* \param wKeyType (WORD) Key Type defined in the map, whether it is an action or a key.
+* \param mapType (TYPEMAP&) Returns the map.
+* \return (BOOL) Whether it is defined or not
 */
 BOOL CActionMapManager::IsMapType( int nType, WORD wKeyType, TYPEMAP& mapType ) 
 {
@@ -1116,7 +1117,7 @@ VOID CActionMapManager::ClearActionMap()
 }
 
 /**
-* \brief ActionMap이 사용되는 Mode를 지정한다.
+* \brief Specifies the mode in which ActionMap is used.
 */
 VOID CActionMapManager::SetActionMapMode( BYTE byActionMapMode )
 {

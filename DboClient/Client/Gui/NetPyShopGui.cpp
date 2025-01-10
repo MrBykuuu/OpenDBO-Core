@@ -85,7 +85,7 @@ RwBool CNetPyShopGui::Create()
 
 	char acSurfaceName[64];
 
-	//// Todo : 추후 Shop Gui의 Surface가 변경될 상황이 생긴다면 다음과 같은 코드를 이용한다.
+	//// Todo: If there is a situation where the Surface of Shop Gui is to be changed in the future, use the following code.
 	//if( m_eShopType == SHOP_TYPE_NETPY )
 	//{
 
@@ -100,7 +100,7 @@ RwBool CNetPyShopGui::Create()
 
 	CRectangle rect;
 
-	// 상점 이름	
+	// store name	
 	rect.SetRectWH(DBOGUI_DIALOG_TITLE_X, DBOGUI_DIALOG_TITLE_Y, 145, 14);
 	m_pShopTitle = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_pShopTitle->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -109,7 +109,7 @@ RwBool CNetPyShopGui::Create()
 
 	rect = GetPosition();
 
-	// 백라인
+	// backline
 	m_BackLineSurface.SetType(CWindowby3::WT_HORIZONTAL);
 	m_BackLineSurface.SetSurface( 0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "srfBackLineTop" ) );
 	m_BackLineSurface.SetSurface( 1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "srfBackLineCenter" ) );
@@ -117,21 +117,21 @@ RwBool CNetPyShopGui::Create()
 	m_BackLineSurface.SetSize(303, 351);
 	m_BackLineSurface.SetPositionfromParent(9, 50);
 
-	// 탭 버튼
+	// tab button
 	m_pTabButton = (gui::CTabButton*)GetComponent( "TabButton" );
 	m_slotTab = m_pTabButton->SigSelectChanged().Connect( this, &CNetPyShopGui::OnSelectChangeTabButton );	
 
-	// 슬롯 포커스 이펙트
+	// slot focus effect
 	m_FocusEffect.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GameCommon.srf", "srfSlotFocusEffect" ) );
 
-	// 슬롯 셀렉트 이펙트
+	// Slot select effect
 	m_SelectEffect.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GameCommon.srf", "srfSlotGrayedEffect" ) );
 
-	// 소지금 배경 ( 현재 없음 요청해야함 )
+	// Cash background (currently none available)
 	m_MoneyBackPanel.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "MoneyBackPanel" ) );
 	m_MoneyBackPanel.SetPositionfromParent(194, 439);
 
-	// 페이지 배경
+	// page background
 	m_PageBackPanel.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "PageBackPanel" ) );
 	m_PageBackPanel.SetPositionfromParent(203, 406);
 
@@ -139,7 +139,7 @@ RwBool CNetPyShopGui::Create()
 	m_pExitButton = (gui::CButton*)GetComponent( "ExitButton" );
 	m_slotCloseButton = m_pExitButton->SigClicked().Connect(this, &CNetPyShopGui::ClickedCloseButton);		
 
-	// ItemPanel
+	// Item panel
 	std::string fullName = "";
 	char acPanelName[] = "ItemPanel";
 	char acNum[3] = "";
@@ -172,7 +172,7 @@ RwBool CNetPyShopGui::Create()
 		m_ItemPanel[i].srfNeedItem.SetPositionfromParent(dNETPYSHOP_TEM_NAME_START_X, iItemNamePosY + 22);
 		m_ItemPanel[i].srfNeedItem.SetSize(dNETPYSHOP_METAL_SMALL_SIZE, dNETPYSHOP_METAL_SMALL_SIZE);
 
-		// 필요한 포인트
+		// points needed
 		rect.SetRectWH( dNETPYSHOP_PRICE_START_X, iPricePosY, 68, 16);
 		m_ItemPanel[i].pPoint = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_RIGHT);
 		m_ItemPanel[i].pPoint->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -185,21 +185,21 @@ RwBool CNetPyShopGui::Create()
 		iPricePosY += dNETPYSHOP_SLOT_GAP_HORI;
 	}		
 
-	// 대량 구매 설명
+	// Bulk Purchase Instructions
 	rect.SetRectWH(16, 379, 282, 20);
 	m_pLargeBuyExplan = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_RIGHT);
 	m_pLargeBuyExplan->CreateFontStd( "detail", 90, DEFAULT_FONT_ATTR);
 	m_pLargeBuyExplan->SetText(GetDisplayStringManager()->GetString( "DST_NPCSHOP_LARGE_BUY_EXPLAIN" ));
 	m_pLargeBuyExplan->Enable(false);
 
-	// 나의 소지금 제목
+	// title of my money
 	rect.SetRectWH(135, 442, 63, 17);
 	m_pPocketMoneytitle = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER);
 	m_pPocketMoneytitle->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pPocketMoneytitle->SetText(GetDisplayStringManager()->GetString( "DST_NETPY" ));
 	m_pPocketMoneytitle->Enable(false);
 
-	// 나의 소지금	
+	// my money	
 	rect.SetRectWH(185, 441, 90, 17);
 	m_pPocketMoney = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_RIGHT );
 	m_pPocketMoney->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -207,13 +207,13 @@ RwBool CNetPyShopGui::Create()
 	m_pPocketMoney->SetText("");
 	m_pPocketMoney->Enable(false);
 
-	// 현재 페이지 표시
+	// Show current page
 	rect.SetRectWH(217, 409, 46, 16);
 	m_pCurrentPage = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER );
 	m_pCurrentPage->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pCurrentPage->SetTextColor( RGB(255, 192, 0) );
 
-	// PrePageButton
+	// Pre page button
 	m_pPrePageButton = (gui::CButton*)GetComponent( "PrePageButton" );
 	m_slotPrePageButton = m_pPrePageButton->SigClicked().Connect(this, &CNetPyShopGui::ClickedPrePageButton);
 
@@ -226,7 +226,7 @@ RwBool CNetPyShopGui::Create()
 	m_slotClickedNetStore = m_pNetStoreButton->SigClicked().Connect( this, &CNetPyShopGui::ClickedNetStoreButton );
 	
 
-	// Sig
+	// Signals
 	m_slotMouseDown		= m_pThis->SigMouseDown().Connect( this, &CNetPyShopGui::OnMouseDown );
 	m_slotMouseUp		= m_pThis->SigMouseUp().Connect( this, &CNetPyShopGui::OnMouseUp );
 	m_slotMove			= m_pThis->SigMove().Connect( this, &CNetPyShopGui::OnMove );	
@@ -286,10 +286,10 @@ VOID CNetPyShopGui::OpenShop()
 	CTextTable* pMerchantTextTable = API_GetTableContainer()->GetTextAllTable()->GetMerchantTbl();
 	CTextTable* pItemTextTable = API_GetTableContainer()->GetTextAllTable()->GetItemTbl();
 
-	// 상점 이름
+	// store name
 	m_pShopTitle->SetText( GetDisplayStringManager()->GetString("DST_NETPYSHOP" ) );
 
-	// NetPy Shop 에서 정의된 Index 4가지의 탭을 불러온다.
+	// Loads four index tabs defined in NetPy Shop.
 	ShopItem shopItem;
 	char acBuffer[256] = "";
 	for(RwInt32 iTabIndex = 0 ; iTabIndex < dNETPYSHOP_TAB_NUMS; ++iTabIndex )
@@ -297,18 +297,18 @@ VOID CNetPyShopGui::OpenShop()
 		if( m_adwNETPYSHOP_MERCHANT_TBLIDX[iTabIndex] <= 0 )
 			continue;
 
-		// 각 Tab 별 등록된 아이템을 읽어온다.
+		// The registered items for each tab are read.
 		sMERCHANT_TBLDAT* pMERCHANT_TBLDAT = Logic_GetMerchantDataFromTable(m_adwNETPYSHOP_MERCHANT_TBLIDX[iTabIndex]);
 		if(!pMERCHANT_TBLDAT)
 			continue;
 
-		// Tab 이름			
+		// Tab name			
 		const wchar_t* pwcMerchantName = pMerchantTextTable->GetText(pMERCHANT_TBLDAT->Tab_Name).c_str();
 		WideCharToMultiByte(GetACP(), 0, pwcMerchantName, -1, acBuffer, 256, NULL, NULL);
 		std::string str = acBuffer;
 		m_pTabButton->AddTab(str);
 
-		// 각 Tab별 등록된 아이템을 ShopItem에 등록한다			
+		// Register items registered for each tab in ShopItem			
 		sITEM_TBLDAT* pITEM_DATA;			
 		for( RwInt32 iMerchantIndex = 0 ; iMerchantIndex < NTL_MAX_MERCHANT_COUNT ; ++iMerchantIndex )
 		{				
@@ -316,7 +316,7 @@ VOID CNetPyShopGui::OpenShop()
 			if(!pITEM_DATA)
 				continue;
 
-			// 실제 ShopItem 데이터				
+			// Actual ShopItem data				
 			if( pMERCHANT_TBLDAT->aitem_Tblidx[iMerchantIndex] == 0 )
 			{
 				m_aShopItem[iTabIndex][iMerchantIndex].hItem = INVALID_SERIAL_ID;
@@ -332,14 +332,14 @@ VOID CNetPyShopGui::OpenShop()
 		}
 	}		
 
-	// 소지금
+	// Cash in hand
 	SetZenny();
 
-	// 최초 탭
+	// first tab
 	m_pTabButton->SelectTab(0);
 	UpdateTabContent(0);
 
-	// Todo :: OpenDialog
+	// Everything :: OpenDialog
 	GetDialogManager()->OpenDialog( DIALOG_NETPYSHOP );
 	
 }
@@ -535,7 +535,7 @@ RwUInt8 CNetPyShopGui::GetPageCount_of_CurTab()
 {
 	RwUInt8 byLastIndex = 0;
 
-	// 아이템 슬롯은 중간에 비어있을 수도 있다
+	// Item slots may be empty in between.
 	for( RwUInt8 i = 0 ; i < NTL_MAX_MERCHANT_COUNT ; ++i )
 	{
 		if( m_aShopItem[m_iCurTab][i].hItem != INVALID_SERIAL_ID )
@@ -641,7 +641,7 @@ VOID CNetPyShopGui::CheckInfoWindow()
 
 VOID CNetPyShopGui::OnMouseDown( const CKey& key )
 {
-	// 현재 다이얼로그에 포커스가 들어오면 링크된 다이얼로그들도 화면의 최상단으로 옮긴다.
+	// When the current dialog receives focus, linked dialogs are also moved to the top of the screen.
 	gui::CGUIManager *pGuiMgr = CNtlPLGuiManager::GetInstance()->GetGuiManager();  
 	if( pGuiMgr->GetFocus() == m_pThis )
 		RaiseLinked();
@@ -654,14 +654,14 @@ VOID CNetPyShopGui::OnMouseDown( const CKey& key )
 
 	for( RwInt32 i = 0 ; i < dMAX_ITEM_PANEL ; ++i )
 	{
-		// 아이콘 영역에서 마우스를 눌렀다
+		// The mouse was pressed in the icon area.
 		if( m_ItemPanel[i].slot.GetSerial() != INVALID_SERIAL_ID &&
 			m_ItemPanel[i].slot.PtInRect((RwInt32)key.m_fX, (RwInt32)key.m_fY) )
 		{
 			m_iMouseDownSlot = i;
 			m_pThis->CaptureMouse();
 
-			// 클릭 이벤트 시작
+			// Start click event
 			m_iClickEffectedSlot = i;	
 			m_ItemPanel[m_iClickEffectedSlot].slot.ClickEffect(true);
 
@@ -674,7 +674,7 @@ VOID CNetPyShopGui::OnMouseUp( const CKey& key )
 {
 	m_pThis->ReleaseMouse();
 
-	// 클릭 이벤트 종료	
+	// Click event ends	
 	if( m_iClickEffectedSlot != dNETPYSHOP_INVALID_INDEX )
 	{		
 		m_ItemPanel[m_iClickEffectedSlot].slot.ClickEffect(false);
@@ -690,7 +690,7 @@ VOID CNetPyShopGui::OnMouseUp( const CKey& key )
 	if( m_iMouseDownSlot < 0 || m_iMouseDownSlot >= dMAX_ITEM_PANEL )
 		return;
 
-	// 아이콘 영역에서 마우스를 눌렀다
+	// The mouse was pressed in the icon area.
 	if( m_ItemPanel[m_iMouseDownSlot].slot.GetSerial() != INVALID_SERIAL_ID &&
 		m_ItemPanel[m_iMouseDownSlot].slot.PtInRect((RwInt32)key.m_fX, (RwInt32)key.m_fY) )
 	{
@@ -708,7 +708,7 @@ VOID CNetPyShopGui::OnMouseUp( const CKey& key )
 
 			if( key.m_dwVKey == UD_MK_CONTROL )
 			{
-				// 최대 스택 갯수를 산다(1개 혹은 20개)
+				// Buy the maximum number of stacks (1 or 20)
 				CDboEventGenerator::NetPyShopEvent(eNETPYSHOP_EVENT_REG_ITEM_MAX,
 					m_aShopItem[m_iCurTab][iItemIndex].hItem,
 					m_aShopItem[m_iCurTab][iItemIndex].pITEM_DATA->CommonPoint,
@@ -736,7 +736,7 @@ VOID CNetPyShopGui::OnMove(RwInt32 iOldX, RwInt32 iOldY)
 	m_MoneyBackPanel.SetPositionbyParent(rtScreen.left, rtScreen.top);	
 	m_PageBackPanel.SetPositionbyParent(rtScreen.left, rtScreen.top);
 
-	// NPCShop 다이얼로그가 움직일 때	
+	// When the NPCShop dialog moves	
 	for( RwInt32 i = 0 ; i < dMAX_ITEM_PANEL ; ++i )
 	{
 		m_ItemPanel[i].slot.SetParentPosition(rtScreen.left, rtScreen.top);
@@ -756,7 +756,7 @@ VOID CNetPyShopGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 
 	if( iPtinSlot != dNETPYSHOP_INVALID_INDEX )
 	{
-		// 슬롯 클릭 이펙트
+		// slot click effect
 		if( m_iClickEffectedSlot != dNETPYSHOP_INVALID_INDEX )
 		{
 			if( m_iClickEffectedSlot == iPtinSlot )
@@ -765,7 +765,7 @@ VOID CNetPyShopGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 				m_ItemPanel[m_iClickEffectedSlot].slot.ClickEffect(false);
 		}
 
-		// 현재 아이템 패널의 인포
+		// Info in the current item panel
 		if( m_ItemPanel[iPtinSlot].slot.GetSerial() != INVALID_SERIAL_ID )
 		{
 			FocusEffect(true, iPtinSlot);
@@ -791,7 +791,7 @@ VOID CNetPyShopGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 		RwInt32 iSmallIconSlot = PtinSlot_of_SmallIcon_in_panel(nX, nY);
 		if( iSmallIconSlot != dNETPYSHOP_INVALID_INDEX )
 		{
-			// 아이템을 사기 위해서 가지고 있어야 하는 아이템 정보
+			// Item information you must have to purchase the item
 			if( m_ItemPanel[iSmallIconSlot].slot.GetSerial() != INVALID_SERIAL_ID )
 			{
 				FocusEffect(true, iSmallIconSlot);
@@ -907,7 +907,7 @@ VOID CNetPyShopGui::HandleEvents( RWS::CMsg &msg )
 		if( Logic_GetAvatarHandle() != pEvent->hSerialId )
 			NTL_RETURNVOID();
 
-		// 상점이 열려있는 상태라면 나의 소지금 업데이트
+		// Update my holdings if the store is open
 		SetZenny();
 	}
 	else if( msg.Id == g_EventPickedUpHide )

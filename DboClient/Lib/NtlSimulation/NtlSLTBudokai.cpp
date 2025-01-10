@@ -89,7 +89,7 @@ RwBool CNtlTBudokai::Create(void)
 
 	LinkMsg( g_EventUpdateTick, 0 );
 
-	// 천하제일 무도회의 상태 ( 게임 접속 초기 )
+	//Status of the World's Best Martial Arts Council (at the beginning of game access)
 	STenkaichiBudokaiInfo* pBudokaiState = GetNtlSLGlobal()->GetTBudokaiStateInfo();
 	m_wSeasonCount = pBudokaiState->sStateInfo.wSeasonCount; 
 	::CopyMemory( &m_sStateInfo, &pBudokaiState->sStateInfo, sizeof( sBUDOKAI_UPDATE_STATE_INFO ) );
@@ -150,7 +150,7 @@ void CNtlTBudokai::HandleEvents(RWS::CMsg& msg)
 
 		m_fCurrentTime += fElapsed;
 		
-		// 천하제일 무도회 시간을 업데이트 해준다.
+		// It updates the time of the World's Best Ball.
 		if( m_sStateInfo.byState != BUDOKAI_STATE_JUNIOR_CLOSE ||
 			m_sStateInfo.byState != BUDOKAI_STATE_CLOSE )
 		{
@@ -311,7 +311,7 @@ void CNtlTBudokai::HandleEvents(RWS::CMsg& msg)
 	}
 	else if( msg.Id == g_EventBudokaiStateInfoNfy )
 	{
-		// 천하제일 무도회의 상태 ( 게임 접속 초기 )
+		// Status of the World's Best Martial Arts Club (at the beginning of game access)
 		sNtlEventBudokaiStateInfoNfy* pNotify = reinterpret_cast<sNtlEventBudokaiStateInfoNfy*>(msg.pData);
 
 		m_wSeasonCount = pNotify->wSeasonCount; 
@@ -322,7 +322,7 @@ void CNtlTBudokai::HandleEvents(RWS::CMsg& msg)
 	}		
 	else if( msg.Id == g_EventBudokaiUpdateStateNfy )
 	{		
-		// 천하제일 무도회 MainState 의 Update
+		// World's Best Martial Arts MainState Update
 		sNtlEventBudokaiUpdateStateNfy* pNotify = reinterpret_cast<sNtlEventBudokaiUpdateStateNfy*>( msg.pData );
 		
 		m_wSeasonCount = pNotify->sStateInfo.wSeasonCount;
@@ -342,7 +342,7 @@ void CNtlTBudokai::HandleEvents(RWS::CMsg& msg)
 	}		
 	else if( msg.Id == g_EventBudokaiUpdateMatchStateNfy )
 	{
-		// 천하제일 무도회의 MatchState Update
+		// MatchState Update of World's Best Martial Arts Club
 		sNtlEventBudokaiUpdateMatchStateNfy* pNotify = reinterpret_cast<sNtlEventBudokaiUpdateMatchStateNfy*>( msg.pData );
 
 		if( pNotify->byMatchType == INVALID_BUDOKAI_MATCH_TYPE )
@@ -350,8 +350,8 @@ void CNtlTBudokai::HandleEvents(RWS::CMsg& msg)
 
 		::CopyMemory( &m_aMatchStateInfo[ pNotify->byMatchType ] , &pNotify->sStateInfo, sizeof( sBUDOKAI_UPDATE_MATCH_STATE_INFO ) );
 		
-		// 천하제일 무도회 참가 신청한 상태이고 자신이 신청한 매치 타입이 등록기간 -> 예선전 대기 상태로 업데이트 되면
-		// 서버로 자신이 예선전에 뽑혔는지 안 뽑혔는지 정보 확인을 요청한다.
+		// If you have applied to participate in the World's Best Martial Arts Club and the match type you applied for is updated to registration period -> waiting for preliminaries.
+		// Request information from the server to check whether you were selected for the preliminaries or not.
 		if( m_sJoinInfo.byJoinState == BUDOKAI_JOIN_STATE_PLAY )
 		{
 			if( m_sJoinInfo.byMatchType == pNotify->byMatchType )
@@ -362,16 +362,16 @@ void CNtlTBudokai::HandleEvents(RWS::CMsg& msg)
 	}	
 	else if( msg.Id == g_EventBudokaiJoinIndividualRes )
 	{
-		// 개인전 참가 결과
+		// Individual exhibition participation results
 		SNtlEventBudokaiJoinIndividualRes* pResult = reinterpret_cast<SNtlEventBudokaiJoinIndividualRes*>( msg.pData );
 
 		if( pResult->wResultCode == GAME_SUCCESS )
 		{
-			m_sJoinInfo.byMatchType = BUDOKAI_MATCH_TYPE_INDIVIDIAUL;		// 개인전
-			m_sJoinInfo.byJoinResult = BUDOKAI_JOIN_RESULT_REGISTER;		// 등록자
-			m_sJoinInfo.byJoinState = BUDOKAI_JOIN_STATE_PLAY;				// 참가중
-			m_sJoinInfo.sIndividualInfo.wJoinId = pResult->wJoinId;			// 참가번호
-			m_sJoinInfo.sIndividualInfo.bDojoRecommender = B2b(pResult->bDojoRecommender);	// 도장 추천자
+			m_sJoinInfo.byMatchType = BUDOKAI_MATCH_TYPE_INDIVIDIAUL;		// solo exhibition
+			m_sJoinInfo.byJoinResult = BUDOKAI_JOIN_RESULT_REGISTER;		// registrant
+			m_sJoinInfo.byJoinState = BUDOKAI_JOIN_STATE_PLAY;				// Participating
+			m_sJoinInfo.sIndividualInfo.wJoinId = pResult->wJoinId;			// Participation number
+			m_sJoinInfo.sIndividualInfo.bDojoRecommender = B2b(pResult->bDojoRecommender);	// dojo recommender
 
 			SAvatarInfo* pAvatarInfo = GetNtlSLGlobal()->GetAvatarInfo();
 			swprintf_s( m_sJoinInfo.sIndividualInfo.wszCharName, NTL_MAX_SIZE_CHAR_NAME + 1, L"%s", pAvatarInfo->sCharPf.awchName );
@@ -379,15 +379,15 @@ void CNtlTBudokai::HandleEvents(RWS::CMsg& msg)
 	}	
 	else if( msg.Id == g_EventBudokaiLeaveIndividualRes )
 	{
-		// 개인전 취소 결과
+		// Result of cancellation of individual exhibition
 		SNtlEventBudokaiLeaveIndividualRes* pResult = reinterpret_cast<SNtlEventBudokaiLeaveIndividualRes*>( msg.pData );
 
 		if( pResult->wResultCode == GAME_SUCCESS )
 		{
-			m_sJoinInfo.byMatchType = INVALID_BUDOKAI_MATCH_TYPE;		// 타입 모름
-			m_sJoinInfo.byJoinResult = INVALID_BUDOKAI_JOIN_RESULT;		// 참가 결과 모름
-			m_sJoinInfo.byJoinState = INVALID_BUDOKAI_JOIN_STATE;		// 참가 안함
-			m_sJoinInfo.sIndividualInfo.wJoinId = INVALID_WORD;			// 접수 번호 없음
+			m_sJoinInfo.byMatchType = INVALID_BUDOKAI_MATCH_TYPE;		// Type unknown
+			m_sJoinInfo.byJoinResult = INVALID_BUDOKAI_JOIN_RESULT;		// Participation result unknown
+			m_sJoinInfo.byJoinState = INVALID_BUDOKAI_JOIN_STATE;		// Not participating
+			m_sJoinInfo.sIndividualInfo.wJoinId = INVALID_WORD;			// No receipt number
 
 			SAvatarInfo* pAvatarInfo = GetNtlSLGlobal()->GetAvatarInfo();
 			swprintf_s( m_sJoinInfo.sIndividualInfo.wszCharName, NTL_MAX_SIZE_CHAR_NAME + 1, L"%s", pAvatarInfo->sCharPf.awchName );
@@ -395,43 +395,43 @@ void CNtlTBudokai::HandleEvents(RWS::CMsg& msg)
 	}	
 	else if( msg.Id == g_EventBudokaiJoinTeamInfoRes )
 	{
-		// 이 이벤트는 파티전을 신청할 때 신청서에 자신이 속한 파티의 정보를 출력하는데 사용된다.
-		// ( 정보를 Simulation에 저장할 필요가 없다 )
+		// This event is used to print information about the party you belong to on the application form when applying for a party match.
+		// (There is no need to save information in Simulation)
 	}		
 	else if( msg.Id == g_EventBudokaiJoinTeamRes )
 	{
-		// 파티전 등록 결과
+		// Pre-party registration results
 		SNtlEventBudokaiJoinTeamRes* pResult = reinterpret_cast<SNtlEventBudokaiJoinTeamRes*>( msg.pData );
 		
 		if( pResult->wResultCode == GAME_SUCCESS )
 		{
-			m_sJoinInfo.byMatchType = BUDOKAI_MATCH_TYPE_TEAM;			// 파티전
-			m_sJoinInfo.byJoinResult = BUDOKAI_JOIN_RESULT_REGISTER;	// 등록중
-			m_sJoinInfo.byJoinState = BUDOKAI_JOIN_STATE_PLAY;			// 참가중
-			m_sJoinInfo.sTeamInfo.wJoinId = pResult->wJoinId;			// 참가번호
+			m_sJoinInfo.byMatchType = BUDOKAI_MATCH_TYPE_TEAM;			// Before the party
+			m_sJoinInfo.byJoinResult = BUDOKAI_JOIN_RESULT_REGISTER;	// Registering
+			m_sJoinInfo.byJoinState = BUDOKAI_JOIN_STATE_PLAY;			// Participating
+			m_sJoinInfo.sTeamInfo.wJoinId = pResult->wJoinId;			// Participation number
 
-			// 팀 이름과 멤버들의 정보
+			// Team name and member information
 			swprintf_s( m_sJoinInfo.sTeamInfo.wszTeamName, NTL_MAX_LENGTH_BUDOKAI_TEAM_NAME_IN_UNICODE + 1, L"%s", pResult->wszTeamName );
 			::CopyMemory( m_sJoinInfo.sTeamInfo.aMemberInfo, pResult->aTeamInfo, sizeof( sBUDOKAI_TEAM_POINT_INFO ) * pResult->byMemberCount );
 		}
 	}			
 	else if( msg.Id == g_EventBudokaiJoinTeamNfy )
 	{	
-		// 파티전 등록 결과 ( 파티장이 아닌 다른 멤버들에게 전달되는 이벤트, 성공일때만 온다. )
+		// Pre-party registration results (event delivered to members other than the party leader, only occurs when successful)
 		SNtlEventBudokaiJoinTeamNfy* pNotify = reinterpret_cast<SNtlEventBudokaiJoinTeamNfy*>( msg.pData );
 
-		m_sJoinInfo.byMatchType = BUDOKAI_MATCH_TYPE_TEAM;				// 파티전
-		m_sJoinInfo.byJoinResult = BUDOKAI_JOIN_RESULT_REGISTER;		// 등록중
-		m_sJoinInfo.byJoinState = BUDOKAI_JOIN_STATE_PLAY;				// 참가중
-		m_sJoinInfo.sTeamInfo.wJoinId = pNotify->wJoinId;				// 참가번호
+		m_sJoinInfo.byMatchType = BUDOKAI_MATCH_TYPE_TEAM;				// Before the party
+		m_sJoinInfo.byJoinResult = BUDOKAI_JOIN_RESULT_REGISTER;		// Registering
+		m_sJoinInfo.byJoinState = BUDOKAI_JOIN_STATE_PLAY;				// Participating
+		m_sJoinInfo.sTeamInfo.wJoinId = pNotify->wJoinId;				// Participation number
 
-		// 팀 이름과 멤버들의 정보
+		// Team name and member information
 		swprintf_s( m_sJoinInfo.sTeamInfo.wszTeamName, NTL_MAX_LENGTH_BUDOKAI_TEAM_NAME_IN_UNICODE + 1, L"%s", pNotify->wszTeamName );
 		::CopyMemory( m_sJoinInfo.sTeamInfo.aMemberInfo, pNotify->aTeamInfo, sizeof( sBUDOKAI_TEAM_POINT_INFO ) * pNotify->byMemberCount );
 	}			
 	else if( msg.Id == g_EventBudokaiLeaveTeamRes )
 	{
-		// 파티전 전체 취소 결과 ( 파티장 )
+		// Result of cancellation of entire party (party leader)
 		SNtlEventBudokaiLeaveTeamRes* pResult = reinterpret_cast< SNtlEventBudokaiLeaveTeamRes*>( msg.pData );
 
 		if( pResult->wResultCode == GAME_SUCCESS )
@@ -447,7 +447,7 @@ void CNtlTBudokai::HandleEvents(RWS::CMsg& msg)
 	}		
 	else if( msg.Id == g_EventBudokaiLeaveTeamNfy )
 	{
-		// 파티전 전체 취소 결과 ( 파티장 외의 멤버들 )
+		// Result of cancellation of entire party (members other than party leader)
 
 		m_sJoinInfo.byMatchType = INVALID_BUDOKAI_MATCH_TYPE;
 		m_sJoinInfo.byJoinState = INVALID_BUDOKAI_JOIN_STATE;
@@ -459,7 +459,7 @@ void CNtlTBudokai::HandleEvents(RWS::CMsg& msg)
 	}		
 	else if( msg.Id == g_EventBudokaiLeaveTeamMemberRes )
 	{
-		// 멤버 취소 결과
+		// Member cancellation results
 		SNtlEventBudokaiLeaveTeamMemberRes* pResult = reinterpret_cast<SNtlEventBudokaiLeaveTeamMemberRes*>( msg.pData );
 
 		if( pResult->wResultCode == GAME_SUCCESS )
@@ -475,14 +475,14 @@ void CNtlTBudokai::HandleEvents(RWS::CMsg& msg)
 	}	
 	else if( msg.Id == g_EventBudokaiLeaveTeamMemberNfy )
 	{
-		// 멤버 취소 알림 ( 타 멤버들에게 )
+		// Member cancellation notification (to other members)
 		SNtlEventBudokaiLeaveTeamMemberNfy* pNotify = reinterpret_cast<SNtlEventBudokaiLeaveTeamMemberNfy*>( msg.pData );
 
-		// 파티전일 경우만 유효하다.
+		// Valid only before a party.
 		if( m_sJoinInfo.byMatchType != BUDOKAI_MATCH_TYPE_TEAM )
 			return;
 
-		// 이름이 맞는 파티 멤버를 찾아서 정보를 삭제해준다.
+		// Find the party member with the correct name and delete the information.
 		for( RwInt32 i = 0; i < NTL_MAX_MEMBER_IN_PARTY; ++i )
 		{
 			if( wcscmp( m_sJoinInfo.sTeamInfo.aMemberInfo[i].wszName, pNotify->pwcMemberName ) == 0 )

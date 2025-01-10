@@ -3,7 +3,7 @@
 * Author		: HaeSung, Cho
 * Copyright		: (주)NTL
 * Date			: 2009. 2. 5	
-* Abstract		: 플레이어의 퀘스트 정보를 보관하고 있는 Quest Group
+* Abstract		: Quest Group, which stores player quest information
 *****************************************************************************
 * Desc         : 
 *

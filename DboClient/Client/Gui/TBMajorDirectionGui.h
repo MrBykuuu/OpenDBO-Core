@@ -1,9 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: TBMajorDirectionGui.h
-// Desc: 천하제일 무도회 본선 연출 Gui
+// Desc: World's Best Martial Arts Finals Direction Gui
 //
 // 2008.07.04 Peessi@hitel.net   
-// 2008.09.18 Peessi@hitel.net 거의 엎음.
+// 2008.09.18 Peessi@hitel.net Almost fell over.
 ////////////////////////////////////////////////////////////////////////////////
 
 #ifndef __TB_MAJOR_DIRECTION_GUI_H__

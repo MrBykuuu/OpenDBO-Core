@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: SkillCommonGui.h
-// Desc: Skill Master, Skill Gui간의 공통된 클래스 선언.
+// Desc: Common class declaration between Skill Master and Skill Gui.
 //
 // 2007.9.3 Peessi@hitel.net  
 // To Be Desired:
@@ -46,17 +46,17 @@ protected:
 enum eSKILLRQSTATE
 { 
 	SRQ_FLAG_INITIAL					= 0x0000,	// 					
-	SRQ_FLAG_NOT_LEARN_SKILL			= 0x0001,	// 미리 배워야 하는 스킬때문에 배울 수 없다.
-	SRQ_FLAG_NOT_LEARN_LEVEL			= 0x0002,	// 레벨이 낮아 스킬을 배울 수 없다.
-	SRQ_FLAG_CAN_LEARN_BY_SKILLMASTER	= 0x0004,	// 스킬마스터에게 스킬을 배울 수 있다.
-	SRQ_FLAG_CAN_LEARN_BY_SELF			= 0x0008,	// 자신이 직접 스킬을 배울 수 있다.
-	SRQ_FLAG_NOT_UPGRADE_SKILLEXP		= 0x0010,	// 스킬 경험치가 낮아 업그레이드를 할 수 없다.
-	SRQ_FLAG_NOT_UPGRADE_LEVEL			= 0x0020,	// 레벨이 낮아 업그레이드를 할 수 없다.
-	SRQ_FLAG_CAN_UPGRADE				= 0x0040,	// 업그레이드를 할 수 있다.
-	SRQ_FLAG_MASTER						= 0x0080,	// 스킬을 마스터 했다.
-	SRQ_FLAG_LEARNED					= 0x0100,	// 이미 배운 스킬이다. 	
-	SRQ_FLAG_NOT_LEARN_CLASS			= 0x0200,	// 클래스가 안맞아 배울수 없다. 
-	SRQ_FLAG_NOT_LEARN_CHANGECLASSRIGHT	= 0x0400,	// 마스터리는 전직권한을 얻어야 배울 수 있다.
+	SRQ_FLAG_NOT_LEARN_SKILL			= 0x0001,	// It cannot be learned because it is a skill that must be learned in advance.
+	SRQ_FLAG_NOT_LEARN_LEVEL			= 0x0002,	// Your level is low and you cannot learn skills.
+	SRQ_FLAG_CAN_LEARN_BY_SKILLMASTER	= 0x0004,	// You can learn skills from a skill master.
+	SRQ_FLAG_CAN_LEARN_BY_SELF			= 0x0008,	// You can learn skills yourself.
+	SRQ_FLAG_NOT_UPGRADE_SKILLEXP		= 0x0010,	// Skill experience is low and cannot be upgraded.
+	SRQ_FLAG_NOT_UPGRADE_LEVEL			= 0x0020,	// The level is low and cannot be upgraded.
+	SRQ_FLAG_CAN_UPGRADE				= 0x0040,	// You can upgrade.
+	SRQ_FLAG_MASTER						= 0x0080,	// Mastered the skill.
+	SRQ_FLAG_LEARNED					= 0x0100,	// It's a skill I've already learned. 	
+	SRQ_FLAG_NOT_LEARN_CLASS			= 0x0200,	// I can't learn because the class doesn't fit. 
+	SRQ_FLAG_NOT_LEARN_CHANGECLASSRIGHT	= 0x0400,	// Mastery can only be learned by obtaining the authority to change jobs.
 };
 
 //! examin												/// woosungs_test 20090730
@@ -184,4 +184,4 @@ namespace SkillCommonLogic
 #define SKILLWND_ITEM_BARBACK_SURFACE	"srfSkillExpGaugeBack"
 #define SKILLWND_UNKNOWN_TEXNAME		"skill_not_learn.png"
 
-#endif//__SKILL_COMMON_H__ 
+#endif//__SKILL_COMMON_H__

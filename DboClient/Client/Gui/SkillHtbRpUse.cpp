@@ -141,7 +141,7 @@ VOID CSkillHtbRpUseIcon::OnFSCallBack( const char* pChar1, const char* pChar2 )
 	}
 	else if( !strcmp( pChar1, "TextOut" ) )
 	{
-		// TextOut
+		// Text out
 		m_pStbRpBall->SetText( m_byIndex+1 );
 	}
 }
@@ -222,7 +222,7 @@ RwBool CSkillHtbRpUse::Create( VOID )
 	m_pPnlGaugeBack = (gui::CPanel*)GetComponent( "pnlTimeBack" );
 	m_pPgbGaugeTime = (gui::CProgressBar*)GetComponent( "pgbLP" );
 
-	// 7개의 Rp 사용 아이콘과 1개의 NONE 아이콘을 생성
+	// Created 7 Rp usage icons and 1 NONE icon
 	for( RwUInt8 i=0; i < dSKILL_HTB_RP_ICON_NUMS; ++i )
 	{
 		m_aRpuseIcon[i].Create( this, dSKILL_HTB_RP_FLASH_BALL, i );
@@ -303,16 +303,16 @@ RwInt32 CSkillHtbRpUse::SwitchDialog( bool bOpen )
 
 VOID CSkillHtbRpUse::HandleEvents( RWS::CMsg& msg )
 {
-	// HTB 쓴다는 것을 알려주는 이벤트
+	// Event notifying that HTB is being used
 	if( msg.Id == g_EventHTBRPStock )
 	{
-		// 가지고 있는 Rp
+		// Have Rp
 		m_uiCurRpStock = Logic_GetRpStock(GetNtlSLGlobal()->GetSobAvatar());
 
-		// 맥스 RP
+		// Max RP
 		RwUInt32 uiMaxRPStock = Logic_GetMaxRpStock(GetNtlSLGlobal()->GetSobAvatar());
 
-		// Dialog를 열고 모든 Component를 안 보여준다.
+		// Open the dialog and not show all components.
 		if( GetDialogManager()->IsOpenDialog( DIALOG_SKILL_HTB_RPUSE ) )
 			GetDialogManager()->CloseDialog( DIALOG_SKILL_HTB_RPUSE );
 
@@ -323,13 +323,13 @@ VOID CSkillHtbRpUse::HandleEvents( RWS::CMsg& msg )
 		InitAllIcon();
 		ShowAllIcon( FALSE );
 
-		// 현재의 Dialog의 크기를 세팅해주고 좌표를 세팅
+		// Set the size of the current dialog and set the coordinates
 		m_pThis->SetSize( (uiMaxRPStock * dSKILL_HTB_RP_WIDTH_OFFSET) + dSKILL_HTB_RP_WIDTH_OFFSET, dSKILL_HTB_RP_HEIGHT );
 		m_pThis->SetPosition( (GetDboGlobal()->GetScreenWidth()/2) - (m_pThis->GetScreenRect().GetWidth()/2),
 			(RwInt32)((RwReal)GetDboGlobal()->GetScreenHeight() * 0.7f) );
 		
-		// Max 만큼 Show를 하고
-		// 가지고 있는 것만큼 Play
+		// Show as much as Max
+		// Play as much as you have
 		for( RwUInt32 i=0; i <m_uiCurRpStock; ++i )
 		{
 			m_aRpuseIcon[i].Show( true );
@@ -346,7 +346,7 @@ VOID CSkillHtbRpUse::HandleEvents( RWS::CMsg& msg )
 			m_aRpuseIcon[i].PlayMovie( true );
 			m_aRpuseIcon[i].GotoDisableFrame();
 			
-			// number
+			// Number
 			char buf[4];
 			sprintf_s( buf, 4, "%d", i+1 );
 			m_aRpuseIcon[i].SetText( buf );
@@ -365,8 +365,8 @@ VOID CSkillHtbRpUse::HandleEvents( RWS::CMsg& msg )
 		m_RpUseIconNone.PlayMovie( TRUE );
 		m_RpUseIconNone.GotoStartFrame();
 
-		// Progress Bar 세팅
-		// 위치
+		// Progress Bar Settings
+		// location
 		RwInt32 nPgbX = (m_pThis->GetScreenRect().GetWidth()/2) - (m_pPnlGaugeBack->GetScreenRect().GetWidth()/2);
 		RwInt32 nPgbY = dSKILL_HTP_RP_TIME_OFFSET_Y;
 
@@ -375,7 +375,7 @@ VOID CSkillHtbRpUse::HandleEvents( RWS::CMsg& msg )
 		m_pPgbGaugeTime->SetRange( 0, 1000 );
 		m_pPgbGaugeTime->SetPos( 1000 );
 
-		// 입력을 받겠다.
+		// I'll take your input.
 		m_bInput = TRUE;
 		m_bActive = TRUE;
 		m_fPlayTime = 0.0f;
@@ -391,12 +391,12 @@ VOID CSkillHtbRpUse::HandleEvents( RWS::CMsg& msg )
 		if( !m_bActive )
 			return;
 
-		// Attribute 관련 Update
+		// Attribute related updates
 		if( pUpdate->uiUpdateType & EVENT_AIUT_ATTR )
 		{
 			CNtlSobAvatar* pSobAvatar = GetNtlSLGlobal()->GetSobAvatar();
 
-			// 저장하고 있는 값과 현재 RP가 다르다면
+			// If the saved value is different from the current RP
 			if( Logic_GetRpStock( pSobAvatar ) != m_uiCurRpStock && m_bSelect == FALSE )
 			{
 				m_uiCurRpStock = Logic_GetRpStock( pSobAvatar );
@@ -424,7 +424,7 @@ VOID CSkillHtbRpUse::OnKeyDown( gui::CComponent* pComponent, CInputDevice* pDevi
 
 	for( RwInt32 i=0; i < dSKILL_HTB_RP_ICON_NUMS; ++i )
 	{
-		// 사용가능한 RP
+		// Available RP
 		if( m_aRpuseIcon[i].IsEnable() )
 		{
 			if( ( key.m_dwVKey - (m_aRpuseIcon[i].GetIndex()+49) ) == 0 )
@@ -436,17 +436,17 @@ VOID CSkillHtbRpUse::OnKeyDown( gui::CComponent* pComponent, CInputDevice* pDevi
 				return;
 			}
 		}
-		// 현재 Disable돼어서 누르면 Max치만큼 선택하는 Icon
+		// Icon that is currently disabled and selects as much as the maximum value when pressed
 		//else
 		//{
 		//	if( ( key.m_dwVKey - (m_aRpuseIcon[i].GetIndex()+49) ) == 0 )
 		//	{
 		//		GetInputActionMap()->RegisterIgnoreKey( (RwUInt8)key.m_dwVKey, 1 );
 
-		//		// 가지고 있는 Rp
+		//		// Have Rp
 		//		m_uiCurRpStock = Logic_GetRpStock(GetNtlSLGlobal()->GetSobAvatar());
 
-		//		// 가지고 있는게 없다면 무를 선택
+		//		// If you don't have any, choose nothing
 		//		if( m_uiCurRpStock == 0 )
 		//		{
 		//			m_RpUseIconNone.OnFSCallBack( "push", "" );
@@ -455,7 +455,7 @@ VOID CSkillHtbRpUse::OnKeyDown( gui::CComponent* pComponent, CInputDevice* pDevi
 		//		}
 		//		else
 		//		{
-		//			// 가지고 있는게 있다면 최대치를 선택
+		//			// If you have it, choose the maximum
 		//			m_aRpuseIcon[ m_uiCurRpStock-1 ].OnFSCallBack( "push", "" );
 		//			m_bInput = FALSE;
 		//			return;
@@ -480,7 +480,7 @@ VOID CSkillHtbRpUse::OnKeyDown( gui::CComponent* pComponent, CInputDevice* pDevi
 
 VOID CSkillHtbRpUse::SelectedHtpRpUse( RwUInt8 byIndex )
 {
-	// 0을 사용하겠다!
+	// I'll use 0!
 	if( byIndex >= dSKILL_HTB_RP_ICON_NUMS )
 	{	
 		API_GetSLPacketGenerator()->SendHTBRPBallUseReq(0);
@@ -511,7 +511,7 @@ VOID CSkillHtbRpUse::SelectedHtpRpUse( RwUInt8 byIndex )
 		m_RpUseIconNone.Show( false );
 	}
 
-	// Selected를 하게 되면
+	// When selected
 	m_bSelect = TRUE;
 
 	//// Clsoe Dialog

@@ -1,7 +1,7 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlFSMUtil.h"
 
-// shared
+// Shared
 #include "NtlMovement.h"
 
 //
@@ -10,7 +10,7 @@
 #include "NtlFSMCharActAgent.h"
 #include "NtlSLEventFunc.h"
 
-// 이동이 가능한 상태인가?
+//Is it possible to move?
 RwBool FSMUtil_CanMoveState(CNtlFSMStateBase *pStateBase)
 {
 	if(pStateBase->GetFlags() & NTL_FSMSF_NOT_MOVE)
@@ -19,7 +19,7 @@ RwBool FSMUtil_CanMoveState(CNtlFSMStateBase *pStateBase)
 	return TRUE;
 }
 
-// 공격이 가능한 상태인가?
+// Is an attack possible?
 RwBool FSMUtil_CanAttackState(CNtlFSMStateBase *pStateBase)
 {
 	if(pStateBase->GetFlags() & NTL_FSMSF_NOT_ATTACK_CAN)
@@ -28,7 +28,7 @@ RwBool FSMUtil_CanAttackState(CNtlFSMStateBase *pStateBase)
 	return TRUE;
 }
 
-// 공격을 받을 수 있는 상태인가?
+// Are you ready to be attacked?
 RwBool FSMUtil_CanHurtState(CNtlFSMStateBase *pStateBase)
 {
 	if(pStateBase->GetFlags() & NTL_FSMSF_NOT_HURT_CAN)

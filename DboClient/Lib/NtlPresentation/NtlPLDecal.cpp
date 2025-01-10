@@ -1,12 +1,12 @@
 #include "precomp_ntlpresentation.h"
 #include "NtlPLDecal.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 #include "NtlAtomic.h"
 
-// presentation
+// Presentation
 #include "NtlPLResourceManager.h"
 #include "NtlPLWorldEntity.h"
 #include "NtlPLEntityFreeList.h"
@@ -45,7 +45,7 @@ CNtlPLDecal::CNtlPLDecal()
 	m_vSize = ZeroAxis;
 	m_fIntersectionRadius = 3.0f;
 	m_fScale = 1.0f;
-	m_fVisibleSquaredDist = 1600.f;	//Camera에서 보이는 거리(40m)
+	m_fVisibleSquaredDist = 1600.f;	//Distance visible from camera (40m)
 	m_pTexture = NULL;
 	m_pCurrentTexture = NULL;
 	m_ppMultiTextures = NULL;
@@ -143,15 +143,15 @@ RwBool CNtlPLDecal::Create( const SPLEntityCreateParam * pParam /*= NULL*/ )
 		}
 	}
 
-    // 버텍스 버퍼 생성
+    // Create vertex buffer
     m_pIm3DBuffer = (RwIm3DVertex*)CNtlEffectSystemFreeList::Alloc(CNtlResourceComponentSystem::RESOURCE_VERTEX_1024);
     m_nMaxVertexCnt = DECAL_VB_SMALL_SIZE;    
     m_uiMemoryUseSize += sizeof(RwIm3DVertex) * 1024;
 
-    // 시작시 Fade 상태를 체크한다.
+    // Check the fade status at startup.
     if(m_eDecalType == DECAL_EFFECT)
     {
-        m_eFadeStatus = FADE_STATUS_IN;      // 이펙트 데칼은 무조건 Fade In부터 시작한다.        
+        m_eFadeStatus = FADE_STATUS_IN;      // Effect decals always start from Fade In.        
     }
     else
     {
@@ -238,7 +238,7 @@ RwBool CNtlPLDecal::Update(RwReal fElapsed)
 	if(!IsVisble())
 		return TRUE;
 
-	// 스케일 Action은 Vertex를 만들기 전에 적용해야 한다.
+	// The scale action must be applied before creating the vertex.
 	if(m_nFlagEffect & rpPRTADVEMITTERDATAFLAGMULTISIZE)
 	{
 		UpdateMultiSize(m_fElapsedTime);
@@ -273,7 +273,7 @@ RwBool CNtlPLDecal::Update(RwReal fElapsed)
 	{
 		SetVertexColor(m_color);
 	}
-    else if(GetWeightAlpha() != 1.0f)           // Weight Alpha가 적용되었을때
+    else if(GetWeightAlpha() != 1.0f)           // When Weight Alpha is applied
     {
         SetVertexColor(m_color);
     }
@@ -353,11 +353,11 @@ void CNtlPLDecal::SetPosition(const RwV3d *pPos)
 		}
 	}	
 	
-	// Effect Decal이거나, 지형 Decal이면서 생성된 Vertex의 범위를 벗어나지 않으면 UV만 업데이트해준다.
+	// If it is an effect decal or a terrain decal and does not exceed the range of the created vertex, only the UV is updated.
 	UpdateUV();
 }
 
-// NOTE : 외부에서 호출할때만 사용하고 Fade 시에는 사용하면 안된다. (Fade와 상관없는 원래 Alpha값)
+// NOTE: Use only when calling from outside and should not be used when fading. (Original Alpha value unrelated to Fade)
 void CNtlPLDecal::SetAlpha(RwUInt8 byAlpha)
 {
 	m_color.alpha = byAlpha;
@@ -365,7 +365,7 @@ void CNtlPLDecal::SetAlpha(RwUInt8 byAlpha)
 	SetVertexColor(m_color);
 }
 
-// NOTE : 외부에서 호출할때만 사용하고 Fade 시에는 사용하면 안된다. (Fade와 상관없는 원래 Alpha값)
+// NOTE: Use only when calling from outside and should not be used when fading. (Original Alpha value unrelated to Fade)
 void CNtlPLDecal::SetColor(RwUInt8 byRed, RwUInt8 byGreen, RwUInt8 byBlue)
 {
 	m_color.red = byRed;
@@ -406,16 +406,16 @@ RwBool CNtlPLDecal::UpdateVertices()
 
 	if(m_nFlagEffect & E_FLAG_DECAL_WATER)
 	{
-		GetWaterDecalVertex();		// 물 위에 그려지는 Decal을 계산한다.
+		GetWaterDecalVertex();		// Calculate the decal drawn on the water.
 	}
 	else if(m_nFlagEffect & E_FLAG_DECAL_RENDER_WORLD)
 	{
-		// World의 Decal 계산
+		// Decal calculation of World
 		CNtlPLWorldEntity *pWorldEntity = reinterpret_cast<CNtlPLVisualManager*>( GetSceneManager() )->GetWorld();
 		if(!pWorldEntity)
 			return FALSE;
 
-		// Decal 내외부 판정.
+		// Decal internal and external judgment.
 		if (!GetNtlWorldSpace(&m_vPos, NULL, NULL))
 		{
 			RwV3d vResutSize = m_vSize * m_fScale;
@@ -423,7 +423,7 @@ RwBool CNtlPLDecal::UpdateVertices()
 			RwBool bResult = pWorldEntity->GetWorldDecal(m_vPos, vResutSize, m_nMaxVertexCnt, m_nRenderVertexCnt, m_fRadiusWorldVertex, m_pIm3DBuffer, m_fYOffset);		
 			if(!bResult)
 			{
-				// 버퍼가 작아서 다 못담을 경우에는 큰 버퍼로 변경한다.
+				// If the buffer is too small to contain everything, change to a larger buffer.
 				if(m_nRenderVertexCnt >= m_nMaxVertexCnt && m_nMaxVertexCnt == DECAL_VB_SMALL_SIZE)
 				{
 					ChangeBigVB();
@@ -437,7 +437,7 @@ RwBool CNtlPLDecal::UpdateVertices()
 				}
 			}
 
-			// 생성된 Vertex의 중점과 반지름 계산
+			// Calculate the midpoint and radius of the created vertex
 			m_vOriginPos = m_vPos;
 			m_vOriginPos.y = 0.0f;
 
@@ -447,7 +447,7 @@ RwBool CNtlPLDecal::UpdateVertices()
 
 	if(m_nFlagEffect & E_FLAG_DECAL_RENDER_OBJECT)
 	{
-		// 오브젝트들의 Decal 계산
+		// Decal calculation of objects
 		GetObjectDecalVertex();
 	}
 
@@ -460,7 +460,7 @@ RwBool CNtlPLDecal::UpdateVertices()
 RwBool CNtlPLDecal::GetWaterDecalVertex() 
 {
 	RwReal fWaterHeight = GetSceneManager()->GetWorldWaterHeight(m_vPos);
-	if(fWaterHeight < -998.0f)			// 물이 아니면 -999.0f 를 리턴한다.
+	if(fWaterHeight < -998.0f)			// If it is not water, -999.0f is returned.
 		return FALSE;
 
 
@@ -495,7 +495,7 @@ void CNtlPLDecal::SetVertexColor(const RwRGBA& color)
 {
 	for(int i = 0; i < m_nRenderVertexCnt; ++i)
 	{
-		// Day and Night의 영향을 받는 플래그가 켜져있으면 영향을 받는다.
+		// If the flag affected by Day and Night is turned on, it will be affected.
 		if(m_nFlagEffect & E_FLAG_DECAL_DAYNIGHT)
 		{
 			RwRGBA colDayNight = color;
@@ -518,7 +518,7 @@ void CNtlPLDecal::UpdateUV()
 	if(m_nRenderVertexCnt <= 0)
 		return;
 
-	// 중심점과의 거리를 계산해서 UV를 계산한다.
+	// UV is calculated by calculating the distance from the center point.
 	RwReal fU, fV;
 	RwV3d v3dPos = m_vPos;
 	v3dPos.y = 0.0f;	
@@ -542,10 +542,10 @@ void CNtlPLDecal::UpdateUV()
 
 	RwMatrixSetIdentity(&m_matTexture);
 
-	// Rotate 값을 적용한다. (Rotate Action말고 Matrix상의 Rotate)
+	// Apply the Rotate value. (Rotate on Matrix, not Rotate Action)
 	RwMatrixRotate(&m_matTexture, &ZAxis, m_fDegree, rwCOMBINEPOSTCONCAT);	
 
-	// 새로 세팅된 UV 초치값에 Rotate Action을 적용한다.
+	// Apply Rotate Action to the newly set UV threshold value.
 	if(m_nFlagEffect & rpPRTSTDEMITTERDATAFLAGPRT2DROTATE)
 	{
 		UpdateRoate(m_fTotalElapsedTime);				
@@ -583,7 +583,7 @@ ShadowRenderAtomicObjectTriangleCB( RpIntersection * intersection __RWUNUSED__,
 
 	RwInt32 nBuffCnt = *(pDecalParam->pBufferCnt);  
 
-	// 최대 개수를 넘으면 Vertex를 생성하지 않고 캔슬한다.
+	// If the maximum number is exceeded, the vertex is canceled without being created.
 	if(nBuffCnt + 2 >= pDecalParam->nMaxVertextCnt)			
 		return collTriangle;
 
@@ -610,7 +610,7 @@ ShadowRenderAtomicObjectTriangleCB( RpIntersection * intersection __RWUNUSED__,
 // 
 // 	RwInt32 nBuffCnt = *(pDecalParam->pBufferCnt);  
 // 	
-// 	// 최대 개수를 넘으면 Vertex를 생성하지 않고 캔슬한다.
+// 	// If the maximum number is exceeded, the vertex is canceled without being created.
 // 	if(nBuffCnt + 2 >= pDecalParam->nMaxVertextCnt)			
 // 		return collTriangle;
 // 
@@ -679,11 +679,11 @@ void CNtlPLDecal::GetObjectDecalVertex()
     if(!CNtlPLGlobal::m_pRpWorld)
         return;
 
-	// decal 구하기		
+	// Get decal		
 
 	DecalCallbackParam param;		
 	param.vPos = m_vPos;
-	param.pBufferCnt = (RwInt32*)&m_nRenderVertexCnt; ///< 현재까지 생성된 Vertex 버퍼의 다음부터 담는다.
+	param.pBufferCnt = (RwInt32*)&m_nRenderVertexCnt; ///< Contains the vertex buffer created so far starting from the next.
 	param.pVertices = m_pIm3DBuffer;			
 	param.fIntersectionRadius =  max(m_vSize.x, m_vSize.z) * m_fScale * 0.5f;
 	param.fScale = m_fScale;
@@ -699,7 +699,7 @@ void CNtlPLDecal::GetObjectDecalVertex()
 
 	RpWorldForAllAtomicIntersections(CNtlPLGlobal::m_pRpWorld, &InterZone, ShadowRenderAtomicCB, (void *) &param);
     
-    // 버퍼가 작아서 다 담지 못하는 경우에는 큰 버퍼로 변경한다.
+    // If the buffer is too small to contain everything, change to a larger buffer.
     if(m_nMaxVertexCnt == DECAL_VB_SMALL_SIZE && m_nRenderVertexCnt > 1020)
     {
         ChangeBigVB();
@@ -797,10 +797,10 @@ void CNtlPLDecal::SetTextureMatrix(RwIm3DVertex* pVertices, RwInt32 nVertCnt, Rw
 	for(int i = 0; i < nVertCnt; ++i)
 	{
 		
-		// Texture의 원점(0,0)과 원하는 원점(0.5, 0.5)이 서로 다르기 때문에, uv좌표에 0.5씩을 더해준다.
-		// 하지만 계산은 원래 원점(0,0)을 기준으로 해야 하기 때문에, 계산전에는 다시 0.5씩을 빼준다.		
-		// 주의) 이러지 않으면 텍스쳐가 원점기준(0, 0)으로 회전한다. 
-		// Note: 원래 값을 따로 보관하고 결과값을 사용해도 되지만, 메모리를 아끼기 위해 그냥 계산한다.
+		// Since the texture's origin (0,0) and the desired origin (0.5, 0.5) are different, 0.5 is added to the uv coordinates.
+		// However, since the calculation must be based on the original origin (0,0), 0.5 is subtracted again before calculation.		
+		// Caution) If this is not done, the texture will rotate based on the origin (0, 0). 
+		// Note: You can keep the original value separately and use the result, but to save memory, just calculate it.
 		pVertices[i].u -= 0.5f;
 		pVertices[i].v -= 0.5f;		
 
@@ -844,11 +844,11 @@ void CNtlPLDecal::UpdateColor(RwReal fElapsedTime)
 	RwInt32 odd = ((RwInt32)m_fTotalElapsedTime / (RwInt32)m_fColorActionTime) % 2;
 
 	RwRGBA color;
-	if(odd == 0) // 나눈수가 짝수이면 end쪽으로 보간
+	if(odd == 0) // If the divided number is even, interpolate toward the end.
 	{
 		color = CNtlMath::Interpolation(m_colStart, m_colEnd, fDeltaTime);
 	}
-	else // 나순수가 홀수이면 start 쪽으로 보간
+	else // If the raw number is odd, interpolate toward start.
 	{
 		color = CNtlMath::Interpolation(m_colEnd, m_colStart, fDeltaTime);
 	}
@@ -976,7 +976,7 @@ void CNtlPLDecal::UpdateMultiTexture(RwReal fElapsedTime)
 			{
 				m_nCurrentTexture = 0;
 			}
-			else	// 루프가 아니면 마지막 텍스쳐를 계속 보여준다.
+			else	// Unless it is a loop, the last texture is continuously displayed.
 			{
 				--m_nCurrentTexture;
 			}			
@@ -1026,10 +1026,10 @@ void CNtlPLDecal::UpdateMultiSize( RwReal fElapsedTime )
 	if(m_EmitterPrtMultiSize.numSize <= 0)
 		return ;
 
-	// Multi Size의 Time은 각 아이템사이간의 Gap Time을 의미한다. 
-	// 지형 Decal은 EndTime이 없어 파티클처럼 시간의 %로 의미할 수가 없어서 Gap으로 사용했다.
-	// 즉, [1] 0.5초 [2] 0.3초  이런식으로 0.5초에 걸쳐 1번째 아이템으로 변경하고, 또 0.3에 걸쳐
-	// 두번째 아이템으로 변경하는 식이다. (by agebreak 2007.03.26)
+	// Multi Size Time refers to the gap time between each item. 
+	// Terrain Decal does not have an EndTime, so it cannot be expressed as a percentage of time like a particle, so it was used as a Gap.
+	// That is, [1] 0.5 seconds, [2] 0.3 seconds, and so on, changing to the first item over 0.5 seconds, and then over 0.3 seconds.
+	// This is done by changing to the second item. (by agebreak 2007.03.26)
 
 	m_fMultiSizeDeltaTime += fElapsedTime;
 
@@ -1067,7 +1067,7 @@ void CNtlPLDecal::SetMatrix(RwMatrix& matWorld )
 {
 	m_matWorld = matWorld;
 
-	// NOTE: Rotate 값은 이후 UpdateUV()할때 적용된다.
+// NOTE: The Rotate value will be applied on subsequent UpdateUV() calls.
 
 	RwV3d* pPos = RwMatrixGetPos(&m_matWorld);		
 	SetPosition(pPos);
@@ -1085,11 +1085,11 @@ void CNtlPLDecal::UpdateUVAnim( RwReal fElapsedTime )
 		RwInt32 nOdd = (RwInt32)(m_fTotalElapsedTime / fOffsetTime);
 		RwReal fTime = fmod(m_fTotalElapsedTime, fOffsetTime);
 		
-		if(nOdd % 2 == 0)	// 전진
+		if(nOdd % 2 == 0)	// Advance
 		{
 			fVelocity = m_EmitterPrtUVAnim.fVelocity * fTime;
 		}
-		else				// 후진
+		else				// Reverse
 		{
 			fVelocity = m_EmitterPrtUVAnim.fVelocity * (fOffsetTime - fTime);
 		}		

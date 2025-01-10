@@ -1,19 +1,19 @@
 #include "precomp_dboclient.h"
 #include "CommunityGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "ItemTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 
-// dbo
+// Dbo
 #include "DboGlobal.h"
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
@@ -61,7 +61,7 @@ RwBool CCommunityGui::Create()
 
 	rect = GetPosition();
 
-	// 백라인
+	// backline
 	m_BackLineSurface.SetType(CWindowby3::WT_HORIZONTAL);
 	m_BackLineSurface.SetSurface( 0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GameCommon.srf", "srfBackLineTop" ) );
 	m_BackLineSurface.SetSurface( 1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GameCommon.srf", "srfBackLineCenter" ) );
@@ -70,20 +70,20 @@ RwBool CCommunityGui::Create()
 	m_BackLineSurface.SetPositionfromParent(9, 50);
 
 
-	// 길드 페이지
+	// guild page
 	m_pTabPage[PAGETYPE_GUILD] = NTL_NEW CCommunityGuild;
 	m_pTabPage[PAGETYPE_GUILD]->Create(this);
 /*
-	// 공대 페이지
+	// Engineering page
 	m_pTabPage[PAGETYPE_RAID] = NTL_NEW CCommunityRaid;
 	m_pTabPage[PAGETYPE_RAID]->Create(this);
 */	
 
-	// 닫기 버튼
+	// close button
 	m_pExitButton = (gui::CButton*)GetComponent( "ExitButton" );
 	m_slotCloseButton = m_pExitButton->SigClicked().Connect(this, &CCommunityGui::CloseButtonClicked);		
 
-	// 탭 버튼
+	// tab button
 	m_pTabButton = (gui::CTabButton*)GetComponent( "TabButton" );	
 
 	m_pBtnHelp = (gui::CButton*)GetComponent( "btnHelp" );
@@ -99,10 +99,10 @@ RwBool CCommunityGui::Create()
 
 	m_pTabButton->SelectTab(0);
 	
-	// 아웃라인
+	// outline
 	rect = GetPosition();	
 
-	// sig
+	// Signals
 	m_slotTabChanged	= m_pTabButton->SigSelectChanged().Connect( this, &CCommunityGui::OnTabChanged );
 	m_slotMouseDown		= m_pThis->SigMouseDown().Connect( this, &CCommunityGui::OnMouseDown );
 	m_slotMouseUp		= m_pThis->SigMouseUp().Connect( this, &CCommunityGui::OnMouseUp );	
@@ -112,7 +112,7 @@ RwBool CCommunityGui::Create()
 	m_slotPaint			= m_pThis->SigPaint().Connect( this, &CCommunityGui::OnPaint );	
 	m_slotCaptureMouseDown = GetNtlGuiManager()->GetGuiManager()->SigCaptureMouseDown().Connect( this, &CCommunityGui::OnCaptureMouseDown );
 
-	// OnMove를 통해 위치가 결정되는 컴포넌트를 위해서
+	// For components whose position is determined via OnMove
 	OnMove(100, 100);
 
 	// Link

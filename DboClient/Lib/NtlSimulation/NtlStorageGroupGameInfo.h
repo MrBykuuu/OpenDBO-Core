@@ -3,7 +3,7 @@
 * Author		: HaeSung, Cho
 * Copyright		: (주)NTL
 * Date			: 2009. 2. 5	
-* Abstract		: GameInfo 의 관련 Unit들
+* Abstract		: Related Units of GameInfo
 *****************************************************************************
 * Desc         : 
 *

@@ -39,7 +39,7 @@ public:
 
 	sMERCHANT_TBLDAT* GetMerchantTbl(void) const;
 
-	const WCHAR*	GetTabName(void) const;		///< 물품들의 분류명( ex : 의복, 무기 ....)
+	const WCHAR*	GetTabName(void) const;		///< Category name of items (ex: clothing, weapons....)
 };
 
 #endif

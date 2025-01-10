@@ -6,7 +6,7 @@
 typedef std::vector<CNtlInstanceEffect*> VecLinkEffect;
 /**
  * \ingroup NtlPresentation
- * \brief Link Effect 클래스 (Model에 계속 붙어있는 이펙트) 
+ * \brief Link Effect class (effect that remains attached to Model) 
  * \date 2006-07-14
  * \author agebreak
  */
@@ -18,10 +18,10 @@ public:
     
     CNtlInstanceEffect* AttachLinkEffect(CNtlPLAttach* pAttach, SEventLinkEffect* pEventLinkEffect);    
     RwBool DetachLinkEffect(CNtlPLAttach* pAttach, CNtlInstanceEffect* pLinkEffect);
-    CNtlInstanceEffect* GetLinkEffectFromName(RwChar* szName);          ///< 이름으로 LinkEffect Instance를 검색하여 반환한다. (모델툴에서만 사용)
-    void SetVisible(BOOL bVisible);         ///< 모든 LinkEffect의 Visible을 설정한다. 
+    CNtlInstanceEffect* GetLinkEffectFromName(RwChar* szName);          ///< Searches for and returns LinkEffect Instance by name. (Used only in model tools)
+    void SetVisible(BOOL bVisible);         ///< Sets the Visible of all LinkEffects. 
 
 public:
-    VecLinkEffect m_vecLinkEffect;          ///< Link Effect Instance들의 벡터
+    VecLinkEffect m_vecLinkEffect;          ///< Vector of Link Effect Instances
 
 };

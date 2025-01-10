@@ -171,20 +171,20 @@ protected:
 	gui::CSlot			m_slotTitleReleased;
 
 	//! Variable
-	gui::CButton*		m_pbtnIndicator;		// Indicator 버튼. Toggle식
-	gui::CButton*		m_pbtnShare;			// 공유 버튼.
-	gui::CButton*		m_pbtnTitle;			// Title 버튼. 
-	gui::CPanel*		m_ppnlState;			// Quest 상태
+	gui::CButton*		m_pbtnIndicator;		//Indicator button. Toggle Expression
+	gui::CButton*		m_pbtnShare;			//Share button.
+	gui::CButton*		m_pbtnTitle;			//Title button.
+	gui::CPanel*		m_ppnlState;			//Quest status
 	
 	sTS_KEY				m_TSKey;			
 	RwUInt32			m_uiState;
 	RwUInt32			m_uiSortType;
-	std::wstring		m_wstrTitle;			// 원본 보관.
+	std::wstring		m_wstrTitle;			//Archive the original.
 
 	RwUInt32			m_dwClickTime;			// 
 	bool				m_bShare;
 	RwBool				m_bIsNew;
-	RwBool				m_bReserveIndicator;	// TMQ에서 돌아왔을때 다시 뜰때 Indicator표시 여부
+	RwBool				m_bReserveIndicator;	// TMQ에서 돌아왔을때 다시 뜰때 Indicator표시 여부//// Show indicator when returning from TMQ
 };
 
 #endif

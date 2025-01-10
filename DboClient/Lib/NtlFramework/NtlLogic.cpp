@@ -17,7 +17,7 @@ CNtlLogic::CNtlLogic() : m_bEnabled(false) ,
 
 /**
 *
-*  각종 tick에 대한 event를 등록한다.
+*Register events for various ticks.
 *
 */
 bool CNtlLogic::Create(void)
@@ -32,7 +32,7 @@ bool CNtlLogic::Create(void)
 
 /**
 *
-*  각종 tick에 대한 등록된 event를 해제한다.
+*  Releases registered events for various ticks.
 *
 */
 void CNtlLogic::Destroy(void)
@@ -46,8 +46,8 @@ void CNtlLogic::Destroy(void)
 
 /**
 *
-*  simulation object에 update tick evnet를 보낸다.
-*  또한 30, 20, 10 frame에 sync된 tick을 계산하여 보낸다.
+*  Send update tick evnet to simulation object.
+*  Also, synchronized ticks at 30, 20, and 10 frames are calculated and sent.
 *
 */
 void CNtlLogic::Update(float fElapsed)
@@ -61,7 +61,7 @@ void CNtlLogic::Update(float fElapsed)
 	g_MsgTick.pData = reinterpret_cast<void*>(&m_fFreeElapsed);
 	SendMsg(g_MsgTick);
 
-	// input을 얻어온다.
-	// logic을 update 한다. (랜더링 객체 포함)
+	// Get input.
+	// Update the logic. (including rendering objects)
 }
 

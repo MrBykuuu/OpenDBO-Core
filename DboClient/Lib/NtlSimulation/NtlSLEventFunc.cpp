@@ -148,7 +148,7 @@ void CNtlSLEventGenerator::CreateWorld( RwBool bCreate )
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
-* avatar/camera 이동 및 회전
+*avatar/camera movement and rotation
 */
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -222,7 +222,7 @@ void CNtlSLEventGenerator::CameraDB(SERIAL_HANDLE hSerialId)
 	SEND_MSG(g_EventCameraDB, &sCameraDB);
 }
 
-// 타임머신 연출용 카메라
+// Time machine production camera
 void CNtlSLEventGenerator::CameraTimeMachine( SERIAL_HANDLE hSerialID ) 
 {
 	CNtlSobActor* pObj = (CNtlSobActor*)GetNtlSobManager()->GetSobObject(hSerialID);
@@ -288,13 +288,13 @@ void CNtlSLEventGenerator::CameraDirectSplineNode(RwReal fDelayTime, RwV3d vStar
 	_SendMsg(msg);
 }
 
-// 프리카메라로 카메라를 체인지 한다.
+// Change the camera to a free camera.
 void CNtlSLEventGenerator::CameraFree() 
 {
 	SEND_MSG(g_EventCameraFree, NULL);
 }
 
-// 1인칭 카메라로 전환한다.
+// Switch to first-person camera.
 void CNtlSLEventGenerator::CameraFPS(RwV3d& vCurrLookAt, RwV3d& vTargetLookAt)
 {
 	SNtlEventCameraFPS data;    
@@ -304,7 +304,7 @@ void CNtlSLEventGenerator::CameraFPS(RwV3d& vCurrLookAt, RwV3d& vTargetLookAt)
 	SEND_MSG(g_EventCameraFPS, &data);
 }
 
-// 버스 카메라로 전환한다
+// Switch to bus camera
 void CNtlSLEventGenerator::CameraBus(CNtlSobActor* pActor)
 {
 	SNtlEventCameraControlBus data;    
@@ -325,7 +325,7 @@ void CNtlSLEventGenerator::CameraControlDelete(RwUInt8 byControllerType)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
-* action mapping
+*action mapping
 */
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3107,13 +3107,13 @@ void CNtlSLEventGenerator::ReloadTS( void )
 }
 
 void CNtlSLEventGenerator::RegQuest_Nfy( sTS_KEY& sTSKey,
-										bool bNewRegister,						// 퀘스트 등록시 New type의 등록 여부
-										bool bQuestShare,						// 퀘스트 공유
-										RwUInt32 uiQuestAreaName,				// 퀘스트 지역 이름
-										RwUInt32 uiQuestState,					// 퀘스트 상태
-										RwUInt32 uiQuestTitle,					// 퀘스트 제목
-										RwUInt32 uiQuestGoal,					// 퀘스트 목적
-										eQUEST_SORT_TYPE eQuestSortType )		// 퀘스트 종류의 타입
+										bool bNewRegister,						// Whether to register a new type when registering a quest
+										bool bQuestShare,						// Share Quest
+										RwUInt32 uiQuestAreaName,				// Quest area name
+										RwUInt32 uiQuestState,					// Quest Status
+										RwUInt32 uiQuestTitle,					// Quest Title
+										RwUInt32 uiQuestGoal,					// Quest Purpose
+										eQUEST_SORT_TYPE eQuestSortType )		// Types of Quest Types
 {
 	SNtlEventRegQuest_Nfy sRegQuestNfy;
 	sRegQuestNfy.sTSKey = sTSKey;
@@ -3156,22 +3156,22 @@ void CNtlSLEventGenerator::ShowQuestWindow( sTS_KEY& sTSKey )
 }
 
 void CNtlSLEventGenerator::ShowQuestWindow_Nfy( sTS_KEY& sTSKey,
-											    RwUInt32 uiQuestAreaName,			// 퀘스트 지역 이름
-											    RwUInt32 uiQuestTitle,				// 퀘스트 제목
-											    RwUInt32 uiQuestSort,				// 퀘스트 종류
-											    RwUInt32 uiQuestGrade,				// 퀘스트 난이도
-											    eGRADE_TYPE eGradeType,				// 퀘스트 난이도 타입
-											    RwUInt32 uiQuestGoal,				// 퀘스트 목표
-											    RwUInt32 uiQuestContents,			// 퀘스트 내용
-											    sREWARD_INFO* psDefaultReward,		// 퀘스트 보상 정보 - 기본 보상
-											    sREWARD_INFO* psSelectReward,		// 퀘스트 보상 정보 - 선택 보상
+											    RwUInt32 uiQuestAreaName,			// Quest area name
+											    RwUInt32 uiQuestTitle,				// Quest Title
+											    RwUInt32 uiQuestSort,				// Quest type
+											    RwUInt32 uiQuestGrade,				// Quest Difficulty
+											    eGRADE_TYPE eGradeType,				// Quest Difficulty Type
+											    RwUInt32 uiQuestGoal,				// Quest Objectives
+											    RwUInt32 uiQuestContents,			// Quest contents
+											    sREWARD_INFO* psDefaultReward,		// Quest Reward Information -Basic Reward
+											    sREWARD_INFO* psSelectReward,		// Quest Reward Information -Select Reward
 	unsigned int uiRewardExp,
 	unsigned int uiRewardZeni,
-											    eSTOC_EVT_DATA_TYPE eEvtInfoType,	// 서버 이벤트 정보 - 데이터 타입
-											    const uSTOC_EVT_DATA& uEvtInfoData,	// 서버 이벤트 정보 - 데이터
-											    RwUInt32 uiTimeLimit,				// 타임 제한 정보
-											    RwUInt32 uiEventType,				// eEVENT_GEN_TYPE ( 현재는 eEVENT_GEN_TYPE_CLICK_NPC 만 사용함 )
-											    RwUInt32 uiEventID,					// uiEventType 에 따른 인덱스 eEVENT_GEN_TYPE_CLICK_NPC	: Mob table index
+											    eSTOC_EVT_DATA_TYPE eEvtInfoType,	// Server event information -data type
+											    const uSTOC_EVT_DATA& uEvtInfoData,	// Server event information -data
+											    RwUInt32 uiTimeLimit,				// Time limit information
+											    RwUInt32 uiEventType,				// eEVENT_GEN_TYPE (currently only uses eEVENT_GEN_TYPE_CLICK_NPC)
+											    RwUInt32 uiEventID,					// Index according to uiEventType eEVENT_GEN_TYPE_CLICK_NPC: Mob table index
 												RwBool bIsEventStarter )			// Event type [ True : Starter, False : Reward ]
 
 {
@@ -3339,10 +3339,10 @@ void CNtlSLEventGenerator::ShowIndicator_Nfy(sTS_KEY& sTSKey,
 	_SendMsg(msg);
 }
 
-void CNtlSLEventGenerator::DoQuest( sQUEST_INFO& sQuestInfo,		// Quest 정보
-								    eEVENT_GEN_TYPE eEventGenType,	// Event 종류
+void CNtlSLEventGenerator::DoQuest( sQUEST_INFO& sQuestInfo,		// About Quest
+								    eEVENT_GEN_TYPE eEventGenType,	// Event type
 									RwUInt32 uiOwnerID,				// Owner ID
-									RwBool bTransCameraCtrlRight)	// 카메라 제어권을 넘기는 경우 TRUE
+									RwBool bTransCameraCtrlRight)	// TRUE if handing over camera control
 {
 	SNtlEventDoQuest sDoQuest;
 	sDoQuest.sQuestInfo = sQuestInfo;
@@ -3554,14 +3554,14 @@ void CNtlSLEventGenerator::QuestRewardDialog_Res( bool bResult, sTS_KEY& sTSKey,
 }
 
 void CNtlSLEventGenerator::QuestNarrationDialog_Req( sTS_KEY& sTSKey,
-													eNARRATION_PROGRESS_STATE eProgState,		// Narration 진행 상태
-													eNARRATION_OWNER_TYPE eOwnerType,			// Owner의 종류
-													RwUInt32 uiOwnerIdx,						// Owner의 테이블 인덱스
-													eNARRATION_OWNER_STATE eOwnerState,		// Owner의 상태
-													eNARRATION_DIALOG_DIR_TYPE eDialogDirType,	// 대화 연출 종류
-													RwUInt32 uiDialog,							// 대화 내용
-													eNARRATION_GUI_TYPE eGUIType,				// GUI 종류
-													RwUInt32 uiMaxLifeTime )					// 이 시간 이상 나레이션 창이 유지 되는 경우 자동으로 Next로 넘어가야 한다.
+													eNARRATION_PROGRESS_STATE eProgState,		// Narration progress status
+													eNARRATION_OWNER_TYPE eOwnerType,			// Type of Owner
+													RwUInt32 uiOwnerIdx,						// Owner's table index
+													eNARRATION_OWNER_STATE eOwnerState,		// Owner's status
+													eNARRATION_DIALOG_DIR_TYPE eDialogDirType,	// type of dialogue production
+													RwUInt32 uiDialog,							// conversation
+													eNARRATION_GUI_TYPE eGUIType,				// GUI type
+													RwUInt32 uiMaxLifeTime )					// If the narration window remains longer than this time, it should automatically move to Next.
 {
 	SNtlEventQuestNarrationDialog_Req sQuestNarrationDialogReq;
 	sQuestNarrationDialogReq.sTSKey = sTSKey;
@@ -3718,10 +3718,10 @@ void CNtlSLEventGenerator::ShowQuestPosMark( sTS_KEY& sTSKey, RwBool bShow )
 }
 
 void CNtlSLEventGenerator::QuestObjDialog_Req( sTS_KEY& sTSKey,
-											  eOBJCONV_TYPE eObjConvType,			// Object 대화 타입
-											  RwUInt32 uiWorldIdx,					// Object 소속 world index
-											  RwUInt32 uiObjIdx,					// Object 테이블 인덱스
-											  RwUInt32 uiDesc )					// Object 대화
+											  eOBJCONV_TYPE eObjConvType,			// Object conversation type
+											  RwUInt32 uiWorldIdx,					// Object belonging world index
+											  RwUInt32 uiObjIdx,					// Object table index
+											  RwUInt32 uiDesc )					// Object conversation
 {
 	SNtlEventQuestObjDialog_Req sObjDlg;
 
@@ -3873,7 +3873,7 @@ void CNtlSLEventGenerator::TSScoutUse( RwUInt32 uiItemIdx, RwUInt32 uiTargetClas
 
 void CNtlSLEventGenerator::TSSkillUse_Guard( SERIAL_HANDLE hSource )
 {
-	// TS skill use 이벤트는 아바타가 주체일 경우만 동작한다
+	// The TS skill use event only works when the avatar is the subject.
 	if ( GetNtlSLGlobal()->GetSobAvatar()->GetSerialID() != hSource )
 	{
 		return;
@@ -3894,7 +3894,7 @@ void CNtlSLEventGenerator::TSSkillUse_Guard( SERIAL_HANDLE hSource )
 
 void CNtlSLEventGenerator::TSSkillUse_Dash( SERIAL_HANDLE hSource )
 {
-	// TS skill use 이벤트는 아바타가 주체일 경우만 동작한다
+	// The TS skill use event only works when the avatar is the subject.
 	if ( GetNtlSLGlobal()->GetSobAvatar()->GetSerialID() != hSource )
 	{
 		return;
@@ -3915,7 +3915,7 @@ void CNtlSLEventGenerator::TSSkillUse_Dash( SERIAL_HANDLE hSource )
 
 void CNtlSLEventGenerator::TSSkillUse_Charging( SERIAL_HANDLE hSource )
 {
-	// TS skill use 이벤트는 아바타가 주체일 경우만 동작한다
+	// The TS skill use event only works when the avatar is the subject.
 	if ( GetNtlSLGlobal()->GetSobAvatar()->GetSerialID() != hSource )
 	{
 		return;
@@ -3936,7 +3936,7 @@ void CNtlSLEventGenerator::TSSkillUse_Charging( SERIAL_HANDLE hSource )
 
 void CNtlSLEventGenerator::TSSkillUse_Skill( SERIAL_HANDLE hSource, SSkillStuff* pSkillStuff, CNtlAttackData* pAttackData )
 {
-	// TS skill use 이벤트는 아바타가 주체일 경우만 동작한다
+	// The TS skill use event only works when the avatar is the subject.
 	if ( GetNtlSLGlobal()->GetSobAvatar()->GetSerialID() != hSource )
 	{
 		return;
@@ -3968,7 +3968,7 @@ void CNtlSLEventGenerator::TSSkillUse_Skill( SERIAL_HANDLE hSource, SSkillStuff*
 
 void CNtlSLEventGenerator::TSSkillUse_HTB( SERIAL_HANDLE hSource, SERIAL_HANDLE hTarget, RwUInt32 uiSkillTblId )
 {
-	// TS skill use 이벤트는 아바타가 주체일 경우만 동작한다
+	// The TS skill use event only works when the avatar is the subject.
 	if ( GetNtlSLGlobal()->GetSobAvatar()->GetSerialID() != hSource )
 	{
 		return;
@@ -4234,7 +4234,7 @@ void CNtlSLEventGenerator::TObjectUpdateState( SERIAL_HANDLE hSerialId, TBLIDX t
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
-* 트리거 오브젝트 스카우터 연출 관련
+* Trigger object scouter production related
 */
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -4273,7 +4273,7 @@ void CNtlSLEventGenerator::RegSideHintIcon(RwUInt32 uiEventType, RwUInt32 uiTabl
 	_SendMsg(msg);
 }
 
-// PrivateShop
+// Private shop
 void CNtlSLEventGenerator::PrivateShopState(RwUInt32 uiEventType,  RwUInt32 uiPrivateShopState, sPRIVATESHOP_SHOP_DATA* pPrivateShopData, RwBool IsAvatarPrivateShop)
 {
 	SNtlEventPrivateShopState sPrivateShopState;
@@ -4719,7 +4719,7 @@ void CNtlSLEventGenerator::RBForcedEnd(void)
 	_SendMsg(msg);
 }
 
-// MailSystem
+// Mail system
 void CNtlSLEventGenerator::MailStart(SERIAL_HANDLE hSerialID, RwBool bIsAway, RwBool bSucceeded)
 {
 	SNtlEventMailStart sEvent;
@@ -5109,7 +5109,7 @@ void CNtlSLEventGenerator::BroadMsgNfy_Emergency( std::wstring& wstrSpeech )
 {
 	sBROAD_MSG_DATA sBroadMsgData;
 
-	// 추후 테이블로 뺄지 말지 토의 필요 ( 현재는 하드코딩 )
+	// Need to discuss whether to remove it from the table in the future (currently hard coded)
 	//////////////////////////////////////////////////////////////////////////
 	sBroadMsgData.eUIDirType = eBROAD_MSG_UI_DIR_TYPE_WARNING;
 	sBroadMsgData.eUIShowHideType = eBROAD_MSG_UI_SHOWHIDE_DIR_TYPE_FADE_SLIDE;

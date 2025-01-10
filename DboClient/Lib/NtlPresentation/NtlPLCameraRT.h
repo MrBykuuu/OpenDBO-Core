@@ -1,17 +1,17 @@
 /******************************************************************************
 * File			: NtlPLCameraRT.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2008. 3. 7
 * Abstract		: 
 *****************************************************************************
-* Desc			: Camera render texture 생성 순서
-*				  1. CameraBeginUpdate()의 true 면 Rendering
-*				  2. CameraEndUpdate() 호출
-*				  3. GetTexture() 로 텍스처 반환
-* 주의 ) CameraBeginUpdate()에 매번 새로운 Framde buffer를 할당한다. 따라서
-*		 CameraBeginUpdate()로 텍스처를 생성하고 반드시 GetTexture()로 텍스처를
-*		 얻어와서 텍스처를 해주어야 한다.
+* Desc			: Camera render texture creation order
+*				  1. Rendering if CameraBeginUpdate() is true
+*				  2. Call CameraEndUpdate()
+*				  3. Return texture with GetTexture()
+* Caution) A new frame buffer is assigned to CameraBeginUpdate() each time. thus
+* Create a texture with CameraBeginUpdate() and make sure to retrieve the texture with GetTexture().
+* You must obtain it and apply a texture to it.
 *****************************************************************************/
 #pragma once
 
@@ -25,7 +25,7 @@ public:
 	VOID			Create(RwInt32 iWidth, RwInt32 iHeigth);
 	VOID			Destroy();
 
-	RwBool			CameraBeginUpdate();			///< t : 카메라 텍스처에 랜더링할 준비가 되었다
+	RwBool			CameraBeginUpdate();			///< t : Ready to render to camera texture
 	VOID			CameraEndUpdate();
 
 	RwTexture*		GetTexture();

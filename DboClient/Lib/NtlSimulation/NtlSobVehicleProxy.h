@@ -1,12 +1,12 @@
 /*****************************************************************************
 *
 * File			: CNtlSobVehicleProxy
-* Author		: JeongHo, Rho
-* Copyright		: (주)NTL
+* Author	    : JeongHo, Rho
+* Copyright		: NTL Co., Ltd.
 * Date			: 2008. 11. 4
 * Abstract		: Simulation vehicle Proxy
 *****************************************************************************
-* Desc         : 
+* Desc          : 
 *
 *****************************************************************************/
 
@@ -50,7 +50,7 @@ public:
 public:
 
 	/**
-	* transform에 관현된 함수.
+	*Function related to transform.
 	*/
 
 	virtual void			SetPosition( const RwV3d* pPos );
@@ -62,7 +62,7 @@ public:
 	virtual void			SetAngleY( RwReal fAngle );
 
 	/**
-	* animation에 관련된 함수.
+	*Functions related to animation.
 	*/
 
 	virtual void			SetBaseAnimation( RwUInt32 uiAnimKey, RwBool bLoop = TRUE, RwReal fStartTime = 0.0f );
@@ -77,7 +77,7 @@ public:
 	virtual RwReal          GetAnimSpeed( void );
 
 	/**
-	* entity에 관련된 함수.
+	*Functions related to entities.
 	*/
 
 	virtual RwReal			GetPLEntityHeight( void );
@@ -87,7 +87,7 @@ public:
 	virtual RwReal			GetScale( void );
 
 	/**
-	* visible에 관련된 함수.
+	*Functions related to visibility.
 	*/
 
 	virtual void			EnableVisible( RwBool bEnable );

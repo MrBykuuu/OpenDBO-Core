@@ -1,28 +1,28 @@
 /******************************************************************************
-* File			: CommunityGuild.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2007. 4. 19
-* Abstract		: 
+*File: CommunityGuild.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : April 19, 2007
+*Abstract		: 
 *****************************************************************************
-* Desc			: 길드 커뮤니티 창
+*Desc: Guild Community Window
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// shared
+// Shared
 #include "NtlSharedType.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// dbo
+// Dbo
 #include "CommunityBase.h"
 #include "SurfaceGui.h"
 #include "Windowby3.h"
@@ -65,7 +65,7 @@ public:
 
 	CNtlPLGui*			m_pParent;
 
-	gui::CPanel*		pTributarySimbol;///< 종족과 직업 그림
+	gui::CPanel*		pTributarySimbol;///< Illustration of races and occupations
 	gui::CStaticBox*	m_pName;
 	gui::CStaticBox*	m_pLevel;
 	gui::CStaticBox*	m_pArea;
@@ -122,7 +122,7 @@ protected:
 	VOID		ClearNoticeGui();
 	VOID		CheckInfoWindow();
 
-	// Sig
+	// Signals
 	VOID		OnScrollChanged(RwInt32 iOffset);
 
 	VOID		ClickedEmblemButton(gui::CComponent* pComponent);
@@ -152,16 +152,16 @@ protected:
 
 	CNtlPLGui*			m_pParent;					///< Owner class	
 
-	gui::CButton*		m_pEmblemButton;			///< 길드 문장 버튼
-	gui::CButton*		m_pEmblemModifyButton;		///< 길드 문장 수정 버튼
-	gui::CButton*		m_pLeaveButton;				///< 길드 탈퇴 버튼
-	gui::CButton*		m_pGhymButton;				///< 길드 도장 버튼
-	gui::CButton*		m_pNameButton;				///< 이름 정렬 버튼
-	gui::CButton*		m_pLevelButton;				///< 레벨 정렬 버튼
-	gui::CButton*		m_pAreaButton;				///< 지역 정렬 버튼
-	gui::CButton*		m_pNoticeButton;			///< 공지 버튼
+	gui::CButton*		m_pEmblemButton;			///< Guild emblem button
+	gui::CButton*		m_pEmblemModifyButton;		///< Guild crest edit button
+	gui::CButton*		m_pLeaveButton;				///< Guild withdrawal button
+	gui::CButton*		m_pGhymButton;				///< Guild seal button
+	gui::CButton*		m_pNameButton;				///< Name sort button
+	gui::CButton*		m_pLevelButton;				///< Level sort button
+	gui::CButton*		m_pAreaButton;				///< Region sort button
+	gui::CButton*		m_pNoticeButton;			///< Notice button
 
-	gui::CStaticBox*	m_pGuildName;				///< 길드 이름
+	gui::CStaticBox*	m_pGuildName;				///< Guild name
 
 	gui::CStaticBox*	m_pCurGuildPointText;		///< Current guild points
 	gui::CStaticBox*	m_pMaxGuildPointText;		///< Max guild points
@@ -170,31 +170,31 @@ protected:
 	gui::CStaticBox*	m_pMaxGuildPoint;			///< Max guild points
 
 
-	gui::CStaticBox*	m_pGuildNum;				///< 길드인원
-	gui::CStaticBox*	m_pGuildNoticeStatic;		///< '길드 공지'
-	gui::CStaticBox*	m_pGuildNoticeTime;			///< 공지 날짜
-	gui::CStaticBox*	m_pGuildNoticer;			///< 공지자
-	gui::COutputBox*	m_pNotice;					///< 공지내용
+	gui::CStaticBox*	m_pGuildNum;				///< Guild members
+	gui::CStaticBox*	m_pGuildNoticeStatic;		///< ‘Guild Notice’
+	gui::CStaticBox*	m_pGuildNoticeTime;			///< Notice date
+	gui::CStaticBox*	m_pGuildNoticer;			///< Announcer
+	gui::COutputBox*	m_pNotice;					///<Notice contents
 
 	gui::CScrollBar*	m_pScrollbar;
 
 	CRwTextureGui*		m_pEmblemButtonImage;
 
-	CWindowby3			m_GuildMemBackSurface;		///< 길드 맴버 배경
-	CWindowby3			m_NoticeSurface;			///< 길드 공지 배경
+	CWindowby3			m_GuildMemBackSurface;		///< Guild member background
+	CWindowby3			m_NoticeSurface;			///< Guild notice background
 
-	CSurfaceGui			m_srfHumanShapeSurface;		///< 사람 모양
-	CSurfaceGui			m_srfNoticeBar;				///< 길드 공지 바	
+	CSurfaceGui			m_srfHumanShapeSurface;		///< human shape
+	CSurfaceGui			m_srfNoticeBar;				///< Guild Notice Bar	
 
-	RwBool				m_bNameAscendingSort;		///< 이름의 오름차순인지 여부
-	RwBool				m_bLevelAscendingSort;		///< 레벨의 오름차순인지 여부
-	RwBool				m_bAreaAscendingSort;		///< 지역의 오름차순이지 여부	
+	RwBool				m_bNameAscendingSort;		///< Whether the names are in ascending order
+	RwBool				m_bLevelAscendingSort;		///< Whether the level is in ascending order
+	RwBool				m_bAreaAscendingSort;		///< Is the region in ascending order?	
 
-	RwInt32				m_iOnlineMember;			///< 현재 접속중인 길드 맴버수
+	RwInt32				m_iOnlineMember;			///< Number of guild members currently online
 
-	CHARACTERID			m_SelectedCharID;			///< 현재 선택된 길드원 ID
+	CHARACTERID			m_SelectedCharID;			///< Currently selected guild member ID
 
-	RwInt32				m_iVisibleStart;			///< 화면에 보이는 MemGUI의 최초 인덱스
+	RwInt32				m_iVisibleStart;			///< The first index of MemGUI shown on the screen
 	RwInt8				m_byInfoMemberIndex;	
 
 	CGuildMemberGui*	m_aGuildMemberGui[dVISIBLE_LIST_COUNT];

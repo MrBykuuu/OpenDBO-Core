@@ -74,8 +74,8 @@ private:
 	RwReal					m_fOffsetNear;
 	RwV3d					m_vDirection;
 
-	sNTL_SPECULAR			m_sNtlSpecular;		// 현재 스페큘라
-	sNTL_SPECULAR			m_sNtlSpecularNew;	// 이제 적용될 스페큘라
+	sNTL_SPECULAR			m_sNtlSpecular;		// Current specula
+	sNTL_SPECULAR			m_sNtlSpecularNew;	// Specula to be applied now
 };
 
 /*

@@ -4,7 +4,7 @@
 // Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 
 // Dbo
@@ -85,7 +85,7 @@ VOID CInfoWndManager::ShowInfoWindow( RwBool bShow, RwInt32 eState /* = INFOWND_
 	m_eWndState = (eINFOWNDSTATE)eState;
 	m_eRequestGui = eRequestGui;
 
-	// 일단 지움. 
+	// Erase it first. 
 	m_pInfoWnd->Show( false );
 
 	if( bShow )
@@ -177,7 +177,7 @@ VOID CInfoWndManager::ShowInfoWindow( RwBool bShow, RwInt32 eState /* = INFOWND_
                 m_pInfoWnd->SetPortalInfo(pPortalToolTip->nPortalID, pPortalToolTip->ePortalIconType, pPortalToolTip->nZenny);
             }            
             break;
-        case INFOWND_FRIEND_LIST:       // 친구 리스트에서 세부 정보를 표시하기 위한 툴팁
+        case INFOWND_FRIEND_LIST:       // Tooltip to display details in friends list
             m_pInfoWnd->SetFriendInfo(reinterpret_cast<sFriendMember*>(pInstance));
             break;
 		case INFOWND_UPGRADE:

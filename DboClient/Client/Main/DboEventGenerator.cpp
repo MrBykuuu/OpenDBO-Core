@@ -1006,7 +1006,7 @@ void CDboEventGenerator::RpBonusSetup( RwInt32 iXPos, RwInt32 iYPos, VOID* pData
 }
 
 /**
-* \brief RpBonus 선택 UI를 오픈하라는 이벤트
+* \brief Event to open RpBonus selection UI
 * \param pData (CNtlSobSkillIcon*)
 */
 void CDboEventGenerator::RpBonusSelect( VOID* pData ) 

@@ -6,7 +6,7 @@
 * Date			: 2007. 8. 10	
 * Abstract		: Simulation Rank Battle
 *****************************************************************************
-* Desc          : 랭크 배틀.
+* Desc          : Rank Battle.
 *****************************************************************************/
 
 #ifndef __NTL_RANK_BATTLE_H__
@@ -76,8 +76,8 @@ public:
 	RwInt32		GetBlueTeamStraightWinScore(VOID) { return m_nBlueTeamStraightWinScore; }
 	RwInt32		GetBlueTeamPerfectWinScore(VOID) { return m_nBlueTeamPerfectWinScore; }
 
-	RESULT		GetResult(void) { return m_eResult; }						// 게임 결과
-	RwBool		IsRoomOwner(void) { return m_bRoomOwner; }					// 방 소유
+	RESULT		GetResult(void) { return m_eResult; }						// game results
+	RwBool		IsRoomOwner(void) { return m_bRoomOwner; }					// own room
 	RwBool		IsRedTeam(VOID) { return IsRoomOwner() ? FALSE : TRUE; }
 	RwBool		IsBlueTeam(VOID) { return IsRoomOwner() ? TRUE : FALSE; }
 	RwBool		IsRedTeamWin(VOID) { return ( IsRedTeam() && m_eResult == WIN ) ? TRUE : FALSE; }
@@ -102,19 +102,19 @@ protected:
 	MAP_RBMEMBER	m_mapMyTeam;
 	MAP_RBMEMBER	m_mapEnemyTeam;
 
-	std::wstring	m_MyTeamName;					// 개인전인 경우 캐릭터이름
+	std::wstring	m_MyTeamName;					// Character name in case of individual competition
 	std::wstring	m_EnemyTeamName;
 	
 	RwBool			m_bRoomOwner;					
 	RESULT			m_eResult;
 
-	RwInt32			m_nMyTeamWinScore;				// 현재 게임내에서의 스코어
+	RwInt32			m_nMyTeamWinScore;				// Current in-game score
 	RwInt32			m_nEnemyTeamWinScore;
 
-	RwInt32			m_nBlueTeamStraightWinScore;	// 방주인 연승정보
-	RwInt32			m_nBlueTeamPerfectWinScore;		// 방주인 완승정보
+	RwInt32			m_nBlueTeamStraightWinScore;	// Ark owner winning streak information
+	RwInt32			m_nBlueTeamPerfectWinScore;		// Ark owner complete victory information
 
-	RwUInt32		m_eRequestState;				// REQUEST_STATE
+	RwUInt32		m_eRequestState;				// Request state
 
 	sRANKBATTLE_SCORE_INFO		m_myRankScore;
 	sRANKBATTLE_TBLDAT*			m_pTblDat;				

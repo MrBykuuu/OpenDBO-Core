@@ -95,7 +95,7 @@ VOID CComponentPage::CreateComponents(const CGUIFileParser::stlCOMPONENT_SORT_MA
 	{
 		CGUIFileParser::ComponentInfo *pInfo = (*it).second;
 
-		// component가 생성되지 않았으면...
+		//If the component has not been created...
 		if (pInfo->pComponent == NULL)
 		{
 			pInfo->pComponent = CComponentManager::CreateComponent(pInfo->type,m_pParent,m_pSurfaceManager);

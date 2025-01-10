@@ -1,22 +1,22 @@
 #include "precomp_dboclient.h"
 #include "DialogManager.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// gui
+// Gui
 #include "gui_component.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 #include "NtlPLCinematicObject.h"
 
-// simulation
+// Simulation
 #include "InputActionMap.h"
 #include "NtlSob.h"
 #include "NtlSobNpc.h"
@@ -30,7 +30,7 @@
 #include "NtlSLEvent.h"
 #include "NtlSobProxy.h"
 
-// dbo
+// Dbo
 #include "GameStage.h"
 #include "StageManager.h"
 #include "AlarmManager.h"
@@ -101,14 +101,14 @@ VOID CDialogManager::CreateInstance(gui::CGUIManager* pGuiManager)
 	m_pInstance->RegisteRegularDialog();
 	m_pInstance->RegisteEntireFocusingDialog();
 
-	// by Kell : 액션별로 다이얼로그를 처리한다.
+	// by Kell: Processes dialogs for each action.
 	GetInputActionMap()->LinkDialogHotKey( m_pInstance, &CDialogManager::HandleDialogAction );
 
 	// create side dialog manager
 	CSideDialogManager::CreateInstance();
 	GetDialogManager()->RegistDialog(DIALOG_SIDEDIALOG_MANAGER, GetSideDialogManager(), &CSideDialogManager::SwitchDialog );
 
-	// 마우스 처리를 위해
+	// for mouse handling
 	m_pInstance->m_slotMouse = pGuiManager->SigCaptureMouseDown().Connect( m_pInstance, &CDialogManager::HandleMouse );
 
 	// Link 
@@ -173,8 +173,8 @@ VOID CDialogManager::Update(RwReal fElapsed)
 		}
 	}	
 
-	// 일부 창들은 서버로 부터 닫기 응답이 와야지만 닫힌다.
-	// 따라서 DialogMananger의 Update에서 창이 닫힌 이후에 멀티 다이얼로그를 열어준다
+	// Some windows are closed only when a close response is received from the server.
+	// Therefore, in DialogMananger's Update, a multi-dialog is opened after the window is closed.
 	if( m_bExpectingCloseNPCDialog )
 	{
 		RwInt32 iDialog = GetOpendNPCDIalog();
@@ -249,7 +249,7 @@ VOID CDialogManager::OpenDefaultDialog()
 			OpenDialog(i, INVALID_SERIAL_ID, FALSE);
 	}
 
-	// Pet 이 있을 경우 펫 관련 Dialog 들도 Default Dialog와 같은 방식으로 열어준다.
+	// If there is a Pet, pet-related dialogs are also opened in the same way as the Default Dialog.
 	 if( CPetStatusBarGui::GetInstance()->GetPetID() != INVALID_SERIAL_ID )
 		 OpenDialog( DIALOG_PET_STATUSBAR );
 
@@ -276,7 +276,7 @@ VOID CDialogManager::CloseNotDefaultDialog()
 
 VOID CDialogManager::CloseAll()
 {
-	// 서버로 부터 패킷을 받아 닫히는 dialog를 위해서 컨셉을 미리 종료한다
+	// The concept is terminated in advance for the dialog to be closed after receiving a packet from the server.
 	CNtlWorldConceptController* pWorldConcept = GetNtlWorldConcept()->FindGradeExtController(WORLD_CONCEPT_SECOND_GRADE);
 	
 	if( pWorldConcept )
@@ -325,7 +325,7 @@ VOID CDialogManager::SwitchBag(RwBool bOpen)
 			CloseDialog(i, FALSE);
 	}
 
-	// 연속해서 소리가 5번 나는 것을 방지하기 위해
+	// To prevent the sound from sounding 5 times in succession
 	if( bOpen )
 		PlayOpenSound(DIALOG_CAPSULE_1);
 	else
@@ -333,7 +333,7 @@ VOID CDialogManager::SwitchBag(RwBool bOpen)
 }
 
 /**
-* \brief Capsult kit를 Index로 Switch Dialog한다.
+* \brief Switch Dialog Capsult kit to Index.
 */
 VOID CDialogManager::SwitchBagByIndex( RwInt32 nIndex )
 {
@@ -345,11 +345,11 @@ VOID CDialogManager::SwitchBagByIndex( RwInt32 nIndex )
 
 	CNtlInventory* pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
 
-	// 없는 Capsule kti라면 아무런 수행을 하지 않는다.
+	// If there is no Capsule kti, no action is performed.
 	if( pInventory->GetBagItem( nIndex ) == INVALID_SERIAL_ID )
 		return;
 
-	// SwitchDialog
+	// Switch dialog
 	SwitchDialog( DIALOG_CAPSULE_1+nIndex );
 }
 
@@ -378,14 +378,14 @@ VOID CDialogManager::RaiseDialogbyUser(RwInt32 iDialog)
 	{
 		if( iDialog == *it )
 		{
-			// 기존에 이미 있다면 가장 뒤로..
+			// If you already have one, go to the back.
 			m_listRaiseDialogbyUser.erase(it);
 			m_listRaiseDialogbyUser.push_back(iDialog);
 			return;
 		}
 	}
 
-	// 새로운 다이얼로그가 화면에 나타난다면
+	// If a new dialog appears on the screen
 	m_listRaiseDialogbyUser.push_back(iDialog);
 }
 
@@ -514,20 +514,20 @@ VOID CDialogManager::OnMode(eDialogMode eMode)
 		{
 			GetCursorManager()->SetDesignatedCursor( CCursorManager::CS_INVALID_CURSOR );
 
-			// 인포윈도우, 팝업다이얼로그 hide
+			// Info window, pop-up dialog hide
 			GetInfoWndManager()->ShowInfoWindow( FALSE );		
 			GetPopupManager()->AllPopupClose();
 
-			// 나레이션이 흐를 때는 모든 다이얼로그를 닫는다
+			// Close all dialogs when narration is flowing.
 			CloseAll();
 
-			// 나레이션중에는 서버말풍선만 표시한다.
+			// During narration, only the server speech bubble is displayed.
 			GetBalloonManager()->SetVisibleBalloonType( CBalloonGui::TYPE_SERVER );
 
-			// 채팅창의 포커스를 지운다.
+			// Clears the focus of the chat window.
 			CDboEventGenerator::ChatGuiMode( FALSE );
 
-			// 입력된 인풋 리셋
+			// Input input reset
 			GetInputActionMap()->Reset();
 
 			// Can not input key input
@@ -603,13 +603,13 @@ VOID CDialogManager::OffMode()
 
 		case DIALOGMODE_NARRATION:
 		{
-			// 월드컨셉 판단은 퀘스트 인디케이터에서 한다.
+			// World concept judgment is made using the quest indicator.
 			GetSideDialogManager()->OpenDialog(SDIALOG_QUEST_INDICATOR);
 
-			// 말풍선 제한 해제
+			// Remove speech bubble restrictions
 			GetBalloonManager()->SetVisibleBalloonType(CBalloonGui::ALL);
 
-			// 나레이션 모드시 열기 요구된 창 열기
+			// Open requested window in narration mode
 			LIST_REQUESTED_OPENDIALOG_IN_NARRATION_ITER iter;
 			for (iter = m_listRequestedOpenDialogInNarration.begin(); iter != m_listRequestedOpenDialogInNarration.end(); ++iter)
 			{
@@ -668,7 +668,7 @@ VOID CDialogManager::LocateBag(RwInt32 iScreenWidth, RwInt32 iScreenHeight, RwBo
 		if( !bForce && pGui->IsShow() == FALSE )
 			continue;
 
-		// 첫 번째 가방의 위치를 정한다
+		// Determine the location of the first bag
 		if( byBagCount == 0 )
 		{
 			iX = iScreenWidth - dDIALOG_CLEINT_EDGE_GAP - pGui->GetWidth();
@@ -713,17 +713,17 @@ VOID CDialogManager::LocationDialogs(RwInt32 iWidth, RwInt32 iHeight)
 		pGui->SetPosition(iWidth - (pGui->GetWidth() + 10), dDIALOG_CLEINT_EDGE_GAP);
 	}	
 
-	// 사이드 다이얼로그 컨트롤러
+	// side dialog controller
 	pGui = GetDialog(DIALOG_SIDEDIALOG_CONTROLLER);
 	if( pGui )
 		pGui->SetPosition(iWidth - (pGui->GetWidth() + dDIALOG_CLEINT_EDGE_GAP), 188);
 
-	// 사이드 다이얼로그
+	// side dialog
 	pGui = GetDialog(DIALOG_SIDEDIALOG_MANAGER);
 	if( pGui )
 		pGui->SetPosition(iWidth - pGui->GetWidth() - dDIALOG_CLEINT_EDGE_GAP, GetDialog(DIALOG_SIDEDIALOG_CONTROLLER)->GetPosition().bottom);
 
-	// 사이드 아이콘
+	// side icon
 	pGui = GetDialog(DIALOG_SIDEICON);
 	if( pGui )
 		pGui->SetPosition(iWidth, iHeight - 53);
@@ -898,7 +898,7 @@ VOID CDialogManager::LocationDialogs(RwInt32 iWidth, RwInt32 iHeight)
 	if( pGui )
 	{
 		rect = GetDialog(DIALOG_QUICKSLOT)->GetPosition();
-		pGui->SetPosition(rect.left, rect.top - rect.GetHeight() - 4); // 펫 스킬 창 위쪽으로
+		pGui->SetPosition(rect.left, rect.top - rect.GetHeight() - 4); // To the top of the pet skill window
 	}	
 
 	pGui = GetDialog(DIALOG_CHANNGEL_CHANGE);
@@ -923,7 +923,7 @@ VOID CDialogManager::LocationDialogs(RwInt32 iWidth, RwInt32 iHeight)
 		pGui->SetPosition((iWidth - pGui->GetWidth())/2, iHeight - pGui->GetHeight() - dDIALOG_CLEINT_EDGE_GAP);
 
 
-	///// for regulear dialog //////////////////////////////////////////////////////////////////////////
+	///// for adjust dialog ///////////////////////////////////////////////////////////////////////////
 
 	pGui = GetDialog(DIALOG_COMMUNITY);
 	if( pGui )
@@ -960,15 +960,15 @@ VOID CDialogManager::Locate_AutoPosition(RwInt32 iWidth, RwInt32 iHeight)
 	CRectangle rect;
 	RwInt32 iX;	
 
-	// 가방
+	// bag
 	LocateBag(iWidth, iHeight);
 
 	// Regular Dialog
 	RwInt32 iNeedCloseRegularCount = m_listOpenedRegularDilaog.size() - HowManyOpenMaxRegular();
 	if( iNeedCloseRegularCount > 0 )
 	{
-		// 클라이언트의 폭이 줄어들어서 열려있는 레귤러 다이얼로그를 닫아야 하는 경우이다
-		// 혹은 다이얼로그 m_bMovable이 TRUE에서 FALSE로 바뀌얼을 때이다
+		// This is a case where the client's width is reduced and an open regular dialog needs to be closed.
+		// Or when the dialog m_bMovable changes from TRUE to FALSE.
 		LIST_OPENED_REGULAR_DIALOG tempList = m_listOpenedRegularDilaog;
 		LIST_OPENED_REGULAR_ITER it_temp = tempList.begin();
 
@@ -1002,7 +1002,7 @@ VOID CDialogManager::Locate_AutoPosition(RwInt32 iWidth, RwInt32 iHeight)
 		iX = pGui->GetLinkedArea().right + dREGULARDIALOG_GAP;
 	}
 
-	// DIALOG_TUTORIAL_DIALOG_FOCUS는 다른 다이얼로그의 위치를 알아야 하니 항상 가장 나중에 옮기도록 하자
+	// DIALOG_TUTORIAL_DIALOG_FOCUS needs to know the location of other dialogs, so always move it last.
 	pGui = GetDialog(DIALOG_TUTORIAL_DIALOG_FOCUS);
 	if(pGui)
 	{
@@ -1016,8 +1016,8 @@ VOID CDialogManager::Locate_UserPosition(RwInt32 iWidth, RwInt32 iHeight)
 	CNtlPLGui* pGui;
 	CRectangle rect;
 
-	// 창고와 길드 창고는 레귤러 다이얼로그이지만 Movable 기능이 활성화되어 있지 않아도
-	// 레귤러 다이얼로그의 위치에 있는다
+	// Warehouse and Guild Warehouse are regular dialogs, but even if the Movable function is not activated,
+	// It is located in the position of a regular dialog.
 	pGui = GetDialog(DIALOG_WAREHOUSEBAR);
 	if( pGui )
 		pGui->SetPosition(dREGULARDIALOG_FIRST_X, m_iRegularStrartY);
@@ -1061,7 +1061,7 @@ VOID CDialogManager::Locate_UserDefaultPosition(RwInt32 iWidth, RwInt32 iHeight)
 	CNtlPLGui* pGui;
 	REGULAR_MAP_ITER it_Regular = m_mapRegular.begin();
 
-	// 화면에 보여지고 있는 레귤러 다이얼로그의 위치 조정
+	// Adjusting the position of the regular dialog shown on the screen
 	for( ; it_Regular != m_mapRegular.end() ; ++it_Regular )
 	{
 		eDialogType eType = it_Regular->first;
@@ -1092,7 +1092,7 @@ VOID CDialogManager::Locate_UserDefaultPosition(RwInt32 iWidth, RwInt32 iHeight)
 		RaiseDialogbyUser(eType);
 	}
 
-	// 화면에 보이지 않는 레귤러 다이얼로그의 위치 조정
+	// Adjusting the position of regular dialogs that are not visible on the screen
 	iXPos = dREGULARDIALOG_FIRST_X;
 	iYPos = dYPOSITION_START;
 
@@ -1117,7 +1117,7 @@ VOID CDialogManager::Locate_UserDefaultPosition(RwInt32 iWidth, RwInt32 iHeight)
 
 VOID CDialogManager::Locate_MovableDefaultPosition()
 {
-	// 가방
+	// bag
 	LocateBag(GetDboGlobal()->GetScreenWidth(), GetDboGlobal()->GetScreenHeight(), TRUE);
 
 	// Regular Dialog
@@ -1143,8 +1143,8 @@ VOID CDialogManager::Locate_MovableDefaultPosition()
 		}
 	}
 
-	// 창고와 길드 창고는 레귤러 다이얼로그이지만 Movable 기능이 활성화되어 있지 않아도
-	// 레귤러 다이얼로그의 위치에 있는다
+	// Warehouse and Guild Warehouse are regular dialogs, but even if the Movable function is not activated,
+	// It is located in the position of a regular dialog.
 	pGui = GetDialog(DIALOG_WAREHOUSEBAR);
 	if( pGui )
 		pGui->SetPosition(dREGULARDIALOG_FIRST_X, m_iRegularStrartY);
@@ -1447,7 +1447,7 @@ VOID CDialogManager::HandleEvents( RWS::CMsg &msg )
 CNtlPLGui* const CDialogManager::GetpDialogTEST(const char* szFrmFileName)
 {
 	CNtlPLGui* pDialog;
-	DIALOG_MAP::iterator it = m_mapDialog.begin();	/// 등록된 dialog 검색
+	DIALOG_MAP::iterator it = m_mapDialog.begin();	/// Registered dialog search
 	for( ; it != m_mapDialog.end(); ++it)
 	{
 		pDialog = it->second.pDialog;
@@ -1463,9 +1463,9 @@ CNtlPLGui* const CDialogManager::GetpDialogTEST(const char* szFrmFileName)
 
 RwBool CDialogManager::ShowDialogTEST(RwInt32 iDialog, bool bOpen)
 {
-	/// OpenDialog 아닌 단순 Show로.....
+	/// Not OpenDialog, but a simple Show.....
 	CNtlPLGui* pDialog;
-	DIALOG_MAP::iterator it = m_mapDialog.find(iDialog);	/// 등록된 dialog 검색
+	DIALOG_MAP::iterator it = m_mapDialog.find(iDialog);	/// Registered dialog search
 	if( it != m_mapDialog.end() )
 	{
 		pDialog = it->second.pDialog;
@@ -1475,20 +1475,20 @@ RwBool CDialogManager::ShowDialogTEST(RwInt32 iDialog, bool bOpen)
 			return TRUE;
 		}
 	}
-	else	/// 없으면 side dialog  검사, open
+	else	/// If not, check side dialog, open
 		return GetSideDialogManager()->ShowDialogTEST(iDialog, bOpen);
 
 	return FALSE;
 }
 
-VOID CDialogManager::ShowAllDialogTEST(bool bOpen)	///< DialogManager, SideDialogManager에 등록된 모든 dialog open/close
+VOID CDialogManager::ShowAllDialogTEST(bool bOpen)	///< All dialogs open/close registered in DialogManager and SideDialogManager
 {
 	GetSideDialogManager()->ShowAllDialogTEST(bOpen);
 
 	CNtlPLGui* pDialog;
 	for(RwInt32 i = DIALOG_FIRST + 1 ; i < DIALOG_NUM ; ++i )
-	{	/// OpenDialog 아닌 단순 Show로.....
-		DIALOG_MAP::iterator it = m_mapDialog.find(i);	/// 등록된 dialog 검색
+	{	/// Not OpenDialog, but a simple Show.....
+		DIALOG_MAP::iterator it = m_mapDialog.find(i);	/// Registered dialog search
 		if( it != m_mapDialog.end() )
 		{
 			pDialog = it->second.pDialog;

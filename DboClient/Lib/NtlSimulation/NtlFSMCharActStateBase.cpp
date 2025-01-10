@@ -1,19 +1,19 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlFSMCharActStateBase.h"
 
-// shared
+// Shared
 #include "NtlResultCode.h"
 #include "ActionTable.h"
 #include "NtlMovement.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 #include "NtlAnimEventData.h"
 
-// simulation
+// Simulation
 #include "NtlFSMCharActEventProc.h"
 #include "NtlBehaviorData.h"
 #include "NtlSobActor.h"
@@ -218,10 +218,10 @@ RwUInt32 CNtlFSMCharActStateBase::EventProcActionMapSkillUse(RWS::CMsg &pMsg)
 	//
 	SNtlEventActionMapSkillUse *pSkillUse = reinterpret_cast<SNtlEventActionMapSkillUse*>(pMsg.pData);
 
-	// skill 사용 effect 출력
+	// Output skill use effect
 	Logic_SkillUseVisualEffect(m_pActor, pSkillUse->hSkillSerialId);
 
-	// Event 처리
+	// Event processing
 	FSMEvent_CharActActionMapSkillUse(m_pActor, pSkillUse);
 
 	if(Logic_IsNotFollowMoveSkill(m_pActor, pSkillUse->bySkillSlotIdx))
@@ -455,11 +455,11 @@ RwUInt32 CNtlFSMCharActStateBase::EventProcInputTerrainClick(RWS::CMsg &pMsg)
 
 	FSMEvent_CharActTerrainClick(m_pActor, reinterpret_cast<SNtlEventTerrainClick*>(pMsg.pData)); 
 
-	// 현재 이동상태가 아니면.
+	// Unless you are currently moving.
 	RwUInt32 uiStateId = GetStateId();
 	if( uiStateId == NTL_FSMSID_MOVE || uiStateId == NTL_FSMSID_SWIMMING)
 	{
-		// behavior data를 update한다.
+		// Update behavior data.
 		UpdateBehavior();
 	}
 	else
@@ -532,10 +532,10 @@ RwUInt32 CNtlFSMCharActStateBase::EventProcInputKeyboardMove(RWS::CMsg &pMsg)
 
 	if( uiStateId == NTL_FSMSID_MOVE || uiStateId == NTL_FSMSID_SWIMMING)
 	{
-		// behavior data를 update한다.
+		// Update behavior data.
 		UpdateBehavior();
 	}
-	else // 현재 이동상태가 아니면.
+	else // Unless you are currently moving.
 	{
 		Finish();
 
@@ -722,7 +722,7 @@ RwUInt32 CNtlFSMCharActStateBase::EventProcInputChangeHeading(RWS::CMsg &pMsg)
 	NTL_RETURN(NTL_FSM_EVENTRES_CHANGE_STATE);
 }
 
-/// Sob Object를 클릭했을때 호출된다.
+/// Called when Sob Object is clicked.
 RwUInt32 CNtlFSMCharActStateBase::EventProcSobTargetSelect(RWS::CMsg &pMsg)
 {
 	NTL_FUNCTION("CNtlFSMCharActStateBase::EventProcSobTargetSelect");
@@ -1028,7 +1028,7 @@ RwUInt32 CNtlFSMCharActStateBase::EventProcSobSpecialAttack(RWS::CMsg& pMsg)
 RwUInt32 CNtlFSMCharActStateBase::EventProcSobAttacked(RWS::CMsg &pMsg)
 {
 	SNtlEventSobAttacked* pAttacked = reinterpret_cast<SNtlEventSobAttacked*>(pMsg.pData);
-	m_pActor->SetLastAttackerID(pAttacked->hAttackerSerialId);	/// last attacker 저장
+	m_pActor->SetLastAttackerID(pAttacked->hAttackerSerialId);	/// last attacker save
 
 	NTL_RETURN(NTL_FSM_EVENTRES_PASS);
 }
@@ -1042,7 +1042,7 @@ RwUInt32 CNtlFSMCharActStateBase::EventProcSobHit(RWS::CMsg &pMsg)
 
 	LuaExec_Hurt(pHit->sHitStuff.hAttackerSerialId, pHit->sHitStuff.hDefenderSerialId, &pHit->sHitStuff);
 
-	// 타겟 마킹된 상태라면 해제한다.
+	// If the target is marked, cancel it.
 	if(m_pActor->GetSerialID() == Logic_GetTargetMarkingID())
 	{
 		CNtlSLEventGenerator::SobTargetMarkRelease(m_pActor->GetSerialID());
@@ -1276,7 +1276,7 @@ RwUInt32 CNtlFSMCharActStateBase::EventProcSobSkillAction(RWS::CMsg &pMsg)
 RwUInt32 CNtlFSMCharActStateBase::EventProcSobSkillActioned(RWS::CMsg &pMsg)
 {
 	SNtlEventSobSkillActioned* pSkillActioned = reinterpret_cast<SNtlEventSobSkillActioned*>(pMsg.pData);
-	m_pActor->SetLastAttackerID(pSkillActioned->hAttackerSerialId);	/// last attacker 저장
+	m_pActor->SetLastAttackerID(pSkillActioned->hAttackerSerialId);	/// last attacker save
 
 	NTL_RETURN(NTL_FSM_EVENTRES_PASS);
 }
@@ -1400,12 +1400,12 @@ RwUInt32 CNtlFSMCharActStateBase::EventProcCondTerror( RWS::CMsg& pMsg )
 
 		//pCharAgent->ConditionTerror(TRUE);
 
-		// 1. 자신을 공격한 몹의 위치를 가져온다.
+		// 1. Get the location of the mob that attacked you.
 		CNtlSobActor* pActor = (CNtlSobActor*)GetNtlSobManager()->GetSobObject(pData->hAttackerSerialId);
 		if(!pActor)
 			NTL_RETURN(NTL_FSM_EVENTRES_PASS);
 
-		// 2. 아바타의 현재 위치에서 몹과 반대쪽으로 달려간다. (최대 10m)
+		// 2. Run in the opposite direction from the mob from the avatar's current location. (up to 10m)
 		RwV3d vDest = m_pActor->GetPosition() - pActor->GetPosition();
 		vDest.y = 0;
 		RwV3dNormalize(&vDest, &vDest);
@@ -1428,10 +1428,10 @@ RwUInt32 CNtlFSMCharActStateBase::EventProcSobPushingNfy( RWS::CMsg& pMsg )
 	if(pData->hSerialId != m_pActor->GetSerialID())
 		NTL_RETURN(NTL_FSM_EVENTRES_BLOCK);
 
-	// 현재 상태를 멈추고 Pushing상태로 전이한다.
-	FSMEvent_CharActHit(m_pActor, pData->byAttackResult, pData->wAttackResultValue);    // Hit Effect및 데미지 출력
+	// Stop the current state and transition to the Pushing state.
+	FSMEvent_CharActHit(m_pActor, pData->byAttackResult, pData->wAttackResultValue);    // Hit Effect and Damage Output
 
-	if(pData->byAttackResult == BATTLE_ATTACK_RESULT_DODGE) // 회피
+	if(pData->byAttackResult == BATTLE_ATTACK_RESULT_DODGE) // evasion
 	{
 		sITEM_TBLDAT *pItemTblData = Logic_GetEquipedWeaponItemTableData(m_pActor);
 		RwBool bEquipedStaff = FALSE;
@@ -1458,7 +1458,7 @@ RwUInt32 CNtlFSMCharActStateBase::EventProcSobPushingNfy( RWS::CMsg& pMsg )
 
 RwUInt32 CNtlFSMCharActStateBase::EventSobTransformSequela(RWS::CMsg& pMsg)
 {
-    // 아바타 전용 이벤트
+    // Avatar exclusive event
     if(m_pActor->GetClassID() != SLCLASS_AVATAR)
         NTL_RETURN(NTL_FSM_EVENTRES_BLOCK);
 

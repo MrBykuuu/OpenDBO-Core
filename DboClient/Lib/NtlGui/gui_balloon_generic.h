@@ -9,10 +9,12 @@ class CBalloon_Generic
 {
 public:
 //! Constructor & Destructor:
+
 	CBalloon_Generic( CBalloon* pSelf, BOOL bLeft );
 	~CBalloon_Generic(VOID);
 
 //! Operations:
+
 	VOID SetOrigin( INT nScreenX, INT nScreenY, BOOL bLeft );
 	VOID SetOriginNow( INT nScreenX, INT nScreenY, BOOL bLeft );
 	
@@ -21,6 +23,7 @@ public:
 	VOID SetBalloonColor( BYTE ucRed, BYTE ucGreen, BYTE ucBlue );
 	
 //! Callbacks:
+
 	VOID OnSetOption( const CComponentOptions& options );
 	VOID OnMove( INT nOldX, INT nOldY );
 	VOID OnPaint(VOID);
@@ -35,17 +38,23 @@ public:
 
 public:
 //! Variables:
+
 	CDynamicOutline*	m_pOutline;
 
-	CPos				m_ptTailLT;		// Tail의 Screen Left Top 좌표.
-	FLOAT				m_fTailFactor;	// Tail이 어느곳에 찍히는지 계수. ( 0 ~ 1 )
+	CPos				m_ptTailLT;		// Tail's Screen Left Top coordinates.
 
-	INT					m_nMarginX;		// 텍스트가 찍히는 여백.
+	FLOAT				m_fTailFactor;	// Count where the tail is placed. ( 0 ~ 1 )
+
+
+	INT					m_nMarginX;		// Margin where text is placed.
+
 	INT					m_nMarginY;
 	
 	CBalloon*			m_pBalloon;		// Reference Pointer.
+
 };
 
 END_GUI
 
 #endif//__GUI_BALLOON_GENERIC_H__
+

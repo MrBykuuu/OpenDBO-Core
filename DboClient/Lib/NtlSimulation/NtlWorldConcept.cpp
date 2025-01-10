@@ -1,18 +1,18 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlWorldConcept.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// sound
+// Sound
 #include "NtlSoundEventGenerator.h"
 
-// presentation
+// Presentation
 #include "NtlPLVisualManager.h"
 #include "NtlPLWorldEntity.h"
 #include "NtlDNController.h"
 
-// simulation
+// Simulation
 #include "NtlSob.h"
 #include "NtlSobProxy.h"
 #include "NtlSobActor.h"
@@ -33,6 +33,7 @@
 
 
 // World Concept Controller
+
 #include "NtlWorldConceptPVP.h"
 #include "NtlWorldConceptNPCCommu.h"
 #include "NtlWorldConceptTrade.h"
@@ -207,6 +208,9 @@ void CNtlWorldConcept::AddWorldPlayConcept( EWorldPlayConcept ePlayConcept )
 		case WORLD_PLAY_CCBD:
 			pController = NTL_NEW CNtlWorldConceptCCBD();
 			break;
+			/*case WORLD_PLAY_DRAGONBALL_SCRAMBLE:
+			pController = NTL_NEW CNtlWorldConceptFreePvpZone();
+			break;*/
 		default:
 			NTL_ASSERTFAIL("CNtlWorldConcept::AddWorldPlayConcept : find not id !!!");
 			break;
@@ -386,17 +390,17 @@ void CNtlWorldConcept::SetHaveTutorialWorldConcept( RwBool bHave )
 
 void CNtlWorldConcept::HandleEvents(RWS::CMsg &pMsg)
 {
-	// DBC의 Night Effect를 적용한다.
+	// Apply DBC's Night Effect.
 	if(pMsg.Id == g_EventNightEffect)
 	{
 		SNtlEventNightEffect* pNightEffect = reinterpret_cast<SNtlEventNightEffect*>(pMsg.pData);
-		if(pNightEffect->bOn && !m_bIsNightOn)      // 현재 Night 상태가 아닌 경우에만 호출된다
+		if(pNightEffect->bOn && !m_bIsNightOn)      // Called only when the current state is not Night.
 		{
 			GetSceneManager()->GetWorld()->OnDragonSkyAppearence(TRUE);
-			LuaExec_DragonDNEnter();		// lua script 호출		
+			LuaExec_DragonDNEnter();		// call lua script		
             m_bIsNightOn = TRUE;
 		}
-		else if(!pNightEffect->bOn && m_bIsNightOn) // 현재 Night 상태가 아닌 경우에는 호출되지 않는다.
+		else if(!pNightEffect->bOn && m_bIsNightOn) // It is not called if it is not currently in the Night state.
 		{
 			GetSceneManager()->GetWorld()->OnDragonSkyAppearence(FALSE);		
 			GetDnController()->AddDNNodeCurrentStart(0.0f, 3.0f, 0);		
@@ -478,10 +482,10 @@ RwBool CNtlWorldConcept::CanUseSkill(RwUInt32 hSerialID, RwUInt32& uiResultCode)
 
 
 /**
- * 아바타의 타겟이 적인지 파악한다. (적은 Mob과 PVP 상대이다)
- * \param pActor 타겟 Actor 객체의 포인터
- * \param hTargetSerial 타겟 Actor 객체의 Serial ID
- * return 타겟이 적인면 True를 반환하고, 아니면 False를 반환한다.
+ *Determine whether the avatar's target is an enemy. (The enemy is Mob and PVP opponent)
+ * \param pActor Pointer to the target Actor object.
+ * \param hTargetSerial Serial ID of target Actor object.
+ *Return Returns True if the target is red, otherwise returns False.
  */
 RwBool CNtlWorldConcept::IsEnemyTargetFromAvatarActor(CNtlSobActor *pActor, SERIAL_HANDLE hTargetSerial)
 {
@@ -502,11 +506,12 @@ RwBool CNtlWorldConcept::IsEnemyTargetFromAvatarActor(CNtlSobActor* pActor, CNtl
 	//if (*(_DWORD*)(*(_DWORD*)(*(_DWORD*)(vF1F8 + 168) + 8) + 32) & 0x1000)
 	//	return 1;
 
+
 	RwUInt32 uiTargetClassId = pSobObj->GetClassID();
 
-	if (uiTargetClassId == SLCLASS_MONSTER)					// 타겟이 몹이라면 무조건 TRUE
+	if (uiTargetClassId == SLCLASS_MONSTER)					// If the target is a mob, it is unconditionally TRUE
 		return TRUE;
-	else if (uiTargetClassId == SLCLASS_PLAYER)				// 타겟이 Player라면 PVP상태의 타겟만이 적이된다.
+	else if (uiTargetClassId == SLCLASS_PLAYER)				// If the target is a Player, only targets in PVP status become enemies.
 	{
 		if (IsActivePlayConcept(WORLD_PLAY_FREEPVP_ZONE))
 		{
@@ -530,6 +535,25 @@ RwBool CNtlWorldConcept::IsEnemyTargetFromAvatarActor(CNtlSobActor* pActor, CNtl
 
 			return FALSE;
 		}
+		/*else if (IsActivePlayConcept(WORLD_PLAY_DRAGONBALL_SCRAMBLE))
+		{
+			CNtlWorldConceptFreePvpZone* pWorldConceptPvpZone = (CNtlWorldConceptFreePvpZone*)GetWorldConceptController(WORLD_PLAY_DRAGONBALL_SCRAMBLE);
+
+			if (pWorldConceptPvpZone) {
+				if (pWorldConceptPvpZone->GetState() != WORLD_STATE_IDLE)
+					return FALSE;
+
+				CNtlSobPlayer* pSobPlayer = reinterpret_cast<CNtlSobPlayer*>(pSobObj);
+				if (pSobPlayer)
+				{
+					CNtlSobPlayerAttr* pSobPlayerAttr = reinterpret_cast<CNtlSobPlayerAttr*>(pSobPlayer->GetSobAttr());
+
+					RwUInt32 stateid = Logic_GetActorStateId(pSobPlayer);
+					if (stateid != NTL_FSMSID_FAINTING && stateid != NTL_FSMSID_DIE && pSobPlayerAttr->GetIsInFreePvpZone())
+						return TRUE;
+				}
+			}
+		}*/
 		else if (IsActivePlayConcept(WORLD_PLAY_FREEPVP))
 		{
 			CNtlWorldConceptPVP* pWorldConceptPVP = (CNtlWorldConceptPVP*)GetWorldConceptController(WORLD_PLAY_FREEPVP);
@@ -594,7 +618,7 @@ RwBool CNtlWorldConcept::IsEnemyTargetFromAvatarActor(CNtlSobActor* pActor, CNtl
 				return FALSE;
 		}
 	}
-	else if (uiTargetClassId == SLCLASS_PET)					// 타겟이 Pet이고, PVP상태의 적이 pet의 주인인경우에만 적이 된다.
+	else if (uiTargetClassId == SLCLASS_PET)					// If the target is a pet, and the enemy in PVP is the pet's owner, it will only become an enemy.
 	{
 		SERIAL_HANDLE hTargetOwnerSerial = pSobObj->GetOwnerID();
 
@@ -683,7 +707,7 @@ CNtlSobActor* CNtlWorldConcept::FindNearEnemyFromAvatarActor(CNtlSobActor *pActo
 
 		return pWorldConceptPVPZone->GetNearAttackableEnemy(pActor);
 	}
-	// freebattle
+	// Freebattle
 	else if ( IsActivePlayConcept( WORLD_PLAY_FREEPVP ) )
 	{
 		CNtlWorldConceptPVP* pWorldConceptPVP = (CNtlWorldConceptPVP*) GetWorldConceptController( WORLD_PLAY_FREEPVP );
@@ -699,7 +723,7 @@ CNtlSobActor* CNtlWorldConcept::FindNearEnemyFromAvatarActor(CNtlSobActor *pActo
 	{
 		return GetNtlSLGlobal()->GetSobAvatar()->GetRankBattle()->GetNearAttackableEnemy( pActor );
 	}
-	// budokai
+	// Budokai
 	else if ( IsActivePlayConcept( WORLD_PLAY_T_BUDOKAI ) )
 	{
 		CNtlWorldConceptTB* pWorldConceptTB = reinterpret_cast<CNtlWorldConceptTB*>( GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );

@@ -2,7 +2,7 @@
 *
 * File			: NtlPLPropertyContaier.h
 * Author		: HyungSuk, Jang
-* Copyright	: (주)NTL
+* Copyright	: (?)NTL
 * Date			: 2005. 8. 09	
 * Abstract		: Presentation object property container class
 *****************************************************************************
@@ -24,8 +24,8 @@ class CNtlPLProperty;
 
 /**
 * \ingroup NtlPresentation
-* Presentation에 사용하는 모든 property를 관리하는 conatiner class 이다.\
-* 이 객체는 singleton 객체이다. GetInstance() 함수를 사용한다.
+*This is a conatiner class that manages all properties used in presentation.\
+*This object is a singleton object. Use the GetInstance() function.
 *
 */
 class CNtlPLPropertyContainer
@@ -57,34 +57,34 @@ protected:
 public:
 
 	/**
-	*  property를 container에 add한다.
+	*  Add property to container.
 	*  \param eType entity type.
-	*  \param pProp add할 property pointer.
+	*  \param pProp Property pointer to add.
 	*/
 	// by agebreak
 	virtual RwBool AddProp(ENtlPLEntityType eType, CNtlPLProperty *pProp);
 
 protected:
 
-	// woody1019
+	// Woody1019
 	RwBool	LoadNtlWorld(const RwChar *pFileName);
 	RwBool	LoadWater(const RwChar *pFileName);
 	RwBool	LoadShoreLine(const RwChar *pFileName);
 	RwBool	LoadSound(const RwChar *pFileName);
 
 	/**
-	*  effect property를 load 하는 함수.
+	*Function that loads effect properties.
 	*  \param pFileName property file name.
-	*  \return 성공하면 TRUE, 실패하면 FALSE.
+	*  \return TRUE if successful, FALSE if failed.
 	*  \see LoadObject
 	*  \see LoadCharacter
 	*/
 	RwBool	LoadEffect(const RwChar *pFileName);
 
 	/**
-	*  effect property를 load 하는 함수.
+	*Function that loads effect properties.
 	*  \param pFileName property file name.
-	*  \return 성공하면 TRUE, 실패하면 FALSE.
+	*  \return TRUE if successful, FALSE if failed.
 	*  \see LoadObject
 	*  \see LoadCharacter
 	*  \see LoadEffect
@@ -92,27 +92,27 @@ protected:
 	RwBool	LoadGui(const RwChar *pFileName);
 
 	/**
-	*  plant property를 load 하는 함수.
+	*Function to load plant properties.
 	*  \param pFileName property file name.
-	*  \return 성공하면 TRUE, 실패하면 FALSE.
+	*  \return TRUE if successful, FALSE if failed.
 	*/
 	RwBool	LoadPlant(const RwChar *pFileName);
 
 	/**
-	*  weather property를 load 하는 함수.
+	*Function that loads weather properties.
 	*  \param pFileName property file name.
-	*  \return 성공하면 TRUE, 실패하면 FALSE.
+	*  \return TRUE if successful, FALSE if failed.
 	*/
 	RwBool	LoadWeather(const RwChar *pFileName, RwUInt32 uiLevel);
 
 	/**
-	*  field bgm/env/share property를 load 하는 함수.
+	*Function to load field bgm/env/share property.
 	*  \param pFileName property file name.
-	*  \return 성공하면 TRUE, 실패하면 FALSE.
+	*  \return TRUE if successful, FALSE if failed.
 	*/
 	RwBool	LoadSoundField(const RwChar *pFileName, const RwChar* pName);
 
-	// Serialize 저장/로드 관련 메소드들
+	// Serialize save/load related methods
 	RwBool	SaveCharacterSerialize(CNtlFileSerializer& sl);
 	RwBool	LoadCharacterSerialize(CNtlFileSerializer& sl);
 
@@ -137,77 +137,77 @@ public:
 	virtual ~CNtlPLPropertyContainer();
 
 	/**
-	*  property container 객체가 생성된 다음 호출하는 함수.
+	*  A function called after a property container object is created.
 	*  \see Destroy
 	*/
 	virtual RwBool Create(void);
 
 	/**
-	*  property container 객체가 생성된 다음 호출하는 함수.
+	*  A function called after a property container object is created.
 	*  \see Destroy
 	*/
 	virtual void Destroy(void);
 
 	/**
-	*  property container instaince 함수.
-	*  이 함수를 사용하여 멤버 함수/변수에 접근한다.
+	*  property container instance function.
+	*  Use this function to access member functions/variables.
 	*  \see Destroy
 	*/
 	static CNtlPLPropertyContainer* GetInstance(void);
 
 	/**
-	*  presentation에 사용하는 모든 property file을 loading하는 함수.
-	*  \param pFileName는 filename이다.
+	*  Function that loads all property files used for presentation.
+	*  \param pFileName is filename.
 	*/
 	virtual RwBool Load();
 
 	/**
-	*  object property를 load 하는 함수.
+	*  A function that loads object properties.
 	*  \param pFileName property file name.
-	*  \return 성공하면 TRUE, 실패하면 FALSE.
+	*  \return TRUE if successful, FALSE if failed.
 	*  \see LoadCharacter
 	*  \see LoadEffect
 	*/
 	RwBool LoadObject(const RwChar *pFileName);
 
 	/**
-	*  character property를 load 하는 함수.
+	*  Function that loads character property.
 	*  \param pFileName property file name.
-	*  \return 성공하면 TRUE, 실패하면 FALSE.
+	*  \return TRUE if successful, FALSE if failed.
 	*  \see LoadObject
 	*  \see LoadEffect
 	*/
 	RwBool LoadCharacter(const RwChar *pFileName);
 
 	/**
-	*  item property를 load 하는 함수.
+	*  Function that loads item property.
 	*  \param pFileName property file name.
-	*  \return 성공하면 TRUE, 실패하면 FALSE.
+	*  \return TRUE if successful, FALSE if failed.
 	*  \see LoadObject
 	*  \see LoadEffect
 	*/
 	RwBool LoadItem(const RwChar *pFileName);
 
 
-	virtual RwBool LoadSerialize(RwBool bEncrypt = FALSE, RwChar* szCryptPassword = NULL);				///< 바이너리로 컨버팅된 데이터들을 로드한다.
-	virtual RwBool SaveSerialize(RwBool bEncrypt = FALSE, RwChar* szCryptPassword = NULL);				///< 바이너리로 컨버팅된 데이터들을 세이브한다.
+	virtual RwBool LoadSerialize(RwBool bEncrypt = FALSE, RwChar* szCryptPassword = NULL);				///< Loads data converted to binary.
+	virtual RwBool SaveSerialize(RwBool bEncrypt = FALSE, RwChar* szCryptPassword = NULL);				///< Save the data converted to binary.
 
 	void		SaveObjectScript(std::string &strFileName);
 	void		SaveCharacterScript(std::string &strFileName);
 	void		SaveItemScript(std::string &strFileName);
 
 	/**
-	*  presentation에 사용하는 모든 property file을 loading하는 함수.
-	*  \param eType는 entity type
-	*  \param uiId 얻어올 property id
-	*  \return 성공하면 property 객체 pointer, 실패하면 NULL 이다.
+	*  Function that loads all property files used for presentation.
+	*  \param eType is entity type
+	*  \param uiId property id to retrieve
+	*  \return If successful, it is a property object pointer. If failed, it is NULL.
 	*/
 	CNtlPLProperty* GetProperty(ENtlPLEntityType eType, const RwChar *pKey);
 
 	/**
-	*  entity type에 해당하는 property container의 참조 변수를 얻어온다.
-	*  \param eType는 entity type
-	*  \param mapProps property container를 얻을 참조 변수.
+	*Obtains the reference variable of the property container corresponding to the entity type.
+	*  \param eType is entity type
+	*  \param mapProps Reference variable to get property container.
 	*/
 	MapProp& Gets(ENtlPLEntityType eType);
 

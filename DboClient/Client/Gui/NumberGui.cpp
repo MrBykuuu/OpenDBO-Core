@@ -1,7 +1,7 @@
 #include "precomp_dboclient.h"
 #include "NumberGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
 namespace
@@ -63,7 +63,7 @@ VOID CNumberGui::SetNumber(RwInt64 iNumber)
 
 	m_i64Number = iNumber;
 
-	// 자릿수를 알아보기 위해
+	// To find the digits
 	iNumber = abs((long)iNumber);
 
 	if( m_i64Number < dMAX_NUMBER_ABS )
@@ -76,7 +76,7 @@ VOID CNumberGui::SetNumber(RwInt64 iNumber)
 
 			iNumber = iNumber / 10;
 
-			// 몇자리 숫자인가
+			// How many digits is it?
 			if( iNumber == 0 )
 			{
 				m_byCurCipher = i + 1;
@@ -169,7 +169,7 @@ CRectangle CNumberGui::GetRect()
 {
 	CRectangle rtRect;
 
-	// 좌우
+	// right and left
 	if( m_byHoriDirection == ND_LEFT )
 	{
 		rtRect.left		= m_iX_fromParent - m_iWidth;
@@ -186,7 +186,7 @@ CRectangle CNumberGui::GetRect()
 		rtRect.right	= m_iX_fromParent + m_iWidth;
 	}
 
-	// 상하
+	// up and down
 	if( m_byVertDirection == NVD_CENTER )
 	{
 		rtRect.top		= m_iY_fromParent - m_iHeight/2;
@@ -231,7 +231,7 @@ VOID CNumberGui::CalcWidth()
 		m_iWidth += m_iNumGap;
 	}
 
-	// 유지되야할 최소 자릿수보다 실제 자릿수가 작다면
+	// If the actual number of digits is smaller than the minimum number of digits to be maintained,
 	if( m_byCurCipher < m_byRemainCipher )
 	{
 		RwInt8 byExpendCipher = m_byRemainCipher - m_byCurCipher;
@@ -268,7 +268,7 @@ VOID CNumberGui::Render(bool bRenderTop /* = false */)
 	RwInt32 iPosX = m_ParentPos.x + m_iX_fromParent;
 	RwInt32 iPosY = m_ParentPos.y + m_iY_fromParent;
 
-	// 수평 위치
+	// horizontal position
 	if( m_byHoriDirection == ND_LEFT )
 	{
 		iPosX -= m_iWidth;
@@ -278,7 +278,7 @@ VOID CNumberGui::Render(bool bRenderTop /* = false */)
 		iPosX -= m_iWidth/2;
 	}
 
-	// 상하 위치
+	// up and down position
 	if( m_byVertDirection == NVD_CENTER )
 	{
 		iPosY -= m_iHeight/2;
@@ -306,7 +306,7 @@ VOID CNumberGui::Render(bool bRenderTop /* = false */)
 		iPosX += m_iNumGap;
 	}
 
-	// 유지되야할 최소 자릿수보다 실제 자릿수가 작다면 0으로 먼저 채운다
+	// If the actual number of digits is smaller than the minimum number of digits to be maintained, it is filled with 0 first.
 	if( m_byCurCipher < m_byRemainCipher )
 	{
 		RwInt8 byExpendCipher = m_byRemainCipher - m_byCurCipher;

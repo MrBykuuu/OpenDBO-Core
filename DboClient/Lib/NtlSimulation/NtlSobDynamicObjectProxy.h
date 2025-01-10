@@ -46,7 +46,7 @@ public:
 	virtual RwReal			GetPLEntityHeight( void );
 	virtual RwReal			GetPLEntityDepth( void );
 
-	// 이름
+	// name
 	void					EnableNameVisible( RwBool bVisible );
 	virtual void			SetNameColor( const WCHAR* pwcName, COLORREF color );
 	
@@ -61,9 +61,9 @@ protected:
 	void					CreatePLTargetMark( void );
 	void					DestroyPLTargetMark( void );
 
-    /// 공유 타겟 마크
-    void                    SobShareTargetSelectHandler(RWS::CMsg& pMsg);                   ///< 공유 타겟 마크 설정 이벤트 처리
-    void                    SobShareTargetReleaseHandler(RWS::CMsg& pMsg);                  ///< 공유 타겟 마크 해제 이벤트 처리        
+    /// Share target mark
+    void                    SobShareTargetSelectHandler(RWS::CMsg& pMsg);                   ///< Share target mark setting event processing
+    void                    SobShareTargetReleaseHandler(RWS::CMsg& pMsg);                  ///< Processing of shared target mark release event        
     void                    CreateShareTargetMark(RwUInt8 bySlot, RwUInt32 type);
     void                    DeleteShareTargetMark();    
 
@@ -74,7 +74,7 @@ protected:
 	CNtlPLObject*			m_pPLDynamicObject;				///< Dynamic object 
 	CNtlPLPlayerName*		m_pPLDynamicObjectName;			///< Dynamic object name
 	CNtlPLEntity*			m_pTargetMark;					///< Dynamic object target mark
-    CNtlShareTargetMark*    m_pShareTargetMark;             ///< 공유 타겟 마크
+    CNtlShareTargetMark*    m_pShareTargetMark;             ///< Share target mark
 
 	RwReal					m_fObjectWidth;					///< Object Width
 	RwReal					m_fObjectHeight;				///< Object Height

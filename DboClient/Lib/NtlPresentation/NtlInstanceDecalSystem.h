@@ -23,11 +23,11 @@ struct DecalParam
 
 class CNtlInstanceDecalSystem : public CNtlInstanceComponentSystem
 {
-	// Vertex를 사용하지만, CNtlDecal을 사용하기 때문에 ImvertexSystem에서 상속 받지 않는다.
+	// It uses Vertex, but because it uses CNtlDecal, it does not inherit from ImvertexSystem.
 public:
-	CNtlResourceDecalSystem*		m_pResourceDecalSystem;			///< 프로퍼티 정보를 가지고 있는 리소스 객체
+	CNtlResourceDecalSystem*		m_pResourceDecalSystem;			///< Resource object containing property information
 	RwBool							m_bUpdateVertex;
-	CNtlPLDecal*					m_pDecalSystem;					///< 실제 Decal을 그리는 Decal 객체
+	CNtlPLDecal*					m_pDecalSystem;					///< Decal object that draws the actual decal
 
 public:
 	CNtlInstanceDecalSystem(void);
@@ -44,7 +44,7 @@ public:
 
 			void	SetVertexUv();
     virtual void    SetAlpha(RwUInt8 byValue);
-    virtual void	SetScale(RwReal fScale);									 ///< 이펙트의 Scale을 설정한다. (현재는 파티클에서만 유효하다)
+    virtual void	SetScale(RwReal fScale);									 ///< Set the scale of the effect. (Currently only valid for particles)
 
 	virtual RwBool	Update(RwReal fElapsedTime);
 	virtual RwBool	Render();
@@ -53,6 +53,6 @@ public:
 
 	virtual void	SetWorldMatrix(const RwMatrix& matWorld);
 
-	RwInt32	GetPolyCount();											///< 현재 그려지고 있는 폴리곤의 개수를 반환한다. (Vertex 개수 / 3)
+	RwInt32	GetPolyCount();											///< Returns the number of polygons currently being drawn. (Vertex count /3)
 };
 

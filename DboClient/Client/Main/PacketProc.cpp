@@ -1,17 +1,17 @@
 #include "precomp_dboclient.h"
 #include "PacketProc.h"
 
-// shared
+// Shared
 #include "NtlClientNet.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// simulation
+// Simulation
 #include "NtlNetSender.h"
 
 
-// dbo
+// Dbo
 #include "DboGlobal.h"
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
@@ -175,11 +175,11 @@ void NetworkEventHander(HSERVER hServer, int nEvent)
                                                  GetDisplayStringManager()->GetString("DST_CHAT_SERVER_DISCONNECT"), 
                                                  TRUE, 5.0f);
             }
-            //break;  // NOTE: break가 없이 아래 재접속을 요청한다. (by agebreak)
+            //break;  //NOTE: Reconnection is requested below without break. (by agebreak)
         case NETCLIENT_EVENT_CONNECT_FAIL:            
             if(pConnectData->sGameCon.hSocket != INVALID_HSERVER)
             {
-                // 재접속 요청 (비동기)
+                // Reconnection request (asynchronous)
                 CNtlClientNet *pNet = GetDboGlobal()->GetNetwork();             
                 pNet->Connect((char*)pConnectData->sChatCon.chServerIP, pConnectData->sChatCon.wServerPort, &pConnectData->sChatCon.hSocket, true, NETCLIENT_ENCODE_NONE);
             }
@@ -304,7 +304,7 @@ void CPacketProc::RecvVirualPackProc(void *pPacket)
 		return;
 	}
 
-	// 기존에 queue에 쌓여 있는 packet이 있으면 처리한다.
+	// If there are packets already accumulated in the queue, they are processed.
 	PopVirutalPacket();
 
 	CNtlPacketHandler::DetectPacketHeader(pVirtualPacket->chPacket);
@@ -316,7 +316,7 @@ void CPacketProc::ActivePop(RwBool bPop)
 
 	if(IsActivePop())
 	{
-		// 기존에 queue에 쌓여 있는 packet이 있으면 처리한다.
+		// If there are packets already accumulated in the queue, they are processed.
 		PopVirutalPacket();
 	}
 }

@@ -1,27 +1,27 @@
 #include "precomp_dboclient.h"
 #include "TBAwardGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlLuaState.h"
 
-// share
+// Share
 
-// table
+// Table
 #include "ItemTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEvent.h"
 #include "NtlSobAvatar.h"
 #include "NtlWorldConceptTB.h"
 #include "NtlSLLuaGlue.h"
 
-// client
+// Client
 #include "DboGlobal.h"
 #include "DboEvent.h"
 #include "TBGui.h"
@@ -146,9 +146,9 @@ VOID CTBAwardResultGui::Destroy(VOID)
 {
 	GetNtlGuiManager()->RemoveUpdateFunc( this );
 
-	OnMouseLeave( NULL ); // 인포윈도우 닫기.
+	OnMouseLeave( NULL ); // Close the info window.
 
-	DeleteAllRewardItem(); // 아이템 아이콘 삭제.
+	DeleteAllRewardItem(); // Delete item icon.
 
 	UnLinkMsg( g_EventResize );
 	UnLinkMsg( g_EventCinematicGuiCommand );
@@ -415,16 +415,16 @@ VOID CTBAwardResultGui::ShowAwardItem( RwUInt8 bySlotIdx )
 
 VOID CTBAwardResultGui::OnFSCallBack( const RwChar* szCommand, const RwChar* szArgs )
 {
-	if( !strcmp( szCommand, "TextEnd1" ) )	// 3,4위
+	if( !strcmp( szCommand, "TextEnd1" ) )	// 3rd and 4th place
 	{
 		ShowAwardItem( FINALMATCH_RESULT_MATCH1_LOSER );
 		ShowAwardItem( FINALMATCH_RESULT_MATCH2_LOSER );
 	}
-	else if( !strcmp( szCommand, "TextEnd2" ) ) // 2위
+	else if( !strcmp( szCommand, "TextEnd2" ) ) // 2nd place
 	{
 		ShowAwardItem( FINALMATCH_RESULT_SEMIWINNER );
 	}
-	else if( !strcmp( szCommand, "TextEnd3" ) )	// 1위
+	else if( !strcmp( szCommand, "TextEnd3" ) )	// 1st place
 	{
 		ShowAwardItem( FINALMATCH_RESULT_WINNER );
 	}

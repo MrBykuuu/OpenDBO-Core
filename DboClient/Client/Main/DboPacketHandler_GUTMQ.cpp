@@ -1,23 +1,23 @@
 /*****************************************************************************
-* File			: DboPackethandler_GUTMQ.cpp
-* Author		: Hong sungbock
-* Copyright		: (주)NTL
-* Date			: 2007. 1. 16
-* Abstract		: Time Machine Quest 관련 패킷 핸들
+*File			: DboPackethandler_GUTMQ.cpp
+*Author		    : Hong sungbock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 1. 16
+*Abstract		: Time Machine Quest related packet handle
 *****************************************************************************
-* Desc         : 
+*Desc         : 
 *****************************************************************************/
 
 #include "precomp_dboclient.h"
 #include "DboPacketHandler.h"
 
-// simulation
+// Simulation
 #include "NtlNetSender.h"
 #include "NtlSLPacketGenerator.h"
 #include "NtlWorldConceptTutorial.h"
 #include "NtlWorldConceptTMQ.h"
 
-// dbo
+// Dbo
 #include "DboTSCTAgency.h"
 #include "DboTSCQAgency.h"
 
@@ -116,13 +116,13 @@ void PacketHandler_GUTimeQuest_Reward_Nfy(void *pPacket)
 {
 	sGU_TIMEQUEST_REWARD_NFY* pResult = (sGU_TIMEQUEST_REWARD_NFY*)pPacket;
 
-	// TMQ 정보 갱신
+	// TMQ Information Update
 	CNtlSLEventGenerator::SLTMQEvent(TET_DAY_RECORD, INVALID_SERIAL_ID, pResult->bIsDayRecord);
 	CNtlSLEventGenerator::SLTMQEvent(TET_IS_BEST_RECORD, INVALID_SERIAL_ID, pResult->bIsBestRecord);
 
 	CNtlSLEventGenerator::SLTMQNotify(TET_TIME_UNTIL_TELEPORT_TO_MAINWORLD, pResult->dwWaitTime);
 
-	// 트리거 실행
+	// trigger execution
 	switch ( pResult->byTriggerType )
 	{
 		case TS_TYPE_QUEST_CS:
@@ -191,7 +191,7 @@ void PacketHandler_GUTimeQuest_GameState(void *pPacket)
 
 void PacketHandler_GUTimeQuest_CouponCount(void *pPacket)
 {
-	// TMQ 쿠폰 정보
+	// TMQ Coupon Information
 	sGU_TIMEQUEST_UPDATE_COUPON_COUNT* pResult = (sGU_TIMEQUEST_UPDATE_COUPON_COUNT*)pPacket;
 
 	CNtlSLEventGenerator::SLTMQEvent(TET_COUPON_COUNT, INVALID_SERIAL_ID, pResult->byCouponCount);
@@ -199,7 +199,7 @@ void PacketHandler_GUTimeQuest_CouponCount(void *pPacket)
 
 void PacketHandler_GUTimeQuest_TMQPoint(void *pPacket)
 {
-	// TMQ 포인트
+	// TMQ Points
 	sGU_TIMEQUEST_UPDATE_TMQ_POINT* pResult = (sGU_TIMEQUEST_UPDATE_TMQ_POINT*)pPacket;
 
 	CNtlSLEventGenerator::SLTMQEvent(TET_TMQ_POINT, INVALID_SERIAL_ID, pResult->wTmqPoint);

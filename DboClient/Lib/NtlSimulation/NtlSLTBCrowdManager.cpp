@@ -172,7 +172,7 @@ void CNtlSLTBCrowdManager::HandleEvents( RWS::CMsg &pMsg )
 
 RwBool CNtlSLTBCrowdManager::Save( const RwChar* szFileName ) 
 {
-    CNtlFileSerializer nsl(1024 * 1024, 1024 * 1024);	// 기본 버퍼를 1메가로 잡는다.
+    CNtlFileSerializer nsl(1024 * 1024, 1024 * 1024);	// Set the default buffer to 1 MB.
 
     nsl<<CNtlSLCENode::m_Version.fLastestVersion;
     nsl<<m_mapControllerContainer.size();
@@ -190,7 +190,7 @@ RwBool CNtlSLTBCrowdManager::Save( const RwChar* szFileName )
 
 RwBool CNtlSLTBCrowdManager::Load( const RwChar* szFileName ) 
 {
-    CNtlFileSerializer nsl(1024 * 1024, 1024 * 1024);	// 기본 버퍼를 1메가로 잡는다.
+    CNtlFileSerializer nsl(1024 * 1024, 1024 * 1024);	// Set the default buffer to 1 MB.
     if(!nsl.LoadFile((char*)szFileName))
         return FALSE;
 
@@ -216,7 +216,7 @@ RwBool CNtlSLTBCrowdManager::Load(CNtlFileSerializer& rSerializer)
 
 void CNtlSLTBCrowdManager::AddStep( ETBCrowdStepType eStep ) 
 {
-	// 루아에서 필요한 Controller를 불러오는 코드
+	// Code that calls the controller needed in Lua
 	char pcStepName[128];
 	GetLuaFuncName(eStep, pcStepName, 128);
 	LuaExec_DirectionStep(pcStepName);
@@ -230,7 +230,7 @@ void CNtlSLTBCrowdManager::ChangeStep( ETBCrowdStepType eStep )
 	} 
     m_listCurController.clear();	
 
-	// 루아에서 필요한 Controller를 불러오는 코드
+	// Code that calls the controller needed in Lua
 	char pcStepName[128];
 	GetLuaFuncName(eStep, pcStepName, 128);
 	LuaExec_DirectionStep(pcStepName);
@@ -251,21 +251,21 @@ ETBCrowdStepType CNtlSLTBCrowdManager::ConvertServerState( SNtlEventMinorMatchSt
 
     switch(pData->byMatchState)
     {
-    case BUDOKAI_MINORMATCH_STATE_NONE:			// 초기 상태
+    case BUDOKAI_MINORMATCH_STATE_NONE:			// initial state
         return E_STEP_BASIC;        
-    case BUDOKAI_MINORMATCH_STATE_WAIT:			// 대전자들을 기다림
+    case BUDOKAI_MINORMATCH_STATE_WAIT:			// waiting for the competitors
         return E_STEP_BASIC;
-    case BUDOKAI_MINORMATCH_STATE_DIRECTION:		// 연출
+    case BUDOKAI_MINORMATCH_STATE_DIRECTION:		// production
         return E_STEP_BASIC;
-    case BUDOKAI_MINORMATCH_STATE_MATCH_READY:	// 경기 준비
+    case BUDOKAI_MINORMATCH_STATE_MATCH_READY:	// game preparation
         return E_STEP_MATCH_READY;
-    case BUDOKAI_MINORMATCH_STATE_STAGE_READY:	// 스테이지 준비
+    case BUDOKAI_MINORMATCH_STATE_STAGE_READY:	// stage preparation
         return E_STEP_STAGE_READY;
-    case BUDOKAI_MINORMATCH_STATE_STAGE_RUN:		// 스테이지 진행
+    case BUDOKAI_MINORMATCH_STATE_STAGE_RUN:		// Stage progress
         return E_STEP_STAGE_RUN;
-    case BUDOKAI_MINORMATCH_STATE_STAGE_FINISH:	// 스테이지 종료
+    case BUDOKAI_MINORMATCH_STATE_STAGE_FINISH:	// Stage End
         return E_STEP_STAGE_FINISH;
-    case BUDOKAI_MINORMATCH_STATE_MATCH_FINISH:	// 경기 종료
+    case BUDOKAI_MINORMATCH_STATE_MATCH_FINISH:	// game over
         return E_STEP_MATCH_FINISH;
     case BUDOKAI_MINORMATCH_STATE_END:
         return E_STEP_BATTLE_END;
@@ -281,23 +281,23 @@ ETBCrowdStepType CNtlSLTBCrowdManager::ConvertServerState( SNtlEventMajorMatchSt
 
     switch(pData->byMatchState)
     {
-    case BUDOKAI_MAJORMATCH_STATE_NONE:			// 초기 상태
+    case BUDOKAI_MAJORMATCH_STATE_NONE:			// initial state
         return E_STEP_BASIC;
-    case BUDOKAI_MAJORMATCH_STATE_WAIT:			// 대전자들을 기다림
+    case BUDOKAI_MAJORMATCH_STATE_WAIT:			// waiting for the competitors
         return E_STEP_BASIC;
-    case BUDOKAI_MAJORMATCH_STATE_DIRECTION:		// 연출
+    case BUDOKAI_MAJORMATCH_STATE_DIRECTION:		// production
         return E_STEP_BASIC;
-    case BUDOKAI_MAJORMATCH_STATE_MATCH_READY:	// 경기 준비
+    case BUDOKAI_MAJORMATCH_STATE_MATCH_READY:	// game preparation
         return E_STEP_MATCH_READY;
-    case BUDOKAI_MAJORMATCH_STATE_STAGE_READY:	// 스테이지 준비
+    case BUDOKAI_MAJORMATCH_STATE_STAGE_READY:	// stage preparation
         return E_STEP_STAGE_READY;
-    case BUDOKAI_MAJORMATCH_STATE_STAGE_RUN:		// 스테이지 진행
+    case BUDOKAI_MAJORMATCH_STATE_STAGE_RUN:		// Stage progress
         return E_STEP_STAGE_RUN;
-    case BUDOKAI_MAJORMATCH_STATE_STAGE_FINISH:	// 스테이지 종료
+    case BUDOKAI_MAJORMATCH_STATE_STAGE_FINISH:	// Stage End
         return E_STEP_STAGE_FINISH;
-    case BUDOKAI_MAJORMATCH_STATE_MATCH_FINISH:	// 경기 종료
+    case BUDOKAI_MAJORMATCH_STATE_MATCH_FINISH:	// game over
         return E_STEP_MATCH_FINISH;
-    case BUDOKAI_MAJORMATCH_STATE_END:			// 종료
+    case BUDOKAI_MAJORMATCH_STATE_END:			// end
         return E_STEP_BATTLE_END;
     }
 
@@ -365,7 +365,7 @@ void CNtlSLTBCrowdManager::RemoveController( const std::string& keyName )
 			NTL_DELETE(pController);
 			m_mapControllerContainer.erase(it_mapController);
 
-			// 컨트롤러가 하나도 없으면 현재 버전은 최신 버전으로....
+			// If you don't have any controllers, the current version is the latest version....
 			if( m_mapControllerContainer.size() == 0 )
 				CNtlSLCENode::m_Version.fCurrentWorkVerstion = CNtlSLCENode::m_Version.fLastestVersion;
 
@@ -436,7 +436,7 @@ void CNtlSLTBCrowdManager::CreateSobRefree()
     if(m_pRefreeActor)
         return;
 
-    // 심판 객체 생성
+    // Create a referee object
     SERIAL_HANDLE hSerialId = CNtlSobFactory::AcquireSerailId();
     sNPC_BRIEF sNPCBrief;
     sCHARSTATE sCharState;

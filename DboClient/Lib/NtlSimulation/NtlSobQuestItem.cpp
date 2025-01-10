@@ -46,7 +46,7 @@ RwBool CNtlSobQuestItem::Create(void)
 		NTL_RETURN(FALSE);
 	}
 
-	// class name 설정.
+	// Set class name.
 	SetClassName(SLCLASS_NAME_SLOT_QUESTITEM);
 
 	m_pIcon->Create(); 
@@ -85,7 +85,7 @@ void CNtlSobQuestItem::CreateEventHandler(RWS::CMsg &pMsg)
 	SNtlEventSobItemCreate *pSobItemCreate = reinterpret_cast<SNtlEventSobItemCreate*>(pMsg.pData);
 	CNtlSobQuestItemAttr *pItemAttr = reinterpret_cast<CNtlSobQuestItemAttr*>( GetSobAttr() );
 
-	// 현재 아이템이 Child Slot을 가지는 아이템이면
+	// If the current item is an item with a Child Slot
 	if(pItemAttr->IsContainerItem())
 		AllocateChild(pItemAttr->GetChildSlotSize());
 

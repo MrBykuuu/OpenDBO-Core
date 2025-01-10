@@ -1,7 +1,7 @@
 
-/// 여기에서.. Msjexhnd.h 파일에 call back 함수를 만든다.
-// 호출된 callback은 dboexceptionhandler에서 받아서.. 
-// GetNtlCallStack()->LogFilePrint() 함수를 호출한다.
+/// Here, create a call back function in the Msjexhnd.h file.
+// The called callback is received from dboexceptionhandler. 
+// Call the GetNtlCallStack()->LogFilePrint() function.
 
 VOID DboExceptionHandler( PEXCEPTION_POINTERS pExceptionInfo );
 

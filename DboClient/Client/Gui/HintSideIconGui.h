@@ -1,15 +1,15 @@
 /******************************************************************************
-* File			: HintSideIconGui.h
-* Author		: Kim Jinsung -> Cho Haesung(2007. 1. 16)
-* Copyright		: (주)NTL
-* Date			: 2007. 6. 13
-* Abstract		: 
+*File           : HintSideIconGui.h
+*Author		    : Kim Jinsung -> Cho Haesung (2007. 1. 16)
+*Copyright	    : NTL Co., Ltd.
+*Date           : June 13, 2007
+*Abstract		: 
 *****************************************************************************
-* Desc			: PoPo Icon을 통하여 Html 데이타를 출력
-CHelpHintConditionCheck			// Hint가 나올 조건을 체크하는 클래스
-CHintSideIconGui				// PoPo Icon의 Side icon
-CHelpHintSideViewGui			// PoPo Icon을 통해서 보여지는 도움말(F1)
-CGuideHintSideViewGui			// PoPo Icon을 통해서 보여지는 Html, Flash 도움말
+*Desc           : Output Html data through PoPo Icon
+CHelpHintConditionCheck			//Class that checks conditions for hints to appear
+CHintSideIconGui				//Side icon of PoPo Icon
+CHelpHintSideViewGui			//Help displayed through PoPo Icon (F1)
+CGuideHintSideViewGui			//Html, Flash help displayed through PoPo Icon
 *****************************************************************************/
 
 #pragma once
@@ -18,8 +18,8 @@ CGuideHintSideViewGui			// PoPo Icon을 통해서 보여지는 Html, Flash 도움말
 #include "WindowBy3.h"
 
 //#define dHINTSIDEICON_DEBUG
-#define dHINT_HELP_DEFAULT_HEIGHT		60	// HelpHintText를 제외한 Component 높이
-#define dHINT_HELP_OPEN_POS_BY_BOTTOM	35	// HelpHintIcon에서 Bottom 값
+#define dHINT_HELP_DEFAULT_HEIGHT		60	// Component height excluding HelpHintText
+#define dHINT_HELP_OPEN_POS_BY_BOTTOM	35	// Bottom value in HelpHintIcon
 #define dHINT_HTML_DIRECTORY_GUIDE		"script\\guide\\"
 
 struct sHELP_TBLDAT;
@@ -37,7 +37,7 @@ class CHelpHintConditionCheck;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 * \ingroup client
-* \brief 도움말 힌트가 나오는 상황을 체크하는 클래스
+* \brief Class that checks the situations in which help hints appear.
 */
 class CHelpHintConditionCheck : public RWS::CEventHandler
 {
@@ -45,7 +45,7 @@ protected:
 	enum eHELPHINT_CONDITION_CHECK
 	{
 		LEVEL_2 = 0,
-		LEVEL_3,								/// level 1 도달
+		LEVEL_3,								/// Reach level 1
 		LEVEL_4,
 		LEVEL_5,
 		LEVEL_6,
@@ -57,23 +57,23 @@ protected:
 		LEVEL_20,			// 10
 		LEVEL_25,
 		LEVEL_30,
-		FIRST_BATTLE_FINISH,					/// 처음 전투가 끝나고 나서
-		FIRST_FAINT,							///	처음 실신했을 때
-		FIRST_CLICK_WARHOUSENPC,				/// 처음 창고NPC를 클릭 할 때
-		FIRST_LEARN_DASH,						/// 처음 대시를 배웠을 때
-		FIRST_CLICK_SHOPNPC,					/// 처음 상점 NPC를 클릭할 때
-		FIRST_LEARN_CHARGE,						/// 처음 차지를 배웠을 때
-		FIRST_LEARN_HTB,						/// 처음 HTB를 배웠을 때
-		FIRST_CLICK_MOB,	// 20				/// 처음 몹을 클릭했을 때
+		FIRST_BATTLE_FINISH,					/// After the first battle
+		FIRST_FAINT,							///	When I first fainted
+		FIRST_CLICK_WARHOUSENPC,				/// When you first click on the warehouse NPC
+		FIRST_LEARN_DASH,						/// When I first learned dash
+		FIRST_CLICK_SHOPNPC,					/// When you first click on the store NPC
+		FIRST_LEARN_CHARGE,						/// When I first learned to charge
+		FIRST_LEARN_HTB,						/// When I first learned about HTB
+		FIRST_CLICK_MOB,	// 20				///When you first click on a mob
 
-		FIRST_LOOT_ITEM	,						/// 최초 item 루팅  		
-		FIRST_IN_MAINWORLD,						/// 최초 월드 진입시 NPC dialog에 대한 help hint
-		FIRST_LOOT_EQUIP,						/// 최초 장비item 루팅
-		FIRST_KILL_MOB,							/// 최초 Mob 사냥	
-		FIRST_DOWN_DURABILITY,					/// 최초 장비 내구도 다운	
-		FIRST_LOOT_HOIPOISTONE,					/// 호이포이스톤 item 루팅
-		FIRST_OPEN_CAPSULEKIT,					/// 최초 open inventory
-		FIRST_USE_SCOUTER,						/// 최초 use scouter
+		FIRST_LOOT_ITEM	,						/// First item routing  		
+		FIRST_IN_MAINWORLD,						/// Help hint for NPC dialog when first entering the world
+		FIRST_LOOT_EQUIP,						/// Rooting the first equipment item
+		FIRST_KILL_MOB,							/// First Mob Hunt	
+		FIRST_DOWN_DURABILITY,					/// First equipment durability down	
+		FIRST_LOOT_HOIPOISTONE,					/// Hoipoiston item looting
+		FIRST_OPEN_CAPSULEKIT,					/// First open inventory
+		FIRST_USE_SCOUTER,						/// first use scouter
 
 		FIRST_INTO_TMQ
 	};
@@ -108,14 +108,14 @@ protected:
 	RwBool			IsHelpHint_Level(RWS::CMsg& msg, const eHELPHINT_CONDITION_CHECK& eHelpHint, const RwUInt8& uiLevel);
 	RwBool			IsHelpHint_First_Click_NPC(RWS::CMsg& msg, const eHELPHINT_CONDITION_CHECK& eHelpHint, const RwUInt32& uiNPC);
 	RwBool			IsHelpHint_First_Into_Tmq(RWS::CMsg& msg);
-	RwBool			IsHelpHint_First_TSItemGet(RWS::CMsg& msg);				/// 최초 item 루팅
-	RwBool			IsHelpHint_EndterWorldNPCDialog(RWS::CMsg& msg);		/// 최초 월드 진입시 NPC dialog에 대한 help hint
-	RwBool			IsHelpHint_First_TSItemGetEquip(RWS::CMsg& msg);		/// 최초 장비item 루팅
-	RwBool			IsHelpHint_First_AvatarKillMob(RWS::CMsg& msg);			/// 최초 Mob 사냥
-	RwBool			IsHelpHint_First_SobEquipItemDurDown(RWS::CMsg& msg);	/// 최초 장비 내구도 다운
-	RwBool			IsHelpHint_First_TSItemGetHoipoiStone(RWS::CMsg& msg);	/// 호이포이스톤 item 루팅
-	RwBool			IsHelpHint_First_OpenBagGui(RWS::CMsg& msg);			/// 최초 open inventory
-	RwBool			IsHelpHint_First_OpenScouterBackgroundGui(RWS::CMsg& msg);	/// 최초 use scouter
+	RwBool			IsHelpHint_First_TSItemGet(RWS::CMsg& msg);				/// First item routing
+	RwBool			IsHelpHint_EndterWorldNPCDialog(RWS::CMsg& msg);		/// Help hint for NPC dialog when first entering the world
+	RwBool			IsHelpHint_First_TSItemGetEquip(RWS::CMsg& msg);		/// Rooting the first equipment item
+	RwBool			IsHelpHint_First_AvatarKillMob(RWS::CMsg& msg);			/// First Mob Hunt
+	RwBool			IsHelpHint_First_SobEquipItemDurDown(RWS::CMsg& msg);	/// First equipment durability down
+	RwBool			IsHelpHint_First_TSItemGetHoipoiStone(RWS::CMsg& msg);	/// Hoipoiston item looting
+	RwBool			IsHelpHint_First_OpenBagGui(RWS::CMsg& msg);			/// First open inventory
+	RwBool			IsHelpHint_First_OpenScouterBackgroundGui(RWS::CMsg& msg);	/// first use scouter
 };
 
 class CHintSideIconGui : public CSideIconBase, RWS::CEventHandler
@@ -162,7 +162,7 @@ public:
 
 /**
 * \ingroup client
-* \brief 도움말 힌트 SideView
+* \brief Help Hint SideView
 */
 class CHelpHintSideViewGui : public CSideViewBase, RWS::CEventHandler
 {
@@ -204,7 +204,7 @@ public:
 
 /**
 * \ingroup client
-* \brief Html or Flash 도움말
+* \brief Html or Flash Help
 */
 class CGuideHintSideViewGui : public CSideViewBase, RWS::CEventHandler
 {
@@ -262,10 +262,10 @@ public:
 
 /**
 * \ingroup client
-* \brief 문자열 알림말 힌트 SideView
+* \brief String Announcement Hint SideView
 */
 
-// 알림 메시지가 떠 있을 시간
+// Time for the notification message to appear
 #define dSTRING_HINT_LIFE_TIME		5.0f
 
 class CStringHintSideViewGui : public CSideViewBase, RWS::CEventHandler

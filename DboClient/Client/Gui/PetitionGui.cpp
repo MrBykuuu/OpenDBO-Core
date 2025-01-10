@@ -1,14 +1,14 @@
 #include "precomp_dboclient.h"
 #include "PetitionGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 #include "NtlPLGuiManager.h"
 
-// cleint
+// Client
 #include "DialogManager.h"
 #include "DboGlobal.h"
 #include "DisplayStringManager.h"
@@ -37,20 +37,20 @@ RwBool CPetitionGui::Create()
 	m_pThis			= (gui::CDialog*)GetComponent("dlgMain");
 	m_pThis->SetPriority(dDIALOGPRIORITY_QUICKSLOT);
 
-	// 닫기 버튼
+	// close button
 	m_pCloseButton	= (gui::CButton*)GetComponent("ExitButton");
 	m_slotCloseButton = m_pCloseButton->SigClicked().Connect(this, &CPetitionGui::OnClicked_CloseButton);
 
-	// 다이얼로그 제목
+	// Dialog title
 	m_pDialogName	= (gui::CStaticBox*)GetComponent( "stbDialogName" );
 	m_pDialogName->SetPosition(DBOGUI_DIALOG_TITLE_X, DBOGUI_DIALOG_TITLE_Y);
 	m_pDialogName->SetText( GetDisplayStringManager()->GetString( "DST_PETITION_TITLE" ) );
 
-	// 대분류 카테고리 스테틱
+	// Main Category Static
 	m_pCategoryStatic = (gui::CStaticBox*)GetComponent( "stbCategory" );
 	m_pCategoryStatic->SetText( GetDisplayStringManager()->GetString( "DST_PETITION_GREAT_CATEGORY" ) );
 
-	// 대분류 카테고리
+	// Main category
 	m_pCategory		= (gui::CComboBox*)GetComponent( "cbbCategory" );
 	m_slotItemSelect = m_pCategory->SigSelected().Connect( this, &CPetitionGui::OnItemSelect );
 
@@ -63,26 +63,26 @@ RwBool CPetitionGui::Create()
 
 	m_pCategory->SelectItem( 0 );	
 
-	// 소분류 카테고리 스테틱
+	// Subcategory Category Static
 	m_pCategoryStatic2 = (gui::CStaticBox*)GetComponent( "stbCategory2" );
 	m_pCategoryStatic2->SetText( GetDisplayStringManager()->GetString( "DST_PETITION_SMALL_CATEGORY" ) );
 
-	// 소분류 카테고리
+	// Subcategories
 	m_pCategory2	= (gui::CComboBox*)GetComponent( "cbbCategory2" );
 	m_slotItemSelect2 = m_pCategory2->SigSelected().Connect( this, &CPetitionGui::OnItemSelect2 );
 
-	// 전송버튼
+	// Send button
 	m_pSendButton	= (gui::CButton*)GetComponent("btnSend");
 	m_pSendButton->SetText(GetDisplayStringManager()->GetString( "DST_PETITION_SEND" ));
 	m_slotSendButton = m_pSendButton->SigClicked().Connect(this, &CPetitionGui::OnClicked_SendButton);
 
-	// 진정내용
+	// Contents of complaint
 	m_pInput	= (gui::CInputBox*)GetComponent("Input");	
 	m_pInput->SetMultilineMode(TRUE);
 	m_pInput->SetMaxLength(NTL_MAX_SIZE_QUESTION_CONTENT);
 	m_pInput->SetCaretSize(dINPUTBOX_CARET_WIDTH, dINPUTBOX_CARET_HEIGHT);
 
-	// 배경
+	// background
 	m_BackPanel.SetType(CWindowby3::WT_VERTICAL);
 	m_BackPanel.SetSurface( 0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Petition.srf", "srfPanelLeft" ) );
 	m_BackPanel.SetSurface( 1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Petition.srf", "srfPanelCenter" ) );
@@ -90,18 +90,18 @@ RwBool CPetitionGui::Create()
 	m_BackPanel.SetSize(269, 286);
 	m_BackPanel.SetPositionfromParent(12, 71);	
 
-	// 카테고리 1 배경
+	// Category 1 Background
 	m_srfCaregoryBack.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Petition.srf", "srfCategoryBack" ) );
 	m_srfCaregoryBack.SetPositionfromParent(12, 47);
 
-	// 카테고리 2 배경
+	// Category 2 Background
 	m_srfCaregoryBack2.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Petition.srf", "srfCategoryBack" ) );
 	m_srfCaregoryBack2.SetPositionfromParent(150, 47);
 
-	// 대분류 카테고리 선택 메세지
+	// Main category selection message
 	m_pCategoryMessage = (gui::CStaticBox*)GetComponent( "stbBigClassfication" );
 
-	//소분류 카테고리 선택 메세지
+	//Subcategory selection message
 	m_pCategoryMessage2 = (gui::CStaticBox*)GetComponent( "stbSmallClassfication" );
 
 	if( GetPetitionManager()->GetCategory2() != PETITION_CATEGORY_2_INVALID )
@@ -117,13 +117,13 @@ RwBool CPetitionGui::Create()
 		SetTextCategory();
 	}
 
-	// sig
+	// Signals
 	m_slotGotFocus			= m_pInput->SigGotFocus().Connect( this, &CPetitionGui::OnGotFocus );
 	m_slotLostFocus			= m_pInput->SigLostFocus().Connect( this, &CPetitionGui::OnLostFocus );
 	m_slotMove				= m_pThis->SigMove().Connect( this, &CPetitionGui::OnMove );
 	m_slotPaint				= m_pThis->SigPaint().Connect( this, &CPetitionGui::OnPaint );
 
-	// Surface들을 위치시키기 위해
+	// To position surfaces
 	CRectangle rtScreen = m_pThis->GetScreenRect();
 	OnMove(rtScreen.left, rtScreen.top);
 
@@ -245,14 +245,14 @@ VOID CPetitionGui::OnClicked_SendButton(gui::CComponent* pComponent)
 
 	if( iSelectedCategory < 0 )
 	{
-		// 대분류를 선택하십시요
+		// Please select a major category
 		GetAlarmManager()->AlarmMessage("DST_PETITION_CHOICE_GREATE_CATEGORY");
 		return;
 	}
 
 	if( iSelectedCategory2 < 0 )
 	{
-		// 소분류를 선택하십시요
+		// Please select a subcategory
 		GetAlarmManager()->AlarmMessage("DST_PETITION_CHOICE_SMALL_CATEGORY");
 		return;
 	}
@@ -264,14 +264,14 @@ VOID CPetitionGui::OnClicked_SendButton(gui::CComponent* pComponent)
 
 	if( contentSize == 0 )
 	{
-		// 내용을 입력하세요
+		// Please enter your details
 		GetAlarmManager()->AlarmMessage("DST_PETITION_INPUT_CONTENT");
 		return;
 	}
 
 	if( contentSize > NTL_MAX_SIZE_QUESTION_CONTENT )
 	{
-		// 내용이 너무 깁니다
+		// Content is too long
 		GetAlarmManager()->AlarmMessage("DST_PETITION_TOO_LONG_CONTENT");
 		return;
 	}

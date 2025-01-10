@@ -43,7 +43,7 @@ public:
 	bool m_bEnabled;
 	bool m_bPopup;
 	bool m_bRemoveflag;
-	bool m_bRenderTop;	// top level rendering 할것인가?
+	bool m_bRenderTop;	//Will you do top level rendering?
 	
 	int  m_nTabID;
 	WORD m_wPriority;	// 우선순위. 큰 순서대로 화면 앞에 찍히게 된다. `

@@ -1,13 +1,13 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlGuildWarehouse.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "ItemTable.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSobItem.h"
@@ -341,7 +341,7 @@ void CNtlGuildWarehouse::ItemMoveEventHandler(RWS::CMsg &pMsg)
 	SNtlGuildWarehouseItemMove* pEvent = reinterpret_cast<SNtlGuildWarehouseItemMove*>(pMsg.pData);	
 	CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
 
-	// 길드 창고에서 아이템을.....
+	// Items from the guild warehouse.....
 	if( CONTAINER_TYPE_GUILD_FIRST <= pEvent->bySrcPlace && pEvent->bySrcPlace <= CONTAINER_TYPE_GUILD_LAST )
 	{
 		RwUInt8 bySrcIndex = (RwUInt8)(pEvent->bySrcPlace - CONTAINER_TYPE_GUILD_FIRST);
@@ -599,7 +599,7 @@ void CNtlGuildWarehouse::ItemStackMoveEventHandler(RWS::CMsg &msg)
 		}
 
 	}
-	// 하나로 합쳐질 때
+	// When we merge into one
 	else if( pEvent->bySrcStackCount == 0 )
 	{
 		if( CONTAINER_TYPE_GUILD_FIRST <= pEvent->bySrcPlace && pEvent->bySrcPlace <= CONTAINER_TYPE_GUILD_LAST &&
@@ -654,7 +654,7 @@ void CNtlGuildWarehouse::ItemStackMoveEventHandler(RWS::CMsg &msg)
 		}
 	}
 
-	// 둘 다 존재할 때
+	// when both exist
 	else
 	{
 		if( CONTAINER_TYPE_GUILD_FIRST <= pEvent->bySrcPlace && pEvent->bySrcPlace <= CONTAINER_TYPE_GUILD_LAST &&

@@ -17,35 +17,35 @@ typedef void (SWEBCALLBACK_ONBN2)(LPCTSTR lpszURL, DWORD nFlags, LPCTSTR lpszTar
 typedef void (SWEBCALLBACK_ONNC2)(LPCTSTR strURL);
 typedef void (SWEBCALLBACK_ONQUIT)();
 
-// SSO 웹브라우저를 Shared DLL로 사용하기 위해 호출하는 함수(InitSSOWebBrowser() 이전에 호출되어야 함)
+// Function called to use the SSO web browser as a shared DLL (must be called before InitSSOWebBrowser())
 void PresetSSOWebBrowserToSharedDll();
 
-// 서비스 사이트에 따른 쿠키 이름을 변경하기 위하여 호출하는 함수(InitSSOWebBrowser() 이전에 호출되어야 함)
-// 다음게임인 경우 "daum"을 넘김(넷마블인 경우는 호출할 필요가 없음)
+// Function called to change the cookie name according to the service site (must be called before InitSSOWebBrowser())
+// If it is a Daum game, pass “daum” (if it is a Netmarble game, there is no need to call it)
 void PresetSSOWebBrowserSetSiteName(LPCTSTR strSiteName);
 
 void PresetSSOWebBrowserBaseFolder(LPCTSTR strFolder);
 
-// SSO 웹브라우저 초기화 함수
+// SSO web browser initialization function
 BOOL InitSSOWebBrowser(HWND hWndMain, LPCTSTR strAuthCookie, LPCTSTR strDataCookie, LPCTSTR strCpCookie);
 
-// 테스트용 초기화 함수
+// Initialization function for testing
 BOOL InitSSOWebBrowser2(LPCSTR strBaseDir, HWND hWndMain, LPCTSTR strAuthCookie, LPCTSTR strDataCookie, LPCTSTR strCpCookie);
 
-// SSO 웹브라우저 파괴 함수(메인 윈도우가 파괴되기 전에 호출해야한다)
+// SSO web browser destruction function (must be called before the main window is destroyed)
 BOOL UnInitSSOWebBrowser();
 
-// 쿠키 활성화 페이지 URL을 얻는 함수
+// Function to get cookie enabled page URL
 LPCTSTR GetActCookieURL();
 
-// 쿠키 리프레쉬 페이지 URL을 얻는 함수
+// Function to get cookie refresh page URL
 LPCTSTR GetRefreshCookieURL();
 
-// SSO 웹브라우저로부터 쿠키를 얻는 함수(내부적으로 변환되기 때문에 얻은 그대로 put_cookie하면 된다)
+// SSO Function to obtain a cookie from the web browser (since it is converted internally, you can just put_cookie as it is obtained)
 BOOL GetSSOWebCookieString(LPSTR pstrAuth, LPSTR pstrData, LPSTR pstrCp);
 
 //////////////////////////////////////////////////////////////////////
-// SSO 웹브라우저 클래스
+// SSO web browser class
 
 class CSSOWebBrowser  
 {
@@ -56,7 +56,7 @@ public:
 	CSSOWebBrowser();
 	virtual ~CSSOWebBrowser();
 
-	// 웹 브라우저 초기화 및 생성
+	// Initializing and creating a web browser
 	BOOL Create(DWORD dwStyle, RECT& rect, HWND hWndParent, UINT nID);
 	void Destroy();
 
@@ -80,7 +80,7 @@ public:
 	//virtual void OnNavigateComplete2( LPCTSTR strURL );
 	//virtual void OnQuit();
 
-	// 콜백 함수
+	//callback function
 	//void (*m_pCallback_OnBeforeNavigate2)(LPCTSTR lpszURL, DWORD nFlags, LPCTSTR lpszTargetFrameName, void* pbaPostedData, LPCTSTR lpszHeaders, BOOL* pbCancel);
 	//void (*m_pCallback_OnNavigateComplete2)( LPCTSTR strURL );
 	//void (*m_pCallback_OnQuit)();

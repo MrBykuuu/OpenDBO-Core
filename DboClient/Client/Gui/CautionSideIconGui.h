@@ -1,11 +1,11 @@
 /******************************************************************************
 * File			: CautionSideIconGui.h
 * Author		: Cho Haesung
-* Copyright		: (주)NTL
+* Copyright		: (二�)NTL
 * Date			: 2008. 4. 3
 * Abstract		: 
 *****************************************************************************
-* Desc			: 경고 메시지가 누적되서 출력되면 CautionSideIcon에서 담아둔다.
+* Desc			:  When warning messages are accumulated and output, they are stored in CautionSideIcon.
 *
 *****************************************************************************/
 
@@ -21,7 +21,7 @@
 #include "SideIconGui.h"
 #include "windowby3.h"
 
-// 표시될 경고 메시지의 최대 갯수
+// Maximum number of warning messages to be displayed
 #define dMAX_CAUTION_SIDE_VIEW_UNIT			10
 
 #define dCAUTION_UNIT_WIDTH					230
@@ -35,8 +35,8 @@
 #define dCAUTION_UNIT_TEXT_COLOR			RGB( 255, 71, 57 )
 
 /**
-* \brief SideView 에서 가지고 있는 Unit의 정보를 담은 구조체
-* SideView -> SideIcon 으로 정보를 넘길 때 사용된다.
+* \brief Structure containing unit information held by SideView
+*Used when passing information from SideView -> SideIcon.
 */
 struct SCautionSideViewUnits
 {
@@ -44,8 +44,8 @@ struct SCautionSideViewUnits
 };
 
 /**
-* \ingroup	client
-* \brief	하나의 경고 메시지를 표현하는 Unit
+* \ingroup client
+* \brief Unit expressing one warning message
 */
 class CCautionSideViewUnit
 {
@@ -71,9 +71,9 @@ protected:
 };
 
 /**
-* \ingroup	client
-* \brief	Caution Side Icon
-* Side Icon을 정의하고 Caution Side View 을 열고 닫는 기능과 Unit을 Side View까지 전달한다.
+* \ingroup client
+* \brief Caution Side Icon
+*Define the Side Icon and transmit the function of opening and closing the Caution Side View and the Unit to the Side View.
 */
 class CCautionSideIconGui : public CSideIconBase
 {

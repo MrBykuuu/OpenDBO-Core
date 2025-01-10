@@ -1,23 +1,23 @@
 #include "precomp_dboclient.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "CEventHandler.h"
 
-// shared
+// Shared
 #include "NPCTable.h"
 
 // Sound
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 #include "NtlPLGuiManager.h"
 
-// framework
+// Framework
 #include "NtlApplication.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLApi.h"
 #include "NtlSLLogic.h"
@@ -30,7 +30,7 @@
 #include "NtlWorldConcept.h"
 
 
-// table
+// Table
 #include "HelpTable.h"
 #include "ItemTable.h"
 #include "SkillTable.h"
@@ -38,7 +38,7 @@
 #include "TextAllTable.h"
 #include "TableContainer.h"
 
-// dbo
+// Dbo
 #include "DboGlobal.h"
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
@@ -49,7 +49,7 @@
 
 #include "HintCommon.h"
 
-// 문자열 알림이 출력되는 시간
+// Time when string notification is output
 #define dSTRING_HINT_TIME_NEWMAIL 5.0f
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,7 +57,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-* \brief 생성자
+* \brief constructor
 */
 CHelpHintConditionCheck ::CHelpHintConditionCheck()
 :m_bRegNewHint(FALSE)
@@ -66,7 +66,7 @@ CHelpHintConditionCheck ::CHelpHintConditionCheck()
 }
 
 /**
-* \brief 소멸자
+* \brief destructor
 */
 CHelpHintConditionCheck ::~CHelpHintConditionCheck()
 {
@@ -79,7 +79,7 @@ RwBool CHelpHintConditionCheck::Create()
 {
 	NTL_FUNCTION("CHelpHintConditionCheck::Create");
 
-	// 조건 검사를 할 Help Data를 Map에 보관한다. (byConditionCheck를 index로, data는 tblidx=> 호출위한)
+	// Help data for condition checking is stored in Map. (byConditionCheck as index, data for tblidx=> call)
 	CHelpTable* pHelpTable = API_GetTableContainer()->GetHelpTable();
 	for (CTable::TABLEIT it = pHelpTable->Begin(); it != pHelpTable->End(); ++it)
 	{
@@ -137,13 +137,13 @@ void CHelpHintConditionCheck::Destroy()
 
 /**
 * \brief HandleEvents
-* \param msg	Event Message 구조체
+* \param msg	Event Message structure
 */
 void CHelpHintConditionCheck::HandleEvents(RWS::CMsg& msg)
 {
 	NTL_FUNCTION("CHelpHintConditionCheck::HandleEvents");
 
-	// Tutorial 힌트가 업데이트 되었을 때
+	// When the tutorial hint is updated
 	if (msg.Id == g_EventHelpHint)
 	{
 		SNtlEventHelpHint* pData	= reinterpret_cast<SNtlEventHelpHint*>(msg.pData);
@@ -263,7 +263,7 @@ void CHelpHintConditionCheck::HandleEvents(RWS::CMsg& msg)
 		if( bBool )
 			UnLinkMsg(g_EventTMQCleintState);
 	}   ///////////////  /// woosungs_test 20090804
-	else if (msg.Id == g_EventTSItemGet)					/// item 획득  최초 item 루팅, 최초 장비item 루팅
+	else if (msg.Id == g_EventTSItemGet)					/// Item acquisition, first item rooting, first equipment item rooting
 	{
 		RwBool bBool = TRUE;
 
@@ -274,7 +274,7 @@ void CHelpHintConditionCheck::HandleEvents(RWS::CMsg& msg)
 		if( bBool )
 			UnLinkMsg(g_EventTSItemGet);
 	}
-	else if (msg.Id == g_EventOpenBagGui)					/// 최초 inventory open
+	else if (msg.Id == g_EventOpenBagGui)					/// First inventory open
 	{
 		RwBool bBool = TRUE;
 
@@ -283,7 +283,7 @@ void CHelpHintConditionCheck::HandleEvents(RWS::CMsg& msg)
 		if( bBool )
 			UnLinkMsg(g_EventOpenBagGui);
 	}
-	else if (msg.Id == g_EventOpenScouterBackgroundGui)		/// 최초 scouter use
+	else if (msg.Id == g_EventOpenScouterBackgroundGui)		/// first scouter use
 	{
 		RwBool bBool = TRUE;
 
@@ -292,7 +292,7 @@ void CHelpHintConditionCheck::HandleEvents(RWS::CMsg& msg)
 		if( bBool )
 			UnLinkMsg(g_EventOpenScouterBackgroundGui);
 	}
-	else if (msg.Id == g_EventSobEquipItemDurDown)			/// 최초 장비 내구도 다운
+	else if (msg.Id == g_EventSobEquipItemDurDown)			/// First equipment durability down
 	{
 		RwBool bBool = TRUE;
 
@@ -301,7 +301,7 @@ void CHelpHintConditionCheck::HandleEvents(RWS::CMsg& msg)
 		if( bBool )
 			UnLinkMsg(g_EventSobEquipItemDurDown);
 	}
-	else if (msg.Id == g_EventMobDie)						/// 최초 Mob 사냥
+	else if (msg.Id == g_EventMobDie)						/// First Mob Hunt
 	{
 		RwBool bBool = TRUE;
 
@@ -338,14 +338,14 @@ RwBool CHelpHintConditionCheck::RegHelpHint(const BYTE& byID)
 	HELPMAP::iterator it = m_mapHelpHint.find(byID);
 	if (it == m_mapHelpHint.end())
 	{
-		return TRUE;													/// Help_Data에 존재하지않는 조건..... 무조건 TRUE반환
+		return TRUE;													/// Condition that does not exist in Help_Data..... returns TRUE unconditionally
 	}
 
 
 	m_uiHelpHint |= 0x1 << byID;
-	m_bRegNewHint = TRUE;												/// SendPacketHintReq() 예약
+	m_bRegNewHint = TRUE;												/// SendPacketHintReq() reservation
 	//GetDboGlobal()->GetGamePacketGenerator()->SendTutorialHintUpdateReq(m_uiHelpHint);
-	//같은 상황에서 합쳐서 Request 위해 HandleEvents로 옮김
+	//Combined in the same situation and moved to HandleEvents for Request
 
 	TBLIDXVEC& vecTable = it->second;
 	for (int i = 0; i < (int)vecTable.size(); ++i)
@@ -550,7 +550,7 @@ RwBool CHelpHintConditionCheck::IsHelpHint_First_TSItemGetEquip(RWS::CMsg& msg)
 																	//Logic_GetItemDataFromTable	
 	if(pITEM_TBLDAT)
 	{
-		if(EQUIP_TYPE_UNKNOWN != pITEM_TBLDAT->byEquip_Type)	/// equip 일때만 체크
+		if(EQUIP_TYPE_UNKNOWN != pITEM_TBLDAT->byEquip_Type)	/// Check only when equipped
 		{
 			return RegHelpHint(FIRST_LOOT_EQUIP);
 		}
@@ -615,7 +615,7 @@ RwBool CHelpHintConditionCheck::IsHelpHint_First_OpenScouterBackgroundGui(RWS::C
 }
 
 /**
-* \brief TMQ에 처음 진입한 것을 체크
+* \brief Check if you entered TMQ for the first time
 */
 RwBool CHelpHintConditionCheck::IsHelpHint_First_Into_Tmq( RWS::CMsg& msg ) 
 {
@@ -624,7 +624,7 @@ RwBool CHelpHintConditionCheck::IsHelpHint_First_Into_Tmq( RWS::CMsg& msg )
 
 	SNtlEventTMQServerState* pEvent = reinterpret_cast<SNtlEventTMQServerState*>(msg.pData);
 
-	// TMQ 시작의 State
+	// TMQ start state
 	if( pEvent->uiState == WORLD_STATE_TMQ_BEGIN )
 	{
 		return RegHelpHint(FIRST_INTO_TMQ);
@@ -638,7 +638,7 @@ RwBool CHelpHintConditionCheck::IsHelpHint_First_Into_Tmq( RWS::CMsg& msg )
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-* \brief 생성자
+* \brief constructor
 */
 CHintSideIconGui::CHintSideIconGui(const RwChar* pName) 
 : CSideIconBase(pName)
@@ -647,7 +647,7 @@ CHintSideIconGui::CHintSideIconGui(const RwChar* pName)
 }
 
 /**
-* \brief 소멸자
+* \brief destructor
 */
 CHintSideIconGui::~CHintSideIconGui()
 {
@@ -666,16 +666,16 @@ RwBool CHintSideIconGui::Create()
 	CNtlPLGui::CreateComponents(GetNtlGuiManager()->GetGuiManager());
 
 	m_pThis			= (gui::CDialog*)GetComponent("dlgMain");
-	m_pIconButton	= (gui::CButton*)GetComponent("btnIcon");	// 포포 아이콘
+	m_pIconButton	= (gui::CButton*)GetComponent("btnIcon");	// popo icon
 
 	m_slotIconButtonClicked	= m_pIconButton->SigClicked().Connect(this, &CHintSideIconGui::OnIconButtonClicked);
 	m_slotPaint = m_pIconButton->SigPaint().Connect( this, &CHintSideIconGui::OnPaint );
 	m_slotMove = m_pThis->SigMove().Connect( this, &CHintSideIconGui::OnMove );
 
-	// Help Hint 조건 검사 생성
+	// Help Hint Create condition check
 	m_helpHintConditionCheck.Create();
 
-	//srfHintPulse
+	//Srf hint pulse
 	gui::CSurface surface = GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "HintSideIcon.srf", "srfHintPulse" );
 	m_feEffect.SetSurface( surface );
 	m_feEffect.SetTime( 0.0f, 0.5f );
@@ -732,8 +732,8 @@ void CHintSideIconGui::HandleEvents(RWS::CMsg& msg)
 {
 	NTL_FUNCTION("CHintSideIconGui::HandleEnvets");
 
-	// Hint를 등록 하고 포포 아이콘을 보여준다.
-	// ShowHint(); 내부에서 힌트의 갯수를 업데이트 한다.
+	// Register a hint and show the popo icon.
+	// ShowHint(); Update the number of hints internally.
 	if (msg.Id == g_EventRegSideHintIcon)
 	{
 		SNtlEventRegSideHintIcon* pHintData = reinterpret_cast<SNtlEventRegSideHintIcon*>(msg.pData);
@@ -745,7 +745,7 @@ void CHintSideIconGui::HandleEvents(RWS::CMsg& msg)
 		
 		ShowHint();
 
-		// HintType이 HINTICON_HELP 라면 링크된 도움말을 열어준다.
+		// If HintType is HINTICON_HELP, linked help is opened.
 		if(pHintData->uiEventType == HINTICON_HELP )
 		{
 			CDboEventGenerator::OpenHelpWindow(pHintData->uiTableIndex);
@@ -806,7 +806,7 @@ void CHintSideIconGui::HandleEvents(RWS::CMsg& msg)
 	{
 		SNtlEventChangeClassAuthorityChanged* pData = reinterpret_cast<SNtlEventChangeClassAuthorityChanged*>(msg.pData);
 
-		// 전직 가능 처리
+		// Transfer possibility processing
 		if( pData->bCanChangeClass )
 		{
 			CStringHint* pStringHint = NTL_NEW CStringHint( GetDisplayStringManager()->GetString( "DST_SIDEICON_HINT_CLASS_CHANGE_TITLE" ),
@@ -821,7 +821,7 @@ void CHintSideIconGui::HandleEvents(RWS::CMsg& msg)
 	}
 	else if( msg.Id == g_EventHintViewClosed )
 	{
-		// 지우고 출력한다.
+		// Erase and print.
 		if( !m_vecHelpHint.empty() )
 		{
 			CHint* pHint = m_vecHelpHint.back();
@@ -845,8 +845,8 @@ void CHintSideIconGui::HandleEvents(RWS::CMsg& msg)
 
 /**
 * \brief Update Hint
-* 현재 남아있는 힌트들의 갯수를 체크하여 출력한다.
-* \return 힌트가 있는지 없는지의 여부( TRUE : 힌트 남아있음, FALSE : 힌트 없음 )
+*Checks and prints the number of hints currently remaining.
+* \return Whether there is a hint or not (TRUE: hint remains, FALSE: no hint)
 */
 RwBool CHintSideIconGui::UpdateHint()
 {
@@ -889,7 +889,7 @@ void CHintSideIconGui::HideHint()
 }
 
 /**
-* \brief 사이드뷰가 닫길때 호출
+* \brief Called when the sideview is closed.
 */
 void CHintSideIconGui::OnSideViewClosed()
 {
@@ -897,7 +897,7 @@ void CHintSideIconGui::OnSideViewClosed()
 }
 
 /**
-* \brief 포포 아이콘을 클릭하였을 때 호출
+* \brief Called when the popo icon is clicked
 */
 void CHintSideIconGui::OnIconButtonClicked(gui::CComponent* pComponent)
 {
@@ -916,11 +916,11 @@ void CHintSideIconGui::OnIconButtonClicked(gui::CComponent* pComponent)
 }
 
 /**
-* \brief 힌트의 사이드 뷰를 보여준다.
+* \brief Shows a side view of hints.
 */
 void CHintSideIconGui::ShowHintView()
 {
-	// 힌트가 있을때만 보여준다.
+	// Shown only when there is a hint.
 	if (!m_vecHelpHint.empty())
 	{
 		CHint* pHint = m_vecHelpHint.back();
@@ -980,7 +980,7 @@ void CHintSideIconGui::OnMove( RwInt32 nOldX, RwInt32 nOldY )
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-* \brief 생성자
+* \brief constructor
 */
 CHelpHintSideViewGui::CHelpHintSideViewGui(const RwChar* pName) 
 : CSideViewBase(pName)
@@ -993,7 +993,7 @@ m_pCloseButton(NULL)
 }
 
 /**
-* \brief 소멸자
+* \brief destructor
 */
 CHelpHintSideViewGui::~CHelpHintSideViewGui()
 {
@@ -1306,7 +1306,7 @@ void CGuideHintSideViewGui::OpenFlashBox(sGUIDE_HINT_TBLDAT* pTableData)
 
 	m_pThis->SetPosition(rectPosition);
 
-	m_pFlash->Load( pTableData->szResource ); // 로딩 부분은 이벤트 받는 곳으로 옮겨야 함. by Peessi.
+	m_pFlash->Load( pTableData->szResource ); // The loading part must be moved to the event receiving location. by Peessi.
 	m_pFlash->SetPosition(rectPosition);
 	m_pFlash->PlayMovie( TRUE );
 	m_pFlash->RestartMovie();
@@ -1393,7 +1393,7 @@ void CStringHintSideViewGui::Update( RwReal fElapsed )
 
 		if( m_fCurrentTime > m_fLifeTime )
 		{
-			// 닫아준다.
+			// Close it.
 			OnSideViewClose();
 
 			CDboEventGenerator::HintSideViewClosed();

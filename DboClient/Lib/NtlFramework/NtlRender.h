@@ -18,8 +18,8 @@
 
 /**
  * \ingroup Client
- * client의 rendering 객체에 system event를 보내는 객체이다.
- * 모든 rendering 객체를 update 한다.
+ *This is an object that sends a system event to the client's rendering object.
+ *Update all rendering objects.
  *
  */
 
@@ -35,20 +35,20 @@ public:
 
 	CNtlRender();
 
-	// CNtlRender 객체가 생성된 다음 곧바로 호출된다.
+	// It is called immediately after the CNtlRender object is created.
     bool Create(void);
 
-	// CNtlRender 객체가 해제되기 전에 바로 호출된다.
+	// Called immediately before the CNtlRender object is released.
 	void Destroy(void);
 
 	/**
 	* \ingroup Client
-	* client의 rendering 객체에 tick event를 보낸다.
+	*Send a tick event to the client's rendering object.
 	*
 	*/
 	void Update(float fElapsed);
 
-	// rendering enable 및 disable
+	// rendering enable and disable
 	void SetEnabled(bool bEnabled); 
 };
 

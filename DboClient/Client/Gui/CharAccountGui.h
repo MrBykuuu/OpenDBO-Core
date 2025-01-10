@@ -1,25 +1,25 @@
 /******************************************************************************
-* File			: CharAccountGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2007. 10. 15
-* Abstract		:
+*File           : CharAccountGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : October 15, 2007
+*Abstract		:
 *****************************************************************************
-* Desc			: 계정정보를 표시한다
+*Desc           : Displays account information
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "Inputhandler.h"
 
-// dbo
+// Dbo
 #include "Windowby3.h"
 
 class CAccountGui : public CNtlPLGui, public RWS::CEventHandler
@@ -49,16 +49,16 @@ protected:
 	gui::CSlot			m_slotSelectServer;
 	gui::CSlot			m_slotPaint;
 
-	CWindowby3			m_Background;		///< 배경
+	CWindowby3			m_Background;		///< background
 
-	CSurfaceGui			m_srtAccountBack;	///< 계정 정보 배경
+	CSurfaceGui			m_srtAccountBack;	///< Account information background
 
 	gui::CStaticBox*	m_pTitleStatic;
 
-	gui::CStaticBox*	m_pServerNameStatic;///< '서버 이름'
-	gui::CStaticBox*	m_pServerStateStatic;///< '서버 상태'	
-	gui::CStaticBox*	m_pServerName;		///< 서버 이름
-	gui::CStaticBox*	m_pServerState;		///< 서버 상태
+	gui::CStaticBox*	m_pServerNameStatic;///< 'server name'
+	gui::CStaticBox*	m_pServerStateStatic;///< 'Server status'	
+	gui::CStaticBox*	m_pServerName;		///< server name
+	gui::CStaticBox*	m_pServerState;		///< Server status
 
-	gui::CButton*		m_pServerSelectButton;///< 서버 선택 버튼
+	gui::CButton*		m_pServerSelectButton;///< Server selection button
 };

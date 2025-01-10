@@ -22,8 +22,8 @@ class CNtlSobAvatarAttr : public CNtlSobPlayerAttr
 
 public:
 
-	RwUInt32	m_uiExp;		// 현재 level에서의 current exp	
-	RwUInt32	m_uiMaxExp;	// 현재 level에서의 max exp
+	RwUInt32	m_uiExp;		// current exp at current level	
+	RwUInt32	m_uiMaxExp;	// max exp at current level
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -35,8 +35,8 @@ public:
 	RwUInt16	m_wApDegenDash; // When dash flying
 	RwUInt16	m_wApDegenAccel; // When accel flying
 
-	RwUInt16	m_wRpRegen;			// RP 증가 속도.(/second)
-	RwUInt16	m_wRpDimimutionRate;	// RP 감소 속도.(/second)
+	RwUInt16	m_wRpRegen;			// RP increase speed (/second)
+	RwUInt16	m_wRpDimimutionRate;	// RP reduction rate (/second)
 
 	DWORD		m_dwWeightLimit;
 	float		m_fItemUpgradeBonusRate;
@@ -49,10 +49,10 @@ public:
 
 	RwUInt32 m_uiSp;
 
-	RwUInt32 m_uiHonorPoint;			///< 명예 포인트
-	RwUInt32 m_uiMudosaPoint;			///< 무도사 포인트
+	RwUInt32 m_uiHonorPoint;			///< Honor Points
+	RwUInt32 m_uiMudosaPoint;			///< Martial Artist Points
 
-	RwBool	 m_bCanChangeClass;			///< 전직 가능 여부
+	RwBool	 m_bCanChangeClass;			///< Is it possible to change jobs?
 
 
 	//////////////////////////////////////////////////////////////////////////

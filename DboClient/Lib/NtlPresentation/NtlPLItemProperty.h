@@ -6,7 +6,7 @@
 #include "NtlPLItemData.h"
 #include "NtlTypeAnimData.h"
 
-// Item Flag들
+// Item Flags
 #define ITEM_FLAG_APPLY_EMBLEM        0x00000001
 
 class CNtlPLItemProperty : public CNtlPLProperty
@@ -15,7 +15,7 @@ public:
 	static unsigned int m_strVer;				///< Property File Version
 	static std::string m_strItemDataPath;		///< Item Data File Path
 
-    std::vector<SEventLinkEffect*> m_vLinkEffect;     ///< Link Effect의 리스트     
+    std::vector<SEventLinkEffect*> m_vLinkEffect;     ///< List of Link Effects     
     SEventTrace        m_eventTrace;            //< Trajectory Effect Properties
 
 protected:
@@ -36,17 +36,17 @@ public:
 	CNtlPLItemProperty();
 	virtual ~CNtlPLItemProperty();
 
-	// 'ItemPropertyList.xml'에서 프로퍼티 목록들을 가져오는 함수
+	// Function to get a list of properties from 'ItemPropertyList.xml'
 	virtual RwBool	Load(CNtlXMLDoc *pDoc, IXMLDOMNode *pNode);
 	virtual RwBool	Save(CNtlXMLDoc *pDoc, IXMLDOMNode *pNode );
 
-    RwBool	LoadScript(const std::string &strFileName);							    	///< XML Script 로드
+    RwBool	LoadScript(const std::string &strFileName);							    	///< Load XML Script
     RwBool  SaveScript(const std::string &strFileName);                                 ///< XML Script Save    
 
-	virtual void	SaveSerialize(CNtlSerializer& sOut);											///< Serialize에 데이터를 저장하는 함수
-	virtual void	LoadSerialize(CNtlSerializer& sIn);												///< Serialize로부터 데이터를 가져오는 함수
+	virtual void	SaveSerialize(CNtlSerializer& sOut);											///< Function to save data in Serialize
+	virtual void	LoadSerialize(CNtlSerializer& sIn);												///< Function to retrieve data from Serialize
 
-    CNtlTypeAnimTable* GetAnimTable() {return &m_TypeAnimTable;}                        ///< AnimTable을 반환한다.
+    CNtlTypeAnimTable* GetAnimTable() {return &m_TypeAnimTable;}                        ///< Returns AnimTable.
 	
 	std::string	&GetMeshFileName()	{ return m_TypeMeshFileName; }						///< Get Mesh Name
 	void SetMeshFileName(const std::string &strName) { m_TypeMeshFileName = strName; }	///< Set Mesh Name
@@ -60,16 +60,16 @@ public:
 	void SetEquipSlotType(EItemEquipSlotType eEquipSlotType) { m_TypeEquipSlotType = eEquipSlotType; }
 	EItemEquipSlotType GetEquipSlotType() { return m_TypeEquipSlotType; }
 
-    void SetAttachOffset(const RwV3d& v3dOffset) {m_v3dAttachOffset = v3dOffset;}       ///< Item의 Attach Offset값을 설정한다.
-    RwV3d GetAttachOffset() {return m_v3dAttachOffset;}                                 ///< Item의 Attach Offset값을 반환한다.
+    void SetAttachOffset(const RwV3d& v3dOffset) {m_v3dAttachOffset = v3dOffset;}       ///< Set the Attach Offset value of the Item.
+    RwV3d GetAttachOffset() {return m_v3dAttachOffset;}                                 ///< Returns the Attach Offset value of the Item.
 
-    void    SetTraceEnableDefault(const RwBool bEnable) {m_bTraceEnableDefault = bEnable;}  ///< 궤적 표시 유무 Default값을 설정한다.
-    RwBool  GetTraceEnableDefault() {return m_bTraceEnableDefault;}                         ///< 궤적 표시 유무 Default값을 반환한다.
+    void    SetTraceEnableDefault(const RwBool bEnable) {m_bTraceEnableDefault = bEnable;}  ///< Set the default value for the presence or absence of trajectory display.
+    RwBool  GetTraceEnableDefault() {return m_bTraceEnableDefault;}                         ///< Returns the default value for whether the trajectory is displayed.
 
-    SUpgradeEffectProperty* GetUpgradeEffectProperty() {return &m_UpgradeEffectProp;}    ///< Upgrade Effect의 Property를 반환한다.
+    SUpgradeEffectProperty* GetUpgradeEffectProperty() {return &m_UpgradeEffectProp;}    ///< Returns the property of the Upgrade Effect.
 
-    // Flag 비교 함수들
-    RwBool  IsApplyEmblem() {return (GetFlag() & ITEM_FLAG_APPLY_EMBLEM);}                ///< Emblem 적용 아이템인지 반환한다.
+    // Flag comparison function
+    RwBool  IsApplyEmblem() {return (GetFlag() & ITEM_FLAG_APPLY_EMBLEM);}                ///< Returns whether the Emblem is an applied item.
 };
 
 #endif

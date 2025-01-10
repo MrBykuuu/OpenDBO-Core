@@ -1,13 +1,13 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobFeelingActor.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlBuffContainer.h"
 #include "NtlSobInfluence.h"
@@ -227,7 +227,7 @@ void CNtlSobFeelingActor::SobSubWeaponDeActiveEventHandler(RWS::CMsg &pMsg)
 
 void CNtlSobFeelingActor::SobPostEffectEventHandler( RWS::CMsg& pMsg ) 
 {
-    // 실제 구현은 프록시에서 한다.
+    // The actual implementation is done in the proxy.
     CNtlSobProxy* pSobProxy = GetSobProxy();
     if(!pSobProxy)
         return;

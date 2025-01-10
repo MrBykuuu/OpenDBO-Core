@@ -4,7 +4,7 @@
  * Author		: HyungSuk, Jang
  * Copyright	: (주)NTL
  * Date			: 2007. 04. 09	
- * Abstract		: Simulation object에서 감정을 느끼는 object
+ * Abstract		: An object that feels emotions in a Simulation object
  *****************************************************************************
  * Desc         : 
  *
@@ -81,7 +81,7 @@ public:
 	void						SobEquipChangeEventHandler(RWS::CMsg &pMsg);
 	void						SobSubWeaponActiveEventHandler(RWS::CMsg &pMsg);
 	void						SobSubWeaponDeActiveEventHandler(RWS::CMsg &pMsg);
-    void                        SobPostEffectEventHandler(RWS::CMsg& pMsg);             ///< Post Effect Event를 처리한다.
+    void                        SobPostEffectEventHandler(RWS::CMsg& pMsg);             ///< Processes Post Effect Events.
 };
 
 

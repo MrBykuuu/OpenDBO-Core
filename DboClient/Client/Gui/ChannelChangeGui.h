@@ -1,28 +1,28 @@
 /******************************************************************************
 * File			: ChannelChangeGui.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: (?)NTL
 * Date			: 2008. 8. 28
 * Abstract		: 
 *****************************************************************************
-* Desc			: 게임중 실시간으로 채널을 변경하기 위한 GUI
+* Desc			:GUI to change channels in real time during the game
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// shared
+// Shared
 #include "NtlCSArchitecture.h"
 
-// gui
+// Gui
 #include "gui_button.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// dbo
+// Dbo
 #include "Windowby3.h"
 
 struct sDBO_GAME_SERVER_CHANNEL_INFO;
@@ -99,18 +99,18 @@ protected:
 	gui::CSlot			m_slotPaint;
 
 	gui::CStaticBox*	m_pDialogName;
-	gui::CStaticBox*	m_pChannelSelect;	///< '채널선택'
-	gui::CStaticBox*	m_pServerlName;		///< 서버 이름
+	gui::CStaticBox*	m_pChannelSelect;	///< ‘Channel selection’
+	gui::CStaticBox*	m_pServerlName;		///< server name
 
 	gui::CButton*		m_pExitButton;
-	gui::CButton*		m_pOkButton;		///< 확인 버튼
-	gui::CButton*		m_pCancelButton;	///< 취소 버튼
+	gui::CButton*		m_pOkButton;		///< OK button
+	gui::CButton*		m_pCancelButton;	///< Cancel button
 
 	CSurfaceGui			m_srfFocusBar;
 	CSurfaceGui			m_srfSelectBar;
 	CSurfaceGui			m_srfDownBar;
 
-	gui::CScrollBar*	m_pScrollBar;		///< 채널 스크롤
+	gui::CScrollBar*	m_pScrollBar;		///< Channel Scroll
 
 	RwUInt8				m_byFocusIndex;
 	RwUInt8				m_byDownIndex;

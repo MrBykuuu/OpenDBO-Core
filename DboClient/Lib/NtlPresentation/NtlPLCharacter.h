@@ -2,11 +2,11 @@
 *
 * File			: NTLPLCharacter.h
 * Author		: HongHoDong
-* Copyright	: (주)NTL
+* Copyright	    : (?)NTL
 * Date			: 2005. 8. 20.
 * Abstract		: NTL PLCharacter
 *****************************************************************************
-* Desc         : 
+* Desc         :
 *
 *****************************************************************************/
 #ifndef __NTL_PL_CHARACTER_H__
@@ -55,7 +55,7 @@ enum ECharacterAnimLayer
 };
 
 /*
-* Play이 되고 있는 Animation의 정보
+*Information on the animation being played
 */
 struct SAnimPlayInfo
 {
@@ -68,7 +68,7 @@ struct SAnimPlayInfo
 
 /**
 * \ingroup NtlPresentation
-* \brief Character 관련 클래스
+* \brief Character related classes
 * \date 2006-08-21
 * \author Hodong
 */
@@ -80,35 +80,35 @@ public:
 	virtual ~CNtlPLCharacter();
 
 protected:
-//	RwSphere				m_BSphere;								///< Position이 연산되지 않은 BoundSphere
-	RwSphere				m_BSphereCur;							///< Position이 연산된 BoundingSphere : GetBoundingSphere를 호출하게 되면 업데이트 된다.
+//	RwSphere				m_BSphere;								///< BoundSphere where Position is not calculated
+	RwSphere				m_BSphereCur;							///< BoundingSphere where Position was calculated: Updated when GetBoundingSphere is called.
 	CNtlPLCharacterProperty	*m_pProperty;							///< Character Property
 	CNtlPLResource			*m_pResourceClump;						///< Target Clump Resource Reference
-	ENTITY_ATOMIC_VEC	    m_vecAtomicList;                        ///< 현재 Clump를 구성하고 있는 Atomic들의 리스트
+	ENTITY_ATOMIC_VEC	    m_vecAtomicList;                        ///< List of Atomics that currently make up Clump
 
 	SCharScheduleResInfo	m_sScheduleResInfo;
 	RwBool					m_bRunTimeAlpha;
 
 	RpHAnimHierarchy		*m_pBaseHierarchy;						///< Base Hierarchy
-    
-	CNtlAnimLayer			m_AnimLayer[CHARACTER_ANIM_LAYER_END];	///< AnimationLayer(상, 하체)
+   
+	CNtlAnimLayer			m_AnimLayer[CHARACTER_ANIM_LAYER_END];	///< AnimationLayer (upper, lower body)
 	CNtlInstanceAnimTable	m_InstanceAnimTable;					///< Animation Resource InstanceData
 
-	SAnimPlayInfo			m_sBaseAnimPlayInfo;					///< 현재 Play중인 Animation의 정보들
+	SAnimPlayInfo			m_sBaseAnimPlayInfo;					///< Information about the animation currently playing
 	FRAME_MAP				m_mapFrame;								///< Bone Info
 	SToonData				m_ToonData;								///< Toon Ink, Toon Paint, Toon Resource
 	
     STypeBoneData			*m_pTypeBoneData;						///< Bone Data Reference
-	RwInt32				    m_nBoneCount;							///< Bone의 갯수
-    RwV3d                   m_vBoneStretchTargetPos;                ///< Bone Stretch Target 위치
-    RwChar                  m_szBoneStretchAxisBone[MAX_DEFAULT_NAME];                ///< Bone Stretch 이벤트에서 회전축이 되는 본
+	RwInt32				    m_nBoneCount;							///< Number of Bones
+    RwV3d                   m_vBoneStretchTargetPos;                ///< Bone Stretch Target Location
+    RwChar                  m_szBoneStretchAxisBone[MAX_DEFAULT_NAME];                ///< Bone that becomes the axis of rotation in the Bone Stretch event
 
 
-	RwV3d					m_vCurPos;								///< Character의 현재 위치
-	RwV3d					m_vScale;								///< Character의 Scale를 변경하고자 할때(Instance)
+	RwV3d					m_vCurPos;								///< Current location of Character
+	RwV3d					m_vScale;								///< When changing the scale of a character (Instance)
 	RwV3d					m_vAngle;								///< Angle					
 
-	RwBool					m_bAnimUpdate;							///< Animation를 Update를 하는지
+	RwBool					m_bAnimUpdate;							///< Do you update animation?
 	RwReal					m_fAnimSpeed;							///< Anim Speed
 	RwReal					m_fFastMaxExtent;						///< fast max extent
 
@@ -122,16 +122,16 @@ protected:
 
 	RwRGBA					m_sInkColor;							///< Ink Color;
 
-	CNtlPLLinkEffect        m_LinkEffectInstance;                   ///< LinkEffect Instance들을 관리하는 객체
+	CNtlPLLinkEffect        m_LinkEffectInstance;                   ///< Object that manages LinkEffect Instances
 	ListLoopEffect          m_listLoopEffect;                       ///< LoopEffect의 list
-	ListSoundHandle         m_listLoopSound;                        ///< LoopSound들의 HANDLE List
+	ListSoundHandle         m_listLoopSound;                        ///< LoopSound’s HANDLE List
 
 	RwBool					m_ToonEdgeVisibility;
 
-	// NPC나 MOB의 경우 m_pResourceClump를 쓰는데 이경우 PLItem에만 해당하는 SimpleMaterial를 쓸수가 없다.
+	// In the case of NPC or MOB, m_pResourceClump is used, but in this case, SimpleMaterial, which only applies to PLItem, cannot be used.
 	RwBool m_SimpleMaterial;
 
-	// Character가 멀리 있을때 performance 증진을 위해 animation update을 skip한다.
+	// Skip animation updates to improve performance when the character is far away.
 	RwReal m_SkipAnimUpdateTime;
 	RwReal m_SkipAnimUpdateElapsedTime;
 
@@ -160,33 +160,33 @@ protected:
 	void	UpdatePreBoneScale();
 	void	UpdatePostBoneScale();
 
-	// Loop Effect 관련
-	void    AddLoopEffect(SLoopEffect* pLoopEffect) {m_listLoopEffect.push_back(pLoopEffect);} ///< LoopEffect List에 LoopEffect를 추가한다.
-	void    ClearLoopEffect();                                                                 ///< LoopEffect List에 들어있는 EffectInstance들을 소멸시킨다.
-	RwBool  IsExistLoopEffect(const RwChar* szEffectName, const RwChar* szBoneName);           ///< LoopEffect List안에 이름-Bone 쌍의 LoopEffect가 있는지 확인한다.
+	// Loop Effect related
+	void    AddLoopEffect(SLoopEffect* pLoopEffect) {m_listLoopEffect.push_back(pLoopEffect);} ///< Add LoopEffect to the LoopEffect List.
+	void    ClearLoopEffect();                                                                 ///< Destroys EffectInstances in the LoopEffect List.
+	RwBool  IsExistLoopEffect(const RwChar* szEffectName, const RwChar* szBoneName);           ///< Check whether there is a LoopEffect of the Name-Bone pair in the LoopEffect List.
 
-	// Loop Sound 관련
-	void    AddLoopSound(SOUND_HANDLE hSound) {m_listLoopSound.push_back(hSound);}             ///< LoopSound List에 SoundHandle을 추가한다.
-	void    ClearLoopSound();                                                                  ///< LoopSound List에 들어있는 LoopSound들을 소멸한다.
-	RwBool  IsExistLoopSound(RwChar* szSoundName);                                             ///< LoopSound List에 동일한 SoundHandle이 있는지 확인한다.
+	// Loop Sound Related
+	void    AddLoopSound(SOUND_HANDLE hSound) {m_listLoopSound.push_back(hSound);}             ///< Add SoundHandle to LoopSound List.
+	void    ClearLoopSound();                                                                  ///< Destroys LoopSounds in the LoopSound List.
+	RwBool  IsExistLoopSound(RwChar* szSoundName);                                             ///< Check whether the same SoundHandle exists in the LoopSound List.
 
-	// Animation Event 관련    
-	virtual void   OnEventAnimEnd(SEventAnimEnd* pEventAnimEnd);                               ///< Anim End Event를 처리한다.
+	// Animation Event Related    
+	virtual void   OnEventAnimEnd(SEventAnimEnd* pEventAnimEnd);                               ///< Processes the Anim End Event.
 	virtual void   OnEventHit(SEventAnimHit* pEventHit);    
 	virtual void   OnEventWeightTime(SEventWeightTime* pEventTime);
 	virtual void   OnEventVisualSound(SEventSound* pEventSound);
-	virtual void   OnEventTraceEffect(SEventTrace* pEventTrace);                                ///< Trace Effect를 생성한다.
-	virtual void   OnEventVisualEffect(SEventVisualEffect* pEventVisualEffect);                 ///< Visual Effect Event를 처리하고, Visual Effect를 생성한다.
-	virtual void   OnEventSubWeapon(SEventSubWeapon* pEventSubWeapon);                          ///< SubWeapon Event를 처리한다.
-	virtual void   OnEventPostEffect(SEventPostEffect* pEventPostEffect);						///< Post Effect Event를 처리한다.
-	virtual void   OnEventSummonPet(SEventSummonPet* pEventSummonPet);							///< Summon Pet Event를 처리한다.
-	virtual void   OnEventAlphaFade(SEventAlpha* pEventAlpha);                                  ///< Alpha Fade Event를 처리한다.
+	virtual void   OnEventTraceEffect(SEventTrace* pEventTrace);                                ///< Creates a Trace Effect.
+	virtual void   OnEventVisualEffect(SEventVisualEffect* pEventVisualEffect);                 ///< Process the Visual Effect Event and create a Visual Effect.
+	virtual void   OnEventSubWeapon(SEventSubWeapon* pEventSubWeapon);                          ///< Handles SubWeapon Event.
+	virtual void   OnEventPostEffect(SEventPostEffect* pEventPostEffect);						///< Process Post Effect Event.
+	virtual void   OnEventSummonPet(SEventSummonPet* pEventSummonPet);							///< Handles Summon Pet Event.
+	virtual void   OnEventAlphaFade(SEventAlpha* pEventAlpha);                                  ///< Processes Alpha Fade Event.
 	virtual void   OnEventFootStep(SEventFootStep* pEventFootStep);
-	virtual void   OnEventDirect(SEventDirect* pEventDirect);                                   ///< 연출용 이벤트
-    virtual void   OnEventColorChange(SEventColorChange* pEventColorChange);                    ///< 색상 변경 이벤트 처리
-    virtual void   OnEventStretch(SEventStretch* pEventStretch);                                ///< 본 늘리기 이벤트
-    virtual void   OnEventTrigger(SEventTrigger* pEventTrigger);                                ///< 트리거 이벤트
-    virtual void   OnEventSkillCancel(SEventSkillCancel* pEventSkillCancel);                    ///< 스킬 캔슬 이벤트
+	virtual void   OnEventDirect(SEventDirect* pEventDirect);                                   ///< Production event
+    virtual void   OnEventColorChange(SEventColorChange* pEventColorChange);                    ///< Color change event handling
+    virtual void   OnEventStretch(SEventStretch* pEventStretch);                                ///< Bone Increase Event
+    virtual void   OnEventTrigger(SEventTrigger* pEventTrigger);                                ///< Trigger event
+    virtual void   OnEventSkillCancel(SEventSkillCancel* pEventSkillCancel);                    ///<Skill Cancel Event
 
 public:
 	void* operator new(size_t size);
@@ -198,7 +198,7 @@ public:
 	virtual RwBool	RenderToTexture();
 	
 
-	// Occluder Proxy 생성 관련.
+	// Related to creating Occluder Proxy.
 	virtual RwBool CreateOccluderProxy();
 
 #ifdef dNTL_WORLD_CULLING_NEW
@@ -206,7 +206,7 @@ public:
 #else
 	virtual RwBool	CullingTest(RwCamera* pRwCamera);
 #endif
-    virtual RwBool  IsCullingTestAllAtomic();                                       ///< 현재 설정된 애니메이션이 Culling Atomic 체크인지 반환한다.
+    virtual RwBool  IsCullingTestAllAtomic();                                       ///< Returns whether the currently set animation is a Culling Atomic check.
 
 	virtual RwBool	SetProperty(const CNtlPLProperty *pData);
 	virtual void	Destroy();
@@ -231,15 +231,15 @@ public:
     RpClump*            GetClump();
     RpAtomic*           GetAtomic(const std::string& strName);
     RpHAnimHierarchy*   GetBaseHierarchy();
-    void                UpdateMaterialSkinInfo();                                               ///< Atomic의 Material 정보를 갱신한다. (순수마인시 사용)
+    void                UpdateMaterialSkinInfo();                                               ///< Update Atomic material information. (Used when pure mine)
 
-    // 본 관련
+    // Bone related
     RwMatrix*       GetBoneMatrix(const RwChar *pBoneName);
     RwFrame *       GetBoneByName(const RwChar *pBoneName);
     RwUInt32        GetBoneIndex(const RwChar* pBoneName);
     STypeBoneData*  GetBoneData() {return m_pTypeBoneData;}
-    RwChar*         GetBoneName(int nBoneIndex);                                                ///< Bone의 이름을 반환한다.
-    void            SetSBoneStretchTargetPos(const RwV3d& vTargetPos, const RwChar* szAxisBone);///< Bone Stretch이벤트의 타겟을 설정한다
+    RwChar*         GetBoneName(int nBoneIndex);                                                ///< Returns the name of the bone.
+    void            SetSBoneStretchTargetPos(const RwV3d& vTargetPos, const RwChar* szAxisBone);///< Set the target of the Bone Stretch event
 
 	virtual void SetPosition(const RwV3d *pPos);
 	RwV3d	GetPosition();
@@ -257,29 +257,29 @@ public:
 	void    SetAngleX(const RwReal fAngleX);
 	RwReal	GetAngleX() { return m_vAngle.x; }
 
-	virtual void   SetScale(RwReal fScale);														///< 임의로 Scale를 변경(Instance)
-	virtual RwReal GetScale();                                                                  ///< 임의로 조정한 Scale을 반환
+	virtual void   SetScale(RwReal fScale);														///< Randomly change scale (Instance)
+	virtual RwReal GetScale();                                                                  ///< Returns a randomly adjusted scale
 
-	void	SetBaseScale(RwReal fBaseScale);													///< BaseScale 변경
-	RwReal  GetBaseScale();                                                                     ///< 설정된 BaseScale을 반환한다.
-	void	SetPosOffset(RwV3d *pPos);															///< Bone Scale 했을경우 발이 떨어지면 보정하는 함수
+	void	SetBaseScale(RwReal fBaseScale);													///< Change BaseScale
+	RwReal  GetBaseScale();                                                                     ///< Returns the set BaseScale.
+	void	SetPosOffset(RwV3d *pPos);															///< Function to compensate if the foot falls when using Bone Scale
 
 	RwBool	SetAllAnimation(RwUInt32 uiAnimKey, RwReal fStartTime = 0.f, RwBool	bLoop = TRUE);  ///< Set All Animation
-	RwBool	SetBaseAnimation(RwUInt32 uiAnimKey, RwReal fStartTime = 0.f, RwBool bLoop = TRUE); ///< Set Base Animation(Client 전용)
-	RwUInt32 GetCurBaseAnimKey() {return m_sBaseAnimPlayInfo.m_uiAnimKey;};                     ///< 현재 플레이되고 있는 Anim Key를 반환한다.    
-	RwBool	IsExistAnim(RwUInt32 uiAnimKey);													///< uiAnimKey의 Animation이 있는지
-	RwBool	SetBlend(EBlendType eBlendType, RwReal fBlendAllpha = 0.f, RwReal fBlendInterval = 0.1f);///< Animation Blend (fBlendAlpha = 1.f 이면 Blend가 안된다.)
+	RwBool	SetBaseAnimation(RwUInt32 uiAnimKey, RwReal fStartTime = 0.f, RwBool bLoop = TRUE); ///< Set Base Animation (Client only)
+	RwUInt32 GetCurBaseAnimKey() {return m_sBaseAnimPlayInfo.m_uiAnimKey;};                     ///< Returns the Anim Key currently being played.    
+	RwBool	IsExistAnim(RwUInt32 uiAnimKey);													///< Is there an Animation of uiAnimKey?
+	RwBool	SetBlend(EBlendType eBlendType, RwReal fBlendAllpha = 0.f, RwReal fBlendInterval = 0.1f);///< Animation Blend (If fBlendAlpha = 1.f, Blend does not work.)
 	void	SetAnimSpeed(RwReal fSpeed);														///< Animation의 Speed Default(1.f)
-	RwReal  GetAnimSpeed();                                                                     ///< Animation의 Speed를 반환한다.
-	void	SetAnimUpdate(RwBool bAnimUpdate);													///< Animation를 Update를 할지 말지
-	RwBool	GetAnimUpdate();																	///< Animation를 Update를 하는지 검사하는 함수
-	RwReal	GetBaseCurrentAnimTime();															///< 현재 Base Layer Animation의 시간을 얻는 함수
-	RwReal	GetBaseDurationAnimTime();															///< 현재 Base Layer Animation의 전체 시간을 얻는 함수
-	void    SetBaseCurrentAnimTime(RwReal fCurrTime);								    		///< 시간을 강제로 넣는 함수도 필요
+	RwReal  GetAnimSpeed();                                                                     ///< Returns the speed of animation.
+	void	SetAnimUpdate(RwBool bAnimUpdate);													///< Whether to update animation or not
+	RwBool	GetAnimUpdate();																	///< Function to check whether animation is updated
+	RwReal	GetBaseCurrentAnimTime();															///< Function to get the time of the current Base Layer Animation
+	RwReal	GetBaseDurationAnimTime();															///< Function to get the total time of the current Base Layer Animation
+	void    SetBaseCurrentAnimTime(RwReal fCurrTime);								    		///< A function to force the time is also needed.
 	RwBool	GetBaseCurrentAnimEnd();
-	SAnimPlayInfo	*GetBaseAnimPlayInfo();														///< 현재 Animation의 간략 정보를 얻는다.
-	RwReal  GetDurationAnimTime(RwUInt32 uiAnimKey);											///< uiAnimKey에 해당한는 Animation의 시간을 얻는다.
-    void    OnAfterAnimEventRun();                                                              ///< 현재 시간 이후의 모든 Anim Event를 실행시킨다.
+	SAnimPlayInfo	*GetBaseAnimPlayInfo();														///< Obtain brief information about the current animation.
+	RwReal  GetDurationAnimTime(RwUInt32 uiAnimKey);											///< Obtain the animation time corresponding to the Anim Key.
+    void    OnAfterAnimEventRun();                                                              ///< Executes all Anim Events after the current time.
 
 	RwReal	GetWidth();																			///< Character Width (x)
 	RwReal	GetHeight();																		///< Character Height (y)
@@ -291,35 +291,35 @@ public:
 	RwBool SetRemoveEquipCItem(CNtlPLItem* _pItem, RwUInt32 _CBitSet);
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// 1. pItem		: Change 또는 Remove 하려는 Item 이다.
-	// 2. bAttach	: Subweapon 관련 Flag, Subweapon 의 경우 이 Flag이 FALSE여서 실제로는 Attach 되지 않는다는 것을 의미한다.
-	// 3. _CBitSet	: Costume 관련 BitFlag Set 이며 반드시 Costume 인 경우에만 입력한다.
-	//				  실제 BitFlag Set 값이 0xFFFFFFFF 인 경우는 기존의 방식을 따르며 0xFFFFFFFF가 아닌 경우는 무언가 Attach 또는 Detach 된다는 의미이다.
+	// 1. pItem		: This is the Item you want to Change or Remove.
+	// 2. bAttach	: Subweapon related flag. In the case of subweapon, this flag is FALSE, meaning it is not actually attached.
+	// 3. _CBitSet	: Costume-related BitFlag Set and must be entered only when it is a Costume.
+	//				  If the actual BitFlag Set value is 0xFFFFFFFF, the existing method is followed. If it is not 0xFFFFFFFF, it means that something is attached or detached.
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// < 주의 >
-	// 현재 Interface를 사용할때 주의해야 할 사항은 다음과 같다.
-	// BitSet에 해당하는 모든메쉬는 단순히 Lib내부적으로 attach, detach된다. 때문에 이 함수를 항상 마지막에 실행시켜야 한다.
-	// 이 함수를 먼저 실행한 후 기존방식으로 item을 입거나 벗게되면 다시 그 item때문에 default item부분이 입혀지거나 벗겨지기 때문이다.
-	// 항상 Costume관련된 입기 interface는 마지막에 실행한다. 반대로 벗을때는 항상 먼저 실행한다. 동일한 이유이다.
+	// <Caution>
+	// Things to keep in mind when using the current interface are as follows.
+	// All meshes corresponding to BitSet are simply attached and detached internally in Lib. Therefore, this function should always be executed last.
+	// This is because if you run this function first and then put on or take off the item in the traditional way, the default item part will be put on or taken off again because of that item.
+	//  Costume-related dressing interfaces are always executed last. Conversely, when taking it off, always run it first. It's the same reason.
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	virtual RwBool	SetChangeEquipItem(CNtlPLItem *pItem, RwBool bAttach = TRUE, RwUInt32 _CBitSet = dCOSTUME_BITSET_INVALID);
 	virtual RwBool	SetRemoveEquipItem(CNtlPLItem *pItem, RwUInt32 _CBitSet = dCOSTUME_BITSET_INVALID);
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Toon edge visibiltity를 결정하는 함수
+	// Function to determine toon edge visibility
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// 호출하면 Toon edge rendering을 끄거나 켤수 있다.
-	// 이 함수를 호출하게 되면 내부적으로 Atomic에 Flag를 갖게 되므로 유지보수에 주의하여야 한다.
-	// Edge를 끈 상태에서 서버로 부터 부분 mesh를 입는경우, 벗는경우등등 캐릭터의 외관상태변화에 따라 이 함수가 호출되어야 할것이다.
+	// When called, Toon edge rendering can be turned off or on.
+	// When this function is called, a flag will be placed in Atomic internally, so care must be taken for maintenance.
+	// This function should be called depending on the appearance state of the character, such as when putting on or taking off a partial mesh from the server with Edge turned off.
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	VOID SetToonEdgeVisibility4CurEquipItem(RwBool _Visibility);
 
 	void UpdateCharacterAtomicList();
 
 	CNtlPLEquipItem* GetEquipItem() {return m_pEquipItem;}
-	RwBool  SetItemGradeEffect(ENtlPLItemGrade eGrade);                                         ///< 현재 장착하고 있는 무기에 Grade Effect를 적용한다.
+	RwBool  SetItemGradeEffect(ENtlPLItemGrade eGrade);                                         ///< Applies the Grade Effect to the currently equipped weapon.
 
-	SToonData	*GetToonData() { return &m_ToonData; }											///< Toon Data를 얻는다.							
+	SToonData	*GetToonData() { return &m_ToonData; }											///< Obtain Toon Data.							
 
 	void SetColor(RwUInt8 byRed, RwUInt8 byGreen, RwUInt8 byBlue);								///< Base Color
 	RwRGBA	*GetColor() { return &m_sColor; }
@@ -329,7 +329,7 @@ public:
 
 	virtual void SetAlpha(RwUInt8 byValue);																///< Base Alpha
 	virtual void SetWeightAlpha(RwReal fWeightValue);													///< Weight Alpha
-	virtual void SetAtomicWeightAlpha(const RwChar *pAtomicName, RwReal fWeightValue);                  ///< Atomic Weight Alpha Value를 세팅한다.
+	virtual void SetAtomicWeightAlpha(const RwChar *pAtomicName, RwReal fWeightValue);                  ///< Set Atomic Weight Alpha Value.
 
 	virtual void SetSkinColor(RwUInt8 byRed, RwUInt8 byGreen, RwUInt8 byBlue);					///< Skin Color
 	RwRGBA	*GetSkinColor() { return &m_sSkinColor; }		
@@ -340,13 +340,13 @@ public:
 	virtual void SetInkColor(RwUInt8 byRed, RwUInt8 byGreen, RwUInt8 byBlue);					///< Ink Color
 	virtual void SetInkThickness(RwReal fThickness = DEFAULT_INK_THICKNESS);					///< Ink Thickness
 
-	virtual int	CallBackBaseAnim(void* pAnimEvent);											///< Animation Event를 받는 Callback 함수
+	virtual int	CallBackBaseAnim(void* pAnimEvent);											///< Callback function that receives Animation Event
 	static RpAtomic *RenderCallBack(RpAtomic *pAtomic);
 
-	// Link Effect 관련
-	VecLinkEffect*      GetVecLinkEffect() {return &(m_LinkEffectInstance.m_vecLinkEffect);}	///< LinkEffect Vector를 반환한다.
-    CNtlInstanceEffect* AttachLinkEffect(SEventLinkEffect* pEventLinkEffect);					///< Link Effect를 Attach 시킨다.
-	RwBool              DetachLinkEffect(CNtlInstanceEffect* pLinkEffect);                      ///< Link Effect를 Detach 시킨다.
+	// Link Effect related
+	VecLinkEffect*      GetVecLinkEffect() {return &(m_LinkEffectInstance.m_vecLinkEffect);}	///< Returns LinkEffect Vector.
+    CNtlInstanceEffect* AttachLinkEffect(SEventLinkEffect* pEventLinkEffect);					///< Attach Link Effect.
+	RwBool              DetachLinkEffect(CNtlInstanceEffect* pLinkEffect);                      ///< Detach the Link Effect.
 
 	RwV3d  GetFaceCameraPos() { return m_pProperty->GetFaceCameraPos();}							///< Get Face Camera Position
 	RwV3d  GetFaceCameraLookAt() { return m_pProperty->GetFaceCameraLookAt();}					///< Set Face Camera LookAt Height 
@@ -356,15 +356,15 @@ public:
 
 	static void fpRenderCB(void* _pParam);
 
-	// Animation update를 skip할때 문제가 발생할 소지가 있다. ex) 튜토리얼에서 월드 트랜스폼이 이루어지지 못하고 char animation으로만 처리할때등등
-	// 구간 구간 문제가 생기는 부분에 설정하고 해제한다; Renderstate설정및 복원과 같은 개념으로 사용하면 된다.
+	// Problems may occur when skipping animation update. ex) When world transformation is not possible in the tutorial and only processed with char animation, etc.
+	// Set and release the sections where problems occur; It can be used in the same concept as setting and restoring renderstate.
 	static void SetSkipAnimUpdate(RwBool _Skip = TRUE);
 
-	// Simple material부분의 game option check에 따른 유무를 판단하기 위함 함수이다.
+	// This is a function to determine the presence or absence of the game option check in the simple material part.
 	static void SetSkipSimpleMaterial(RwBool _Skip = TRUE);
 	static RwBool GetSkipSimpleMaterial(void);
 
-	// edge를 skip 시킨다.(형석)
+	// Skip the edge. (Fluorite)
 	static void SetSkipEdge(RwBool _Skip = FALSE);
 	static RwBool GetSkipEdge(void);
 

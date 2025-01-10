@@ -2,7 +2,7 @@
 //	File		:	NtlInstancePostEffectSystem.cpp
 //	Desc		:	
 //	Begin		:	2007. 1.17
-//	Copyright	:	ⓒ 2007 by agebreak CO., Ltd
+//	Copyright	:	? 2007 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -86,7 +86,7 @@ void CNtlInstancePostEffectSystem::Delete()
     NTL_ARRAY_DELETE(m_pComicVertices);
     NTL_ARRAY_DELETE(m_pComicHalfIndex);
 
-    // 삭제시 Camera 클래스에서 등록을 해제한다.
+    // When deleted, it is unregistered from the Camera class.
     if(CNtlPostEffectCamera::GetInstance())
     {
         CNtlPostEffectCamera::GetInstance()->DetachPostEffectSystem(this);
@@ -118,7 +118,7 @@ RwBool CNtlInstancePostEffectSystem::Create(CNtlResourceEffect* pResourceEffect,
     SetComicVertex();
     SetComicIndex();
 
-    // Center Fix   (모델툴에서 Post Effect Event로 사용하면, 이벤트에서 다시 재정의 된다)
+    // Center Fix (If used as a Post Effect Event in the model tool, it will be redefined in the event)
     if(pResourceComponentSystem->m_nEmitterDataFlag & NTLrpPRTSTDEMITTERDATAFLAGPRTCENTERFIX)
     {
         m_bCenterFix = TRUE;
@@ -139,7 +139,7 @@ void CNtlInstancePostEffectSystem::BuildEmitterStandard(SNtlPostEffectEmitterSta
     ZeroMemory(m_pComicVertices, sizeof(RwIm2DVertex) * (m_nVertexCount + 2));
     m_uiMemoryUseSize += sizeof(RwIm2DVertex) * (m_nVertexCount + 2);
     
-    // 중심점 좌표 초기화 
+    // Initializing center point coordinates 
     m_v2dCenterPos.x = CNtlPostEffectCamera::GetInstance()->GetScreenSize().x * 0.5f;
     m_v2dCenterPos.y = CNtlPostEffectCamera::GetInstance()->GetScreenSize().y * 0.5f;
 }
@@ -182,7 +182,7 @@ void CNtlInstancePostEffectSystem::SetComicIndex()
 {
     if(m_pResourcePostEffectSystem->m_EmitterStandard.bDrawFullScreen)
     {
-        // Full Screen의 경우 Index가 아닌 Fan으로 그린다
+        // In case of full screen, draw with fan, not index.
     }
     else
     {
@@ -221,12 +221,12 @@ RwBool CNtlInstancePostEffectSystem::Update(RwReal fElapsedTime)
 			m_bReady	= TRUE;
 			m_bUpdate	= TRUE;
 
-			// 스타트가 되면 라이프 타임을 초기화 한다.
+			// When starting, the life time is initialized.
 			m_fLifeTime = fElapsedTime;
 
             RebuildPostEffectVertex();
 
-            // Camera 객체 등록한다.
+            // Register a Camera object.
             CNtlPostEffectCamera::GetInstance()->AttachPostEffectSystem(this);
 		}
 		else
@@ -267,8 +267,8 @@ RwBool CNtlInstancePostEffectSystem::Update(RwReal fElapsedTime)
 //------------------------------------------------------------------
 RwBool CNtlInstancePostEffectSystem::Render()
 {
-    // Visual Manager에서 호출하는 Render는 사용하지 않는다.
-    // 대신 Camera에서 RenderPostEffect를 호출한다.
+    // Render called from Visual Manager is not used.
+    // Instead, call RenderPostEffect on Camera.
 	if (!m_bReady) return TRUE;
 
 	return TRUE;
@@ -284,7 +284,7 @@ void CNtlInstancePostEffectSystem::RebuildPostEffectVertex()
     RwReal fRadius = 0.0f;
     if(m_pResourcePostEffectSystem->m_EmitterStandard.bDrawFullScreen)
     {
-        // Full Screen인경우에는 반지름을 중심점과 화면의 4귀퉁이들과의 거리를 구해서 가장 긴 거리로 설정한다.
+        // In the case of Full Screen, the radius is set to the longest distance by finding the distance between the center point and the four corners of the screen.
         RwV2d v2dEndPoint[4];
         v2dEndPoint[0].x = v2dEndPoint[0].y = 0.0f;
         v2dEndPoint[1].x = 0.0f;
@@ -305,7 +305,7 @@ void CNtlInstancePostEffectSystem::RebuildPostEffectVertex()
             }
         }
 
-        // 화면 전체를 채우기 위해서 약간의 Offset값을 더 넣어준다.
+        // Add a little more Offset value to fill the entire screen.
         fRadius += 100.0f;
     }
     else
@@ -399,7 +399,7 @@ RwBool CNtlInstancePostEffectSystem::RenderPostEffect()
 
     if(m_pResourcePostEffectSystem->m_EmitterStandard.bDrawFullScreen)
     {
-        // Full Screen의 경우 Fan으로 그리면 된다.
+        // In the case of full screen, you can draw with a fan.
         RwIm2DRenderPrimitive(rwPRIMTYPETRIFAN, m_pComicVertices, m_nVertexCount + 2);        
     }
     else
@@ -417,7 +417,7 @@ void CNtlInstancePostEffectSystem::SetWorldMatrix( const RwMatrix& matWorld )
     CNtlInstanceComponentSystem::SetWorldMatrix(matWorld);
     RwV3d vPosition = *RwMatrixGetPos(&m_matRender);
 
-    // 중심점 위치 고정 기능
+    // Center point location fixation function
     if(!m_bCenterFix || m_bUpdateCenter)
     {
         m_v2dCenterPos = API_PL_Calc3DPosTo2D(&vPosition, (RwInt32)CNtlPostEffectCamera::GetInstance()->GetScreenSize().x, (RwInt32)CNtlPostEffectCamera::GetInstance()->GetScreenSize().y);        

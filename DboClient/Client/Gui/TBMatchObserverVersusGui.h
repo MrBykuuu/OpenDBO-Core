@@ -3,7 +3,7 @@
 * Author		: Haesung, Cho
 * Copyright		: (주)NTL
 * Date			: 2008. 11. 24
-* Abstract		: 천하제일 무도회 관전자 VS GUI
+* Abstract		: World's Best Martial Arts Spectator VS GUI
 *****************************************************************************
 * Desc         : 
 *****************************************************************************/

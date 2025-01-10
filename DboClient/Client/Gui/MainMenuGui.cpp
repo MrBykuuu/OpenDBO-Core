@@ -459,7 +459,7 @@ VOID CMainMenuGui::OnClickedInven( gui::CComponent* pComponent )
 
 		RwBool bAllClosedCapsuleClosed = GetDialogManager()->IsBagOpen();
 
-		// 가방이 한개라도 열려 있다면 전부 닫는다.
+		// If any bags are open, close them all.
 		GetDialogManager()->SwitchBag(!bAllClosedCapsuleClosed);
 	}
 

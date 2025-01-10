@@ -4,7 +4,7 @@
 // Table
 #include "MerchantTable.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLGlobal.h"
 #include "NtlGameTableContainer.h"

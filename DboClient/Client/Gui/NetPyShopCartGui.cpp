@@ -1,20 +1,20 @@
 #include "precomp_dboclient.h"
 #include "NetPyShopCartGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "ItemTable.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLDef.h"
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLGlobal.h"
 #include "NtlSobAvatar.h"
@@ -22,7 +22,7 @@
 #include "NtlSobItemAttr.h"
 #include "NtlSobManager.h"
 
-// dbo
+// Dbo
 #include "IconMoveManager.h"
 #include "DisplayStringManager.h"
 #include "DboLogic.h"
@@ -36,7 +36,7 @@
 
 namespace
 {
-#define dMAX_TRADE_OVERLAP_COUNT			20	///< 한 슬롯당 거래할 수 있는 최대 아이템 갯수
+#define dMAX_TRADE_OVERLAP_COUNT			20	///< Maximum number of items that can be traded per slot
 
 #define dGUI_BUY_SELL_SLOT_GAP				97
 #define dGUI_SLOT_HORI_GAP					42
@@ -93,7 +93,7 @@ RwBool CNetPyShopCartGui::Create()
 
 	m_pMoneyIconTexture = Logic_CreateTexture( MONEYICON_NAME );
 
-	// 다이얼로그 이름 스태틱
+	// Dialog name static
 	rect.SetRectWH(DBOGUI_DIALOG_TITLE_X, DBOGUI_DIALOG_TITLE_Y, 130, 14);
 	m_pDialogName = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_pDialogName->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -103,11 +103,11 @@ RwBool CNetPyShopCartGui::Create()
 	m_pExitButton = (gui::CButton*)GetComponent( "ExitButton" );
 	m_slotCloseButton = m_pExitButton->SigClicked().Connect(this, &CNetPyShopCartGui::ClickedCloseButton);
 
-	// 구입 버튼
+	// purchase button
 	m_pBuyButton = (gui::CButton*)GetComponent( "BuyButton" );	
 	m_slotClickedBuy = m_pBuyButton->SigClicked().Connect(this, &CNetPyShopCartGui::ClickedBuyButton);	
 
-	// 아이템 갯수 더하기/빼기 버튼
+	// Item count plus/minus buttons
 	RwInt32 iButtonX = 16;
 	for( RwInt32 i = 0 ; i < SLOTKIND_NUM ; ++i )
 	{		
@@ -120,7 +120,7 @@ RwBool CNetPyShopCartGui::Create()
 			else
 				iButtonX = 16 + dGUI_SLOT_HORI_GAP;
 
-			// 아이템 갯수 더하기 버튼
+			// Item count plus button
 			rect.SetRectWH(iButtonX, iButtonY, 18, 15);
 			m_pUpButton[i][j] = NTL_NEW gui::CButton(rect, "",
 				GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "srfUpButtonUp" ),
@@ -131,7 +131,7 @@ RwBool CNetPyShopCartGui::Create()
 				GUI_BUTTON_DOWN_COORD_X, GUI_BUTTON_DOWN_COORD_Y, m_pThis, GetNtlGuiManager()->GetSurfaceManager() );
 			m_slotUpButton[i][j] = m_pUpButton[i][j]->SigClicked().Connect(this, &CNetPyShopCartGui::ClickUpButton);
 
-			// 아이템 갯수 빼기 버튼
+			// Item count minus button
 			rect.SetRectWH(iButtonX + dGUI_BUTTON_HORI_GAP, iButtonY, 18, 15);
 			m_pDownButton[i][j] = NTL_NEW gui::CButton(rect, "",
 				GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "srfDownButtonUp" ),
@@ -170,17 +170,17 @@ RwBool CNetPyShopCartGui::Create()
 			iSlotY += dGUI_SLOT_VERT_GAP;
 	}
 
-	// 총 구입 금액
+	// total purchase amount
 	rect.SetRectWH( 14, 411, 61, 16);
 	m_pTotalBuyMoney = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_RIGHT );
 	m_pTotalBuyMoney->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pTotalBuyMoney->SetText( "0");
 	m_pTotalBuyMoney->Enable(false);
 
-	// 슬롯 포커스 이펙트
+	// slot focus effect
 	m_FocusEffect.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GameCommon.srf", "srfSlotFocusEffect" ) );
 
-	// Sig
+	// Signals
 	m_slotMouseDown		= m_pThis->SigMouseDown().Connect( this, &CNetPyShopCartGui::OnMouseDown );
 	m_slotMouseUp		= m_pThis->SigMouseUp().Connect(this, &CNetPyShopCartGui::OnMouseUp);
 	m_slotMove			= m_pThis->SigMove().Connect( this, &CNetPyShopCartGui::OnMove );
@@ -301,11 +301,11 @@ VOID CNetPyShopCartGui::ClickedBuyButton(gui::CComponent* pComponent)
 		}
 	}
 
-	// 카운트가 없다면 아무것도 사지 않는 다는 것이다.
+	// If there is no count, you are not buying anything.
 	if( byCount == 0 )
 		return;
 
-	// 사는 패킷 보내기
+	// Send purchase packet
 	GetDboGlobal()->GetGamePacketGenerator()->SendShopNetPyItemBuyReq( byCount, aBuyCart );	
 }
 
@@ -432,22 +432,22 @@ VOID CNetPyShopCartGui::OnMouseUp(const CKey& key)
 
 	for(RwInt32 i = 0 ; i < MAX_SLOT ; ++i )
 	{
-		// 구입 슬롯
+		// purchase slot
 		if( m_BuySlotInfo[i].slot.PtInRect((RwInt32)key.m_fX, (RwInt32)key.m_fY) )
 		{				
-			if( key.m_nID == UD_LEFT_BUTTON )	// 좌버튼
+			if( key.m_nID == UD_LEFT_BUTTON )	// Left button
 			{
 				if( !GetIconMoveManager()->IsActive() )
 					break;
 
-				// NPC 상점에서 메세지를 보낸 경우
+				// When a message is sent from an NPC store
 				if( GetIconMoveManager()->GetSrcPlace() == PLACE_NPCSHOP )
 				{
 					RegBuyItemByDrag(i);
 					GetIconMoveManager()->IconMoveEnd();
 				}					
 			}
-			else if( key.m_nID == UD_RIGHT_BUTTON )	// 우버튼
+			else if( key.m_nID == UD_RIGHT_BUTTON )	// Right button
 			{
 				if( GetIconMoveManager()->IsActive() )
 					break;
@@ -460,7 +460,7 @@ VOID CNetPyShopCartGui::OnMouseUp(const CKey& key)
 				}					
 			}	
 
-			// 해당슬롯의 아무런 처리도 하지 않았을 때
+			// When no processing is done for the slot
 			break;
 		}
 
@@ -488,12 +488,12 @@ VOID CNetPyShopCartGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 {
 	FocusEffect(FALSE);	
 
-	// 아이템 정보를 표시하고 포커스 이펙트를 보여준다
+	// Display item information and show focus effects
 	for( RwInt32 i = 0 ; i < MAX_SLOT ; ++i )
 	{		
 		if( m_BuySlotInfo[i].slot.PtInRect(nX, nY) )
 		{
-			// 셀렉트 포커스
+			// select focus
 			FocusEffect(TRUE, BUY_SLOT, i);
 
 			if( GetIconMoveManager()->IsActive() )
@@ -503,7 +503,7 @@ VOID CNetPyShopCartGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 			{
 				if( m_byInfoWindowIndex != i )
 				{
-					// 미확인 아이템
+					// Unidentified item
 					CRectangle rtScreen = m_pThis->GetScreenRect();
 					GetInfoWndManager()->ShowInfoWindow(TRUE, CInfoWndManager::INFOWND_UNIDENTIFIED_ITEM,
 						rtScreen.left + m_BuySlotInfo[i].slot.GetX_fromParent(),
@@ -529,7 +529,7 @@ VOID CNetPyShopCartGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 			{
 				if( m_byInfoWindowIndex != i )
 				{
-					// 당신의 가방에 빈 공간이 모자랍니다
+					// There's not enough space in your bag
 					CRectangle rtScreen = m_pThis->GetScreenRect();
 					const WCHAR* pwcText = GetDisplayStringManager()->GetString("DST_TRADE_YOUR_BAG_NOT_ENOUGH");
 					GetInfoWndManager()->ShowInfoWindow(TRUE, CInfoWndManager::INFOWND_JUST_WTEXT,
@@ -577,10 +577,10 @@ VOID CNetPyShopCartGui::FocusEffect( RwBool bPush, RwInt32 iSlotKind /* =0 */, R
 
 VOID CNetPyShopCartGui::OpenCart()
 {
-	// TradeCart를 연다.
+	// Open TradeCart.
 	GetDialogManager()->OpenDialog(DIALOG_NETPYSHOP_TRADE);
 
-	// 가방을 연다
+	// open the bag
 	GetDialogManager()->SwitchBag( TRUE );
 }
 
@@ -645,7 +645,7 @@ VOID CNetPyShopCartGui::RegBuyItemByDrag(RwInt32 iSlot)
 	RwUInt8 byMerchantTab	= (BYTE)GetIconMoveManager()->GetEXData1();
 	RwUInt8 byItemPos		= (BYTE)GetIconMoveManager()->GetSrcSlotIdx();
 
-	// 기간제 아이템
+	// Limited time item
 	if( eDURATIONTYPE_FLATSUM		== pITEM_DATA->byDurationType ||
 		eDURATIONTYPE_METERRATE		== pITEM_DATA->byDurationType )
 	{
@@ -666,7 +666,7 @@ VOID CNetPyShopCartGui::RegBuyItemByDrag(RwInt32 iSlot)
 
 	if( m_BuySlotInfo[iSlot].slot.GetCount() <= 0 )
 	{
-		// 빈 슬롯이면 등록
+		// Register if slot is empty
 		RwInt32 iCount = GetIconMoveManager()->GetStackCount();	
 		RwInt32 iPrice = GetIconMoveManager()->GetEXData2();
 
@@ -687,7 +687,7 @@ VOID CNetPyShopCartGui::RegBuyItemByDrag(RwInt32 iSlot)
 	{
 		if( pITEM_DATA->byMax_Stack > m_BuySlotInfo[iSlot].NPCShopBuyInfo.byStack)
 		{
-			// 이전에 등록된 아이템과 같은 아이템이 슬롯에 놓일 수 있는 최대 갯수를 초과하지 않았다면
+			// If the maximum number of items that can be placed in a slot is not exceeded, such as previously registered items.
 			AddItem(BUY_SLOT, iSlot, 1);
 		}			
 	}
@@ -703,7 +703,7 @@ VOID CNetPyShopCartGui::RegBuyItemByEvent(RwInt32 iSlot, SDboEventNetPyShopEvent
 	}
 
 
-	// 기간제 아이템
+	// Limited time item
 	if( eDURATIONTYPE_FLATSUM		== pITEM_DATA->byDurationType ||
 		eDURATIONTYPE_METERRATE		== pITEM_DATA->byDurationType )
 	{
@@ -857,14 +857,14 @@ VOID CNetPyShopCartGui::HandleEvents( RWS::CMsg &msg )
 			{
 				RwInt32 iSlot = dNETPYSHOP_CART_INVALID_INDEX;
 
-				// 기존에 등록된 아이템이면 더한다.				
+				// If it is an existing registered item, add it.				
 				for( RwInt32 i = 0 ; i < MAX_SLOT ; ++i )
 				{
 					if( m_BuySlotInfo[i].slot.GetSerial() == pData->uiSerial )
 					{
 						if(m_BuySlotInfo[i].slot.GetItemTable()->byMax_Stack > m_BuySlotInfo[i].NPCShopBuyInfo.byStack)
 						{
-							// 최대 스택갯수를 초과하지 않았다면
+							// If the maximum number of stacks is not exceeded
 							AddItem(BUY_SLOT, i, 1);
 							iSlot = i;
 
@@ -873,7 +873,7 @@ VOID CNetPyShopCartGui::HandleEvents( RWS::CMsg &msg )
 					}
 				}
 
-				// 기존에 등록된 아이템이 아니면 빈 슬롯을 찾아 등록한다.
+				// If the item is not already registered, find an empty slot and register it.
 				if(iSlot == dNETPYSHOP_CART_INVALID_INDEX)
 				{
 					iSlot = (RwInt8)FindEmptySlot(BUY_SLOT);
@@ -882,7 +882,7 @@ VOID CNetPyShopCartGui::HandleEvents( RWS::CMsg &msg )
 						RegBuyItemByEvent(iSlot, *pData);
 					else
 					{
-						// 카트에 슬롯이 부족합니다
+						// There are not enough slots in your cart
 						GetAlarmManager()->AlarmMessage("DST_TRADECART_NO_MORE_SLOT");
 					}
 				}		
@@ -893,7 +893,7 @@ VOID CNetPyShopCartGui::HandleEvents( RWS::CMsg &msg )
 				RwInt8 iSlot = (RwInt8)FindEmptySlot(BUY_SLOT);
 				if( iSlot >= 0 )
 				{
-					// 빈 슬롯을 찾아서 20개를 등록한다
+					// Find empty slots and register 20
 					RegBuyItemByEvent(iSlot, *pData);
 				}
 				else
@@ -902,10 +902,10 @@ VOID CNetPyShopCartGui::HandleEvents( RWS::CMsg &msg )
 					{
 						if( m_BuySlotInfo[i].slot.GetSerial() == pData->uiSerial )
 						{
-							// 최대 스택갯수를 초과하지 않았다면
+							// If the maximum number of stacks is not exceeded
 							if(m_BuySlotInfo[i].slot.GetItemTable()->byMax_Stack > m_BuySlotInfo[i].slot.GetCount())
 							{
-								// 마저 더해서 20개를 채운다
+								// Add more to make 20.
 								AddItem(BUY_SLOT, i, m_BuySlotInfo[i].slot.GetItemTable()->byMax_Stack - m_BuySlotInfo[i].slot.GetCount());
 								break;
 							}							

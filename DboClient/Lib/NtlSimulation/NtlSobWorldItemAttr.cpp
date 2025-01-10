@@ -1,12 +1,12 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobWorldItemAttr.h"
 
-// shared
+// Shared
 #include "ItemTable.h"
 #include "NtlObject.h"
 #include "TableContainer.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
 // simulation

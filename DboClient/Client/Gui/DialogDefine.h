@@ -1,19 +1,19 @@
 /******************************************************************************
-* File			: DialogDefine.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2006. 8. 11
-* Abstract		: 
+*File           : DialogDefine.h
+*Author         : Hong SungBock
+*Copyright      : NTL Co., Ltd.
+*Date           : August 11, 2006
+*Abstract		:  
 *****************************************************************************
-* Desc			: Dialog 관련 정의
+*Desc           : Dialog related definitions
 *****************************************************************************/
 
 #pragma once
 
 enum eDialogVisible
 {
-	DIALOGVISIBLE_FALSE,					///< 다이얼로그를 닫는다.
-	DIALOGVISIBLE_TRUE						///< 다이얼로그를 연다.
+	DIALOGVISIBLE_FALSE,					///< Closes the dialog.
+	DIALOGVISIBLE_TRUE						///< Opens the dialog.
 };
 
 // Be careful not to overlap the SideDilaog index
@@ -34,21 +34,21 @@ enum eDialogType
 
 	DIALOG_DEFAULT_FIRST,
 
-	DIALOG_HP = DIALOG_DEFAULT_FIRST,		///< HP 윈도우
-	DIALOG_EXP,								///< EXP 창(경험치)
-	DIALOG_CHAT,							///< 채팅창
-	DIALOG_QUICKSLOT,						///< 퀵슬롯 창	
-	DIALOG_BAGSLOT,							///< 캡슐 슬롯	
-	DIALOG_MINIMAP,							///< 미니맵	
-	DIALOG_MAINMENUBUTTON,					///< 메인 메뉴 버튼
-	DIALOG_SIDEICON,						///< 사이드 아이콘
-	DIALOG_SIDEDIALOG_MANAGER,				///< 사이드 다이얼로그 매니저	
+	DIALOG_HP = DIALOG_DEFAULT_FIRST,		///< HP Windows
+	DIALOG_EXP,								///< EXP Window (Experience Points)
+	DIALOG_CHAT,							///< Chat window
+	DIALOG_QUICKSLOT,						///< Quick Slot Window	
+	DIALOG_BAGSLOT,							///< Capsule slot	
+	DIALOG_MINIMAP,							///< Minimap	
+	DIALOG_MAINMENUBUTTON,					///< Main menu button
+	DIALOG_SIDEICON,						///< side icon
+	DIALOG_SIDEDIALOG_MANAGER,				///< Side dialog manager	
 	DIALOG_SIDEDIALOG_CONTROLLER,			///< Side dialog controller
-	DIALOG_PARTYMENU,						///< 파티 메뉴(파티 맴버창을 자식으로 갖는다)
-	DIALOG_GM_CHATTING,						///< GM 채팅
-	DIALOG_GROUP_CHAT_MANAGER,				///< Group 채팅 매니저
-	DIALOG_DICE_MANAGER,					///< 주사위 매니저
-	DIALOG_VEHICLE,							///< 탈 것 조작창
+	DIALOG_PARTYMENU,						///< Party menu (has the party member window as a child)
+	DIALOG_GM_CHATTING,						///< GM Chat
+	DIALOG_GROUP_CHAT_MANAGER,				///< Group chat manager
+	DIALOG_DICE_MANAGER,					///< Dice Manager
+	DIALOG_VEHICLE,							///< Vehicle control panel
 
 	DIALOG_DEFAULT_LAST = DIALOG_VEHICLE,
 	
@@ -57,41 +57,41 @@ enum eDialogType
 
 	DIALOG_EVENT_FIRST,
 
-	DIALOG_TARGER_UI = DIALOG_EVENT_FIRST,	///< 타겟 UI	// 19 in TW client
-	DIALOG_SCOUTER_MEASURE,					///< 스카우터 전투력 측정
-	DIALOG_SHOPING_CART,					///< 상점의 카트
-	DIALOG_TRADECART,						///< 트레이드 카트
-	DIALOG_PRIVATESHOP_CART,				///< 개인상점 카트
+	DIALOG_TARGER_UI = DIALOG_EVENT_FIRST,	///< Target UI //19 in TW client
+	DIALOG_SCOUTER_MEASURE,					///< Scouter combat power measurement
+	DIALOG_SHOPING_CART,					///< cart in store
+	DIALOG_TRADECART,						///< Trade Cart
+	DIALOG_PRIVATESHOP_CART,				///< Personal store cart
 	DIALOG_NETPYSHOP_TRADE,					///< NetPy Shop Trade Cart
-	DIALOG_WAREHOUSE_1,						///< 1번 창고
-	DIALOG_WAREHOUSE_2,						///< 2번 창고
-	DIALOG_WAREHOUSE_3,						///< 3번 창고
-	DIALOG_WAREHOUSE_COMMON,				///< 공유 창고
-	DIALOG_DBC_REWARD,						///< 드래곤볼 보상 GUI
-	DIALOG_DBC_DRAGON_DIALOG,				///< 용신의 대화 말풍선 GUI
-	DIALOG_DROPITEM_INFO,					///< 드롭아이템 정보창
-	DIALOG_TMQ_REWARD,						///< 타임머쉰 퀘스트 보상창
-	DIALOG_BACKBOARD,						///< 화면전체를 가리는 백보드창	
-	DIALOG_FLASH_NOTIFY,					///< Flash를 이용한 Notify 알림창
+	DIALOG_WAREHOUSE_1,						///< Warehouse 1
+	DIALOG_WAREHOUSE_2,						///< Warehouse 2
+	DIALOG_WAREHOUSE_3,						///< Warehouse 3
+	DIALOG_WAREHOUSE_COMMON,				///< Shared warehouse
+	DIALOG_DBC_REWARD,						///< Dragon Ball Reward GUI
+	DIALOG_DBC_DRAGON_DIALOG,				///< Dragon God’s conversation speech bubble GUI
+	DIALOG_DROPITEM_INFO,					///< Drop item information window
+	DIALOG_TMQ_REWARD,						///< Time Machine Quest Reward Window
+	DIALOG_BACKBOARD,						///< Backboard window that covers the entire screen	
+	DIALOG_FLASH_NOTIFY,					///< Notify notification window using Flash
 	DIALOG_INTERFACE_SHAKE,					///< Window to speed up recovery by manipulating the interface at the time of knockdown
-    DIALOG_NET_CONNECT_BOX,                 ///< 서버 연결 실패시 상태를 표시하는 다이얼로그 박스
-    DIALOG_TELECAST,                        ///< Broadcasting window // by daneos: is this required?? 
-	DIALOG_TIME_NOTIFY,						///< 시간 알림 표시창
-	DIALOG_GUILD_WAREHOUSE_1,				///< 길드 1번 창고
-	DIALOG_GUILD_WAREHOUSE_2,				///< 길드 2번 창고
-	DIALOG_GUILD_WAREHOUSE_3,				///< 길드 3번 창고
-	DIALOG_TUTORIAL_DIALOG_FOCUS,			///< 튜토리얼 다이얼로그 포커스창
-	DIALOG_TUTORIAL_EXAMPLE,				///< 튜토리얼 예시창
-	DIALOG_TUTORIAL_MESSAGE,				///< 튜토리얼 메세지
-	DIALOG_TUTORIAL_CONFIRM,				///< 튜토리얼 확인 메세지
-	DIALOG_PETITION_SATISFACTION,			///< GM 상담 만족도 조사창
+    DIALOG_NET_CONNECT_BOX,                 ///< Dialog box that displays the status when server connection fails
+    DIALOG_TELECAST,                        ///< Broadcasting window //by daneos: is this required?? 
+	DIALOG_TIME_NOTIFY,						///< Time notification display window
+	DIALOG_GUILD_WAREHOUSE_1,				///<Guild No. 1 Warehouse
+	DIALOG_GUILD_WAREHOUSE_2,				///< Guild Warehouse No. 2
+	DIALOG_GUILD_WAREHOUSE_3,				///<Guild warehouse 3
+	DIALOG_TUTORIAL_DIALOG_FOCUS,			///< Tutorial dialog focus window
+	DIALOG_TUTORIAL_EXAMPLE,				///< Tutorial example window
+	DIALOG_TUTORIAL_MESSAGE,				///< Tutorial message
+	DIALOG_TUTORIAL_CONFIRM,				///< Tutorial confirmation message
+	DIALOG_PETITION_SATISFACTION,			///< GM consultation satisfaction survey window
 	DIALOG_BROADCAST,
-	DIALOG_PET_STATUSBAR,					///< 펫 상태 창    
-	DIALOG_PET_SKILL_SLOT,                ///< 펫을 소환했을때 나타나는 스킬 슬롯창
+	DIALOG_PET_STATUSBAR,					///< Pet status window    
+	DIALOG_PET_SKILL_SLOT,                ///<Skill slot window that appears when summoning a pet
 
 	DIALOG_ITEM_EXCHANGE_CART,
 
-	DIALOG_SCRAMBLE_NOTIFY,					///< 도장 쟁탈전 진행 알림창
+	DIALOG_SCRAMBLE_NOTIFY,					///< Dojo competition progress notification window
 	DIALOG_CCBD_NOTIFY,
 	DIALOG_CCBD_REWARD,
 
@@ -102,26 +102,26 @@ enum eDialogType
 
 	DIALOG_NORMAL_FIRST, 
 
-	DIALOG_MAINMENU = DIALOG_NORMAL_FIRST,	///< 메인 메뉴	
-	DIALOG_ESCMENU,							///< ESC Menu			// 83 IN TW
-	DIALOG_STATUS,							///< 스테이터스 윈도우			
-	DIALOG_SKILL,							///< 스킬창
-	DIALOG_CHAT_LOG,						///< 채팅로그창
-    DIALOG_COMMUNITY,						///< 커뮤니티 다이얼로그
-    DIALOG_FRIEND_LIST,                     ///< 친구 리스트/블랙 리스트
-	DIALOG_WORLDMAP,						///< 월드맵
-	DIALOG_OPTIONWND,						///< 옵션 윈도우
-	DIALOG_HELPWND,							///< 헬프 윈도우	
-	DIALOG_PRIVATESHOP,						///< 개인상점
-	DIALOG_MAILSYSTEM,						///< 메일 시스템
-	DIALOG_MAILSYSTEM_READ,					///< 메일 시스템 : 메일 읽기
-	DIALOG_DBC_ALTAR,						///< 드래곤볼 컬렉션 제단 윈도우
-    DIALOG_COMMU_TARGET,                    ///< 커뮤니티 타겟창
+	DIALOG_MAINMENU = DIALOG_NORMAL_FIRST,	///< Main menu	
+	DIALOG_ESCMENU,							///< ESC Menu			//83 IN TW
+	DIALOG_STATUS,							///< Status window			
+	DIALOG_SKILL,							///< Skill window
+	DIALOG_CHAT_LOG,						///< Chat log window
+    DIALOG_COMMUNITY,						///< Community dialog
+    DIALOG_FRIEND_LIST,                     ///< Friend list/black list
+	DIALOG_WORLDMAP,						///< World Map
+	DIALOG_OPTIONWND,						///< Options window
+	DIALOG_HELPWND,							///< Help window	
+	DIALOG_PRIVATESHOP,						///< Private store
+	DIALOG_MAILSYSTEM,						///< Mail system
+	DIALOG_MAILSYSTEM_READ,					///< Mail system: Reading mail
+	DIALOG_DBC_ALTAR,						///< Dragon Ball Collection Altar Window
+    DIALOG_COMMU_TARGET,                    ///< Community target window
 
 	DIALOG_HOIPOIMIX_RECIPE,
 	DIALOG_HOIPOIMIX_CRAFT,
 
-	DIALOG_CAPSULE_1,						///< 가방
+	DIALOG_CAPSULE_1,						///< bag
 	DIALOG_CAPSULE_2,
 	DIALOG_CAPSULE_3,
 	DIALOG_CAPSULE_4,
@@ -130,24 +130,24 @@ enum eDialogType
 
 	//DIALOG_MSGBOX,							///< Message box (center alignment)
 	
-	DIALOG_QUESTLIST,						///< 퀘스트리스트 
-	DIALOG_QUESTPROGRESS,					///< 퀘스트진행	
+	DIALOG_QUESTLIST,						///< Quest list 
+	DIALOG_QUESTPROGRESS,					///< Quest progress	
 	
-	DIALOG_SKILL_RPBONUS,					///< RP BONUS 스킬 사용 GUI
+	DIALOG_SKILL_RPBONUS,					///< RP BONUS skill use GUI
 	DIALOG_SKILL_RPBONUS_AUTO,
 
 	DIALOG_RANKBOARD,						///< Ranking Board
 	DIALOG_MASCOT,
-	DIALOG_BUDOKAI_NEWS,					///< 천하제일 무도회 소식지
-	DIALOG_BUDOKAI_REQUEST,					///< 천하제일 무도회 신청서
+	DIALOG_BUDOKAI_NEWS,					///< World's Best Martial Arts Newsletter
+	DIALOG_BUDOKAI_REQUEST,					///< World’s Best Martial Arts Application Form
 	DIALOG_BUDOKAI_TOURNAMENT,
-	DIALOG_BUDOKAI_TOURNAMENT_MATCHINFO,	///< 토너먼트 MatchInfo
+	DIALOG_BUDOKAI_TOURNAMENT_MATCHINFO,	///< Tournament MatchInfo
 
-	DIALOG_TBGAMBLERESULT,					///< 겜블 캡슐 확인 창
-	DIALOG_CHANNGEL_CHANGE,					///< 게임중 채널 변경 창		// 137 in tw
-	DIALOG_PETITION,						///< GM 상담 요청창
+	DIALOG_TBGAMBLERESULT,					///< Gamble capsule confirmation window
+	DIALOG_CHANNGEL_CHANGE,					///< Channel change window during game //137 in tw
+	DIALOG_PETITION,						///< GM consultation request window
 
-	DIALOG_SKILLABILITYSET,					///< Skill Ability 설정 GUI
+	DIALOG_SKILLABILITYSET,					///< Skill Ability Settings GUI
 	DIALOG_SKILLABILITYUSE,
 
 	DIALOG_SKILL_HTB_RPUSE,					///< HTB Skill Rp Use Gui
@@ -163,25 +163,25 @@ enum eDialogType
 
 	DIALOG_NPCDIALOG_FIRST,
 
-	DIALOG_MULTIDIALOG = DIALOG_NPCDIALOG_FIRST,///< NPC 멀티다이얼로그
+	DIALOG_MULTIDIALOG = DIALOG_NPCDIALOG_FIRST,///< NPC multi-dialog
 	
-	DIALOG_QUESTMESSAGE,					///< 퀘스트메세지	
-	DIALOG_QUESTPROPOSAL,					///< 퀘스트제안	
-	DIALOG_QUESTREWARD,						///< 퀘스트보상
-	DIALOG_ITEMUPGRADE,						///< 아이템 업그레이드	
+	DIALOG_QUESTMESSAGE,					///< Quest message	
+	DIALOG_QUESTPROPOSAL,					///< Quest suggestion	
+	DIALOG_QUESTREWARD,						///< Quest Reward
+	DIALOG_ITEMUPGRADE,						///< Item upgrade	
 	DIALOG_ITEM_CHANGE_BATTLE_ATTRIBUTE,
-	DIALOG_RBBOARD,							///< 랭크배틀 게시판
-	DIALOG_RBCHALLENGE,						///< 랭크배틀 도전정보
-	DIALOG_NPCSHOP,							///< NPC 상점	
-	DIALOG_TMQBOARD,						///< 타임머신 퀘스트 게시판	
+	DIALOG_RBBOARD,							///< Rank Battle Bulletin Board
+	DIALOG_RBCHALLENGE,						///< Ranked Battle Challenge Information
+	DIALOG_NPCSHOP,							///< NPC Shop	
+	DIALOG_TMQBOARD,						///< Time Machine Quest Bulletin Board	
 	DIALOG_ULTIMATEDUNGEON,
-	DIALOG_WAREHOUSEBAR,					///< 창고 컨트롤 바	
-    DIALOG_PORTAL,                          ///< 포탈 NPC 
-	DIALOG_OBJECT_CLICK,					///< 오브젝트 클릭
-	DIALOG_GUILD_WAREHOUSEBAR,				///< 길드 창고 컨트롤 바
-	DIALOG_DOJO_INFO,						///< 도장 정보창
-	DIALOG_DOJO_ACCOUNT,					///< 도장 창고 사용내역
-	DIALOG_DOGI,							///< 도복 다이얼로그
+	DIALOG_WAREHOUSEBAR,					///< Warehouse control bar	
+    DIALOG_PORTAL,                          ///< Portal NPC 
+	DIALOG_OBJECT_CLICK,					///< Click on object
+	DIALOG_GUILD_WAREHOUSEBAR,				///< Guild Warehouse Control Bar
+	DIALOG_DOJO_INFO,						///< Stamp information window
+	DIALOG_DOJO_ACCOUNT,					///< Paint warehouse usage history
+	DIALOG_DOGI,							///< Uniform dialog
 	DIALOG_DOJO_UPGRADE,					///< Painting Upgrade Dialog
 
 	DIALOG_BIND_SEALING,
@@ -206,20 +206,20 @@ enum eDialogType
 
 	DIALOG_LAST = DIALOG_NPCDIALOG_LAST,
 
-	DIALOG_UNKNOWN = 0xFF,					///< 잘못된 다이얼로그 인덱스
+	DIALOG_UNKNOWN = 0xFF,					///< Invalid dialog index
 };
 
 enum eDialogMode
 {	
-	DIALOGMODE_ITEM_REPAIR,					///< 아이템 수리 모드
-	DIALOGMODE_ITEM_IDENTIFICATION,			///< 미확인 아이템 감정
-	DIALOGMODE_NPCSHOP_ITEM_IDENTIFICATION,	///< 상점에서 미확인 아이템 감정
-	DIALOGMODE_NARRATION,					///< 내레이션 모드
+	DIALOGMODE_ITEM_REPAIR,					///< Item repair mode
+	DIALOGMODE_ITEM_IDENTIFICATION,			///< Unidentified item appraisal
+	DIALOGMODE_NPCSHOP_ITEM_IDENTIFICATION,	///< Evaluate unidentified items in the store
+	DIALOGMODE_NARRATION,					///< Narration mode
 
-	DIALOGMODE_CHATTING_RESIZE_HORI,		///< 채팅 디스플레이창 수직 리사이즈
-	DIALOGMODE_CHATTING_RESIZE_RIGHTUP,		///< 채팅 디스플레이창 우상단 리사이즈
-	DIALOGMODE_CHATTING_RESIZE_RIGHTDOWN,	///< 채팅 디스플레이창 우하단 리사이즈
-	DIALOGMODE_CHATTING_RESIZE_VERT,		///< 채팅 디스플레이창 수평 리사이즈
+	DIALOGMODE_CHATTING_RESIZE_HORI,		///< Vertical resize of chat display window
+	DIALOGMODE_CHATTING_RESIZE_RIGHTUP,		///< Resize the upper right corner of the chat display window
+	DIALOGMODE_CHATTING_RESIZE_RIGHTDOWN,	///< Resize the lower right corner of the chat display window
+	DIALOGMODE_CHATTING_RESIZE_VERT,		///< Resize the chat display window horizontally
 
 	DIALOGMODE_ITEM_DISASSEMBLE,
 	DIALOGMODE_ITEM_BEAD,
@@ -235,7 +235,7 @@ enum eDialogMode
 // Regular dialog attribute
 #define dRDA_NORMAL							0x00000000
 #define dRDA_EXCLUSIVE						0x00000001	///< Do not yield when another regular dialog opens
-#define dRDA_HALFSIZE						0x00000002	///< 다른 레귤러 다이얼로그보다 절반 정도의 크기로 아래쪽 정렬된다
+#define dRDA_HALFSIZE						0x00000002	///< It is aligned at the bottom at about half the size of other regular dialogs.
 #define dRDA_NOT_ESC						0x00000004	///< It is not affected by the ESC key
 
 // Entire focusing dialog attribute
@@ -284,8 +284,8 @@ enum eDialogMode
 #define INFOCOLOR_6		RGB( 255, 168,  68 ) // orange #ffa844
 #define INFOCOLOR_7		RGB( 255, 218,  75 ) // yellow #ffda4b
 #define INFOCOLOR_8		RGB( 231, 121, 210 ) // purple #e779d2
-#define INFOCOLOR_9		RGB( 180, 180, 180 ) // grey
-#define INFOCOLOR_13	RGB( 167, 184, 193 ) // grey
+#define INFOCOLOR_9		RGB( 180, 180, 180 ) // Grey
+#define INFOCOLOR_13	RGB( 167, 184, 193 ) // Grey
 #define INFOCOLOR_14	RGB( 35, 255, 60 ) // green #23ff3c
 
 #define INFOCOLOR_LOBBY_FOC		RGB( 255, 255, 255 )
@@ -316,7 +316,7 @@ enum eDialogMode
 #define NTL_BUTTON_CLICK_DIFFX			2 
 #define NTL_BUTTON_CLICK_DIFFY			3 
 
-// RPGauge 
+// Rp gauge 
 #define RPGAUGE_TIME_SERVER		1.0f
 #define RPGAUGE_TIME_EPSILON	0.0f
 
@@ -329,7 +329,7 @@ enum eDialogMode
 // Item Duration warning
 #define ITEM_DURATION_WARNING	0.3f
 
-// Dialog를 클릭했을 시 해당에 Link된 Dialog와 자신을 최상단에 그리기 위한 매크로
+// When you click on a dialog, a macro is used to draw the linked dialog and yourself at the top.
 #define CAPTURE_MOUSEDOWN_RAISE(eDialog, PosX, PosY)	\
 	if( m_pThis->GetParent()->GetChildComponentReverseAt((RwInt32)PosX, (RwInt32)PosY) != m_pThis ) \
 	return; \
@@ -343,8 +343,8 @@ enum eDialogMode
 	}
 
 
-// Dialog를 클릭했을 시 해당 Dialog를 Link하고 있는 Dialog와 그 Dialog에 Link된 Dialog들을
-// 최상단에 그리기 위한 매크로
+// When you click on a dialog, the dialog linking that dialog and the dialogs linked to that dialog are displayed.
+// Macro to draw at the top
 #define CAPTURE_MOUSEDOWN_RAISE_TOP_LINKED(TopLinkedDialog, PosX, PosY)	\
 	if( m_pThis->GetParent()->GetChildComponentReverseAt((RwInt32)PosX, (RwInt32)PosY) != m_pThis ) \
 		return; \

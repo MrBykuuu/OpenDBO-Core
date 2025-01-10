@@ -36,7 +36,7 @@ CComponent::CComponent(const CRectangle &rtPos, CComponent *pParent, CSurfaceMan
 
 CComponent::~CComponent()
 {
-	// GUI Manager pointer를 구한다.
+	//Obtain the GUI Manager pointer.
 	CComponent *pGuiMgr = GetGuiManager();
 	
 	if(IsPopup())

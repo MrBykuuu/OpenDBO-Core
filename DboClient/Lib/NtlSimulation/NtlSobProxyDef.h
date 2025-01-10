@@ -43,7 +43,7 @@ class CNtlSobProxySystemEffectScale;
 #define NTL_SHADOW_GRAY_MAX					200
 
 // proxy system flag
-#define NTL_PROXYSYSTEM_NOT_VISIBLE			0x00000001		// GM은 다른 player에게 안보일 경우 쓰인다.
+#define NTL_PROXYSYSTEM_NOT_VISIBLE			0x00000001		//Used when the GM is not visible to other players.
 #define NTL_PROXYSYSTEM_LP_VISIBLE			0x00000002		// LP GUI on/off 
 
 

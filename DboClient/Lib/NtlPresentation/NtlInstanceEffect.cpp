@@ -3,7 +3,7 @@
 //	Desc		:	
 //	Begin		:	2005. 7.28
 //                  2006. 8.17
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //                  HoDong
 //	Update		:	
@@ -25,7 +25,7 @@
 
 #include "NtlPLCullingScheduling.h"
 
-#define EFFECT_NOT_UPDATE_TIME_MAX 0.5f                     ///< Not Visible이거나 컬링될때 업데이트 주기
+#define EFFECT_NOT_UPDATE_TIME_MAX 0.5f                     ///< Update cycle when Not Visible or culled
 
 RwBool CNtlInstanceEffect::m_bLowSpec = FALSE;
 RwBool CNtlInstanceEffect::m_bRenderMeshSystem = TRUE;
@@ -93,16 +93,16 @@ CNtlInstanceEffect::~CNtlInstanceEffect(void)
 }
 
 /**
- * Effect 생성
+*Effect creation
  */
 RwBool CNtlInstanceEffect::Create(const SPLEntityCreateParam *pParam)
 {
-	//SetVisibleBoundingVolume(true);
+	//Set visible bounding volume(true);
 	return TRUE;
 }
 
 /**
- * Effect Destroy
+ *Effect Destroy
  */
 void CNtlInstanceEffect::Destroy()
 {
@@ -115,7 +115,7 @@ void CNtlInstanceEffect::Destroy()
 	}
 	m_svSystem.clear();
 
-	//m_pVisibleBVClump
+	//M p visible bv clump
 	if(m_pVisibleBVClump != NULL)
 	{
 		RpWorldRemoveClump(CNtlPLGlobal::m_pRpWorld, m_pVisibleBVClump->GetClump());
@@ -124,7 +124,7 @@ void CNtlInstanceEffect::Destroy()
 }
 
 /**
- * Property를 Effect에 적용을 한다.
+ *Apply the property to the effect.
  * \param pData Property Data
  */
 RwBool CNtlInstanceEffect::SetProperty(const CNtlPLProperty *pData)
@@ -141,7 +141,7 @@ RwBool CNtlInstanceEffect::SetProperty(const CNtlPLProperty *pData)
 
 	m_bAutoDelete = pResourceEffect->IsAutoDelete();
 
-    // Sound를 Play한다.
+    // Play Sound.
 	if(strlen(pResourceEffect->m_EffectSound.chSoundName) > 0)
 	{
         RwInt32 nCnt = 1;
@@ -187,7 +187,7 @@ RwBool CNtlInstanceEffect::SetProperty(const CNtlPLProperty *pData)
 }
 
 /**
- * Effect를 생성을 한다.
+ *Create an effect.
  * \param matRender: Effect Local Matrix
  */
 void CNtlInstanceEffect::CreateSystem(CNtlResourceEffect* pResourceEffect, const RwMatrix& matRender)
@@ -221,7 +221,7 @@ void CNtlInstanceEffect::CreateSystem(CNtlResourceEffect* pResourceEffect, const
 		}
 
 		{
-			// FadeOut System 연결 하기
+			// Connecting the FadeOut System
 			svdef_InstanceComponentSystem::iterator it;
 			for (it = m_svSystem.begin(); it != m_svSystem.end(); ++it)
 			{
@@ -348,11 +348,11 @@ RwBool CNtlInstanceEffect::Render()
 }
 
 /**
- * Effect World에 위치 시킨다.
- * Matrix가 적용 되고 Position이 넘어오는 경우가 있다.
- * Matrix에서 Positon은 크게 문제가 없으나 Scale 하고 Rotation
- * Matirx와 임시 변수(Scale, Angle)과 어떻게 동기화를 시킬까?
- * \param matWorld Effect를 World에 위치 시키는 Model Matrix
+ * Place in Effect World.
+ * There are cases where the Matrix is ??applied and the Position is transferred.
+ * There is no major problem with Position in Matrix, but Scale and Rotation
+ * How to synchronize Matirx with temporary variables (Scale, Angle)?
+ * \param matWorld Model Matrix that places the Effect in the World
  */
 void  CNtlInstanceEffect::SetMatrix(RwMatrix& matWorld)
 {
@@ -382,7 +382,7 @@ RwMatrix &CNtlInstanceEffect::GetMatrix()
 }
 
 /**
- * ModelScale, ModelAngle, WorldPostion으로 Matrix을 구한다.
+ * Find Matrix using ModelScale, ModelAngle, and WorldPostion.
  */
 void CNtlInstanceEffect::SetTransform()
 {
@@ -402,9 +402,9 @@ void CNtlInstanceEffect::SetTransform()
 }
 
 /**
- * Effect World에 위치 시킨다. m_matWorld에 위치 좌표를 넣는다.
- * 그리고 임시 변수인 m_vWorldPosition도 값을 갱신 시킨다.
- * \param pPos Effect가 위치 할 World의 좌표
+ *Place in Effect World. Insert the location coordinates into m_matWorld.
+ *And the value of the temporary variable m_vWorldPosition is also updated.
+ * \param pPos World coordinates where the Effect will be located.
  */
  void CNtlInstanceEffect::SetPosition(const RwV3d *pPos)
 {
@@ -439,8 +439,8 @@ void CNtlInstanceEffect::SetTransform()
 }
 
 /**
- * Effect의 World에서의 위치를 얻는다.
- * \return RwV3d World에서의 위치
+ *Get the location of the Effect in the World.
+ * \return Location in RwV3d World
  */
 RwV3d CNtlInstanceEffect::GetPosition(void)
 { 
@@ -448,8 +448,8 @@ RwV3d CNtlInstanceEffect::GetPosition(void)
 }
 
 /**
- * Effect를 Model 공간에서 회전을 시킨다.
- * \param fXAngle X축 각도, Y축 각도, Z축 각도 모두(Degree -360 - 360)
+ *Rotate the Effect in Model space.
+ * \param fXAngle All of the X-axis angle, Y-axis angle, and Z-axis angle (Degree -360 -360)
  */
 void CNtlInstanceEffect::SetRotate(RwReal fXAngle, RwReal fYAngle, RwReal fZAngle)
 {
@@ -477,8 +477,8 @@ void CNtlInstanceEffect::SetRotate(RwReal fXAngle, RwReal fYAngle, RwReal fZAngl
 }
 
 /**
- * Effect를 Model 공간에서의 회전값을 얻는다.
- * \return RwV3d 각축에 대한 회전값(Degree -360 - 360)
+ *Effect obtains the rotation value in Model space.
+ * \return RwV3d Rotation value for each axis (Degree -360 -360)
  */
 const RwV3d* CNtlInstanceEffect::GetRotate(void) const
 {
@@ -486,7 +486,7 @@ const RwV3d* CNtlInstanceEffect::GetRotate(void) const
 }
 
 /**
- * Effect의 Model 공간에서의 Scale을 적용한다.
+ *Apply scale in the model space of the effect.
  */
 void CNtlInstanceEffect::SetScale( RwReal fScale)
 {
@@ -509,7 +509,7 @@ void CNtlInstanceEffect::SetScale( RwReal fScale)
 }
 
 /**
- * Effect의 Model 공간에서의 Scale 값을 얻는다.
+ *Obtain the scale value in the model space of the effect.
  */
 RwReal CNtlInstanceEffect::GetScale( void )
 {
@@ -517,7 +517,7 @@ RwReal CNtlInstanceEffect::GetScale( void )
 }
 
 /**
- * Effect AnimSpeed를 조정한다.
+ *Adjust Effect AnimSpeed.
  */
 RwBool CNtlInstanceEffect::SetPlayAnimSpeed(RwReal fAnimSpeed)
 {
@@ -583,12 +583,12 @@ void CNtlInstanceEffect::AddComponentSystem( CNtlInstanceComponentSystem* pCompo
 
 void CNtlInstanceEffect::Finish() 
 {
-    // 내부적으로는 ComponentSystem들의 Stop을 호출한다.	
+    // Internally, Stop of ComponentSystems is called.	
 
     svdef_InstanceComponentSystem::iterator it;
     for (it = m_svSystem.begin(); it != m_svSystem.end(); ++it)
     {
-		// 모두 False를 반환하면 설정된 Finish 동작이 없다는 것이다.
+		// If they all return False, there is no Finish action set.
         (*it)->Finish();
     }
 }
@@ -598,7 +598,7 @@ void CNtlInstanceEffect::SetVisible( RwBool bVisible )
     m_bShow = bVisible;
 }
 
-// 스케일 적용 유무를 설정한다
+// Set whether or not to apply scale
 void CNtlInstanceEffect::SetApplyScale( RwBool bApply ) 
 {
     m_bApplyScale = bApply;
@@ -641,7 +641,7 @@ void CNtlInstanceEffect::CalcBoundingSphere()
 
     if(m_pResourceEffect->m_EffectBoundingSphere.bDisableAuto)
     {
-        // 정의된 바운딩 스피어 사용
+        // Use defined bounding spheres
         m_BoundingSphere.radius = m_pResourceEffect->m_EffectBoundingSphere.fRadius;
     }
     else

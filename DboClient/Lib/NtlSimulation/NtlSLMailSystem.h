@@ -21,15 +21,15 @@ public:
 	enum eMAILSYSTEM_NOTIFY_TYPE
 	{
 		MAILSYSTEM_NOTIFY_TYPE_NONE		= 0x00000000,
-		MAILSYSTEM_NOTIFY_TYPE_NEWMAIL	= 0x00000001,	///< 새로운 메일이 있다는 것을 알림
+		MAILSYSTEM_NOTIFY_TYPE_NEWMAIL	= 0x00000001,	///< Notifies that there is new mail
 	};
 
 	enum eMAILSYSTEM_NOTIFY_VALUE
 	{
 		MAILSYSTEM_NOTIFY_VALUE_NONE			= 0x00000000,
-		MAILSYSTEM_NOTIFY_VALUE_MAIL_NORMAL		= 0x00000001,	///< 일반 메일 존재
-		MAILSYSTEM_NOTIFY_VALUE_MAIL_MANAGER	= 0x00000002,	///< GM 메일 존재
-		MAILSYSTEM_NOTIFY_VALUE_MAIL_FULL		= 0x00000004,	///< 메일이 가득참
+		MAILSYSTEM_NOTIFY_VALUE_MAIL_NORMAL		= 0x00000001,	///< Regular mail exists
+		MAILSYSTEM_NOTIFY_VALUE_MAIL_MANAGER	= 0x00000002,	///< GM Mail Presence
+		MAILSYSTEM_NOTIFY_VALUE_MAIL_FULL		= 0x00000004,	///< Mail is full
 	};
 
 	typedef std::vector<MAILID>					MAIL_ID_VEC;
@@ -63,7 +63,7 @@ public:
 
 public:
 	RwBool				GetMail(sMAIL_PROFILE& outMailProfile, const MAILID& mailID);
-	RwBool				GetMail(sMAIL_PROFILE& outMailProfile, const RwUInt32& uiIndex, const RwBool& bReverse/*가장 최신은 제일 뒤*/);
+	RwBool				GetMail(sMAIL_PROFILE& outMailProfile, const RwUInt32& uiIndex, const RwBool& bReverse/*The most recent is the last*/);
 
 	RwUInt32			GetAbility();
 	SERIAL_HANDLE		GetUseObjectSerial()		{ return m_hObject; }

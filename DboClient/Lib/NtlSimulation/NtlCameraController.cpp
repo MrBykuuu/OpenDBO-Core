@@ -1,29 +1,35 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlCameraController.h"
 
-// shared
+// Shared
+
 #include "NtlMovement.h"
 #include "MobTable.h"
 #include "GraphicDataTable.h"
 #include "NtlXMLDoc.h"
 #include "WorldTable.h"
 
-// core
+// Core
+
 #include "NtlMath.h"
 
-// framework
+// Framework
+
 #include "NtlCamera.h"
 
-// sound
+// Sound
+
 #include "NtlSoundEventGenerator.h"
 
-// presentation
+// Presentation
+
 #include "NtlPLEventGenerator.h"
 #include "NtlPLVisualManager.h"
 #include "NtlPLHelpers.h"
 #include "NtlPLResourcePack.h"
 
-// simulation
+// Simulation
+
 #include "NtlCameraManager.h"
 #include "NtlSobActor.h"
 #include "NtlSobManager.h"
@@ -44,6 +50,7 @@
 
 
 RwMatrix CNtlCameraController::m_matTrans;		// camera trans matrix
+
 RwReal   CNtlCameraController::m_fTargetHeightRatio = 0.7f;
 
 CNtlCameraController::CNtlCameraController()
@@ -72,8 +79,11 @@ void CNtlCameraController::UpdateCameraTrans(RwV3d *pCamPos, const RwV3d *pLookA
     RwV3d vPos;
     CNtlMath::MathRwV3dAssign(&vPos, 0.0f, 0.0f, fDist); 
     RwMatrixTranslate (&m_matTrans, &vPos, rwCOMBINEREPLACE);									// Position
+
     RwMatrixRotate (&m_matTrans, &CNtlPLGlobal::m_vXAxisV3, fPitch, rwCOMBINEPOSTCONCAT);		// Pitch
+
     RwMatrixRotate (&m_matTrans, &CNtlPLGlobal::m_vYAxisV3, fYaw, rwCOMBINEPOSTCONCAT);			// Yaw
+
     RwMatrixUpdate(&m_matTrans);
 
     *pCamPos = *pLookAt - m_matTrans.pos;
@@ -84,6 +94,7 @@ RwReal CNtlCameraController::GetActorOffset(CNtlSobActor *pActor)
 	if ( pActor )
 	{
 		// Height ratio does not reflect when swimming
+
 
 		RwReal fOffset;
 		RwV3d vPos = pActor->GetPosition();
@@ -214,7 +225,8 @@ RwBool CNtlCameraNormalController::UpdateSmoothLookAt(RwV3d& vLookAt, RwReal fEl
 
 void CNtlCameraNormalController::UpdateZoomInOut(RwReal fElapsed)
 {
-    //위치 갱신
+    //location update
+
     RwReal fCurrDist = GetNtlGameCameraManager()->GetDist();
     float fDeltaDist = m_fDeltaDist * fElapsed * 4.0f;
     if( fabs(m_fDesiredDist - fCurrDist) <= fabs(fDeltaDist))
@@ -249,12 +261,12 @@ void CNtlCameraNormalController::UpdateSmoothLerp(RwV3d& vCamPos, RwV3d& vLookAt
 
     if(fCurrLen > NTL_EPSILON)
     {
-        // delta time 동안 이동 거리를 구한다.
+        //Find the moving distance during delta time.
         if(fCurrLen - RwV3dLength(&vDelta) <= NTL_EPSILON)           
         {
             EnableSmoothingLerp(FALSE);
         }
-        else if(fCurrLen > GetNtlGameCameraManager()->GetMaxDist() * 1.2f)      /// 갑자기 범위가 멀리 벌어지는 경우를 대비한 방어코드 (텔레포트 할때 버그가 생기는 경우가 있다) by agebreak 2009.05.06)
+        else if(fCurrLen > GetNtlGameCameraManager()->GetMaxDist() * 1.2f)      /// Defense code in case the range suddenly expands (bugs may occur when teleporting) by agebreak 2009.05.06)
         {
             m_vLerpPos = vPos + (vDir * -1.0f * GetNtlGameCameraManager()->GetMaxDist());
             EnableSmoothingLerp(FALSE);
@@ -371,7 +383,7 @@ void CNtlCameraNormalController::Update(RwReal fElapsed)
     RwReal fDistOffset = 0.0f;
     RwV3d vLookAt, vCamPos;
 
-    // 현재 camera position 과 actor position 사이 초당 10미터로 보간을 한다.
+    // It interpolates at 10 meters per second between the current camera position and actor position.
     if(m_bySmoothingFlag == CAMERA_NORAML_SMOOTHING_LERP)
         UpdateSmoothLerp(vCamPos, vLookAt, fDistOffset, fElapsed);
     else if(m_bySmoothingFlag == CAMERA_NORAML_SMOOTHING_FOLLOW_START)
@@ -591,7 +603,7 @@ void CNtlCameraDashController::CalcCameraTrans(RwReal fSpeed, RwReal fLimitLen, 
 
     if(fCurrLen > fLimitLen)
     {
-        // delta time 동안 이동 거리를 구한다.
+        // Find the distance traveled during delta time.
         if(fCurrLen - RwV3dLength(&vDelta) <= fLimitLen)
         {
             CNtlMath::MathRwV3dAssign(&m_vStartPos, vPos.x-fLimitLen*vDir.x, vPos.y-fLimitLen*vDir.y, vPos.z-fLimitLen*vDir.z);
@@ -631,7 +643,7 @@ void CNtlCameraDashController::CalcCameraEndTrans(RwReal fElapsed)
 
     if(fCurrLen > NTL_EPSILON)
     {
-        // delta time 동안 이동 거리를 구한다.
+        // Find the distance traveled during delta time.
         if(fCurrLen - RwV3dLength(&vDelta) <= NTL_EPSILON)
             m_vStartPos = vPos;
         else
@@ -1061,7 +1073,7 @@ CNtlCameraDragonBallController::CNtlCameraDragonBallController()
     AddCameraData(5.67f, -13.216f, 20.192f, 77.251f, -4.053f, 34.29f, 24.023f, &m_vecData);
     CreateSequenceData(&m_pSeqPos, &m_pSeqTarget, &m_vecData);
 
-    // Idle용 카메라        
+    // Camera for idle        
     m_DataIdle.fTime = 7.0f;
     m_DataIdle.vPos.x = -13.216f;
     m_DataIdle.vPos.y = 20.192f;
@@ -1171,7 +1183,7 @@ void CNtlCameraDragonBallController::SetActiveActor(const CNtlSobActor *pActor)
 
     CNtlCameraFromArtData::SetActiveActor(pActor);
 
-    // Idle Camera 위치 변환
+    // Idle Camera position conversion
     RwV3dTransformPoint(&m_DataIdle.vPos, &m_DataIdle.vPos, &m_matDir);
     RwV3dTransformPoint(&m_DataIdle.vTargetPos, &m_DataIdle.vTargetPos, &m_matDir);
 
@@ -1225,7 +1237,7 @@ void CNtlCameraDragonBallController::ChangeState(RwInt32 iState)
     {
         m_fTime = 0.0f;        
     }
-    else if(iState == CAMERA_DB_STATE_SCATTER) // 카메라 흩어지는 연출
+    else if(iState == CAMERA_DB_STATE_SCATTER) // Camera scattering effect
     {
         GetNtlGameCameraManager()->SetFov(60.0f);
         m_fTime = 0.0f;
@@ -2800,7 +2812,7 @@ void CNtlSobCameraExplosion::UpdateCamera( RwMatrix& matResult )
     RwV3d v3ActorPos = m_pActor->GetPosition();
     RwV3d v3CamPos = pCameraMatrix->pos;
 
-    // 폭발 영향 반경 밖에 존재하는 경우 폭발 시키지 않는다
+    // It does not explode if it is outside the explosion radius of influence.
     RwReal fDist = sqrtf( (v3AvatarPos.x - v3ActorPos.x) * (v3AvatarPos.x - v3ActorPos.x) +
         (v3AvatarPos.z - v3ActorPos.z) * (v3AvatarPos.z - v3ActorPos.z) );
 
@@ -2810,12 +2822,12 @@ void CNtlSobCameraExplosion::UpdateCamera( RwMatrix& matResult )
     {
         if ( fDist <= EXPLOSION_MIN_DISTANCE )
         {
-            // 최소 영역 안에 존재하는 경우는 최대로 폭발시킨다
+            // If it exists within the minimum area, it explodes to the maximum.
             fDistFactor = 1.f;
         }
         else if ( fDist >= EXPLOSION_MAX_DISTANCE )
         {
-            // 최대 영역 밖에 존재하는 경우는 폭발시키지 않는다
+            // If it exists outside the maximum area, it will not explode.
             return;
         }
         else
@@ -2824,7 +2836,7 @@ void CNtlSobCameraExplosion::UpdateCamera( RwMatrix& matResult )
         }
     }
 
-    // 회전 매트릭스 계산
+    // Rotation Matrix Calculation
     RwMatrix matRotate;
     RwMatrixSetIdentity( &matRotate );
 
@@ -2836,11 +2848,11 @@ void CNtlSobCameraExplosion::UpdateCamera( RwMatrix& matResult )
 
     RwV3dCrossProduct( &matRotate.right, &matRotate.up, &matRotate.at );
 
-    // Explosion offset 값 회전
+    // Explosion offset value rotation
     RwV3d v3Offset;
     RwV3dTransformPoint( &v3Offset, &matResult.pos, &matRotate );
 
-    // 폭발 거리에 따른 가감
+    // Addition or subtraction according to explosion distance
     RwV3dScale( &v3Offset, &v3Offset, fDistFactor );
 
     GetNtlGameCameraManager()->AddCameraOffset( &v3Offset );
@@ -2921,11 +2933,11 @@ void CNtlCameraTimeMachineArriveController::Update( RwReal fElapsed )
             RwV3d v3TMDir = m_pTimemachineActor->GetDirection();
             RwV3d v3TMPos = m_pTimemachineActor->GetPosition();
 
-            // Time machine의 메트릭스 계산
+            // Time machine metrics calculation
             RwMatrix matTMRotate;
             CNtlMath::MathRwMatrixAssign( &matTMRotate, &v3TMPos, &v3TMDir );
 
-            // 로컬 카메라 위치 및 방향 정보 회전
+            // Rotate local camera position and orientation information
             RwV3d v3Temp;
 
             v3Temp = m_v3Pos;
@@ -3197,11 +3209,11 @@ void CNtlCameraFPSController::Enter()
     m_bInter = TRUE;
     m_uiMoveFlag = NTL_MOVE_NONE;
 
-    // 카메라 위치
+    // camera position
     m_vTargetPos = m_pActor->GetPosition();
     if(m_pActor->GetSobProxy()->GetBaseAnimationKey() == SWIM_IDLE)
     {
-        // NOTE: 물속에서는 카메라가 낮으면 물이 렌더링안된다. 그래서 높이를 좀더 높였다(by agebreak)
+        // NOTE: If the camera is low underwater, the water will not be rendered. So I raised the height even more (by agebreak)
         m_vTargetPos.y += m_pActor->GetSobProxy()->GetPLEntityHeight() * 1.3f;      
     }
     else
@@ -3253,10 +3265,10 @@ void CNtlCameraFPSController::Update( RwReal fElapsed )
         {
             RwReal fDeltaTime = min(m_fInterTime / FPS_INTERPOLATION_TIME, 1.0f);
 
-            // 위치 보간
+            // Position interpolation
             vCamPos = CNtlMath::Interpolation(m_vStartPos, m_vTargetPos, fDeltaTime);
 
-            // LookAt 보간
+            // LookAt interpolation
             vLookAt = CNtlMath::Interpolation(m_vCurrLookAt, m_vTargetLookAt, fDeltaTime);            
         }        
     }
@@ -3300,7 +3312,7 @@ void CNtlCameraFPSController::ZoomInOut( RwReal fDelta )
 
     if(fDelta > 0)
     {
-        CNtlSLEventGenerator::CameraControlDelete(CAMERA_CONTROL_FPS);       // 줌을 시키면 FPS카메라에서 빠진다.
+        CNtlSLEventGenerator::CameraControlDelete(CAMERA_CONTROL_FPS);       // When you zoom, it disappears from the FPS camera.
         GetNtlGameCameraManager()->SetDist(GetNtlGameCameraManager()->GetMinDist() + 0.1f);
     }    
 }
@@ -3545,7 +3557,7 @@ void CNtlCameraBusController::Update_TraceBusBack( RwReal fElapsed )
 
     if( !m_BusTraceInfo.bTracing )
     {
-        // 버스의 방향이 바뀌었는지 체크
+        // Check if the direction of the bus has changed
         if( v3BusDir.x != m_BusTraceInfo.v3BusDir.x ||
             v3BusDir.y != m_BusTraceInfo.v3BusDir.y ||
             v3BusDir.z != m_BusTraceInfo.v3BusDir.z )
@@ -3975,7 +3987,7 @@ RwReal CNtlCameraTutorialController::GetActorOffset( void )
 {
 	if ( m_pActor )
 	{
-		// 수영 중인 경우는 Height ratio 를 반영하지 않는다
+		// Height ratio is not reflected when swimming.
 
 		RwReal fOffset;
 		RwV3d vPos = m_pActor->GetPosition();
@@ -4048,7 +4060,7 @@ void CNtlCameraObserver::Update( RwReal fElapsed )
         RwV3d vPos = *GetNtlGameCameraManager()->GetCameraPos();
         RwV3d vTarget = GetNtlGameCameraManager()->GetLookAt();
 
-        // 프리 카메라를 위해서 Pitch와 Yaw를 저장한다.
+        // Save Pitch and Yaw for free camera.
         RwV3d vLookAt = vTarget - vPos;
         RwV3dNormalize(&vLookAt, &vLookAt);        
         GetNtlGameCameraManager()->SetPitch(CNtlMath::LineToAngleX(&vLookAt));
@@ -4074,7 +4086,7 @@ void CNtlCameraObserver::SetIndex(RwInt32 nType, RwInt32 nIndex)
         GetNtlGameCameraManager()->SetCameraPos(&m_mapPos[m_nIndex].vPos);
         GetNtlGameCameraManager()->SetLookAt(&m_mapPos[m_nIndex].vTarget);
 
-        //// 프리 카메라를 위해서 Pitch와 Yaw를 저장한다.
+        //// Save Pitch and Yaw for free camera.
         //RwV3d vLookAt = m_mapPos[m_nIndex].vTarget - m_mapPos[m_nIndex].vPos;
         //RwV3dNormalize(&vLookAt, &vLookAt);        
         //GetNtlGameCameraManager()->SetPitch(CNtlMath::LineToAngleX(&vLookAt));
@@ -4101,7 +4113,7 @@ RwBool CNtlCameraObserver::LoadObserverCameraData()
         if(pData == NULL)
             return FALSE;
 
-        // 버퍼 + 1 생성
+        // Create buffer + 1
         char* pBuffer = NTL_NEW char[nSize + 1];
         memcpy(pBuffer, pData, sizeof(char) * nSize);
         pBuffer[nSize] = '\0';

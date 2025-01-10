@@ -116,7 +116,7 @@ protected:
 	RwBool					CreateWater();
 	RwBool					CreatePlant();	
 			
-	virtual	RwBool			UpdateFieldMap(RwV3d& Pos); // 인도어 : virtual 재정의
+	virtual	RwBool			UpdateFieldMap(RwV3d& Pos); // Indoor: redefine virtual
 	void					UpdateDatumDir();
 	void					UpdateNeighborFields(RwV3d& Pos);
 	void					UpdateLODAttr(RwV3d& Pos);
@@ -125,7 +125,7 @@ protected:
 	void					UpdateSky(RwV3d* pPosAvatar);
 	void					UpdateFog(RwV3d* pPosAvatar);
 	void					UpdateShoreLine(RwReal _ElapsedTime);
-	virtual void			UpdateMsg(RwV3d& Pos); // 인도어 : virtual 재정의
+	virtual void			UpdateMsg(RwV3d& Pos); // Indoor: redefine virtual
 	void					UpdateSectors();
 	virtual void			UpdateVisibleSectors();
 	VOID					UpdateCurMapName(RwV3d& Pos);
@@ -135,16 +135,16 @@ protected:
 	RwBool					IsFieldValid(RwV3d& Pos);
 	RwBool					IsThereNewRegion2Load();	
 			
-	virtual VOID			LoadPVS(); // 인도어 : virtual 재정의
-	virtual VOID			RefreshCurSectorPVS(RwInt32 _SectorIdx); // 인도어 : virtual 재정의
-	virtual VOID			RefreshOldSectorPVS(RwInt32 _SectorIdx); // 인도어 : virtual 재정의
+	virtual VOID			LoadPVS(); // Indoor: redefine virtual
+	virtual VOID			RefreshCurSectorPVS(RwInt32 _SectorIdx); // Indoor: redefine virtual
+	virtual VOID			RefreshOldSectorPVS(RwInt32 _SectorIdx); // Indoor: redefine virtual
 
 public:
 	CNtlWorldFieldManager(RpWorld *pNtlWorld, RwV3d& SpawnPos, EActiveWorldType _ActiveWorldtype);
 	virtual ~CNtlWorldFieldManager();
 
-	virtual void			Init(RpWorld *pNtlWorld, RwV3d& SpawnPos); // 인도어 : virtual 재정의
-	virtual void			Free(); // 인도어 : virtual 재정의
+	virtual void			Init(RpWorld *pNtlWorld, RwV3d& SpawnPos); // Indoor: redefine virtual
+	virtual void			Free(); // Indoor: redefine virtual
 
 	virtual void			InitSingleInstance();
 	virtual void			FreeSingleInstance();
@@ -152,20 +152,20 @@ public:
 
 	virtual RpWorld*		GetWorld() { return m_pRpWorld; }
 	
-	// 인도어
+	// Indoor
 	virtual void			CreateRpWorld();
 	virtual void			DestroyRpWorld();
 
 	RwBool					CreateBloom();
 	RwBool					CreateLight();
 
-	virtual void			CreateSectorMap(RpWorld *pNtlWorld); // 인도어 virtual 재정의
+	virtual void			CreateSectorMap(RpWorld *pNtlWorld); // Indoor virtual redefinition
 	
-	virtual RwBool			CreateFields(RwInt32 FieldIdx); // 인도어 virtual 재정의
-	virtual RwBool			CreateFieldInMemory(RwInt32 FieldIdx); // 인도어 virtual 재정의
-	virtual RwBool			CreateFieldFromFile(RwInt32 FieldIdx); // 인도어 virtual 재정의
+	virtual RwBool			CreateFields(RwInt32 FieldIdx); // Indoor virtual redefinition
+	virtual RwBool			CreateFieldInMemory(RwInt32 FieldIdx); // Indoor virtual redefinition
+	virtual RwBool			CreateFieldFromFile(RwInt32 FieldIdx); // Indoor virtual redefinition
 
-	RpWorld*				Create(RpWorld *pNtlWorld); // 없는 함수 같은데.
+	RpWorld*				Create(RpWorld *pNtlWorld); // It seems like a function that doesn't exist.
 	VOID					DestroyDragoneSky();
 	VOID					DestroyBloom();
 	void					DestroySky();
@@ -174,23 +174,23 @@ public:
 	void					DestroyLight();
 	void					DestroyPlant();
 
-	virtual VOID			DeleteFiles4Field(RwInt32 FieldIdx);  // 인도어 virtual 재정의
-	virtual RwBool			DeleteFields(RwInt32 FieldIdx); // 인도어 virtual 재정의
-	virtual RwBool			DeleteFieldInMemory(RwInt32 FieldIdx, RwBool SaveSwapInToolMode = TRUE);  // 인도어 virtual 재정의
-	virtual RwBool			DeleteFieldIntoFile(RwInt32 FieldIdx); // 인도어 virtual 재정의
-	virtual RwBool			DeleteFieldThenCreateNew(RwInt32 FieldIdx); // 인도어 virtual 재정의
+	virtual VOID			DeleteFiles4Field(RwInt32 FieldIdx);  //  virtual redefinition
+	virtual RwBool			DeleteFields(RwInt32 FieldIdx); //  virtual redefinition
+	virtual RwBool			DeleteFieldInMemory(RwInt32 FieldIdx, RwBool SaveSwapInToolMode = TRUE);  // Indoor virtual redefinition
+	virtual RwBool			DeleteFieldIntoFile(RwInt32 FieldIdx); //  virtual redefinition
+	virtual RwBool			DeleteFieldThenCreateNew(RwInt32 FieldIdx); //  virtual redefinition
 				
-	virtual void			UpdateAnotherField(); // 인도어 virtual 재정의
+	virtual void			UpdateAnotherField(); // Indoor virtual redefinition
 	void					UpdateCurFieldTexLyr(RwInt32 IdxLyr, RwInt32 IdxMenu);
 	void					UpdateCurFieldTexMat(RwInt32 IdxLyr);
 	void					UpdateCurFieldTexAdd(RwInt32 IdxLyr);
-	virtual void			Update(RwV3d& AvatarPos, RwReal _ElapsedTime); // 인도어 virtual 재정의
+	virtual void			Update(RwV3d& AvatarPos, RwReal _ElapsedTime); // Indoor virtual redefinition
 	void					Render();
 	void					RenderWater(CNtlWorldSector* pNtlWorldSector, RxD3D9InstanceData* pInstancedData, RxD3D9ResEntryHeader *pResEntryHeader);
 
 	// could get interpolated height at _Pos. The value could be gotten from some memory or file
 	RwBool					GetHeight(RwV3d& _Pos);
-	virtual RwBool			GetWorldReady(); // 인도어 : virtual 로 재정의
+	virtual RwBool			GetWorldReady(); // Indoor: redefined as virtual
 	EActiveWorldType		GetActiveWorldType() { return m_ActiveWorldType; }
 	RwBool					GetFieldSectorIndices(RwInt32 _FieldIdx, RwInt32 _FieldSectorIndices[4]);
 	CNtlPLPlanetHandler*	GetPlanetHandler() { return m_pPlanetHandler; }
@@ -203,7 +203,7 @@ public:
 	virtual DWORD			GetMapTileProp(RwV3d& Pos);
 	virtual BYTE			GetMaterialTileProp(RwV3d& Pos);
 
-	virtual RwReal			GetWaterHeight(RwV3d& Pos);	// 인도어 : virtual 재정의
+	virtual RwReal			GetWaterHeight(RwV3d& Pos);	// Indoor: redefine virtual
 	RwInt32					GetCurField() { return m_IdxCurField; }
 	const CNtlWorldField*	GetFields() { return m_pFields; }
 	RwBool					GetVertInMemory(RwV3d& DatumPt, RwV3d& Result);
@@ -212,7 +212,7 @@ public:
 	RwInt32					GetFieldIdx(RwV3d& Pos);
 	sCUR_FIELD_TEX_INFO*	GetTexAttr();
 	sCUR_FIELD_TEX_INFO*	GetTexAttr(RwInt32 IdxField);
-	virtual RwBool			GetAFieldProp(RwV3d& Pos, sNTL_FIELD_PROP& NtlFieldProp); // 인도어 : virtual 재정의
+	virtual RwBool			GetAFieldProp(RwV3d& Pos, sNTL_FIELD_PROP& NtlFieldProp); // Indoor: redefine virtual
 	
 	RpAtomic*				GetAtomic(RwV3d& Pos);
 	
@@ -224,13 +224,13 @@ public:
 	RwBool					GetClrVertList(RwV3d& PosCurVert, RwRGBA* pClrVertList);
 	RwBool					GetNeighborFields(RwInt32 _IdxCurField, vector<RwInt32>& _vecNeighborFields);
 	VOID					GetVisible2DAABB(C2DAABB& _2DAABB);
-	virtual RwBool			GetWorldShadowColor(RwV3d& Pos, RwRGBA* pOutColor); // 인도어 : virtual 재정의
-	virtual RwBool			GetWorldLightColor(RwV3d& Pos, RwRGBA* pOutColor, RwBool bCalcShadow); // 인도어 : virtual 재정의
+	virtual RwBool			GetWorldShadowColor(RwV3d& Pos, RwRGBA* pOutColor); // Indoor: redefine virtual
+	virtual RwBool			GetWorldLightColor(RwV3d& Pos, RwRGBA* pOutColor, RwBool bCalcShadow); // Indoor: redefine virtual
 	RwInt32					GetSelSectorIdxCntInField(RwInt32 _SectorIdx, RwInt32 _FieldIdx);
 	RwBool					SetClrVertList(RwV3d& PosCurVert, RwRGBA* pClrVertList);
 	RwBool					SetHeight(RwV3d& PosSectorDatum, RwV3d& PosTileDatum);
-	virtual RwBool			SetAFieldProp(RwV3d& Pos, sNTL_FIELD_PROP& NtlFieldProp, eNTL_FIELD_PROPID NtlFieldPropID); // 인도어 : virtual 재정의
-	virtual void			SetAnotherField(RwBool ChangeStraightAway = FALSE); // 인도어 : virtual 재정의
+	virtual RwBool			SetAFieldProp(RwV3d& Pos, sNTL_FIELD_PROP& NtlFieldProp, eNTL_FIELD_PROPID NtlFieldPropID); // Indoor : redefine virtual
+	virtual void			SetAnotherField(RwBool ChangeStraightAway = FALSE); // Indoor: redefine virtual
 	RwBool					SetPortalPosition(RwV3d& Pos, RwBool _RUFInitFlag = TRUE);	
 	VOID					SetPVSActivation(RwBool _Flag);
 
@@ -238,7 +238,7 @@ public:
 
 	virtual RwV3d			GetFieldRelativeCoord(RwInt32 iSField, RwInt32 iEField);
 
-	virtual RwBool			IsFieldLoaded(RwInt32 FieldIdx); // 인도어 : virtual 재정의
+	virtual RwBool			IsFieldLoaded(RwInt32 FieldIdx); // Indoor: redefine virtual
 	RwBool					RefreshField(RwInt32 FieldIdx);
 	RwBool					RefreshPVS();
 	RwBool					RefreshFieldAll();
@@ -248,17 +248,17 @@ public:
 	virtual	RwBool			Pick(RwInt32 ScreenPosX, RwInt32 ScreenPosY, RwV3d& IntersectionPt, sNtlWorldCollisionInfo* pOutWorldCollsionInfo);
 	virtual RwBool			Pick(RwV3d& StartPos, RwV3d& EndPos, RwV3d& IntersectionPt, sNtlWorldCollisionInfo* pOutWorldCollsionInfo);
 	virtual	RwBool			PickTerrain(RwInt32 ScreenPosX, RwInt32 ScreenPosY, RwV3d& IntersectionPt);
-	virtual RwBool			PickTerrain(RwV3d& StartPos, RwV3d& EndPos, RwV3d& IntersectionPt); // 인도어 : virtual 재정의
+	virtual RwBool			PickTerrain(RwV3d& StartPos, RwV3d& EndPos, RwV3d& IntersectionPt); // Indoor: redefine virtual
 
 	RwBool					SaveField(RwInt32 FieldIdx);
 	RwBool					SaveCurFields();
-	virtual RwBool			SaveCurFieldsBeforeExit(); // 인도어 : virtual 재정의
+	virtual RwBool			SaveCurFieldsBeforeExit(); // Indoor: redefine virtual
 	void					SaveSwapFile(RwInt32 FieldIdx);
 
-	// 인도어
+	// Indoor
 	virtual RwBool			GetWorldDecal(RwV3d& vPosition, RwV3d& vSize, RwInt32 nPolyMaxCount, RwInt32& nRenderVertexCount, RwReal& fUpdateVertextRadius, RwIm3DVertex* pVertices, RwReal OffsetY = 0.1f);
 
-	// 인도어
+	// Indoor
 	virtual void			GetSectopMap(RpWorldSector* pRpWorldSector, std::vector<CNtlWorldSector*>& vecNtlWorldSector);
 
 #ifdef dNTL_WORLD_TOOL_MODE

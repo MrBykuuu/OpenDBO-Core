@@ -6,7 +6,7 @@
 
 /**
 *
-*  Default constructor for CNtlStageManager
+* Default constructor for CNtlStageManager
 *
 */
 CNtlStageManager::CNtlStageManager()
@@ -25,9 +25,9 @@ CNtlStageManager::~CNtlStageManager()
 
 /**
 *
-*  \param pStageName는 stage name이다.
+*  \param pStageName is the stage name.
 *
-*  \return stage name에 해당하는 stage를 pointer를 리턴한다. 없으면 NULL.
+*  \return Returns a pointer to the stage corresponding to the stage name. If not, NULL.
 */
 CNtlStage* CNtlStageManager::FindActiveStage(const char *pStageName)
 {
@@ -81,8 +81,8 @@ CNtlStage* CNtlStageManager::GetActiveStage(void)
 
 
 /**
-*  stage를 destroy 시킨다.
-*  \param pStage는 destroy시킬 stage pointer이다.
+*Destroys the stage.
+*  \param pStage is the stage pointer to be destroyed.
 */
 void CNtlStageManager::DeleteStage(CNtlStage *pStage)
 {
@@ -98,9 +98,9 @@ void CNtlStageManager::DeleteStage(CNtlStage *pStage)
 }
 
 /**
-*  이 함수는 stage manager를 instance를 생성한 다음 곧바로 호출한다.
-*  이 함수의 기능은 stage manager가 처리한 event를 등록한다.
-*  event에는 stage create 와 stage delete event가 존재한다.
+*  This function creates an instance of the stage manager and then calls it immediately.
+*  The function of this function registers the event processed by the stage manager.
+*  Events include stage create and stage delete events.
 */
 
 bool CNtlStageManager::Create(void)
@@ -117,9 +117,9 @@ bool CNtlStageManager::Create(void)
 }
 
 /**
-*  이 함수는 stage manager 객체를 삭제하기 전에 호출한다.
-*  여기에는 등록된 event를 모두 해제한다.
-*  관리하고 있는 active stage를 모두 삭제한다.
+*  This function is called before deleting the stage manager object.
+*  All registered events are released here.
+*  Delete all managed active stages.
 */
 
 void CNtlStageManager::Destroy(void)
@@ -161,8 +161,8 @@ void CNtlStageManager::PostRender(void)
 
 
 /**
-*  Event Handler 함수.
-*  \param pMsg는 event message이며, message안에 event id와 data 정보가 포함되어 있다.
+*  Event Handler function.
+*  \param pMsg is an event message, and the message contains event id and data information.
 */
 
 void CNtlStageManager::HandleEvents(RWS::CMsg &pMsg)

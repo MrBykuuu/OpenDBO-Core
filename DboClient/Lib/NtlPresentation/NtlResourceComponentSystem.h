@@ -2,7 +2,7 @@
 //	File		:	NtlResourceComponentSystem.h
 //	Desc		:	
 //	Begin		:	2006. 7.28
-//	Copyright	:	ⓒ 2006 by agebreak CO., Ltd
+//	Copyright	:	? 2006 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -35,8 +35,8 @@ public:
         RESOURCE_SYSTEMTYPE_LINE,
         RESOURCE_SYSTEMTYPE_UPGRADE,
         RESOURCE_SYSTEMTYPE_TRAIL,
-        RESOURCE_VERTEX_1024,                       /// 리소스 시스템은 아니지만, Vertex 메모리 풀을 위해 추가한다.
-        RESOURCE_VERTEX_5120,                       /// 리소스 시스템은 아니지만, Vertex 메모리 풀을 위해 추가한다.
+        RESOURCE_VERTEX_1024,                       /// Although it is not a resource system, it is added for the Vertex memory pool.
+        RESOURCE_VERTEX_5120,                       /// Although it is not a resource system, it is added for the Vertex memory pool.
 	};
 
 //#ifdef RWDEBUG
@@ -69,8 +69,8 @@ public:
 	RwMatrix			m_matWorld;
 	RwMatrix			m_matPathWorld;
 
-    SGroundFlag         m_sGroundFlag;              ///< 지면에서 표시될 이펙트를 설정하는 구조체
-    RwReal              m_fBoundSphereRadius;       ///< 바운딩 스피어 반지름    
+    SGroundFlag         m_sGroundFlag;              ///< Structure that sets the effect to be displayed on the ground
+    RwReal              m_fBoundSphereRadius;       ///< Bounding sphere radius    
 
 public:
 	CNtlResourceComponentSystem(const RwChar* strName);

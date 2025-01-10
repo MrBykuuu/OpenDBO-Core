@@ -1,7 +1,7 @@
 #include "precomp_dboclient.h"
 #include "BroadCastGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
 // gui library
@@ -18,7 +18,7 @@
 #include "NtlSLEventFunc.h"
 #include "NtlSLLogic.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
 // Dbo
@@ -95,7 +95,7 @@ RwBool CBroadCastGui::Create()
 	m_aCallUpdateState[STATE_DIRECTION_OUT_END]		= &CBroadCastGui::UpdateDirectionOutEnd;
 	m_aCallUpdateState[STATE_CLOSE]					= &CBroadCastGui::UpdateClose;
 
-	// Init ( 화면에 안 보이게 설정 )
+	// Init (set to not show on screen)
 	m_pThis->SetPosition( GetDboGlobal()->GetScreenWidth(), 0 );
 
 	GetNtlGuiManager()->AddUpdateFunc( this );
@@ -126,7 +126,7 @@ VOID CBroadCastGui::Update( RwReal fElapsed )
 	if( !m_bPlay )
 		return;
 
-	// Flash가 플레이 중이면 업데이트 해준다.
+	// If Flash is playing, it will be updated.
 	for( RwInt32 i=0; i<dBROAD_BALLOON_SHAPE_NUMS; ++i )
 	{
 		if( m_paFlaBalloon[i]->IsPlayMovie() )
@@ -139,19 +139,19 @@ VOID CBroadCastGui::Update( RwReal fElapsed )
 	if( m_pHtmlText->IsVisible() )
 		m_pHtmlText->Update( fElapsed );
 
-	// 각 스테이트에 맞춰서 Update 함수 호출
+	// Call the Update function for each state
 	(this->*m_aCallUpdateState[m_byState])( fElapsed );
 }
 
 VOID CBroadCastGui::HandleEvents( RWS::CMsg &msg )
 {
-	// g_EventBroadMsgBegNfy : BroadCast Message를 시작하라는 Event
+	// g_EventBroadMsgBegNfy: Event to start BroadCast Message
 	if( msg.Id == g_EventBroadMsgBegNfy )
 	{
 		SNtlEventBroadMsgBegNfy* pNotify = reinterpret_cast< SNtlEventBroadMsgBegNfy* >( msg.pData );
 
-		// 현재 출력되고 있는 Unit이 없다면 바로 시작한다.
-		// 만약 현재 출력되고 있던 Unit이 있다면 현재 출력되고 있던 Type에 따라 새로운 Data로 세팅한다.
+		// If there is no unit currently being output, it starts immediately.
+		// If there is a unit that is currently being output, set it as new data according to the type that is currently being output.
 		if( !m_bCurUnit )
 		{
 			SetCurUnitData( pNotify->byMsgType, pNotify->defMsgDataList );
@@ -170,7 +170,7 @@ VOID CBroadCastGui::HandleEvents( RWS::CMsg &msg )
 			case eBROAD_MSG_TYPE_TS:
 			case eBROAD_MSG_TYPE_EMERGENCY:
 				{
-					// 같은 타입이라고 지칭하고 현재 있는 것을 완전히 종료하고 새로운 데이타로 세팅한다.
+					// It refers to the same type, completely terminates the current one, and sets it with new data.
 					if( pNotify->byMsgType == eBROAD_MSG_TYPE_TS ||
 						pNotify->byMsgType == eBROAD_MSG_TYPE_EMERGENCY )
 					{
@@ -185,7 +185,7 @@ VOID CBroadCastGui::HandleEvents( RWS::CMsg &msg )
 					{
 						DeleteDeqUnit( pNotify->byMsgType );
 
-						// 현재 있는 Unit을 보관하고 새로운 Unit으로 세팅하여 플레이한다.
+						// Save the current unit and set it as a new unit to play.
 						SaveCurUnitData();
 						SetCurUnitData( pNotify->byMsgType, pNotify->defMsgDataList );
 						SetCurMsgData( m_CurUnit );
@@ -200,14 +200,14 @@ VOID CBroadCastGui::HandleEvents( RWS::CMsg &msg )
 				{
 					if( pNotify->byMsgType != eBROAD_MSG_TYPE_MINI_NARRATION )
 					{
-						// TS와 Emergency가 있다면 삭제해준다.
+						// If there are TS and Emergency, delete them.
 						DeleteDeqUnit( eBROAD_MSG_TYPE_TS );
 						DeleteDeqUnit( eBROAD_MSG_TYPE_EMERGENCY );
 						
-						// 현재 있는 Unit을 보관하고 새로운 Unit으로 세팅하여 플레이한다.
+						// Save the current unit and set it as a new unit to play.
 						SaveCurUnitData();
 
-						// 새로운 Unit 세팅
+						// New unit settings
 						SetCurUnitData( pNotify->byMsgType, pNotify->defMsgDataList );
 						SetCurMsgData( m_CurUnit );
 
@@ -217,8 +217,8 @@ VOID CBroadCastGui::HandleEvents( RWS::CMsg &msg )
 					}
 					else
 					{
-						// 미니 나레이션일 경우 현재 있는 미니 나레이션은 무시하고 새로운 미니 나레이션을 세팅하여
-						// 출력한다.
+						// In the case of mini narration, ignore the current mini narration and set a new mini narration.
+						// Print out.
 						SetCurUnitData( pNotify->byMsgType, pNotify->defMsgDataList );
 						SetCurMsgData( m_CurUnit );
 
@@ -231,13 +231,13 @@ VOID CBroadCastGui::HandleEvents( RWS::CMsg &msg )
 			}
 		}
 	}
-	// g_EventBroadMsgEndNfy : 현재 출력되고 있는 메시지를 삭제하라는 Event
+	// g_EventBroadMsgEndNfy : Event to delete the currently output message
 	else if( msg.Id == g_EventBroadMsgEndNfy )
 	{
 		SNtlEventBroadMsgEndNfy* pNotify = reinterpret_cast< SNtlEventBroadMsgEndNfy* >( msg.pData );
 
-		// 현재 출력 중인 Unit가 삭제하라는 Unit이라면 종료 상태로 가고 예약되어 있는 Unit이라면
-		// 예약된 Unit 들 중에 같은 Type들을 모두 다 삭제한다.
+		// If the unit currently being output is a unit to be deleted, it goes to the terminated state. If the unit is reserved,
+		// Delete all of the same types among reserved units.
 		if( m_bCurUnit )
 		{
 			if( pNotify->byMsgType == m_CurUnit.m_byMsgType )
@@ -251,7 +251,7 @@ VOID CBroadCastGui::HandleEvents( RWS::CMsg &msg )
 			}
 		}
 	}
-	// g_EventWorldChange : World가 Change 되었다는 Event. 현재 출력 중인 것을 종료시키고 예약되어 있는 모든 유닛을 삭제한다.
+	// g_EventWorldChange: Event that the world has changed. Terminates the currently printing process and deletes all reserved units.
 	if( msg.Id == g_EventWorldChange )
 	{
 		SNtlEventWorldChange* pWorldChange = reinterpret_cast<SNtlEventWorldChange*>(msg.pData);
@@ -270,29 +270,29 @@ VOID CBroadCastGui::HandleEvents( RWS::CMsg &msg )
 }
 
 /**
-* \brief 나타나는 연출 시작
+* \brief The production that appears begins
 */
 VOID CBroadCastGui::UpdateDirectionInStart( RwReal fElapsed )
 {
-	// Illust 를 세팅한다.
+	// Set Illust.
 	SetIllust( m_sCurData.uiOwnerTblIdx, m_sCurData.eOwnerCondition );
 	SetillustPos( m_pThis->GetScreenRect().left, m_pThis->GetScreenRect().top );
 		
-	// Dialog를 연다.
+	// Open the dialog.
 	GetDialogManager()->OpenDialog( DIALOG_BROADCAST );
 
-	// HtmlBox에 내용을 세팅한다.
+	// Set the content in the HtmlBox
 	SetHtmlString( m_sCurData.wstrSpeech.c_str(), m_sCurData.wstrSpeech.length() );
 	m_pHtmlText->Show( false );
 	
-	// 모든 말풍선을 감춘다.
+	// Hide all speech bubbles.
 	HideAllBalloon();
 
-	// BroadCast와 화면 상 X 위치와 Y 위치를 계산한다. (UIConfig.xml) 에서 읽어들임
+	// BroadCast and calculates the X and Y positions on the screen. Read from (UIConfig.xml)
 	RwInt32 nXPos = (RwInt32)(m_pBroadCastConfig->fPosXRate * GetDboGlobal()->GetScreenWidth());
 	RwInt32 nYPos = (RwInt32)(m_pBroadCastConfig->fPosYRate * GetDboGlobal()->GetScreenHeight());
 
-	// ShowHide Type 따른 초기화를 해준다.
+	// Initializes according to ShowHide Type.
 	switch( m_sCurData.eUIShowHideType )
 	{
 	case eBROAD_MSG_UI_SHOWHIDE_DIR_TYPE_NORMAL:
@@ -356,11 +356,11 @@ VOID CBroadCastGui::UpdateDirectionInStart( RwReal fElapsed )
 }
 
 /**
-* \brief 들어오는 연출
+* \brief Incoming production
 */
 VOID CBroadCastGui::UpdateDirectionIn( RwReal fElapsed )
 {
-	// Show Hide에 따라서 들어오는 연출 중에 해줘야하는 작업을 수행한다.
+	// According to the Show Hide, the work that needs to be done during the incoming production is performed.
 	RwInt32 nYPos = (RwInt32)(m_pBroadCastConfig->fPosYRate * GetDboGlobal()->GetScreenHeight());
 	switch( m_sCurData.eUIShowHideType )
 	{
@@ -402,11 +402,11 @@ VOID CBroadCastGui::UpdateDirectionIn( RwReal fElapsed )
 }
 
 /**
-* \brief 들어오는 연출이 끝날 때
+* \brief When the incoming production ends
 */
 VOID CBroadCastGui::UpdateDirectionInEnd( RwReal fElapsed )
 {
-	// Interval 상태 회복
+	// Interval state recovery
 	m_pHtmlText->SetIntervalTextDisable();
 
 	// Show/Hide Direction
@@ -478,11 +478,11 @@ VOID CBroadCastGui::UpdateDirectionInEnd( RwReal fElapsed )
 }
 
 /**
-* \brief 오픈 중의 연출
+* \brief Direction during opening
 */
 VOID CBroadCastGui::UpdateOpen( RwReal fElapsed )
 {
-	// Text Direction ( Blending만 따로 연출 )
+	// Text Direction (only blending is produced separately)
 	switch( m_sCurData.eUISpeechDirType )
 	{
 	case eBROAD_MSG_UI_SPEECH_DIR_TYPE_NORMAL:
@@ -500,7 +500,7 @@ VOID CBroadCastGui::UpdateOpen( RwReal fElapsed )
 		break;
 	}
 
-	// Shake Direction ( Shake는 공통 )
+	// Shake Direction (Shake is common)
 	switch( m_sCurData.eUIDirType )
 	{
 	case eBROAD_MSG_UI_DIR_TYPE_NORMAL:
@@ -540,10 +540,10 @@ VOID CBroadCastGui::UpdateOpen( RwReal fElapsed )
 
 	m_fElapsed += fElapsed;
 	
-	// 현재 Unit의 타임이 끝나면 넘어간다.
+	// When the current unit's time expires, it moves on.
 	if( m_sCurData.fDisplayTime < m_fElapsed )
 	{
-		// 특별한 경우 : 만약 HtmlData가 다음 페이지가 있을 경우 다시 Open 상태로 돌아간다. ( Line에 대비하여 )
+		// Special case: If HtmlData has the next page, it returns to the Open state again. (In contrast to Line)
 		if( m_pHtmlText->SetNextPage() )
 		{
 			m_fElapsed = 0.0f;
@@ -558,11 +558,11 @@ VOID CBroadCastGui::UpdateOpen( RwReal fElapsed )
 }
 
 /**
-* \brief 끝나는 연출의 시작
+* \brief The beginning of the ending and the production
 */
 VOID CBroadCastGui::UpdateDirectionOutStart( RwReal fElapsed )
 {
-	// Text Direction 회복 해줘야 할 것들
+	// Text Direction Things that need to be restored
 	switch( m_sCurData.eUISpeechDirType )
 	{
 	case eBROAD_MSG_UI_SPEECH_DIR_TYPE_NORMAL:
@@ -574,7 +574,7 @@ VOID CBroadCastGui::UpdateDirectionOutStart( RwReal fElapsed )
 		break;
 	}
 
-	// Shake Direction ( Shake는 공통 )
+	// Shake Direction (Shake is common)
 	switch( m_sCurData.eUIDirType )
 	{
 	case eBROAD_MSG_UI_DIR_TYPE_NORMAL:
@@ -587,8 +587,8 @@ VOID CBroadCastGui::UpdateDirectionOutStart( RwReal fElapsed )
 		break;
 	}
 
-	// 만약 현재 유닛의 메시지 리스트에 남아 있는 것이 있다면 일러스트, 텍스트, Balloon 등을 세팅해주고
-	// 다시 STATE_OPEN 상태로 간다. ( 데이터가 유효한 경우만 )
+	// If there are any remaining messages in the current unit's message list, set the illustration, text, balloon, etc.
+	// It goes back to STATE_OPEN state. (Only if data is valid)
 	if( !m_CurUnit.m_vecMsgDataList.empty() && m_bCurUnit )
 	{
 		RwBool bChangeIllust = FALSE;
@@ -616,11 +616,11 @@ VOID CBroadCastGui::UpdateDirectionOutStart( RwReal fElapsed )
 			}
 		}
 
-		// Text 세팅
+		// Text settings
 		SetHtmlString( m_sCurData.wstrSpeech.c_str(), m_sCurData.wstrSpeech.length() );
 		m_pHtmlText->Show( true );
 
-		// Balloon 세팅
+		// Balloon setting
 		HideAllBalloon();
 		ShowBalloon((RwUInt8)m_sCurData.eUIBalloonShapeType, m_bSmallText );
 
@@ -659,17 +659,17 @@ VOID CBroadCastGui::UpdateDirectionOutStart( RwReal fElapsed )
 	case eBROAD_MSG_UI_SHOWHIDE_DIR_TYPE_NORMAL:
 	case eBROAD_MSG_UI_SHOWHIDE_DIR_TYPE_FADE:
 		{
-			// 현재 상태에서 가감해야 한다.
+			// It must be added or subtracted from the current state.
 			m_conAlpha.SetAccel( (RwReal)m_surIllust.GetAlpha(), (RwReal)0, m_pBroadCastConfig->fBlendStartVel,
 				m_pBroadCastConfig->fBlendAccelVel );
 		}
 		break;
 	case eBROAD_MSG_UI_SHOWHIDE_DIR_TYPE_SLIDE:
 		{
-			// 말풍선 닫기
+			// Close speech bubble
 			HideAllBalloon();
 			m_pHtmlText->Show( false );
-			// 가속도 컨트롤러를 사용하여 슬라이딩 팩터를 적용
+			// Apply a sliding factor using an acceleration controller
 			m_conAccel.SetAccel( (RwReal)m_pThis->GetScreenRect().left, 
 				(RwReal)GetDboGlobal()->GetScreenWidth(), 
 				m_pBroadCastConfig->fSlideStartVel, 
@@ -679,10 +679,10 @@ VOID CBroadCastGui::UpdateDirectionOutStart( RwReal fElapsed )
 		break;
 	case eBROAD_MSG_UI_SHOWHIDE_DIR_TYPE_FADE_SLIDE:
 		{
-			// 말풍선 닫기
+			// Close speech bubble
 			HideAllBalloon();
 			m_pHtmlText->Show( false );
-			// 가속도 컨트롤러를 사용하여 슬라이딩 팩터를 적용
+			// Apply a sliding factor using an acceleration controller
 			m_conAccel.SetAccel( (RwReal)m_pThis->GetScreenRect().left, 
 				(RwReal)(m_pBroadCastConfig->fPosXRate*GetDboGlobal()->GetScreenWidth())+m_pBroadCastConfig->fFadeSlidePos, 
 				m_pBroadCastConfig->fFadeSlideStartVel, 
@@ -697,7 +697,7 @@ VOID CBroadCastGui::UpdateDirectionOutStart( RwReal fElapsed )
 }
 
 /**
-* \brief 끝나는 연출 중
+* \brief Ending production
 */
 VOID CBroadCastGui::UpdateDirectionOut( RwReal fElapsed )
 {
@@ -742,11 +742,11 @@ VOID CBroadCastGui::UpdateDirectionOut( RwReal fElapsed )
 }
 
 /**
-* \brief 끝나는 연출 끝
+* \brief End of directing
 */
 VOID CBroadCastGui::UpdateDirectionOutEnd( RwReal fElapsed )
 {
-	// 현재 Unit중 남은 것이 있다면 새로운 Unit을 꺼내온다.
+	// If there are any remaining units among the current units, a new unit is taken out.
 	if( !m_deqUnit.empty() )
 	{
 		deqBroadUnit::iterator it = m_deqUnit.begin();
@@ -765,11 +765,11 @@ VOID CBroadCastGui::UpdateDirectionOutEnd( RwReal fElapsed )
 }
 
 /**
-* \brief 끝나는 중
+* \brief Ending
 */
 VOID CBroadCastGui::UpdateClose( RwReal fElapsed )
 {
-	// 현재 데이타 무효함 & 플레이 멈춤
+	// Current data is invalid & play stops
 	m_bCurUnit = FALSE;
 	m_pStbName->Clear();
 	
@@ -798,14 +798,14 @@ VOID CBroadCastGui::SetState( RwUInt8 byState )
 }
 
 /**
-* \brief 현재 출력되는 Unit을 세팅한다.
+* \brief Sets the currently output unit.
 */
 VOID CBroadCastGui::SetCurUnitData( RwUInt8 byMsgType, vecdef_BroadMsgDataList& vecList )
 {
 	m_CurUnit.SetData( byMsgType, vecList );
 	m_bCurUnit = TRUE;
 
-	// Dialog 우선 순위 적용
+	// Apply dialog priority
 	
 	RwUInt16 wPriority = dDIALOGPRIORITY_BROADCAST_TS;
 	switch( byMsgType )
@@ -826,7 +826,7 @@ VOID CBroadCastGui::SetCurUnitData( RwUInt8 byMsgType, vecdef_BroadMsgDataList& 
 
 
 /**
-* \brief Unit의 가장 첫번째 Vector의 Data를 꺼내서 현재 Data에 저장한다.
+* \brief Take out the data of the first vector of the unit and save it in the current data.
 */
 VOID CBroadCastGui::SetCurMsgData( CBroadCastUnit& unit )
 {
@@ -846,7 +846,7 @@ VOID CBroadCastGui::SetCurMsgData( CBroadCastUnit& unit )
 
 	m_pStbName->SetText( L"?" );
 
-	// 이름 지정
+	// Naming
 	if( m_sCurData.eOwnerType == eBROAD_MSG_OWNER_TYPE_NPC )
 	{
 		sNPC_TBLDAT* pNPCData = reinterpret_cast<sNPC_TBLDAT*>( API_GetTableContainer()->GetNpcTable()->FindData( m_sCurData.uiOwnerTblIdx ) );	
@@ -875,7 +875,7 @@ VOID CBroadCastGui::SetCurMsgData( CBroadCastUnit& unit )
 }
 
 /**
-* \brief Html String을 입력한다. ( 크기 계산 )
+* \brief Html String Enter . (size calculation)
 */
 VOID CBroadCastGui::SetHtmlString( const WCHAR* pString, RwInt32 nSize )
 {
@@ -900,7 +900,7 @@ VOID CBroadCastGui::SetHtmlString( const WCHAR* pString, RwInt32 nSize )
 }
 
 /**
-* \brief 현재 있는 Unit을 보관할 때는 Update된 타임을 저장해놓아야 한다.
+* \brief When storing the current unit, the updated time must be saved.
 */
 VOID CBroadCastGui::SaveCurUnitData()
 {
@@ -911,11 +911,11 @@ VOID CBroadCastGui::SaveCurUnitData()
 }
 
 /**
-* \brief Deq에 보관되어 메시지를 삭제한다.
+* \brief Deletes the message stored in Deq.
 */
 VOID CBroadCastGui::DeleteDeqUnit( RwInt8 byMsgType )
 {
-	// 다를 경우라면 보관중인 Unit중에서 같은 타입이 있나 찾아보고 있다면 삭제를 해준다음
+	// If they are different, look for the same type among the stored units and delete them.
 	deqBroadUnit::iterator it = m_deqUnit.begin();
 	while( it != m_deqUnit.end() )
 	{
@@ -930,7 +930,7 @@ VOID CBroadCastGui::DeleteDeqUnit( RwInt8 byMsgType )
 }
 
 /**
-* \brief 저장되어 있던 모든 Unit을 삭제한다.
+* \brief Deletes all saved Units.
 */
 VOID CBroadCastGui::DeleteDeqUnitAll()
 {
@@ -969,7 +969,7 @@ VOID CBroadCastGui::HideAllBalloon()
 }
 
 /**
-* \brief Illust를 File name으로 세팅한다.
+* Set \brief Illust as the File name.
 */
 VOID CBroadCastGui::SetIllust( const RwChar* pIllustName )
 {
@@ -992,7 +992,7 @@ VOID CBroadCastGui::SetIllust( const RwChar* pIllustName )
 }
 
 /**
-* \brief Illust를 Index와 condition으로 구성한다.
+* \brief The illustration is composed of index and condition.
 */
 VOID CBroadCastGui::SetIllust( RwUInt32 uiOwnerTblIdx, RwUInt32 uiOwnerCondition )
 {
@@ -1021,7 +1021,7 @@ VOID CBroadCastGui::SetIllust( RwUInt32 uiOwnerTblIdx, RwUInt32 uiOwnerCondition
 
 VOID CBroadCastGui::SetillustPos( RwInt32 nX, RwInt32 nY )
 {
-	// 좌표가 들어오는 기준은 m_pThis의 left, top으로 들어온다.
+	// The standard for receiving coordinates is the left and top of m_pThis.
 	CRectangle rtDialog = m_pThis->GetScreenRect();
 	RwInt32 nDlgWidth = rtDialog.GetWidth();
 	RwInt32 nDlgHeight = rtDialog.GetHeight();
@@ -1031,7 +1031,7 @@ VOID CBroadCastGui::SetillustPos( RwInt32 nX, RwInt32 nY )
 	RwInt32 nIllWidth = rtIllust.GetWidth();
 	RwInt32 nIllHeight = rtIllust.GetHeight();
 	
-	// 현재 컴포넌트의 중간에 위치할 수 있도록.
+	// So that it can be positioned in the middle of the current component.
 	RwInt32 nXOffset = (nDlgWidth - nIllWidth)/2;
 	RwInt32 nYOffset = (nDlgHeight - nIllHeight);
 	

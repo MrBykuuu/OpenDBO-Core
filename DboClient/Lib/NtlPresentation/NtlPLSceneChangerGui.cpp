@@ -1,13 +1,13 @@
 #include "precomp_ntlpresentation.h"
 #include "NtlPLSceneChangerGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// gui
+// Gui
 #include "gui_renderer.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
@@ -41,7 +41,7 @@ RwBool CNtlPLSceneChangerGui::Create()
 
 	Show(false);
 
-	// default
+	// Default
 	SetColor(dDEFAULT_RED, dDEFAULT_GREEN, dDEFAULT_BLUE);
 	SetAlpha(dDEFAULT_ALPHA);
 
@@ -129,18 +129,18 @@ VOID CNtlPLSceneChangerGui::OnPaintShutDownTV()
 {
 	CRectangle rtScreen = GetNtlGuiManager()->GetGuiManager()->GetScreenRect();
 	RwReal fRate = m_InterData.fCurTime/m_InterData.fUpdateTime;	
-	RwReal fHalfHeight = (RwReal)rtScreen.GetHeight()/2.f + 1; // 1 : 소수점 오차로 인한 수치 보정
+	RwReal fHalfHeight = (RwReal)rtScreen.GetHeight()/2.f + 1; // 1: Numerical correction due to decimal point error
 
 	if( m_eFadeInOut == EFADE_IN )
 	{
 
 		RwInt32 iHeight = (RwInt32)(fHalfHeight - (fHalfHeight * fRate));
 
-		// 상단 그리기
+		// top drawing
 		m_srfSurface.m_SnapShot.rtRect.SetRectWH(rtScreen.left, rtScreen.top, rtScreen.right, iHeight);
 		g_GuiRenderer.RenderQueue(&m_srfSurface.m_SnapShot, m_srfSurface.m_pTexture, true, m_srfSurface.m_fAngle);		
 
-		// 하단 그리기
+		// draw bottom
 		m_srfSurface.m_SnapShot.rtRect.SetRectWH(rtScreen.left, rtScreen.bottom - iHeight, rtScreen.right, iHeight);
 		g_GuiRenderer.RenderQueue(&m_srfSurface.m_SnapShot, m_srfSurface.m_pTexture, true, m_srfSurface.m_fAngle);
 	}
@@ -148,11 +148,11 @@ VOID CNtlPLSceneChangerGui::OnPaintShutDownTV()
 	{
 		RwInt32 iHeight = (RwInt32)(fHalfHeight * fRate);
 
-		// 상단 그리기
+		// top drawing
 		m_srfSurface.m_SnapShot.rtRect.SetRectWH(rtScreen.left, rtScreen.top, rtScreen.right, iHeight);
 		g_GuiRenderer.RenderQueue(&m_srfSurface.m_SnapShot, m_srfSurface.m_pTexture, true, m_srfSurface.m_fAngle);
 
-		// 하단 그리기
+		// draw bottom
 		m_srfSurface.m_SnapShot.rtRect.SetRectWH(rtScreen.left, rtScreen.bottom - iHeight, rtScreen.right, iHeight);
 		g_GuiRenderer.RenderQueue(&m_srfSurface.m_SnapShot, m_srfSurface.m_pTexture, true, m_srfSurface.m_fAngle);
 	}	
@@ -174,7 +174,7 @@ RwInt32 CNtlPLSceneChangerGui::SwitchDialog(bool bOpen)
 	}
 	else
 	{
-		// 다이얼로그가 닫힐 때 초기화
+		// Initialized when dialog is closed
 		Show(false);
 		SetColor(dDEFAULT_RED, dDEFAULT_GREEN, dDEFAULT_BLUE);
 		SetAlpha(dDEFAULT_ALPHA);
@@ -216,7 +216,7 @@ VOID CNtlPLSceneChangerGui::HandleEvents( RWS::CMsg &msg )
 		m_eFadeInOut				= EFADE_OUT;
 
 
-		// avooo's comment : 차후에 이벤트의 인자로 받을 여지가 있다
+		// avooo's comment: There is room to receive it as a factor for an event in the future.
 		if( m_byTransitionMode == CINEMATIC_FADEINOUT_SCREEN_PANEL )
 		{
 			m_InterData.byStartAlpha	= 0;

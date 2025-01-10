@@ -52,7 +52,7 @@ RwBool CDBCDragonDialogGUI::Create()
 
 	AdjustDialog();
 
-	// GUI Manager에 추가한다.
+	// Add to GUI Manager.
 	GetNtlGuiManager()->AddGui(this);	
 	GetNtlGuiManager()->AddUpdateFunc(this);
 
@@ -126,7 +126,7 @@ VOID CDBCDragonDialogGUI::SetText(RwInt32 nTblIdx, EDialogType eDialogType /* = 
 
 VOID CDBCDragonDialogGUI::SetText(std::wstring& strWString, EDialogType eDialogType /* = E_DIALOG_FIRST */)
 {
-	// 시간을 설정하지만 실제로는 경고 대사창만 시간이 경과한 후에 사라진다.
+	// You set the time, but in reality, only the warning dialog disappears after the time has elapsed.
 	m_SDragonDialog[eDialogType].m_fLifeTime = WARNNING_DIALOG_TIME;	
 	m_SDragonDialog[eDialogType].m_pStatic->SetText(strWString.c_str());
 	m_SDragonDialog[eDialogType].Show(TRUE);
@@ -154,7 +154,7 @@ void CDBCDragonDialogGUI::DeleteInstance()
 
 VOID CDBCDragonDialogGUI::HandleEvents( RWS::CMsg &pMsg ) 
 {
-	// World Concept이 끝날때 삭제한다.
+	// Delete when the World Concept is finished.
 	if(pMsg.Id == g_EventChangeWorldConceptState)
 	{
 		SNtlEventWorldConceptState* pEvent = reinterpret_cast<SNtlEventWorldConceptState*>( pMsg.pData );

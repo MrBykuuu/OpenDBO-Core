@@ -5,7 +5,7 @@
 * Date			: 2009. 4. 24
 * Abstract		: 
 *****************************************************************************
-* Desc			: Teleport proposal 들을 관리한다.
+* Desc			: Manages teleport proposals.
 *****************************************************************************/
 
 #ifndef __TELEPORT_PROPOSAL_MANAGER_H__

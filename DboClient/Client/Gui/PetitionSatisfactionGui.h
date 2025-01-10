@@ -1,19 +1,19 @@
 /******************************************************************************
-* File			: PetitionSatisFactionGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 10. 23
-* Abstract		: 
+*File           : PetitionSatisFactionGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : October 23, 2008
+*Abstract		: 
 *****************************************************************************
-* Desc			: GM과의 상담 내용 만족도 설문조사 GUI
+*Desc           : Satisfaction survey GUI on consultation with GM
 *****************************************************************************/
 
 #pragma once
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// share
+// Share
 #include "NtlSharedType.h"
 #include "NtlPetition.h"
 
@@ -42,15 +42,15 @@ protected:
 	gui::CSlot			m_slotRadioButton[dTEMP_GG];
 	gui::CSlot			m_slotSendButton;
 
-	gui::CStaticBox*	m_pDialogName;					///< 다이얼로그 제목
-	gui::CStaticBox*	m_pMessage;						///< 안내 메세지
-	gui::CStaticBox*	m_pToggleText[dTEMP_GG];		///< 만족도 텍스트
+	gui::CStaticBox*	m_pDialogName;					///< Dialog title
+	gui::CStaticBox*	m_pMessage;						///< Information message
+	gui::CStaticBox*	m_pToggleText[dTEMP_GG];		///< Satisfaction text
 
-	gui::CButton*		m_pCloseButton;					///< 닫기 버튼
-	gui::CButton*		m_pRadioButton[dTEMP_GG];		///< 만족도 선택 라디오 버튼
-	gui::CButton*		m_pSendButton;					///< 만족도 보내기 버튼
+	gui::CButton*		m_pCloseButton;					///< Close button
+	gui::CButton*		m_pRadioButton[dTEMP_GG];		///< Satisfaction selection radio button
+	gui::CButton*		m_pSendButton;					///< Send satisfaction button
 
-	RwInt32				m_iSelectedIndex;				///< 선택한 만족도 인덱스
+	RwInt32				m_iSelectedIndex;				///< Selected satisfaction index
 
 	PETITIONID			m_petitionID;
 	ACCOUNTID			m_GMID;

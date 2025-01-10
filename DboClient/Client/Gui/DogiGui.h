@@ -1,25 +1,25 @@
 /******************************************************************************
-* File			: DogiGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2009. 4. 6
-* Abstract		: 
+*File			: DogiGui.h
+*Author		    : Hong SungBock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2009. 4. 6
+*Abstract		: 
 *****************************************************************************
-* Desc			: 도복 GUI
+*Desc			: 도복 GUI
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// client
+// Client
 #include "SlotGui.h"
 
 
@@ -102,15 +102,15 @@ protected:
 	gui::CButton*		m_pBtnCancel;
 
 	gui::CStaticBox*	m_pDialogName;
-	gui::CStaticBox*	m_pPreviewDogiStatic;				///< '도복 미리보기'
-	gui::CStaticBox*	m_pSetupDogiStatic;					///< '도복 설정'
+	gui::CStaticBox*	m_pPreviewDogiStatic;				///< ‘Preview of uniform’
+	gui::CStaticBox*	m_pSetupDogiStatic;					///< 'Drum settings'
 
 	CSurfaceGui			m_srfPreviewDogiBar;
 	CSurfaceGui			m_srfSetupDogiBar;
 	CSurfaceGui			m_srfCharacterBackground;
 	CSurfaceGui			m_srfDogiBackground;
 	CSurfaceGui			m_srfColorDisable[dMAX_COLOR_ROW];
-	CSurfaceGui			m_srfCharacter;						///< 캐릭터가 랜더링되는 서페이스
+	CSurfaceGui			m_srfCharacter;						///< Surface on which the character is rendered
 	CSurfaceGui			m_srfSlotFocus;
 
 	gui::CTexture		m_texCharacter;

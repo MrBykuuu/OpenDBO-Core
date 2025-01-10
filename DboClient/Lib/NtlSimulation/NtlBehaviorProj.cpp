@@ -1,15 +1,15 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlBehaviorProj.h"
 
-//core
+//Core
 #include "NtlMath.h"
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLEntity.h"
 #include "NtlPLSceneManager.h"
 
-// simulation
+// Simulation
 #include "NtlSobActor.h"
 #include "NtlSobProjectile.h"
 #include "NtlSobManager.h"
@@ -25,11 +25,11 @@
 #define HISSHIDAN_INC_SPEED			13.0f
 #define HISSHIDAN_DEFAULT_SPEED		50.0f
 
-// hellzone
+// Hellzone
 #define HELLZONE_INC_SPEED			13.0f
 #define HELLZONE_DEFAULT_SPEED		50.0f
 
-// drain
+// Drain
 #define STEAL_INC_SPEED				2.0f
 #define STEAL_DEFAULT_SPEED			0.5f
 
@@ -91,7 +91,7 @@ void CNtlBehaviorProjBall::Update(RwReal fElapsed)
 	RwV3d vCurrDir = pSobProj->GetDirection() + vDir * fElapsed;
 	RwV3dNormalize(&vCurrDir, &vCurrDir);
 
-    // 현재 남은 거리를 구한다.
+    //Find the current remaining distance.
     RwV3d vDelta = vCurrDir * fSpeed * fElapsed;	
     RwV3d vNextPos = vPos + vDelta;	
     RwReal fDist = CNtlMath::GetLength(vPos, vDestPos);    
@@ -102,7 +102,7 @@ void CNtlBehaviorProjBall::Update(RwReal fElapsed)
 	plane.PlaneFromPointNormal(&vDestPos, &vDir);
 	RwReal fDot = plane.DotProduct(&vNextPos); 
 
-	// delta time 동안 이동 거리를 구한다.
+	// Find the distance traveled during delta time.
 	if(fDot >= 0.0f)
 	{
 		pSobProj->SetPosition(&vDestPos);
@@ -162,12 +162,12 @@ void CNtlBehaviorProjMagare::Update( RwReal fElapsed )
     RwV3d vCurrDir = pSobProj->GetDirection() + vDir * fElapsed;
     RwV3dNormalize(&vCurrDir, &vCurrDir);
 
-    // 현재 남은 거리를 구한다.
+    // Find the current remaining distance.
     RwV3d vDelta = vCurrDir * fSpeed * fElapsed;	
     RwV3d vNextPos = vPos + vDelta;	
     RwReal fDist = CNtlMath::GetLength(vPos, vDestPos);    
 
-    // 뒤로 돌아가는 테스트용
+    // For testing going back
     if(m_eStatus == MAGARE_GO)
     {
         if(fDist <= fTargetHeight * MAGARE_RADIUS)
@@ -235,20 +235,20 @@ void CNtlBehaviorProjBeam::Update(RwReal fElapsed)
 	RwV3d vDir;
 	RwV3dSubMacro(&vDir, &vDestPos, &vPos); 
 		
-	// 현재 남은 거리를 구한다.
+	// Find the current remaining distance.
 	RwReal fCurrSqaredLen = CNtlMath::MathRwV3dSquaredLength(&vDir);
 
 	RwV3d vDelta;
 	RwV3dNormalize(&vDir, &vDir);
 	CNtlMath::MathRwV3dAssign(&vDelta, vDir.x*fElapsed*fSpeed, vDir.y*fElapsed*fSpeed, vDir.z*fElapsed*fSpeed);
 
-	// delta time 동안 이동 거리를 구한다.
+	// Find the distance traveled during delta time.
 	if(fCurrSqaredLen < CNtlMath::MathRwV3dSquaredLength(&vDelta))
 	{
 		m_pActor->SetPosition(&vDestPos);
 		Finish();
 
-		// Lua를 연동한다.
+		// Integrate Lua.
 		return;
 	}
 	    
@@ -295,7 +295,7 @@ void CNtlBehaviorProjHisshidan::Enter(void)
 		m_fTargetHeight = pSobProxy->GetPLEntityHeight();
 	}
 
-	// hissidan projectile 방향 노이즈.
+	// hissidan projectile direction noise.
 	CNtlSobProjectile *pSobProj = reinterpret_cast<CNtlSobProjectile*>(m_pActor);
 
 	if(!m_bAngleUse)
@@ -312,7 +312,7 @@ void CNtlBehaviorProjHisshidan::Enter(void)
 
 		RwReal fRandValue = NtlRandomNumber(0.3f, 0.7f);
 		
-		// 오른쪽, 왼쪽 보정.
+		// Right and left corrections.
 		if(bLeftHand)
 		{
 			vDir.x -= vRight.x*fRandValue;
@@ -382,7 +382,7 @@ void CNtlBehaviorProjHisshidan::Update(RwReal fElapsed)
     vCurrDir += vDir * fElapsed * fIncSpeed;
 	RwV3dNormalize(&vCurrDir, &vCurrDir);
 
-	// 현재 남은 거리를 구한다.	
+	// Find the current remaining distance.	
 	RwV3d vNextPos = vPos + (vCurrDir * fElapsed * fSpeed);	
 
 	CNtlPlane plane;
@@ -391,7 +391,7 @@ void CNtlBehaviorProjHisshidan::Update(RwReal fElapsed)
 	plane.PlaneFromPointNormal(&vDestPos, &vDir);
 	RwReal fDot = plane.DotProduct(&vNextPos); 
 						
-	// delta time 동안 이동 거리를 구한다.
+	// Find the distance traveled during delta time.
 	if(fDot >= 0.0f)
 	{
 		vDestPos.y += NtlRandomNumber(-1.0f, 1.0f);
@@ -533,7 +533,7 @@ void CHisshidanPiece::Update(RwReal fElapsed)
 	RwV3d vDir;
 	RwV3dSubMacro(&vDir, &vDestPos, &m_vPos); 
 
-	// 현재 남은 거리를 구한다.
+	// Find the current remaining distance.
 	RwV3dNormalize(&vDir, &vDir);
 		
 	RwReal fIncSpeed = m_fIncSpeed*fSpeed/HISSHIDAN_DEFAULT_SPEED;
@@ -544,7 +544,7 @@ void CHisshidanPiece::Update(RwReal fElapsed)
 
 	RwV3dNormalize(&m_vCurrDir, &m_vCurrDir);
 
-	// 현재 남은 거리를 구한다.
+	// Find the current remaining distance.
 	RwV3d vDelta;
 	CNtlMath::MathRwV3dAssign(&vDelta, m_vCurrDir.x*fElapsed*fSpeed, m_vCurrDir.y*fElapsed*fSpeed, m_vCurrDir.z*fElapsed*fSpeed);
 
@@ -557,7 +557,7 @@ void CHisshidanPiece::Update(RwReal fElapsed)
 	plane.PlaneFromPointNormal(&vDestPos, &vDir);
 	RwReal fDot = plane.DotProduct(&vNextPos); 
 						
-	// delta time 동안 이동 거리를 구한다.
+	// Find the distance traveled during delta time.
 	if(fDot >= 0.0f)
 	{
 		vDestPos.y += NtlRandomNumber(-1.0f, 1.0f);
@@ -848,7 +848,7 @@ void CNtlBehaviorProjHelljone::UpdateLoop(RwReal fElapsed)
 	RwV3d vDir;
 	RwV3dSubMacro(&vDir, &vDestPos, &vPos); 
 
-	// 현재 남은 거리를 구한다.
+	// Find the current remaining distance.
 	RwV3dNormalize(&vDir, &vDir);
 
 	RwV3d vCurrDir = m_pActor->GetDirection();
@@ -861,7 +861,7 @@ void CNtlBehaviorProjHelljone::UpdateLoop(RwReal fElapsed)
 
 	RwV3dNormalize(&vCurrDir, &vCurrDir);
 
-	// 현재 남은 거리를 구한다.
+	// Find the current remaining distance.
 	RwV3d vDelta;
 	CNtlMath::MathRwV3dAssign(&vDelta, vCurrDir.x*fElapsed*fSpeed, vCurrDir.y*fElapsed*fSpeed, vCurrDir.z*fElapsed*fSpeed);
 
@@ -874,7 +874,7 @@ void CNtlBehaviorProjHelljone::UpdateLoop(RwReal fElapsed)
 	plane.PlaneFromPointNormal(&vDestPos, &vDir);
 	RwReal fDot = plane.DotProduct(&vNextPos); 
 						
-	// delta time 동안 이동 거리를 구한다.
+	// Find the distance traveled during delta time.
 	if(fDot >= 0.0f)
 	{
 		vDestPos.y += NtlRandomNumber(-0.5f, 0.5f);
@@ -942,7 +942,7 @@ void CNtlBehaviorProjSteal::Enter(void)
 		return;
 	}
 
-	// hissidan projectile 방향 노이즈.
+	// hissidan projectile direction noise.
 	CNtlSobProjectile *pSobProj = reinterpret_cast<CNtlSobProjectile*>(m_pActor);
 	RwV3d vDir = pSobProj->GetDirection();
 	pSobProj->SetSpeed(STEAL_DEFAULT_SPEED);
@@ -1019,7 +1019,7 @@ void CNtlBehaviorProjSteal::UpdateLoop(RwReal fElapsed)
 	RwV3d vDir;
 	RwV3dSubMacro(&vDir, &vDestPos, &vPos); 
 
-	// 현재 남은 거리를 구한다.
+	// Find the current remaining distance.
 	RwReal fCurrLen = RwV3dLength(&vDir);
 	RwV3dNormalize(&vDir, &vDir);
 
@@ -1033,7 +1033,7 @@ void CNtlBehaviorProjSteal::UpdateLoop(RwReal fElapsed)
 
 	RwV3dNormalize(&vCurrDir, &vCurrDir);
 
-	// 현재 남은 거리를 구한다.
+	// Find the current remaining distance.
 	RwV3d vDelta;
 	CNtlMath::MathRwV3dAssign(&vDelta, vCurrDir.x*fElapsed*fSpeed, vCurrDir.y*fElapsed*fSpeed, vCurrDir.z*fElapsed*fSpeed);
 
@@ -1052,7 +1052,7 @@ void CNtlBehaviorProjSteal::UpdateLoop(RwReal fElapsed)
 	plane.PlaneFromPointNormal(&vDestPos, &vDir);
 	RwReal fDot = plane.DotProduct(&vNextPos); 
 						
-	// delta time 동안 이동 거리를 구한다.
+	// Find the distance traveled during delta time.
 	if(fDot >= 0.0f)
 	{
 		m_pActor->SetPosition(&vDestPos);

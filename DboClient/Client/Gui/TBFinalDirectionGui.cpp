@@ -1,15 +1,15 @@
 #include "precomp_dboclient.h"
 #include "TBFinalDirectionGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlLuaState.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEvent.h"
 #include "NtlSobAvatar.h"
@@ -17,7 +17,7 @@
 #include "NtlCameraManager.h"
 #include "NtlSLLuaGlue.h"
 
-// client
+// Client
 #include "DboGlobal.h"
 
 CTBFinalDirectionGui::CTBFinalDirectionGui( const RwChar* pName )
@@ -61,7 +61,7 @@ RwBool CTBFinalDirectionGui::Create(VOID)
 	ReCalcPosition( GetDboGlobal()->GetScreenWidth(), GetDboGlobal()->GetScreenHeight() );
 	Show( true );
 
-	// InitSetting
+	// Init setting
 	m_stScore.LoadFlash( GetTBFlashName()->GetNormalCounter() );
 
 	NTL_RETURN( TRUE );
@@ -210,14 +210,14 @@ VOID CTBFinalDirectionGui::HandleEvents( RWS::CMsg& msg )
 				CNtlLuaState* pLuaState = GetLuaState();
 				pLuaState->RunString( GetTBFlashName()->GetLuaFinal() );				
 
-				// 미리 로딩
+				// preloading
 				m_stScore.LoadFlash( GetTBFlashName()->GetSpecialCounter() );
 			}			
 		}
 		else if( pData->byMatchState == BUDOKAI_FINALMATCH_STATE_AWARDING )
 		{
 			//m_stOneLine.pflaFirst->SigMovieEnd().Disconnect( m_slotWinLoseMovieEnd );	
-			// 텔레포트 타이밍과 안맞아서 시간 지연후(2초) 출력.
+			// Since it does not match the teleport timing, it is output after a time delay (2 seconds).
 			//CNtlLuaState* pLuaState = GetLuaState();
 			//pLuaState->RunString( GetTBFlashName()->GetLuaAward() );
 			if( pData->bEnterState )

@@ -3,8 +3,8 @@
 
 /**
 *
-*  constructor for CNtlStage
-*  \param pStageName´Â stage nameÀÌ´Ù.
+*constructor for CNtlStage
+*  \param pStageName is the stage name.
 *
 */
 CNtlStage::CNtlStage(const char *pStageName)

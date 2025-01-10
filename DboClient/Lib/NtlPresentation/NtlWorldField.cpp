@@ -335,7 +335,7 @@ RwBool CNtlWorldField::CreateFieldFromFile(RwInt32 FieldIdx)
 	{
 		/*
 		WorldFileFormat - FieldProperty
-		Field Property를 File로부터 Load 하는 부분 이다.
+		This is the part where Field Property is loaded from File.
 		*/
 
 		m_pProp = NTL_NEW sNTL_FIELD_PROP;
@@ -430,7 +430,7 @@ RwBool CNtlWorldField::DeleteFieldIntoFile(RwInt32 FieldIdx)
 	{
 		/*
 		WorldFileFormat - FieldProperty
-		Field Property를 File로 Save 하는 부분 이다.
+		This is the part where Field Property is saved as a file.
 		*/
 		fwrite(m_pProp->_Name, 64, 1, pFile);
 		fwrite(m_pProp->_pBitProp, sizeof(DWORD) * (dGET_WORLD_PARAM()->WorldSectorTileNum * 2) * (dGET_WORLD_PARAM()->WorldSectorTileNum * 2), 1, pFile);

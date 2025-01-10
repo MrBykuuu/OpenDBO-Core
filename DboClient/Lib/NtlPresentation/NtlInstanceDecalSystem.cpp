@@ -2,7 +2,7 @@
 //	File		:	NtlInstanceDecalSystem.cpp
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -152,7 +152,7 @@ void CNtlInstanceDecalSystem::BuildEmitterStandard(SNtlDecalEmitterStandard* pEm
 	// Rotate Action
 	if(m_pResourceDecalSystem->IsEmitterDataFlag(rpPRTSTDEMITTERDATAFLAGPRT2DROTATE))
 	{
-		// Rotate 각도는 1초에 걸쳐 회전하는 각도로 설정한다. (Life Time과는 관계 없다)
+		// Rotate angle is set to the rotation angle over 1 second. (No relation to Lifetime)
 		m_pDecalSystem->Set2DRoateAction(m_pResourceDecalSystem->m_EmitterPrtRotate.prtEnd2DRotate);
 	}
 
@@ -220,7 +220,7 @@ RwBool CNtlInstanceDecalSystem::Update(RwReal fElapsedTime)
 			m_bReady	= TRUE;
 			m_bUpdate	= TRUE;
 
-			// 스타트가 되면 라이프 타임을 초기화 한다.
+			// When starting, initialize the life time.
 			m_fLifeTime = fElapsedTime;
 		}
 		else

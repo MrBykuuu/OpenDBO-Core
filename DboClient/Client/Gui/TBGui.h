@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: TBGui.h
 // Desc: Tenkaichi Budokai Gui Group
-//       천하제일 무도회 관련 Gui. 시즌, 매치에 맞게 생성 삭제된다.
+//       Gui related to World's Best Martial Arts Club. They are created and deleted according to the season and match.
 //
 // 2007.08.23 Peessi@hitel.net   
 ////////////////////////////////////////////////////////////////////////////////
@@ -47,8 +47,8 @@ public:
 	VOID	Create( RwUInt8 byMatchType );
 	VOID	Destroy(VOID);
 
-	// 소식지 생성 및 삭제
-	VOID	CreateBudokaiNewsOnce();	///< 로딩 후 한번만 실행
+	// Create and delete newsletters
+	VOID	CreateBudokaiNewsOnce();	///< Run only once after loading
 	VOID	CreateBudokaiNews();
 	VOID	DestroyBudokaiNews();
 	
@@ -58,7 +58,7 @@ public:
 	//! Event
 	VOID	HandleEvents( RWS::CMsg& msg );
 
-	// 각 Match State의 Update 때 참가자와 관전자를 구분하여 처리한다.
+	// When updating each Match State, participants and spectators are processed separately.
 	VOID	HandleEventMinorMatchStateUpdateEntrance( RWS::CMsg& msg );
 	VOID	HandleEventMinorMatchStateUpdateObserver( RWS::CMsg& msg );
 	VOID	HandleEventMajorMatchStateUpdateEntrance( RWS::CMsg& msg );
@@ -66,7 +66,7 @@ public:
 	VOID	HandleEventFinalMatchStateUpdateEntrance( RWS::CMsg& msg );
 	VOID	HandleEventFinalMatchStateUpdateObserver( RWS::CMsg& msg );
 	
-	// 객체가 중간에 생성 되었을 때 SetGauge를 해주기 위해
+	// To setGauge when an object is created in the middle
 	VOID	HandleEventSobCreate( RWS::CMsg& msg );
 
 	//! Implements
@@ -94,14 +94,14 @@ public:
 	CResultNarrationGui*		m_pResultNarration;
 	CCounterGui*				m_pCounter;
 
-	// 관전자 GUI
+	// Spectator GUI
 	CTBMatchObserverVersusGui*	m_pObserverVersusGui;
 	CTBMatchIndiObRedGui*		m_pMatchIndiObRedGui;
 	CTBMatchIndiObBlueGui*		m_pMatchIndiObBlueGui;
 	CTBMatchTeamObRedGui*		m_pMatchTeamObRedGui;
 	CTBMatchTeamObBlueGui*		m_pMatchTeamObBlueGui;
 
-	// 천하제일 무도회 소식지
+	// World’s Best Martial Arts Newsletter
 	CTBNewsGui*					m_pNewsGui;
 	CTBRequestGui*				m_pRequestGui;
 

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: QuestCommonGui.h
-// Desc: Quest의 Proposal, Progress, Reward에 쓰이는 공통적인 요소의 추상화 클래스.
-//		 QuestReward를 공통화하고, 
+// Desc: An abstraction class for common elements used in Quest's Proposal, Progress, and Reward.
+//		 Commonize QuestReward,
 //
 // 2006.12.13 Peessi@hitel.net   
 //

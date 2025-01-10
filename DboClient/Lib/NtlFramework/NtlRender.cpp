@@ -28,16 +28,16 @@ void CNtlRender::Destroy(void)
 
 /**
 *
-*  rendering 객체 update 함수.
-*  \param fElapsed는 이전 tick에서 현재 tick의 delta time이다.
+*Rendering object update function.
+*  \param fElapsed is the delta time of the current tick from the previous tick.
 *
 */
 void CNtlRender::Update(float fElapsed)
 {
 	NTL_FUNCTION("CNtlRender::Update");
 
-	// input을 얻어온다.
-	// logic을 update 한다. (랜더링 객체 포함)
+	// Get input.
+	// Update the logic. (including rendering objects)
 
 	g_MsgTick.Id = g_EventRenderTick;
 	m_fFreeElapsed = fElapsed;

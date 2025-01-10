@@ -16,7 +16,8 @@ class CComponentManager
 public:
 	
 	CComponentManager();
-	//: component manager ¼Ò¸êÀÚ...	
+	//:component manager destructor...	
+
 	virtual ~CComponentManager();
 
 //! Attributes:

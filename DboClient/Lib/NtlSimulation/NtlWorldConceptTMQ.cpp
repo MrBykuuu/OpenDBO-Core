@@ -2,7 +2,7 @@
 #include "NtlWorldConceptTMQ.h"
 #include "TimeQuestTable.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSobManager.h"

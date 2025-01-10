@@ -1,11 +1,11 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlShareTargetMark.h"
 
-// presentation
+// Presentation
 #include "NtlPLSceneManager.h"
 #include "NtlPLHelpers.h"
 
-// simulation
+// Simulation
 #include "NtlSLVisualDeclear.h"
 #include "NtlSob.h"
 #include "NtlSobProxy.h"
@@ -117,7 +117,7 @@ void CNtlShareTargetMark::CreateShareTargetMark( RwUInt8 bySlot, RwInt32 type )
         return;        
     }
 
-    // 타겟의 위치에 Attach 한다.
+    // Attach to the target location.
     if(m_pShareTargetMark)
     {
         RwV3d vOffset = ZeroAxis;
@@ -136,7 +136,7 @@ void CNtlShareTargetMark::DeleteShareTargetMark()
     m_bySlot  = INVALID_BYTE;
     m_type    = SHARE_TARGET_NONE;
 
-    // 공유 타겟 정보도 삭제한다.
+    //Also delete shared target information.
     RwInt32 nSlot = Logic_isPartyShareTarget(m_pSobObj->GetSerialID());
     if(nSlot != -1)
     {

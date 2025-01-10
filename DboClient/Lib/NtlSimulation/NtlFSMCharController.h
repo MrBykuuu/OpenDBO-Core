@@ -336,7 +336,7 @@ private:
 	RwReal				m_fStateTimer;
 	RwReal				m_fThinkingTimer;
 	RwReal				m_fPathTimer;
-	RwReal				m_fSkillTimer[NTL_MAX_NPC_HAVE_SKILL];			// Skill Timer (AI로 스킬을 판단하는 시간)
+	RwReal				m_fSkillTimer[NTL_MAX_NPC_HAVE_SKILL];			//Skill Timer (time to judge skill with AI)
 
 	RwBool				m_bCompulsoryAttack;
 	SERIAL_HANDLE		m_hBattleSerialId;

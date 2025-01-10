@@ -1,22 +1,22 @@
 /******************************************************************************
-* File			: GMPlayerGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 11. 17
-* Abstract		: 
+*File           : GMPlayerGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : November 17, 2008
+*Abstract		: 
 *****************************************************************************
-* Desc			: GM이 보는 Player의 정보
+*Desc           : Player information seen by GM
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
 class CPlayerInfoGui : public CNtlPLGui, public RWS::CEventHandler
@@ -30,7 +30,7 @@ public:
 
 	RwBool		SetPlayerSerial(SERIAL_HANDLE hPlayer);
 
-	// DialogManager의 Movable 간섭을 받지 않기 위하여
+	// To avoid interfering with the DialogManager's Movable
 	virtual void	SetMovable(RwBool bMovable) {}
 
 	RwInt32		SwitchDialog(bool bOpen);

@@ -1,11 +1,11 @@
 /*****************************************************************************
-* File			: PacketTracer.h
-* Author		: woosung
-* Copyright	: (주)NTL
-* Date			: 2009. 08. 04
-* Abstract		: 
+*File			: PacketTracer.h
+*Author		    : woosung
+*Copyright	    : NTL Co., Ltd.
+*Date			: 2009. 08. 04
+*Abstract		: 
 *****************************************************************************
-* Desc			:패킷추적을 위해 패킷을 패킷명과 시간을 dump
+*Desc			:Dump packet name and time for packet tracking
 *****************************************************************************/
 
 #pragma once
@@ -17,8 +17,8 @@
 
 using namespace	std;
 
-#ifdef _DEBUG		/// 안전장치					
-//#define	_ENABLE_PACKET_TRACE_		/// Defalut로 Disable /// 프로토콜이 변경될수있다. 자동빌드가 실패할 수 있음
+#ifdef _DEBUG		/// safety device					
+//#define _ENABLE_PACKET_TRACE_ ///Disable ///Protocol can be changed with Defalut. Automatic build may fail
 #endif
 
 class CPacketTracer : public RWS::CEventHandler
@@ -46,10 +46,10 @@ public:
 	//! Event
 	virtual VOID HandleEvents( RWS::CMsg& msg );
 
-	//! 싱글톤 생성/제거 
+	//! Create/remove singleton 
 	static	void	CreateInstance();
 	static	void	DeleteInstance();
-	static CPacketTracer*	GetInstance();						///< 싱글톤 인스턴스 객체
+	static CPacketTracer*	GetInstance();						///< Singleton instance object
 
 private:
 	RwBool m_bAvtivate;

@@ -2,7 +2,7 @@
 //	File		:	NtlResourceImVertexSystem.h
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -23,7 +23,7 @@ public:
 	RpPrtAdvPrtMultiColorEmitter	m_EmitterPrtMultiCol;
 	SNtlAdvMultiSizeEmitter			m_EmitterPrtMultiSize;
 
-    SNtlPrtStdEmitterPrtFinish      m_EmitterPrtFinish;             ///< Finish 연출에 사용되는 프로퍼티
+    SNtlPrtStdEmitterPrtFinish      m_EmitterPrtFinish;             ///< Properties used to direct Finish
 
 public:
 	CNtlResourceImVertexSystem(const RwChar* strName);

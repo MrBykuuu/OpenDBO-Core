@@ -1,7 +1,7 @@
 #include "precomp_ntlsound.h"
 #include "NtlBGMGroup.h"
 
-// sound
+// Sound
 #include "NtlSoundDefines.h"
 #include "GUISoundDefine.h"
 #include "NtlSoundGlobal.h"
@@ -181,7 +181,7 @@ eStoreResult CNtlBGMGroup::StoreSound(CNtlSound* pSound, sNtlSoundPlayParameta* 
 	
 	if( STORE_READY_TO_PLAY == eResult )
 	{
-		// 따로 이벤트로 받았을 때만 기록
+		// Recorded only when received as a separate event
 		if( BGM_TYPE_SHARE_THEME != pParameta->eBGM_Type )
 			m_pBGMPlayList->AddBGMList(pParameta->eBGM_Type, pParameta->pcFileName);
 
@@ -204,7 +204,7 @@ bool CNtlBGMGroup::Stop(SOUND_HANDLE hHandle)
 
 	if( hHandle == m_tPostSound.hHandle )
 	{
-		// 즉각 해제
+		// immediately released
 		CNtlChannelGroup::Stop(m_tPostSound.hHandle);
 		ClearBGMList(m_tPostSound.hHandle);
 		return true;
@@ -216,7 +216,7 @@ bool CNtlBGMGroup::Stop(SOUND_HANDLE hHandle)
 	ClearBGMList(m_tPlaySound.hHandle);
 
 
-	// 무한루프 무조건 해제후 Fade out
+	// Fade out after unconditionally canceling the infinite loop
 	FMOD_MODE mode;
 	pSound->m_pFMODSound->getMode(&mode);
 	mode &= !FMOD_LOOP_NORMAL;
@@ -278,10 +278,10 @@ void CNtlBGMGroup::ReleaseFinishedSound(float fElapsed)
 			pSound->m_pFMODChannel->getMode(&mode);
 
 			if( mode ^ FMOD_LOOP_NORMAL )
-			{	// 무한반복이 아닐 때
+			{	// When there is no infinite repetition
 				bool bPlaying;
 
-				// paused 된 사운드도 true 값이 리턴된다
+				// A true value is returned even for paused sounds.
 				pSound->m_pFMODChannel->isPlaying(&bPlaying);
 
 				if(!bPlaying)

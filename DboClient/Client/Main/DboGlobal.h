@@ -2,7 +2,7 @@
  *
  * File			: Global.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2005. 9. 14	
  * Abstract		: DBO global.h
  *****************************************************************************
@@ -25,7 +25,7 @@
 #include "NtlSlEvent.h"
 #include "DBOUIConfig.h"
 
-// ChattingFilter
+// Chatting filter
 #include "SayFilter.h"
 
 static DWORD sm_cameraMoveCount = 0;
@@ -45,8 +45,8 @@ class CNtlSobAvatar;
 // config data
 struct SConfigData
 {
-	std::string strAddr;		// account server ip address(해킹의 문제로 하드코딩을 고려한다?)
-	DWORD dwPort;				// account server ip port(해킹의 문제로 하드코딩을 고려한다?)
+	std::string strAddr;		// account server ip address (considering hard coding due to hacking problem?)
+	DWORD dwPort;				// account server ip port (considering hard coding due to hacking problem?)
     std::string strBugTrapServerIP;         
     DWORD       dwBugTrapServerPort;
     std::string strBugTrapFolder;
@@ -72,7 +72,7 @@ typedef struct _SConnectAtomic
 	RwChar		chServerIP[NTL_MAX_LENGTH_OF_IP+1];
 	RwUInt16	wServerPort;
 	RwChar		chAuthKey[NTL_MAX_SIZE_AUTH_KEY+1];
-	RwBool		bBanishment;	///< 운영상의 제재를 당했는지 여부
+	RwBool		bBanishment;	///< Whether you have been subject to operational sanctions
 
 	void Init(void)
 	{
@@ -102,17 +102,17 @@ typedef struct _SConnectData
 	SConnectAtomic sGameCon;
 	SConnectAtomic sChatCon;
 
-	// character server 종류.
+	// character server type.
 	typedef std::list<SCharServerInfo*> ListCharServer;
 	ListCharServer listCharServer;
 
-	//uuid
+	//Uuid
 	RwUInt32	uiAccountId;
 	RwUInt8		byLastServerFarmID;
 
 	RwBool		bChangingGameServer;
 
-	// Dev func 정보
+	// Dev func information
 	RwChar			m_acAllowFuncForDev[dMAX_SIZE_DEV_FUNC_ARRAY];
 	
 	void			Init(void);
@@ -148,12 +148,12 @@ typedef struct _SUserData
 typedef struct _SGameData
 {
 	RwBool			bChatMode;
-	RwBool			bFirstWorldEnter;			///< 처음으로 world에 진입하는가?
+	RwBool			bFirstWorldEnter;			///< Are you entering the world for the first time?
 	RwBool			bInputActive;		
 	RwBool			bDebugDisplay;
-	SERIAL_HANDLE	hAskedPCSerial;				///< 뭔가를 질문해온 PC의 핸들
-    SERIAL_HANDLE   hCommunityTargetSerial;     ///< 커뮤니티 단계에서 선택(타겟팅)한 PC의 핸들
-	RwBool			bAvatarReCreate;			///< 다른 물리적 game server로 진입할 때 avatar를 삭제하고 다시 생성한다.
+	SERIAL_HANDLE	hAskedPCSerial;				///< The handle of the PC that asked something
+    SERIAL_HANDLE   hCommunityTargetSerial;     ///< Handle of the PC selected (targeted) at the community level
+	RwBool			bAvatarReCreate;			///< When entering another physical game server, delete the avatar and create it again.
 
 	void Init(void)
 	{
@@ -174,7 +174,7 @@ struct sContractInfo
 	WCHAR*			pwcContract;
 	WCHAR*			pwcRealContract;
 	RwInt32			uiContractVersion;
-	RwBool			bAcceptGameContract;			///< 약관 수락 여부
+	RwBool			bAcceptGameContract;			///< Whether to accept the terms or not
 };
 
 
@@ -190,36 +190,36 @@ private:
 private:
 
 	/**
-	* screen size 변수.
+	*Screen size variable.
 	*/
 	RwUInt32		m_uiScreenWidth;				/** screen width */
 	RwUInt32		m_uiScreenHeight;				/** screen height */
 
 	/**
-	* game lobby 간략 정보
+	*Game lobby brief information
 	*/
-	RwUInt8			m_byPostSelectedServerHandle;	/** 이전에 선택된 서버의 핸들 */
-	RwUInt8			m_bySelectedServerHandle;		/** 현재 선택된 서버의 핸들 */
-	RwUInt8			m_bySelectedCharIndex;			/** 선택된 캐릭터 인덱스 */
+	RwUInt8			m_byPostSelectedServerHandle;	/** Handle of the previously selected server */
+	RwUInt8			m_bySelectedServerHandle;		/** Handle of currently selected server */
+	RwUInt8			m_bySelectedCharIndex;			/** selected character index */
 
 	/**
-	* game data  처리 변수.
+	*Game data processing variables.
 	*/
 	SUserData			m_sUser;					/** dbo user data */
 	SConfigData			m_sConfig;					/** dbo config data */	
 	SConnectData		m_sConnect;					/** dbo network connect data */		
 	SGameData			m_sGame;					/** dbo game data */
 
-	// 드래곤볼 컬렉션 기간 정보 구조체
+	// Dragon Ball Collection Period Information Structure
 	SNtlEventDBCSchedule_Info m_sDBCSheduleInfo;
 	    
 	/**
-	* network lib 변수.
+	*network lib variable.
 	*/
 	CNtlClientNet *m_pNetwork;						/** network lib */
 
 	/**
-	* packet 처리 변수.
+	*Packet processing variables.
 	*/
 
 	CNtlNetSender *m_pLoginNetSender;					/** login network sender */
@@ -232,11 +232,11 @@ private:
 	CGamePacketGenerator *m_pGamePacketGenerator;		/** game packet generator */
 	CChatPacketGenerator *m_pChatPacketGenerator;		/** chatting packet generator */
 
-    CDBOUIConfig*   m_pDBOUIConfig;                     ///< DBO UI Config 정보 객체 (2007.11.15 by agebreak)
+    CDBOUIConfig*   m_pDBOUIConfig;                     ///< DBO UI Config information object (2007.11.15 by agebreak)
 
 	sContractInfo*	m_pContractInfo;
-	RwBool			m_bEnterTutorial;					/** 튜토리얼 진입 인터페이스에서 취소 버튼을 눌러 게임에 진입시 */
-	RwBool			m_bDirectionFirstConnect;			/** 처음 접속해서 연출을 보여줄 것인지 여부 */
+	RwBool			m_bEnterTutorial;					/** When entering the game by pressing the Cancel button on the tutorial entry interface, */
+	RwBool			m_bDirectionFirstConnect;			/** Whether you want to show the production when you log in for the first time */
 
 private:
 
@@ -263,19 +263,19 @@ public:
 	void			LoadingContractInfo();
 			
 	/**
-	* game data  처리 함수.
+	*Game data processing function.
 	*/
 	SUserData*		GetUserData(void)		{ return &m_sUser; }
 	SConfigData*	GetConfigData(void)		{ return &m_sConfig; }
 	SConnectData*	GetConnectData(void)	{ return &m_sConnect; }	
 	SGameData*		GetGameData(void)		{ return &m_sGame; }
 
-	// 드래곤볼 컬렉션 정보 처리 함수
+	// Dragon Ball Collection Information Processing Function
 	void			SetDBCScheduleInfo(SNtlEventDBCSchedule_Info sDBCScheduleInfo) {m_sDBCSheduleInfo = sDBCScheduleInfo;}
 	SNtlEventDBCSchedule_Info* GetDBCScheduleInfo() {return &m_sDBCSheduleInfo;}
 	
 	/**
-	* packet 처리 함수.
+	*Packet processing function.
 	*/
 	CNtlClientNet*			GetNetwork(void)					{ return m_pNetwork; }
 	CLoginPacketGenerator*	GetLoginPacketGenerator(void)		{ return m_pLoginPacketGenerator; }
@@ -299,7 +299,7 @@ public:
 	void			ToggleDebugDisplay( void )					{ m_sGame.bDebugDisplay = !m_sGame.bDebugDisplay; }
 	RwBool			IsDebugDisplay(void)						{ return m_sGame.bDebugDisplay; }
 
-    CDBOUIConfig*   GetDBOUIConfig()                            {return m_pDBOUIConfig;}        ///< DBO UI Config 객체를 반환한다.
+    CDBOUIConfig*   GetDBOUIConfig()                            {return m_pDBOUIConfig;}        ///< Returns a DBO UI Config object.
 	
 	void			SetEnterTutorial( RwBool bEnter )			{ m_bEnterTutorial = bEnter; }
 	RwBool			IsEnterTutorial()							{ return m_bEnterTutorial; }

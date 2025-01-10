@@ -36,7 +36,7 @@ RwBool CNtlResourceDecalSystem::Load(FILE* pFile)
 {
 	CNtlResourceImVertexSystem::Load(pFile);
 
-    // YOffset 추가 (버전 8)
+    //Add YOffset (version 8)
     if(CNtlResourceEffect::m_nVersion > 0x00000007)
     {
         fread(&m_EmitterStandard, sizeof(SNtlDecalEmitterStandard), 1, pFile);

@@ -1,8 +1,8 @@
 /*****************************************************************************
  *
  * File			: DboEvenetGenerator.h
- * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Author	    : HyungSuk, Jang
+ * Copyright	    : NTL Co., Ltd.
  * Date			: 2005. 9. 27	
  * Abstract		: DBO event generator
  *****************************************************************************
@@ -13,10 +13,10 @@
 #ifndef __DBO_EVENT_GENERATOR_H__
 #define __DBO_EVENT_GENERATOR_H__
 
-// shared
+// Shared
 #include "NtlBattle.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 
 class CDboEventGenerator
@@ -111,18 +111,18 @@ public:
 
 	static void OpenHelpContent(RwUInt32 uiDialogType);
 
-	static void	EnableItemIcon( RwBool bEnable, RwInt32 ePlace, RwUInt32 uiSlotIdx, RwInt32 nPlaceIdx = -1 ); // peessi: nPlaceIdx는 WareHouse, Bag에만 쓰임.
+	static void	EnableItemIcon( RwBool bEnable, RwInt32 ePlace, RwUInt32 uiSlotIdx, RwInt32 nPlaceIdx = -1 ); // peessi: nPlaceIdx is only used for WareHouse and Bag.
 	static void CapsuleLockItem( RwBool bEnable, RwInt32 ePlace, RwUInt32 uiSlotIdx, RwInt32 nPlaceIdx = -1 );
 	static void CapsuleLockItemWithoutBag( RwBool bEnable, SERIAL_HANDLE hItem );
 
 	static void DirectMoveIcon(RwUInt32 uiSrcSerial, RwUInt32 eSrcPlace, RwUInt32 eDestPlace, RwUInt32 uiSrcSlotIdx, RwUInt32 uiSrcStackCount);
 
-	// 개인상점
+	// private store
 	static void PrivateShopSelectNfy(RwUInt8 uiPrivateShopPos, RwUInt8 uiItemState);
 	static void RegPrivateShopCartItem(RwUInt32 uiSerial, RwUInt32 uiPlace, RwUInt32 uiPos, RwUInt32 uiStackCount, RwUInt32 uiPrice, void* pData);
 	static void RegPrivateShopItem(RwUInt32 uiPlace, RwUInt32 uiIndex, RwUInt32 uiPos);
 
-	// 개인상점 흥정
+	// Private store bargaining
 	static void PrivateShopBusinessStart(RwUInt8 uiType, RwUInt32 uiShopOwner, WCHAR* pwcTargetName, sPRIVATESHOP_ITEM_DATA* pPrivateShopItemData, void* pGui);
 	static void PrivateShopBusinessFluctuations(RwUInt8 uiType, sPRIVATESHOP_ITEM_DATA* pPrivateShopItemData, RwUInt32 uiStartPrice);
 	static void PrivateShopBusinessCloseNfy(RwUInt32 uiShopOwner);
@@ -178,7 +178,7 @@ public:
 	// Link Script
 	static void ScriptLinkNotify(RwUInt8 byType, RwUInt8 byAction, WCHAR* pwcValue );
 
-	// 주사위
+	// dice
 	static void DiceStart(RwUInt8 byWorkID, void* pExData = NULL);
 	static void DiceResult(SERIAL_HANDLE hHandle, RwUInt8 byWorkID, RwUInt8 byResultNum);
 	static void DiceResultShow(SERIAL_HANDLE hHandle, RwUInt8 byWorkID, RwUInt8 byResultNum);
@@ -213,7 +213,7 @@ public:
 	static void PetitionEvent(RwUInt32 uiEventType);
 	static void PetitionPostEvent(RwUInt32 uiEventType);
 
-	// TeleportProposal
+	// Teleport proposal
 	static void TeleportProposalNfy( SDboEventTeleportProposalNfy* pNotify );
 	static void TeleportConfirmRes( SDboEventTeleportConfirmRes* pResult );
 
@@ -221,7 +221,7 @@ public:
 	static void ObserverMenu(RwUInt8 byEventType, SERIAL_HANDLE hHandle = INVALID_SERIAL_ID, RwUInt32 uiValue = 0xffffffff, void* pExdata = NULL);
 	static void ObserverMenuPost(RwUInt8 byEventType, SERIAL_HANDLE hHandle = INVALID_SERIAL_ID, RwUInt32 uiValue = 0xffffffff);
 
-	// RPCharge
+	// Rp charge
 	static void RPCharge( RwBool bIncrease, RwBool bStop );
 
 	static void BattleCombatMode(bool bCombatMode);
@@ -250,7 +250,7 @@ public:
 	static void ChangeCommercialExtendmode( RwInt32 iMode );
 	static void OpenCommercialExtendGui( RwInt32 iMode = -1, RwUInt32 uiItemIdx = 0xFFFFFFFF );
 
-	//hls
+	//Hls
 	static void HLShopEvent(BYTE byType, DWORD dwCash);
 	static void HLShopEventBuy(bool bConfirm, TBLIDX hlsItemIdx);
 	static void HLShopEventGift(bool bConfirm, TBLIDX hlsItemIdx, const WCHAR* wchPlayer);
@@ -267,7 +267,7 @@ public:
 	static void OpenBagGui();
 	static void OpenScouterBackgroundGui();
     //////////////////////////////////////////////////////////////////////////
-    // 한국 상용화 관련
+    // Regarding commercialization in Korea
     static void UpdateNetPy(NETP netPy, NETP dwAccumulationNetP, DWORD timeNextGainTime);       
     static void NetMarbleMemberShipNfy();
 };

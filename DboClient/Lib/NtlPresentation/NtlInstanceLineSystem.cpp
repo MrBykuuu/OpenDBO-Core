@@ -62,7 +62,7 @@ RwBool CNtlInstanceLineSystem::Create( CNtlResourceEffect* pResourceEffect, CNtl
     CNtlInstanceImVertexSystem::Create(pResourceEffect, pResourceComponentSystem, matWorld);
     m_pResourceLineSystem = (CNtlResourceLineSystem*)pResourceComponentSystem;
  
-    // Vertex Buffer 생성 (최대 라인의 개수 * 6)
+    // Vertex Buffer creation (maximum number of lines *6)
     m_nVertexCount = m_pResourceLineSystem->m_EmitterStandard.m_nMaxCount * 6;    
     m_pVertices = NTL_NEW RwIm3DVertex[m_nVertexCount];
     NTL_ASSERTE(m_pVertices);
@@ -70,7 +70,7 @@ RwBool CNtlInstanceLineSystem::Create( CNtlResourceEffect* pResourceEffect, CNtl
     ZeroMemory(m_pVertices, sizeof(RwIm3DVertex) * m_nVertexCount);
     m_uiMemoryUseSize += sizeof(RwIm3DVertex) * m_nVertexCount;
 
-    // Line Pool 생성
+    // Line Pool Creation
     m_poolLineSystemVertex = NTL_NEW SLineSystemVertex[m_pResourceLineSystem->m_EmitterStandard.m_nMaxCount];
     NTL_ASSERTE(m_poolLineSystemVertex);
     if(!m_poolLineSystemVertex) NTL_RETURN(FALSE);
@@ -78,10 +78,10 @@ RwBool CNtlInstanceLineSystem::Create( CNtlResourceEffect* pResourceEffect, CNtl
     m_uiMemoryUseSize += sizeof(SLineSystemVertex) * m_pResourceLineSystem->m_EmitterStandard.m_nMaxCount;
     
 
-    // 텍스쳐 설정
+    // Texture settings
     m_pCurrentTexture = m_pStandardTexture = CreateTexture(m_pResourceLineSystem->m_strTextureName);
 
-    // 기본 Emitter 설정
+    // Default Emitter Settings
     BuildEmitterStandard();
 
     m_nRoateSeed = rand();
@@ -91,7 +91,7 @@ RwBool CNtlInstanceLineSystem::Create( CNtlResourceEffect* pResourceEffect, CNtl
 
 void CNtlInstanceLineSystem::BuildEmitterStandard()
 {
-    // Color 설정
+    // Color settings
     if(m_pResourceLineSystem->IsEmitterDataFlag(rpPRTSTDEMITTERDATAFLAGPRTCOLOR))
     {
         RwRGBA color;
@@ -178,7 +178,7 @@ RwBool CNtlInstanceLineSystem::Render()
 	if(m_listLineSystemVertex.empty())
 		return TRUE;
     
-    // Vertex 들을 렌더링 한다.
+    // Render vertices.
     if(m_pResourceLineSystem->m_EmitterStandard.m_bZBufferEnable == FALSE)
     {
         RwRenderStateSet( rwRENDERSTATEZTESTENABLE, (void*)FALSE);
@@ -212,7 +212,7 @@ void CNtlInstanceLineSystem::UpdateVertices( RwReal fElapsedTime )
 
     m_fCreateGapTime += fElapsedTime;
 
-    // Gap Time이 지났으면 새로운 라인을 생성한다.
+    // If the gap time has passed, a new line is created.
     RwReal fEmitterGap = m_pResourceLineSystem->m_EmitterStandard.m_fEmitterGap;
     if(CNtlInstanceEffect::GetLowSpecEnable())
     {
@@ -240,10 +240,10 @@ void CNtlInstanceLineSystem::UpdateVertices( RwReal fElapsedTime )
 
             if(pLineSystemVertex->fLifeTime < m_pResourceLineSystem->m_EmitterStandard.m_fLineLifeTime)
             {
-                // 끝점을 설정된 방향으로 이동 시킨다.
+                // Move the end point in the set direction.
                 pLineSystemVertex->vUpdatePoint += pLineSystemVertex->vDir * m_pResourceLineSystem->m_EmitterStandard.m_fVelocity * fElapsedTime;
 
-                // 라인이 길이가 정해진 길이보다 길어지면 StartPoint도 이동한다.
+                // If the line becomes longer than the specified length, the StartPoint also moves.
                 if(m_pResourceLineSystem->m_EmitterStandard.m_bMoveLine)
                 {
                     RwV3d vLenth = pLineSystemVertex->vUpdatePoint - pLineSystemVertex->vStrartPoint;
@@ -254,13 +254,13 @@ void CNtlInstanceLineSystem::UpdateVertices( RwReal fElapsedTime )
                     }
                 }
 
-                // Shake 옵션이 켜져있으면 랜덤으로 흔든다
+                // If the Shake option is on, it shakes randomly.
                 if(m_pResourceLineSystem->m_EmitterStandard.m_bShake)
                 {
                     UpdateShake(pLineSystemVertex);
                 }
 
-                // 정해진 두점을 가지고 Z축 빌보드 면을 생성한다.
+                // Create a Z-axis billboard surface using two specified points.
                 if(m_pResourceLineSystem->m_EmitterStandard.m_bZBiilBoard)
                 {
                     UpdateZBillBoard(pLineSystemVertex);
@@ -271,7 +271,7 @@ void CNtlInstanceLineSystem::UpdateVertices( RwReal fElapsedTime )
                 }
                 
 
-                // List에 있는 Vertex들을 Vertex Buffer에 넣는다.
+                // Put the vertices in the list into the Vertex Buffer.
                 for(int i = 0; i < 6; ++i)
                 {
                     m_pVertices[nCount++] = pLineSystemVertex->imVertices[i];                    
@@ -279,7 +279,7 @@ void CNtlInstanceLineSystem::UpdateVertices( RwReal fElapsedTime )
 
                 ++it;
             }
-            else    // Life Time이 지나면 리스트에서 제거한다.
+            else    // When Life Time expires, it is removed from the list.
             {
                 it = m_listLineSystemVertex.erase(it);
 
@@ -289,7 +289,7 @@ void CNtlInstanceLineSystem::UpdateVertices( RwReal fElapsedTime )
 }
 
 /**
- * 새로운 라인을 추가하여 List에 추가한다. 
+ *Add a new line and add it to the List. 
  */
 void CNtlInstanceLineSystem::CreateLine()
 {
@@ -303,7 +303,7 @@ void CNtlInstanceLineSystem::CreateLine()
         m_nPoolIndex = 0;
     }
 
-    // Emitter내의 위치를 결정한다.
+    // Determine the location within the emitter.
     RwReal fRadian = NtlRandomNumber(0.0f, (2.0f * rwPI));        
     
     RwV3d vStartPoint;
@@ -334,7 +334,7 @@ void CNtlInstanceLineSystem::CreateLine()
         vStartPoint.y = (RwReal)RwSin(fRadian);    
         vStartPoint.z = 0.0f;    
 
-        // Line의 진행 방향을 결정한다.
+        // Determines the direction of progress of the line.
         vDir = vStartPoint * m_pResourceLineSystem->m_EmitterStandard.m_fTargetRadius;    
         vDir.z = -1.0f;
         RwV3dNormalize(&vDir, &vDir);
@@ -345,7 +345,7 @@ void CNtlInstanceLineSystem::CreateLine()
 
     m_poolLineSystemVertex[m_nPoolIndex].vDir = vDir;    
 
-    // Emitter Bias를 설정한다.
+    // Set Emitter Bias.
     if(m_pResourceLineSystem->m_EmitterStandard.m_fEmitterBias != 0.0f)
     {
         RwReal fEmitterBias = NtlRandomNumber(-(m_pResourceLineSystem->m_EmitterStandard.m_fEmitterBias), m_pResourceLineSystem->m_EmitterStandard.m_fEmitterBias);
@@ -353,7 +353,7 @@ void CNtlInstanceLineSystem::CreateLine()
         m_poolLineSystemVertex[m_nPoolIndex].vStrartPoint += vDir;
     }
 
-    // UV 설정
+    // UV settings
     m_poolLineSystemVertex[m_nPoolIndex].imVertices[0].u = 0.0f;
     m_poolLineSystemVertex[m_nPoolIndex].imVertices[0].v = 0.0f;
     m_poolLineSystemVertex[m_nPoolIndex].imVertices[1].u = 1.0f;
@@ -367,16 +367,16 @@ void CNtlInstanceLineSystem::CreateLine()
     m_poolLineSystemVertex[m_nPoolIndex].imVertices[5].u = 0.0f;
     m_poolLineSystemVertex[m_nPoolIndex].imVertices[5].v = 1.0f;
 
-    // Color 설정
+    // Color settings
     for(int i = 0; i < 6; ++i)
     {
         RwIm3DVertexSetRGBA(&m_poolLineSystemVertex[m_nPoolIndex].imVertices[i], m_sColor.red, m_sColor.green, m_sColor.blue, m_sColor.alpha);
     }
 
-    // Size 설정    
+    // Size settings    
     if(m_pResourceLineSystem->IsEmitterDataFlag(rpPRTSTDEMITTERDATAFLAGPRTSIZE))
     {
-        // Size Action이 설정되면 기본 Size는 무시된다. (Size Action의 z값은 사용하지 않는다.)
+        // When Size Action is set, the default Size is ignored. (Z value of Size Action is not used.)
         m_poolLineSystemVertex[m_nPoolIndex].vLineSize.x = m_pResourceLineSystem->m_EmitterPrtSize.prtStartSize.x;        
         m_poolLineSystemVertex[m_nPoolIndex].vLineSize.y = m_pResourceLineSystem->m_EmitterPrtSize.prtStartSize.y;
     }
@@ -424,27 +424,27 @@ void CNtlInstanceLineSystem::UpdateZBillBoard( SLineSystemVertex* pLineSystemVer
 
 void CNtlInstanceLineSystem::UpdateNoneZBillBoard( SLineSystemVertex* pLineSystemVertex ) 
 {
-    // ZBillBoard가 적용되지 않은 면을 생성한다.
-    // 라인의 Dir 벡터와 라인위치와 원점과의 벡터를 외적한 벡터 방향으로 면을 늘린다.
+    // Creates a surface to which ZBillBoard is not applied.
+    // The surface is stretched in the direction of the vector that is the cross product of the line's Dir vector and the vector between the line position and the origin.
 
     if(!pLineSystemVertex)
         return;
 
-    // 진행 벡터
+    // progress vector
     RwV3d vDir = pLineSystemVertex->vUpdatePoint - pLineSystemVertex->vStrartPoint;
     if(RwV3dLength(&vDir) == 0.0f)
         return;
 
     RwV3dNormalize(&vDir, &vDir);
 
-    // 원점과의 벡터
+    // vector with origin
     RwV3d vLinePos = pLineSystemVertex->vUpdatePoint;
     vLinePos.z = m_pResourceLineSystem->m_vPosition.z;
 
     RwV3d vOrigin = vLinePos - m_pResourceLineSystem->m_vPosition;
     RwV3dNormalize(&vOrigin, &vOrigin);
 
-    // 두 벡터를 외적하여 면의 방향을 결정한다.
+    // The direction of the face is determined by cross producting the two vectors.
     RwV3d vAxisWidth;
     RwV3dCrossProduct(&vAxisWidth, &vDir, &vOrigin);
     RwV3dNormalize(&vAxisWidth, &vAxisWidth);
@@ -454,10 +454,10 @@ void CNtlInstanceLineSystem::UpdateNoneZBillBoard( SLineSystemVertex* pLineSyste
 
 
 /**
- * 라인의 정보로 평면을 생성한다.
- * \param pLineSystemVertex 정보를 가지고 있는 구조체의 포인터
- * \param vStartAxis 시작점에서 구성될 평면의 벡터 (단위벡터)
- * \param vEndAxis 끝점에서 구성될 편면의 벡터 (단위 벡터) 
+ *Create a plane with line information.
+ * \param pLineSystemVertex Pointer to a structure containing information.
+ * \param vStartAxis Vector of the plane to be constructed from the starting point (unit vector)
+ * \param vEndAxis Vector of the side to be constructed from the endpoints (unit vector) 
  */
 void CNtlInstanceLineSystem::CreatePlane(SLineSystemVertex* pLineSystemVertex, const RwV3d& vStartAxis, const RwV3d& vEndAxis)
 {
@@ -491,7 +491,7 @@ void CNtlInstanceLineSystem::UpdateShake( SLineSystemVertex* pLineSystemVertex )
 
     fShakeDir = fShakeDir * fShakeRatio;
 
-    // 끝라인만 Shake를 적용한다.
+    // Shake is applied only to the end line.
     pLineSystemVertex->vUpdatePoint = pLineSystemVertex->vUpdatePoint + fShakeDir;
 }
 
@@ -517,7 +517,7 @@ void CNtlInstanceLineSystem::UpdateRotate( RwReal fDeltaTime )
 
 void CNtlInstanceLineSystem::UpdateColor( RwReal fDeltaTime ) 
 {
-    // 각각의 라인마다 Color를 Update한다.
+    // Update the color for each line.
     RwRGBA color;
 
     for each(SLineSystemVertex* pLineSystemVertex in m_listLineSystemVertex)
@@ -541,7 +541,7 @@ void CNtlInstanceLineSystem::UpdateColor( RwReal fDeltaTime )
 }
 void CNtlInstanceLineSystem::UpdateSize( RwReal fDeltaTime ) 
 {
-    // 각각의 라인마다 Size를 Update한다.
+    // Update the size for each line.
     RwV3d size;
 
     for each(SLineSystemVertex* pLineSystemVertex in m_listLineSystemVertex)

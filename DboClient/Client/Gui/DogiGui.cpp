@@ -2,18 +2,18 @@
 #include "DogiGui.h"
 
 
-// shared
+// Shared
 #include "NPCTable.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLItem.h"
 #include "NtlPLPalette.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSobAvatar.h"
 #include "NtlSobCharProxy.h"
@@ -23,7 +23,7 @@
 #include "NtlSLLogic.h"
 #include "NtlSobItemAttr.h"
 
-// client
+// Client
 #include "DialogManager.h"
 #include "DisplayStringManager.h"
 #include "DboEventGenerator.h"
@@ -116,7 +116,7 @@ RwBool CDogiGui::Create()
 		iPosY += dCOLOR_GAP_ROW;
 	}
 
-	// 도복 슬롯
+	// gi slot
 	m_DogiSlot.Create(m_pThis, DIALOG_DOGI, REGULAR_SLOT_ITEM_SOB);
 	m_DogiSlot.SetPosition_fromParent(50, 353);
 
@@ -127,7 +127,7 @@ RwBool CDogiGui::Create()
 	m_tUseColorInfo.bUseAllColor		= FALSE;
 	m_tUseColorInfo.byEnableColorRow	= 0;
 
-	// 컴포넌트를 배치
+	// Place components
 	OnMove(0, 0);
 
 	m_pDialogName		->SetText(GetDisplayStringManager()->GetString("DST_DOGI_SETUP"));
@@ -137,7 +137,7 @@ RwBool CDogiGui::Create()
 	m_pBtnOK		->SetText(GetDisplayStringManager()->GetString("DST_MSG_BTN_OK"));
 	m_pBtnCancel	->SetText(GetDisplayStringManager()->GetString("DST_MSG_BTN_CANCEL"));
 
-	// sig
+	// Signals
 	m_slotHelpButton				= m_pBtnHelp->SigClicked().Connect(this, &CDogiGui::OnClicked_HelpButton);
 	m_slotExitButton				= m_pBtnExit->SigClicked().Connect(this, &CDogiGui::OnClicked_ExitButton);
 	m_slotLeftArrowButtonPress		= m_pBtnLeftArrow->SigPressed().Connect( this, &CDogiGui::OnPressed_LeftArrowButton );
@@ -578,7 +578,7 @@ VOID CDogiGui::OnMouseUp(const CKey& key)
 						{
 							if( ITEM_TYPE_DOGI == pITEM_TBLDAT->byItem_Type )
 							{
-								// 가방에서 도복 아이템을 등록했다
+								// A uniform item was registered in the bag.
 								if( SetDogi( GetIconMoveManager()->GetSrcSerial() ) )
 								{
 									GetIconMoveManager()->IconMoveEnd();
@@ -600,7 +600,7 @@ VOID CDogiGui::OnMouseUp(const CKey& key)
 			{
 				if( FALSE == GetIconMoveManager()->IsActive() )
 				{
-					// 팔레트를 선택했다
+					// Choose a palette
 					SelectColor(m_byLeftMouseDown);
 				}
 			}
@@ -612,7 +612,7 @@ VOID CDogiGui::OnMouseUp(const CKey& key)
 		{
 			if( m_byRightMouseDown == bySlot )
 			{
-				// 등록된 도복을 지운다
+				// Delete registered gi
 				CheckInfoWindow();
 				UnsetDogi();				
 
@@ -779,11 +779,11 @@ VOID CDogiGui::HandleEvents( RWS::CMsg &msg )
 		if( pEvent->eDialog != DIALOG_DOGI )
 			return;
 
-		// 같은 NPC
+		// same NPC
 		if( m_hNPCSerial == pEvent->hSerialId )
 			return;
 
-		// 다른 NPC와 대화를 하는 경우이다
+		// This is when talking to another NPC.
 		if( m_hNPCSerial != INVALID_SERIAL_ID )
 		{
 			GetDialogManager()->CloseDialog(DIALOG_DOGI);
@@ -801,13 +801,13 @@ VOID CDogiGui::HandleEvents( RWS::CMsg &msg )
 
 		if( m_hNPCSerial == *pDeleteSerial )
 		{
-			// NPC 서버가 다운되거나 하여 갑자기 NPC가 사라지는 경우
+			// When the NPC server suddenly goes down or the NPC suddenly disappears
 			GetDialogManager()->CloseDialog(DIALOG_DOGI);
 		}
 	}
 	else if( msg.Id == g_EventDirectMoveIcon )
 	{
-		// GUI를 열 때마다 정보를 갱신하기에 닫혀있는 상태에서는 갱신하지 않는다
+		// Since the information is updated every time the GUI is opened, it is not updated when it is closed.
 		if( FALSE == GetDialogManager()->IsOpenDialog(DIALOG_DOGI) )
 			return;
 
@@ -862,7 +862,7 @@ VOID CDogiGui::HandleEvents( RWS::CMsg &msg )
 	}
 	else if( msg.Id == g_EventDojoNotify )
 	{
-		// GUI를 열 때마다 정보를 갱신하기에 닫혀있는 상태에서는 갱신하지 않는다
+		// Since the information is updated every time the GUI is opened, it is not updated when it is closed.
 		if( FALSE == GetDialogManager()->IsOpenDialog(DIALOG_DOGI) )
 			return;
 
@@ -878,7 +878,7 @@ VOID CDogiGui::HandleEvents( RWS::CMsg &msg )
 	}
 	else if( msg.Id == g_EventSobInfoUpdate )
 	{
-		// GUI를 열 때마다 정보를 갱신하기에 닫혀있는 상태에서는 갱신하지 않는다
+		// Since the information is updated every time the GUI is opened, it is not updated when it is closed.
 		if( FALSE == GetDialogManager()->IsOpenDialog(DIALOG_DOGI) )
 			return;
 
@@ -897,7 +897,7 @@ VOID CDogiGui::HandleEvents( RWS::CMsg &msg )
 		{
 			if( NULL == GetNtlSobManager()->GetSobObject(m_DogiSlot.GetSerial()) )
 			{
-				// 등록했던 도복이 사라졌다
+				// The registered uniform has disappeared.
 				CheckInfoWindow();
 				UnsetDogi();
 			}
@@ -911,7 +911,7 @@ VOID CDogiGui::HandleEvents( RWS::CMsg &msg )
 	}
 	else if( msg.Id == g_EventEnableItemIcon )
 	{
-		// GUI를 열 때마다 정보를 갱신하기에 닫혀있는 상태에서는 갱신하지 않는다
+		// Since the information is updated every time the GUI is opened, it is not updated when it is closed.
 		if( false == GetDialogManager()->IsOpenDialog(DIALOG_DOGI) )
 			NTL_RETURNVOID();
 

@@ -1,28 +1,28 @@
 /******************************************************************************
-* File			: Vehicle.h
-* Author		: Hong SungBock
-* Copyright		: (¡÷)NTL
-* Date			: 2009. 1. 5
-* Abstract		: 
-* Update		: 
+*File			: Vehicle.h
+*Author	     	: Hong SungBock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2009. 1. 5
+*Abstract		: 
+*Update  		: 
 *****************************************************************************
-* Desc: Top's GUI
-* In the initial plan, the fuel item is a stack item.
-* All of the same fuels were registered at once and all were locked.
-* Planning changes, fuel items are not stacked items, only one
-* Only the fuel will be registered, so write info about the item lock on stl
-* If you do not need it but you want to change it again later, stl :: pair
-* To manage the item lock information.
+*Desc           : Top's GUI
+*                 In the initial plan, the fuel item is a stack item.
+*                 All of the same fuels were registered at once and all were locked.
+*                 Planning changes, fuel items are not stacked items, only one
+*                 Only the fuel will be registered, so write info about the item lock on stl
+*                 If you do not need it but you want to change it again later, stl :: pair
+*                 To manage the item lock information.
 *****************************************************************************/
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// cleint
+// Client
 #include "SlotGui.h"
 
 struct sVEHICLE_TBLDAT;
@@ -37,7 +37,7 @@ class CVehicleGui : public CNtlPLGui, public RWS::CEventHandler
 
 	struct sFUEL
 	{
-		CRegularSlotGui				FuelSlot;				///< ø¨∑· ΩΩ∑‘
+		CRegularSlotGui				FuelSlot;				///< Fuel slot
 		SET_LOCKED_BAGSLOT		setLockedBagSlot;
 		SET_LOCKED_BAGSLOT		setNewLockBagSlot;
 	};
@@ -115,9 +115,9 @@ protected:
 	gui::CProgressBar*	m_pFuelGauge;
 	gui::CFlash*		m_pflashEngineWorking;
 
-	CSurfaceGui			m_srfFocusEffect;		///< ΩΩ∑‘ ∆˜ƒøΩ∫ ¿Ã∆Â∆Æ
-	CSurfaceGui			m_srfSelectEffect;		///< ΩΩ∑‘ ºø∑∫∆Æ ¿Ã∆Â∆Æ	
-	CSurfaceGui			m_srfFuelGaugeBack;		///< ø¨∑· ∞‘¿Ã¡ˆ πË∞Ê
+	CSurfaceGui			m_srfFocusEffect;		///< Slot focus effect
+	CSurfaceGui			m_srfSelectEffect;		///< Slot select effect	
+	CSurfaceGui			m_srfFuelGaugeBack;		///< Fuel gauge background
 
 	RwBool				m_bFocus;
 	RwBool				m_bSelected;

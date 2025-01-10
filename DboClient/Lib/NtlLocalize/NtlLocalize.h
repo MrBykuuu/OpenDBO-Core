@@ -4,29 +4,29 @@
  * Author		: HyungSuk, Jang
  * Copyright	: (주)NTL
  * Date			: 2007. 3. 19	
- * Abstract		: Localizing에 따른 정의.
+ * Abstract		: Definition according to Localizing.
  *****************************************************************************
  * Desc         : 
  *
  *****************************************************************************/
 
 //----------------------------------------
-// DBO Launcher에서의 함수의 실행 순서
+// Execution order of functions in DBO Launcher
 //----------------------------------------
 
 // 1. Local_Init();
 // 2. Local_DetectData();
 // 3. Local_DBOEncryptConfig();
-// 4. DBO Client 실행할 때 command에 DBO encrypt config data를 넣어준다.
+// 4. When running DBO Client, enter DBO encrypt config data in the command.
 // 5. Local_Terminate();
 
 
 //----------------------------------------
-// DBO client 에서의 함수의 실행 순서
+// Execution order of functions in DBO client
 //----------------------------------------
 
 // 1. Local_Init();
-// 2. Local_DBODecryptConfig();  command에서의 값을 넣어준다.
+// 2. Local_DBODecryptConfig();  Enter the value in the command.
 // 3. Local_Terminate();
 
 
@@ -41,7 +41,7 @@ void			Local_Terminate(void);
 unsigned char	Local_GetType(void);	
 SLocalConfig*	Local_GetConfig(void);
 
-// Localizing data 검출.(launcher로 넘어오는 decrypt key)
+//Localizing data detection. (decrypt key transferred to launcher)
 bool			Local_DetectData(const char *pKey);
 
 

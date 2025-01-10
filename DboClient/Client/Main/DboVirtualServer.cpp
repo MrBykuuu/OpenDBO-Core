@@ -1,7 +1,7 @@
 #include "precomp_dboclient.h"
 #include "DboVirtualServer.h"
 
-// shared
+// Shared
 #include "NtlClientNet.h"
 #include "NtlCharacter.h"
 #include "NtlPacketCommon.h"
@@ -20,12 +20,12 @@
 #include "TableContainer.h"
 
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "NtlSLGlobal.h"
 #include "NtlEventQueue.h"
@@ -45,7 +45,7 @@
 #include "NtlSLEventFunc.h"
 
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 
 #ifndef NET_SERVER_SYNC
@@ -77,10 +77,10 @@
 #define VIRTUAL_AVATAR_POSX			4583.0f
 #define VIRTUAL_AVATAR_POSZ			4070.0f
 
-// #define VIRTUAL_AVATAR_POSX			5473.0f  // 물
+// #define VIRTUAL_AVATAR_POSX			5473.0f  // avatar spawn point
 // #define VIRTUAL_AVATAR_POSZ			4902.0f
 
-// #define VIRTUAL_AVATAR_POSX			5999.0f  // 카린탑 마을
+// #define VIRTUAL_AVATAR_POSX			5999.0f  // Karin top Village
 // #define VIRTUAL_AVATAR_POSZ			253.0f
 
 
@@ -483,7 +483,7 @@ void CDboVirtualServer::SendOneServerRes(void *pPacket)
 
 	SendEvent(sizeof(sPackeOneRes), &sPackeOneRes);
 
-	// channel 정보.
+	// channel information.
 	sCU_SERVER_CHANNEL_INFO sPacketChannel;
 	sPackeOneRes.wOpCode = CU_SERVER_CHANNEL_INFO;
 	sPacketChannel.byCount = 1;
@@ -1307,7 +1307,7 @@ void CDboVirtualServer::SendCharActionAttack(RwUInt32 uiSerialId)
 		SendCharUpdateLp(m_iCurrentHp);
 	}
 
-	// fainting 검사.
+	// fainting test.
 	if(m_iCurrentHp <= 0)
 	{
 		SendCharUpdateFaintingState();
@@ -1382,7 +1382,7 @@ RwBool CDboVirtualServer::IsSkillCastingExist(void)
 
 void CDboVirtualServer::SendCharSkillRes(void *pPacket)
 {
-	// rect data 처리.
+	// rect data processing.
 	sUG_CHAR_SKILL_REQ *pCharSkillReq = (sUG_CHAR_SKILL_REQ*)pPacket;
 	
 	m_bySkillActiveType = VIRTUAL_SKILL_TYPE_CASTING;
@@ -1404,7 +1404,7 @@ void CDboVirtualServer::SendCharSkillRes(void *pPacket)
 	m_uiSkillTblId = pSkillTblData->tblidx;
 	*/
 
-	// send
+	// Send
 	sGU_CHAR_SKILL_RES sPacket;
 	memset(&sPacket, 0, sizeof(sGU_CHAR_SKILL_RES));
 
@@ -1416,7 +1416,7 @@ void CDboVirtualServer::SendCharSkillRes(void *pPacket)
 
 void CDboVirtualServer::SendCharHTBSkillRes(void *pPacket)
 {
-	// rect data 처리.
+	// rect data processing.
 	sUG_HTB_START_REQ *pCharHTBSkillReq = (sUG_HTB_START_REQ*)pPacket;
 
 	CNtlSobAvatar *pSobAvatar = GetNtlSLGlobal()->GetSobAvatar();
@@ -1426,7 +1426,7 @@ void CDboVirtualServer::SendCharHTBSkillRes(void *pPacket)
 	m_uiTargetSerialId = pCharHTBSkillReq->hTarget;
 	m_uiSkillTblId = pHTBSetTblData->tblidx;
 	
-	// send
+	// Send
 	sGU_HTB_START_RES sPacket;
 	memset(&sPacket, 0, sizeof(sGU_HTB_START_RES));
 
@@ -1589,10 +1589,10 @@ CDboVirtualServer* CDboVirtualServer::GetInstance(void)
 
 void CDboVirtualServer::Update(RwReal fElapsed)
 {
-	// packet을 pop한다.
+	// Pop the packet.
 	PopPacket();
 
-	// 공격 처리
+	// attack handling
 	SVirtualBattleData *pBattleData;
 	ListAttackBegin::iterator it;
 	for(it = m_listAttackBegin.begin(); it != m_listAttackBegin.end(); it++)
@@ -1605,14 +1605,14 @@ void CDboVirtualServer::Update(RwReal fElapsed)
 		}
 	}
 
-	// 이동 처리
+	// move processing
 	if(timeGetTime() - m_uiMobMoveCurrTime >= VIRTUAL_MONSTER_MOVE_UPDATE_TICK)
 	{
-//		SendMobMove();
+//		Send mob move();
 		m_uiMobMoveCurrTime = timeGetTime();
 	}
 
-	// skill 처리. 
+	// skill processing. 
 	if(m_bySkillActiveType == VIRTUAL_SKILL_TYPE_CASTING)
 	{
 		CSkillTable *pSkillTbl = API_GetTableContainer()->GetSkillTable();
@@ -1664,7 +1664,7 @@ void CDboVirtualServer::PacketProc(void *pPacket)
 		SendGameEnterRes(pPacket);
 		SendAvatarCharInfo();
 		SendAvatarItemInfo();
-//		SendAvatarSkillInfo();
+		//		SendAvatarSkillInfo();
 		SendAvatarInfoEnd();
 		break;
 	case UG_ENTER_WORLD:

@@ -2,13 +2,13 @@
 
 #include <map>
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// share
+// Share
 #include "NtlSharedDef.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "DboTSCoreDefine.h"
 #include "NtlSLGlobal.h"
@@ -39,9 +39,9 @@ typedef std::multimap<QM_KEY, sNextQuest>::iterator		MAP_NEXTQUEST_ITER;
 
 struct sBindInfo
 {
-	RwUInt8				byBindType;					///< 바인드 타입(eDBO_BIND_TYPE)
-	WORLDID				BindedWorldID;				///< 바인드 된 월드의 아이디
-	RwUInt32			uiBindedObejcTblIdx;		///< 바인드 된 오브젝트 테이블 인덱스
+	RwUInt8				byBindType;					///< Bind type (eDBO_BIND_TYPE)
+	WORLDID				BindedWorldID;				///< ID of the bound world
+	RwUInt32			uiBindedObejcTblIdx;		///< Bound object table index
 };
 
 
@@ -110,7 +110,7 @@ public:
 protected:
 	RwUInt32		m_uiHelpHint;
 
-	SERIAL_HANDLE	m_hRegisteredFuelItem;		///< 탈 것을 사용할 때만 올바른 핸들을 갱신한다
+	SERIAL_HANDLE	m_hRegisteredFuelItem;		///< Only update the correct handle when using the vehicle
 	TBLIDX			m_idxRegisteredFuelItem;
 
 	MAP_NEXTQUEST	m_multimapNextQuest;

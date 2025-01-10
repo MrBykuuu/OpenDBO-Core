@@ -1,15 +1,15 @@
 #include "precomp_dboclient.h"
 #include "ItemBindSealingGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLDef.h"
 #include "NtlPLGui.h"
 #include "NtlPLGuiManager.h"
 
-//  simul
+//  Simulation
 #include "NtlCameraController.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSobManager.h"
@@ -17,11 +17,11 @@
 #include "NtlSobItemAttr.h"
 #include "NtlSLLogic.h"
 
-// framework
+// Framework
 #include "NtlApplication.h"
 
 
-// dbo
+// Dbo
 #include "DisplayStringManager.h"
 #include "DboEvent.h"
 #include "IconMoveManager.h"

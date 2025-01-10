@@ -1,13 +1,13 @@
 /*****************************************************************************
  *
- * File			: LoginGui.h
- * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
- * Date			: 2005. 9. 20	
- * Update		: 2007. 10. 15
- * Abstract		: DBO Login gui.
+ *File			: LoginGui.h
+ *Author	    : HyungSuk, Jang
+*Copyright	    : (주)NTL
+ *Date			: 2005. 9. 20	
+ *Update		: 2007. 10. 15
+ *Abstract		: DBO Login gui.
  *****************************************************************************
- * Desc         : 
+ *Desc         : 
  *
  *****************************************************************************/
 
@@ -45,7 +45,7 @@ protected:
 	virtual VOID	HandleEvents( RWS::CMsg &msg );
 
 	VOID			OnTimer(void);
-	VOID			SwitchEnableButtons(bool bEnable);	///< Exit 버튼을 제외한 버튼의 이용가능 설정
+	VOID			SwitchEnableButtons(bool bEnable);	///< Available settings for buttons except the Exit button
 
 	RwInt32			TabButtonHandle();
 
@@ -83,18 +83,18 @@ protected:
 	gui::CSlot			m_slotSigChangedTest;
 	gui::CSlot			m_slotSigActivityTest;
 
-	gui::CButton*		m_pCinemaButton;			///< 동영상 재생 버튼
-	gui::CButton*		m_pCreditButton;			///< 제작진 보기 버튼
+	gui::CButton*		m_pCinemaButton;			///< Video play button
+	gui::CButton*		m_pCreditButton;			///< View crew button
 	gui::CButton*		m_pGamePolicyButton;		///< 
 	gui::CButton*		m_pNewAccountButton;		///< 
-	gui::CButton*		m_pLoginButton;				///< 로그인 버튼
-	gui::CButton*		m_pExitButton;				///< 나가기 버튼
+	gui::CButton*		m_pLoginButton;				///< Login button
+	gui::CButton*		m_pExitButton;				///< Exit button
 
-	gui::CStaticBox*	m_pAccountName;				///< '계정 이름' 스태틱
-	gui::CStaticBox*	m_pPassward;				///< '비밀번호' 비밀번호 스태틱
-	gui::CStaticBox*	m_pNotive;					///< 'Dbo 공지사항' 스태틱
+	gui::CStaticBox*	m_pAccountName;				///< 'Account name' static
+	gui::CStaticBox*	m_pPassward;				///< 'password' password static
+	gui::CStaticBox*	m_pNotive;					///< 'Dbo Notice' static
 
-	gui::CStaticBox*	m_pVersion;					///< Dbo 버전 표시
+	gui::CStaticBox*	m_pVersion;					///< Display Dbo version
 
 	gui::CInputBox*		m_pAccountInput;			///< Account Input
 	gui::CInputBox*		m_pPasswardInput;			///< Passward Input
@@ -105,8 +105,8 @@ protected:
 
 	gui::CFlash*		m_pFlashCredit;
 
-	CSurfaceGui			m_srfInputDialogBack;		///< 인풋박스 배경
-	CSurfaceGui			m_NoticeUnderLine;			///< 공지사항 밑줄
+	CSurfaceGui			m_srfInputDialogBack;		///< Input box background
+	CSurfaceGui			m_NoticeUnderLine;			///< Notice underline
 
 
 	void*				m_handleKeyDown;

@@ -1,17 +1,17 @@
 #include "precomp_dboclient.h"
 #include "PetitionManager.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// share
+// Share
 #include "NtlSharedType.h"
 #include "NtlPetition.h"
 
-// framework
+// Framework
 #include "NtlStage.h"
 
-// cleint
+// Client
 #include "StageManager.h"
 #include "DboGlobal.h"
 
@@ -80,7 +80,7 @@ void CPetitionManager::StartGMChatting(PETITIONID petitionID, ACCOUNTID GMID, co
 	CNtlStage* pStage = CStageManager::GetInstance()->GetActiveStage();
 	if( !pStage )
 	{
-		// 유저가 아직 월드에 들어가지 않았다
+		// The user has not yet entered the world
 		GetDboGlobal()->GetChatPacketGenerator()->SendPetitionChatStartRes(PETITION_NOT_YET_ENTER_WORLD, GMID);
 		return;
 	}
@@ -88,14 +88,14 @@ void CPetitionManager::StartGMChatting(PETITIONID petitionID, ACCOUNTID GMID, co
 	std::string strStageName = pStage->GetName();
 	if( strStageName != GAME_STAGE_NAME )
 	{
-		// 유저가 아직 월드에 들어가지 않았다
+		// The user has not yet entered the world
 		GetDboGlobal()->GetChatPacketGenerator()->SendPetitionChatStartRes(PETITION_NOT_YET_ENTER_WORLD, GMID);
 		return;
 	}
 
 	if( IsGMChatting() )
 	{
-		// 유저가 이미 GM 채팅중이다
+		// User is already chatting with GM
 		GetDboGlobal()->GetChatPacketGenerator()->SendPetitionChatStartRes(PETITION_AREADY_GM_CHATTING, GMID);
 		return;
 	}
@@ -104,7 +104,7 @@ void CPetitionManager::StartGMChatting(PETITIONID petitionID, ACCOUNTID GMID, co
 	if( FALSE == GetDboGlobal()->GetChatPacketGenerator()->SendPetitionChatStartRes(CHAT_SUCCESS, GMID) )
 		return;
 
-	// 유저가 진정을 넣지 않아도 GM이 진정을 생성하여 유저와 능동적으로 채팅을 할 수 있다
+	// Even if the user does not submit a complaint, the GM can create a complaint and actively chat with the user.
 	m_Petition.petitionID			= petitionID;
 
 	m_GMChat.bGMChatting			= TRUE;

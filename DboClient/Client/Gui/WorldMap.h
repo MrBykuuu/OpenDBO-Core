@@ -1,10 +1,10 @@
 ﻿/******************************************************************************
-* File			: CWorldMapGui.h
-* Author		: Hong Sungbock
-* Copyright		: (주)NTL
-* Date			: 2007. 2. 1
-* Update		: 2007. 12. 6 by Hong Sungbock(워포그 추가)
-* Abstract		: 
+*File			: CWorldMapGui.h
+*Author		    : Hong Sungbock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 2. 1
+*Update		    : 2007. 12. 6 by Hong Sungbock(Add warfog)
+*Abstract		: 
 *****************************************************************************
 * Desc			: CWorldMapGui
 
@@ -12,25 +12,25 @@
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// share
+// Share
 #include "WorldMapTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// trigger
+// Trigger
 #include "DboTSCoreDefine.h"
 
-// simulation
+// Simulation
 #include "NtlSharedType.h"
 #include "NtlParty.h"
 #include "NtlSlDef.h"
 #include "NtlOtherParam.h"
 
-// dbo
+// Dbo
 #include "SurfaceGui.h"
 #include "Windowby3.h"
 
@@ -154,7 +154,7 @@ public:
 		WCHAR*				pwcName;
 	};
 
-	struct sCAMP_PEOPLE				///< 진영을 나누어 사람들끼리 싸우게 되는 경우
+	struct sCAMP_PEOPLE				///< When people divide into camps and fight among themselves
 	{
 		CPos				v2Pos;
 		eCampPeopleType		ePeopleType;
@@ -240,7 +240,7 @@ public:
 	VOID		Update(RwReal fElapsed);
 	VOID		Destroy();
 	
-	RwInt32		SwitchDialog(bool bOpen);		///< DialogManager에서의 Open/Close
+	RwInt32		SwitchDialog(bool bOpen);		///< Open/Close in DialogManager
 
 protected:
 	CWorldMapGui() {};
@@ -271,12 +271,12 @@ protected:
 	sWORLD_MAP_TBLDAT*	GetWorldMapTable(RwUInt32 uiWorldID, RwUInt32 uiZoneID);
 	VOID			GetAvatarMarkPosition(RwInt32& iOutputX, RwInt32& iOutputY, CNtlSobAvatar* pAvatar);
 
-	// 월드상 좌표를 입력하여 월드맵 모드에 따른 2D좌표를 돌려준다
+	// Enter world coordinates and return 2D coordinates according to world map mode.
 	VOID			GetMapPos_from_RealPos(RwReal fX, RwReal fZ, RwInt32& iX, RwInt32& iY);
 
 	VOID			LocateComponent();
 	VOID			CheckInfoWindow();
-	RwReal			GetAngle(RwV3d v3Dir);			///< 12시 방향을 기준으로 시계방향 각도
+	RwReal			GetAngle(RwV3d v3Dir);			///< Clockwise angle based on 12 o'clock
 
 	VOID			UnLoadWorldFocus();
 	VOID			UnloadLandMark();
@@ -354,37 +354,37 @@ protected:
 
 	gui::CComboBox*		m_pcbbSearchNpc;
 
-	gui::CStaticBox*	m_pBusRoute;			/// "버스 노선도"
-	gui::CStaticBox*	m_pOurGuild;			/// "우리 유파"
-	gui::CStaticBox*	m_pOtherGuild;			/// "상대 유파"
-	gui::CStaticBox*	m_pTransparency;		/// "투명도"
+	gui::CStaticBox*	m_pBusRoute;			/// "Bus route map"
+	gui::CStaticBox*	m_pOurGuild;			/// “Our school”
+	gui::CStaticBox*	m_pOtherGuild;			/// “Relative school”
+	gui::CStaticBox*	m_pTransparency;		/// "transparency"
 
 	gui::CScrollBar*	m_pAlphaScrollbar;
 
-	gui::CButton*		m_pExitButton;			///< 창닫기 버튼
+	gui::CButton*		m_pExitButton;			///< Close window button
 	gui::CButton*		m_pBusRouteButton;
 	gui::CButton*		m_pVisibleOurGuildMemberButton;
 	gui::CButton*		m_pVisibleOurGuildMemberMiniMapButton;
 	gui::CButton*		m_pVisibleOtherGuildMemberButton;	
 	gui::CButton*		m_pVisibleOtherGuildMemberMiniMapButton;
 
-	CWindowby3			m_MapFrameUp;			///< 월드맵의 틀 상단
-	CSurfaceGui			m_MapFrameLC;			///< 월드맵의 틀 좌중단
-	CSurfaceGui			m_MapFrameRC;			///< 월드맵의 틀 우중단
-	CWindowby3			m_MapFrameDown;			///< 월드맵의 틀 하단
+	CWindowby3			m_MapFrameUp;			///< Top of the world map frame
+	CSurfaceGui			m_MapFrameLC;			///< Middle left corner of the world map frame
+	CSurfaceGui			m_MapFrameRC;			///< Middle right corner of the world map frame
+	CWindowby3			m_MapFrameDown;			///< Bottom of the world map frame
 
-	CSurfaceGui			m_surBack;				///< 배경 서페이스
-	CSurfaceGui			m_srfMap;				///< 맵 서페이스
-	CSurfaceGui			m_srfBusRoute;			///< 버스 노선 서페이스
-	CSurfaceGui			m_surMarkBus[NUM_BUS_SHAPE_TYPE][NUM_BUS_MARK][NUM_BUS_DIRECTION];	///< 버스 마크
-	CSurfaceGui			m_surMarkAvatar;		///< 아바타 마크
-	CSurfaceGui			m_surMarkPartryMember;	///< 파티원 마크
-	CSurfaceGui			m_surLandMark[NUM_LMT];	///< 랜드 마크
-	CSurfaceGui			m_surNextQuestMark[NUM_eQMI_TARGET_TYPE];///< 다음 진행 퀘스트 마크
-	CSurfaceGui			m_surBindMark;			///< 바인딩 마크
-	CSurfaceGui			m_surDboRate[NUM_MAP_DBO];	///< DBO 지도간 비율
-	CSurfaceGui			m_surCamp[NUM_CAMP_PEOPLE];///< (피아구분)팀을 나누어서 싸우는 경우의 사람들
-	CSurfaceGui			m_surScrambleSeal[NUM_DBO_TEAM];	///< 도장전 인장
+	CSurfaceGui			m_surBack;				///< Background surface
+	CSurfaceGui			m_srfMap;				///< Map surface
+	CSurfaceGui			m_srfBusRoute;			///< Bus route surface
+	CSurfaceGui			m_surMarkBus[NUM_BUS_SHAPE_TYPE][NUM_BUS_MARK][NUM_BUS_DIRECTION];	///< bus mark
+	CSurfaceGui			m_surMarkAvatar;		///< Avatar Mark
+	CSurfaceGui			m_surMarkPartryMember;	///< Party member mark
+	CSurfaceGui			m_surLandMark[NUM_LMT];	///< Landmark
+	CSurfaceGui			m_surNextQuestMark[NUM_eQMI_TARGET_TYPE];///< Next progress quest mark
+	CSurfaceGui			m_surBindMark;			///< Binding mark
+	CSurfaceGui			m_surDboRate[NUM_MAP_DBO];	///< Ratio between DBO maps
+	CSurfaceGui			m_surCamp[NUM_CAMP_PEOPLE];///< (Fia division) People who divide into teams and fight
+	CSurfaceGui			m_surScrambleSeal[NUM_DBO_TEAM];	///< Seal before painting
 
 	CSurfaceGui			m_srfQTSlotIcon[10];
 	CSurfaceGui			m_srfQTSlotIconWorld;
@@ -408,44 +408,44 @@ protected:
 
 	gui::CComponent*	m_pDummy;				///< for Post render
 
-	RwUInt8				m_byFocusArea;			///< 포커싱 되고 있는 월드맵 포커스 이미지 인덱스(실제 존 인덱스와 상관없다)
+	RwUInt8				m_byFocusArea;			///< World map focus image index being focused (regardless of actual zone index)
 	ZONEID				m_FocusZoneID;			///< Zone index being focused
 	TBLIDX				m_FocusMapID;			///< World map index being focused
-	sWorldMapFocusRect	m_aMainWorldFocus[NUM_MWFT];///< 메인월드의 포커스
+	sWorldMapFocusRect	m_aMainWorldFocus[NUM_MWFT];///< Main world focus
 
-	RwUInt8				m_byMapMode;			///< 맵 모드
-	RwReal				m_fElapsedTime;			///< 업데이트 타임
-	RwReal				m_fElapsedTestChangeZone;///< 존이 바뀌는지 검사하는 시간
-	RwReal				m_fMapScale;			///< 맵 스케일
-	RwUInt8				m_byDboRateType;		///< 실 축척이 아닌 지도간 비율
+	RwUInt8				m_byMapMode;			///< map mode
+	RwReal				m_fElapsedTime;			///< Update time
+	RwReal				m_fElapsedTestChangeZone;///< Time to check whether the zone has changed
+	RwReal				m_fMapScale;			///< Map scale
+	RwUInt8				m_byDboRateType;		///< Ratio between maps, not actual scale
 
-	RwUInt32			m_uiFocusLandMarkIndex;	///< 포커싱되고 있는 랜드마크 인덱스
+	RwUInt32			m_uiFocusLandMarkIndex;	///< Landmark index being focused
 	ZONEID				m_uiPressedZoneIndex;	///< ZONE Index of mouse down zone
 	TBLIDX				m_uiPressedMapIndex;	///< World Index of mouse down zone
-	RwBool				m_bRightMouse;			///< 마우스 오른쪽
-	RwBool				m_bChangedMap_by_User;	///< 유저가 처음에 열린 맵에서 다른 맵으로 바꾸어 본다
+	RwBool				m_bRightMouse;			///< Right mouse button
+	RwBool				m_bChangedMap_by_User;	///< The user switches from the initially opened map to another map.
 	
-	RwInt32				m_iMapStartX, m_iMapStartY; ///< 실제 맵 영역
+	RwInt32				m_iMapStartX, m_iMapStartY; ///< Actual map area
 
 	TBLIDX				m_uiRenderingWorldID;	///< The world ID of the area being drawn on the screen
-	ZONEID				m_uiRenderingZoneID;	///< 화면에 그려지고 있는 지역의 존 아이디
+	ZONEID				m_uiRenderingZoneID;	///< Zone ID of the area depicted on the screen
 
 	TBLIDX				m_uiActiveWorldID;		///< World ID where the avatar is located
-	ZONEID				m_uiActiveZoneID;		///< 아바타가 위치한 존 ID
+	ZONEID				m_uiActiveZoneID;		///< Zone ID where the avatar is located
 
-	RwV2d				m_v2MapPos;				///< 기준점이 되는 맵의 좌상단 위치
-	sPARTYMEMBER		m_aPartyMember[NTL_MAX_MEMBER_IN_PARTY - 1]; ///< 파티원 위치
+	RwV2d				m_v2MapPos;				///< Location of the upper left corner of the map as the reference point
+	sPARTYMEMBER		m_aPartyMember[NTL_MAX_MEMBER_IN_PARTY - 1]; ///< Party member location
 
-	sWarFogDisappearEvent m_WarFogDisappearEvent;	///< 워포그 데이터를 받아서 사라지는 이벤트 데이터
+	sWarFogDisappearEvent m_WarFogDisappearEvent;	///< Event data that disappears after receiving warfog data
 	sSCRAMBLE_VISIBLE	m_tScrambleVisible;
 
 
 	BUS_POS_MAP			m_mapBusPos;
-	LIST_CAMP			m_listCamp;				///< (피아구분)팀을 나누어서 싸우는 경우의 사람들
+	LIST_CAMP			m_listCamp;				///< (Fia division) People who divide into teams and fight
 	NEXTQUEST_LIST		m_listNextQuest;
-	LANDMARK_LIST		m_listLandMark;			///< 랜드마크 위치
-	sBindMarkInfo		m_BindInfo;				///< 바인디 위치 정보
-	sWarFog				m_WarFog[DBO_WORLD_MAP_TABLE_COUNT_WORLD_WARFOG];///< 워 포그 정보
-	CQuestSearchGui*	m_pQuestSearch;			///< 퀘스트 서치 gui
+	LANDMARK_LIST		m_listLandMark;			///< Landmark location
+	sBindMarkInfo		m_BindInfo;				///< Bindi location information
+	sWarFog				m_WarFog[DBO_WORLD_MAP_TABLE_COUNT_WORLD_WARFOG];///< War Fog Information
+	CQuestSearchGui*	m_pQuestSearch;			///< Quest search gui
 	MAP_SCRAMBLE_SEAL_MARK	m_mapScrambleSealMark;
 };

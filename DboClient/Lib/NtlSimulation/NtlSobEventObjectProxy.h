@@ -36,11 +36,11 @@ public:
     void SobCreateEventHandler(RWS::CMsg &pMsg);
 
     //---------------------------------------------------
-    // main presentation entity에 관련된 함수 
+    // Functions related to the main presentation entity 
     //---------------------------------------------------
 
     /**
-    * transform에 관현된 함수.
+    *Function related to transform.
     */
 
     virtual void SetPosition(const RwV3d *pPos);
@@ -48,17 +48,17 @@ public:
     virtual void SetAngleY(RwReal fAngle);        
 
     /**
-    * entity 정보에 관한 함수.
+    *Function regarding entity information.
     */
     CNtlPLEntity*			GetPLMainEntity(void);      ///< presentation main entity    
-    virtual RwReal			GetPLEntityWidth(void);     ///< pl entity의 폭을 얻어온다.    
-    virtual RwReal			GetPLEntityHeight(void);    ///< pl entity의 높이를 얻어온다.    
-    virtual RwReal			GetPLEntityDepth(void);     ///< pl entity의 depth을 얻어온다.
+    virtual RwReal			GetPLEntityWidth(void);     ///< Gets the width of the pl entity.    
+    virtual RwReal			GetPLEntityHeight(void);    ///< Gets the height of the pl entity.    
+    virtual RwReal			GetPLEntityDepth(void);     ///< Gets the depth of pl entity.
 
 protected:
 
 	/** 
-	* trigger object 이름 생성.
+	*Create trigger object name.
 	*/
 	void    CreatePLObjectName(void);
 	void    DeletePLObjectName(void);

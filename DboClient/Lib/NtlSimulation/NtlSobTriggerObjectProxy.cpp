@@ -1,14 +1,14 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobTriggerObjectProxy.h"
 
-// shared
+// Shared
 #include "ObjectTable.h"
 #include "NtlObject.h"
 
-// core
+// Core
 #include "NtlMath.h"
 
-//// presentation
+//// Presentation
 #include "NtlPLEvent.h"
 #include "NtlPLSceneManager.h"
 #include "NtlPLObject.h"
@@ -16,7 +16,7 @@
 #include "NtlPLPlayerName.h"
 #include "NtlPLHelpers.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSob.h"
 #include "NtlSobTriggerObject.h"
@@ -113,7 +113,7 @@ void CNtlSobTriggerObjectProxy::CreatePLTargetMark(void)
 	CNtlSobTriggerObjectAttr* pAttrTObj = dynamic_cast< CNtlSobTriggerObjectAttr* > ( pSobTObj->GetSobAttr() );
 	if ( NULL == pAttrTObj ) return;
 
-    // 공유 타겟이 설정되어 있으면 일반 타켓마크는 뜨지 않는다.
+    // If a shared target is set, the general target mark does not appear.
     if(m_pShareTargetMark && m_pShareTargetMark->IsShareTargeting())
     {
         CreateShareTargetMark(m_pShareTargetMark->GetSlot(), CNtlShareTargetMark::SHARE_TARGET_TARGET);
@@ -315,8 +315,8 @@ void CNtlSobTriggerObjectProxy::SobCreateEventHandler(RWS::CMsg &pMsg)
 
 	m_pPLObject->SetSerialID(m_pSobObj->GetSerialID());
 
-	// 트리거 오브젝트의 경우 Visible 여부 및 Fading In/Out 여부를
-	// 외부에서 제어한다 - 게임의 경우
+	// For trigger objects, check whether they are Visible and Fading In/Out.
+	// Controlled externally -in the case of games
 	RwUInt32 uiFlags = m_pPLObject->GetFlags();
 	uiFlags |= NTL_PLEFLAG_OBJECT_FORCE_VISIBLE;
 	uiFlags &= ~NTL_PLEFLAG_FADE;
@@ -333,7 +333,7 @@ void CNtlSobTriggerObjectProxy::SobCreateEventHandler(RWS::CMsg &pMsg)
 
 	CreatePLObjectName();
 
-	// 초기 상태를 처리한다
+	// Process the initial state
 	sOBJECT_TBLDAT* pObjTbl = ((CNtlSobTriggerObjectAttr*)m_pSobObj->GetSobAttr())->GetTriggerObjectTbl();
 	InitState( pObjTbl->byDefMainState, pObjTbl->byDefSubState);
 }
@@ -384,7 +384,7 @@ void CNtlSobTriggerObjectProxy::SobQuestMark(RWS::CMsg &pMsg)
 
 void CNtlSobTriggerObjectProxy::SobUpdateState(RWS::CMsg &pMsg)
 {
-	// 업데이트된 상태 처리를 수행한다
+	// Perform updated state processing
 	SNtlEventTObjectUpdateState *pSobTObjUpdateState = reinterpret_cast<SNtlEventTObjectUpdateState*>(pMsg.pData);
 	UpdateState( pSobTObjUpdateState->byMainState, pSobTObjUpdateState->bySubState, pSobTObjUpdateState->uiStateTime );
 }
@@ -550,7 +550,7 @@ void CNtlSobTriggerObjectProxy::InitState(RwUInt8 byMainState, RwUInt8 bySubStat
 	// Sub state processing
 	m_bySubState = bySubState;
 
-	// Whether the object is Show / Hide
+	// Whether the object is Show /Hide
 
 	// If the object is a Scouter object, the control on the Visible is invisible regardless of CS interaction
 	// will start
@@ -595,19 +595,19 @@ void CNtlSobTriggerObjectProxy::UpdateState(RwUInt8 byMainState, RwUInt8 bySubSt
     if(byMainState >= DBO_MAX_OBJECT_STATE)
         return;
 
-	// 메인 상태 처리
+	// Main state processing
 
-	// PID object인 경우 Visible에 대한 컨트롤은 CS 연동 상태와는 무관하게 현재 아바타 소속 파티의
-	// 파티 인스턴전 타입에 의해 상태가 결정된다
+	// In the case of a PID object, control over Visible is performed by the current avatar's party regardless of CS linkage status.
+	// Status is determined by party instance type.
 	if ( IsPIDObject() )
 	{
 		m_byMainState = byMainState;
 
-		// Animation chain은 초기화 상태로 유지되어야 한다
+		// Animation chain must remain initialized
 	}
 	else
 	{
-		// 상태가 변경되었을 경우만 메인상태를 업데이트한다
+		// Update the main state only when the state changes.
 		if ( m_byMainState != byMainState )
 		{
 			m_byMainState = byMainState;
@@ -629,12 +629,13 @@ void CNtlSobTriggerObjectProxy::UpdateState(RwUInt8 byMainState, RwUInt8 bySubSt
 			{
 				fProgTime -= m_pPLObject->GetAnimPlayTime( pObjTbl->abyState[byMainState][i] );
 
-				// 트리거 오브젝트의 상태 진행 시간에 따라 Animation을 skipping한다
+				// Animation is skipped according to the state progress time of the trigger object.
+
 				if ( fProgTime < 0.f )
 				{
 					if ( FLT_MAX == fPlayTime )
 					{
-						// 이벤트를 건너 뛰는 경우가 발생하는 듯 하여 우선 아래 주석 코드 대신 처음 부터 시작 하도록 처리 했음.
+						// There seemed to be a case where events were skipped, so I decided to start from the beginning instead of using the comment code below.
 						fPlayTime = 0.f;	// fProgTime + m_pPLObject->GetAnimPlayTime( pObjTbl->abyState[byMainState][i] );
 					}
 
@@ -644,8 +645,8 @@ void CNtlSobTriggerObjectProxy::UpdateState(RwUInt8 byMainState, RwUInt8 bySubSt
 				++i;
 			}
 
-			// 서버에서 트리거 오브젝트의 상태 진행 시간이 모든 Animation 길게 내려온 경우
-			// 맨 마지막 Animation을 출력하도록 한다
+			// When the state progress time of the trigger object on the server is long for all animations
+			// Print the last animation.
 			if ( m_AnimChain.empty() && i > 0 )
 			{
 				fPlayTime = 0.f;
@@ -667,22 +668,22 @@ void CNtlSobTriggerObjectProxy::UpdateState(RwUInt8 byMainState, RwUInt8 bySubSt
 		}
 	}
 
-	// 보조 상태 처리
+	// Secondary state handling
 	m_bySubState = bySubState;
 
-	// 오브젝트 Show / Hide 여부
+	// Object Show/Hide
 
-	// Scouter object인 경우 Visible에 대한 컨트롤은 CS 연동 상태와는 무관하게 처리된다
-	// 즉, Visibility에 대해서는 CS간에 연동되는 상태와 동기를 맞추지 않는다
+	// In the case of a Scouter object, control over Visible is handled regardless of the CS integration status.
+	// In other words, Visibility is not synchronized with the state interconnected between CSs.
 	if ( IsScouterObject() )
 	{
-		// 아무 것도 하지 않는다
+		// do nothing
 	}
-	// TLQ object인 경우 Visible에 대한 컨트롤은 CS 연동 상태와는 무관하게 처리된다
-	// 즉, Visibility에 대해서는 CS간에 연동되는 상태와 동기를 맞추지 않는다
+	// In the case of a TLQ object, control over Visible is handled regardless of the CS linkage status.
+	// In other words, Visibility is not synchronized with the state interconnected between CSs.
 	else if ( IsTLQObject() )
 	{
-		// 아무 것도 하지 않는다
+		// do nothing
 	}
 	else
 	{
@@ -756,8 +757,8 @@ void CNtlSobTriggerObjectProxy::UpdateTLQObject(RwReal fElapsed)
 
 void CNtlSobTriggerObjectProxy::UpdatePIDObject(RwReal fElapsed)
 {
-	// 트리거 오브젝트의 경우 아바타 보다 먼저 생성되므로
-	// 아바타가 아직 생성되지 않은 경우에 대한 예외처리l
+	// In the case of trigger objects, they are created before the avatar.
+	// Exception handling when the avatar has not been created yet
 	CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
 	if ( NULL == pAvatar )
 	{
@@ -770,7 +771,7 @@ void CNtlSobTriggerObjectProxy::UpdatePIDObject(RwReal fElapsed)
 		return;
 	}
 
-	// Animation chain이 비어 있는 경우에 한해 새로운 Animation chain을 구성한다
+	// Construct a new animation chain only if the animation chain is empty.
 	if ( IsPIDObject() && m_AnimChain.empty() )
 	{
 		RwUInt8 byDngState;
@@ -793,7 +794,7 @@ void CNtlSobTriggerObjectProxy::UpdatePIDObject(RwReal fElapsed)
 			++i;
 		}
 
-		// 초기 상태에서는 Animation chain의 맨 뒤 애니매이션만 출력한다.
+		// In the initial state, only the animation at the end of the animation chain is output.
 		if ( !m_AnimChain.empty() )
 		{
 			while ( m_AnimChain.size() != 1 )
@@ -843,7 +844,7 @@ void CNtlSobTriggerObjectProxy::Fade(RwBool bFadeIn)
 
 void CNtlSobTriggerObjectProxy::UpdateFadeInOut(RwReal fElapsed)
 {
-	// 현재의 Alpha 값 판단
+	// Determination of current Alpha value
 	m_sFadeInOutInfo.fCurAlpha = CNtlMath::Range( m_sFadeInOutInfo.fCurAlpha, 0.0f, 255.0f );
 	m_sFadeInOutInfo.fDestAlpha = CNtlMath::Range( m_sFadeInOutInfo.fDestAlpha, 0.0f, 255.0f );
 
@@ -851,15 +852,15 @@ void CNtlSobTriggerObjectProxy::UpdateFadeInOut(RwReal fElapsed)
 	{
 		RwBool bFadeIn = ((RwReal)m_sFadeInOutInfo.fDestAlpha - (RwReal)m_sFadeInOutInfo.fCurAlpha > 0) ? TRUE : FALSE;
 
-		// 자식 오브젝트들에 대한 Alpha 결정
+		// Alpha determination for child objects
 		RwReal fAlpha = m_sFadeInOutInfo.fCurAlpha + ( bFadeIn ? FADE_RATIO * fElapsed : -1 * FADE_RATIO * fElapsed );
 		m_sFadeInOutInfo.fCurAlpha = CNtlMath::Range( fAlpha, 0.0f, 255.0f );
 	}
 
-	// 자식 오브젝트들에 대한 Visual 결정
+	// Visual decisions about child objects
 	m_sFadeInOutInfo.bShow = (m_sFadeInOutInfo.fCurAlpha != 0.0f) ? TRUE : FALSE;
 
-	// 자식 오브젝트들에 대한 Alpha 및 Visual 설정
+	// Alpha and Visual settings for child objects
 	CNtlSobProxy::EnableVisible( m_sFadeInOutInfo.bShow );
 
 	if( m_pPLObject )
@@ -923,7 +924,7 @@ void CNtlSobTriggerObjectProxy::SobShareTargetSelectHandler( RWS::CMsg& msg )
     SNtlEventShareTargetSelect* pData = (SNtlEventShareTargetSelect*)msg.pData;
     if(pData->hSerialId == m_pSobObj->GetSerialID())
     {
-        // 기존 타겟 마크를 삭제하기 전에 현재 상태를 저장해둔다        
+        // Save the current state before deleting the existing target mark.        
         RwBool bTargetMode = m_pTargetMark ? TRUE : FALSE;
 
         DeletePLTargetMark();

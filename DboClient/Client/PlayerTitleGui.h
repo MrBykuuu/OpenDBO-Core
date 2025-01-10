@@ -1,12 +1,12 @@
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// client
+// Client
 #include "Windowby3.h"
 #include "ButtonList.h"
 

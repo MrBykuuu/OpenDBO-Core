@@ -10,7 +10,7 @@ struct sBlackListMember : public sCommunityMember
 };
 
 
-// 블랙리스트 데이터를 관리하는 클래스
+// Class that manages blacklist data
 /// by agebreak 2007.12.14
 class CNtlSLBlackList : public CNtlSLCommunityGroup, public RWS::CEventHandler
 {

@@ -34,7 +34,7 @@
 #include "NtlFSMDef.h"
 #include "NtlSobMonsterAttr.h"
 
-#define TRANSFORM_NAMEK_ATTACK_RANGE    3.0f                    ///< 거대 나멕 변신후의 공격 범위
+#define TRANSFORM_NAMEK_ATTACK_RANGE    3.0f                    ///< Attack range after transformation into giant Namek
 #define TRANSFORM_PURE_MAJIN_FACE1      "A_P_majin_FACE01"
 #define TRANSFORM_PURE_MAJIN_FACE2      "A_P_majin_FACE01_1"
 #define TRANSFORM_PURE_MAJIN_HEAD       "headShape"
@@ -134,7 +134,7 @@ void CNtlSobCharProxyTransform::Destory()
 
     if(m_pMajinPureModel)
     {
-        if(m_bIsTransform)  // 현재의 모델은 SobProxy에서 지워준다, 쓰지 않는 모델을 삭제한다.
+        if(m_bIsTransform)  //Delete the current model from SobProxy. Delete unused models.
         {
             if(m_pMajinOrgModel)
             {
@@ -248,7 +248,7 @@ void CNtlSobCharProxyTransform::HandleEvents( RWS::CMsg &pMsg )
     {
         EventSobSkillAction(pMsg);
     }
-    else if(pMsg.Id == g_EventAnimHit)  // Hit 이벤트가 변신 타이밍이다.
+    else if(pMsg.Id == g_EventAnimHit)  // Hit event is the transformation timing.
     {
         if(m_bReadyTransform)   
 		{
@@ -411,7 +411,7 @@ void CNtlSobCharProxyTransform::OnTransform_SuperSaiyan( RwBool bTransform )
         m_pFaceTransform = CNtlPLResourceManager::GetInstance()->LoadTexture(strTexName->c_str(), "Texture\\Item\\;");            
 
         CNtlPLItem* pFaceItem = m_pPLCharacter->GetEquipItem()->GetDefItem(ITEM_EQUIP_FACE);
-        m_pPLCharacter->GetEquipItem()->SetApplyFaceData(pFaceItem);    // 변신 상태에서 성인 상태로 변경될떄 얼굴 페이스를 바꾸기위해서 한번 적용해야 한다.
+        m_pPLCharacter->GetEquipItem()->SetApplyFaceData(pFaceItem);    //Must be applied once to change the face when changing from transformed state to adult state.
         pFaceItem->SetMultiTexture(m_pFaceTransform);
         m_pPLCharacter->GetEquipItem()->SetChangeFaceEnable(FALSE);
 
@@ -492,35 +492,35 @@ void CNtlSobCharProxyTransform::OnTransform_KaiOuKen(RwBool bTransform, BYTE byL
         m_pKaiOuKenColor[1] = NULL;
     }
 }
-
+// Great Namek transformation 
 void CNtlSobCharProxyTransform::OnTransform_BigNamek( RwBool bTransform ) 
 {
     if(bTransform)
     {
-        // 크기 변경
+        //change size
         m_pActor->GetSobProxy()->AddVisualSystemEffectScale(Dbo_GetTransformScale(ASPECTSTATE_GREAT_NAMEK, 1), 2.5f);
 
-        // 무기 제거
+        //remove weapon
         DetachWeapon();
 
-        // 공격 범위 설정
+        //Set attack range
         CNtlSobBattleAttr *pSobBattleAttr = reinterpret_cast<CNtlSobBattleAttr*>(m_pActor->GetSobAttr());
         m_fOrgAttackRange = pSobBattleAttr->GetAttackRange();
         pSobBattleAttr->SetAttackRange(TRANSFORM_NAMEK_ATTACK_RANGE);
     }
     else
     {
-        // 크기 변경
+        //change size
         m_pActor->GetSobProxy()->AddVisualSystemEffectScale(1.0f, 2.5f);            
 
-        // 무기 장착
+        //Equip weapon
         AttachWeapon();
 
-        // 공격 범위 설정
+        //Set attack range
         CNtlSobBattleAttr *pSobBattleAttr = reinterpret_cast<CNtlSobBattleAttr*>(m_pActor->GetSobAttr());        
         pSobBattleAttr->SetAttackRange(m_fOrgAttackRange);
 
-        // Idle 상태라면 애니메이션 변경
+        //Change animation if in idle state
         if(Logic_GetActorStateId(m_pActor) == NTL_FSMSID_IDLE ||
            Logic_GetActorStateId(m_pActor) == NTL_FSMSID_FIGHTING_POSE)
         {
@@ -642,7 +642,7 @@ CNtlPLItem* CNtlSobCharProxyTransform::GetTransformItem()
     {
         GetNtlResourceManager()->SetLoadScheduling(FALSE);
     }
-    else // 아직 스케쥴 로딩이 끝나지 않았을때
+    else // When schedule loading is not yet complete
     {
         GetNtlResourceManager()->SetLoadScheduling(TRUE);
         m_bScheduleLoadingCheck = TRUE;
@@ -753,7 +753,7 @@ void CNtlSobCharProxyTransform::ChangeWeapon( RWS::CMsg& pMsg )
 
 void CNtlSobCharProxyTransform::AddWorld() 
 {
-    // 초사이어인
+    //Super Saiyan
     if(m_bIsTransform)
     {
         if(m_pItemTransform)
@@ -763,7 +763,7 @@ void CNtlSobCharProxyTransform::AddWorld()
     }
     
 
-    // 순수 마인 (비 변신상태라도 모델을 생성했으면 월드에 추가해야만 한다)    
+    //Pure Majin (even in non-transformed state, if you created a model, you must add it to the world)  
     if(m_pMajinOrgModel)
         m_pMajinOrgModel->AddWorld();    
     if(m_pMajinPureModel)
@@ -773,7 +773,7 @@ void CNtlSobCharProxyTransform::AddWorld()
     if(m_pMajinPureModelUI)
         m_pMajinPureModelUI->AddWorld();
 
-    // 캔디
+    //candy
     if(m_pCandyOrgModel)
         m_pCandyOrgModel->AddWorld();
     if(m_pCandyOrgModelUI)
@@ -803,7 +803,7 @@ void CNtlSobCharProxyTransform::RemoveWorld()
         break;
     }
 
-    // 순수 마인 (비 변신상태라도 모델을 생성했으면 월드에 추가해야만 한다)            
+    //Pure Majin (even in non-transformed state, if you created a model, you must add it to the world)          
     if(m_pMajinOrgModel)
         m_pMajinOrgModel->RemoveWorld();    
     if(m_pMajinPureModel)
@@ -813,7 +813,7 @@ void CNtlSobCharProxyTransform::RemoveWorld()
     if(m_pMajinPureModelUI)
         m_pMajinPureModelUI->RemoveWorld();
 
-    // 캔디
+    //candy
     if(m_pCandyOrgModel)
         m_pCandyOrgModel->RemoveWorld();
     if(m_pCandyOrgModelUI)
@@ -824,7 +824,7 @@ void CNtlSobCharProxyTransform::RemoveWorld()
         m_pCandyModelUI->RemoveWorld();
 }
 
-// 마진은 컨버트 클래스처럼 모델을 직접 변경한다
+//Margin directly changes the model like a convert class
 void CNtlSobCharProxyTransform::OnTransform_PureMajin( RwBool bTransform ) 
 {
     if(bTransform)
@@ -902,7 +902,7 @@ CNtlPLCharacter* CNtlSobCharProxyTransform::CreatePureMajinModel()
     if(m_pMajinPureModel)
         return m_pMajinPureModel;
 
-    // 스케쥴 로딩을 끈다.
+    //Turn off scheduled loading.
     GetNtlResourceManager()->SetLoadScheduling(FALSE);
 
     std::string strModelName = "A_PURE_MAJIN";
@@ -919,14 +919,14 @@ CNtlPLCharacter* CNtlSobCharProxyTransform::CreatePureMajinModel()
     m_pMajinPureModel->SetSerialID(m_pActor->GetSerialID());    
     
 
-    // 스킨 칼라 적용
+    //Apply skin color
     SCharScheduleResInfo* pInfo = m_pPLCharacter->GetCharScheduleResInfo();
     EClassGenderType eClassGenderType = CNtlDefaultItemTable::GetClassGenderType(pInfo->uiRace, pInfo->uiGender, pInfo->bIsAdult);    
     RwRGBA *pSkinColor = CNtlDefaultItemTable::GetInstance().GetSkinColor(eClassGenderType, m_pPLCharacter->GetCharScheduleResInfo()->uiSkinColorType);
     m_pMajinPureModel->UpdateMaterialSkinInfo();    
     m_pMajinPureModel->SetSkinColor(pSkinColor->red, pSkinColor->green, pSkinColor->blue);
 
-    // UI용 순수 마인 모델
+    //Pure mine model for UI
     if(m_pActor->GetClassID() == SLCLASS_AVATAR)
     {
         m_pMajinPureModelUI = (CNtlPLCharacter*)GetSceneManager()->CreateEntity(PLENTITY_CHARACTER, strModelName.c_str(), &sParam);
@@ -983,7 +983,7 @@ CNtlPLCharacter* CNtlSobCharProxyTransform::CreateCandyModel()
     NTL_ASSERT(m_pCandyModel, "Can't Create Candy Model : " << strModelName.c_str());
     m_pCandyModel->SetSerialID(m_pActor->GetSerialID());
 
-    // 사이즈에 맞는 크기를 적용한다.
+    //Apply the size that matches the size.
     if(m_pActor->GetClassID() == SLCLASS_MONSTER)
     {
         RwReal fHeight = m_pPLCharacter->GetHeight();
@@ -997,7 +997,7 @@ CNtlPLCharacter* CNtlSobCharProxyTransform::CreateCandyModel()
         }
     }    
 
-    // UI용 모델
+    //Model for UI
     if(m_pActor->GetClassID() == SLCLASS_AVATAR)
     {
         m_pCandyModelUI = (CNtlPLCharacter*)GetSceneManager()->CreateEntity(PLENTITY_CHARACTER, strModelName.c_str(), &sParam);
@@ -1086,7 +1086,7 @@ void CNtlSobCharProxyTransform::OnTransform_Candy( RwBool bTransform )
         CNtlPLEntity* pEffect = GetSceneManager()->CreateEntity(PLENTITY_EFFECT, NTL_VID_CANDY_CHANGE_ORG, NULL);
         pEffect->SetPosition(&m_pActor->GetPosition());
 
-        // 이펙트 크기 조절
+        //Adjust effect size
         if(m_pCandyModel->GetHeight() >= CANDY_HEIGHT_BIG)
         {
             pEffect->SetScale(CANDY_SCALE_BIG);
@@ -1107,7 +1107,7 @@ void CNtlSobCharProxyTransform::OnTransform_Mob( RwUInt32 tblIdx )
     if(!pTblData)
         return;
     
-    // 스케쥴 로딩을 끈다.
+    //Turn off scheduled loading.
     GetNtlResourceManager()->SetLoadScheduling(FALSE);
 
     SPLCharacterCreateParam sParam;
@@ -1127,7 +1127,7 @@ void CNtlSobCharProxyTransform::OnTransform_Mob( RwUInt32 tblIdx )
 
     pSobProxy->SetBaseAnimation(TRANS_SPAWN, FALSE);
 
-    // 몹이름 변경
+    //change mob name
     CNtlSobMonsterAttr* pMonsterAttr = reinterpret_cast<CNtlSobMonsterAttr*>( m_pActor->GetSobAttr() );
 
 	CTextTable* pTextTable = API_GetTableContainer()->GetTextAllTable()->GetMobTbl();
@@ -1147,7 +1147,7 @@ void CNtlSobCharProxyTransform::EventSobChangeAdult( RWS::CMsg& pMsg )
     if(!IsTransform())
         return;
 
-    // 어른으로 바뀌면 변신 상태를 해제한다.
+    //When transformed into an adult, the transformation state is canceled.
     switch(m_uiTransformId)
     {
 		case ASPECTSTATE_SUPER_SAIYAN:  OnTransform_SuperSaiyan(FALSE);     break;

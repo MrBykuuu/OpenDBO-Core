@@ -1,30 +1,30 @@
 /******************************************************************************
-* File			: ServerSelectGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2006. 12. 11
-* Update		: 2007. 10. 12
-* Abstract		: 
+*File			: ServerSelectGui.h
+*Author		    : Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2006. 12. 11
+*Update		: 2007. 10. 12
+*Abstract		: 
 *****************************************************************************
-* Desc			: ServerSelectGui
+*Desc			: ServerSelectGui
 *****************************************************************************/
 
 #pragma once
 
 #include <list>
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// gui
+// Gui
 #include "gui_button.h"
 #include "gui_progressbar.h"
 #include "gui_scrollbar.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// dbo
+// Dbo
 #include "Windowby3.h"
 #include "SlotGui.h"
 #include "LobbyManager.h"
@@ -40,9 +40,9 @@ public:
 		gui::CStaticBox*	pState;
 
 		SERVER_HANDLE		hServer;
-		wchar_t				awcServerName[NTL_MAX_SIZE_SERVER_FARM_NAME_UNICODE + 1];	///< 서버 이름
-		RwUInt8				byCharacterCount;			///< 소유한 캐릭터
-		RwUInt32			uiUserRate;					///< 유저 접속 비율
+		wchar_t				awcServerName[NTL_MAX_SIZE_SERVER_FARM_NAME_UNICODE + 1];	///< server name
+		RwUInt8				byCharacterCount;			///< Owned characters
+		RwUInt32			uiUserRate;					///< User connection rate
 	};
 
 	typedef std::list<CServerItem*>					SERVERITEM_LIST;
@@ -55,7 +55,7 @@ public:
 	RwBool		Create();
 	VOID		Destroy();
 
-	// 캐릭터 스테이지(로비)에서의 GUI의 컨트롤의 위한 함수
+	// Functions for GUI control in the character stage (lobby)
 	VOID		SwitchDialog(bool bShow);
 
 protected:
@@ -95,41 +95,41 @@ protected:
 	VOID		OnPostPaint();
 
 protected:
-	///< 서버 리스트를 정렬하기 위한 어댑터 클래스
+	///< Adapter class for sorting the server list
 	class CServerListSort
 	{
 	public:
-		///< 이름 오름차순으로 정렬
+		///< Sort by name ascending
 		static bool CompareAscentName(CServerItem* pServerItem, CServerItem* pServerItem2)
 		{
 			return (wcscmp(pServerItem->awcServerName, pServerItem2->awcServerName) < 0 );
 		}		
 
-		///< 이름 내림차순으로 정렬
+		///< Sort by name descending
 		static bool CompareDecentName(CServerItem* pServerItem, CServerItem* pServerItem2)
 		{
 			return (wcscmp(pServerItem->awcServerName, pServerItem2->awcServerName) > 0 );
 		}
 
-		///< 캐릭터수 오름차순으로 정렬
+		///< Sort by increasing number of characters
 		static bool CompareAscentCharacter(CServerItem* pServerItem, CServerItem* pServerItem2)
 		{
 			return (pServerItem->byCharacterCount < pServerItem2->byCharacterCount);
 		}
 
-		///< 캐릭터수 내림차순으로 정렬
+		///< Sort by descending number of characters
 		static bool CompareDecentCharacter(CServerItem* pServerItem, CServerItem* pServerItem2)
 		{
 			return (pServerItem->byCharacterCount > pServerItem2->byCharacterCount);
 		}
 
-		///< 서버 상태 오름차순으로 정렬
+		///< Sort by server status ascending
 		static bool CompareAscentState(CServerItem* pServerItem, CServerItem* pServerItem2)
 		{
 			return ( pServerItem->uiUserRate < pServerItem2->uiUserRate);
 		}		
 
-		///< 서버 상태 내림차순으로 정렬
+		///< Sort by server status descending
 		static bool CompareDecentState(CServerItem* pServerItem, CServerItem* pServerItem2)
 		{
 			return ( pServerItem->uiUserRate > pServerItem2->uiUserRate);
@@ -153,13 +153,13 @@ protected:
 
 	gui::CStaticBox*	m_pTitleStatic;
 
-	gui::CStaticBox*	m_pSelectServer;			///< '서버를 선택하세요'
+	gui::CStaticBox*	m_pSelectServer;			///< 'Select a server'
 
-	gui::CButton*		m_pServerButton;			///< 서버 이름 정렬 버튼
-	gui::CButton*		m_pCharButton;				///< 캐릭터 수 정렬 버튼
-	gui::CButton*		m_pStateButton;				///< 서버 상태 정렬 버튼
-	gui::CButton*		m_pOKButton;				///< 확인 버튼
-	gui::CButton*		m_pCancelButton;			///< 취소 버튼
+	gui::CButton*		m_pServerButton;			///< Server name sort button
+	gui::CButton*		m_pCharButton;				///< Character number sort button
+	gui::CButton*		m_pStateButton;				///< Server status sort button
+	gui::CButton*		m_pOKButton;				///< OK button
+	gui::CButton*		m_pCancelButton;			///< Cancel button
 
 	CSurfaceGui			m_srfServerArrowUp;
 	CSurfaceGui			m_srfServerArrowDown;
@@ -173,9 +173,9 @@ protected:
 
 	gui::CScrollBar*	m_pScrollBar;
 
-	RwBool				m_bServerAscendingSort;		///< 서버의 오름차순인지 여부
-	RwBool				m_bCharacterAscendingSort;	///< 캐릭터의 오름차순인지 여부
-	RwBool				m_bChannelAscendingSort;	///< 채널의 오름차순이지 여부
+	RwBool				m_bServerAscendingSort;		///< Is the server in ascending order?
+	RwBool				m_bCharacterAscendingSort;	///< Whether the characters are in ascending order
+	RwBool				m_bChannelAscendingSort;	///< Is the channel in ascending order?
 	
 	RwUInt8				m_byFocusIndex;
 	RwUInt8				m_byDownIndex;

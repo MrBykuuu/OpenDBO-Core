@@ -6,7 +6,7 @@
 
 /*!
  * \Animation
- * Animation Channel(하나)를 처리 한다.
+ * Processes Animation Channel (one).
  * 
  */
 class CNtlAnimChannel
@@ -20,7 +20,7 @@ protected:
 	SInstanceAnimData	*m_pAnimData;							///< Animation Instance Data Reference
 
 	RwBool				m_bLoop;								///< Loop Animation
-	RwBool				m_bAnimEnd;								///< Loop가 아닐경우 Animation이 끝났는지
+	RwBool				m_bAnimEnd;								///< If it is not a loop, has the animation finished?
 
 public:
 	RwBool	Create(RpHAnimHierarchy *pBaseHierarchy);

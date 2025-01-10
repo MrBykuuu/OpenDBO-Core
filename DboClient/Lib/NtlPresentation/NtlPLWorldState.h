@@ -26,7 +26,7 @@ public:
 	static CNtlPLObject*		pActiveMiniIndoorNew;
 };
 
-// RESTURN : TRUE(내부), FALSE(외부)
+// RETURN: TRUE (internal), FALSE (external)
 RwBool GetNtlWorldSpace(RwV3d* pvPos, CNtlPLEntity** ppPLEntity, RwReal* pfDist);
 
 // Evnet Check

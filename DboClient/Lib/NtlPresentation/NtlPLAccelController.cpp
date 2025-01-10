@@ -18,16 +18,16 @@ CNtlPLAccelController::~CNtlPLAccelController(void)
 
 }
 
-// fStartVal : 시작값
-// fEndVal : 목표값
-// fStartVelocity : 속도 (증가값/초)
-// fAccel : 가속도 (증가속도/초)
+// fStartVal: Start value
+// fEndVal: target value
+// fStartVelocity: Velocity (increment value/sec)
+// fAccel: Acceleration (increase speed/sec)
 void CNtlPLAccelController::SetAccel( RwReal fStartVal, RwReal fEndVal, RwReal fStartVelocity, RwReal fAccel ) 
 {
     m_fStartVal = m_fCurrentVal =  fStartVal;
     m_fEndVal = fEndVal;
     m_fStartVelocity = m_fCurrVel = fStartVelocity;
-    m_fAccel = fAccel;                 ///< 가속도는 Update시마다 계산하는것을 줄이기 위해서 미리 제곱해둔다.
+    m_fAccel = fAccel;                 ///< Acceleration is squared in advance to reduce calculations at each update.
     m_bUpdate = TRUE;
 }
 
@@ -36,10 +36,10 @@ RwBool CNtlPLAccelController::Update( RwReal fElapsed )
     if(!m_bUpdate)
         return FALSE;
 
-    // 속도 증가
+    // increase speed
     m_fCurrVel += m_fAccel * fElapsed;
 
-    // 값 증가
+    // increase value
     if(m_fEndVal >= m_fStartVal)
     {
         m_fCurrentVal += m_fCurrVel * fElapsed;

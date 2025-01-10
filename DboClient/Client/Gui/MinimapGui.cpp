@@ -3,11 +3,11 @@
 
 #include <algorithm>
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// share
+// Share
 #include "NPCTable.h"
 #include "WorldTable.h"
 #include "TextAllTable.h"
@@ -19,16 +19,16 @@
 #include "TableContainer.h"
 #include "NpcServerTable.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlWorldCommon.h"
 #include "NtlPLWorldEntity.h"
 #include "NtlPLGuiManager.h"
 #include "NtlPLVisualManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLApi.h"
 #include "NtlSLLogicDef.h"
 #include "NtlSLLogic.h"
@@ -55,7 +55,7 @@
 #include "NtlStorageManager.h"
 #include "NtlStorageGroupScouter.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "InfoWndManager.h"
@@ -77,15 +77,15 @@ CSurfaceCamera* CMapItem::m_pRealMapCamera2 = NULL;
 
 #define MINIMAP_UPDATETIME		0.1f
 
-#define dLENGTH_VISIBLE_PARTY_ARROW			100.f	///< 일정 거리 이상 떨어진 파티원의 화살표는 보여주지 않는다
+#define dLENGTH_VISIBLE_PARTY_ARROW			100.f	///< Arrows for party members who are farther away than a certain distance are not shown.
 
-#define	dONE_SIZE_RESOURCE_COUNT			3		///< 한 축의 리소스 갯수
+#define	dONE_SIZE_RESOURCE_COUNT			3		///< Number of resources on one axis
 
-#define	dFIELD_RESOURCE_SIZE				128		///< 필드맵 리소스 한 면의 사이즈
-#define	dRENDER_TARGET_MAP_SIZE				384		///< 백버퍼에 저장된 전체 지도의 한 면의 사이즈
-#define	dRESULT_DEFUALT_SIZE				256		///< 최종 텍스처의 기본 사이즈
+#define	dFIELD_RESOURCE_SIZE				128		///<Size of one side of field map resource
+#define	dRENDER_TARGET_MAP_SIZE				384		///< Size of one side of the entire map stored in the back buffer
+#define	dRESULT_DEFUALT_SIZE				256		///< Basic size of final texture
 
-#define	dSURFACE_SIZE						150		///< 미니맵 서페이스 사이즈
+#define	dSURFACE_SIZE						150		///< Minimap surface size
 
 // avooo's comment : Adjusting the icons with the actual map ratio is too small or too large. Adjust it arbitrarily.
 #define dICON_RATE_0						1.5f
@@ -99,8 +99,8 @@ CSurfaceCamera* CMapItem::m_pRealMapCamera2 = NULL;
 #define dNEXTQUEST_ICON_DISTANCE_FROM_CENTER	59.f
 #define dNEXTQUEST_ICON_RADIUS					9.f
 
-#define dSEAL_REMAIN_TIME					(3.f)	///< 인장 플래쉬가 보여지는 시간
-#define dSEAL_REST_TIME						(5.f)	///< 인장 플래쉬가 보여지고 나서 일정시간은 다시 보여주지 않는다
+#define dSEAL_REMAIN_TIME					(3.f)	///< Time when the seal flash is displayed
+#define dSEAL_REST_TIME						(5.f)	///< After the seal flash is shown, it is not shown again for a certain period of time.
 #define dSEAL_ENEMY_FLASH_FILE				"Minimap_Signal_Effect_Red.swf"
 #define dSEAL_MY_TEAM_FLASH_FILE			"Minimap_Signal_Effect_Blue.swf"
 
@@ -201,7 +201,7 @@ RwReal CMapItem::GetRate()
 
 RwBool CMapItem::ReadyMakeTexture(RwReal fElapsed)
 {
-	// 아직 서버로 부터 EnterWorld 패킷을 받지 않았다
+	// No EnterWorld packet has been received from the server yet.
 	RwUInt32 uiWorldID = Logic_GetActiveWorldId();
 	if( uiWorldID == 0 )
 		return false;
@@ -231,7 +231,7 @@ RwBool CMapItem::ReadyMakeTexture(RwReal fElapsed)
 	if( !m_pRealMapCamera->CameraBeginUpdate() )
 		return false;
 
-	// UV 조정 : 오른손 좌표계를 쓰기에 좌상단 방향이 + 이다.
+	// UV adjustment: Since the right-handed coordinate system is used, the upper left direction is +.
 	RwV3d vAvatarPos = pAvatar->GetPosition();
 	RwInt32 iAreaSize = dGET_WORLD_PARAM()->WorldFieldSize * dONE_SIZE_RESOURCE_COUNT;
 	RwReal fHalfSize = (RwReal)dRESULT_DEFUALT_SIZE / 2.f;
@@ -298,7 +298,7 @@ VOID CMapItem::UpdatePotalMapUpdateResource()
 
 		for( RwUInt8 i = 0 ; i < NUM_MAPPOSITON ; ++i )
 		{
-			// 월드가 바뀌면 리소스를 전부 다시 읽어들인다
+			// When the world changes, all resources are reloaded.
 			Logic_DeleteTexture(m_ResourceSurface[i].GetTexture());
 			m_ResourceSurface[i].UnsetTexture();
 			LoadingSurface(m_ResourceSurface[i], CalcIndex(m_iCurField, i), i);
@@ -310,7 +310,7 @@ VOID CMapItem::UpdatePotalMapUpdateResource()
 		std::map<RwInt32, gui::CTexture*> mapResourceSurface;
 		std::map<RwInt32, gui::CTexture*>::iterator it_resource;
 
-		// 기존의 리소스를 보관
+		// Archive existing resources
 		for( RwUInt8 i = 0 ; i < NUM_MAPPOSITON ; ++i )
 		{
 			iFieldIndex = CalcIndex(m_iPostField, i);
@@ -330,18 +330,18 @@ VOID CMapItem::UpdatePotalMapUpdateResource()
 
 			if( it_resource == mapResourceSurface.end() )
 			{
-				// 새로운 리소스를 로딩한다
+				// Load new resources
 				LoadingSurface(m_ResourceSurface[i], iFieldIndex, i);
 			}
 			else
 			{
-				// 기존 리소스를 활용한다
+				// Leverage existing resources
 				m_ResourceSurface[i].SetTexture(it_resource->second);
 				mapResourceSurface.erase(it_resource);
 			}
 		}
 
-		// 재활용되지 않는 리소스는 삭제한다
+		// Delete resources that are not recycled
 		it_resource = mapResourceSurface.begin();
 		for( ; it_resource != mapResourceSurface.end() ; ++it_resource )
 		{
@@ -360,8 +360,8 @@ VOID CMapItem::LoadingSurface(CSurfaceGui& surface, RwInt32 iFieldIndex, RwInt32
 	CWorldTable* pWorldTable = API_GetTableContainer()->GetWorldTable();
 	sWORLD_TBLDAT* pWORLD_TBLDAT = reinterpret_cast<sWORLD_TBLDAT*>( pWorldTable->FindData(Logic_GetActiveWorldTableId()) );
 
-	// 미니맵의 리소스는 4자리의 숫자로 된 파일이름으로 되어 있다
-	// 확장자는 DDS 이며 현재 프로젝트에서 DDS는 확장자를 붙이지 않고 쓴다
+	// The minimap resource has a 4-digit file name.
+	// The extension is DDS, and in the current project, DDS is used without an extension.
 	sprintf_s(acFileName, "%04d", iFieldIndex);
 
 	::WideCharToMultiByte(GetACP(), 0, pWORLD_TBLDAT->wszResourceFolder, -1, acPathName, 256, NULL, NULL);
@@ -377,7 +377,7 @@ RwInt32 CMapItem::CalcIndex(RwInt32 iCenterIndex, RwInt32 iPosition)
 {
 	RwInt32 iResult;
 
-	// 월드의 한 축의 사이즈
+	// Size of one axis of the world
 	RwInt32 iWorldEdgeSize = dGET_WORLD_PARAM()->WorldFieldNum;	
 
 	switch(iPosition)
@@ -387,7 +387,7 @@ RwInt32 CMapItem::CalcIndex(RwInt32 iCenterIndex, RwInt32 iPosition)
 			RwInt32 iCompare = iCenterIndex + iWorldEdgeSize;
 			iResult = iCompare + 1;
 
-			// 세로축이 다르면 가장 좌측이라 이보다 좌측의 필드는 없음을 나타낸다
+			// If the vertical axis is different, it is on the leftmost axis, indicating that there are no fields further to the left.
 			if( (iCompare/iWorldEdgeSize) != (iResult/iWorldEdgeSize) )
 			{
 				iResult = INVALID_INDEX;
@@ -408,7 +408,7 @@ RwInt32 CMapItem::CalcIndex(RwInt32 iCenterIndex, RwInt32 iPosition)
 			RwInt32 iCompare = iCenterIndex + iWorldEdgeSize;
 			iResult = iCompare - 1;
 
-			// 세로축이 다르면 가장 우측이라 이보다 우측의 필드는 없음을 나타낸다
+			// If the vertical axis is different, it is on the far right, indicating that there are no fields further to the right.
 			if( (iCompare/iWorldEdgeSize) != (iResult/iWorldEdgeSize) )
 			{
 				iResult = INVALID_INDEX;
@@ -422,7 +422,7 @@ RwInt32 CMapItem::CalcIndex(RwInt32 iCenterIndex, RwInt32 iPosition)
 			RwInt32 iCompare = iCenterIndex;
 			iResult = iCompare + 1;
 
-			// 세로축이 다르면 가장 좌측이라 이보다 좌측의 필드는 없음을 나타낸다
+			// If the vertical axis is different, it is on the leftmost axis, indicating that there are no fields further to the left.
 			if( (iCompare/iWorldEdgeSize) != (iResult/iWorldEdgeSize) )
 			{
 				iResult = INVALID_INDEX;
@@ -441,7 +441,7 @@ RwInt32 CMapItem::CalcIndex(RwInt32 iCenterIndex, RwInt32 iPosition)
 			RwInt32 iCompare = iCenterIndex;
 			iResult = iCompare - 1;
 
-			// 세로축이 다르면 가장 우측이라 이보다 우측의 필드는 없음을 나타낸다
+			// If the vertical axis is different, it is on the far right, indicating that there are no fields further to the right.
 			if( (iCompare/iWorldEdgeSize) != (iResult/iWorldEdgeSize) )
 			{
 				iResult = INVALID_INDEX;
@@ -461,7 +461,7 @@ RwInt32 CMapItem::CalcIndex(RwInt32 iCenterIndex, RwInt32 iPosition)
 				break;
 			}
 
-			// 세로축이 다르면 가장 좌측이라 이보다 좌측의 필드는 없음을 나타낸다
+			// If the vertical axis is different, it is on the leftmost axis, indicating that there are no fields further to the left.
 			if( (iCompare/iWorldEdgeSize) != (iResult/iWorldEdgeSize) )
 			{
 				iResult = INVALID_INDEX;
@@ -494,7 +494,7 @@ RwInt32 CMapItem::CalcIndex(RwInt32 iCenterIndex, RwInt32 iPosition)
 				break;
 			}
 
-			// 세로축이 다르면 가장 우측이라 이보다 우측의 필드는 없음을 나타낸다
+			// If the vertical axis is different, it is on the far right, indicating that there are no fields further to the right.
 			if( (iCompare/iWorldEdgeSize) != (iResult/iWorldEdgeSize) )
 			{
 				iResult = INVALID_INDEX;
@@ -637,23 +637,23 @@ RwBool CMinimapGui::Create(VOID)
 	//Hidden Objects
 	m_surHiddenObject.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Minimap.srf", "srfHiddenObject" ) );
 
-	// 포포스톤
+	// Four Post Stone
 	m_surPopoStone.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GameCommon.srf", "srfPopoStone" ) );
 	m_surPopoStoneActive.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("GameCommon.srf", "srfBindPopoStone"));
 
-	// 공유 타겟
+	// shared target
 	for( RwUInt8 i = 0 ; i < NTL_MAX_SHARETARGET_COUNT ; ++i )
 	{
 		sprintf_s(acBuffer, 64, "srfCommonTargetMark_%d", i+1);
 		m_surMarkCommonTarget[i].SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Minimap.srf", acBuffer ) );
 	}
 
-	// 도장 인장
+	// seal seal
 	m_surMarkDojoSeal[DBO_TEAM_MY_TEAM]		.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Minimap.srf", "srfSealMyTeamTeam" ) );
 	m_surMarkDojoSeal[DBO_TEAM_ENEMY]		.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Minimap.srf", "srfSealEnemyTeam" ) );
 	m_surMarkDojoSeal[DBO_TEAM_NEUTRAILITY]	.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Minimap.srf", "srfSealNoTeam" ) );
 
-	// (피아구분)팀을 나누어서 싸우는 경우의 사람들
+	// (Fia division) People who fight by dividing into teams
 	m_surCamp[CAMP_PEOPLE_MY_PARTY]				.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Minimap.srf", "srfScrambleCampPartyTeam" ) );
 	m_surCamp[CAMP_PEOPLE_MY_TEAM]				.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Minimap.srf", "srfScrambleCampMyTeam" ) );
 	m_surCamp[CAMP_PEOPLE_EMENY_TEAM]			.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Minimap.srf", "srfScrambleCampEnemyTeam" ) );
@@ -695,7 +695,7 @@ void CMinimapGui::Destroy(VOID)
 {
 	NTL_FUNCTION("CMinimapGui::Destroy");
 
-	//for each( sLANKMARK* pLandMark in m_listLandMark )
+	//for each( sLANKMARK*pLandMark in m_listLandMark )
 	//	NTL_DELETE(pLandMark);
 
 	ClearSeal();
@@ -767,11 +767,11 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 
 	m_fElapsedTime += fElapsed;
 
-	// 연산량을 줄이기 위해 일정시간마다 Update
+	// Update at regular intervals to reduce computation amount
 	if( m_fElapsedTime < MINIMAP_UPDATETIME )
 		return;
 
-	// m_fElapsedTime 초기화는 UpdateBeforeCamera()함수에서
+	// m_fElapsedTime is initialized in the UpdateBeforeCamera() function.
 
 	CNtlGuild*		pGuild				= pAvatar->GetGuild();
 	const WCHAR*	pwcAvatarGuildName	= pGuild->GetGuildName();
@@ -796,7 +796,7 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 	}
 
 
-	// 대상의 위치를 임시 저장
+	// Temporarily store the location of the target
 	RwV3d v3TempPos;
 	CRectangle rtScreen = m_pThis->GetScreenRect();
 
@@ -805,7 +805,7 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 	v2Avatar.x = v3Avatar.x;
 	v2Avatar.y = v3Avatar.z;
 
-	// 아바타
+	// avatar
 	if( m_hBus_with_Avatar == INVALID_SERIAL_ID )
 	{
 		RwV3d vDirAvatar = pAvatar->GetDirection();
@@ -837,7 +837,7 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 	if( m_tSCRAMBLE_VISIBLE.bShowScrambleMyTeam || 
 		m_tSCRAMBLE_VISIBLE.bShowScrambleEnemyTeam )
 	{
-		// 도장전 팀
+		// Dojangjeon Team
 		CNtlSobGroup* pSobGroup = GetNtlSobManager()->GetSobGroup( SLCLASS_PLAYER );
 		if( pSobGroup )
 		{
@@ -886,7 +886,7 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 
 	if( !m_tSCRAMBLE_VISIBLE.bScramble )
 	{
-		// 파티 맴버 위치 업데이트
+		// Party member location updates
 		RwUInt8 byPartyMemberIndex = 0;
 		COMMUNITY_ITER it_party = pParty->Begin();
 		for( ; it_party != pParty->End() ; ++it_party )
@@ -922,7 +922,7 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 
 			if( IsV2MoreLength(&partyMember.v2Pos, &v2Avatar, fLimitedDistance) )
 			{
-				// 일정 거리 떨어진 파티원의 화살표 아이콘은 아예 보여주지 않는다
+				// Arrow icons for party members who are a certain distance away are not shown at all.
 				if( Logic_InFollowRange(pAvatar, pMember->vPos, dLENGTH_VISIBLE_PARTY_ARROW ) )
 					continue;
 
@@ -933,7 +933,7 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 				RwV2dSub(&v2Dir, &partyMember.v2Pos, &v2Avatar);
 				partyMember.fAngle = GetAngle(v2Dir, &v2Dir);
 
-				// GUI는 x, y가 +방향이 반대방향
+				// In the GUI, x and y are in the opposite direction of +.
 				v2Dir *= -1.f;
 
 				partyMember.v2OutCenter = v2Dir * dNEXTQUEST_ICON_DISTANCE_FROM_CENTER;
@@ -960,7 +960,7 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 		}
 	}
 
-	// 트리거 오브젝트 위치 업데이트
+	// Trigger object position update
 	pSobGroup = GetNtlSobManager()->GetSobGroup( SLCLASS_TRIGGER_OBJECT );
 	if( pSobGroup )
 	{
@@ -1009,7 +1009,7 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 		}
 	}
 
-	// 몬스터 위치 업데이트
+	// Monster location updates
 	pSobGroup = GetNtlSobManager()->GetSobGroup( SLCLASS_MONSTER );
 	if( pSobGroup )
 	{
@@ -1075,7 +1075,7 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 		}
 	}
 
-	// NPC, 퀘스트 위치 업데이트
+	// NPC, quest location updated
 	pSobGroup = GetNtlSobManager()->GetSobGroup( SLCLASS_NPC );
 
 	CNpcServerTable* pNpcServerTbl = API_GetTableContainer()->GetNpcServerTable();
@@ -1144,12 +1144,12 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 				}
 				else if( Logic_IsBus( reinterpret_cast<CNtlSobActor*>(pNpc) ) )
 				{
-					// 아바타가 타고 있는 버스
+					// The bus the avatar is riding on
 					if( pNpc->GetSerialID() == m_hBus_with_Avatar )
 						sNPC.bGetOnBus = true;
 					else
 					{
-						// 파티원이 타고 있는 버스인지 검사
+						// Check whether the bus the party member is riding is
 						for( RwUInt8 i = 0 ; i < NTL_MAX_MEMBER_IN_PARTY ; ++i )
 						{
 							if( ahBus_with_Party[i] == pNpc->GetSerialID() )
@@ -1166,7 +1166,7 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 		}
 	}
 
-	// Sob 객체는 없지만 테이블상에 미니맵 영역에 위치하는 NPC를 찾는다
+	// There is no Sob object, but it finds an NPC located in the minimap area on the table.
 	if( GetNtlWorldConcept()->IsActivePlayConcept(WORLD_PLAY_DOJO_SCRAMBLE) == false)
 	{
 		CDboTSCMain* pTCSMain = GetTSCMain();
@@ -1321,7 +1321,7 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 			RwV2dSub(&v2Dir, &nextQuest.v2Pos, &v2Avatar);
 			nextQuest.fAngle = GetAngle(v2Dir, &v2Dir);
 
-			// GUI는 x, y가 +방향이 반대방향
+			// In the GUI, x and y are in the opposite direction of +.
 			v2Dir *= -1.f;
 
 			nextQuest.v2OutCenter = v2Dir * dNEXTQUEST_ICON_DISTANCE_FROM_CENTER;
@@ -1361,7 +1361,7 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 		m_vectNextQuest.push_back(nextQuest);
 	}
 
-	// 체크 포인트
+	// checkpoint
 	std::vector<sCHECK_POINT>::iterator it_CheckPoint = m_vecCheckPoint.begin();
 	for( ; it_CheckPoint != m_vecCheckPoint.end() ; ++it_CheckPoint )
 	{
@@ -1378,7 +1378,7 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 			RwV2dSub(&v2Dir, &checkPoint.v2Pos, &v2Avatar);
 			checkPoint.fAngle = GetAngle(v2Dir, &v2Dir);
 
-			// GUI는 x, y가 +방향이 반대방향
+			// In the GUI, x and y are in the opposite direction of +.
 			v2Dir *= -1.f;
 
 			checkPoint.v2OutCenter = v2Dir * dNEXTQUEST_ICON_DISTANCE_FROM_CENTER;
@@ -1406,8 +1406,8 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 		TransWorldToMapAxis( v2Avatar, pLandMark->v2Pos, fRealRate, pLandMark->v2Icon );
 	}*/
 
-	// 공유 타겟 : 혹시 위의 로직에 포함되지 않지만 공유 타겟을 가리키는 정보가 남아있는지 검사
-	//			   예) 플레이어
+	// Shared target: Check if there is any information remaining that points to the shared target but is not included in the above logic.
+	//			   Example) Player
 	sSHARETARGET_INFO* pSHARETARGET_INFO = pAvatar->GetParty()->GetShareTargetInfos();
 	if( pSHARETARGET_INFO )
 	{
@@ -1447,7 +1447,7 @@ VOID CMinimapGui::Update( RwReal fElapsed )
 		}
 	}
 
-	// 도장 인장
+	// Stamp seal
 	std::map<RwUInt32, sSCRAMBLE_SEAL*>::iterator it_Seal = m_mapScrambleSeal.begin();
 	for( ; it_Seal != m_mapScrambleSeal.end() ; ++it_Seal )
 	{
@@ -1544,7 +1544,7 @@ VOID CMinimapGui::UpdateBeforeCamera(RwReal fElapsed)
 
 	UpdateRegionTitle();
 
-	// 연산량을 줄이기 위해 일정시간마다 Update
+	// Update at regular intervals to reduce computation amount
 	if( m_fElapsedTime < MINIMAP_UPDATETIME )
 		return;
 
@@ -1572,7 +1572,7 @@ VOID CMinimapGui::UpdateBeforeCamera(RwReal fElapsed)
 				m_surMarkLandMark[pLandMark->eLandMarkType].Render();
 			}*/
 
-			// 트리거 오브젝트
+			// trigger object
 			for( i = 0 ; i < m_vecTriggerObject.size() ; ++i )
 			{
 				sTRIGGER_OBJECT& triggerObject = m_vecTriggerObject[i];
@@ -1591,7 +1591,7 @@ VOID CMinimapGui::UpdateBeforeCamera(RwReal fElapsed)
 				}
 			}
 
-			// 히든 오브젝트
+			// Hidden Object
 			for( i = 0 ; i < m_vecHiddenObject.size() ; ++i )
 			{
 				sHIDDEN_OBJECT& hiddenObject = m_vecHiddenObject[i];
@@ -1604,7 +1604,7 @@ VOID CMinimapGui::UpdateBeforeCamera(RwReal fElapsed)
 				}
 			}
 
-			// 도장 인장
+			// seal seal
 			std::map<RwUInt32, sSCRAMBLE_SEAL*>::iterator it_Seal = m_mapScrambleSeal.begin();
 			for( ; it_Seal != m_mapScrambleSeal.end() ; ++it_Seal )
 			{
@@ -1618,7 +1618,7 @@ VOID CMinimapGui::UpdateBeforeCamera(RwReal fElapsed)
 				}
 			}
 
-			// 몬스터
+			// monster
 			for( i = 0 ; i < m_vecMob.size() ; ++i )
 			{
 				sMONSTER& monster = m_vecMob[i];
@@ -1637,7 +1637,7 @@ VOID CMinimapGui::UpdateBeforeCamera(RwReal fElapsed)
 				m_surMarkMob[monster.eMobMarkType].Render();
 			}
 
-			// NPC
+			// Npc
 			RwReal fNPCMarkRate = dICON_RATE_0;
 
 			switch(m_byCurScale)
@@ -1696,7 +1696,7 @@ VOID CMinimapGui::UpdateBeforeCamera(RwReal fElapsed)
 				m_surMarkQuest[nType].Render();
 			}
 
-			// 다음 퀘스트
+			// next quest
 			for( i = 0 ; i < m_vectNextQuest.size() ; ++i )
 			{
 				sNEXT_QUEST* pNextQuest = &m_vectNextQuest[i];
@@ -1716,7 +1716,7 @@ VOID CMinimapGui::UpdateBeforeCamera(RwReal fElapsed)
 				// avooo's comment : Outwardly pointing icons are drawn in the OnPaint () function.
 			}
 
-			// 체크 포인트
+			// checkpoint
 			for( i = 0 ; i < m_vecCheckPoint.size() ; ++i )
 			{
 				sCHECK_POINT* pCheckPoint = &m_vecCheckPoint[i];
@@ -1733,7 +1733,7 @@ VOID CMinimapGui::UpdateBeforeCamera(RwReal fElapsed)
 				// avooo's comment : Outwardly pointing icons are drawn in the OnPaint () function.
 			}
 
-			// 파티맴버
+			// party member
 			if( !m_tSCRAMBLE_VISIBLE.bScramble )
 			{
 				for( i = 0 ; i < m_vecPartyMember.size() ; ++i )
@@ -2116,7 +2116,7 @@ VOID CMinimapGui::OnPaint(VOID)
 
 		m_MapItem.Render();
 
-		// 다음 퀘스트
+		// next quest
 		for( i = 0 ; i < m_vectNextQuest.size() ; ++i )
 		{
 			sNEXT_QUEST* pNextQuest = &m_vectNextQuest[i];
@@ -2157,7 +2157,7 @@ VOID CMinimapGui::OnPaint(VOID)
 			// avooo's commnet : The inner icon is drawn in UpdateBeforeCamera ()
 		}
 
-		// 파티원
+		// party member
 		if( !m_tSCRAMBLE_VISIBLE.bScramble )
 		{
 			for( i = 0 ; i < m_vecPartyMember.size() ; ++i )
@@ -2239,7 +2239,7 @@ VOID CMinimapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 
 	CRectangle rtScreen = m_pThis->GetScreenRect();
 
-	// 아바타
+	// avatar
 	if( m_surMarkAvatar.PtInRect(rtScreen.left + nX, rtScreen.top + nY) )
 	{
 		CNtlParty*		pParty = pAvatar->GetParty();
@@ -2255,7 +2255,7 @@ VOID CMinimapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 		listMarkInfo.push_back(info);
 	}
 
-	// 몬스터
+	// monster
 	CTextTable* pMonsterTextTable = API_GetTableContainer()->GetTextAllTable()->GetMobTbl();
 
 	iHalfWidth = ((RwInt32)((RwReal)m_surMarkMob[MMT_NORMAL].GetWidth() / 2.f / fRate));
@@ -2286,7 +2286,7 @@ VOID CMinimapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 		}			
 	}
 
-	// NPC
+	// Npc
 	CTextTable* pNPCTextTable = API_GetTableContainer()->GetTextAllTable()->GetNPCTbl();
 
 	iHalfWidth = ((RwInt32)((RwReal)m_surMarkNPC.GetWidth() / 2.f));
@@ -2318,7 +2318,7 @@ VOID CMinimapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 		}
 	}
 
-	// 퀘스트
+	// quest
 	iHalfWidth = ((RwInt32)((RwReal)m_surMarkQuest[0].GetWidth() / 2.f / fRate));
 	iHalfHeight = ((RwInt32)((RwReal)m_surMarkQuest[0].GetHeight() / 2.f / fRate));
 
@@ -2352,7 +2352,7 @@ VOID CMinimapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 		}			
 	}
 
-	// 다음 진행 퀘스트	
+	// Next quest	
 	for( i = 0 ; i < m_vectNextQuest.size() ; ++i )
 	{
 		sNEXT_QUEST& nextQuest = m_vectNextQuest[i];
@@ -2386,7 +2386,7 @@ VOID CMinimapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 		{
 			sMINIMAPINFO info;
 
-			// ex) [metatag =5]재배맨 ==> 재배맨
+			// ex) [metatag =5] Cultivation Man ==> Cultivation Man
 			const WCHAR* pwcText = wcschr(nextQuest.pwcText, L']');
 			if( pwcText )
 			{
@@ -2508,7 +2508,7 @@ VOID CMinimapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 
 	if( m_tSCRAMBLE_VISIBLE.bShowScrambleMyTeam || m_tSCRAMBLE_VISIBLE.bShowScrambleEnemyTeam )
 	{
-		// 도장전 인원
+		// Number of people before painting
 		LIST_CAMP_PEOPLE::iterator it_CampPeople = m_listCampPeople.begin();
 		for( ; it_CampPeople != m_listCampPeople.end() ; ++it_CampPeople )
 		{
@@ -2556,7 +2556,7 @@ VOID CMinimapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 	
 	if( !m_tSCRAMBLE_VISIBLE.bScramble )
 	{
-		// 파티맴버
+		// party member
 		for( i = 0 ; i < m_vecPartyMember.size() ; ++i )
 		{
 			sPARTYMEMBER& partyMember = m_vecPartyMember[i];
@@ -2599,7 +2599,7 @@ VOID CMinimapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 		}
 	}	
 
-	// 랜드마크
+	//landmark
 	/*for each( sLANKMARK* pLandMark in m_listLandMark )
 	{
 		if( !pLandMark->bShow )
@@ -2620,7 +2620,7 @@ VOID CMinimapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 		}
 	}*/
 
-	// 공유 타겟
+	// shared target
 	for( RwUInt8 j = 0 ; j < NTL_MAX_SHARETARGET_COUNT ; ++j )
 	{
 		if( !m_aCommonTarget[j].bInfoWindow )
@@ -2641,7 +2641,7 @@ VOID CMinimapGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 		}
 	}
 
-	// 도장 인장
+	// Dojo seal
 	std::map<RwUInt32, sSCRAMBLE_SEAL*>::iterator it_Seal = m_mapScrambleSeal.begin();
 	for( ; it_Seal != m_mapScrambleSeal.end() ; ++it_Seal )
 	{
@@ -2820,10 +2820,10 @@ VOID CMinimapGui::HandleEvents( RWS::CMsg& msg )
 			checkPoint.v2Pos.x		= pEvent->vLoc.x;
 			checkPoint.v2Pos.y		= pEvent->vLoc.z;
 
-			// 체크 포인트
+			// checkpoint
 			checkPoint.wstrText		= GetDisplayStringManager()->GetString("DST_MINIMAP_CHECK_POINT");
 
-			// 기획상 한번에 체크 포인트는 한번에 하나만....
+			// In terms of planning, there can be only one checkpoint at a time....
 			m_vecCheckPoint.clear();
 
 			m_vecCheckPoint.push_back(checkPoint);
@@ -2832,7 +2832,7 @@ VOID CMinimapGui::HandleEvents( RWS::CMsg& msg )
 		{
 			m_vecCheckPoint.clear();
 
-			/*	차후 기획이 바뀌어 여러개의 체크 포인트가 생길 수 있을 때를 위하여 봉인...
+			/*	Sealed in case the plan changes in the future and multiple checkpoints may be created...
 			std::vector<sCHECK_POINT>::iterator it = m_vecCheckPoint.begin();
 			for( ; it != m_vecCheckPoint.end() ; ++it )
 			{
@@ -2892,7 +2892,7 @@ VOID CMinimapGui::HandleEvents( RWS::CMsg& msg )
 		if( false == GetNtlWorldConcept()->IsActivePlayConcept(WORLD_PLAY_DOJO_SCRAMBLE) )
 			NTL_RETURNVOID();
 
-		// 인장 정보는 도장 쟁탈전중 생성되면 도장 쟁탈전이 끝날 때까지 삭제하지 않는다
+		// If seal information is created during a dojo contest, it is not deleted until the dojo contest ends.
 		SNtlEventDojo* pEvent = reinterpret_cast<SNtlEventDojo*>( msg.pData );
 
 		if( DOJO_EVENT_SEAL_ATTACK_BEGIN == pEvent->byDojoEvent )
@@ -3025,7 +3025,7 @@ VOID CMinimapGui::HandleEvents( RWS::CMsg& msg )
 		}
 		else if( DOJO_EVENT_SCRAMBLE_CHANGE_SEAL_OWNER == pEvent->byDojoEvent )
 		{
-			// 인장의 상태가 변경되었음을 판단한다
+			// Determine that the status of the seal has changed
 			TBLIDX		dojoTblidx		= pEvent->uiParam;
 			TBLIDX		idxObject		= *(TBLIDX*)pEvent->pExData;
 

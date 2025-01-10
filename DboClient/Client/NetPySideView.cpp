@@ -1,23 +1,23 @@
 #include "precomp_dboclient.h"
 #include "NetPySideView.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// sl
+// Simulation
 #include "NtlSLLogic.h"
 
-// dbo
+// Dbo
 #include "DisplayStringManager.h"
 #include "DialogDefine.h"
 
 
 #include "DboGlobal.h"
 
-#define NOTIFY_SHOWTIME_MAX     5.0f                        ///< Notify 정보를 보여줄 시간 (초)
+#define NOTIFY_SHOWTIME_MAX     5.0f                        ///< Time to display Notify information (seconds)
 
 
 CNetPySideViewGui::CNetPySideViewGui(const RwChar* pName)
@@ -46,22 +46,22 @@ RwBool CNetPySideViewGui::Create()
     
     m_pThis = (gui::CDialog*)GetComponent("dlgMain");
 
-    // 배경
+    // background
     m_BackPanel.SetType(CWindowby3::WT_HORIZONTAL);    
     m_BackPanel.SetSurface(0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("NetPySideView.srf", "srfDialogBackUp"));
     m_BackPanel.SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("NetPySideView.srf", "srfDialogBackCenter"));
     m_BackPanel.SetSurface(2, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("NetPySideView.srf", "srfDialogBackDown"));	    
 
-    // sig	
+    //Signals	
     m_slotPaint			= m_pThis->SigPaint().Connect( this, &CNetPySideViewGui::OnPaint );
     m_slotMove			= m_pThis->SigMove().Connect(this, &CNetPySideViewGui::OnMove);
     m_slotResize		= m_pThis->SigMove().Connect(this, &CNetPySideViewGui::OnResize);
 
     //////////////////////////////////////////////////////////////////////////
-    // 현재 NetPy 정보
+    // Current NetPy information
     CRectangle rect;
     rect.SetRectWH(20, 10, 250, 14);
-    // 다음 NetPy 획득까지 남은 시간
+    // Time left until next NetPy acquisition
     m_pstbRemainTimeTitle = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
     m_pstbRemainTimeTitle->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);	        
     m_pstbRemainTimeTitle->SetTextColor(INFOCOLOR_13);
@@ -74,7 +74,7 @@ RwBool CNetPySideViewGui::Create()
     m_pstbRemainTimeData->SetTextColor(RGB(255, 255, 255));    
     
 
-    // 누적 획득 넷피
+    // Accumulated Net Fee
     rect.SetRectWH(20, 50, 250, 14);
     m_pstbGetTitle = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
     m_pstbGetTitle->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);	        
@@ -88,7 +88,7 @@ RwBool CNetPySideViewGui::Create()
     m_pstbGetData->SetTextColor(RGB(255, 255, 255));    
     
 
-    // 현재 넷피
+    // Current Netpy
     rect.SetRectWH(20, 90, 250, 14);
     m_pstbCurrentTitle = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
     m_pstbCurrentTitle->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);	        
@@ -102,7 +102,7 @@ RwBool CNetPySideViewGui::Create()
     m_pstbCurrentData->SetTextColor(RGB(255, 255, 255));
     
     //////////////////////////////////////////////////////////////////////////
-    // NetpY 획득 정보
+    // NetpY acquisition information
 
     rect.SetRectWH(20, 10, 250, 14);
     m_pstbGetPoint = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
@@ -239,19 +239,19 @@ VOID CNetPySideViewGui::OnShowInfo()
 
         m_pThis->SetHeight(NETPY_SIDEVIEW_HEIGHT_PCBANG);            
 
-        // 남은 시간
+        // time remaining
         WCHAR wcRemainTime[128] = {0,};
-        if(m_UpdateNetPyInfo.timeNextGainTime > 60) // 분단위
+        if(m_UpdateNetPyInfo.timeNextGainTime > 60) // minute by minute
         {
             swprintf_s(wcRemainTime, L"%d %s", m_UpdateNetPyInfo.timeNextGainTime / 60, GetDisplayStringManager()->GetString("DST_TIME_MINUTE"));
         }
-        else // 초 단위
+        else // seconds
         {
             swprintf_s(wcRemainTime, L"%d %s", m_UpdateNetPyInfo.timeNextGainTime, GetDisplayStringManager()->GetString("DST_TIME_SECOND"));
         }
         m_pstbRemainTimeData->SetText(wcRemainTime);
 
-        // 획득 넷피
+        // Acquired netfy
         WCHAR wcAccumNetPy[128] = {0,};
         swprintf_s(wcAccumNetPy, L"%d %s", m_UpdateNetPyInfo.dwAccumlationNetPy, GetDisplayStringManager()->GetString("DST_NETPY_POINT"));
         m_pstbGetData->SetText(wcAccumNetPy);
@@ -268,7 +268,7 @@ VOID CNetPySideViewGui::OnShowInfo()
 
     LocateComponent();
 
-    // 총 넷피
+    // Total net fee
     WCHAR wcTotalNetPy[128] = {0,};
     swprintf_s(wcTotalNetPy, L"%d %s", Logic_GetNetPy(), GetDisplayStringManager()->GetString("DST_NETPY_POINT"));
     m_pstbCurrentData->SetText(wcTotalNetPy);
@@ -282,7 +282,7 @@ VOID CNetPySideViewGui::OnShowNotify()
 
     LocateComponent();
     
-    // 메시지
+    // message
     WCHAR wcNotify[128] = {0,};
     swprintf_s(wcNotify, GetDisplayStringManager()->GetString("DST_NETPY_GET_NOTIFY"), m_dwUpdateNetPyPoint);
     m_pstbGetPoint->SetText(wcNotify);
@@ -290,7 +290,7 @@ VOID CNetPySideViewGui::OnShowNotify()
 
 VOID CNetPySideViewGui::Update( RwReal fElapsed ) 
 {
-    // 남은 시간 계산
+    // Calculate remaining time
     if(m_UpdateNetPyInfo.timeNextGainTime > 0 && m_fRemainTime > 0.0f)
     {
         m_fRemainTime -= fElapsed;
@@ -305,7 +305,7 @@ VOID CNetPySideViewGui::Update( RwReal fElapsed )
 
         }
 
-        if(m_pstbCurrentData->IsVisible())  // Info 정보 표시중이면 갱신한다.
+        if(m_pstbCurrentData->IsVisible())  // Info If information is being displayed, update it.
         {
             OnShowInfo();
         }        

@@ -1,14 +1,14 @@
 #include "precomp_dboclient.h"
 #include "TBTournamentMatchInfoGui.h"
 
-// shared
+// Shared
 
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// client
+// Client
 #include "DboEvent.h"
 #include "DialogManager.h"
 #include "DisplayStringManager.h"
@@ -109,7 +109,7 @@ RwBool CTBTournamentMatchInfoGui::Create(VOID)
 	// Initial Setting
 	m_pThis->Show( false );
 
-	// Event¿¬°á
+	// Event connection
 	LinkMsg( g_EventResize );
 	
 	

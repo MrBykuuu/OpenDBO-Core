@@ -12,16 +12,21 @@
 //
 //***********************************************************************************
 
+
 #pragma once
 
 //-----------------------------------------------------------------------------------
-// 클라이언트 연출 타입
+// Client presentation type
 //-----------------------------------------------------------------------------------
+
 enum eDIRECTION_TYPE
 {
 	DIRECTION_FLASH, // 2D production
+
 	DIRECTION_CINEMATIC, // Cinema Directing tick
+
 	DIRECTION_PLAY, // Director of animations specified by the server (the tick is unlike cinema and Sync) -> Delete scheduled
+
 
 	MAX_DIECTION_TYPE,
 	INVALID_DIRECTION_TYPE = 0xFF,
@@ -30,6 +35,7 @@ enum eDIRECTION_TYPE
 //-----------------------------------------------------------------------------------
 // Directed character type (synchronization of state-level)
 //-----------------------------------------------------------------------------------
+
 enum eDIRECT_PLAY_TYPE
 {
 	DIRECT_PLAY_TQS_START,
@@ -47,6 +53,7 @@ enum eDIRECT_PLAY_TYPE
 //-----------------------------------------------------------------------------------
 //Broadcasting (radio trunks message type)
 //-----------------------------------------------------------------------------------
+
 enum eTELECAST_MESSAGE_TYPE
 {
 	TELECAST_MESSAGE_TYPE_NORMAL,
@@ -54,13 +61,15 @@ enum eTELECAST_MESSAGE_TYPE
 	TELECAST_MESSAGE_TYPE_DANGER,
     TELECAST_MESSAGE_TYPE_NOTIFY,               ///< Carried notification message coming from the server (used only within the client)
 
+
 	MAX_TELECAST_MESSAGE_TYPE,
 	INVALID_TELECAST_MESSAGE_TYPE = 0xFF,
 };
 
 //-----------------------------------------------------------------------------------
-// 진행 메시지 ( TMQ등에서 현재 진행상황을 안내하는 메시지 )
+// Progress message (message informing current progress in TMQ, etc.)
 //-----------------------------------------------------------------------------------
+
 enum ePROGRESS_MESSAGE_TYPE
 {
 	PROGRESS_MESSAGE_TYPE_TMQ,
@@ -71,13 +80,17 @@ enum ePROGRESS_MESSAGE_TYPE
 };
 
 //-----------------------------------------------------------------------------------
-// 방향 지시 메시지
+// direction message
 //-----------------------------------------------------------------------------------
+
 enum eDIRECTION_INDICATE_TYPE
 {
 	DIRECTION_INDICATE_TYPE_TOBJECT, // It indicates the object
+
 	DIRECTION_INDICATE_TYPE_NPC, // It indicates the npc
+
 	DIRECTION_INDICATE_TYPE_POINT, // Indicate a single spot
+
 
 	MAX_DIRECTION_INDICATE_TYPE,
 	INVALID_DIRECTION_INDICATE_TYPE = 0xFF,

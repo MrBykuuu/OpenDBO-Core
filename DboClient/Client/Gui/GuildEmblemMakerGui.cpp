@@ -1,19 +1,19 @@
 #include "precomp_dboclient.h"
 #include "GuildEmblemMakerGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEmblemMaker.h"
 
-// simulation
+// Simulation
 #include "NtlSLGuild.h"
 #include "NtlSLGlobal.h"
 #include "NtlSobAvatar.h"
 
-// dbo
+// Dbo
 #include "DisplayStringManager.h"
 #include "DboLogic.h"
 #include "DialogManager.h"
@@ -87,7 +87,7 @@ RwBool CGuildEmblemMakerGui::Create()
 	m_pOKButton->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_OK"));
 	m_pCancelButton->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_CANCLE2"));
 
-	// 재료 텍스처의 서페이스
+	// Surface with material texture
 	RwInt32 iStuffX = dEMBLEM_STUFF_START_X;
 	RwInt32 iStuffY = dEMBLEM_STUFF_START_Y;
 	for(RwUInt8 i = 0 ; i < dSTUFF_TEXTURE_ROW ; ++i)
@@ -103,7 +103,7 @@ RwBool CGuildEmblemMakerGui::Create()
 		iStuffY += dEMBLEM_STUFF_ROW_GAP + dEMBLEM_STUFF_SIZE;
 	}
 
-	// 팔레트 영역
+	// palette area
 	RwInt32 iPaletteX = dPALETTE_START_X;
 	RwInt32 iPaletteY = dPALETTE_START_Y;
 	for(RwUInt8 i = 0 ; i < dPALETTE_ROW ; ++i )
@@ -118,17 +118,17 @@ RwBool CGuildEmblemMakerGui::Create()
 		iPaletteY += dPALETTE_GAP + dPALETTE_SIZE;
 	}
 
-	// 셀렉트 & 포커스 서페이스
+	// Select & Focus Surface
 	for(RwUInt8 i = 0 ; i < dSTUFF_TEXTURE_ROW ; ++i)
 		m_srfEmblemSelect[i].SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GuildEmblemMaker.srf", "srfSelectEmblem" ) );
 
 	m_srfEmblemFocus.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GuildEmblemMaker.srf", "srfSelectEmblem" ) );
 	m_srfPaletteFocus.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GuildEmblemMaker.srf", "srfSelectColor" ) );
 
-	// Emblem 구성 요소
+	// Emblem component
 	m_pEmblemFactor = NTL_NEW sEmblemFactor;
 
-	// 재료 텍스처 리스트 초기화
+	// Initialize material texture list
 	m_mapStuffTypeA = (MAP_STUFF*)GetEmblemMaker()->GetStuffList(EMBLEMTYPE_A);
 	m_mapStuffTypeB = (MAP_STUFF*)GetEmblemMaker()->GetStuffList(EMBLEMTYPE_B);
 
@@ -259,7 +259,7 @@ VOID CGuildEmblemMakerGui::SetTextureStuff(RwInt8 byStuffType, RwUInt32 uiStuffT
 			}
 	}
 
-	// 기존에 존재하는 텍스처를 재활용하기 위해 로딩된 텍스처 보관
+	// Archive loaded textures to recycle existing textures
 	for(RwUInt8 i = 0 ; i < dSTUFF_TEXTURE_COLUMN ; ++i)
 	{
 		if( m_StuffSlot[byStuffType][i].srfStuff.GetTexture() )
@@ -268,11 +268,11 @@ VOID CGuildEmblemMakerGui::SetTextureStuff(RwInt8 byStuffType, RwUInt32 uiStuffT
 		m_StuffSlot[byStuffType][i].srfStuff.UnsetTexture();
 	}
 
-	// 화면에 보여지는 재료 텍스처의 재구성
+	// Reconstruction of material textures shown on screen
 	it = pmapStuffType->find(uiStuffTextureIndex);
 	if( it != pmapStuffType->end() )
 	{
-		// 화면에 보여줄 연속된 4개의 재료 텍스처를 찾는다
+		// Find four consecutive material textures to display on screen.
 		RwUInt32 uiMaxStuff = pmapStuffType->size();
 
 		if( uiMaxStuff > dSTUFF_TEXTURE_COLUMN )
@@ -283,14 +283,14 @@ VOID CGuildEmblemMakerGui::SetTextureStuff(RwInt8 byStuffType, RwUInt32 uiStuffT
 			TEMP_STUFF_TEXTURE::iterator it_tempFind = mapTempTexture.find(it->second);
 			if( it_tempFind != mapTempTexture.end() )
 			{
-				// 재료 텍스처의 인덱스가 메모리에 존재하면
+				// If the index of the material texture exists in memory,
 				m_StuffSlot[byStuffType][i].srfStuff.SetTexture( it_tempFind->second );
 				m_StuffSlot[byStuffType][i].byStuffTextureIndex = (RwUInt8)it->second;
 				mapTempTexture.erase(it_tempFind);
 			}
 			else
 			{
-				// 메모리로 새로운 재료 텍스처를 읽어들인다				
+				// Load new material texture into memory				
                 ZeroMemory(acBuffer, sizeof(acBuffer));
 				GetEmblemMaker()->MakeEmblemResourceName((eEmblemType)byStuffType, (RwUInt8)it->second, acBuffer, 64);
 				m_StuffSlot[byStuffType][i].srfStuff.SetTexture( Logic_CreateTexture(acBuffer, TEXTTYPE_EMBLEM) );
@@ -304,7 +304,7 @@ VOID CGuildEmblemMakerGui::SetTextureStuff(RwInt8 byStuffType, RwUInt32 uiStuffT
 		}
 	}
 
-	// 재사용되지 않은 텍스처는 메모리에서 삭제한다
+	// Unreused textures are deleted from memory.
 	std::map<RwUInt32, gui::CTexture*>::iterator it_TempTexture = mapTempTexture.begin();
 	for( ; it_TempTexture != mapTempTexture.end() ; ++it_TempTexture )
 	{
@@ -524,7 +524,7 @@ VOID CGuildEmblemMakerGui::OnMouseUp(const CKey& key)
 		{
 			if( m_byCurStuffRow != INVALID_BYTE )
 			{
-				// 팔레트를 선택했다
+				// Choose a palette
 				switch(m_byCurStuffRow)
 				{
 					case 0:	m_pEmblemFactor->byTypeAColor = m_MouseInfo.bySlotIndex; break;
@@ -559,7 +559,7 @@ VOID CGuildEmblemMakerGui::OnMove(RwInt32 iOldX, RwInt32 iOldY)
 
 VOID CGuildEmblemMakerGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 {
-	// 재료 텍스처 포커스
+	// material texture focus
 	RwUInt8 byStuffFocus = INVALID_BYTE;
 	for(RwUInt8 i = 0 ; i < dSTUFF_TEXTURE_ROW ; ++i)
 	{
@@ -576,7 +576,7 @@ VOID CGuildEmblemMakerGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 
 	m_bStuffFocus = FALSE;
 
-	// 팔레트 포커스
+	// palette focus
 	m_byPaletteFocus = PtInRectPalette(nX, nY);
 	if( m_byPaletteFocus != INVALID_BYTE )
 	{

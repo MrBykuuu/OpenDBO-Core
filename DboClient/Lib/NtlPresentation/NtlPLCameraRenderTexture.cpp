@@ -5,9 +5,9 @@
 #include "NtlPLCameraRenderTexture.h"
 
 /**
- * 객체 생성
- * \param nWidth: Texture의 가로 사이즈
- * \param nHeight; Texture의 세로 사이즈
+ *Create object
+ * \param nWidth: Horizontal size of Texture
+ * \param nHeight; Vertical size of texture
  */
 void CNtlPLCameraRenderTexture::Create( RwInt32 nTexWidth, RwInt32 nTexHeight, RwInt32 nRealWidth, RwInt32 nRealHeight, RwReal fFov, RwBool _IsCamInWorld)
 {
@@ -40,7 +40,7 @@ void CNtlPLCameraRenderTexture::Create( RwInt32 nTexWidth, RwInt32 nTexHeight, R
 }
 
 /**
- * 객체 소멸
+ *Object destruction
  */
 void CNtlPLCameraRenderTexture::Destroy()
 {
@@ -99,7 +99,7 @@ void CNtlPLCameraRenderTexture::SetFar(RwReal _Far)
 }
 
 /**
- * Fov를 구하기 위한 함수
+ *Function to find Fov
  * \param fFov: Fov
  */
 void CNtlPLCameraRenderTexture::SetCalcFov(RwReal fFov, RwInt32 nWidth, RwInt32 nHeight)
@@ -117,8 +117,8 @@ void CNtlPLCameraRenderTexture::SetCalcFov(RwReal fFov, RwInt32 nWidth, RwInt32 
 }
 
 /**
- * Texture에 Entity를 Rendering을 한다.
- * \param pEntity Rendering을 할 Entity
+ *Render the entity to texture.
+ * \param pEntity Entity to be rendered
  */
 void CNtlPLCameraRenderTexture::RenderTexture(CNtlPLEntity *pEntity)
 {
@@ -141,8 +141,8 @@ void CNtlPLCameraRenderTexture::RenderTexture(CNtlPLEntity *pEntity)
 
 
 /**
- * Texture에 Entity를 Rendering을 한다.
- * \param pEntity Rendering을 할 Entity
+ *Render the entity to texture.
+ * \param pEntity Entity to be rendered
  */
 void CNtlPLCameraRenderTexture::RenderTexture(std::list<CNtlPLEntity*>& listEntity)
 {
@@ -185,10 +185,10 @@ void CNtlPLCameraRenderTexture::SetCameraPosition(const RwV3d *pCameraPos, const
 
 
 /**
- * Target 카메라에 Rendered Texture를 Render한다.
- * \param pRenderTarget Texture을 렌더링할 카메라
- * \param fPos Texture가 표시될 위치
- * \param fSize Texture의 Size 
+ *Render the rendered texture to the target camera.
+ * \param pRenderTarget Camera to render the Texture to.
+ * \param fPos Position where the Texture will be displayed.
+ * \param fSize Size of Texture 
  */
 void CNtlPLCameraRenderTexture::Render(RwCamera *pRenderTarget, RwV2d fPos, RwV2d fSize)
 {

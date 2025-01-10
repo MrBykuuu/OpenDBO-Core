@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: RBDirectionGui.h
-// Desc: Rank Battle 연출 Gui
+// Desc: Rank Battle Direction Gui
 //
 // 2008.03.14 Peessi@hitel.net   
 ////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +56,7 @@ private:
 	gui::CSlot			m_slotTsuruTeamMemberMovieEnd[MAX_TEAM_MEMBER];
 	
 	//! Variables
-	gui::CDialog*		m_pdlgDirection;	// Direction용 부모객체.
+	gui::CDialog*		m_pdlgDirection;	// Parent object for Direction.
 	gui::CFlash*		m_pflaTitle;
 	gui::CFlash*		m_pflaKameTeam;
 	gui::CFlash*		m_pflaTsuruTeam;
@@ -64,7 +64,7 @@ private:
 	gui::CFlash*		m_pflaTsuruTeamMember[MAX_TEAM_MEMBER];
 	gui::CFlash*		m_pflaVS;
 
-	stSCOREINFO			m_stScore;			// 점수.
+	stSCOREINFO			m_stScore;			// score.
 
 	CRectangle			m_rtOriginalTitle;
 	CRectangle			m_rtOriginalKameTeam;

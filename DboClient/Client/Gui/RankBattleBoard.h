@@ -1,11 +1,11 @@
 /******************************************************************************
-* File			: RankBattleBoard.h
-* Author		: Cho Hae sung
-* Copyright		: (주)NTL
-* Date			: 2007. 12. 14
-* Abstract		: 
+*File			: RankBattleBoard.h
+*Author		    : Cho Hae sung
+*Copyright		: (주)NTL
+*Date			: 2007. 12. 14
+*Abstract		: 
 *****************************************************************************
-* Desc			: 랭크배틀의 순위 게시판
+*Desc			: Rank Battle’s ranking bulletin board
 *****************************************************************************/
 
 #ifndef __RANKBATTLE_H__
@@ -28,19 +28,19 @@
 
 struct sRANKBATTLE_ITEM
 {
-	RwInt32		nRank;												///< 순위
-	WCHAR		awcName[NTL_MAX_SIZE_CHAR_NAME+1];			///< 캐릭터 이름
-	RwInt32		nLevel;												///< 레벨
-	RwUInt8		byClass;											///< 클래스
-	WCHAR		awcGuildName[NTL_MAX_SIZE_GUILD_NAME+1];	///< 길드 이름
-	RwInt32		nPoint;												///< 점수
-	RwUInt16	wStraightWin;										///< 연승
-	RwUInt32	nCompare;											///< 비교날짜
+	RwInt32		nRank;												///< Ranking
+	WCHAR		awcName[NTL_MAX_SIZE_CHAR_NAME+1];			///< Character name
+	RwInt32		nLevel;												///< level
+	RwUInt8		byClass;											///< class
+	WCHAR		awcGuildName[NTL_MAX_SIZE_GUILD_NAME+1];	///< Guild name
+	RwInt32		nPoint;												///< score
+	RwUInt16	wStraightWin;										///< Winning streak
+	RwUInt32	nCompare;											///< Comparison date
 };
 
 /**
 * \ingroup client
-* \brief 랭크배틀의 항목들
+* \brief Items of Ranked Battle
 */
 class CRankBattleRowItem
 {
@@ -63,35 +63,35 @@ public:
 	VOID OnMouseLeaveFromClass( gui::CComponent* pComponent );
 
 protected:
-	gui::CStaticBox*	m_pStbRank;				///< 순위
-	gui::CStaticBox*	m_pStbName;				///< 이름
-	gui::CStaticBox*	m_pStbLevel;			///< 레벨
-	gui::CPanel*		m_pPanClass;			///< 직업
-	gui::CStaticBox*	m_pStbGuildName;		///< 길드이름
-	gui::CStaticBox*	m_pStbPoint;			///< 점수
-	gui::CStaticBox*	m_pStbStraightWin;		///< 연승
-	gui::CStaticBox*	m_pStbCompare;			///< 비교
-	gui::CPanel*		m_pPanCompareMark;		///< 비교마크
+	gui::CStaticBox*	m_pStbRank;				///< Ranking
+	gui::CStaticBox*	m_pStbName;				///< name
+	gui::CStaticBox*	m_pStbLevel;			///< level
+	gui::CPanel*		m_pPanClass;			///< Occupation
+	gui::CStaticBox*	m_pStbGuildName;		///< Guild name
+	gui::CStaticBox*	m_pStbPoint;			///< score
+	gui::CStaticBox*	m_pStbStraightWin;		///< Winning streak
+	gui::CStaticBox*	m_pStbCompare;			///< Compare
+	gui::CPanel*		m_pPanCompareMark;		///< Comparison mark
 	gui::CDialog*		m_pDlgItem;
 
 	gui::CSlot			m_slotMouseEnterFromClass;
 	gui::CSlot			m_slotMouseLeaveFromClass;
 
-	RwInt32				m_nRank;				///< 순위
+	RwInt32				m_nRank;				///< Ranking
 
-	RwUInt8				m_byClass;				///< 직업
+	RwUInt8				m_byClass;				///< Occupation
 
 
 };
 
 /**
 * \ingroup client
-* \brief 랭크배틀 순위 게시판
+* \brief Rank Battle Ranking Bulletin Board
 */
 class CRankBattleBoard : public CBoard
 {
 public:
-	// 서버에서 받은 데이타의 유효값
+	// Valid value of data received from server
 	enum eDataResult
 	{
 		eDATA_OK = 0,
@@ -104,10 +104,10 @@ public:
 		eDATA_INVALID = 0xFF
 	};
 
-	// 검색 모드
+	// search mode
 	enum eSearchMode
 	{
-		eSEARCH_RANK = 0,	// 랭크로 검색
+		eSEARCH_RANK = 0,	// Search by rank
 		eSEARCH_NAME,
 
 		eSEARCH_NUMS,
@@ -118,7 +118,7 @@ public:
 	CRankBattleBoard();
 	virtual ~CRankBattleBoard();
 
-	// abstract
+	// Abstract
 	virtual void Create( eBoardType eType , CRankBoardGui* pParent );
 	virtual void Destroy();
 
@@ -141,11 +141,11 @@ public:
 	void		OnInputReturnSearch();
 	void		OnClickedBtnSearch(gui::CComponent* pComponent);
 
-	// 서치 관련 콤보박스
+	// Search related combo box
 	VOID		OnSearchItemSelect( INT nIndex );
 	VOID		OnSearchListToggled( RwBool bToggled, gui::CComponent* pComponent );
 
-	// Compare 관련 콤보박스 
+	// Compare related combo box 
 	VOID		OnItemSelect( INT nIndex );
 	VOID		OnListToggled( RwBool bToggled, gui::CComponent* pComponent );
 	VOID		OnClickedCompare( gui::CComponent* pComponent );
@@ -169,10 +169,10 @@ protected:
 	gui::CSlot			m_slotSearchListToggled;
 
 	RwInt32				m_nSearchMode;
-	RwBool				m_bSearchRank;				///< 순위 모드임
+	RwBool				m_bSearchRank;				///< This is ranking mode
 
-	RwInt32				m_nSearchRankPage;			///< 순위 모드일때의 페이지
-	RwInt32				m_nSearchRankIndex;			///< 순위 모드일때 하이라이트 해줄 위치
+	RwInt32				m_nSearchRankPage;			///< Page in ranking mode
+	RwInt32				m_nSearchRankIndex;			///< Location to highlight when in ranking mode
 
 	gui::CInputBox*		m_pIpbSearch;
 	gui::CButton*		m_pBtnSearch;
@@ -185,19 +185,19 @@ protected:
 	gui::CSlot			m_slotIpbSearchGotFocus;
 	gui::CSlot			m_slotIpbSearchLostFocus;
 
-	gui::CStaticBox*	m_pStbRank;					///< 순위
-	gui::CStaticBox*	m_pStbName;					///< 이름
-	gui::CStaticBox*	m_pStbLevel;				///< 레벨
-	gui::CStaticBox*	m_pStbClass;				///< 직업
-	gui::CStaticBox*	m_pStbGuildName;			///< 길드이름
-	gui::CStaticBox*	m_pStbPoint;				///< 점수
-	gui::CStaticBox*	m_pStbStraightWin;			///< 연승
-	/*gui::CComboBox*		m_pCbbCompare;				///< 비교날짜( 콤보박스 )*/
-	gui::CStaticBox*	m_pStbRankBattleCompare;		///< 변동 사항
+	gui::CStaticBox*	m_pStbRank;					///< Ranking
+	gui::CStaticBox*	m_pStbName;					///< name
+	gui::CStaticBox*	m_pStbLevel;				///< level
+	gui::CStaticBox*	m_pStbClass;				///< Occupation
+	gui::CStaticBox*	m_pStbGuildName;			///< Guild name
+	gui::CStaticBox*	m_pStbPoint;				///< score
+	gui::CStaticBox*	m_pStbStraightWin;			///< Winning streak
+	/*gui::CComboBox*		m_pCbbCompare;				///< Comparison date (combo box)*/
+	gui::CStaticBox*	m_pStbRankBattleCompare;		///< Changes
 
-	gui::CSlot			m_slotItemSelect;			///< 아이템 셀렉트
-	gui::CSlot			m_slotListToggled;			///< 리스트박스 토글
-	gui::CSlot			m_slotClickedCompare;		///< 리스트박스의 컴페어 버튼 클릭
+	gui::CSlot			m_slotItemSelect;			///< Item selection
+	gui::CSlot			m_slotListToggled;			///< Listbox toggle
+	gui::CSlot			m_slotClickedCompare;		///< Click the Compare button in the list box
 
 	RwInt32				m_nCurrentPage;
 	RwInt32				m_nCurrentCompareDay;

@@ -48,7 +48,7 @@ public:
 	BOOL Create( CONST CHAR* szFileName, int nID);
 	VOID Destroy(VOID);
 
-	BOOL Update( FLOAT fElapsed );			// return FALSE -> 한타임 종료됨.
+	BOOL Update( FLOAT fElapsed );			// return FALSE -> One time has ended.
 	VOID Render(VOID);
 
 	INT	 GetResolutionWidth(VOID) { return m_nResolutionWidth; }

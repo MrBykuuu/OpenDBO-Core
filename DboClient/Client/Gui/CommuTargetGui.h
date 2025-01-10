@@ -6,7 +6,7 @@
 
 /**
  * \ingroup Client
- * \brief 커뮤니티 타겟 윈도우 GUI
+ * \brief Community target Windows GUI
  * \date 2007-12-26
  * \author agebreak
  */
@@ -30,8 +30,8 @@ protected:
     VOID        OnEventTargetRelease();
 
 protected:
-    gui::CStaticBox*    m_pSttName;                     ///< 타겟 이름 표시 
-    gui::CStaticBox*    m_pSttType;                     ///< 타겟 종류 표시 (친구,길드...)
+    gui::CStaticBox*    m_pSttName;                     ///< Display target name
+    gui::CStaticBox*    m_pSttType;                     ///< Display target type (friend, guild. ..)
 
     SNtlEventCommuTargetSelect     m_currTarget;
 

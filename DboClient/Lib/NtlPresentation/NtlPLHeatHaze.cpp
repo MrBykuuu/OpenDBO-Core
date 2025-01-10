@@ -580,7 +580,7 @@ RwBool CNtlPLHeatHazeObject::Pick(RwReal* pfDist)
 	RwBool bPicked	= FALSE;
 	RwReal fTemp	= 0.0f;
 
-	// 뒷면 앞면 모두 픽킹이 가능하다.
+	//Both the back and front sides can be picked.
 	if(RtIntersectionLineTriangle(&rayCamera.start, &vRayDeltha, &m_vVertex[0], &m_vVertex[1], &m_vVertex[2], &fTemp))
 	{
 		bPicked = TRUE;

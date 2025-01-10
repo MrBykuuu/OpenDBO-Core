@@ -1,17 +1,17 @@
 /*****************************************************************************
-* File			: DboPackethandler_TURankingBoard.cpp
-* Author		: Cho Haesung
-* Copyright		: (주)NTL
-* Date			: 2008. 4. 8
-* Abstract		: 
+*File			: DboPackethandler_TURankingBoard.cpp
+*Author	    	: Cho Haesung
+*Copyright		: NTL Co., Ltd.
+*Date			: 2008. 4. 8
+*Abstract		: 
 *****************************************************************************
-* Desc         : 랭킹보드에 관련된 패킷
+*Desc           : Packets related to ranking board
 *****************************************************************************/
 
 #include "precomp_dboclient.h"
 #include "DboPacketHandler.h"
 
-// simulation
+// Simulation
 #include "NtlNetSender.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSLPacketGenerator.h"
@@ -19,7 +19,7 @@
 #include "NtlCameraController.h"
 
 /**
-* \brief 랭킹보드 : 랭크배틀의 순위권의 요청한 페이지의 리스트를 받는다.
+* \brief Ranking Board: Receives a list of requested pages in the ranking of ranked battles.
 */
 void PacketHandler_TURankBattle_Rank_List_Res(void* pPacket)
 {
@@ -60,7 +60,7 @@ void PacketHandler_TURankBattle_Rank_Find_Character_Res(void* pPacket)
 }
 
 /**
-* \brief 랭킹보드 : 랭크배틀의 순위권의 요청한 비교날짜의 페이지 리스트를 받는다.
+* \brief Ranking Board: Receives a list of pages with the requested comparison date of the ranked battle rankings.
 */
 void PacketHandler_TURankBattle_Rank_Compare_Day_Res(void* pPacket)
 {

@@ -1,26 +1,26 @@
 /*****************************************************************************
-* File			: DboPackethandler_GUTMail.cpp
-* Author		: Hong sungbock
-* Copyright		: (주)NTL
-* Date			: 2007. 1. 16
-* Abstract		: 메일 관련 패킷 핸들
+*File			: DboPackethandler_GUTMail.cpp
+*Author		    : Hong sungbock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 1. 16
+*Abstract		: Mail-related packet handle
 *****************************************************************************
-* Desc         : 
+*Desc           : 
 *****************************************************************************/
 
 #include "precomp_dboclient.h"
 #include "DboPacketHandler.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// simulation
+// Simulation
 #include "NtlNetSender.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSLPacketGenerator.h"
 
 
-// MailSystem
+// Mail system
 void PacketHandler_GUMailStartRes(void* pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock(GU_MAIL_START_RES);
@@ -31,7 +31,7 @@ void PacketHandler_GUMailStartRes(void* pPacket)
 	{
 		CNtlSLEventGenerator::SysMsg(INVALID_SERIAL_ID, Logic_GetResultCodeString(pResult->wResultCode, "").c_str());
 		CNtlSLEventGenerator::MailStart(pResult->hObject, pResult->bIsAway, FALSE);
-		// Mail의 경우 자체적인 Dialog 오픈 실패 상황 처리 알고리즘이 존재
+		// In the case of Mail, there is its own algorithm for handling dialog open failure situations.
 		// CDboEventGenerator::DialogEvent( DIALOGEVENT_OPEN_FAIL_NPC_DIALOG, PLACE_NONE, PLACE_NONE, DIALOG_MAILSYSTEM );
 		return;
 	}
@@ -101,7 +101,7 @@ void PacketHandler_GUMailSendRes(void* pPacket)
 
 	Logic_PlayGUISound( GSD_SYSTEM_MAIL_SEND );
 
-	// 메일 퀘스트
+	// mail quest
 	CNtlSLEventGenerator::TSUseMail();
 }
 

@@ -1,13 +1,13 @@
 /*****************************************************************************
  *
- * File			: TBGambleResultGui.h
- * Author		: Haesung, Cho
- * Copyright	: (주)NTL
- * Date			: 2008. 8. 20	
- * Abstract		: Tenkaichi budokai gamble npc result
+ *File			: TBGambleResultGui.h
+ *Author	    : Haesung, Cho
+*Copyright	    : (주)NTL
+ *Date			: 2008. 8. 20	
+ *Abstract		: Tenkaichi budokai gamble npc result
  *****************************************************************************
- * Desc         : 
- * 겜블NPC가 뱉어내는 아이템을 띄워서 확인시켜준다.
+ *Desc         : 
+ *Confirm by floating the item that the gambling NPC spits out.
  *****************************************************************************/
 
 #ifndef __TBGAMBLERESULT__H__
@@ -20,7 +20,7 @@
 
 /**
 * \ingroup client
-* \brief 겜블 NPC에게서 겜블을 했을 경우 어떤 아이템이 나왔는지 화면으로 보여준다.
+* \brief When you gamble with a gambling NPC, the screen shows what items you got.
 */
 class CTBGambleResultGui : public CNtlPLGui, public RWS::CEventHandler
 {

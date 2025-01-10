@@ -64,7 +64,7 @@ public:
 	RwBool	IsLock_withoutMessage( RwInt32 eLockPacket );
 	RwBool	IsLockType_withoutMessage( RwInt32 eLockedType );
 
-	// Req <-> Res 간의 Lock
+	// Req <-> Res Interracial Lock
 	RwBool	IndividualLock( RwInt32 eLockPacket );
 	RwBool	IndividualUnlock( RwInt32 eLockPacket );
 	RwBool	IsIndividualLock( RwInt32 eLockPacket );
@@ -72,10 +72,10 @@ public:
 private:
 	// Variable
 
-	// LOCK TYPE 별로 분류하는 Packet
+	//Packet classified by LOCK TYPE
 	MAP_LOCKPACKET		m_mapLockPacket;
 	
-	// Request 와 Result 로 구분하는 Packet
+	// Packet divided into Request and Result
 	SET_LOCKPACKET		m_setLockPacket;
 	LIST_LOCKED_TIME	m_listLockedTime;
 };

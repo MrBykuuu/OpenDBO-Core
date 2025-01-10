@@ -2,7 +2,7 @@
 //	File		:	NtlInstanceImVertexSystem.h
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -35,7 +35,7 @@ public:
     virtual RwBool	Update(RwReal fElapsedTime);
 
 	virtual void	SetVertexColor(RwRGBA& color);
-    virtual void    SetAlpha(RwUInt8 byValue);                                         ///< Efffect의 Alpha값을 설정한다.
+    virtual void    SetAlpha(RwUInt8 byValue);                                         ///< Set the Alpha value of Effect.
 
 	virtual void	SetWorldMatrix(const RwMatrix& matWorld);
 
@@ -45,5 +45,5 @@ public:
 protected:
     virtual	void	UpdateColor(RwReal fDeltaTime);
     virtual void	UpdateSize(RwReal fDeltaTime);
-    virtual RwUInt8 UpdateFinishAlpha(RwUInt8 uiOriginAlpha, RwReal fElapsedTime, RwReal fFinishTime);  ///< Finish시의 Alpha값 처리를 한다.
+    virtual RwUInt8 UpdateFinishAlpha(RwUInt8 uiOriginAlpha, RwReal fElapsedTime, RwReal fFinishTime);  ///< Processes the Alpha value at Finish.
 };

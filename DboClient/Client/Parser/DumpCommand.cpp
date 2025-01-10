@@ -2,18 +2,18 @@
 
 #include "DumpCommand.h"
 
-// shared
+// Shared
 #include "NtlPacketUG.h"
 #include "NtlPacketGU.h"
 #include "NtlPacketUtil.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "NtlSLGlobal.h"
 #include "NtlSob.h"
@@ -22,7 +22,7 @@
 #include "NtlSLEventFunc.h"
 #include "NtlSLLogic.h"
 
-// dbo
+// Dbo
 #include "DumpTargetConsole.h"
 #include "DumpTargetGui.h"
 #include "DumpTargetFile.h"
@@ -161,7 +161,7 @@ void CDumpCmdManager::RecvPacket(void *pPacket)
 
 void CDumpCmdManager::RecvNet(const char *pFormat)
 {
-	// 활용되지 않고 있음
+	// Not utilized
 
 	MAP_DUMPTARGET::iterator it;
 	for(it = m_mapActiveTarget.begin(); it != m_mapActiveTarget.end(); ++it)
@@ -263,7 +263,7 @@ void CDumpCmdManager::OutPutClientMessage(eDUMP_TYPE eDumpType, const WCHAR* pMe
 
 void CDumpCmdManager::OutputSobObj(RwUInt32 uiSerialId)
 {
-	// Dump 플래그가 아닌 별도의 치트를 통해서 활성화할 수 있다
+	// It can be activated through a separate cheat rather than the dump flag.
 
 	MAP_DUMPTARGET::iterator it;
 	for(it = m_mapActiveTarget.begin(); it != m_mapActiveTarget.end(); ++it)
@@ -274,7 +274,7 @@ void CDumpCmdManager::OutputSobObj(RwUInt32 uiSerialId)
 
 void CDumpCmdManager::OutputSobObj(CNtlDumpTarget &dump, RwUInt32 uiSeiralId)
 {
-	// Dump 플래그가 아닌 별도의 치트를 통해서 활성화할 수 있다
+	// It can be activated through a separate cheat rather than the dump flag.
 
 	dump.Color(0, 255, 0);
 	dump << "\n\n\n\n================ simulation object dump(begin) =====================\n";
@@ -301,7 +301,7 @@ void CDumpCmdManager::OutputSobObj(CNtlDumpTarget &dump, RwUInt32 uiSeiralId)
 /// woosungs_test 20090723
 void CDumpCmdManager::OutputDump(const RwChar *pMsg, RwUInt32 iR, RwUInt32 iG, RwUInt32 iB)
 {
-	// Dump 플래그가 아닌 별도의 치트를 통해서 활성화할 수 있다
+	// It can be activated through a separate cheat rather than the dump flag.
 
 	MAP_DUMPTARGET::iterator it;
 	for(it = m_mapActiveTarget.begin(); it != m_mapActiveTarget.end(); ++it)

@@ -1,16 +1,16 @@
 ﻿/*****************************************************************************
- * File			: ContractGui.h
- * Author		: Hong Sungbock
- * Copyright	: (주)NTL
- * Date			: 2009. 2. 26
- * Abstract		: DBO contract gui.
+ *File			: ContractGui.h
+ *Author	    : Hong Sungbock
+ *Copyright	    : NTL Co., Ltd.
+ *Date			: 2009. 2. 26
+ *Abstract		: DBO contract gui.
  *****************************************************************************
- * Desc         : Definition of when to see the terms GUI
+ *Desc         : Definition of when to see the terms GUI
  *
  *				  1. When you see it automatically
- *					- The first time you access the account from the local PC
- *					- Renewal of Terms and Conditions
- *					- When DBO's expansion pack comes up, it is the first time you access the account on your local PC
+ *					-The first time you access the account from the local PC
+ *					-Renewal of Terms and Conditions
+ *					-When DBO's expansion pack comes up, it is the first time you access the account on your local PC
  *
  *				  2. When the "Terms" button is pressed on the DBO Title screen
  *
@@ -19,13 +19,13 @@
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// cleint
+// Client
 #include "SurfaceGui.h"
 
 class CContractGui : public CNtlPLGui, public RWS::CEventHandler
@@ -72,7 +72,7 @@ protected:
 	gui::CButton*		m_pOKButton;
 	gui::CButton*		m_pCancelButton;
 
-	CSurfaceGui			m_srfBackground;					///< 검은 배경
+	CSurfaceGui			m_srfBackground;					///< black background
 
 private:
 

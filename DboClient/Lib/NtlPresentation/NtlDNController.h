@@ -2,7 +2,7 @@
 *
 * File			: NtlDNController
 * Author		: Peessi
-* Copyright		: (주)NTL
+* Copyright		: (?)NTL
 * Date			: 2006. 8. 17	
 * Abstract		: Presentation Day And Night Control
 *****************************************************************************
@@ -21,7 +21,7 @@ public:
 	enum { NOT_START = 0xffffffff };
 	
 	CDNNode( RwReal fBeginTime, RwReal fDurationTime, RwUInt8 ucStartValue, RwUInt8 ucFinishValue, RwReal fBlendFactor, CNtlDNController* pController );
-	CDNNode( RwReal fBeginTime, RwReal fDurationTime, RwUInt8 ucFinishValue, RwReal fBlendFactor, CNtlDNController* pController );// Current Start 생성자.
+	CDNNode( RwReal fBeginTime, RwReal fDurationTime, RwUInt8 ucFinishValue, RwReal fBlendFactor, CNtlDNController* pController );// Current Start constructor.
 	
 	~CDNNode(VOID);
 
@@ -77,7 +77,7 @@ private:
 
 	DNLIST	 m_listDNNode;		
 	RwUInt8  m_ucLastValue;
-	BOOL	 m_bSetDNEffect;		// DNEffect가 적용되는 상태를 알기위한 것. TRUE : 적용중.
+	BOOL	 m_bSetDNEffect;		//To know the state in which DNEffect is applied. TRUE: Applying.
 };
 
 static CNtlDNController* GetDnController(VOID)

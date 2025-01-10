@@ -37,22 +37,28 @@ public:
 	bool m_bToggled;
 	bool m_bToggleMode;
 	BOOL m_bMouseEnter;
-	BOOL m_bClickEnable;							// Component 자체의 Enable이 아닌 button만의 Enable 모든 메세지는 허용하나 단지 클릭만 되지 않는다. 
-	BOOL m_bEnableMouseCapture;						// MouseDown시 MouseCapture를 할지 여부.
+	BOOL m_bClickEnable;							// Enable only the button, not the enable of the component itself. All messages are allowed, but only clicks are not possible. 
+
+	BOOL m_bEnableMouseCapture;						// Whether to perform MouseCapture when MouseDown.
+
 		
-	COLORREF m_colorTextUpColor;					// 각 텍스트 색.
+	COLORREF m_colorTextUpColor;					// Each text color.
+
 	COLORREF m_colorTextDownColor;
 	COLORREF m_colorTextFocusColor;
 	COLORREF m_colorTextDisableColor;
-	BYTE	 m_ucTextUpAlpha;						// 각 텍스트 알파.
+	BYTE	 m_ucTextUpAlpha;						// Each text alpha.
+
 	BYTE	 m_ucTextDownAlpha;
 	BYTE	 m_ucTextFocusAlpha;
 	BYTE	 m_ucTextDisableAlpha;
 
-	INT		m_nTextDownCoordDiffX;					// 버튼다운시 텍스트 변화.
+	INT		m_nTextDownCoordDiffX;					// Text changes when button down.
+
 	INT		m_nTextDownCoordDiffY;
 
-	INT		m_nTextCoordX;							// 버튼 내 Text위치
+	INT		m_nTextCoordX;							// Text location in button
+
 	INT		m_nTextCoordY;							
 
 	std::string	m_strFocusSound;					
@@ -80,7 +86,8 @@ public:
 
 	RwImage *m_pMaskImage;
 
-	// mask 그림에서 유효하지 않은 영역이가?
+	// Is the mask an invalid area in the picture?
+
 	bool PtInMask(int nX, int nY);
 	BOOL PtInValidRegion( INT nX, INT nY );
 	VOID CreateMaskImage(const char *pFileName);

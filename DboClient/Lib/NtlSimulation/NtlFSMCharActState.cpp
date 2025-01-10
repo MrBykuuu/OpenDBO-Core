@@ -1,7 +1,7 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlFSMCharActState.h"
 
-// shared
+// Shared
 #include "NtlSharedType.h"
 #include "NtlResultCode.h"
 #include "NtlMovement.h"
@@ -17,14 +17,14 @@
 #include "VehicleTable.h"
 #include "NtlCharacter.h"
 
-// sound
+// Sound
 #include "WorldSoundDefine.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 #include "NtlCharacterData.h"
 #include "NtlPLCharacter.h"
@@ -32,7 +32,7 @@
 #include "NtlPLHelpers.h"
 #include "NtlPLEventGenerator.h"
 
-// simulation
+// Simulation
 #include "NtlFSMDef.h"
 #include "NtlFSMAgent.h"
 #include "NtlSLVisualDeclear.h"
@@ -225,7 +225,7 @@ void CNtlFSMCharActIdleState::Enter(void)
 	pMoveStuff->byMoveFlags = NTL_MOVE_NONE;	
     
 
-	// monster일 경우, move pattern 적용.
+	//In case of monster, apply move pattern.
 	if( Logic_IsMovePatternApply(m_pActor) )
 	{
 		m_pIdlePattern = NTL_NEW CNtlBehaviorCharIdlePattern;
@@ -275,7 +275,7 @@ void CNtlFSMCharActIdleState::Enter(void)
 
 void CNtlFSMCharActIdleState::Exit(void)
 {
-	// monster일 경우
+	// In case of monster
 	if(m_pIdlePattern)
 	{
 //		Logic_GetMovePatternSync(m_pActor->GetSerialID(), 0);
@@ -355,7 +355,7 @@ RwUInt32 CNtlFSMCharActIdleState::HandleEvents(RWS::CMsg &pMsg)
 		if(uiAnimKey == NML_IDLE_01 || uiAnimKey == NML_IDLE_02 || 
 			uiAnimKey == NML_STAFF_IDLE_01 || uiAnimKey == NML_STAFF_IDLE_02)
 		{
-			// monster idle pattern coding을 따로 한다.
+			// Monster idle pattern coding is done separately.
 			if(m_pIdlePattern)
 			{
 				m_pIdlePattern->NextUnit();
@@ -421,7 +421,7 @@ RwUInt32 CNtlFSMCharActIdleState::HandleEvents(RWS::CMsg &pMsg)
 
 void CNtlFSMCharActIdleState::SetAnim(RwUInt8 byAnimOrder)
 {
-	// idle pattern이 있는 monster일 경우에는 적용 안한다.
+	// This does not apply to monsters with an idle pattern.
 	if(m_pIdlePattern)
 	{
 		return;
@@ -432,7 +432,7 @@ void CNtlFSMCharActIdleState::SetAnim(RwUInt8 byAnimOrder)
 	RwUInt32 uiCurrAnimKey = pSobProxy->GetBaseAnimationKey();
 	RwUInt32 uiNextAnimKey = 0;
 
-    // 나메크 변신 체크
+    // Namek transformation check
     if(Logic_IsTransformGreatNamek(m_pActor))
     {
         uiNextAnimKey = TRANS_IDLE;
@@ -571,7 +571,7 @@ void CNtlFSMCharActIdleState::UpdateSlipping(RwReal fElapsed)
 
 	if(!CheckSwimming())
 	{
-        //// 충돌 체크        
+        //// collision check       
         //SWorldHeightStuff sHstuff;
         //Logic_GetWorldHeight(m_pActor, &vNewPos, sHstuff);
         //RwUInt8 byColliResult = NTL_CHARACTER_COLLI_NONE;
@@ -591,7 +591,7 @@ void CNtlFSMCharActIdleState::UpdateSlipping(RwReal fElapsed)
         //    }            
         //}
 
-        //// Falling 체크
+        //// Falling check
         //if( m_pActor->GetFlags() & SLFLAG_FALLING_ENABLE && vNewPos.y - sHstuff.fFinialHeight > FALLING_CHECK_LEN)
         //{
         //    CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
@@ -695,7 +695,7 @@ void CNtlFSMCharActIdleState::UpdateCalcHeight( RwReal fElapsed )
 
 void CNtlFSMCharActIdleState::UpdateTerror( RwReal fElapsed ) 
 {
-    // 자기 자신이거나, 자신의 펫인 경우에만 처리한다.
+    // Process only if it is you or your pet.
     if(m_pActor->GetClassID() == SLCLASS_AVATAR || m_pActor->GetOwnerID() == GetNtlSLGlobal()->GetSobAvatar()->GetSerialID())
     {
         Logic_RandomMove(m_pActor, DBO_MAX_TERROR_MOVEMENT_DISTANCE);        
@@ -777,7 +777,7 @@ void CNtlFSMCharActMoveState::Enter(void)
 	}
     else if(pMoveStuff->byForm == NTL_MOVEFORM_BUS)
     {
-		// Behavior가 이미 생성 되었있는 경우는 생성하지 않는다
+		// If Behavior has already been created, it is not created.
 		CNtlBehaviorBusMove *pBehavior = NTL_NEW CNtlBehaviorBusMove;
 		AddBehavior(pBehavior);
     }
@@ -870,7 +870,7 @@ RwUInt32 CNtlFSMCharActMoveState::HandleEvents(RWS::CMsg &pMsg)
 	}
 	else if(pMsg.Id == g_EventSobSecondDestMove)
 	{
-		// 버스인 경우
+		// In case of bus
 		if ( Logic_IsBus( m_pActor ) )
 		{
 			FSMEvent_CharActSobSecondDestMove( m_pActor, reinterpret_cast<SNtlEventSobSecondDestMove*>(pMsg.pData) ); 
@@ -901,7 +901,7 @@ void CNtlFSMCharActMoveSwimming::Enter(void)
 {
 	CNtlFSMCharActStateBase::Enter();
 
-	// fly move인지 ground move인지를 판단한다.
+	// Determine whether it is a fly move or a ground move.
 	CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
 	SMoveStuff *pMoveStuff = pBeData->GetMoveStuff();
 
@@ -975,11 +975,11 @@ void CNtlFSMCharActAdjustMoveState::Enter(void)
 {
 	CNtlFSMCharActStateBase::Enter();
 
-	// fly move인지 ground move인지를 판단한다.
+	// Determine whether it is a fly move or a ground move.
 	CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
 	SMoveStuff *pMoveStuff = pBeData->GetMoveStuff();
 
-	// 유효 범위 검색.
+	// Effective range search.
 	RwV3d vPos = m_pActor->GetPosition(); 
 	RwV3d vDir;
 	RwV3dSubMacro(&vDir, &pMoveStuff->vDest, &vPos);
@@ -1149,7 +1149,7 @@ void CNtlFSMCharActSitDownState::Enter(void)
 {
 	CNtlFSMCharActStateBase::Enter();
 
-	// animation을 setting 한다.
+	// Set animation.
 	CNtlSobCharProxy *pSobProxy = reinterpret_cast<CNtlSobCharProxy*>(m_pActor->GetSobProxy());
 	sITEM_TBLDAT *pItemTblData = Logic_GetEquipedWeaponItemTableData(m_pActor);
 	if(pItemTblData && Logic_IsEquipedStaffWeapon(pItemTblData))
@@ -1165,7 +1165,7 @@ void CNtlFSMCharActSitDownState::Exit(void)
 
 void CNtlFSMCharActSitDownState::Update(RwReal fElapsed)
 {
-	// 여기에서는 behavior가 없기 때문에 굳이 state를 업데이트 할 필요가 없다.
+	// Since there is no behavior here, there is no need to update the state.
 //	CNtlFSMCharActStateBase::Update(fElapsed); 
 }
 
@@ -1209,7 +1209,7 @@ void CNtlFSMCharActSitState::Enter(void)
 {
 	CNtlFSMCharActStateBase::Enter();
 
-	// animation을 setting 한다.
+	// Set animation.
 	CNtlSobCharProxy *pSobProxy = reinterpret_cast<CNtlSobCharProxy*>(m_pActor->GetSobProxy());
 	sITEM_TBLDAT *pItemTblData = Logic_GetEquipedWeaponItemTableData(m_pActor);
 	if(pItemTblData && Logic_IsEquipedStaffWeapon(pItemTblData))
@@ -1225,7 +1225,7 @@ void CNtlFSMCharActSitState::Exit(void)
 
 void CNtlFSMCharActSitState::Update(RwReal fElapsed)
 {
-	// 여기에서는 behavior가 없기 때문에 굳이 state를 업데이트 할 필요가 없다.
+	// Since there is no behavior here, there is no need to update the state.
 //	CNtlFSMCharActStateBase::Update(fElapsed); 
 }
 
@@ -1255,7 +1255,7 @@ void CNtlFSMCharActStandUpState::Enter(void)
 {
 	CNtlFSMCharActStateBase::Enter();
 
-	// animation을 setting 한다.
+	// Set animation.
 	CNtlSobCharProxy *pSobProxy = reinterpret_cast<CNtlSobCharProxy*>(m_pActor->GetSobProxy());
 	sITEM_TBLDAT *pItemTblData = Logic_GetEquipedWeaponItemTableData(m_pActor);
 	if(pItemTblData && Logic_IsEquipedStaffWeapon(pItemTblData))
@@ -1271,7 +1271,7 @@ void CNtlFSMCharActStandUpState::Exit(void)
 
 void CNtlFSMCharActStandUpState::Update(RwReal fElapsed)
 {
-	// 여기에서는 behavior가 없기 때문에 굳이 state를 업데이트 할 필요가 없다.
+	// Since there is no behavior here, there is no need to update the state.
 //	CNtlFSMCharActStateBase::Update(fElapsed); 
 }
 
@@ -1407,7 +1407,7 @@ void CNtlFSMCharActTriggerOperateState::Enter(void)
 
 	m_hTargetSerialId = pCtrlStuff->uExtra.sOperate.hTargetSerialId;
 
-	// animation
+	// Animation
 	SetAnim();
 }
 
@@ -1418,8 +1418,8 @@ void CNtlFSMCharActTriggerOperateState::Exit(void)
 
 void CNtlFSMCharActTriggerOperateState::Update(RwReal fElapsed)
 {
-	// CNtlFSMCharActStateBase::Update 함수를 호출하지 않는다.
-	// 자동으로 상태가 끝내는 것을 없앤다..
+	// Do not call the CNtlFSMCharActStateBase::Update function.
+	// Automatically removes the state from ending.
 }
 
 RwUInt32 CNtlFSMCharActTriggerOperateState::HandleEvents(RWS::CMsg &pMsg)
@@ -2080,7 +2080,7 @@ void CNtlFSMCharActFollowState::Enter(void)
 {
 	CNtlFSMCharActStateBase::Enter();
 
-	// fly move인지 ground move인지를 판단한다.
+	// Determine whether it is a fly move or a ground move.
 	CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
 	SMoveStuff *pMoveStuff = pBeData->GetMoveStuff();
 	SCtrlStuff *pCtrlStuff = pBeData->GetCtrlStuff();
@@ -2187,7 +2187,7 @@ void CNtlFSMCharActFightingFollowState::Enter(void)
 {
 	CNtlFSMCharActStateBase::Enter();
 
-	// fly move인지 ground move인지를 판단한다.
+	// Determine whether it is a fly move or a ground move.
 	CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
 	SMoveStuff *pMoveStuff = pBeData->GetMoveStuff();
 	SCtrlStuff *pCtrlStuff = pBeData->GetCtrlStuff();
@@ -2220,13 +2220,13 @@ void CNtlFSMCharActFightingFollowState::Enter(void)
 
     m_byMoveForm = pMoveStuff->byForm;
 
-    // 어택모드를 켠다.
+    // Turn on attack mode.
     CNtlSLEventGenerator::SobAutoAttackMode(m_pActor->GetSerialID(), TRUE);    
 }
 
 void CNtlFSMCharActFightingFollowState::Exit(void)
 {
-    // 어택 모드를 끈다.
+    // Turn off attack mode.
     CNtlSLEventGenerator::SobAutoAttackMode(m_pActor->GetSerialID(), FALSE);
 
 	CNtlFSMCharActStateBase::Exit();
@@ -2244,7 +2244,7 @@ void CNtlFSMCharActFightingFollowState::Update( RwReal fElapsed )
 {
     CNtlFSMCharActStateBase::Update(fElapsed);
 
-    // 육지인지 물속인지 파악하여 행동을 변경하여 준다.
+    // It determines whether it is on land or in the water and changes its behavior.
     SWorldHeightStuff hStuff;
     if(Logic_IsSwimmingActor(m_pActor, &m_pActor->GetPosition(), hStuff))
     {
@@ -2293,7 +2293,7 @@ void CNtlFSMCharActFightingPoseState::Enter(void)
 	CNtlSobCharProxy *pSobProxy = reinterpret_cast<CNtlSobCharProxy*>(m_pActor->GetSobProxy());
 
 	sITEM_TBLDAT *pItemTblData = Logic_GetEquipedWeaponItemTableData(m_pActor);
-    // 변신때는 애니메이션을 안하고 바로 Idle로 간다.
+    // When transforming, there is no animation and goes straight to Idle.
     if(Logic_IsTransformGreatNamek(m_pActor))
     {
         pSobProxy->SetBaseAnimation(TRANS_IDLE);        
@@ -2303,8 +2303,8 @@ void CNtlFSMCharActFightingPoseState::Enter(void)
 	else
 		pSobProxy->SetBaseAnimation(BTL_DEF_FP_LOOP);
 
-	// ground fly를 위해서
-	// 위치를 다시한번 셋팅한다.
+	// For ground fly
+	// Set the location again.
 	RwV3d vPos = m_pActor->GetPosition();
 
 	SWorldHeightStuff sHStuff;
@@ -2313,7 +2313,7 @@ void CNtlFSMCharActFightingPoseState::Enter(void)
 
 	m_pActor->SetPosition(&vPos);
 
-	// 위치 보정을 해야하는 class인지를 check한다.
+	// Check whether it is a class that requires position correction.
 	if(!FSMUtil_IsStandingAdjustMoveClass(m_pActor))
 	{
 		m_bAdjustMoveCheck = TRUE;
@@ -2669,8 +2669,8 @@ void CNtlFSMCharActFightingShrinkState::Enter(void)
 	// time setting
 	m_fTime = 0.0f;
 
-	// ground fly를 위해서
-	// 위치를 다시한번 셋팅한다.
+	// For ground fly
+	// Set the location again.
 	RwV3d vPos = m_pActor->GetPosition();
 
 	SWorldHeightStuff sHStuff;
@@ -2739,7 +2739,7 @@ void CNtlFSMCharActFightingShrinkState::Update(RwReal fElapsed)
 	}
 
 	
-	// 여기에서는 behavior가 없기 때문에 굳이 state를 업데이트 할 필요가 없다.
+	// Since there is no behavior here, there is no need to update the state.
 	//	CNtlFSMCharActStateBase::Update(fElapsed); 
 }
 
@@ -2776,7 +2776,7 @@ void CNtlFSMCharActHurtState::Enter(void)
 {
 	CNtlFSMCharActStateBase::Enter();
 
-    // NPC 상점 이용중이라면 캔슬한다.
+    // If you are using an NPC store, cancel.
     if(m_pActor->GetClassID() == SLCLASS_AVATAR)
     {
         if(GetNtlWorldConcept()->IsActivePlayConcept(WORLD_PLAY_NPC_COMMU))
@@ -2828,7 +2828,7 @@ void CNtlFSMCharActKnockDownState::Enter(void)
 {
 	CNtlFSMCharActStateBase::Enter();
 
-	// NPC 상점 이용중이라면 캔슬한다.
+	// If you are using an NPC store, cancel.
 	if(m_pActor->GetClassID() == SLCLASS_AVATAR)
 	{
 		if(GetNtlWorldConcept()->IsActivePlayConcept(WORLD_PLAY_NPC_COMMU))
@@ -2876,8 +2876,8 @@ RwUInt32 CNtlFSMCharActKnockDownState::HandleEvents(RWS::CMsg &pMsg)
 	}
 	else if(pMsg.Id == g_EventSobFainting)
 	{
-		// faint event일 경우에는 behavior만 event를 보낸다.
-		// knockdown되어서 쓰러져 있는 상태로 죽어야 하므로...
+		// In the case of a faint event, only the behavior sends the event.
+		// Because you're knocked down, you have to die while lying down...
 		CNtlFSMStateBase::HandleEvents(pMsg);
 		FSMEvent_CharActFainting(m_pActor, reinterpret_cast<SNtlEventSobFainting*>( pMsg.pData ));
 		SetNextStateId(NTL_FSMSID_DIE);
@@ -2885,7 +2885,7 @@ RwUInt32 CNtlFSMCharActKnockDownState::HandleEvents(RWS::CMsg &pMsg)
 	}
 	else if(pMsg.Id == g_EventSobHit)
 	{
-		// 여기는 중요한 부분.
+		// Here is the important part.
 		SNtlEventSobHit *pHit = reinterpret_cast<SNtlEventSobHit*>(pMsg.pData);
 		FSMEvent_CharActHit(m_pActor, pHit); 
 
@@ -2950,8 +2950,8 @@ RwUInt32 CNtlFSMCharActSlidingState::HandleEvents(RWS::CMsg &pMsg)
 
 	if(pMsg.Id == g_EventSobFainting)
 	{
-		// faint event일 경우에는 behavior만 event를 보낸다.
-		// sliding이 끝난 다음 죽어야 하므로....
+		// In the case of a faint event, only the behavior sends the event.
+		// Because you have to die after sliding is over...
 		FSMEvent_CharActFainting(m_pActor, reinterpret_cast<SNtlEventSobFainting*>( pMsg.pData ));
 		SetNextStateId(NTL_FSMSID_FAINTING);
 		NTL_RETURN( NTL_FSM_EVENTRES_BLOCK );
@@ -3026,12 +3026,12 @@ void CNtlFSMCharActStunState::Enter(void)
             
         }
         break;
-		case DBO_STUN_TYPE_FROZEN:      // 동작을 멈춘다.        
+		case DBO_STUN_TYPE_FROZEN:      // stop the action        
         {
             m_fOrgAnimSpeed = pSobProxy->GetAnimSpeed();
             pSobProxy->SetAnimSpeed(0.0f);
             
-            // 이펙트
+            // effect
             CNtlPLEntity* pEffect = pSobProxy->CreatePLEffect(NTL_VID_STATE_FREEZE, &m_pActor->GetPosition());
             if(pEffect)
             {
@@ -3042,7 +3042,7 @@ void CNtlFSMCharActStunState::Enter(void)
         break;
 		case DBO_STUN_TYPE_TIED:
         {
-            // 우선 IDLE 애니메이션
+            // First IDLE animation
             RwUInt32 uiNextAnimKey = Logic_GetIdleAnimationID(m_pActor);	            
             pSobProxy->SetBaseAnimation(uiNextAnimKey);
         }
@@ -3147,7 +3147,7 @@ void CNtlFSMCharActStunState::OnStone(RwBool bEffect)
 
     if(bEffect)
     {
-        // 애니메이션을 멈춘다.
+        // Stop the animation.
         m_fOrgAnimSpeed = pSobProxy->GetAnimSpeed();
         pSobProxy->SetAnimSpeed(0.0f);
 
@@ -3315,11 +3315,11 @@ void CNtlFSMCharActSkillFollowState::Enter(void)
     if(CheckInFollowRange())
         return;
 
-	// char behavior data 를 얻어온다.
+	// Obtain char behavior data.
 	CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
 	SMoveStuff *pMoveStuff = pBeData->GetMoveStuff();
 	
-	// fly move인지 ground move인지를 판단한다.
+	// Determine whether it is a fly move or a ground move.
 	if(pMoveStuff->byForm == NTL_MOVEFORM_GROUND)
 	{
 		CNtlBehaviorBase *pBehavior = NTL_NEW CNtlBehaviorCharGroundMove;
@@ -3366,7 +3366,7 @@ void CNtlFSMCharActSkillFollowState::Update( RwReal fElapsed )
 {
     CNtlFSMCharActStateBase::Update(fElapsed);
 
-    // Falling 체크
+    // Falling check
     CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
     SMoveStuff *pMoveStuff = pBeData->GetMoveStuff();
     if(pMoveStuff->byMoveResult & NTL_MOVE_RESULT_FALLING)
@@ -3375,7 +3375,7 @@ void CNtlFSMCharActSkillFollowState::Update( RwReal fElapsed )
         SetNextStateId(NTL_FSMSID_FALLING);
     }
 
-    // 육지인지 물속인지 파악하여 행동을 변경하여 준다.
+    // It determines whether it is on land or in the water and changes its behavior.
     SWorldHeightStuff hStuff;
     if(Logic_IsSwimmingActor(m_pActor, &m_pActor->GetPosition(), hStuff))
     {
@@ -3401,7 +3401,7 @@ void CNtlFSMCharActSkillFollowState::Update( RwReal fElapsed )
 
 RwBool CNtlFSMCharActSkillFollowState::CheckInFollowRange() 
 {
-    // char behavior data 를 얻어온다.
+    // Obtain char behavior data.
     CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData());     
     SCtrlStuff *pCtrlStuff = pBeData->GetCtrlStuff();
 
@@ -3425,7 +3425,7 @@ void CNtlFSMCharActSkillFocusState::Enter(void)
 {
 	CNtlFSMCharActStateBase::Enter();
 
-    // Rp Bonus Effect와 애니메이션을 재생한다.
+    // Plays Rp Bonus Effect and animation.
 	CNtlSobCharProxy* pSobProxy = (CNtlSobCharProxy*)m_pActor->GetSobProxy();
 	pSobProxy->SetBaseAnimation(NML_SKILL_ABILITY);    
     pSobProxy->AttachRPBonusEffect();
@@ -3471,7 +3471,7 @@ void CNtlFSMCharActSkillReadyState::Enter(void)
 
 void CNtlFSMCharActSkillReadyState::Update(RwReal fElapsed)
 {
-	// 여기에서는 behavior가 없기 때문에 굳이 state를 업데이트 할 필요가 없다.
+	// Since there is no behavior here, there is no need to update the state.
 	//	CNtlFSMCharActStateBase::Update(fElapsed); 
 
 	if(m_bSkillReq)
@@ -3496,14 +3496,14 @@ RwUInt32 CNtlFSMCharActSkillReadyState::HandleEvents(RWS::CMsg &pMsg)
 	{
 		SNtlEventSobSkillCancel *pSobSkillCancel = reinterpret_cast<SNtlEventSobSkillCancel*>(pMsg.pData);
 
-        // Rp Bonus가 적용되어 있으면 이펙트를 제거한다.
+        // If the Rp Bonus is applied, the effect is removed.
         CNtlSobCharProxy* pProxy = (CNtlSobCharProxy*)m_pActor->GetSobProxy();
         pProxy->DetachRPBonusEffect();   
 
-        // 서브웨폰이 있으면 해제한다.
+        // If you have a subweapon, disarm it.
         CNtlPLEventGenerator::AnimEventSubWeaponDeActive(m_pActor->GetSerialID());
 
-		// 여기서 이유를 밝힌다.
+		// The reason is explained here.
 		if(pSobSkillCancel->wReason == GAME_TARGET_TOO_FAR ||
            pSobSkillCancel->wReason == GAME_TARGET_TOO_CLOSE)
 		{
@@ -3601,7 +3601,7 @@ void CNtlFSMCharActSkillCastingState::Enter(void)
 		LuaExec_SkillCastingEnter(m_pActor->GetSerialID(), pSkillStuff->uiSkillTblId);
 	}
 
-	// casting gui를 위한 event를 보낸다.
+	// Sends an event for casting gui.
 	if(m_pActor->GetClassID() == SLCLASS_AVATAR)
 	{
 		CNtlSLEventGenerator::SobCastingDirect( m_pActor, TRUE, TRUE );
@@ -3651,7 +3651,7 @@ void CNtlFSMCharActSkillCastingState::Enter(void)
             }
         }
 
-        // effect
+        // Effect
         CNtlPLEntity* pEffectRange = GetSceneManager()->CreateEntity(PLENTITY_EFFECT, strEffectName.c_str());
         pEffectRange->SetPosition(&vPos);
 
@@ -3678,13 +3678,13 @@ void CNtlFSMCharActSkillCastingState::Exit(void)
 			}
 		}
 
-		// 캐스팅 타겟 마크
+		// Casting target mark
 		if (m_pActor->GetTargetID() == Logic_GetTargetMarkingID())
 		{
 			CNtlSLEventGenerator::SobTargetMarkRelease(Logic_GetTargetMarkingID());
 		}
 
-		// casting gui를 위한 event를 보낸다.
+		// Sends an event for casting gui.
 		if (m_pActor->GetClassID() == SLCLASS_AVATAR)
 		{
 			CNtlSLEventGenerator::SobCastingDirect(m_pActor, TRUE, FALSE);
@@ -3698,7 +3698,7 @@ void CNtlFSMCharActSkillCastingState::Exit(void)
 	CNtlFSMCharActStateBase::Exit();
 }
 
-#define CASTING_CHECK_OCCLUSION     0.5f                        ///< 캐스팅중에 오브젝트 오클류젼을 체크할 타임
+#define CASTING_CHECK_OCCLUSION     0.5f                        ///< Time to check object occlusion during casting
 
 void CNtlFSMCharActSkillCastingState::Update(RwReal fElapsed)
 {
@@ -3707,10 +3707,10 @@ void CNtlFSMCharActSkillCastingState::Update(RwReal fElapsed)
     {
         m_fOcclusionCheckTime = 0.0f;
 
-        // 캐스팅중에 오브젝트 충돌 체크를 한다.        
+        // Object collision is checked during casting.        
         if(Logic_isEnemyTargetOcclusion(m_pActor->GetTargetID()))
         {
-            // 서버에 캐스팅 캔슬 패킷을 보낸다.
+            // Send a casting cancellation packet to the server.
             API_GetSLPacketGenerator()->SendCharSkillCastingCanceledNfy(GAME_SKILL_CASTING_CANCELED_OBJECT_OCCLUSION);
         }
     }
@@ -3739,7 +3739,7 @@ RwUInt32 CNtlFSMCharActSkillCastingState::HandleEvents(RWS::CMsg &pMsg)
     {
         Finish();
 
-        // 서브웨폰이 있으면 해제한다.
+        // If you have a subweapon, disarm it.
         CNtlPLEventGenerator::AnimEventSubWeaponDeActive(m_pActor->GetSerialID());
 
         return NTL_FSM_EVENTRES_CHANGE_STATE;
@@ -3892,7 +3892,7 @@ void CNtlFSMCharActSkillActionState::Enter(void)
             }
         }
 
-        // effect
+        // Effect
         CNtlPLEntity* pEffectRange = GetSceneManager()->CreateEntity(PLENTITY_EFFECT, strEffectName.c_str());
         pEffectRange->SetPosition(&vPos);
         pEffectRange->SetScale(Logic_GetSkillApplyRange(m_pActor, m_uiSkillTblId));
@@ -3945,7 +3945,7 @@ void CNtlFSMCharActSkillActionState::Exit(void)
 		CNtlSLEventGenerator::TSSkillUse_Skill(m_pActor->GetSerialID(), pSkillStuff, pAttackData);
 	}
 
-    // Rp Bonus가 적용되어 있으면 이펙트를 제거한다.
+    // If the Rp Bonus is applied, the effect is removed.
     CNtlSobCharProxy* pProxy = (CNtlSobCharProxy*)m_pActor->GetSobProxy();
     pProxy->DetachRPBonusEffect();    
 
@@ -4056,8 +4056,8 @@ RwUInt32 CNtlFSMCharActSkillActionState::HandleEvents(RWS::CMsg &pMsg)
 	else if(pMsg.Id == g_EventAnimSkillCancel)
 	{
 		//SetFlags(GetFlags() & ~(NTL_FSMSF_NOT_SKILLUSE | NTL_FSMSF_NOT_INPUT) );
-        
-        // Idle 상태와 같은 모든 입력을 받는다.
+
+        // It receives all inputs such as Idle state.
         SetFlags(NTL_FSMSF_SKIP_STANDUP | NTL_FSMSF_NOT_RUNJUMP);
 		m_bAnimCancelPoint = TRUE;        
 	}
@@ -4225,7 +4225,7 @@ void CNtlFSMCharActHTBFollowState::Enter(void)
 {
 	CNtlFSMCharActStateBase::Enter();
 
-	// char behavior data 를 얻어온다.
+	// Obtain char behavior data.
 	CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
 	SMoveStuff *pMoveStuff = pBeData->GetMoveStuff();
 	SCtrlStuff *pCtrlStuff = pBeData->GetCtrlStuff();
@@ -4234,7 +4234,7 @@ void CNtlFSMCharActHTBFollowState::Enter(void)
 	if(Logic_InFollowRange(m_pActor, pTargetActor, pCtrlStuff->fFollowRange))
 		return;
 
-	// fly move인지 ground move인지를 판단한다.
+	// Determine whether it is a fly move or a ground move.
 	if(pMoveStuff->byForm == NTL_MOVEFORM_GROUND)
 	{
 		CNtlBehaviorBase *pBehavior = NTL_NEW CNtlBehaviorCharGroundMove;
@@ -4352,11 +4352,11 @@ void CNtlFSMCharActHTBState::EnableSimulation(RwBool bEnable)
 
 	if(bEnable)
 	{
-		// actor의 elasped time 설정한다.
+		// Set the actor's elapsed time.
 		m_pActor->EnableVisible(FALSE);
 		m_pHTBElapController = GetNtlSobElapsedControlManager()->CreateController(m_pActor, 100.0f, HTB_SIMULATION_WEIGHT_ELAPSED_VALUE);
 		
-		// target actor의 elasped time 설정한다.
+		// Set the elapsed time of the target actor.
 		CNtlSob *pSobObj = GetNtlSobManager()->GetSobObject(pHTBStuff->hTargetSerialId);
 		if(pSobObj)
 		{
@@ -4366,7 +4366,7 @@ void CNtlFSMCharActHTBState::EnableSimulation(RwBool bEnable)
 	}
 	else
 	{
-		// actor의 elasped time 설정한다.
+		// Set the actor's elapsed time.
 		m_pActor->EnableVisible(TRUE);
 		if(m_pHTBElapController)
 		{
@@ -4374,7 +4374,7 @@ void CNtlFSMCharActHTBState::EnableSimulation(RwBool bEnable)
 			m_pHTBElapController = NULL;
 		}
 
-		// target actor의 elasped time 설정한다.
+		// Set the elapsed time of the target actor.
 		CNtlSob *pSobObj = GetNtlSobManager()->GetSobObject(pHTBStuff->hTargetSerialId);
 		if(pSobObj)
 		{
@@ -4420,11 +4420,11 @@ RwReal CNtlFSMCharActHTBState::GetFirstSkillRange(void)
 
 void CNtlFSMCharActHTBState::NextStepProc(void)
 {
-	// 다음 HTB step을 진행한다.
+	// Proceed with the next HTB step.
 	CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
 	SHTBStuff *pHTBStuff = pBeData->GetHTBStuff();
 
-	// lua 연동한다.
+	// Integrates with lua.
 	if(m_bHTBSuccess)
 	{
 		if(m_pActor->GetClassID() == SLCLASS_AVATAR)
@@ -4434,7 +4434,7 @@ void CNtlFSMCharActHTBState::NextStepProc(void)
 		}
 	}
 
-	// HTB simulation off 시킨다.
+	// Turn off HTB simulation.
 	if(m_bSimulationMode && m_byHTBNextStep >= pHTBStuff->byCurrStep)
 		EnableSimulation(FALSE);
 
@@ -4445,14 +4445,14 @@ void CNtlFSMCharActHTBState::NextStepProc(void)
 		return;
 	}
 
-	// 현재 플레이 가능한 HTB step을 구한다.
+	// Obtains the currently playable HTB step.
 	if(m_byHTBNextStep >= pHTBStuff->byStepCount)
 	{
 		m_byHTPStepState = EHTB_FINISH;
 		return;
 	}
 
-	// 서버로 HTB 진행 상황을 보낸다.
+	// Send HTB progress to the server.
 	if(m_pActor->GetFlags() & SLFLAG_SERVER_SENDER)
 	{
 		RwV3d vPos = m_pActor->GetPosition();
@@ -4461,7 +4461,7 @@ void CNtlFSMCharActHTBState::NextStepProc(void)
 		API_GetSLPacketGenerator()->SendCharHTBForward(vPos, vDir);
 	}
 
-	// skill을 사용하는 set 이면.
+	// If it is a set that uses skill.
 	CHTBSetTable *pHTBSetTbl = API_GetTableContainer()->GetHTBSetTable();
 	sHTB_SET_TBLDAT *pHTBSetTblData = reinterpret_cast<sHTB_SET_TBLDAT*>( pHTBSetTbl->FindData(pHTBStuff->uiSkillTblId) );
     
@@ -4553,7 +4553,7 @@ void CNtlFSMCharActHTBState::NextStepProc(void)
 		}
 	}
 
-	// HTB camera lua script 호출.
+	// Call HTB camera lua script.
 	if(m_bHTBSuccess)
 	{
 		if(m_pActor->GetClassID() == SLCLASS_AVATAR)
@@ -4614,7 +4614,7 @@ void CNtlFSMCharActHTBState::Enter(void)
 {
 	CNtlFSMCharActStateBase::Enter();
 	
-	// 좌표 setting
+	// Coordinate setting
 	RwV3d vPos = m_pActor->GetPosition();
 
 	SWorldHeightStuff sHStuff;
@@ -4623,18 +4623,18 @@ void CNtlFSMCharActHTBState::Enter(void)
 
 	m_pActor->SetPosition(&vPos);
 
-	// simulation step으로 진행해야 하는지 판단한다.
+	// Determine whether to proceed with the simulation step.
 	CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
 	SHTBStuff *pHTBStuff = pBeData->GetHTBStuff();
 	if(pHTBStuff->byCurrStep > 0)
 		EnableSimulation(TRUE);
 
-	// 처음으로 active skill이 나오는 step
+	// Step where active skill appears for the first time
 	m_byFirstActiveStep = FindFirstActiveStep();
 	// next step procedure
 	NextStepProc();
 
-	// RP Stock Image 띄우기.
+	// Launch RP Stock Image.
 	Logic_ShowHTBRPSelectGui(m_pActor, pHTBStuff->hTargetSerialId);
 }
 
@@ -4642,7 +4642,7 @@ void CNtlFSMCharActHTBState::Exit(void)
 {
     CNtlCameraShakeController::ResetShakeFactor();
 
-	// sub weapon이 장착되어 있으면, 장착 해제...
+	// If a sub weapon is equipped, unequip it...
 	CNtlPLEventGenerator::AnimEventSubWeaponDeActive(m_pActor->GetSerialID());
 
 	// HTB camera delete 
@@ -4687,7 +4687,7 @@ void CNtlFSMCharActHTBState::Update(RwReal fElapsed)
 						API_GetSLPacketGenerator()->SendCharHTBForward(vPos, vDir);
 					}
 
-                    // HTB가 끝나고도 타겟이 살아있으면 자동 공격한다.
+                    // If the target is still alive after HTB ends, it automatically attacks.
                     if(m_pActor->GetClassID() == SLCLASS_AVATAR)
                     {
                         CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
@@ -4704,7 +4704,7 @@ void CNtlFSMCharActHTBState::Update(RwReal fElapsed)
 			}
 			else
 			{
-				// next step이 존재한다면. htb 상태를 finish 하지 않는다.
+				// If the next step exists. Do not finish htb status.
 				ResetFinish();
 			}
 		}
@@ -4829,7 +4829,7 @@ void CNtlFSMCharActHTBSandbagState::BehaviorKnockDownProc(void)
 
 void CNtlFSMCharActHTBSandbagState::BehaviorTossUp(void)
 {
-	// 잠시 동안 지형 높이 check와 ground fly flag를 끈다.
+	// Turn off the terrain height check and ground fly flag for a moment.
 	RwUInt32 uiFlags = m_pActor->GetFlags();
 	uiFlags = (uiFlags | SLFLAG_NOT_WORLD_HEIGHT_CHECK) & ~SLFLAG_CAN_GROUND_FLY;
 	m_pActor->SetFlags( uiFlags);
@@ -4843,7 +4843,7 @@ void CNtlFSMCharActHTBSandbagState::BehaviorTossUp(void)
 
 void CNtlFSMCharActHTBSandbagState::BehaviorTossDown(void)
 {
-    // 잠시 동안 지형 높이 check와 ground fly flag를 끈다.
+    // Turn off the terrain height check and ground fly flag for a moment.
     RwUInt32 uiFlags = m_pActor->GetFlags();
     m_pActor->SetFlags( uiFlags & ~SLFLAG_NOT_WORLD_HEIGHT_CHECK);
 
@@ -4865,7 +4865,7 @@ void CNtlFSMCharActHTBSandbagState::BehaviorHomingDown(void)
 
 void CNtlFSMCharActHTBSandbagState::Enter(void)
 {
-	// 좌표 setting
+	// Coordinate setting
 	RwV3d vPos = m_pActor->GetPosition();
 
 	SWorldHeightStuff sHStuff;
@@ -4874,7 +4874,7 @@ void CNtlFSMCharActHTBSandbagState::Enter(void)
 
 	m_pActor->SetPosition(&vPos);
 
-	// RP Stock Image 띄우기.
+	// Launch RP Stock Image.
 	Logic_ShowSandBagRPSelectGUI(m_pActor);
 
 	CNtlFSMCharActStateBase::Enter();
@@ -4885,13 +4885,13 @@ void CNtlFSMCharActHTBSandbagState::Exit(void)
 	RwUInt32 uiFlags = m_pActor->GetFlags();
 	m_pActor->SetFlags( uiFlags & ~SLFLAG_NOT_WORLD_HEIGHT_CHECK);
 
-	// ground fly 객체이면 다시 ground fly flag를 켠다.
+	// If it is a ground fly object, turn on the ground fly flag again.
 	if(Logic_IsGroundFlyActor(m_pActor))
 	{
 		m_pActor->SetFlags(m_pActor->GetFlags() | SLFLAG_CAN_GROUND_FLY);
 	}
 
-    if(m_bSobFaint) // 몹이 이미 죽어 있는 경우
+    if(m_bSobFaint) // If the mob is already dead
     {
         // If you just jump to Faint, you will be able to play the Faint animation again after the knockdown, so it will not be processed with alpha. (Because he was dead anyway)
         m_pActor->GetSobProxy()->AddVisualSystemEffectAlphaBlend(1.0f, 0.0f, 1.0f, 0.0f, TRUE);
@@ -4953,8 +4953,8 @@ RwUInt32 CNtlFSMCharActHTBSandbagState::HandleEvents(RWS::CMsg &pMsg)
 	}
     else if(pMsg.Id == g_EventSobFainting)
     {
-        // HTB 맞는중에 Faint가 들어오면 애니메이션이 멈추고 죽는 문제가 있다.
-        // 그래서 HTB 중에서는 Faint 상태로 전이하지 않고 Exit에서 처리한다.
+        // There is an issue where the animation stops and the player dies if Faint comes in while hitting HTB.
+        // Therefore, in HTB, it is processed at Exit rather than transitioning to Faint state.
         m_bSobFaint = TRUE;        
         NTL_RETURN(NTL_FSM_EVENTRES_BLOCK);
     }
@@ -4986,7 +4986,7 @@ void CNtlFSMCharActItemReadyState::Enter(void)
 
 void CNtlFSMCharActItemReadyState::Update(RwReal fElapsed)
 {
-	// 여기에서는 behavior가 없기 때문에 굳이 state를 업데이트 할 필요가 없다.
+	// Since there is no behavior here, there is no need to update the state.
 	//	CNtlFSMCharActStateBase::Update(fElapsed); 
 }
 
@@ -5054,7 +5054,7 @@ void CNtlFSMCharActItemCastingState::Enter(void)
         
 	if(m_pActor->GetClassID() == SLCLASS_AVATAR)
 	{
-        // casting gui를 위한 event를 보낸다.
+        // Sends an event for casting gui.
 		if(strlen(pUseItemTblData->szCasting_Effect) > 0)
 		{
 			RwV3d vOffset;
@@ -5066,7 +5066,7 @@ void CNtlFSMCharActItemCastingState::Enter(void)
 		CNtlSLEventGenerator::SobCastingDirect( m_pActor, FALSE, TRUE );
 	}
 
-    // 애니메이션
+    // animated movie
     
     m_pActor->GetSobProxy()->SetBaseAnimation(pUseItemTblData->wCasting_Animation_Start, FALSE);
 
@@ -5081,7 +5081,7 @@ void CNtlFSMCharActItemCastingState::Exit(void)
 		m_pPLEntity = NULL;
 	}
 
-	// casting gui를 위한 event를 보낸다.
+	// Sends an event for casting gui.
 	if(m_pActor->GetClassID() == SLCLASS_AVATAR)
 	{
 		CNtlSLEventGenerator::SobCastingDirect( m_pActor, FALSE, FALSE );
@@ -5162,7 +5162,7 @@ void CNtlFSMCharActFaintingState::Enter(void)
 {
 	CNtlFSMCharActStateBase::Enter();
 
-	// 죽을 때 animation sync를 동기시킨다.
+	// Synchronize animation sync on death.
 	GetNtlSobManager()->GetAnimSyncManager()->RemoveAnimSyncTarget(m_pActor->GetSerialID());
 	Logic_SetLp(m_pActor, 0);
 
@@ -5183,7 +5183,7 @@ void CNtlFSMCharActFaintingState::Exit(void)
 
 void CNtlFSMCharActFaintingState::Update(RwReal fElapsed)
 {
-	// 여기에서는 behavior가 없기 때문에 굳이 state를 업데이트 할 필요가 없다. 
+	// Since there is no behavior here, there is no need to update the state. 
 }
 
 
@@ -5224,16 +5224,16 @@ void CNtlFSMCharActDieState::Enter(void)
 {
 	CNtlFSMCharActStateBase::Enter();
 
-	// 죽을 때 animation sync를 동기시킨다.
+	// Synchronize animation sync on death.
 	GetNtlSobManager()->GetAnimSyncManager()->RemoveAnimSyncTarget(m_pActor->GetSerialID());
 	Logic_SetLp(m_pActor, 0);
 
-	// character picking을 할 수 없게 한다.
+	// Disables character picking.
 	CNtlSobCharProxy *pSobProxy = reinterpret_cast<CNtlSobCharProxy*>(m_pActor->GetSobProxy());
 	CNtlPLCharacter *pPLCharacter = reinterpret_cast<CNtlPLCharacter*>( pSobProxy->GetPLMainEntity() );
 	
-	// ground fly actor이면?
-	// ground fly 기능(SLFLAG_CAN_GROUND_FLY)을 빼준다.
+	// What if it is a ground fly actor?
+	// Remove the ground fly function (SLFLAG_CAN_GROUND_FLY).
 	if(Logic_IsGroundFlyActor(m_pActor))
 	{
 		RwUInt32 uiFlags = m_pActor->GetFlags();
@@ -5241,12 +5241,12 @@ void CNtlFSMCharActDieState::Enter(void)
 		m_pActor->SetFlags(uiFlags);
 	} 
 
-	// 부활 가능한 캐릭터라면?
+	// What if the character can be revived?
 	if(m_pActor->GetFlags() & SLFLAG_CAN_REVIVAL)
 	{
 		m_byDieState = DIE_END;
 
-        // 공중에서 점프중에 죽는 경우도 있기 때문에, 위치는 지면으로 이동시킨다. (어색하면 나중에 변경한다)
+        // Since there are cases where one dies while jumping in the air, the location is moved to the ground. (If it’s awkward, change it later)
         RwV3d vPos = m_pActor->GetPosition();
         SWorldHeightStuff sHStuff;
         Logic_GetWorldHeight(m_pActor, &vPos, sHStuff);
@@ -5257,7 +5257,7 @@ void CNtlFSMCharActDieState::Enter(void)
 	{
 		pPLCharacter->SetPicking(FALSE);
 
-        // 파티 공유 타겟에 포함되어 있으면 제거한다.
+        // If it is included in the party sharing target, it is removed.
         RwInt32 nSlot = Logic_isPartyShareTarget(m_pActor->GetSerialID());
         if(nSlot > -1)
         {
@@ -5266,7 +5266,7 @@ void CNtlFSMCharActDieState::Enter(void)
 	}    
 
 
-	// animation 실행.
+	// Run animation.
 	if(m_bDirectDie)
 	{
 		pPLCharacter->SetBlend(BLEND_TWEEN, 0.0f);
@@ -5311,7 +5311,7 @@ void CNtlFSMCharActDieState::UpdateFadeOut(RwReal fElapsed)
 		pSobCharProxy->SetAlpha(1);
 		pSobCharProxy->SetInkThickness(0.0f);
 
-		// 자신의 pet인 경우.
+		// If it is your pet.
 		if( (m_pActor->GetFlags() & SLFLAG_SERVER_SENDER) && (m_pActor->GetClassID() == SLCLASS_PET) )
 		{
 			API_GetSLPacketGenerator()->SendPetDismissReq(m_pActor->GetServerSyncAvatarType());
@@ -5438,7 +5438,7 @@ void CNtlFSMCharActPrivateShopState::Enter(void)
 	CNtlPLCharacter *pPLCharacter = reinterpret_cast<CNtlPLCharacter*>( pSobProxy->GetPLMainEntity() );
 	sITEM_TBLDAT *pItemTblData = Logic_GetEquipedWeaponItemTableData(m_pActor);
 
-	// animation 실행.
+	// Run animation.
 	if(m_bDirectShop)
 	{
 		pPLCharacter->SetBlend(BLEND_TWEEN, 0.0f);
@@ -5691,7 +5691,7 @@ RwUInt32 CNtlFSMCharActDirectionState::HandleEvents(RWS::CMsg &pMsg)
 				CNtlSobProxy *pSobProxy = m_pActor->GetSobProxy();
 				m_pSpawnAlpha	= pSobProxy->AddVisualSystemEffectAlphaBlend(0.0f, 1.0f, 0.2f, 0.2f, FALSE);	
 
-                // GM 이면 이펙트를 표시하지 않는다.
+                // If it is GM, the effect is not displayed.
                 if(m_pActor->GetClassID() == SLCLASS_PLAYER)
                 {
                     CNtlFSMCharActAgent* pAgent = (CNtlFSMCharActAgent*)m_pActor->GetFSMLayer()->GetFSMAgent();
@@ -5714,7 +5714,7 @@ RwUInt32 CNtlFSMCharActDirectionState::HandleEvents(RWS::CMsg &pMsg)
 				CNtlSobProxy *pSobProxy = m_pActor->GetSobProxy();
 				m_pSpawnAlpha	= pSobProxy->AddVisualSystemEffectAlphaBlend(0.0f, 1.0f, 0.2f, 0.2f, FALSE);				
                 
-                // GM 이면 이펙트를 표시하지 않는다.
+                // If it is GM, the effect is not displayed.
                 if(m_pActor->GetClassID() == SLCLASS_PLAYER)
                 {
                     CNtlFSMCharActAgent* pAgent = (CNtlFSMCharActAgent*)m_pActor->GetFSMLayer()->GetFSMAgent();
@@ -5977,7 +5977,7 @@ void CNtlFSMCharActDespawnState::Exit(void)
 
 void CNtlFSMCharActDespawnState::ExitDragonBallNpc(void)
 {
-    if(m_byState == DESPAWN_DRAGONBALL_END)     // 아직 Alpha 연출이 끝나지 않았는데 Exit가 호출된 경우 이펙트를 보여준다.
+    if(m_byState == DESPAWN_DRAGONBALL_END)     // If Exit is called while Alpha production has not yet been completed, the effect is displayed.
     {
         OnEffectDragonDespawn();
     }
@@ -6022,7 +6022,7 @@ void CNtlFSMCharActDespawnState::CreateDespawnEffect( CNtlSobActor* pActor )
     if(!m_pActor)
         return;
 
-    // GM 이면 이펙트를 표시하지 않는다.
+    // If it is GM, the effect is not displayed.
     if(m_pActor->GetClassID() == SLCLASS_PLAYER)
     {
         CNtlFSMCharActAgent* pAgent = (CNtlFSMCharActAgent*)m_pActor->GetFSMLayer()->GetFSMAgent();
@@ -6123,12 +6123,12 @@ void CNtlFSMCharActOnBus::Exit( void )
 
 void CNtlFSMCharActOnBus::Update( RwReal fElapsed ) 
 {
-	// 버스에 탑승 중이면.
+	// If you are on a bus.
 	if(m_byRideState == BUS_RIDE_ON)
 	{
 		if(!m_pTargetActor)    
 		{
-			// 캐릭이 생성될때 버스보다 먼저 생성되기 때문에 여기서 처리해야 한다.
+			// When the character is created, it is created before the bus, so it must be processed here.
 			CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData());
 			SCtrlStuff *pCtrlStuff = pBeData->GetCtrlStuff();
 			m_pTargetActor = (CNtlSobActor*)GetNtlSobManager()->GetSobObject(pCtrlStuff->sRide.hTargetSerialId);                    
@@ -6216,11 +6216,11 @@ RwUInt32 CNtlFSMCharActOnBus::HandleEvents( RWS::CMsg &pMsg )
 
 void CNtlFSMCharActOnBus::SetRideOn(RwBool bRideOn, RwBool bCreateEffect /* = TRUE */)
 {
-    if(bRideOn)     // 탑승 연출
+    if(bRideOn)     // boarding production
     {
         if(bCreateEffect)
         {
-            // GM 이면 이펙트를 표시하지 않는다.
+            // If it is GM, the effect is not displayed.
             if(m_pActor->GetClassID() == SLCLASS_PLAYER)
             {
                 CNtlFSMCharActAgent* pAgent = (CNtlFSMCharActAgent*)m_pActor->GetFSMLayer()->GetFSMAgent();
@@ -6245,7 +6245,7 @@ void CNtlFSMCharActOnBus::SetRideOn(RwBool bRideOn, RwBool bCreateEffect /* = TR
             CNtlSLEventGenerator::CameraBus(m_pTargetActor);
         }
 
-		// 다른 객체에게 알려준다.
+		// Notifies other objects.
 		CNtlSLEventGenerator::SobOnBus(m_pActor->GetSerialID(), bRideOn, m_pTargetActor->GetSerialID());
     }
 	else
@@ -6269,7 +6269,7 @@ void CNtlFSMCharActOnBus::SetRideOn(RwBool bRideOn, RwBool bCreateEffect /* = TR
 	    }
 
 
-		// 다른 객체에게 알려준다.
+		// Notifies other objects.
         if(m_pTargetActor)
         {
 		    CNtlSLEventGenerator::SobOnBus(m_pActor->GetSerialID(), bRideOn, m_pTargetActor->GetSerialID());
@@ -6290,7 +6290,7 @@ void CNtlFSMCharActOnBus::SetRideOn(RwBool bRideOn, RwBool bCreateEffect /* = TR
 
 		m_pActor->SetPosition(&m_vRideOffPos);
 
-		// animation
+		// Animation
 		CNtlSobProxy *pSobProxy = m_pActor->GetSobProxy();
 		pSobProxy->SetBaseAnimation(JUMP_HOVER, TRUE);
     }
@@ -6341,12 +6341,12 @@ void CNtlFSMCharActOnVehicle::Exit( void )
 
 void CNtlFSMCharActOnVehicle::Update( RwReal fElapsed ) 
 {
-	// 버스에 탑승 중이면.
+	// If you are on a bus.
 	if(m_byRideState == VEHICLE_RIDE_ON)
 	{
 		if(!m_pTargetActor)    
 		{
-			// 캐릭이 생성될때 버스보다 먼저 생성되기 때문에 여기서 처리해야 한다.
+			// When the character is created, it is created before the bus, so it must be processed here.
 			CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData());
 			SCtrlStuff *pCtrlStuff = pBeData->GetCtrlStuff();
 			m_pTargetActor = (CNtlSobActor*)GetNtlSobManager()->GetSobObject(pCtrlStuff->sRide.hTargetSerialId);                    
@@ -6409,9 +6409,9 @@ RwUInt32 CNtlFSMCharActOnVehicle::HandleEvents( RWS::CMsg &pMsg )
 
 void CNtlFSMCharActOnVehicle::SetRideOn(RwBool bRideOn, RwV3d vPos /* = ZeroAxis */)
 {
-    if(bRideOn)     // 탑승 연출
+    if(bRideOn)     // boarding production
     {
-        // GM 이면 이펙트를 표시하지 않는다.
+        // If it is GM, the effect is not displayed.
         if(m_pActor->GetClassID() == SLCLASS_PLAYER)
         {
             CNtlFSMCharActAgent* pAgent = (CNtlFSMCharActAgent*)m_pActor->GetFSMLayer()->GetFSMAgent();
@@ -6428,13 +6428,13 @@ void CNtlFSMCharActOnVehicle::SetRideOn(RwBool bRideOn, RwV3d vPos /* = ZeroAxis
             CNtlSLEventGenerator::CameraBus(m_pTargetActor);
         }
 
-		// 다른 객체에게 알려준다.
+		// Notifies other objects.
 		CNtlSLEventGenerator::SobOnBus(m_pActor->GetSerialID(), bRideOn, m_pTargetActor->GetSerialID());
     }
     else
     {
-        // 플레이어가 생성, 버스는 아직 생성되지 않음=> 내가 로딩중 플레이어가 버스에서 내리는 경우.
-        // Actor 체크를 하지 않으면 크래시가 발생한다. 그래서 체크 부분 추가 (by agebreak 09.05.21)
+        // Player created, bus not yet created => If the player gets off the bus while I am loading.
+        // If the Actor is not checked, a crash will occur. So I added the check part (by agebreak 09.05.21)
         if(!m_pTargetActor)
             return;
 
@@ -6449,7 +6449,7 @@ void CNtlFSMCharActOnVehicle::SetRideOn(RwBool bRideOn, RwV3d vPos /* = ZeroAxis
             CNtlSLEventGenerator::CameraControlDelete(CAMERA_CONTROL_BUS);
         }
 
-		// 다른 객체에게 알려준다.
+		// Notifies other objects.
 		CNtlSLEventGenerator::SobOnBus(m_pActor->GetSerialID(), bRideOn, m_pTargetActor->GetSerialID());
 
 		CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData());
@@ -6467,7 +6467,7 @@ void CNtlFSMCharActOnVehicle::SetRideOn(RwBool bRideOn, RwV3d vPos /* = ZeroAxis
 
 		m_pActor->SetPosition(&m_vRideOffPos);
 
-		// animation
+		// Animation
 		CNtlSobProxy *pSobProxy = m_pActor->GetSobProxy();
 		pSobProxy->SetBaseAnimation(JUMP_HOVER, TRUE);
     }
@@ -6519,7 +6519,7 @@ RwUInt32 CNtlFSMCharActTurning::HandleEvents( RWS::CMsg &pMsg )
     }
     else if(pMsg.Id == g_EventSobStanding)
     {       
-		// 버그 수정(형석)
+		// Bug fix (fluorite)
         NTL_RETURN(NTL_FSM_EVENTRES_BLOCK);
     }
 	else if(pMsg.Id == g_EventSobSecondDestMove)
@@ -6534,7 +6534,7 @@ RwUInt32 CNtlFSMCharActTurning::HandleEvents( RWS::CMsg &pMsg )
 
 void CNtlFSMCharActTurning::SetNextDirection(RwV3d& vDir)
 {
-	// 버그 수정(형석)
+	// Bug fix (fluorite)
 
     m_pActor->SetDirection(&vDir);
     
@@ -6560,7 +6560,7 @@ void CNtlFSMCharTransformSequela::Enter()
     {
         SetAnim(0);        
         
-        // 상태 chcek.
+        // Status check.
         RwV3d vPos = m_pActor->GetPosition();
         SWorldHeightStuff sHStuff;
         Logic_GetWorldHeight(m_pActor, &vPos, sHStuff);
@@ -6828,11 +6828,11 @@ void CNtlFSMCharPushing::Enter()
 {
     CNtlFSMCharActStateBase::Enter();
 
-    // 데미지 동작
+    // damage action
     CNtlBehaviorBase *pBehavior = NTL_NEW CNtlBehaviorCharHurt;
     AddBehavior(pBehavior);
 
-    // Push 동작    
+    // Push operation    
     CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
     SHitStuff *pHitStuff = pBeData->GetHitStuff();
     RwV3d vDir = pBeData->GetCtrlStuff()->uExtra.sPushing.vDestPos - m_pActor->GetPosition();
@@ -6893,7 +6893,7 @@ void CNtlFSMCharRideOnOff::Enter()
 	{
 		case ASPECTSTATE_VEHICLE:
 		{
-			// Vehicle 객체를 생성한다
+			// Create a Vehicle object
 
 			sCHARSTATE* pState = pSobPlayer->GetServerFullState();
 
@@ -6940,7 +6940,7 @@ void CNtlFSMCharRideOnOff::Enter()
 				return;
 			}
 
-			// PC 객체와 Vehicle 객체를 연결한다
+			// Connect the PC object and the Vehicle object
 
 			CNtlBeCharData* pVehicleBeData = reinterpret_cast< CNtlBeCharData* >( pSobVehicle->GetBehaviorData() );
 			SCtrlStuff* pVehicleCtrlStuff = pVehicleBeData->GetCtrlStuff();
@@ -6960,7 +6960,7 @@ void CNtlFSMCharRideOnOff::Enter()
 				pSobVehicle->EnableVisible( FALSE );
 			}
 
-			// Vehicle의 상태를 변경한다
+			// Change the state of the vehicle
 
 			CNtlSLEventGenerator::SobStateTransition( pSobVehicle->GetSerialID(), NTL_FSMSID_RIDEONOFF );
 		}
@@ -6968,7 +6968,7 @@ void CNtlFSMCharRideOnOff::Enter()
 
 		case ASPECTSTATE_INVALID:
 		{
-			// Vehicle를 다음 틱에 제거한다
+			// Remove Vehicle at next tick
 
 			SERIAL_HANDLE hVehicleID = m_pActor->GetVehicleID();
 			if ( INVALID_SERIAL_ID == hVehicleID )
@@ -6983,7 +6983,7 @@ void CNtlFSMCharRideOnOff::Enter()
 			vDir.y = 0.f;
 			RwV3dNormalize( &vDir, &vDir );
 
-			// PC의 방향을 보정한다
+			// Correct the orientation of your PC
 			((CNtlPLCharacter*)m_pActor->GetSobProxy()->GetPLMainEntity())->SetDirection(&vDir);
 
 			CNtlSobVehicle* pVehicle = (CNtlSobVehicle*)GetNtlSobManager()->GetSobObject( hVehicleID );

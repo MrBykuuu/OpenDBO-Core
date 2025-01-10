@@ -7,7 +7,7 @@
 
 /**
 * \ingroup NtlSimulation
-* \brief 천하제일 무도회, 전투 상태를 제어.
+* \brief The world's best martial arts club, controlling the battle state.
 * \date 2008-05-09
 * \author peessi
 */
@@ -36,7 +36,7 @@ struct stTBudokaiMember
 	RwUInt16		wWinCount;
 	RwUInt16		wLoseCount;
 	RwUInt16		wDrawCount;
-	RwUInt8			byIndex;		///< 천하제일 무도회의 멤버 Index
+	RwUInt8			byIndex;		///< Member of the World's Best Martial Arts Club Index
 	std::wstring	wstrGuildName;
 	std::wstring	wstrName;		
 	stTBudokaiTeam*	pTeam;
@@ -70,6 +70,7 @@ class CNtlWorldConceptTB : public CNtlWorldConceptController
 {
 public:
 	// ! Constructor
+
 	CNtlWorldConceptTB(void);
 	~CNtlWorldConceptTB(void);
 
@@ -87,7 +88,7 @@ public:
 	virtual RwBool		IsMoveableArea(CNtlSobActor *pActor, const RwV3d *pPos, const RwV3d *pDestPos);
 	virtual RwBool		IsVisiblePCInCinematic(VOID) { return TRUE; }
 	virtual RwBool		CanUseSkill(RwUInt32 hSerialID, RwUInt32& uiResultCode);
-	RwBool				IsRingOut( RwUInt32 hSerialID );							// 죽건살건 링 안에 존재할때만 FALSE, 링 밖에 있을땐 다 TRUE
+	RwBool				IsRingOut( RwUInt32 hSerialID );							// FALSE only when inside the ring, TRUE when outside the ring.
 	RwBool				IsAttackableEnemy( RwUInt32 hSerialId );
 	CNtlSobActor*		GetNearAttackableEnemy( CNtlSobActor* pActor );
 	RwBool				IsPartyBattle(VOID);
@@ -95,10 +96,10 @@ public:
 	stTBudokaiMember*	FindMember(RwUInt32 hSerialID);
 	stTBudokaiTeam*		FindTeam(RwUInt16 wTeamID);	
 	stTBudokaiTeam*		GetMyTeam(VOID);											
-	stTBudokaiTeam*		GetEnemyTeam(VOID);											// 본선,결선용 first를 Return할 뿐.
-	stTBudokaiTeam*		GetBlueTeam(VOID);											// 본선,결선용 first를 Return할 뿐.
-	stTBudokaiTeam*		GetRedTeam(VOID);											// 본선,결선용 first를 Return할 뿐.
-	MAP_TBTEAM*			GetTeams(VOID) { return &m_mapTeams; }						// 예선용
+	stTBudokaiTeam*		GetEnemyTeam(VOID);											// We only return the first one for the finals and finals.
+	stTBudokaiTeam*		GetBlueTeam(VOID);											// We only return the first one for the finals and finals.
+	stTBudokaiTeam*		GetRedTeam(VOID);											// We only return the first one for the finals and finals.
+	MAP_TBTEAM*			GetTeams(VOID) { return &m_mapTeams; }						// For preliminaries
 	MAP_TBMEMBER*		GetMembers(VOID) { return &m_mapMembers; }
 
 	RwUInt16			GetMyTeamType(VOID) { return m_wMyTeamType; }
@@ -130,7 +131,8 @@ protected:
 	RwUInt8				m_byMatchDepth;
 	RwUInt8				m_byMatchIndex;				
 	
-	sRANKBATTLE_TBLDAT*	m_pMatchTblDat;												// 랭크배틀 테이블 월드인포에서 세팅. 
+	sRANKBATTLE_TBLDAT*	m_pMatchTblDat;												// Ranked battle table set in World Info. 
+
 
 public:
 	void	EventHandler_MinorMatchStateUpdate(void* pData);

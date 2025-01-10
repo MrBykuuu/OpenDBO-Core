@@ -4,7 +4,7 @@
 
 /**
  * \ingroup NtlSimulation
- * \brief 이동이 멈춘후에 서버 위치에 맞게 위치 보간을 처리하는 행동 클래스
+ * \brief Behavior class that handles position interpolation according to the server position after movement stops.
  *
  * \date 2009-04-15
  * \author agebreak
@@ -26,7 +26,7 @@ public:
     virtual void SetAnim();
 
 protected:    
-    RwBool  IsNotAdjustMove();                  ///< Adjust Move를 하지 않는 상태인지 체크한다.
+    RwBool  IsNotAdjustMove();                  ///< Check whether Adjust Move is not being performed.
 
 protected:
     SMoveStuff			m_MoveStuff;

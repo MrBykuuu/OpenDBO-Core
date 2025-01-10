@@ -1,22 +1,22 @@
 #include "precomp_dboclient.h"
 #include "RankBoardGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlPLDef.h"
 
-// shared
+// Shared
 #include "NtlResultCode.h"
 #include "NtlTimeQuest.h "
 #include "NtlRankBattle.h"
 #include "NtlSharedType.h"
 
-// simulation
+// Simulation
 #include "InputActionMap.h"
 #include "GUISoundDefine.h"
 #include "NtlSoundManager.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
@@ -29,12 +29,12 @@
 #include "DisplayStringManager.h"
 #include "AlarmManager.h"
 
-// RankBoard
+// Rank board
 #include "RankBattleBoard.h"
 #include "TMQBoard.h"
 
 /**
-* \brief 생성자
+* \brief constructor
 */
 CRankBoardGui::CRankBoardGui( const RwChar* pName ) 
 : CNtlPLGui( pName )
@@ -57,7 +57,7 @@ CRankBoardGui::CRankBoardGui( const RwChar* pName )
 }
 
 /**
-* \brief 소멸자
+* \brief destructor
 */
 CRankBoardGui::~CRankBoardGui() 
 {
@@ -91,7 +91,7 @@ RwBool CRankBoardGui::Create()
 	m_slotClickedBtnTitle = m_pCbbTitle->GetButton()->SigClicked().Connect( this, &CRankBoardGui::OnClickedBtnTitle );
 	m_slotSelectBoard = m_pCbbTitle->SigSelected().Connect( this, &CRankBoardGui::OnSelectBoard );
 
-	// ComboBox
+	// Combo box
 	m_pCbbTitle->ClearAllItems();
 	m_pCbbTitle->AddItem( GetDisplayStringManager()->GetString( "DST_RANKBOARD_BOARD_TITLE_PVP" ) );
 	m_pCbbTitle->SelectItem( 0 );
@@ -99,7 +99,7 @@ RwBool CRankBoardGui::Create()
 	// Show
 	Show( FALSE );
 
-	// 게시판 생성
+	// Create bulletin board
 	m_pBoard[eBOARD_RANKBATTLE] = NTL_NEW CRankBattleBoard;
 	m_pBoard[eBOARD_RANKBATTLE]->Create( eBOARD_RANKBATTLE, this );
 
@@ -172,7 +172,7 @@ VOID CRankBoardGui::HandleEvents( RWS::CMsg &msg )
 	{
 		//m_pBoard[eBOARD_TMQ]->MessageProc( msg );
 	}
-	// 랭크보드를 Disable상태로 변환한다.
+	// Converts the rank board to Disabled state.
 	else if( msg.Id == g_EventRankBoardDisable )
 	{
 		DisableAllButton();
@@ -188,7 +188,7 @@ RwInt32 CRankBoardGui::SwitchDialog( bool bOpen )
 {
 	if( bOpen == TRUE )
 	{
-		// 버튼이 활성화된 상태라면 현재 페이지를 요청한다. (아니라면 요청하지 않는다)
+		// If the button is activated, it requests the current page. (If not, don't ask)
 		if( m_bEnableButton )
 		{
 			m_pBoard[m_eCurrentBoard]->CurrentPage();
@@ -218,7 +218,7 @@ RwInt32 CRankBoardGui::SwitchDialog( bool bOpen )
 }
 
 /**
-* \brief Button이 enable 상태인지 확인
+* \brief Check if Button is enabled
 */
 RwBool CRankBoardGui::IsEnableButton()
 {
@@ -226,11 +226,11 @@ RwBool CRankBoardGui::IsEnableButton()
 }
 
 /**
-* \brief 모든 Board를 Enable 시킨다.
+* \brief Enables all boards.
 */
 VOID CRankBoardGui::EnableAllButton() 
 {
-	// 모든 Board를 Enable TRUE
+	// Enable all boards TRUE
 	//for( int i=0; i<eBOARD_NUMS; ++i)
 	//	m_pBoard[i]->Enable( TRUE );
 
@@ -248,11 +248,11 @@ VOID CRankBoardGui::EnableAllButton()
 }
 
 /**
-* \brief 모든 Board를 Diable 시킨다.
+* \brief Disables all boards.
 */
 VOID CRankBoardGui::DisableAllButton() 
 {
-	// 모든 Board를 Enable TRUE
+	//Enable all boards TRUE
 	/*for( int i=0; i<eBOARD_NUMS; ++i)
 		m_pBoard[i]->Enable( FALSE );*/
 
@@ -261,8 +261,8 @@ VOID CRankBoardGui::DisableAllButton()
 	m_pCbbTitle->Enable( FALSE );
 	m_pCbbTitle->GetButton()->ClickEnable( FALSE );
 	
-	m_fElapsedTime = dRANKBOARD_COMMON_ENABLE_IDLE;		// 3초
-	m_bEnableButton = FALSE;	// 버튼 비활성화 모드
+	m_fElapsedTime = dRANKBOARD_COMMON_ENABLE_IDLE;		// 3 seconds
+	m_bEnableButton = FALSE;	// Button Disable Mode
 
 	m_pStbDataLoading->Show( TRUE );
 
@@ -273,15 +273,15 @@ VOID CRankBoardGui::DisableAllButton()
 
 VOID CRankBoardGui::Update( RwReal fElapsed ) 
 {
-	// 버튼이 비활성화 모드라면
+	// If the button is in disabled mode
 	if( m_bEnableButton == FALSE )
 	{
-		// 경과 시간을 빼주고
+		// Subtract the elapsed time
 		m_fElapsedTime -= fElapsed;
 
 		if( m_fElapsedTime < 0.0f )
 		{
-			// 활성화
+			// activate
 			EnableAllButton();
 		}
 	}
@@ -289,7 +289,7 @@ VOID CRankBoardGui::Update( RwReal fElapsed )
 
 
 /**
-* \brief 닫기 버튼을 클릭
+* \brief Click the Close button
 */
 VOID CRankBoardGui::OnClickedBtnClose( gui::CComponent* pComponent ) 
 {
@@ -300,7 +300,7 @@ VOID CRankBoardGui::OnClickedBtnClose( gui::CComponent* pComponent )
 }
 
 /**
-* \brief 콤보박스를 눌러서 리스트박스를 나오게 했을 때
+* \brief When the combo box is clicked to display the list box
 */
 VOID CRankBoardGui::OnListToggledCbbTitle( RwBool bToggled, gui::CComponent* pComponent ) 
 {
@@ -311,7 +311,7 @@ VOID CRankBoardGui::OnListToggledCbbTitle( RwBool bToggled, gui::CComponent* pCo
 }
 
 /**
-* \brief 타이틀 버튼을 클릭하였을 경우 ( 콤보박스의 Button )
+* \brief When the title button is clicked (Button of combo box)
 */
 VOID CRankBoardGui::OnClickedBtnTitle( gui::CComponent* pComponent ) 
 {
@@ -319,8 +319,8 @@ VOID CRankBoardGui::OnClickedBtnTitle( gui::CComponent* pComponent )
 }
 
 /**
-* \brief 콤보박스를 선택하였을 때 날라오는 콜백
-* \param nIndex	(RwInt32) 아이템의 인덱스
+* \brief Callback fired when a combo box is selected
+* \param nIndex (RwInt32) Index of the item
 */
 VOID CRankBoardGui::OnSelectBoard( RwInt32 nIndex )
 {

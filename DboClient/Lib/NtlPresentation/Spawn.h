@@ -136,8 +136,8 @@ public:
 	// VOID* GetSpawnTblDat() = 0
 };
 
-// 내부에서 싱글턴 사용으로 사용에 난해할 수 있어 일단은 따로 만든다.
-// 나중에 시간에 될 때 전부 합치는 방안을 모색해 보자.
+//It may be difficult to use due to the use of a singleton internally, so create it separately for now.
+//Let's find a way to combine everything later when we have time.
 class CMergeSpawn
 {
 public:

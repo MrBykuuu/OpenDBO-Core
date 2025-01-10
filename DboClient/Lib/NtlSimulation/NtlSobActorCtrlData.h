@@ -143,7 +143,7 @@ public:
     RwUInt32 m_uiMoveFlags;
 	RwV3d m_vDir;
 	RwV3d m_vDest;
-	RwUInt32 m_uiTime;				// fighting pos 와 keyboard move time에 사용.
+	RwUInt32 m_uiTime;				// Used for fighting pos and keyboard move time.
 	RwUInt32 m_uiTargetSerialId;	// follow target serial id;
     
 	// adjust move

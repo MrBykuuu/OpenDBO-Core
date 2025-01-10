@@ -42,7 +42,7 @@ protected:
 	
 protected:
 
-	// 생성자.
+	//constructor.
 	CNtlSobActor();
 	
 public:
@@ -76,7 +76,7 @@ public:
 	virtual RwBool CanMove(void);
 	virtual RwBool CanAttack(void);
 	virtual RwBool CanHurted(void);
-	virtual RwBool CanClick(void);	// 이 액터를 클릭해서 선택할 수 있는지에 대한 유무
+	virtual RwBool CanClick(void);	//Whether or not this actor can be selected by clicking on it
 
 	virtual RwBool IsAirMode(void);
 	virtual RwBool IsFightingMode(void);

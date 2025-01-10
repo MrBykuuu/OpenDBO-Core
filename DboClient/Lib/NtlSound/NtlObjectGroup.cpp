@@ -90,7 +90,7 @@ bool CNtlObjectGroup::ReleaseLowRankChannel()
 	{
 		GetFadeInOut()->StopImmediately(pSound->m_pFMODChannel, dFADE_STOP_FLAG_NOT_NOTIFY);
 
-		// 강제종료되는 Sound의 정보저장
+		// Saving information on Sound that is forced to close
 		StoreReleasedSound(pSound);
 
 		pSound->m_pFMODChannel->stop();
@@ -128,7 +128,7 @@ void CNtlObjectGroup::PostUpdate(float fXPos, float fYPos, float fZPos)
 	FMOD_VECTOR vPos;	
 
 
-	// 일정 반경안의 플레이 되지 않은 오브젝트 뮤직 플레이
+	// Play unplayed object music within a certain radius
 	SOUND_ITER it = m_mapSleepingSound.begin();
 	while( it != m_mapSleepingSound.end() )
 	{
@@ -152,7 +152,7 @@ void CNtlObjectGroup::PostUpdate(float fXPos, float fYPos, float fZPos)
 		++it;
 	}
 
-	// 일정 반경 밖으로 벗어난 오브젝트 뮤직 찾기
+	// Find object music outside a certain radius
 	SOUND_MAP mapDelSound;
 	for( it = m_mapGroup.begin() ; it != m_mapGroup.end() ; ++it )
 	{
@@ -215,7 +215,7 @@ void CNtlObjectGroup::DelSleepingSound(SOUND_HANDLE hHandle)
 
 void CNtlObjectGroup::DelReleasedSound(SOUND_HANDLE hHandle)
 {
-	// 만약 soundHandle이 강제종료되어 다시 플레이되길 기다리는 오브젝트 뮤직이라면 삭제한다.
+	// If soundHandle is object music waiting to be played again after being forcefully terminated, delete it.
 	SOUND_ITER it = m_mapReleasedSound.find(hHandle);
 	if( it != m_mapReleasedSound.end() )
 	{

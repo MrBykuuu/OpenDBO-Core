@@ -185,7 +185,7 @@ void CMsgBoxGui::SetBoxData( RwBool bPopup, RwBool bHasInput, std::list<sMsgBoxC
 	if( pData )
 		memcpy_s( &m_Data, sizeof( sMsgBoxData ), pData, sizeof( sMsgBoxData ) );
 
-	// Btn Show 유무 판별.
+	//Determine whether Btn Show exists.
 	m_pInput->Show( false );
 	m_pbtnOk->Show( false );
 	m_pbtnCancel->Show( false );
@@ -296,7 +296,7 @@ VOID CMsgBoxGui::ProccessDefault()
 			return;
 		}
 
-		// Ok Cancel이 없는 경우.
+		//If there is no Ok Cancel.
 		if(m_pbtnCancel->IsVisible() == false && m_pbtnOk->IsVisible() == false)
 			m_bHide = TRUE;
 		else

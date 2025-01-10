@@ -55,7 +55,7 @@ RwBool CNtlOccluderManager::Update(RwReal fElapsed)
 {
 	NTL_FUNCTION("CNtlOccluderManager::Update");
 
-	// Update Time에서 Occluder visibility를 클리어 해준다.
+	// Clears Occluder visibility at Update Time.
 	m_vecOccluderVisibility.clear();
 
 	/*RwV3d* pCameraPos = RwMatrixGetPos(RwFrameGetMatrix(RwCameraGetFrame(CNtlPLGlobal::m_RwCamera)));
@@ -121,10 +121,10 @@ RwBool CNtlOccluderManager::OccluderQuery(COccluderProxy* pOccluderProxy, RwUInt
 		COccluderProxy::EOccluderProxyState eState = pOccluderProxy->m_pOccluderProxyData[uiTestCnt].eOccluderProxyState;
 		switch (eState)
 		{
-		case COccluderProxy::EOCCLUDER_CHECK: // 오클루더 체크해야 한다.
+		case COccluderProxy::EOCCLUDER_CHECK: // You need to check the occluder.
 			pOccluderProxy->m_pOccluderProxyData[uiTestCnt].pPLOccluder			= NULL;
 			pOccluderProxy->m_pOccluderProxyData[uiTestCnt].eOccluderProxyState	= COccluderProxy::EOCCLUDER_NONE;
-		case COccluderProxy::EOCCLUDER_NONE: // 오클루더 체크 영역
+		case COccluderProxy::EOCCLUDER_NONE: // Occluder check area
 			{
 				if (m_vecOccluderVisibility.empty())
 				{
@@ -143,7 +143,7 @@ RwBool CNtlOccluderManager::OccluderQuery(COccluderProxy* pOccluderProxy, RwUInt
 					{
 						continue;
 					}
-#ifdef dNTL_WORLD_TOOL_MODE // Tool에서만 로드 하기 때문에.. 툴코드로 넣는다.
+#ifdef dNTL_WORLD_TOOL_MODE // Since it is loaded only from Tool, it is put in as tool code.
 					else if (pPLOccluder->IsOccluderFuncFlag(EPLOCCLUDER_FUNC_PVS))
 					{
 						continue;
@@ -183,7 +183,7 @@ RwBool CNtlOccluderManager::OccluderQuery(COccluderProxy* pOccluderProxy, RwUInt
 				} while (++it != itEnd);
 				break;
 			}
-		case COccluderProxy::EOCCLUDER_CULLED: // 컬링된 오브젝트라면 자신을 가린 오클루더에게 다시 묻는다.
+		case COccluderProxy::EOCCLUDER_CULLED: // If it is a culled object, it asks again the occluder that occluded it.
 			{
 				RwBool bCulled = TRUE;
 				if (!pOccluderProxy->m_pOccluderProxyData[uiTestCnt].pPLOccluder->IsRunable())
@@ -222,7 +222,7 @@ RwBool CNtlOccluderManager::OccluderQuery(COccluderProxy* pOccluderProxy, RwUInt
 
 					pOccluderProxy->m_pOccluderProxyData[uiTestCnt].pPLOccluder					= NULL;
 					pOccluderProxy->m_pOccluderProxyData[uiTestCnt].eOccluderProxyState			= COccluderProxy::EOCCLUDER_CHECK;
-					pOccluderProxy->m_pOccluderProxyData[uiTestCnt].fOccluderQueryUpdateTime	+= pOccluderProxy->m_fOccluderQueryTime; // 컬링 되었다가 다시 보인 것은 업데이트 타임을 늘린다.
+					pOccluderProxy->m_pOccluderProxyData[uiTestCnt].fOccluderQueryUpdateTime	+= pOccluderProxy->m_fOccluderQueryTime; // Culling and then showing again increases the update time.
 				}
 				break;
 			}
@@ -266,7 +266,7 @@ RwBool CNtlOccluderManager::OccluderQuery(RwUInt32 eType, RwUInt32 eFlag, void* 
 		{
 			continue;
 		}
-#ifdef dNTL_WORLD_TOOL_MODE // Tool에서만 로드 하기 때문에.. 툴코드로 넣는다.
+#ifdef dNTL_WORLD_TOOL_MODE // Since it is loaded only from Tool, it is put in as tool code.
 		else if (pPLOccluder->IsOccluderFuncFlag(EPLOCCLUDER_FUNC_PVS))
 		{
 			continue;
@@ -328,7 +328,7 @@ void CNtlOccluderManager::UnRegisterOccluder(CNtlPLOccluder_Base* pPLOccluder)
 
 void CNtlOccluderManager::UnRegisterProxyInOccluder(COccluderProxy* pOccluderProxy)
 {
-	// 객체는 언제든지 파괴될 수 있다. 그러므로 파괴될 때 리스트에서 빼주어야 한다.
+	// Objects can be destroyed at any time. Therefore, it must be removed from the list when it is destroyed.
 	for (RwUInt32 i = 0; i < pOccluderProxy->m_uiOccluderTestNum; ++i)
 	{
 		CNtlPLOccluder_Base* pOccluder = pOccluderProxy->m_pOccluderProxyData[i].pPLOccluder;

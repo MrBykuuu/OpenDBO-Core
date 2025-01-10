@@ -1,21 +1,21 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobMonster.h"
 
-//shared
+//Shared
 #include "MobTable.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
 
-// presentation
+// Presentation
 #include "NtlPLSceneManager.h"
 #include "NtlPLCharacter.h"
 #include "NtlPLPlayerName.h"
 #include "NtlPLHelpers.h"
 
-// simulation
+// Simulation
 #include "TableContainer.h"
 #include "NtlSobManager.h"
 #include "NtlSobAttrFactory.h"
@@ -50,7 +50,7 @@ RwBool CNtlSobMonster::Create(void)
 {
 	NTL_FUNCTION("CNtlSobMonster::Create");
 
-	// proxy 설정
+	// proxy settings
 	m_pSobProxy = NTL_NEW CNtlSobCharProxy;
 	m_pSobProxy->Create(0);
 	m_pSobProxy->SetSobObj(this);
@@ -63,7 +63,7 @@ RwBool CNtlSobMonster::Create(void)
 		NTL_RETURN(FALSE);
 	}
 
-	// class name 설정.
+	// Set class name.
 	SetClassName(SLCLASS_NAME_MONSTER);
 			
 	NTL_RETURN(TRUE);
@@ -110,7 +110,7 @@ void CNtlSobMonster::HandleEvents(RWS::CMsg &pMsg)
 		// proxy setting
 		GetSobProxy()->HandleEvents(pMsg);
 
-		// 좌표와 방향 세팅.
+		// Coordinate and direction settings.
 		RwV3d vLoc, vDir;
 		RwV3dAssignMacro(&vLoc, &pSobCreate->vLoc); 
 		RwV3dAssignMacro(&vDir, &pSobCreate->vDir); 
@@ -132,7 +132,7 @@ void CNtlSobMonster::HandleEvents(RWS::CMsg &pMsg)
 		RwReal fScale = pSobMobAttr->GetScale();
 		GetSobProxy()->SetScale(fScale);
 	}
-    else if(pMsg.Id == g_EventBotCaution_Nfy)   // 플레이어를 발각했을때
+    else if(pMsg.Id == g_EventBotCaution_Nfy)   // When a player is discovered
     {
         OnEventBotCautionNfy_Handler(pMsg);        
     }
@@ -148,13 +148,13 @@ void CNtlSobMonster::HandleEvents(RWS::CMsg &pMsg)
 
 void CNtlSobMonster::OnEventBotCautionNfy_Handler( RWS::CMsg& pMsg ) 
 {
-    // 이펙트 생성
+    // Create effects
     RwV3d vOffset;
     vOffset.x = vOffset.z = 0.0f;
     vOffset.y = GetSobProxy()->GetPLEntityHeight() + 1.0f;
     GetSobProxy()->CreatePLChildEffect(NTL_VID_MARK_CAUTION, vOffset);
 
-    // 사운드 플레이
+    // sound play
     RwV3d vPos = GetPosition();        
 	sNtlSoundPlayParameta tSoundParam;
 	tSoundParam.iChannelGroup	= CHANNEL_GROUP_EFFECT_SOUND;
@@ -170,7 +170,7 @@ void CNtlSobMonster::OnEventBotHelpMeNfy_Handler( RWS::CMsg& pMsg )
 {
     SNtlEventBotHelpMe_Nfy* pData = (SNtlEventBotHelpMe_Nfy*)pMsg.pData;
 
-    // 이펙트 생성
+    // Create effects
     RwV3d vOffset;
     vOffset.x = vOffset.z = 0.0f;
     vOffset.y = GetSobProxy()->GetPLEntityHeight() + 1.0f;    

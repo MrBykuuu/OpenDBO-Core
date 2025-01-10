@@ -1,13 +1,13 @@
 #include "precomp_dboclient.h"
 #include "ChannelChangeGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DboGlobal.h"
@@ -71,33 +71,33 @@ RwBool CChannelChangeGui::Create()
 	m_pExitButton = (gui::CButton*)GetComponent("ExitButton");
 	m_slotCloseButton = m_pExitButton->SigClicked().Connect( this, &CChannelChangeGui::OnClickCancleButton );
 
-	// '채널선택'
+	// ‘Channel selection’
 	rect.SetRectWH(145, 40, 83, 14);
 	m_pChannelSelect = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER );
 	m_pChannelSelect->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pChannelSelect->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_CHOICE_CHANNEL"));
 	m_pChannelSelect->Enable(false);
 
-	// 서버 이름
+	// server name
 	rect.SetRectWH(30, 77, 186, 14);
 	m_pServerlName = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER );
 	m_pServerlName->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pServerlName->SetTextColor(RGB(255, 192, 0));
 	m_pServerlName->Enable(false);
 
-	// 스크롤
+	// scroll
 	m_pScrollBar = (gui::CScrollBar*)GetComponent("scbScroll");
 	m_slotServerScrollChanged		= m_pScrollBar->SigValueChanged().Connect( this, &CChannelChangeGui::OnScrollChanged );
 	m_slotServerScrollSliderMoved	= m_pScrollBar->SigSliderMoved().Connect( this, &CChannelChangeGui::OnScrollChanged );
 
-	// 확인 버튼
+	// OK button
 	m_pOkButton = (gui::CButton*)GetComponent("btnOk");
 	m_pOkButton->SetTextFocusColor(INFOCOLOR_LOBBY_FOC);
 	m_pOkButton->SetTextDownColor(INFOCOLOR_LOBBY_DOWN);
 	m_pOkButton->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_OK"));
 	m_slotOKButton = m_pOkButton->SigClicked().Connect( this, &CChannelChangeGui::OnClickOKButton );
 
-	// 취소 버튼
+	// Cancel button
 	m_pCancelButton = (gui::CButton*)GetComponent("btnCancel");
 	m_pCancelButton->SetTextFocusColor(INFOCOLOR_LOBBY_FOC);
 	m_pCancelButton->SetTextDownColor(INFOCOLOR_LOBBY_DOWN);
@@ -114,7 +114,7 @@ RwBool CChannelChangeGui::Create()
 
 	Show(false);
 	
-	// sig	
+	// Signals	
 	m_slotCaptureWheelMove	= GetNtlGuiManager()->GetGuiManager()->SigCaptureWheelMove().Connect( this, &CChannelChangeGui::OnCaptureWheelMove );
 	m_slotMouseDown			= m_pThis->SigMouseDown().Connect( this, &CChannelChangeGui::OnMouseDown );
 	m_slotMouseUp			= m_pThis->SigMouseUp().Connect( this, &CChannelChangeGui::OnMouseUp );	
@@ -198,7 +198,7 @@ VOID CChannelChangeGui::CreateChannels()
 		pChannelGui->pChannelState->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 		SetChannelState(pChannelGui, pDBO_GAME_SERVER_CHANNEL_INFO);
 		pChannelGui->pChannelState->Enable(false);
-
+		
 		// Channel usage gauge background
 		pChannelGui->srfGaugeBack.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "ChannelChange.srf", "srfGaugeBack" ));
 
@@ -254,7 +254,7 @@ VOID CChannelChangeGui::SetServerName()
 
 	m_pServerlName->Format(L"%s  %s %d", pLobby->GetServerName(),
 										 GetDisplayStringManager()->GetString("DST_LOBBY_CHANNEL"),
-										 pLobby->GetSelectedChannelIndex() + 1);
+		                                 pLobby->GetSelectedChannelIndex() + 1);
 }
 
 RwUInt8 CChannelChangeGui::GetSelectedChannelIndex()
@@ -461,7 +461,7 @@ VOID CChannelChangeGui::OnClickOKButton(gui::CComponent* pComponent)
 {
 	if( m_bySelectIndex == INVALID_BYTE )
 	{
-		// 채널을 선택하십시요
+		// Please select a channel
 		GetAlarmManager()->AlarmMessage( "DST_LOBBY_MUST_CHOICE_CHANNEL" );
 		return;
 	}
@@ -471,7 +471,7 @@ VOID CChannelChangeGui::OnClickOKButton(gui::CComponent* pComponent)
 	sMsgBoxData data;
 	data.byIndex = m_bySelectIndex;
 
-	// 채널을 변경하시겠습니까?
+	// Would you like to change the channel?
 	GetAlarmManager()->AlarmMessage( "DST_ASK_CHANGE_CHANNEL", FALSE, &data );
 }
 

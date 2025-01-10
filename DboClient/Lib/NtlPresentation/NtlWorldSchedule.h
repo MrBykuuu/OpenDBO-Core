@@ -5,8 +5,8 @@
 #include "NtlPLEvent.h"
 
 /*
-WorldFileFormat - Schedule
-WorldData가 변경되면 Schedule Loading 부분 또한 규칙에 맞게 변경해주어야 한다.
+WorldFileFormat -Schedule
+When WorldData is changed, the Schedule Loading part must also be changed according to the rules.
 */
 
 class CNtlSCDEField;
@@ -47,7 +47,7 @@ enum ESCHEDULE_FREELIST_TYPE
 class CNtlWorldSchedulerFreeList
 {
 	static RwFreeList*	m_pFreeList[ESCHEDULE_FREELIST_NUM];
-	static RwInt32		m_iRefCount; // AllocFreeList나 DeAllocFreeList가 2번 호출 되는걸 막는다.
+	static RwInt32		m_iRefCount; // Prevents AllocFreeList or DeAllocFreeList from being called twice.
 
 public:
 	static RwBool	AllocFreeList();

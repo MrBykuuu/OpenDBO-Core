@@ -1,30 +1,37 @@
 //***********************************************************************************
 //
-//	File		:	NtlHlsItem.h
+//	File: NtlHlsItem.h
 //
-//	Begin		:	2009-8-14
+//	Begin : 2009-8-14
 //
-//	Copyright	:	ⓒ NTL-Inc Co., Ltd
+//	Copyright : ⓒ NTL-Inc Co., Ltd
 //
-//	Author		:	chung,DooSup ( john@ntl-inc.com )
+//	Author : chung,DooSup ( john@ntl-inc.com )
 //
-//	Desc		: HLS는 호이포이 럭셔리 샵의 약자로 Cash를 갖고 구매하는 상점을 뜻한다.	
+//	Desc: HLS stands for Hoipoi Luxury Shop and refers to a store where purchases are made with cash.	
 //
 //***********************************************************************************
+
 #pragma once
 #include "NtlSharedType.h"
 
 
 //-----------------------------------------------------------------------------------
-// 캐쉬 아이템 타입
+// Cash item type
 //-----------------------------------------------------------------------------------
+
 enum eCASHITEM_TYPE
 {
 	CASHITEM_TYPE_ITEM_CREATE,			// Go to the capsule kit
+
 	CASHITEM_TYPE_PACKAGE,				// Packages
+
 	CASHITEM_TYPE_GMT,					// Reset time increase the number of gaming enthusiasts
+
 	CASHITEM_TYPE_ACCOUNT_USE,			// Account Warehouse duration Items
+
 	CASHITEM_TYPE_EXP_ZENNY,			// Updating the experience acquired zenny period
+
 
 	CASHITEM_TYPE_UNKNOWN,				// 
 	CASHITEM_TYPE_UNKNOWN2,				// 
@@ -39,6 +46,7 @@ struct sCASHITEM_BRIEF
 {
 	QWORD			qwProductId;
 	TBLIDX			HLSitemTblidx; // cash item table index
+
 	BYTE			byStackCount;
 	sDBO_TIME		tRegTime;
 	WCHAR			wchSenderName[NTL_MAX_SIZE_CHAR_NAME + 1];
@@ -47,11 +55,13 @@ struct sCASHITEM_BRIEF
 struct sCASHITEM : public sCASHITEM_BRIEF
 {
 	TBLIDX		itemTblidx; // item table index
+
 };
 
 //-----------------------------------------------------------------------------------
 // Cash items Displacement Function Type Flag
 //----------------------------------------------------------------------------------
+
 enum eHLS_TAB_TYPE
 {
 	HLS_TAB_TYPE_NORMAL,
@@ -69,8 +79,10 @@ enum eHLS_TAB_TYPE
 enum eHLS_SELL_TYPE
 {
 	HLS_SELL_TYPE_NORMAL,
-	HLS_SELL_TYPE_PERIOD,	// 기간
-	HLS_SELL_TYPE_TOTAL_COUNT,	// 개수
+	HLS_SELL_TYPE_PERIOD,	// period
+
+	HLS_SELL_TYPE_TOTAL_COUNT,	// count
+
 	
 	HLS_SELL_TYPE_COUNT,
 
@@ -105,10 +117,13 @@ enum eHLS_QUICK_LINK
 };
 
 const DWORD		NTL_CASHITEM_RELOAD_TIME		= 60000;    // DB synchronization information and time adjustment needed
-const DWORD		NTL_MAX_CASHITEM_COUNT			= 1000;		// Display or loading can not limit the maximum cache item // it Must once limited to loading
+
+const DWORD		NTL_MAX_CASHITEM_COUNT			= 1000;		// Display or loading can not limit the maximum cache item //it Must once limited to loading
+
 const DWORD		DBO_MAX_COUNT_HLSITEM_SUB_ITEM	= 5;
 
-//new
+//New
+
 const DWORD		DBO_MAX_CASHITEM_COUNT_IN_PACKET_SERVER = 50;
 const DWORD		DBO_MAX_CASHITEM_COUNT_IN_PACKET_CLIENT = 30;
 

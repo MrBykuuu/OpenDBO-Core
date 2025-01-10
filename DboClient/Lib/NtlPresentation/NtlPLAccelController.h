@@ -2,37 +2,37 @@
 *
 * File			: NtlPLAccelController
 * Author		: agebreak
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2007. 12. 29	
-* Abstract		: 가속도 계산용 컨트롤러
+* Abstract		: Controller for calculating acceleration
 *****************************************************************************
-* Desc         : UI의 슬라이드등에서 사용되는 가속도 계산용 컨트롤러
+* Desc          : Controller for calculating acceleration used in UI slides, etc.
 *
 *****************************************************************************/
 
 #pragma once
 
-/// 가속도 계산 컨트롤러
+/// acceleration calculation controller
 class CNtlPLAccelController
 {
 public:
     CNtlPLAccelController(void);
     ~CNtlPLAccelController(void);
 	
-    void    SetAccel(RwReal fStartVal, RwReal fEndVal, RwReal fStartVelocity, RwReal fAccel);       /// 값을 설정한다.
-    RwBool  Update(RwReal fElapsed);                           ///< 업데이트
+    void    SetAccel(RwReal fStartVal, RwReal fEndVal, RwReal fStartVelocity, RwReal fAccel);       /// Set the value.
+    RwBool  Update(RwReal fElapsed);                           ///< Update
 	void	Stop();
-    RwReal  GetCurrentValue() {return m_fCurrentVal;}          ///< 현재값
-    RwReal  GetCurrentVelocity() {return m_fCurrVel;}          ///< 현재 속도
-	RwReal	GetCurrentProgress();								///< 0.0(시작) ~ 1.0(끝) 기준의 현재 진행
+    RwReal  GetCurrentValue() {return m_fCurrentVal;}          ///< Current value
+    RwReal  GetCurrentVelocity() {return m_fCurrVel;}          ///< current speed
+	RwReal	GetCurrentProgress();								///< Current progress based on 0.0 (start) to 1.0 (end)
 
 protected:
-    RwReal  m_fStartVal;                      ///< 시작값
-    RwReal  m_fEndVal;                        ///< 끝값
-    RwReal  m_fCurrentVal;                    ///< 현재값
-    RwReal  m_fStartVelocity;                 ///< 시작 속도
-    RwReal  m_fAccel;                         ///< 가속도
-    RwReal  m_fCurrVel;                       ///< 현재 속도
-	RwReal	m_fCurrProgress;				  ///< 현재 진행치 ( 0.0f ~ 1.0f )
-    RwBool  m_bUpdate;                        ///< 업데이트 유무 플래그
+    RwReal  m_fStartVal;                      ///< starting value
+    RwReal  m_fEndVal;                        ///< end value
+    RwReal  m_fCurrentVal;                    ///< Current value
+    RwReal  m_fStartVelocity;                 ///< Startup speed
+    RwReal  m_fAccel;                         ///< acceleration
+    RwReal  m_fCurrVel;                       ///< current speed
+	RwReal	m_fCurrProgress;				  ///< Current progress (0.0f ~ 1.0f)
+    RwBool  m_bUpdate;                        ///< Update presence flag
 };

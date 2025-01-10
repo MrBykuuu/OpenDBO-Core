@@ -2,7 +2,7 @@
 //	File		:	NtlPostEffectCamera.h
 //	Desc		:	
 //	Begin		:	2006. 2.13
-//	Copyright	:	ⓒ 2006 by agebreak CO., Ltd
+//	Copyright	:	? 2006 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -28,8 +28,8 @@ class CNtlPLHeatHaze;
 #define POST_EFFECT_FILTER_NONE		0
 #define POST_EFFECT_FILTER_HDR		1
 #define dMONO_POWER_DEFAULT (2.4f)
-#define RES_MESH_CNT 20                                     ///< View 화면의 Mesh 개수 (아직 사용안함)
-#define RES_VERTEX_CNT (RES_MESH_CNT * RES_MESH_CNT * 6)    ///< View 화면의 Vertex개수 (아직 사용안함)
+#define RES_MESH_CNT 20                                     ///< Number of meshes in the view screen (not yet used)
+#define RES_VERTEX_CNT (RES_MESH_CNT * RES_MESH_CNT * 6)    ///< Number of vertices on the view screen (not used yet)
 
 class CNtlPostEffectCamera : public CNtlCamera
 {
@@ -88,13 +88,13 @@ public:
 
     RwV2d       GetScreenSize();
 
-    // Post Effect System 관련 메소드
+    // Post Effect System related methods
     void        AttachPostEffectSystem(CNtlInstancePostEffectSystem* pPostEffectSystem);
     void        DetachPostEffectSystem(CNtlInstancePostEffectSystem* pPostEffectSystem);
 
-	// LensFlare 관련 메소드
-	void		AttachLensFlare(CNtlPLLensFlare* pLensFlare);				///< LensFlare 객체를 카메라에 추가한다.
-	void		DetachLensFlare(CNtlPLLensFlare* pLensFlare);				///< LensFlare 객체를 카메라에서 제거한다.
+	// LensFlare related methods
+	void		AttachLensFlare(CNtlPLLensFlare* pLensFlare);				///< Add a LensFlare object to the camera.
+	void		DetachLensFlare(CNtlPLLensFlare* pLensFlare);				///< Remove the LensFlare object from the camera.
 
 protected:
     RwBool		IsEnablePostEffect(void);
@@ -144,7 +144,7 @@ protected:
 	RwTexture*			m_pHeatHazeTexture;
 	CNtlPLHeatHaze*		m_pHeatHaze;
 
-    // Motion Blur에 사용될 카메라와 텍스쳐 
+    // Cameras and textures to be used for Motion Blur 
     RwCamera*			m_pMotionBlurCamera;
     RwTexture*			m_pMotionBlurTexture;
 
@@ -176,12 +176,12 @@ protected:
     RwIm2DVertex		m_PowerVertex[4];
     RwIm2DVertex		m_FinalVertex[4];
 
-    RwBool              m_bEnableBlur;                      ///< 모션 블러 Enable Flag
-    RwReal              m_fBlurAlpha;                       ///< 현재의 Blur Alpha값
-    RwReal              m_fBlurFadeVelocity;                ///< Blur가 적용되는 속도
+    RwBool              m_bEnableBlur;                      ///< Motion Blur Enable Flag
+    RwReal              m_fBlurAlpha;                       ///< Current Blur Alpha value
+    RwReal              m_fBlurFadeVelocity;                ///< Speed ??at which blur is applied
 
-    std::list<CNtlInstancePostEffectSystem*> m_listPostEffectSystem; ///< 카메라에 표시될 PostEffect System의 리스트
-	std::list<CNtlPLLensFlare*> m_listLensFlare;			///< 카메라에 표시될 Lens Flare 객체들의 리스트
+    std::list<CNtlInstancePostEffectSystem*> m_listPostEffectSystem; ///< List of PostEffect Systems to be displayed on the camera
+	std::list<CNtlPLLensFlare*> m_listLensFlare;			///< List of Lens Flare objects to be displayed on the camera
 
 	// TEST
 public:

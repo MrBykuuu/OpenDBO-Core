@@ -154,15 +154,15 @@ RwBool CNtlPLObject::CreateThreadSafe(void)
 	NTL_SPROFILE("CNtlPLObject::CreateThreadSafe");
 
 	Helper_SetClumpAllAtomics(GetClump(), &m_vecAtomicList);		
-	Helper_GetBoneList(GetClump(), &m_mapFrame);            // Bone List�� ������ �д�.
+	Helper_GetBoneList(GetClump(), &m_mapFrame);            // Save the Bone List.
 
-	// Anim�� �����Ѵ�
+	// Apply Anim
 	if(m_pProperty->m_strAnimFileName.size() > 0)
 	{
 		SetAnimation(m_pProperty->m_strAnimFileName.c_str());
 	}
 
-	// Ʈ���� �ִϸ��̼��� ����Ȱ� ������ �����Ѵ�.
+	// If there is a trigger animation applied, apply it.
 	m_sScheduleInfo.bLoadComplete = TRUE;
 	if(m_sScheduleInfo.uiAnimKey > 0)
 	{
@@ -170,7 +170,7 @@ RwBool CNtlPLObject::CreateThreadSafe(void)
 	}
 
 
-	// UVAnim�� Clump�� �����Ѵ�.
+	// Apply UVAnim to Clump.
 	if(m_pUVAnim)
 	{
 		m_pUVAnim->SetClump(GetClump());
@@ -193,7 +193,7 @@ RwBool CNtlPLObject::CreateThreadSafe(void)
 		SetFlags(GetFlags() | NTL_PLEFLAG_SHADOW);
 	}
 
-	// clump�� ���� atomic
+	// atomic for clump
 	if( GetClump() != NULL )
 	{
 		// Toon
@@ -206,11 +206,11 @@ RwBool CNtlPLObject::CreateThreadSafe(void)
 			RpAtomicSetRenderCallBack(pAtomic, CNtlPLObject::RenderCallBack);            			
 			RpNtlAtomicSetData(pAtomic, this);
 
-			// ����ó�� UV�ִϸ� ���� ������Ʈ�� FX����������, ȯ����� ������ �־ FX������������ ������ ������
-			// �ؿ� if(!RpMaterialUVAnimExists(pMaterial))���� ���ѹ� üũ�ϹǷ� ���� ������ �ּ�ó���մϴ�.
-			// ȯ���, UV�ִϵ��� ���� ������Ʈ�� ������ ����ٸ� �̺κ��� �ٽ� �ѹ� ������ �Ǿ� �մϴ�.
-			// �ּ��� Ǯ�� �Ǹ� UV�� ȯ����� ���� ������Ʈ�� �����ҽ� ������������ Ʋ���Ƿ� addcolor���� �ʽ��ϴ�.
-			// - ����
+			// Even objects that only use UV animation, such as a waterfall, have an FX pipeline, and even if they have an environment map, they have an FX pipeline.
+			// Since it is checked again in if(!RpMaterialUVAnimExists(pMaterial)) below, comment out the following sentence.
+			// If problems arise with objects with environment maps, UV animations, etc., this should be considered again.
+			// If you uncomment it, when you select an object with UV and environment map, addcolor will not be added because the pipeline is wrong.
+			// -Wootaek
 			//if(pAtomic->pipeline == NULL && m_pUVAnim == NULL)
 			if(pAtomic->pipeline == NULL)
 			{
@@ -254,10 +254,10 @@ RwBool CNtlPLObject::CreateThreadSafe(void)
 		AttachLightObject();
 	}
 
-	// ������ ��ü�� �����ϰ� ����Ʈ�� �߰��Ѵ�.
+	// Create a blend object and add it to the list.
 	m_pFadeBlend = GetAlphaBlendController()->AddAlpha(1.0f);
 
-	// Link Effect�� �����Ѵ�.
+	// Set Link Effect.
 	for(UINT i = 0; i < m_pProperty->m_vLinkEffect.size(); ++i)
 	{
 		SEventLinkEffect* pEventLinkEffect = m_pProperty->m_vLinkEffect[i];        
@@ -265,10 +265,10 @@ RwBool CNtlPLObject::CreateThreadSafe(void)
 	}
 	if(!m_pProperty->m_vLinkEffect.empty())
 	{
-		Update(0.0f);       // ��ũ����Ʈ�� ������ ���ʿ� ������Ʈ�� �ѹ� ����� �Ѵ�. (Effect�� Object���� Updateȣ���� ������ ����)
+		Update(0.0f);       // If there is a link effect, you must first update it once. (Because Effect calls Update faster than Object)
 	}
 
-	// Sound�� ����Ѵ�.
+	// Play sound.
 	if(strlen(m_pProperty->GetSoundProp()->chSoundName) > 0)
 	{
 		sNtlSoundPlayParameta tSoundParam;
@@ -288,7 +288,7 @@ RwBool CNtlPLObject::CreateThreadSafe(void)
 		AddLoopSound(tSoundParam.hHandle);
 	}
 
-	// ó�� �ʿ� ���Խÿ� ��Ÿ���� ������Ʈ���� Fade ȿ���� �������� �ʴ´�.    
+	// Objects that appear when you first enter the map do not apply the Fade effect.    
 	if(m_bLoadMap || (!GetSceneManager()->GetDistanceFilterEnable()))
 	{
 		m_eFadeState = FADE_VISIBLE;	        
@@ -313,14 +313,14 @@ RwBool CNtlPLObject::CreateThreadSafe(void)
 RwBool CNtlPLObject::CreateOccluderProxy()
 {
 #ifdef dNTL_WORLD_CULLING_NEW
-	// +1 == Bounding Sphere Check�� ���ؼ� ����Ѵ�.
+	// +1 == Used for Bounding Sphere Check.
 	return COccluderProxy::CreateOccluderProxy(0.5f, m_vecAtomicList.size() + 1);
 #else
 	if (m_bHaveAnim)
 	{
 		return COccluderProxy::CreateOccluderProxy(0.5f, m_vecAtomicList.size());
 	}
-	else // Animetion �� ������ ���� ���� Entity Bounding Sphere�� ó���Ѵ�.
+	else // If it does not have animation, it is handled as Entity Bounding Sphere.
 	{
 		return COccluderProxy::CreateOccluderProxy(0.5f, 1);
 	}
@@ -902,7 +902,7 @@ void CNtlPLObject::Destroy(void)
 		RemoveWorld();		
 	}
 
-	// ���⼭�� m_pClumpResource�� null pointer�� �˻����� �ʴ´�(����)
+	// Here, the null pointer of m_pClumpResource is not checked (fluorite)
 	CNtlPLResourceManager::GetInstance()->UnLoadScheduling(this, m_pClumpResource );
 	m_pClumpResource = NULL;
 
@@ -999,7 +999,7 @@ RwBool CNtlPLObject::Update( RwReal fElapsed )
 		m_pObjectType->Update(fElapsed);
 	}
 
-	// Ʈ���� �ִϸ��̼��� ���õǸ�, �����ɶ����� Time�� �����Ų��.
+	// Once the trigger animation is set, time advances until it is created.
 	if(!IsSchedulingLoadingComplete())
 	{
 		if(m_sScheduleInfo.uiAnimKey > 0)
@@ -1077,7 +1077,7 @@ RwBool CNtlPLObject::SetThreadSafeProperty(const CNtlPLProperty *pData)
 			SetFlags(GetFlags() & ~NTL_PLEFLAG_NOTUPDATE);
 	}
 
-	//  Ʈ���� �ִϸ��̼��� ������ Update Flag�� �Ҵ�
+	//  If there is a trigger animation, turn on the Update Flag.
 	if(m_pProperty->GetAnimTable()->GetTypeAnimMap()->size() > 0)
 	{
 		m_bHaveAnim = TRUE;
@@ -1148,7 +1148,7 @@ void CNtlPLObject::CallSchedulingResource(CNtlPLResource *pResource)
 	SetTransform();
 	SetAlpha(m_sColor.alpha);
 
-	// �ε��� �Ϸ�Ǿ����� �̺�Ʈ�� ���.
+	// An event is fired indicating that loading is complete.
 	CNtlPLEventGenerator::CreateEventThreadLoading(GetSerialID());
 
 	NTL_RETURNVOID();
@@ -1440,7 +1440,7 @@ void CNtlPLObject::SetMatrix( RwMatrix & matWorld )
 
 	RwMatrixCopy( RwFrameGetMatrix( pFrame ), &matWorld );
 
-	// ��ġ���� �����Ѵ�.
+	// Save the position value.
 	m_vWorldPosition = *RwMatrixGetPos(&matWorld);
 
 	RwFrameUpdateObjects( pFrame );
@@ -1474,14 +1474,14 @@ RwBool CNtlPLObject::SetUVAnim( const RwChar* szUVAnimFileName )
 		m_pUVAnim = NTL_NEW CNtlPLUVAnim();
 	}
 
-	// NOTE: UVAnim�� Clump�� Load �Ǳ����� ȣ��Ǿ�߸� ����ȴ�.
+	// NOTE: UVAnim is applied only when called before Clump is loaded.
 	return m_pUVAnim->Create(szUVAnimFileName);    
 }
 
 /**
-* �ִϸ��̼� ���ҽ��� ��ü�� �����ϰ�, ������Ʈ�� �����Ѵ�.
-* \param szAnimFileName ������ AnimFileName (*.anm)
-* return ���� ����
+*Create animation resources and objects and apply them to objects.
+* \param szAnimFileName AnimFileName to apply (*.anm)
+*Whether return is successful or not
 */
 RwBool CNtlPLObject::SetAnimation( const RwChar* szAnimFileName ) 
 {
@@ -1497,7 +1497,7 @@ RwBool CNtlPLObject::SetAnimation( const RwChar* szAnimFileName )
 	}
 	else
 	{
-		// �ε��� Anim�� �޸𸮿��� �����Ѵ�.
+		// Removes the loaded Anim from memory.
 		CNtlPLResourceManager::GetInstance()->UnLoad(m_pAnimResource);
 		m_pAnimResource = NULL;
 	}
@@ -1552,12 +1552,12 @@ RwBool CNtlPLObject::SetTriggerAnimation(RwUInt32 uiAnimKey, RwReal fStartTime /
 		NTL_RETURN(FALSE);
 	}
 
-	// Instance Anim Table ����
+	// Create Instance Anim Table
 	if(!m_pAnimLayer)
 	{
 		CreateAnim();
 
-		// AnimLayer ��ü�� ����� ���ؼ��� �켱 �ִϸ��̼��� ����Ǿ� �־�� �Ѵ�.
+		// To create an AnimLayer object, animation must first be applied.
 		RpHAnimHierarchySetCurrentAnim(m_pBaseHierarchy, pInstanceAnimData->pResource->GetAnimation());
 		RpHAnimUpdateHierarchyMatrices(m_pBaseHierarchy);
 
@@ -1574,7 +1574,7 @@ RwBool CNtlPLObject::SetTriggerAnimation(RwUInt32 uiAnimKey, RwReal fStartTime /
 	ClearLoopSound();
 	
 
-	// Play time�� 0 ~ 1 ���� ������ �����Ѵ�
+	// Adjust the play time to a value between 0 and 1.
 	RwReal fPlayTime = fStartTime;
 	fPlayTime = (FLT_MAX == fPlayTime ? 0.f : fPlayTime);
 	fPlayTime = fabs(fPlayTime);
@@ -1631,8 +1631,8 @@ void CNtlPLObject::CalcBoundingSphere()
 	m_BSphere.center = m_BSphere.center - GetPosition();
 }
 
-// GetPosition���� ������Ʈ�� ���� ���������� ������.
-// ������ �� ��� �ٽ� �����Ѵ�.
+// Update with GetPosition becomes a difficult problem.
+// If the problem persists, restore it again.
 // RwSphere* CNtlPLObject::GetBoundingSphere()
 // {
 // 	return &m_BSphere;
@@ -1894,7 +1894,7 @@ RwBBox CNtlPLObject::GetTriggerAABBInfo( const RwV3d& vPos, const RwV3d& vRotate
 	if(!pBBox)
 		return bboxOut;
 
-	// ������Ƽ�� ������ �ٿ�� �ڽ��� ������ ����ؼ� �����Ѵ�.
+	// If there is no bounding box set in the property, it is calculated and set.
 	if(RwV3dLength(&(pBBox->sup)) == 0)
 	{
 		m_pProperty->SetBBox(CreateDefaultAABB());        
@@ -1980,7 +1980,7 @@ RwBool CNtlPLObject::UpdateFadeSystem()
 
 	if(m_eFadeState == FADE_NOT_VISIBLE || m_eFadeState == FADE_VISIBLE)
 	{
-		// ī�޶���� �Ÿ��� üũ�Ѵ�. (���̴� üũ���� �ʴ´�)
+		// Check the distance from the camera. (Height is not checked)
 		RwFrame* pFrame = RwCameraGetFrame(CNtlPLGlobal::m_RwCamera);
 		RwV3d vPosCamera = *RwMatrixGetPos(RwFrameGetMatrix(pFrame));
 		RwV3d vPosObject = GetPosition();
@@ -1991,7 +1991,7 @@ RwBool CNtlPLObject::UpdateFadeSystem()
 		// Fade Out         
 		if( m_eFadeState == FADE_VISIBLE && fDistCamera >= GetVisibleCullingDistance())
 		{
-			m_eFadeState = FADE_OUT_OBJECT;            // ��������� object���� ������� (����Ʈ�� �����ִ�)
+			m_eFadeState = FADE_OUT_OBJECT;            // When disappearing, the object disappears first (the effect remains)
 			m_fFadeTime = 0.0f;
 
 			for(RwUInt32 i = 0; i < m_vecAtomicList.size(); i++)
@@ -2002,7 +2002,7 @@ RwBool CNtlPLObject::UpdateFadeSystem()
 
 			AddSceneUpdate();
 
-			// 	 		if(!m_bAnimPlay)            // �ִϸ��̼��� ����ȵ� ������Ʈ�� update�� ȣ����� �ʱ⶧���� Update�� ȣ���Ҽ��ֵ��� �߰��Ѵ�.
+			// 	 		if(!m_bAnimPlay) //Add so that Update can be called because update is not called for objects to which animation has not been applied.
 			//   			{
 			//   				GetSceneManager()->AddUpdate(this);
 			// 	  		}
@@ -2010,8 +2010,8 @@ RwBool CNtlPLObject::UpdateFadeSystem()
 		// Fade In
 		else if(m_eFadeState == FADE_NOT_VISIBLE && fDistCamera <= GetVisibleCullingDistance())
 		{
-			//m_eFadeState = FADE_IN_EFFECT;             // ��Ÿ������ Effect���� ��Ÿ���� (������Ʈ�� ���Ŀ� ��Ÿ����)            
-			/// -- Fade In �ɶ��� ������Ʈ�� ����Ʈ�� ���� ��Ÿ���� (2007.7.31 by agebreak - �μ��� �䱸����)
+			//m_eFadeState = FADE_IN_EFFECT;             //When appearing, Effect appears first (objects appear later)            
+			/// --When Fade In, the object and effect appear together (2007.7.31 by agebreak -Minseok's request)
 			m_eFadeState = FADE_IN_OBJECT;
 			m_fFadeTime = 0.0f;
 
@@ -2073,7 +2073,7 @@ RwBool CNtlPLObject::UpdateFading(RwReal fElapsedTime)
 		}
 		else
 		{
-			// Alpha�� 0%->100%�� ��ȭ��Ų��. 
+			// Change Alpha from 0% to 100%. 
 			m_pFadeBlend->SetWeight(m_fFadeTime / CNtlPLGlobal::m_fDistFiterObjFrequency);            
 		}
 		break;
@@ -2101,7 +2101,7 @@ RwBool CNtlPLObject::UpdateFading(RwReal fElapsedTime)
 		}            
 		else
 		{
-			// Alpha�� 100%->0%�� ��ȯ��ĭ��.           
+			// Converts Alpha from 100% to 0%.           
 			m_pFadeBlend->SetWeight((CNtlPLGlobal::m_fDistFiterObjFrequency - m_fFadeTime) / CNtlPLGlobal::m_fDistFiterObjFrequency);            
 		}   
 		break;
@@ -2164,23 +2164,23 @@ RpAtomic *CNtlPLObject::RenderCallBack(RpAtomic *pAtomic)
 						nMatCount = RENDER_MAX_COLOR_TEMP;
 				}
 
-				// Atomic�� ������ Alpha ������ ����                
+				// Compensation with Alpha value set in Atomic                
 				sColorRatioReal.alpha *= RpNtlAtomicGetAlpha(pAtomic) / 255.0f;
 
-				// Fade�� ���� Weight Alpha������ ����
-#ifdef dNTL_WORLD_TOOL_MODE	// �������� ������ Fade Alpha ����
+				// Correction with Weight Alpha value for fade
+#ifdef dNTL_WORLD_TOOL_MODE	// Fade Alpha is applied unconditionally in the tool.
 				sColorRatioReal.alpha *= pEntity->GetWeightAlpha();
 #else
-				if(!(pEntity->GetFlags() & NTL_PLEFLAG_OBJECT_FORCE_VISIBLE)) // �÷��װ� �����ִٸ�, Fade alpha�� �������� �ʴ´�.
+				if(!(pEntity->GetFlags() & NTL_PLEFLAG_OBJECT_FORCE_VISIBLE)) // �÷��װ� �����ִٸ�, Fade alpha������� �ʴ´�.
 				{
 					sColorRatioReal.alpha *= pEntity->GetWeightAlpha();
 				}
 #endif                
 
-				if(sColorRatioReal.alpha == 0.0f)       // ���İ� 0.0�̸� ���������� �ʴ´�.
+				if(sColorRatioReal.alpha == 0.0f)       // If alpha is 0.0, it is not rendered.
 					NTL_RPROFILE(pAtomic);
 
-				// Alpha Test ATomic�� Alpha ���� ����( Alpha Test�� ��� 208 �̻��� ��� ����� �����)
+				// Alpha Test ATomic's Alpha interpolation correction (in case of Alpha Test, if it is 208 or higher, it passes)
 				if( RpNtlAtomicGetFlag(pAtomic) & NTL_ALPHATEST &&
 					RpNtlAtomicGetFlag(pAtomic) & NTL_RUNTIME_ALPHA)
 				{
@@ -2194,7 +2194,7 @@ RpAtomic *CNtlPLObject::RenderCallBack(RpAtomic *pAtomic)
 					// get through the proper renderpipe
 					if(pObjEntity->GetToonData())
 					{
-						// Toon�� ����Ǿ� �ִ� ��쿡�� Material Render CallBack�� ������. �ȵǾ������� �ȳ��´�. (by agebreak)
+						// Material Render CallBack is followed only when Toon is applied. If it isn't set up, it won't come out. (by agebreak)
 						RpNtlMaterialSetRenderCB(pMaterial, CNtlPLCharacter::fpRenderCB);
 					}
 
@@ -2278,9 +2278,9 @@ RpClump * CNtlPLObject::GetClump( void ) const
 }
 
 /**
-* Fade ȿ�� ���¸� �����Ѵ�.
-* \param bEnable Fade ȿ�� ����
-* return 
+*Apply Fade effect Yumu.
+* \param bEnable Fade effect or not
+*return 
 */
 void CNtlPLObject::SetFadeEnable(RwBool bEnable)
 {
@@ -2311,14 +2311,14 @@ void CNtlPLObject::SetFadeEnable(RwBool bEnable)
 	{
 		SetFlags(uiFlags & (~NTL_PLEFLAG_FADE));
 
-		// Visual Manager�� Update List�� ���ԵǾ� ������ �����Ѵ�
+		// If it is included in the Update List of Visual Manager, remove it.
 		if(m_eFadeState != FADE_VISIBLE && m_eFadeState != FADE_NOT_VISIBLE && !m_bHaveAnim)
 		{
 			RemoveSceneUpdate();
 			//GetSceneManager()->RemoveUpdate(this);
 		}
 
-		// ������Ʈ�� ȭ�鿡 ǥ���Ѵ�.
+		// Displays the object on the screen.
 		m_eFadeState = FADE_VISIBLE;        
 		m_pFadeBlend->SetWeight(1.0f);    
 		SetWeightAlpha(1.0f);
@@ -2378,16 +2378,16 @@ void CNtlPLObject::OnEventAnimEnd( SEventAnimEnd* pEventAnimEnd )
 
 void CNtlPLObject::OnEventVisualSound( SEventSound* pEventSound ) 
 {
-	// Sound�� Play�Ѵ�.    
+	// Play Sound.    
 
 	if(strlen(pEventSound->chSoundName) <= 1)
 		return ;
 
-	// LoopSound�̰� �̹� ������ Play�ǰ� �ִٸ� Play���� �ʴ´�.
+	// If it is LoopSound and is already playing, it does not play.
 	if(pEventSound->bLoop && IsExistLoopSound(pEventSound->chSoundName))
 		return ;
 
-	// ������ ������ ���õǾ� �ִ°�쿡�� �������� �÷��̵ȴ�.
+	// If multiple files are set, they are played randomly.
 	std::string soundFileName;
 	int nMax = 1;
 	if(strlen(pEventSound->chSoundName4) > 0)
@@ -2421,7 +2421,7 @@ void CNtlPLObject::OnEventVisualSound( SEventSound* pEventSound )
 		soundFileName = pEventSound->chSoundName;
 	}
 
-	// ��ġ�� �������� �����Ѵ�
+	// Select a pitch randomly
 	RwReal fSoundPitch = NtlRandomNumber(pEventSound->fSoundPitchMin, pEventSound->fSoundPitchMax);
 
 	sNtlSoundPlayParameta tSoundParam;
@@ -2438,7 +2438,7 @@ void CNtlPLObject::OnEventVisualSound( SEventSound* pEventSound )
 
 	int iRet = GetSoundManager()->Play(&tSoundParam);
 
-	// Loop Sound�� ����Ʈ�� �߰��Ѵ�.
+	// If it is a Loop Sound, add it to the list.
 	if(iRet == SOUNDRESULT_OK && pEventSound->bLoop && tSoundParam.hHandle != INVALID_SOUND_HANDLE)
 	{
 		AddLoopSound(tSoundParam.hHandle);
@@ -2454,7 +2454,7 @@ void CNtlPLObject::OnEventVisualEffect( SEventVisualEffect* pEventVisualEffect )
 	if( strlen(pEventVisualEffect->chBoneName) <= 0 && pEventVisualEffect->bAttachBone)
 		return;
 
-	// ���� LoopEffect ����Ʈ�� ���� �̸�,Bone�� ������ ���� �������� �ʴ´�.
+	// If there is a same name, Bone, in the LoopEffect list, a new one is not created.
 	if (IsExistLoopEffect(pEventVisualEffect->chEffectName, pEventVisualEffect->chBoneName))
 	{
 		return;
@@ -2470,7 +2470,7 @@ void CNtlPLObject::OnEventVisualEffect( SEventVisualEffect* pEventVisualEffect )
 
 	CNtlInstanceEffect *pInstanceEffect = (CNtlInstanceEffect *)pPLEntity;
 
-	// AutoDelete�� �ƴϸ� LoopEffect��� �����ϰ� ����Ʈ�� �߰��Ѵ�   
+	// If it is not AutoDelete, it is considered LoopEffect and added to the list.              
 	if(!pPLEntity->IsAutoDelete())
 	{
 		SLoopEffect* pLoopEffect = NTL_NEW SLoopEffect();
@@ -2500,7 +2500,7 @@ void CNtlPLObject::OnEventVisualEffect( SEventVisualEffect* pEventVisualEffect )
 
 void CNtlPLObject::OnEventAlphaFade( SEventAlpha* pEventAlpha ) 
 {
-	// Atomic Alpha�� ���ؼ��� PL�ܿ��� ó���Ѵ�.
+	// Only Atomic Alpha is handled by the PL stage.
 	if(pEventAlpha->eAlphaEventType != SEventAlpha::E_ALPHA_EVENT_ATOMIC)
 	{
 		CNtlPLEventGenerator::AnimEventAlpha(GetSerialID(), (void*)pEventAlpha);
@@ -2576,7 +2576,7 @@ RwBool CNtlPLObject::IsExistLoopSound( RwChar* szSoundName )
 
 RwReal CNtlPLObject::GetAnimPlayTime( RwUInt32 uiAnimKey ) 
 {
-	// AnimTable�� ���� �����Ǿ� ���� �ʴٸ� �������ش�. 
+	// If AnimTable has not been created yet, it is created.  
 	if(!m_pInstanceAnimTable)
 	{
 		m_pInstanceAnimTable = NTL_NEW CNtlInstanceAnimTable();
@@ -2823,8 +2823,8 @@ RwBool CNtlPLObject::CullingTest(RwCamera* pRwCamera, RwUInt16 uiRenderFrame)
 			}
 			else if (iFrustumCheck + iOccluderCheck >= iNumAtomic) 
 			{
-				// Frustum + Occluder ������ Atomic �������� ���ٸ�
-				// OCCLUDER Flag�� ���� �Ѵ�. �� OccluderCheck ������ �����ؾ� �ϹǷ�, iFrustumCheck >= iNumAtomic�� ����ؾ߸� �����ϴ�.
+				// If the number of Frustum + Occluders is greater than the number of Atomics
+				// Set the OCCLUDER Flag. However, since the number of OccluderChecks must exist, this is only possible if iFrustumCheck >= iNumAtomic is passed.
 				m_uiCullFlags |= NTL_PLEFLAG_CULLED_OCCLUDER;
 			}
 		}
@@ -2892,8 +2892,8 @@ RwBool CNtlPLObject::CullingTest(RwCamera* pRwCamera)
 				}
 				else if (iFrustumCheck + iOccluderCheck >= iNumAtomic) 
 				{
-					// Frustum + Occluder ������ Atomic �������� ���ٸ�
-					// OCCLUDER Flag�� ���� �Ѵ�. �� OccluderCheck ������ �����ؾ� �ϹǷ�, iFrustumCheck >= iNumAtomic�� ����ؾ߸� �����ϴ�.
+					// If the number of Frustum + Occluders is greater than the number of Atomics
+					// Set the OCCLUDER Flag. However, since the number of OccluderChecks must exist, this is only possible if iFrustumCheck >= iNumAtomic is passed.
 					m_uiCullFlags |= NTL_PLEFLAG_CULLED_OCCLUDER;
 				}
 			}
@@ -3064,7 +3064,7 @@ RpWorldSector* NtlRpWorldSectorIntersectionOBB(RpIntersection * pIntersection, R
 	SNtlRpWorldSectorIntersectionOBB*	pNtlRpWorldSectorIntersectionOBB = (SNtlRpWorldSectorIntersectionOBB*)pData;
 	const RwBBox*						pBBoxRpWorldSector = RpWorldSectorGetBBox(pRpWorldSector);
 
-	//���� ���������̱� ���� ���� �Է�.
+	//Direct input to reduce internal calculations.
 	OBBRpWorldSector.fAxisLen[0] = (pBBoxRpWorldSector->sup.x - pBBoxRpWorldSector->inf.x) * 0.5f;
 	OBBRpWorldSector.fAxisLen[1] = (pBBoxRpWorldSector->sup.y - pBBoxRpWorldSector->inf.y) * 0.5f;
 	OBBRpWorldSector.fAxisLen[2] = (pBBoxRpWorldSector->sup.z - pBBoxRpWorldSector->inf.z) * 0.5f;
@@ -3158,9 +3158,9 @@ void CNtlPLObject::SetObjectType(RwUInt32 uiObjectType)
 
 void CNtlPLObject::AddSceneUpdate()
 {
-	// Animation�� ���ų� ObjectType�� MINI_INDOOR_CLOSE �Ǵ� EPL_OBJECT_TYPE_MINI_INDOOR_OPEN�̸�
-	// UpdateList�� �����Ѵ�. Animation�� ������ �ִ� Object�� SetProperty���� Update Flag�� ���� �ϱ� ������
-	// ���⼭�� �����ؼ��� �ȵȴ�.
+	// If there is no Animation or the ObjectType is MINI_INDOOR_CLOSE or EPL_OBJECT_TYPE_MINI_INDOOR_OPEN
+	// Included in UpdateList. Because the Object with Animation removes the Update Flag from SetProperty
+	// You shouldn't get involved here.
 	if (GetObjectType() == EPL_OBJECT_TYPE_MINI_INDOOR_CLOSE || 
 		GetObjectType() == EPL_OBJECT_TYPE_MINI_INDOOR_OPEN ||
 		!m_bHaveAnim)
@@ -3171,9 +3171,9 @@ void CNtlPLObject::AddSceneUpdate()
 
 void CNtlPLObject::RemoveSceneUpdate()
 {
-	// Animation�� ���ų� ObjectType�� MINI_INDOOR_CLOSE �Ǵ� EPL_OBJECT_TYPE_MINI_INDOOR_OPEN�̸�
-	// UpdateList�� �����Ѵ�. Animation�� ������ �ִ� Object�� SetProperty���� Update Flag�� ���� �ϱ� ������
-	// ���⼭�� �����ؼ��� �ȵȴ�.
+	// If there is no Animation or the ObjectType is MINI_INDOOR_CLOSE or EPL_OBJECT_TYPE_MINI_INDOOR_OPEN
+	// Included in UpdateList. Because the Object with Animation removes the Update Flag from SetProperty
+	// You shouldn't get involved here.
 	if (GetObjectType() != EPL_OBJECT_TYPE_MINI_INDOOR_CLOSE && 
 		GetObjectType() != EPL_OBJECT_TYPE_MINI_INDOOR_OPEN &&
 		!m_bHaveAnim)
@@ -3350,7 +3350,7 @@ void CNtlPLObject::LoadSwapFile(RwReal x, RwReal y, RwReal z)
 
 RwBool CNtlPLObject::IsCullingTestAllAtomic() 
 {
-	if(m_uiCurAnimKey != INVALID_DWORD)  // �� Ű���� Ʈ���� �ִϸ��̼��� ����ɶ��� ��ȿ�ϴ�.
+	if(m_uiCurAnimKey != INVALID_DWORD)  // This key value is only valid when a trigger animation is applied.
 	{
 		STypeAnimData *pTypeAnimData = m_pProperty->GetAnimTable()->Get(m_uiCurAnimKey);
 		if(!pTypeAnimData)
@@ -3926,7 +3926,7 @@ BYTE* CNtlPLObject::SkipToFileMem(BYTE* pFileMem, EActiveWorldType eActiveWorldT
 
 	pFileMem = SkipPSMapToFileMem(pFileMem);
 
-	// milepost
+	// Milepost
 	RwBool EnableFlg;
 	CopyMemory(&EnableFlg, pFileMem, sizeof(RwBool));
 	pFileMem += sizeof(RwBool);
@@ -4109,7 +4109,7 @@ BYTE* CNtlPLObject::SkipToFileMemGetEnabledTrigger(BYTE* pFileMem, EActiveWorldT
 
 	pFileMem = SkipPSMapToFileMem(pFileMem);
 
-	// milepost
+	// Milepost
 	RwBool EnableFlg;
 	CopyMemory(&EnableFlg, pFileMem, sizeof(RwBool));
 	pFileMem += sizeof(RwBool);
@@ -4184,7 +4184,7 @@ BYTE* CNtlPLObject::SkipToFileMemGetEnabledPEC(BYTE* pFileMem, EActiveWorldType 
 
 	pFileMem = SkipPSMapToFileMem(pFileMem);
 
-	// milepost
+	// Milepost
 	RwBool EnableFlg;
 	CopyMemory(&EnableFlg, pFileMem, sizeof(RwBool));
 	pFileMem += sizeof(RwBool);
@@ -4277,7 +4277,7 @@ BYTE* CNtlPLObject::SaveIntoFileFromFileMemVisibilityDistance(FILE* pFile, BYTE*
 
 	pFileMem = SavePSMapFromFileMem(pFile, pFileMem);
 
-	// milepost
+	// Milepost
 	RwBool EnableFlg;
 	CopyMemory(&EnableFlg, pFileMem, sizeof(RwBool));
 	fwrite(&EnableFlg, sizeof(RwBool), 1, pFile);
@@ -4341,9 +4341,9 @@ RwBool CNtlPLObject::SavePSMap(FILE* pFile)
 // 			}
 // 			else if (dNTL_WORLD_VERSION_COMPARE(dGET_WORLD_PARAM()->WorldSaveVer, dNTL_WORLD_VERSION))
 // 			{
-// 				// Save �� �� ������ �׸��� ������ �����Ѵ�. �� �� �ε� �� PSMap ������ ���� �� �ִ�.
-// 				// Load �� �ϱ� ���ؼ��� Shadow ������ Object���� ���� Load�Ǿ� ������ ���� Shadow�� Object���� ���߿� �б� ������
-// 				// ������ �̷��� �ذ��Ѵ�. ���߿� ������ �ٲپ� �����ϴ� ����� ������ ����.
+// 				// When saving, the shadow color of the sector is saved. After this, the PSMap color may change when loading.
+// 				// In order to load, the shadow information must be loaded before the object, but currently the shadow is read later than the object.
+// 				// This is how I solve it for now. We will consider changing the order and saving it later.
 // 
 // 				CNtlWorldFieldManager* pMgr = GetSceneManager()->GetWorld()->GetWorldFieldMgr();
 // 
@@ -4356,7 +4356,7 @@ RwBool CNtlPLObject::SavePSMap(FILE* pFile)
 // 				fwrite(&pUserDat->m_rgbaShadow, sizeof(RwRGBA), 1, pFile);
 // 			}
 
-			// size
+			// Size
 			RwInt32 Size = RwRasterGetWidth(pUserDat->m_pTexShadow->raster);
 			fwrite(&Size, sizeof(RwInt32), 1, pFile);
 
@@ -4384,7 +4384,7 @@ RwBool CNtlPLObject::LoadPSMap(FILE* pFile)
 	{
 		CNtlWorldShadow* pLoadNWS = NTL_NEW CNtlWorldShadow;
 
-		// name
+		// Name
 		RwChar ReadBuff[rwTEXTUREBASENAMELENGTH] = {0,};
 
 		if (dNTL_WORLD_VERSION_COMPARE(dGET_WORLD_PARAM()->WorldLoadVer, dNTL_WORLD_VERSION))
@@ -4729,15 +4729,15 @@ RwBool CNtlPLObject::CreateThreadSafe(void)
 	NTL_SPROFILE("CNtlPLObject::CreateThreadSafe");
 
 	Helper_SetClumpAllAtomics(GetClump(), &m_vecAtomicList);		
-	Helper_GetBoneList(GetClump(), &m_mapFrame);            // Bone List�� ������ �д�.
+	Helper_GetBoneList(GetClump(), &m_mapFrame);            // Save the Bone List.
 
-	// Anim�� �����Ѵ�
+	// Apply Anim
 	if(m_pProperty->m_strAnimFileName.size() > 0)
 	{
 		SetAnimation(m_pProperty->m_strAnimFileName.c_str());
 	}
 
-    // Ʈ���� �ִϸ��̼��� ����Ȱ� ������ �����Ѵ�.
+    // If there is a trigger animation applied, apply it.
     m_sScheduleInfo.bLoadComplete = TRUE;
     if(m_sScheduleInfo.uiAnimKey > 0)
     {
@@ -4745,7 +4745,7 @@ RwBool CNtlPLObject::CreateThreadSafe(void)
     }
     
 
-	// UVAnim�� Clump�� �����Ѵ�.
+	// Apply UVAnim to Clump.
 	if(m_pUVAnim)
 	{
 		m_pUVAnim->SetClump(GetClump());
@@ -4768,7 +4768,7 @@ RwBool CNtlPLObject::CreateThreadSafe(void)
 		SetFlags(GetFlags() | NTL_PLEFLAG_SHADOW);
 	}
 
-	// clump�� ���� atomic
+	// atomic for clump
 	if( GetClump() != NULL )
 	{
 		// Toon
@@ -4781,11 +4781,11 @@ RwBool CNtlPLObject::CreateThreadSafe(void)
 			RpAtomicSetRenderCallBack(pAtomic, CNtlPLObject::RenderCallBack);            			
 			RpNtlAtomicSetData(pAtomic, this);
 
-			// ����ó�� UV�ִϸ� ���� ������Ʈ�� FX����������, ȯ����� ������ �־ FX������������ ������ ������
-			// �ؿ� if(!RpMaterialUVAnimExists(pMaterial))���� ���ѹ� üũ�ϹǷ� ���� ������ �ּ�ó���մϴ�.
-			// ȯ���, UV�ִϵ��� ���� ������Ʈ�� ������ ����ٸ� �̺κ��� �ٽ� �ѹ� ������ �Ǿ� �մϴ�.
-			// �ּ��� Ǯ�� �Ǹ� UV�� ȯ����� ���� ������Ʈ�� �����ҽ� ������������ Ʋ���Ƿ� addcolor���� �ʽ��ϴ�.
-			// - ����
+			// Even objects that only use UV animation, such as a waterfall, have an FX pipeline, and even if they have an environment map, they have an FX pipeline.
+			// Since it is checked again in if(!RpMaterialUVAnimExists(pMaterial)) below, comment out the following sentence.
+			// If problems arise with objects with environment maps, UV animations, etc., this should be considered again.
+			// If you uncomment it, when you select an object with UV and environment map, addcolor will not be added because the pipeline is wrong.
+			// -Wootaek
 			//if(pAtomic->pipeline == NULL && m_pUVAnim == NULL)
 			if(pAtomic->pipeline == NULL)
 			{
@@ -4829,10 +4829,10 @@ RwBool CNtlPLObject::CreateThreadSafe(void)
 		AttachLightObject();
 	}
 
-	// ������ ��ü�� �����ϰ� ����Ʈ�� �߰��Ѵ�.
+	// Create a blend object and add it to the list.
 	m_pFadeBlend = GetAlphaBlendController()->AddAlpha(1.0f);
 
-	// Link Effect�� �����Ѵ�.
+	// Set Link Effect.
 	for(UINT i = 0; i < m_pProperty->m_vLinkEffect.size(); ++i)
 	{
 		SEventLinkEffect* pEventLinkEffect = m_pProperty->m_vLinkEffect[i];        
@@ -4840,10 +4840,10 @@ RwBool CNtlPLObject::CreateThreadSafe(void)
 	}
 	if(!m_pProperty->m_vLinkEffect.empty())
 	{
-		Update(0.0f);       // ��ũ����Ʈ�� ������ ���ʿ� ������Ʈ�� �ѹ� ����� �Ѵ�. (Effect�� Object���� Updateȣ���� ������ ����)
+		Update(0.0f);       // If there is a link effect, you must first update it once. (Because Effect calls Update faster than Object)
 	}
 
-	// Sound�� ����Ѵ�.
+	// Play sound.
 	if(strlen(m_pProperty->GetSoundProp()->chSoundName) > 0)
 	{
 		sNtlSoundPlayParameta tSoundParam;
@@ -4863,7 +4863,7 @@ RwBool CNtlPLObject::CreateThreadSafe(void)
 		AddLoopSound(tSoundParam.hHandle);
 	}
 
-	// ó�� �ʿ� ���Խÿ� ��Ÿ���� ������Ʈ���� Fade ȿ���� �������� �ʴ´�.    
+	// Objects that appear when you first enter the map do not apply the Fade effect.    
 	if(m_bLoadMap || (!GetSceneManager()->GetDistanceFilterEnable()))
 	{
 		m_eFadeState = FADE_VISIBLE;	        
@@ -4888,14 +4888,14 @@ RwBool CNtlPLObject::CreateThreadSafe(void)
 RwBool CNtlPLObject::CreateOccluderProxy()
 {
 #ifdef dNTL_WORLD_CULLING_NEW
-	// +1 == Bounding Sphere Check�� ���ؼ� ����Ѵ�.
+	// +1 == Used for Bounding Sphere Check.
 	return COccluderProxy::CreateOccluderProxy(0.5f, m_vecAtomicList.size() + 1);
 #else
 	if (m_bHaveAnim)
 	{
 		return COccluderProxy::CreateOccluderProxy(0.5f, m_vecAtomicList.size());
 	}
-	else // Animetion �� ������ ���� ���� Entity Bounding Sphere�� ó���Ѵ�.
+	else // If it does not have animation, it is handled as Entity Bounding Sphere.
 	{
 		return COccluderProxy::CreateOccluderProxy(0.5f, 1);
 	}
@@ -5381,7 +5381,7 @@ void CNtlPLObject::Destroy(void)
 		RemoveWorld();		
 	}
 
-	// ���⼭�� m_pClumpResource�� null pointer�� �˻����� �ʴ´�(����)
+	// Here, the null pointer of m_pClumpResource is not checked (fluorite)
 	CNtlPLResourceManager::GetInstance()->UnLoadScheduling(this, m_pClumpResource );
 	m_pClumpResource = NULL;
 
@@ -5478,7 +5478,7 @@ RwBool CNtlPLObject::Update( RwReal fElapsed )
 		m_pObjectType->Update(fElapsed);
 	}
 
-	// Ʈ���� �ִϸ��̼��� ���õǸ�, �����ɶ����� Time�� �����Ų��.
+	// Once the trigger animation is set, time advances until it is created.
     if(!IsSchedulingLoadingComplete())
     {
         if(m_sScheduleInfo.uiAnimKey > 0)
@@ -5556,7 +5556,7 @@ RwBool CNtlPLObject::SetThreadSafeProperty(const CNtlPLProperty *pData)
 			SetFlags(GetFlags() & ~NTL_PLEFLAG_NOTUPDATE);
 	}
 
-	//  Ʈ���� �ִϸ��̼��� ������ Update Flag�� �Ҵ�
+	//  If there is a trigger animation, turn on the Update Flag.
 	if(m_pProperty->GetAnimTable()->GetTypeAnimMap()->size() > 0)
 	{
 		m_bHaveAnim = TRUE;
@@ -5607,7 +5607,7 @@ void CNtlPLObject::RemoveWorld(void)
 
 void CNtlPLObject::CallPreSchedulingResource(void)
 {
-	// ������ UVAnim�� ������ �����Ѵ�.(Clump�� Load�Ǳ����� Load �Ǿ�� �Ѵ�)
+	// If there is a set UVAnim, it is applied. (Must be loaded before Clump is loaded)
 	if(m_pProperty->m_strUVAnimFileName.size())
 		SetUVAnim(m_pProperty->m_strUVAnimFileName.c_str());
 }
@@ -5627,7 +5627,7 @@ void CNtlPLObject::CallSchedulingResource(CNtlPLResource *pResource)
 	SetTransform();
 	SetAlpha(m_sColor.alpha);
 
-	// �ε��� �Ϸ�Ǿ����� �̺�Ʈ�� ���.
+	// An event is fired indicating that loading is complete.
 	CNtlPLEventGenerator::CreateEventThreadLoading(GetSerialID());
 
 	NTL_RETURNVOID();
@@ -5833,7 +5833,7 @@ VOID CNtlPLObject::SavePSMap(FILE* _pFile)
 			// light matrices
 			fwrite(&pUserDat->m_matLight, sizeof(RwMatrix), 1, _pFile);
 
-			// size
+			// Size
 			RwInt32 Size = RwRasterGetWidth(pUserDat->m_pTexShadow->raster);
 			fwrite(&Size, sizeof(RwInt32), 1, _pFile);
 
@@ -5852,7 +5852,7 @@ VOID CNtlPLObject::LoadPSMap(FILE* _pFile)
 	{
 		CNtlWorldShadow* pLoadNWS = NTL_NEW CNtlWorldShadow;
 
-		// name
+		// Name
 		RwChar ReadBuff[rwTEXTUREBASENAMELENGTH] = {0,};
 		fread(ReadBuff, sizeof(RwChar) * rwTEXTUREBASENAMELENGTH, 1, _pFile);
 
@@ -5987,7 +5987,7 @@ void CNtlPLObject::SetMatrix( RwMatrix & matWorld )
 
 	RwMatrixCopy( RwFrameGetMatrix( pFrame ), &matWorld );
 
-	// ��ġ���� �����Ѵ�.
+	// Save the position value.
 	m_vWorldPosition = *RwMatrixGetPos(&matWorld);
 
 	RwFrameUpdateObjects( pFrame );
@@ -6021,14 +6021,14 @@ RwBool CNtlPLObject::SetUVAnim( const RwChar* szUVAnimFileName )
 		m_pUVAnim = NTL_NEW CNtlPLUVAnim();
 	}
 
-	// NOTE: UVAnim�� Clump�� Load �Ǳ����� ȣ��Ǿ�߸� ����ȴ�.
+	// NOTE: UVAnim is applied only when called before Clump is loaded.
 	return m_pUVAnim->Create(szUVAnimFileName);    
 }
 
 /**
-* �ִϸ��̼� ���ҽ��� ��ü�� �����ϰ�, ������Ʈ�� �����Ѵ�.
-* \param szAnimFileName ������ AnimFileName (*.anm)
-* return ���� ����
+*Create animation resources and objects and apply them to objects.
+* \param szAnimFileName AnimFileName to apply (*.anm)
+*Whether return is successful or not
 */
 RwBool CNtlPLObject::SetAnimation( const RwChar* szAnimFileName ) 
 {
@@ -6044,7 +6044,7 @@ RwBool CNtlPLObject::SetAnimation( const RwChar* szAnimFileName )
 	}
 	else
 	{
-		// �ε��� Anim�� �޸𸮿��� �����Ѵ�.
+		// Removes the loaded Anim from memory.
 		CNtlPLResourceManager::GetInstance()->UnLoad(m_pAnimResource);
 		m_pAnimResource = NULL;
 	}
@@ -6079,7 +6079,7 @@ RwBool CNtlPLObject::SetTriggerAnimation(RwUInt32 uiAnimKey, RwReal fStartTime /
         return FALSE;
     }
 
-	// AnimTable�� ���� �����Ǿ� ���� �ʴٸ� �������ش�. 
+	// If AnimTable has not been created yet, it is created. 
 	if(!m_pInstanceAnimTable)
 	{
 		m_pInstanceAnimTable = NTL_NEW CNtlInstanceAnimTable();
@@ -6090,12 +6090,12 @@ RwBool CNtlPLObject::SetTriggerAnimation(RwUInt32 uiAnimKey, RwReal fStartTime /
 	if(!pInstanceAnimData)
 		NTL_RETURN(FALSE);
 
-	// Instance Anim Table ����
+	// Create Instance Anim Table
 	if(!m_pAnimLayer)
 	{
 		CreateAnim();
 
-		// AnimLayer ��ü�� ����� ���ؼ��� �켱 �ִϸ��̼��� ����Ǿ� �־�� �Ѵ�.
+		// To create an AnimLayer object, animation must first be applied.
 		RpHAnimHierarchySetCurrentAnim(m_pBaseHierarchy, pInstanceAnimData->pResource->GetAnimation());
 		RpHAnimUpdateHierarchyMatrices(m_pBaseHierarchy);
 
@@ -6113,7 +6113,7 @@ RwBool CNtlPLObject::SetTriggerAnimation(RwUInt32 uiAnimKey, RwReal fStartTime /
 
 	m_uiCurAnimKey = uiAnimKey;
 
-	// Play time�� 0 ~ 1 ���� ������ �����Ѵ�
+	// Adjust the play time to a value between 0 and 1.
 	RwReal fPlayTime = fStartTime;
 	fPlayTime = (FLT_MAX == fPlayTime ? 0.f : fPlayTime);
 	fPlayTime = fabs(fPlayTime);
@@ -6170,8 +6170,8 @@ void CNtlPLObject::CalcBoundingSphere()
 	m_BSphere.center = m_BSphere.center - GetPosition();
 }
 
-// GetPosition���� ������Ʈ�� ���� ���������� ������.
-// ������ �� ��� �ٽ� �����Ѵ�.
+// Update with GetPosition becomes a difficult problem.
+// If the problem persists, restore it again.
 // RwSphere* CNtlPLObject::GetBoundingSphere()
 // {
 // 	return &m_BSphere;
@@ -6433,7 +6433,7 @@ RwBBox CNtlPLObject::GetTriggerAABBInfo( const RwV3d& vPos, const RwV3d& vRotate
 	if(!pBBox)
 		return bboxOut;
 
-	// ������Ƽ�� ������ �ٿ�� �ڽ��� ������ ����ؼ� �����Ѵ�.
+	// If there is no bounding box set in the property, it is calculated and set.
 	if(RwV3dLength(&(pBBox->sup)) == 0)
 	{
 		m_pProperty->SetBBox(CreateDefaultAABB());        
@@ -6519,7 +6519,7 @@ RwBool CNtlPLObject::UpdateFadeSystem()
 
 	if(m_eFadeState == FADE_NOT_VISIBLE || m_eFadeState == FADE_VISIBLE)
 	{
-		// ī�޶���� �Ÿ��� üũ�Ѵ�. (���̴� üũ���� �ʴ´�)
+		// Check the distance from the camera. (Height is not checked)
 		RwFrame* pFrame = RwCameraGetFrame(CNtlPLGlobal::m_RwCamera);
 		RwV3d vPosCamera = *RwMatrixGetPos(RwFrameGetMatrix(pFrame));
 		RwV3d vPosObject = GetPosition();
@@ -6530,7 +6530,7 @@ RwBool CNtlPLObject::UpdateFadeSystem()
 		// Fade Out         
 		if( m_eFadeState == FADE_VISIBLE && fDistCamera >= GetVisibleCullingDistance())
 		{
-			m_eFadeState = FADE_OUT_OBJECT;            // ��������� object���� ������� (����Ʈ�� �����ִ�)
+			m_eFadeState = FADE_OUT_OBJECT;            // When disappearing, the object disappears first (the effect remains)
 			m_fFadeTime = 0.0f;
 
 			for(RwUInt32 i = 0; i < m_vecAtomicList.size(); i++)
@@ -6541,7 +6541,7 @@ RwBool CNtlPLObject::UpdateFadeSystem()
 
 			AddSceneUpdate();
 
-// 	 		if(!m_bAnimPlay)            // �ִϸ��̼��� ����ȵ� ������Ʈ�� update�� ȣ����� �ʱ⶧���� Update�� ȣ���Ҽ��ֵ��� �߰��Ѵ�.
+// 	 		if(!m_bAnimPlay) //Add so that Update can be called because update is not called for objects to which animation has not been applied.
 //   			{
 //   				GetSceneManager()->AddUpdate(this);
 // 	  		}
@@ -6549,8 +6549,8 @@ RwBool CNtlPLObject::UpdateFadeSystem()
 		// Fade In
 		else if(m_eFadeState == FADE_NOT_VISIBLE && fDistCamera <= GetVisibleCullingDistance())
 		{
-			//m_eFadeState = FADE_IN_EFFECT;             // ��Ÿ������ Effect���� ��Ÿ���� (������Ʈ�� ���Ŀ� ��Ÿ����)            
-			/// -- Fade In �ɶ��� ������Ʈ�� ����Ʈ�� ���� ��Ÿ���� (2007.7.31 by agebreak - �μ��� �䱸����)
+			//m_eFadeState = FADE_IN_EFFECT;             //When appearing, Effect appears first (objects appear later)            
+			/// --When Fade In, the object and effect appear together (2007.7.31 by agebreak -Minseok's request)
 			m_eFadeState = FADE_IN_OBJECT;
 			m_fFadeTime = 0.0f;
 
@@ -6612,7 +6612,7 @@ RwBool CNtlPLObject::UpdateFading(RwReal fElapsedTime)
 		}
 		else
 		{
-			// Alpha�� 0%->100%�� ��ȭ��Ų��. 
+			// Change Alpha from 0% to 100%. 
 			m_pFadeBlend->SetWeight(m_fFadeTime / CNtlPLGlobal::m_fDistFiterObjFrequency);            
 		}
 		break;
@@ -6640,7 +6640,7 @@ RwBool CNtlPLObject::UpdateFading(RwReal fElapsedTime)
 		}            
 		else
 		{
-			// Alpha�� 100%->0%�� ��ȯ��ĭ��.           
+			// Converts Alpha from 100% to 0%.           
 			m_pFadeBlend->SetWeight((CNtlPLGlobal::m_fDistFiterObjFrequency - m_fFadeTime) / CNtlPLGlobal::m_fDistFiterObjFrequency);            
 		}   
 		break;
@@ -6703,11 +6703,11 @@ RpAtomic *CNtlPLObject::RenderCallBack(RpAtomic *pAtomic)
 					nMatCount = RENDER_MAX_COLOR_TEMP;
 				}
 
-				// Atomic�� ������ Alpha ������ ����                
+				// Compensation with Alpha value set in Atomic                
 				sColorRatioReal.alpha *= RpNtlAtomicGetAlpha(pAtomic) / 255.0f;
 
-				// Fade�� ���� Weight Alpha������ ����
-#ifdef dNTL_WORLD_TOOL_MODE	// �������� ������ Fade Alpha ����
+				// Correction with Weight Alpha value for fade
+#ifdef dNTL_WORLD_TOOL_MODE	// Fade Alpha is applied unconditionally in the tool.
 				sColorRatioReal.alpha *= pEntity->GetWeightAlpha();
 #else
 				if(!(pEntity->GetFlags() & NTL_PLEFLAG_OBJECT_FORCE_VISIBLE)) // �÷��װ� �����ִٸ�, Fade alpha�� �������� �ʴ´�.
@@ -6716,10 +6716,10 @@ RpAtomic *CNtlPLObject::RenderCallBack(RpAtomic *pAtomic)
 				}
 #endif                
 
-				if(sColorRatioReal.alpha == 0.0f)       // ���İ� 0.0�̸� ���������� �ʴ´�.
+				if(sColorRatioReal.alpha == 0.0f)       // If alpha is 0.0, it is not rendered.
 					NTL_RPROFILE(pAtomic);
 
-				// Alpha Test ATomic�� Alpha ���� ����( Alpha Test�� ��� 208 �̻��� ��� ����� �����)
+				// Alpha Test ATomic's Alpha interpolation correction (in case of Alpha Test, if it is 208 or higher, it passes)
 				if( RpNtlAtomicGetFlag(pAtomic) & NTL_ALPHATEST &&
 					RpNtlAtomicGetFlag(pAtomic) & NTL_RUNTIME_ALPHA)
 				{
@@ -6733,7 +6733,7 @@ RpAtomic *CNtlPLObject::RenderCallBack(RpAtomic *pAtomic)
 					// get through the proper renderpipe
 					if(pObjEntity->GetToonData())
 					{
-						// Toon�� ����Ǿ� �ִ� ��쿡�� Material Render CallBack�� ������. �ȵǾ������� �ȳ��´�. (by agebreak)
+						// Material Render CallBack is followed only when Toon is applied. If it isn't set up, it won't come out. (by agebreak)
 						RpNtlMaterialSetRenderCB(pMaterial, CNtlPLCharacter::fpRenderCB);
 					}
 
@@ -6817,9 +6817,9 @@ RpClump * CNtlPLObject::GetClump( void ) const
 }
 
 /**
-* Fade ȿ�� ���¸� �����Ѵ�.
-* \param bEnable Fade ȿ�� ����
-* return 
+*Apply Fade effect Yumu.
+* \param bEnable Fade effect or not
+*return 
 */
 void CNtlPLObject::SetFadeEnable(RwBool bEnable)
 {
@@ -6850,14 +6850,14 @@ void CNtlPLObject::SetFadeEnable(RwBool bEnable)
 	{
 		SetFlags(uiFlags & (~NTL_PLEFLAG_FADE));
 
-		// Visual Manager�� Update List�� ���ԵǾ� ������ �����Ѵ�
+		// If it is included in the Update List of Visual Manager, remove it.
  		if(m_eFadeState != FADE_VISIBLE && m_eFadeState != FADE_NOT_VISIBLE && !m_bHaveAnim)
  		{
 			RemoveSceneUpdate();
  			//GetSceneManager()->RemoveUpdate(this);
  		}
 
-		// ������Ʈ�� ȭ�鿡 ǥ���Ѵ�.
+		// Displays the object on the screen.
 		m_eFadeState = FADE_VISIBLE;        
 		m_pFadeBlend->SetWeight(1.0f);    
 		SetWeightAlpha(1.0f);
@@ -6917,16 +6917,16 @@ void CNtlPLObject::OnEventAnimEnd( SEventAnimEnd* pEventAnimEnd )
 
 void CNtlPLObject::OnEventVisualSound( SEventSound* pEventSound ) 
 {
-	// Sound�� Play�Ѵ�.    
+	// Play Sound.    
 
 	if(strlen(pEventSound->chSoundName) <= 1)
 		return ;
 
-	// LoopSound�̰� �̹� ������ Play�ǰ� �ִٸ� Play���� �ʴ´�.
+	// If it is LoopSound and is already playing, it does not play.
 	if(pEventSound->bLoop && IsExistLoopSound(pEventSound->chSoundName))
 		return ;
 
-	// ������ ������ ���õǾ� �ִ°�쿡�� �������� �÷��̵ȴ�.
+	// If multiple files are set, they are played randomly.
 	std::string soundFileName;
 	int nMax = 1;
 	if(strlen(pEventSound->chSoundName4) > 0)
@@ -6960,7 +6960,7 @@ void CNtlPLObject::OnEventVisualSound( SEventSound* pEventSound )
 		soundFileName = pEventSound->chSoundName;
 	}
 
-	// ��ġ�� �������� �����Ѵ�
+	// Select a pitch randomly
 	RwReal fSoundPitch = NtlRandomNumber(pEventSound->fSoundPitchMin, pEventSound->fSoundPitchMax);
 
 	sNtlSoundPlayParameta tSoundParam;
@@ -6977,7 +6977,7 @@ void CNtlPLObject::OnEventVisualSound( SEventSound* pEventSound )
 
 	int iRet = GetSoundManager()->Play(&tSoundParam);
 
-	// Loop Sound�� ����Ʈ�� �߰��Ѵ�.
+	// If it is a Loop Sound, add it to the list.
 	if(iRet == SOUNDRESULT_OK && pEventSound->bLoop && tSoundParam.hHandle != INVALID_SOUND_HANDLE)
 	{
 		AddLoopSound(tSoundParam.hHandle);
@@ -6986,7 +6986,7 @@ void CNtlPLObject::OnEventVisualSound( SEventSound* pEventSound )
 
 void CNtlPLObject::OnEventVisualEffect( SEventVisualEffect* pEventVisualEffect ) 
 {
-	//Effect Name�� ���� ���� ������ Return�� �Ѵ�.
+	//If there is no Effect Name, Return is unconditional.
 	if( strlen(pEventVisualEffect->chEffectName) <= 0)
 		return;
 
@@ -6994,7 +6994,7 @@ void CNtlPLObject::OnEventVisualEffect( SEventVisualEffect* pEventVisualEffect )
 		pEventVisualEffect->bAttachBone)
 		return;
 
-	// ���� LoopEffect ����Ʈ�� ���� �̸�,Bone�� ������ ���� �������� �ʴ´�.
+	// If there is a same name, Bone, in the LoopEffect list, a new one is not created.
 	if(IsExistLoopEffect(pEventVisualEffect->chEffectName, pEventVisualEffect->chBoneName))
 		return;
 
@@ -7003,14 +7003,14 @@ void CNtlPLObject::OnEventVisualEffect( SEventVisualEffect* pEventVisualEffect )
 	if(pPLEntity == NULL)
 		return;
 
-	//Effect�� Object�� Serial ID�� �ִ´�.(Client���� ����� �ϱ� ���ؼ�)
+	//Enter the Serial ID of the Object in the Effect. (To use in the Client)
 	pPLEntity->SetSerialID(GetSerialID());
 
 	pPLEntity->SetVisible(IsVisible(0));
 
 	CNtlInstanceEffect *pInstanceEffect = (CNtlInstanceEffect *)pPLEntity;
 
-	// AutoDelete�� �ƴϸ� LoopEffect��� �����ϰ� ����Ʈ�� �߰��Ѵ�              
+	// If it is not AutoDelete, it is considered LoopEffect and added to the list.              
 	if(!pPLEntity->IsAutoDelete())
 	{
 		SLoopEffect* pLoopEffect = NTL_NEW SLoopEffect();
@@ -7040,7 +7040,7 @@ void CNtlPLObject::OnEventVisualEffect( SEventVisualEffect* pEventVisualEffect )
 
 void CNtlPLObject::OnEventAlphaFade( SEventAlpha* pEventAlpha ) 
 {
-	// Atomic Alpha�� ���ؼ��� PL�ܿ��� ó���Ѵ�.
+	// Only Atomic Alpha is handled by the PL stage.
 	if(pEventAlpha->eAlphaEventType != SEventAlpha::E_ALPHA_EVENT_ATOMIC)
 	{
 		CNtlPLEventGenerator::AnimEventAlpha(GetSerialID(), (void*)pEventAlpha);
@@ -7116,7 +7116,7 @@ RwBool CNtlPLObject::IsExistLoopSound( RwChar* szSoundName )
 
 RwReal CNtlPLObject::GetAnimPlayTime( RwUInt32 uiAnimKey ) 
 {
-	// AnimTable�� ���� �����Ǿ� ���� �ʴٸ� �������ش�. 
+	// If AnimTable has not been created yet, it is created. 
 	if(!m_pInstanceAnimTable)
 	{
 		m_pInstanceAnimTable = NTL_NEW CNtlInstanceAnimTable();
@@ -7263,7 +7263,7 @@ void CNtlPLObject::CheckToonData()
 	if(!pToonGeo || !pAtomic)
 		return;
 
-	// Toon ���� (�׽�Ʈ)
+	// Toon application (test)
 	m_pToonData = NTL_NEW SToonData();
 	m_pToonData->pTexture = CNtlPLResourceManager::GetInstance()->LoadTexture("smooth.png", "texture/toon/");
 	DBO_ASSERT(m_pToonData->pTexture, "Texture load failed.");
@@ -7305,7 +7305,7 @@ RwBool CNtlPLObject::CullingTest(RwCamera* pRwCamera, RwUInt16 uiRenderFrame)
 
 				if (IsCullingTestAllAtomic())
 				{
-					// [m_vecAtomicList.size()]�� Occluder Proxy�� Bounding Sphere��.
+					// [m_vecAtomicList.size()] times the Occluder Proxy is a Bounding Sphere.
 					for (RwInt32 i = 0; i < iNumAtomic; ++i)
 					{
 #ifdef _DEBUG
@@ -7363,8 +7363,8 @@ RwBool CNtlPLObject::CullingTest(RwCamera* pRwCamera, RwUInt16 uiRenderFrame)
 			}
 			else if (iFrustumCheck + iOccluderCheck >= iNumAtomic) 
 			{
-				// Frustum + Occluder ������ Atomic �������� ���ٸ�
-				// OCCLUDER Flag�� ���� �Ѵ�. �� OccluderCheck ������ �����ؾ� �ϹǷ�, iFrustumCheck >= iNumAtomic�� ����ؾ߸� �����ϴ�.
+				// If the number of Frustum + Occluders is greater than the number of Atomics
+				// Set the OCCLUDER Flag. However, since the number of OccluderChecks must exist, this is only possible if iFrustumCheck >= iNumAtomic is passed.
 				m_uiCullFlags |= NTL_PLEFLAG_CULLED_OCCLUDER;
 			}
 		}
@@ -7432,8 +7432,8 @@ RwBool CNtlPLObject::CullingTest(RwCamera* pRwCamera)
 				}
 				else if (iFrustumCheck + iOccluderCheck >= iNumAtomic) 
 				{
-					// Frustum + Occluder ������ Atomic �������� ���ٸ�
-					// OCCLUDER Flag�� ���� �Ѵ�. �� OccluderCheck ������ �����ؾ� �ϹǷ�, iFrustumCheck >= iNumAtomic�� ����ؾ߸� �����ϴ�.
+					// If the number of Frustum + Occluders is greater than the number of Atomics
+					// Set the OCCLUDER Flag. However, since the number of OccluderChecks must exist, this is only possible if iFrustumCheck >= iNumAtomic is passed.
 					m_uiCullFlags |= NTL_PLEFLAG_CULLED_OCCLUDER;
 				}
 			}
@@ -7604,7 +7604,7 @@ RpWorldSector* NtlRpWorldSectorIntersectionOBB(RpIntersection * pIntersection, R
 	SNtlRpWorldSectorIntersectionOBB*	pNtlRpWorldSectorIntersectionOBB = (SNtlRpWorldSectorIntersectionOBB*)pData;
 	const RwBBox*						pBBoxRpWorldSector = RpWorldSectorGetBBox(pRpWorldSector);
 	
-	//���� ���������̱� ���� ���� �Է�.
+	//Direct input to reduce internal calculations.
 	OBBRpWorldSector.fAxisLen[0] = (pBBoxRpWorldSector->sup.x - pBBoxRpWorldSector->inf.x) * 0.5f;
 	OBBRpWorldSector.fAxisLen[1] = (pBBoxRpWorldSector->sup.y - pBBoxRpWorldSector->inf.y) * 0.5f;
 	OBBRpWorldSector.fAxisLen[2] = (pBBoxRpWorldSector->sup.z - pBBoxRpWorldSector->inf.z) * 0.5f;
@@ -7698,9 +7698,9 @@ void CNtlPLObject::SetObjectType(RwUInt32 uiObjectType)
 
 void CNtlPLObject::AddSceneUpdate()
 {
-	// Animation�� ���ų� ObjectType�� MINI_INDOOR_CLOSE �Ǵ� EPL_OBJECT_TYPE_MINI_INDOOR_OPEN�̸�
-	// UpdateList�� �����Ѵ�. Animation�� ������ �ִ� Object�� SetProperty���� Update Flag�� ���� �ϱ� ������
-	// ���⼭�� �����ؼ��� �ȵȴ�.
+	// If there is no Animation or the ObjectType is MINI_INDOOR_CLOSE or EPL_OBJECT_TYPE_MINI_INDOOR_OPEN
+	// Included in UpdateList. Because the Object with Animation removes the Update Flag from SetProperty
+	// You shouldn't get involved here.
 	if (GetObjectType() == EPL_OBJECT_TYPE_MINI_INDOOR_CLOSE || 
 		GetObjectType() == EPL_OBJECT_TYPE_MINI_INDOOR_OPEN ||
 		!m_bHaveAnim)
@@ -7711,9 +7711,9 @@ void CNtlPLObject::AddSceneUpdate()
 
 void CNtlPLObject::RemoveSceneUpdate()
 {
-	// Animation�� ���ų� ObjectType�� MINI_INDOOR_CLOSE �Ǵ� EPL_OBJECT_TYPE_MINI_INDOOR_OPEN�̸�
-	// UpdateList�� �����Ѵ�. Animation�� ������ �ִ� Object�� SetProperty���� Update Flag�� ���� �ϱ� ������
-	// ���⼭�� �����ؼ��� �ȵȴ�.
+	// If there is no Animation or the ObjectType is MINI_INDOOR_CLOSE or EPL_OBJECT_TYPE_MINI_INDOOR_OPEN
+	// Included in UpdateList. Because the Object with Animation removes the Update Flag from SetProperty
+	// You shouldn't get involved here.
 	if (GetObjectType() != EPL_OBJECT_TYPE_MINI_INDOOR_CLOSE && 
 		GetObjectType() != EPL_OBJECT_TYPE_MINI_INDOOR_OPEN &&
 		!m_bHaveAnim)
@@ -7890,7 +7890,7 @@ void CNtlPLObject::LoadSwapFile(RwReal x, RwReal y, RwReal z)
 
 RwBool CNtlPLObject::IsCullingTestAllAtomic() 
 {
-    if(m_uiCurAnimKey != INVALID_DWORD)  // �� Ű���� Ʈ���� �ִϸ��̼��� ����ɶ��� ��ȿ�ϴ�.
+    if(m_uiCurAnimKey != INVALID_DWORD)  // This key value is only valid when a trigger animation is applied.
     {
         STypeAnimData *pTypeAnimData = m_pProperty->GetAnimTable()->Get(m_uiCurAnimKey);
         if(!pTypeAnimData)

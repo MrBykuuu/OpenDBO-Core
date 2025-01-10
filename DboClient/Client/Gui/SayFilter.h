@@ -1,16 +1,16 @@
 /*****************************************************************************
 *
-* File			: SayFilter.h
-* Author		: JinSung, Kim ( Modified Haesung, Cho )
-* Copyright		: (주)NTL
-* Date			: 2007. 9. 4
-* Abstract		: Say message filtering manager
+*File			: SayFilter.h
+*Author		    : JinSung, Kim ( Modified Haesung, Cho )
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 9. 4
+*Abstract		: Say message filtering manager
 *****************************************************************************
-* Desc			:
+*Desc			:
 *
-* DBO 문자열 필터링
-* 현재는 테이블이 로드되지 않았어도 게임 플레이가 가능 (필터되지 않음)
-* (정책적으로 상의해야 할 사항들)
+*DBO string filtering
+*Game play is currently possible even if the table is not loaded (unfiltered)
+*(Policy matters to be discussed)
 *****************************************************************************/
 
 #ifndef _SAYFILTER_H_
@@ -18,7 +18,7 @@
 
 #pragma once
 
-// include
+// Include
 #include "stdafx.h"
 #include <string>
 #include <map>
@@ -29,7 +29,7 @@
 
 /**
 * \ingroup Client
-* 필터될 단어들을 한 글자씩 분리하여 맵의 키 값에 삽입
+*Separate words to be filtered one by one and insert them into the key value of the map
 */
 template <typename T>
 class CFilterWord
@@ -41,7 +41,7 @@ public:
 	typedef	std::basic_string<T, TCHAR_TRAITS, TALLOCATOR>	TSTRING;
 
 public:
-	// 대체할 텍스트를 저장
+	// Save replacement text
 	struct SResult
 	{
 		TSTRING strText;
@@ -213,7 +213,7 @@ int CFilterWord<T>::GetNumFilter()
 
 /**
 * \ingroup Client
-* 메시지 필터링의 클래스
+*Classes of message filtering
 */
 class CFilterManager
 {
@@ -221,28 +221,28 @@ public:
 	typedef CFilterWord<wchar_t> CWFILTERWORD;
 
 public:
-	// 초기화 & 해제
+	// Initialize & Release
 	void InitOnce();
 	void Destroy();
 
-	// 테이블 로드
+	// table load
 	void Create( void );
 
-	void AddFilter( int nIndex, wchar_t* pText, int nLink );		///< 필터링 단어를 등록
+	void AddFilter( int nIndex, wchar_t* pText, int nLink );		///< Register filtering words
 
-	std::wstring Filtering( std::wstring& pText );					///< 필터링 (wstring)
-	std::string Filtering( std::string& pText );					///< 필터링 (string)
-	std::wstring Filtering( const wchar_t* pText );						///< 필터링 (wchar_t*)
+	std::wstring Filtering( std::wstring& pText );					///< filtering (wstring)
+	std::string Filtering( std::string& pText );					///< filtering (string)
+	std::wstring Filtering( const wchar_t* pText );						///< filtering (wchar_t*)
 
 	/*std::wstring FilterName( */
 
 	RwBool IsAnyInvalidText( const WCHAR* pText );
 
-	RwBool IsSlang( std::wstring& pText );							///< 욕설인지 체크(wstring), 욕설이라면 TRUE 리턴
-	RwBool IsSlang( std::string& pText );							///< 욕설인지 체크(string)
+	RwBool IsSlang( std::wstring& pText );							///< Check if it is an abusive language (wstring), if it is an abusive language, return TRUE
+	RwBool IsSlang( std::string& pText );							///< Check for abusive language (string)
 	RwBool IsSlang( const wchar_t* pText );
 
-	// 싱글톤의 인스턴스
+	// instance of a singleton
 	static CFilterManager* GetInstance(void)
 	{
 		static CFilterManager instance;
@@ -255,7 +255,7 @@ protected:
 	std::wstring			m_defaultReplace;
 	RwBool					m_bIsEmpty;
 
-	// 생성자 & 소멸자
+	// Constructor & Destructor
 	CFilterManager();
 	~CFilterManager();
 };

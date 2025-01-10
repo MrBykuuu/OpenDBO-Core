@@ -1,10 +1,10 @@
 #include "precomp_dboclient.h"
 #include "CharacterStage.h"
 
-// network
+// Network
 #include "NtlClientNet.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlEventQueue.h"
 #include "NtlNetSender.h"
@@ -20,7 +20,7 @@
 #include "NtlSLEventFunc.h"
 #include "NtlSobProxy.h"
 
-// dbo
+// Dbo
 #include "DboGlobal.h"
 #include "DboEvent.h"
 #include "DboPacketGenerator.h"
@@ -29,7 +29,7 @@
 #include "CharStageState.h"
 #include "NtlGameTableContainer.h"
 
-// shared
+// Shared
 #include "PCTable.h"
 #include "NewbieTable.h"
 #include "ItemTable.h"
@@ -325,7 +325,7 @@ void CCharacterStage::CreateDummyAvatar( BYTE byRace, BYTE byClass, BYTE byGende
 	pAvatarInfo->sCharPf.tblidx = pTblData->tblidx;	
 	
 	//Character Name
-	//wcscpy_s(pAvatarInfo->sCharPf.awchName, NTL_MAX_SIZE_CHAR_NAME_UNICODE, L"동동동");
+	//wcscpy_s(pAvatarInfo->sCharPf.awchName, NTL_MAX_SIZE_CHAR_NAME_UNICODE, L"Dongdongdong");
 
 	pAvatarInfo->sCharPf.sPcShape.byFace = byFace;
 	pAvatarInfo->sCharPf.sPcShape.byHair = byHair;
@@ -422,7 +422,7 @@ void CCharacterStage::CreateDummyAvatar( BYTE byRace, BYTE byClass, BYTE byGende
 		pAvatarInfo->sItemPf[pAvatarInfo->byItemCount].byPos				= pNewbieTblData->abyPos[i];
 		pAvatarInfo->sItemPf[pAvatarInfo->byItemCount].byStackcount			= 1;
 		pAvatarInfo->sItemPf[pAvatarInfo->byItemCount].byRank				= ITEM_RANK_NORMAL;
-		pAvatarInfo->sItemPf[pAvatarInfo->byItemCount].byCurDur;			// 여기는 채워 넣으시면 됩니다.
+		pAvatarInfo->sItemPf[pAvatarInfo->byItemCount].byCurDur;			// Just fill in the information here.
 		pAvatarInfo->sItemPf[pAvatarInfo->byItemCount].Option				= INVALID_TBLIDX;
 		pAvatarInfo->sItemPf[pAvatarInfo->byItemCount].bNeedToIdentify		= FALSE;
 		pAvatarInfo->sItemPf[pAvatarInfo->byItemCount].byGrade				= 0;	
@@ -565,7 +565,7 @@ void CCharacterStage::CreateDownLoadAvatar(sPC_SUMMARY *pCharInfo )
 		pAvatarInfo->sItemPf[pAvatarInfo->byItemCount].byPos				= i;
 		pAvatarInfo->sItemPf[pAvatarInfo->byItemCount].byStackcount			= 1;
 		pAvatarInfo->sItemPf[pAvatarInfo->byItemCount].byRank				= pCharInfo->sItem[i].byRank;
-		pAvatarInfo->sItemPf[pAvatarInfo->byItemCount].byCurDur;			// 여기는 채워 넣으시면 됩니다.
+		pAvatarInfo->sItemPf[pAvatarInfo->byItemCount].byCurDur;			// Just fill in the information here.
 		pAvatarInfo->sItemPf[pAvatarInfo->byItemCount].Option				= pCharInfo->sItem[i].Option;
 		pAvatarInfo->sItemPf[pAvatarInfo->byItemCount].bNeedToIdentify		= FALSE;
 		pAvatarInfo->sItemPf[pAvatarInfo->byItemCount].byGrade				= pCharInfo->sItem[i].byGrade;

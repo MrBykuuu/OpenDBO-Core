@@ -5,9 +5,9 @@
 * Date			: 2006. 9. 13S
 * Abstract		: 
 *****************************************************************************
-* Desc: Community-related dialog form
-* Each page content is set according to PageType
-* Messages and events are also passed to the active Page.
+* Desc          : Community-related dialog form
+*               Each page content is set according to PageType
+*               Messages and events are also passed to the active Page.
 *****************************************************************************/
 /*
 #pragma once
@@ -38,7 +38,7 @@ public:
 	RwBool		Create();
 	VOID		Destroy();
 
-	RwInt32		SwitchDialog(bool bOpen);			///< DialogManager에서의 Open/Close
+	RwInt32		SwitchDialog(bool bOpen);			///< Open/Close in DialogManager
 
 protected:
 	virtual VOID	HandleEvents( RWS::CMsg &msg );	
@@ -50,18 +50,18 @@ protected:
 	VOID			OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY);
 	VOID			OnMouseLeave(gui::CComponent* pComponent);
 
-protected:	
+protected:
 	gui::CSlot			m_slotMouseDown;
 	gui::CSlot			m_slotMouseUp;
 	gui::CSlot			m_slotMouseMove;
 	gui::CSlot			m_slotMouseLeave;
 	gui::CSlot			m_slotPaint;
 
-	RwInt32				m_iMouseDownSlot;			///< 마우스로 눌린 슬롯의 인덱스
+	RwInt32				m_iMouseDownSlot;			///< Index of the slot pressed by the mouse
 
-	RwInt32				m_iPageType;				///< 현재의 페이지 타입
+	RwInt32				m_iPageType;				///< Current page type
 
-	CItemSlot			m_slot;						///< 슬롯
+	CItemSlot			m_slot;						///< slot
 
-	gui::CPanel*		m_pSlotFocusEffect;			///< 슬롯 포커스 이펙트
+	gui::CPanel*		m_pSlotFocusEffect;			///< slot focus effect
 };*/

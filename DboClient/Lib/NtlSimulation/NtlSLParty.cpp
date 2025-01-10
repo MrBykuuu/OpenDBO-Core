@@ -1,15 +1,15 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlParty.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// share
+// Share
 #include "Itemtable.h"
 #include "CharmTable.h"
 #include "TableContainer.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSobAvatar.h"
@@ -149,14 +149,14 @@ VOID CNtlParty::Update(RwReal fElapsed)
 		
 		CNtlSobPlayer* pPlayer = reinterpret_cast<CNtlSobPlayer*>(GetNtlSobManager()->GetSobObject(pMember->hSerial));
 		
-		// 파티 맴버가 가시영역 밖으로 나가서 사라질 수도 있다.
+		//Party members may go out of the visible area and disappear.
 		if(!pPlayer)
 			continue;
 
 		RwV3d vPos = pPlayer->GetPosition();
 		
-		// 아바타 주변에 있으므로 아바타와 같은 월드 아이디를 갖는다
-		// 아바타 주변에 없을 때는 서버로 부터 별도의 패킷으로 데이터를 받는다
+		// Since it is around the avatar, it has the same world ID as the avatar.
+		// When the avatar is not around, data is received from the server in a separate packet.
 		pMember->uiWorldID	= Logic_GetActiveWorldId();
 		pMember->uiWorldTbl	= Logic_GetActiveWorldTableId();
 
@@ -291,7 +291,7 @@ VOID CNtlParty::HandleEvents(RWS::CMsg &pMsg)
 
 		if(hAvatarHandle == hSerial)
 		{
-			// 파티 강퇴를 통해서 Avatar가 강퇴되었다
+			// Avatar was kicked out through party kicking.
 			Leave();
 
 			CNtlSLEventGenerator::PartyUpdateValue(PMT_PARTY_LEAVE);
@@ -428,7 +428,7 @@ VOID CNtlParty::HandleEvents(RWS::CMsg &pMsg)
 		{
 			CNtlSobPlayer* pPlayer = reinterpret_cast<CNtlSobPlayer*>(GetNtlSobManager()->GetSobObject(pMember->hSerial));
 
-			// 가시거리에 있는 맴버의 위치는 업데이트하지 않는다
+			// The positions of members in visible distance are not updated.
 			if(pPlayer)
 				return;
 
@@ -533,7 +533,7 @@ void CNtlParty::PartyShareTargetNfyHandler( RWS::CMsg& pMsg )
 {
     SNtlEventPartyShareTargetNfy* pData = (SNtlEventPartyShareTargetNfy*)pMsg.pData;
 
-    // 1. Removes marks that are not included in an existing target. (NOTE: check to prevent the effect from being continuously generated / released)   
+    // 1. Removes marks that are not included in an existing target. (NOTE: check to prevent the effect from being continuously generated /released)   
     for(int i = 0; i < NTL_MAX_SHARETARGET_COUNT; ++i)
     {
         if(m_aShareTargetInfo[i].hTarget == INVALID_SERIAL_ID)

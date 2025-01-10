@@ -1,14 +1,14 @@
 #include "precomp_ntlpresentation.h"
 #include "NtlPLResourceScheduling.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlCoreUtil.h"
 
-// framework
+// Framework
 #include "NtlTimer.h"
 
-// presentation
+// Presentation
 #include "NtlPLDef.h"
 #include "NtlPLEntity.h"
 #include "NtlPLResourceManager.h"
@@ -21,7 +21,7 @@
 
 #define MAX_DELETE_SCHEDULING_TIME					0.1f
 
-// 이 시간을 넘기면 rest time 을 뻥튀기 한다.
+// If this time is exceeded, rest time is triggered.
 #define MAX_LOAD_CHARACTER_OVER_WEIGHT				0.07f
 #define MAX_LOAD_OBJECT_OVER_WEIGHT					0.05f
 
@@ -49,7 +49,7 @@ CNtlResourceScheduleUnit::CNtlResourceScheduleUnit()
 */
 CNtlResourceScheduleUnit::~CNtlResourceScheduleUnit()
 {
-	// Delete Schedule에 있는 clump 를 삭제한다.
+	// Deletes a clump in the Delete Schedule.
 	CNtlPLResource *pResource;
 	ListScheduling::iterator itDelete;
 	for(itDelete = m_listClumpDeleteSchedule.begin(); itDelete != m_listClumpDeleteSchedule.end(); itDelete++)
@@ -59,7 +59,7 @@ CNtlResourceScheduleUnit::~CNtlResourceScheduleUnit()
 	}
 	m_listClumpDeleteSchedule.clear();
 
-	// Load Schedule에 있는 clump 리스트를 삭제한다.
+	// Delete the clump list in Load Schedule.
 	MapScheduling::iterator it;
 	for(it = m_mapClumpLoadSchedule.begin(); it != m_mapClumpLoadSchedule.end(); it++)
 	{
@@ -69,8 +69,8 @@ CNtlResourceScheduleUnit::~CNtlResourceScheduleUnit()
 }
 
 /**
-* \brief Obejct 관련 Clump들을 스케쥴링 로딩 ( 게임 스테이지로 진입 도중에 로딩한다. )
-* \param fElapsed	(RwReal) 이전 업데이트에서 경과 시간
+* \brief Obejct Scheduling loading of related Clumps (Loading while entering the game stage.)
+* \param fElapsed (RwReal) Elapsed time from previous update.
 */
 void CNtlResourceScheduleUnit::UpdateObjectLoadScheduling(RwReal fElapsed)
 {
@@ -136,8 +136,8 @@ void CNtlResourceScheduleUnit::UpdateObjectLoadScheduling(RwReal fElapsed)
 }
 
 /**
-* \brief Object 관련 clump들을 Seamless 로딩 ( 게임 도중 심리스 형식의 로딩 )
-* \param fElapsed	(RwReal) 이전 업데이트에서 경과한 시간
+* \brief Seamless loading of object-related clumps (seamless loading during the game)
+* \param fElapsed (RwReal) Time elapsed from previous update.
 */
 void CNtlResourceScheduleUnit::UpdateObjectLoadSeamlessScheduling(RwReal fElapsed)
 {
@@ -178,7 +178,7 @@ void CNtlResourceScheduleUnit::UpdateObjectLoadSeamlessScheduling(RwReal fElapse
 		dwCount++;
 #endif
 
-		// 초당 20 frm
+		// 20 frm per second
 		fSum += (RwReal)(GetTickCount() - dwTime)/1000.0f;
 		if(fSum > g_fLoadObjectSeamlessTime)
 			break;
@@ -203,8 +203,8 @@ void CNtlResourceScheduleUnit::UpdateObjectLoadSeamlessScheduling(RwReal fElapse
 }
 
 /**
-* \brief 스케쥴링 업데이트를 로딩한다.
-* \param fElapsed	(RwReal) 이전 업데이트에서 경과된 시간
+* \brief Loads scheduling updates.
+* \param fElapsed (RwReal) Time elapsed from previous update.
 */
 void CNtlResourceScheduleUnit::UpdateLoadScheduling(RwReal fElapsed)
 {
@@ -217,12 +217,12 @@ void CNtlResourceScheduleUnit::UpdateLoadScheduling(RwReal fElapsed)
 	if(m_mapClumpLoadSchedule.empty())
 		return;
 
-	// 오브젝트 만 업데이트 한다.
+	// Only updates objects.
 	UpdateObjectLoadScheduling(fElapsed);
 }
 
 /**
-* \brief 심리스 방식으로 스케쥴러를 업데이트 한다.
+* \brief Updates the scheduler in a seamless manner.
 */
 void CNtlResourceScheduleUnit::UpdateLoadSeamlessScheduling(RwReal fElapsed)
 {
@@ -233,7 +233,7 @@ void CNtlResourceScheduleUnit::UpdateLoadSeamlessScheduling(RwReal fElapsed)
 }
 
 /**
-* \brief 지워질 목록을 스케쥴링한다.
+* \brief Schedules the list to be deleted.
 */
 void CNtlResourceScheduleUnit::UpdateDeleteScheduling(RwReal fElapsed)
 {
@@ -274,8 +274,8 @@ void CNtlResourceScheduleUnit::UpdateDeleteScheduling(RwReal fElapsed)
 }
 
 /**
-* \brief Unit이 스케쥴링 로드할 Entity의 Type을 셋팅
-* \param byEntityType	(RwUInt8) 엔티티의 타입
+* \brief Set the type of entity that the unit will load for scheduling.
+* \param byEntityType (RwUInt8) Type of entity.
 */
 void CNtlResourceScheduleUnit::SetEntityType(RwUInt8 byEntityType)
 {
@@ -350,7 +350,7 @@ CNtlResourceScheduleCharUnit::~CNtlResourceScheduleCharUnit()
 
 /**
 * \brief Update
-* \param fElapsed	(RwReal) 이전 프레임에서의 업데이트 Time
+* \param fElapsed (RwReal) Update Time from previous frame
 */
 void CNtlResourceScheduleCharUnit::Update( RwReal fElapsed ) 
 {
@@ -361,36 +361,36 @@ void CNtlResourceScheduleCharUnit::Update( RwReal fElapsed )
 }
 
 /**
-* \brief 스케쥴링 로딩을 Node를 등록한다.
-* \param pPLEntity	(CNtlPLEntity*) Entity의 주소
-* \param pNode		(SResourceScheduleNode*) ResourceNode
+* \brief Registers Node for scheduling loading.
+* \param pPLEntity (CNtlPLEntity*) Address of the Entity
+* \param pNode (SResourceScheduleNode*) ResourceNode
 */
 void CNtlResourceScheduleCharUnit::AddSchedulingNode(CNtlPLEntity *pPLEntity, SResourceScheduleNode *pNode ) 
 {
-	// 리스트에 등록될 구조체
+	// Structure to be registered in the list
 	SResourceScheduleCharUnit sCharUnit;
 	sCharUnit.pPLEntity = pPLEntity;
 	sCharUnit.pNode = pNode;
 
-	// 리스트에 추가한다.
+	// Add to the list.
 	m_listCharClumpLoadSchedule.push_back( sCharUnit );
 }
 
 /**
-* \brief 스케쥴링 로딩에서 Node를 삭제한다.
-* \param pPLEntity	(CNtlPLEntity*) 삭제할 Entity의 포인터
-* \param pResource	(CNtlPLResource*) 삭제할 리소스의 포인터
+* \brief Delete Node from scheduling loading.
+* \param pPLEntity (CNtlPLEntity*) Pointer to the Entity to be deleted.
+* \param pResource (CNtlPLResource*) Pointer to the resource to delete.
 */
 void CNtlResourceScheduleCharUnit::UnLoadScheduling( CNtlPLEntity *pPLEntity, CNtlPLResource *pResource ) 
 {
-	// pResource가 NULL로 들어온다면 리스트에서 삭제해야 한다.
-	// multimap으로 자료구조를 바꿔야함
+	// If pResource is NULL, it must be deleted from the list.
+	// The data structure must be changed to multimap.
 	if(pResource == NULL)
 	{
 		ListCharScheduling::iterator it = m_listCharClumpLoadSchedule.begin();
 		while(it != m_listCharClumpLoadSchedule.end())
 		{
-			// 리스트에서 검색하여 삭제
+			// Search and delete from the list
 			if( (*it).pPLEntity == pPLEntity )
 			{
 				CNtlResourceScheduleManager::FreeListFree((void*)(*it).pNode);
@@ -405,14 +405,14 @@ void CNtlResourceScheduleCharUnit::UnLoadScheduling( CNtlPLEntity *pPLEntity, CN
 	}
 	else
 	{
-		// 삭제할 리스트를 등록한다.
+		// Register the list to be deleted.
 		m_listClumpDeleteSchedule.push_back(pResource);
 	}
 }
 
 /**
-* \brief 스케쥴링 로딩 할 리스트가 비어있는가?
-* \returns 비어있는지 여부
+* \brief Is the scheduling loading list empty?
+* \returns Is empty?
 */
 RwBool CNtlResourceScheduleCharUnit::IsEmptyLoadScheduling( void ) 
 {
@@ -423,20 +423,20 @@ RwBool CNtlResourceScheduleCharUnit::IsEmptyLoadScheduling( void )
 }
 
 /**
-* \brief 캐릭터의 스케쥴링에 들어 있는 clump를 로딩한다.
-* \param fElapsed	(RwReal) 경과시간
+* \brief Loads the clump contained in the character's scheduling.
+* \param fElapsed (RwReal) Elapsed time
 */
 void CNtlResourceScheduleCharUnit::UpdateCharacterLoadScheduling(RwReal fElapsed)
 {
 	m_fLoadCurrTime += fElapsed;
 
-	// 이전에 걸렸던 시간만큼 지나지 않았다면 리턴한다.
+	// Returns if the time taken previously has not passed.
 	if(m_fLoadCurrTime <= m_fLoadSchedulingTime)
 		return;
 
 	m_fLoadCurrTime = 0.0f;
 
-	// 없다면 리턴
+	// If not, return
 	if( IsEmptyLoadScheduling() )
 		return;
 
@@ -451,14 +451,14 @@ void CNtlResourceScheduleCharUnit::UpdateCharacterLoadScheduling(RwReal fElapsed
 	pPLEntity = (*it).pPLEntity;
 	pNode = (*it).pNode;
 
-	// Entity에게 Resource를 로딩하기 전에 알려준다.
+	// Notifies the entity before loading the resource.
 	if(pPLEntity)
 		pPLEntity->CallPreSchedulingResource();
 
-	// 리소스를 가지고 와서
+	// Get a resource
 	pResource = GetNtlResourceManager()->LoadClump(pNode->chFileName, pNode->chResourcePath);
 
-	// 리소스를 로딩
+	// loading resources
 	if(pPLEntity)
 	{	
 		pPLEntity->CallSchedulingResource(pResource);
@@ -466,7 +466,7 @@ void CNtlResourceScheduleCharUnit::UpdateCharacterLoadScheduling(RwReal fElapsed
 	}
 
 	m_listCharClumpLoadSchedule.erase(it);
-	// 리소스가 로딩된후에는 반복자를 지워준다.
+	// After the resource is loaded, the iterator is cleared.
 	CNtlResourceScheduleManager::FreeListFree((void*)pNode);
 
 	dwTime = GetTickCount() - dwTime;
@@ -476,20 +476,20 @@ void CNtlResourceScheduleCharUnit::UpdateCharacterLoadScheduling(RwReal fElapsed
 }
 
 /**
-* \brief Cash 된 데이터의 로딩 속도를 향상시키기 위한 업데이트 함수
-* \param fElapsed	(RwReal) 이전 업데이트에서 경과된 시간
+* \brief Update function to improve loading speed of cached data
+* \param fElapsed (RwReal) Time elapsed from previous update.
 */
 void CNtlResourceScheduleCharUnit::UpdateCharacterLoadSeamlessScheduling( RwReal fElapsed ) 
 {
 	m_fLoadCurrTime += fElapsed;
 
-	// 이전에 걸렸던 시간만큼 지나지 않았다면 리턴한다.
+	// Returns if the time taken previously has not passed.
 	if(m_fLoadCurrTime <= m_fLoadSchedulingTime)
 		return;
 
 	m_fLoadCurrTime = 0.0f;
 
-	// 없다면 리턴
+	// If not, return
 	if( IsEmptyLoadScheduling() )
 		return;
 
@@ -513,14 +513,14 @@ void CNtlResourceScheduleCharUnit::UpdateCharacterLoadSeamlessScheduling( RwReal
 		pPLEntity = (*it).pPLEntity;
 		pNode = (*it).pNode;
 
-		// Entity에게 Resource를 로딩하기 전에 알려준다.
+		// Notifies the entity before loading the resource.
 		if(pPLEntity)
 			pPLEntity->CallPreSchedulingResource();
 
-		// 리소스를 가지고 와서
+		// bring resources
 		pResource = GetNtlResourceManager()->LoadClump(pNode->chFileName, pNode->chResourcePath);
 
-		// 리소스를 로딩
+		// loading resources
 		if(pPLEntity)
 		{	
 			pPLEntity->CallSchedulingResource(pResource);
@@ -641,8 +641,8 @@ void CNtlResourceScheduleManager::AddSchedulingClump(const char *pStrName, const
 
 	RwUInt8 byEntityType = (RwUInt8)pEntity->GetClassType();
 
-	// 확장 by Kell
-	// 캐릭터와 아이템은 다른 방식의 스케쥴링 로딩을 사용한다.
+	// Expansion by Kell
+	// Characters and items use different methods of scheduling loading.
 	CNtlResourceScheduleUnit *pUnit = FindUnit(byEntityType);
 	if(pUnit == NULL)
 	{

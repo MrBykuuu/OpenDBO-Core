@@ -1,17 +1,17 @@
 #include "precomp_dboclient.h"
 #include "TutorialExampleGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLEventFunc.h"
 
-// dbo
+// Dbo
 #include "DboGlobal.h"
 #include "DialogManager.h"
 
@@ -55,7 +55,7 @@ RwBool CTutorialExampleGui::Create()
 	m_ShowHide.fElapsedTime		= 0.f;
 	m_ShowHide.bShow			= FALSE;
 
-	// sig
+	// Signals
 	m_slotMove			= m_pThis->SigMove().Connect( this, &CTutorialExampleGui::OnMove );
 
 	LinkMsg(g_EventResize);
@@ -92,7 +92,7 @@ VOID CTutorialExampleGui::Update(RwReal fElapsed)
 
 	m_pflashExample->Update(fElapsed);
 
-	// 알파 변경
+	// alpha change
 	if( m_ShowHide.fRemainTime > 0.f )
 	{
 		RwUInt8 byAlpha;
@@ -154,7 +154,7 @@ VOID CTutorialExampleGui::LocateComponent()
 	rtRect.left		= (GetDboGlobal()->GetScreenWidth() - iWidth)/2 + m_iOffsetX;
 	rtRect.right	= rtRect.left + iWidth;
 
-	// 기획의 변경으로 화면 중앙 정렬에서 화면 하단 정렬로 변경
+	// Due to changes in planning, the screen was aligned from the center of the screen to the bottom of the screen.
 	rtRect.top		= GetDboGlobal()->GetScreenHeight() - (768 - ((768 - iHeight)/2 + m_iOffsetY));
 	rtRect.bottom	= rtRect.top + iHeight;
 

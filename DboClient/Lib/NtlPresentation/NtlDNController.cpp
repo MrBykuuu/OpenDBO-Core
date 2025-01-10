@@ -111,8 +111,8 @@ VOID CNtlDNController::Update( RwReal fElapsedTime )
 
 	if( m_listDNNode.size() <= 0)
 	{
-		// 살아 있는 Node가 없더라고, 현재 DNEffect가 적용된 상태(현재 DNValue가 0이 아닌 상태)에서는 
-		// DN Effect가 적용되었다고 판단한다. (2007.7.12 by agebreak)
+        //Even if there are no alive nodes, in the state where DNEffect is currently applied (current DNValue is not 0) 
+		//Determine that the DN Effect has been applied. (2007.7.12 by agebreak)
 		if(m_ucLastValue == 0)
 		{
 			m_bSetDNEffect = FALSE;

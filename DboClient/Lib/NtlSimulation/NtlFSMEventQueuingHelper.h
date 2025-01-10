@@ -2,12 +2,12 @@
  *
  * File			: NtlFSMEventQueuingHelper.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2006. 9. 26	
  * Abstract		: FSM event queuing helper
  *****************************************************************************
- * Desc         :  잠시 잠깐 임시로 쓴다.
- *				  - state를 stack 하는 기능을 agent에 만든다.
+ * Desc         : I'm using it temporarily for a little while.
+ *				  - Create a function to stack the state in the agent.
  *
  *****************************************************************************/
 

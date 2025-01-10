@@ -34,12 +34,12 @@ public:
 
     virtual EProxySystemEffectType GetType()    {return m_eType;}
 
-    void            SetExtraSound(SOUND_HANDLE hSound) {m_hSound = hSound;}             ///< 추가 사운드 핸들을 설정한다.
+    void            SetExtraSound(SOUND_HANDLE hSound) {m_hSound = hSound;}            ///< Sets additional sound handles.
 
 protected:
     CNtlSobProxy*           m_pSobProxy;
     EProxySystemEffectType  m_eType; 
-    SOUND_HANDLE            m_hSound;                          ///< 추가 사운드 핸들
+    SOUND_HANDLE            m_hSound;                          ///< Additional sound handles
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -87,7 +87,7 @@ protected:
 
     RwUInt8		m_byUpdateCount;
 
-    RwBool      m_bAddColorFlag;                    ///< 색상을 블렌드가 아닌 더할지 유무 플래그    
+    RwBool      m_bAddColorFlag;                    ///< Flag whether to add colors rather than blend them
 
 protected:
     void			SetWeightValue(RwReal fWeightRed, RwReal fWeightGreen, RwReal fWeightBlue);
@@ -137,7 +137,7 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////////
-/// 크기를 변경하는 이펙트
+///Effect that changes size
 class CNtlSobProxySystemEffectScale : public CNtlSobProxySystemEffect
 {
 public:
@@ -153,14 +153,13 @@ public:
     virtual RwBool	IsCalcWeightValue(void);
 
     RwReal          GetWeightValue();
-    void            SetData(RwReal fEndScale, RwReal fTime);            ///< 스케일 변경과 시간을 설정한다.
-
+    void            SetData(RwReal fEndScale, RwReal fTime);            ///< Set scale change and time.
 protected:
-    RwReal          m_fWeightValue;                                     ///< 현재값
-    RwReal          m_fStartValue;                                      ///< 시작값
-    RwReal          m_fEndValue;                                        ///< 끝값
-    RwReal          m_fTime;                                            ///< 시간
-    RwReal          m_fElapsedTime;                                     ///< 총 경과한 시간
-    RwBool          m_bFinish;                                          ///< 적용이 끝났는지 여부
+    RwReal          m_fWeightValue;                                     ///< current value
+    RwReal          m_fStartValue;                                      ///< starting value
+    RwReal          m_fEndValue;                                        ///< end value
+    RwReal          m_fTime;                                            ///< time
+    RwReal          m_fElapsedTime;                                     ///< Total elapsed time
+    RwBool          m_bFinish;                                          ///< Whether application has been completed
 };
 

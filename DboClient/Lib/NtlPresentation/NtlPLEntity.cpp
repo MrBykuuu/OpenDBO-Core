@@ -1,10 +1,10 @@
 #include "precomp_ntlpresentation.h"
 #include "NtlPLEntity.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentaiton
+// Presentaiton
 #include "NtlPLElapsedController.h"
 #include "NtlPLSceneManager.h"
 #include "NtlPLEntityBlend.h"
@@ -81,12 +81,12 @@ RwBool CNtlPLEntity::CullingTest(RwCamera* pRwCamera, RwUInt16 uiRenderFrame)
 	++CNtlPLGlobal::m_uiCullTestCnt;
 #endif
 
-	// Culiing Test�� �õ� �Ѵٸ� Culling�� ����ϰڴٴ� �ǹ̴�. �ʱⰪ�� �����Ѵ�.
+    //If you attempt a culiing test, it means that you will use culling. Change the initial value.
 	if (m_uiRenderFrame != uiRenderFrame)
 	{
 		m_uiRenderFrame= uiRenderFrame;
-		// PVS Flag�� ������ ������ ���� �ؾ� �Ѵ�.
-		// �� Frame���� �ѹ��� �õ� �Ǿ�� �ϸ�, �ѹ��� ������ ���� �Ǿ�� �Ѵ�.
+		// PVS Flag should retain its existing content.
+		// It should only be attempted once per frame, and the content should only be applied once.
 		m_uiCullFlags &= NTL_PLEFLAG_CULLED_PVS;
 	}
 

@@ -1,11 +1,11 @@
 /******************************************************************************
-* File			: CCommunityBase.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2007. 3. 13
-* Abstract		: 
+*File           : CCommunityBase.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : March 13, 2007
+*Abstract		: 
 *****************************************************************************
-* Desc			: 커뮤니티 다이얼로그의 관련 탭 base class
+*Desc           : Base class for related tabs in community dialog
 *****************************************************************************/
 
 #pragma once

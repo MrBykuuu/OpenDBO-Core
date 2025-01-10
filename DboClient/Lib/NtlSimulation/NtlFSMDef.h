@@ -2,19 +2,19 @@
  *
  * File			: NtlFSMDef.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright: NTL Co., Ltd.
  * Date			: 2005. 8. 18	
  * Abstract		: Finite state machine definition
- *****************************************************************************
+  *****************************************************************************
  * Desc         : 
- *
- *****************************************************************************/
+  *
+*****************************************************************************/
 
 #ifndef __NTL_FSM_DEF_H__
 #define __NTL_FSM_DEF_H__
 
 
-// FSMSN => finite state machine state name의 약어.
+// FSMSN => Abbreviation for finite state machine state name.
 
 #define NTL_FSMSID_INVALID			0
 #define NTL_FSMSID_CREATE			1
@@ -63,14 +63,14 @@
 #define NTL_FSMSID_DIRECTION		44
 #define NTL_FSMSID_DESPAWN			45
 #define NTL_FSMSID_LEAVING			46
-#define NTL_FSMSID_ONBUS            49                          ///< 버스 탑승 상태
-#define NTL_FSMSID_ONVEHICLE        50                          ///< 탈것 탑승 상태
-#define NTL_FSMSID_TURNING          51                          ///< 버스가 회전하는 상태
-#define NTL_FSMSID_SEQUELA          52                          ///< 초사이야인 변신 휴유증 상태 // 52 in tw
-#define NTL_FSMSID_SPIN_ATTACK      53                          ///< 회전 공격중인 상태
-#define NTL_FSMSID_PUSHING          54                          ///< 회전 공격을 당해서 Pushing 상태
-#define NTL_FSMSID_RIDEONOFF        55                          ///< 탈것에 타거나 내리는 상태
-#define NTL_FSMSID_KEEPING_EFFECT   56                          ///< 스킬 Action Loop 상태
+#define NTL_FSMSID_ONBUS            49                          ///< Bus boarding status
+#define NTL_FSMSID_ONVEHICLE        50                          ///< Vehicle boarding status
+#define NTL_FSMSID_TURNING          51                          ///< State of bus rotating
+#define NTL_FSMSID_SEQUELA          52                          ///< Aftereffects of Super Saiyan transformation //52 in tw
+#define NTL_FSMSID_SPIN_ATTACK      53                          ///< State of spinning attack
+#define NTL_FSMSID_PUSHING          54                          ///< Pushing state due to spin attack
+#define NTL_FSMSID_RIDEONOFF        55                          ///< The state of getting on or off a vehicle
+#define NTL_FSMSID_KEEPING_EFFECT   56                          ///<Skill Action Loop status
 #define NTL_FSMSID_AIR_JUMP			57
 #define NTL_FSMSID_AIR_ACCEL		58
 #define NTL_FSMSID_ROLLING_ATTACK   59
@@ -133,14 +133,14 @@
 #define NTL_FSMSN_AIR_ACCEL			"State_AirAccel"
 #define NTL_FSMSN_ROLLING_ATTACK	"State_Rolling_Attack"
 
-// FSMSF => finite state machine state flag의 약어.
+// FSMSF => Abbreviation for finite state machine state flag.
 #define NTL_FSMSF_NOT_MOVE				0x00000001	// No mouse movement.
 #define NTL_FSMSF_NOT_ATTACK_STATE		0x00000002	// Can not switch attack state.
 #define NTL_FSMSF_NOT_HURT_STATE		0x00000004	// hurt status can not be switched.
 #define NTL_FSMSF_NOT_JUMP				0x00000008	// No jump possible.
 #define NTL_FSMSF_NOT_SKILLUSE			0x00000010	// Disable skill.
 #define NTL_FSMSF_NOT_SOCIALUSE			0x00000020	// Disable social action.
-#define NTL_FSMSF_NOT_SIT				0x00000040	// You can not use sit / stand.
+#define NTL_FSMSF_NOT_SIT				0x00000040	// You can not use sit /stand.
 #define NTL_FSMSF_NOT_CAHNGE_HEADING	0x00000080	// You can not change the heading.
 #define NTL_FSMSF_NOT_ADJUSTMOVE		0x00000100	// Can not compensate movement ...
 #define NTL_FSMSF_NOT_STATECHANGE		0x00000200	//The state can not be transferred.
@@ -150,15 +150,15 @@
 #define NTL_FSMSF_NOT_INPUT				0x00002000	// You can not handle events related to input.
 #define NTL_FSMSF_NOT_GROUNDMOVE		0x00004000	// It does not move along the height of the world.
 
-#define NTL_FSMSF_SKIP_SITDOWN			0x01000000	// sit down 사용 skip.	
-#define NTL_FSMSF_SKIP_STANDUP			0x02000000  // stand up 사용 skip.
-#define NTL_FSMSF_SKIP_ATTACK_CLICK		0x04000000  // attack click 사용 skip.
+#define NTL_FSMSF_SKIP_SITDOWN			0x01000000	// Use sit down skip.	
+#define NTL_FSMSF_SKIP_STANDUP			0x02000000  // Skip using stand up.
+#define NTL_FSMSF_SKIP_ATTACK_CLICK		0x04000000  // Use attack click skip.
 
 
 #define NTL_FSMSF_NOT_ALL				0x07007fff
 
-// 비쥬얼 관련 FSM 플래그 (이 플래그들은 NOT_ALL에 포함되지 않는다)
-#define NTL_FSMSF_VISUAL_RPBOUNS             0x10000000  // RP Bonus Effect 표시 가능 플래그
+// Visual-related FSM flags (these flags are not included in NOT_ALL)
+#define NTL_FSMSF_VISUAL_RPBOUNS             0x10000000  // RP Bonus Effect displayable flag
 
 
 // FSM controller type
@@ -167,7 +167,7 @@
 #define NTL_FSM_SERVER_CONTROLLER	0x00000004
 
 
-// FSM event에 대한 처리 결과.
+// Processing results for FSM events.
 #define NTL_FSM_EVENTRES_PASS				0x00000001
 #define NTL_FSM_EVENTRES_BLOCK				0x00000002
 #define NTL_FSM_EVENTRES_CHANGE_STATE		0x00000003

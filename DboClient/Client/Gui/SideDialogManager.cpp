@@ -1,26 +1,26 @@
 #include "precomp_dboclient.h"
 #include "SideDialogManager.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSobAvatar.h"
 #include "NtlSLGlobal.h"
 
-// dbo
+// Dbo
 #include "DialogManager.h"
 #include "DboGlobal.h"
 #include "DboEventGenerator.h"
 
 
-#define dVELOCITY_MOVE			1500.f			///< Side dialog가 open/close 되는 속도
+#define dVELOCITY_MOVE			1500.f			///< Speed ??of side dialog opening/closing
 
 CSideDialogManager* CSideDialogManager::m_pInstance = NULL;
 
@@ -135,7 +135,7 @@ VOID CSideDialogManager::OpenDefaultDialog()
 
 RwBool CSideDialogManager::OpenDialog(RwInt32 iSideDialog, RwBool bPlaySound /* = TRUE */)
 {
-	// 퀘스트 나레이션이 흐르면 리턴
+	// Return when quest narration flows
 	if( GetDialogManager()->IsMode( DIALOGMODE_NARRATION ) )
 		return FALSE;
 
@@ -150,16 +150,16 @@ RwBool CSideDialogManager::OpenDialog(RwInt32 iSideDialog, RwBool bPlaySound /* 
 	{		
 		if( it_presentation_find->second.eSDialog == (eSideDialogType)iSideDialog )
 		{
-			// 현재 요청한 사이드 다이얼로그가 활성화된 목록에 있는지 찾아본다
+			// Checks whether the currently requested side dialog is in the active list.
 			it_presentation = it_presentation_find;
 		}
 		else
 		{
-			// 기존에 OPEN 상태인 사이드 다이얼로그를 찾는다
+			// Find a side dialog that is already OPEN.
 			if( it_presentation_find->second.openType == OPENTYPE_OPEN ||
 				it_presentation_find->second.openType == OPENTYPE_MINIMAM )
 			{
-				// 다른 사이드 다이얼로그와 겹칠 수 없는 것이라면..
+				// If it cannot overlap with other side dialogs...
 				if( IsAttribute(it_presentation_find->second.eSDialog, dSDA_INDEPENDENTLY) == FALSE )
 					it_presentation_Open = it_presentation_find;
 			}
@@ -170,7 +170,7 @@ RwBool CSideDialogManager::OpenDialog(RwInt32 iSideDialog, RwBool bPlaySound /* 
 			break;
 	}
 
-	// 기존 활성화된 목록에 있는 것이라면...
+	// If it's already on the active list...
 	if( it_presentation != m_mapPresentDialog.end() )
 	{
 		sPresentationDialog& rPresentaionDialog = it_presentation->second;
@@ -187,7 +187,7 @@ RwBool CSideDialogManager::OpenDialog(RwInt32 iSideDialog, RwBool bPlaySound /* 
 				rPresentaionDialog.openType = OPENTYPE_OPEN;
 				rPresentaionDialog.pDialogInfo->pDialog->Show(true);
 
-				// 기존에 Open 상태인 것을 감춘다
+				// Hides the previously open status.
 				if( it_presentation_Open != m_mapPresentDialog.end() )
 				{
 					it_presentation_Open->second.openType = OPENTYPE_CONCEAL;
@@ -200,7 +200,7 @@ RwBool CSideDialogManager::OpenDialog(RwInt32 iSideDialog, RwBool bPlaySound /* 
 		}
 	}
 
-	// 새로이 열리는 각 클래스의 SwitcDialog()를 호출한다.
+	// Call SwitcDialog() for each newly opened class.
 	if( pDialogInfo->pCallSwitch->Call(true) < 0 )
 		return FALSE;
 
@@ -211,10 +211,10 @@ RwBool CSideDialogManager::OpenDialog(RwInt32 iSideDialog, RwBool bPlaySound /* 
 	newPresentaionDialog.pDialogInfo		= pDialogInfo;
 	newPresentaionDialog.openType			= OPENTYPE_OPEN;
 
-	// 다른 사이드 다이얼로그와 동시에 뜰 수 없는 것이라면
+	// If it cannot be displayed at the same time as another side dialog
 	if( IsAttribute(iSideDialog, dSDA_INDEPENDENTLY) == FALSE )
 	{
-		// 기존에 Open 상태인 것을 감춘다
+		// Hides the previously open status.
 		if( it_presentation_Open != m_mapPresentDialog.end() )
 		{
 			it_presentation_Open->second.openType = OPENTYPE_CONCEAL;
@@ -222,7 +222,7 @@ RwBool CSideDialogManager::OpenDialog(RwInt32 iSideDialog, RwBool bPlaySound /* 
 		}
 	}
 
-	// 사이드 다이얼로그의 좌표 설정
+	// Setting coordinates of side dialog
 	RwInt32 iXPos = GetDboGlobal()->GetScreenWidth() - newPresentaionDialog.pDialogInfo->pDialog->GetWidth() - dDIALOG_CLEINT_EDGE_GAP;
 	RwInt32 iYPos;
 	if( IsAttribute(iSideDialog, dSDA_FREE_Y_POSITION) )
@@ -248,7 +248,7 @@ RwBool CSideDialogManager::OpenDialog(RwInt32 iSideDialog, RwBool bPlaySound /* 
 
 RwBool CSideDialogManager::CloseDialog(RwInt32 iSideDialog, RwBool bPlaySound /* = TRUE */)
 {
-	// 이미 닫혀 있다면 리턴
+	// Return if already closed
 	MAP_PRESENTATION_ITER it_presentation = m_mapPresentDialog.find(iSideDialog);
 	if( it_presentation == m_mapPresentDialog.end() )
 		return FALSE;
@@ -257,8 +257,8 @@ RwBool CSideDialogManager::CloseDialog(RwInt32 iSideDialog, RwBool bPlaySound /*
 	if(!pDialogInfo)
 		return FALSE;
 
-	// 각 클래스의 SwithDialog()를 호출한다. 이 함수내에서 Show(false)를 호출해서는 안된다
-	// Show(false)는 CSideDialogManager::Update()에서 Close effect가 마무리 되면 자동 호출된다
+	// Call SwithDialog() of each class. Show(false) should not be called within this function.
+	// Show(false) is automatically called when the Close effect is completed in CSideDialogManager::Update().
 	if( pDialogInfo->pCallSwitch->Call(false) < 0 )
 		return FALSE;
 
@@ -393,7 +393,7 @@ VOID CSideDialogManager::RegisterAttribute()
 	for( RwInt32 i = SDIALOG_FIRST ; i <= SDIALOG_LAST ; ++i )
 		m_mapAttribute[i] = dSDA_NONE;
 
-	// 특별한 경우의 사이드 다이얼로그의 속성을 정의한다
+	// Defines side dialog properties for special cases
 }
 
 VOID CSideDialogManager::HandleEvents( RWS::CMsg &msg )
@@ -427,7 +427,7 @@ VOID CSideDialogManager::HandleEvents( RWS::CMsg &msg )
 CNtlPLGui* const CSideDialogManager::GetpDialogTEST(const char* szFrmFileName)
 {
 	CNtlPLGui* pDialog;
-	MAP_SDIALOG::iterator it = m_mapDialog.begin();	/// 등록된 dialog 검색
+	MAP_SDIALOG::iterator it = m_mapDialog.begin();	/// Registered dialog search
 	for( ; it != m_mapDialog.end(); ++it)
 	{
 		pDialog = it->second.pDialog;
@@ -443,9 +443,9 @@ CNtlPLGui* const CSideDialogManager::GetpDialogTEST(const char* szFrmFileName)
 
 RwBool CSideDialogManager::ShowDialogTEST(RwInt32 iDialog, bool bOpen)
 {
-	/// OpenDialog 아닌 단순 Show로.....
+	/// Not OpenDialog, but a simple Show.....
 	CNtlPLGui* pDialog;
-	MAP_SDIALOG::iterator it = m_mapDialog.find(iDialog);	/// 등록된 dialog 검색
+	MAP_SDIALOG::iterator it = m_mapDialog.find(iDialog);	/// Registered dialog search
 	if( it != m_mapDialog.end() )
 	{
 		pDialog = it->second.pDialog;
@@ -459,12 +459,12 @@ RwBool CSideDialogManager::ShowDialogTEST(RwInt32 iDialog, bool bOpen)
 	return FALSE;
 }
 
-VOID CSideDialogManager::ShowAllDialogTEST(bool bOpen)	///< SideDialogManager에 등록된 모든 dialog open/close
+VOID CSideDialogManager::ShowAllDialogTEST(bool bOpen)	///< All dialog open/close registered in SideDialogManager
 {
 	CNtlPLGui* pDialog;
 	for(RwInt32 i = SDIALOG_FIRST + 1 ; i < SDIALOG_UNKNOWN ; ++i )
-	{	/// OpenDialog 아닌 단순 Show로.....
-		MAP_SDIALOG::iterator it = m_mapDialog.find(i);	/// 등록된 dialog 검색
+	{	/// Not OpenDialog, but a simple Show.....
+		MAP_SDIALOG::iterator it = m_mapDialog.find(i);	/// Registered dialog search
 		if( it != m_mapDialog.end() )
 		{
 			pDialog = it->second.pDialog;

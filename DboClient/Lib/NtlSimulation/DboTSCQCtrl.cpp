@@ -118,28 +118,28 @@ CDboTSCQCtrl::~CDboTSCQCtrl()
 
 void CDboTSCQCtrl::Update( void )
 {
-	// 종료 상태인 경우
+	// When in shutdown state
 	if ( IsExitState() ) return;
 
-	// 예외 타이머 업데이트
+	// Exception Timer Update
 	UpdateExceptionTimer();
 
-	// 제한 시간 타입 업데이트
+	// Time limit type update
 	UpdateLimitTime();
 
-	// 대기 타이머 업데이트
+	// Wait timer update
 	UpdateTimeWait();
 
-	// 대기 타이머 동작
+	// Standby timer operation
 	if ( !IsTimeWait() )
 	{
-		// 동기화 큐가 동작 중이면 다음 단계로 진행하지 않는다
+		// If the synchronization queue is running, do not proceed to the next step.
 		if ( IsContSyncQueueEmpty() )
 		{
 			// Server event ID update
 			UpdateSvrEventID();
 
-			// 퀘스트를 진행한다
+			// Proceed with the quest
 			UpdateTSStep();
 		}
 	}
@@ -270,15 +270,15 @@ bool CDboTSCQCtrl::IsCompletedServerEvt( void )
 
 				if ( !bRet ) break;
 
-				// 필요한 아이템이 Invalid 인 경우 필요 아이템이 없는 경우로 간주
+				// If the required item is Invalid, it is considered that the required item does not exist.
 				unsigned int uiNeedItemIdx = m_sSToCEvtData.uSToCEvtData.sPublicMobItemCnt[i].uiRequireItemIdx;
 				if ( 0xffffffff == uiNeedItemIdx ) continue;
 
-				// 해당 퀘스트 아이템을 유저가 가지고 있는지 검사한다
+				// Check whether the user has the quest item
 				{
 					int nSumCnt = 0;
 
-					// Quest inventory를 검색
+					// Search for Quest inventory
 					for ( int j = 0; j < MAX_QUEST_INVENTORY_SLOT; ++j )
 					{
 						CNtlSobQuestItem* pQItem = pQInventory->GetQuestItemFromIdx( j );
@@ -625,7 +625,7 @@ void CDboTSCQCtrl::SkipContainer( NTL_TS_TC_ID tcID )
 
 void CDboTSCQCtrl::Build( void )
 {
-	// Server event id 빌드
+	// Server event id build
 	m_defSvrEventIDList.clear();
 
 	CEventSearch clReceive;
@@ -697,7 +697,7 @@ NTL_TSRESULT CDboTSCQCtrl::Cont_GCond( CNtlTSCont* pCont, bool bDoAction /*= tru
 	sParam.SetControl( this );
 	sParam.SetAgency( GetParent() );
 
-	// 일반적인 조건 컨테이너는 클라이언트에서 먼저 실행하고 문제 없으면 서버로 검증을 요구한다
+	// General conditions: Container runs on the client first and requests verification from the server if there are no problems.
 	NTL_TSRESULT tsResult = GetTrigger()->RunTarget( tgID, tcID, GetParent()->GetRecv(), &sParam );
 	if ( tsResult & NTL_TSRESULT_TYPE_ERROR )
 	{
@@ -705,7 +705,7 @@ NTL_TSRESULT CDboTSCQCtrl::Cont_GCond( CNtlTSCont* pCont, bool bDoAction /*= tru
 		return tsResult;
 	}
 
-	// 조건을 만족함
+	// Satisfies the conditions
 	if ( NTL_TSRESULT_TYPE_SUCCESS == tsResult )
 	{
 		CNtlTSCont* pNextCont = GetTrigger()->GetGroup( tgID )->GetChildCont( pContGCond->GetYesLinkID() );
@@ -715,7 +715,7 @@ NTL_TSRESULT CDboTSCQCtrl::Cont_GCond( CNtlTSCont* pCont, bool bDoAction /*= tru
 			return NTL_TSRESULT_TYPE_ERROR;
 		}
 
-		// 서버에게 다음 단계로 진행해도 되는지 물어본다
+		// Ask the server if you can proceed to the next step
 		if (bDoAction)
 		{
 			unsigned int uiParam[QUEST_REWARD_SEL_MAX_CNT] = { 0xffffffff , 0xffffffff , 0xffffffff , 0xffffffff };
@@ -723,15 +723,15 @@ NTL_TSRESULT CDboTSCQCtrl::Cont_GCond( CNtlTSCont* pCont, bool bDoAction /*= tru
 			UG_Avatar_TS_Confirm_Step(tcID, pNextCont->GetID(), uiParam, GetEventType(), GetEventData());
 		}
 	}
-	// 현재는 조건을 만족하지는 못하나 다음에는 조건을 만족할 수 있음
-	// 현재도 조건을 만족하지는 못하고 다음에도 절대 조건을 만족할 수 없는 경우
+	// The conditions are not satisfied now, but the conditions may be satisfied next time.
+	// If the conditions are not satisfied now and the conditions will never be satisfied in the future
 	else if ( (tsResult & NTL_TSRESULT_TYPE_COND_CAN_PROGRESS) || (tsResult & NTL_TSRESULT_TYPE_COND_CANT_PROGRESS) )
 	{
-		// 만약 No에 연결된 링크가 있다면 실행한다
+		// If there is a link connected to No, run it.
 		CNtlTSCont* pNextCont = GetTrigger()->GetGroup( tgID )->GetChildCont( pContGCond->GetNoLinkID() );
 		if ( pNextCont )
 		{
-			// 서버에게 다음 단계로 진행해도 되는지 물어본다
+			// Ask the server if you can proceed to the next step
 			if (bDoAction)
 			{
 				unsigned int uiParam[QUEST_REWARD_SEL_MAX_CNT] = { 0xffffffff , 0xffffffff , 0xffffffff , 0xffffffff };
@@ -751,7 +751,7 @@ NTL_TSRESULT CDboTSCQCtrl::Cont_GAct( CNtlTSCont* pCont, bool bDoAction /*= true
 	NTL_TS_TG_ID tgID = ((CNtlTSGroup*)pContGAct->GetParent())->GetID();
 	NTL_TS_TG_ID tcID = pContGAct->GetID();
 
-	// 일반적인 액션 컨테이너는 서버에게 실행을 요청하고 응답을 받은 시점에서 실행을 한다
+	// A typical action container requests execution from the server and executes when a response is received.
 	CNtlTSCont* pNextCont = GetTrigger()->GetGroup( tgID )->GetChildCont( pContGAct->GetNextLinkID() );
 	if ( 0 == pNextCont )
 	{
@@ -759,7 +759,7 @@ NTL_TSRESULT CDboTSCQCtrl::Cont_GAct( CNtlTSCont* pCont, bool bDoAction /*= true
 		return NTL_TSRESULT_TYPE_ERROR;
 	}
 
-	// 서버에게 다음 단계로 진행해도 되는지 물어본다
+	// Ask the server if you can proceed to the next step
 	if (bDoAction)
 	{
 		unsigned int uiParam[QUEST_REWARD_SEL_MAX_CNT] = { 0xffffffff , 0xffffffff , 0xffffffff , 0xffffffff };
@@ -777,7 +777,7 @@ NTL_TSRESULT CDboTSCQCtrl::Cont_UserSel( CNtlTSCont* pCont, bool bDoAction /*= t
 	NTL_TS_TG_ID tgID = ((CNtlTSGroup*)pContUsr->GetParent())->GetID();
 	NTL_TS_TG_ID tcID = pContUsr->GetID();
 
-	// 유저에게 유저 선택창 출력
+	// Display a user selection window to the user
 	sTS_KEY sKey; sKey.Init();
 	sKey.tID = tID;
 	sKey.tgID = tgID;
@@ -799,7 +799,7 @@ NTL_TSRESULT CDboTSCQCtrl::Cont_Reward( CNtlTSCont* pCont, bool bDoAction /*= tr
 	sParam.SetControl( this );
 	sParam.SetAgency( GetParent() );
 
-	// 보상 컨테이너는 클라이언트에서 먼저 실행하고 문제 없으면 서버로 검증을 요구한다
+	// The compensation container runs first on the client and requests verification from the server if there are no problems.
 	NTL_TSRESULT tsResult = GetTrigger()->RunTarget( tgID, tcID, GetParent()->GetRecv(), &sParam );
 	if ( tsResult & NTL_TSRESULT_TYPE_ERROR )
 	{
@@ -807,11 +807,11 @@ NTL_TSRESULT CDboTSCQCtrl::Cont_Reward( CNtlTSCont* pCont, bool bDoAction /*= tr
 		return tsResult;
 	}
 
-	// 조건을 만족함
+	// Satisfies the conditions
 	if ( NTL_TSRESULT_TYPE_SUCCESS == tsResult )
 	{
-		// 유저에게 대화 출력.
-		// 그리고, 유저가 주어진 보상중 하나를 선택해서 알려줘야 함
+		// Output dialogue to the user.
+		// Additionally, the user must select one of the given rewards and notify the user.
 		sTS_KEY sKey; sKey.Init();
 		sKey.tID = tID;
 		sKey.tgID = tgID;
@@ -840,7 +840,7 @@ NTL_TSRESULT CDboTSCQCtrl::Cont_Start( CNtlTSCont* pCont, bool bDoAction /*= tru
 	sParam.SetAgency( GetParent() );
 	sParam.SetQuestShare( IsQuestShareMode() ? true : false );
 
-	// 시작 컨테이너는 클라이언트에서 먼저 실행하고 문제 없으면 서버로 검증을 요구한다
+	// The starting container runs first on the client and requests verification from the server if there are no problems.
 	NTL_TSRESULT tsResult = GetTrigger()->RunTarget( tgID, tcID, GetParent()->GetRecv(), &sParam );
 	if ( tsResult & NTL_TSRESULT_TYPE_ERROR )
 	{
@@ -848,7 +848,7 @@ NTL_TSRESULT CDboTSCQCtrl::Cont_Start( CNtlTSCont* pCont, bool bDoAction /*= tru
 		return tsResult;
 	}
 
-	// 조건을 만족함
+	// Satisfies the conditions
 	if ( NTL_TSRESULT_TYPE_SUCCESS == tsResult )
 	{
 		CNtlTSCont* pNextCont = GetTrigger()->GetGroup( tgID )->GetChildCont( pContStart->GetYesLinkID() );
@@ -858,22 +858,22 @@ NTL_TSRESULT CDboTSCQCtrl::Cont_Start( CNtlTSCont* pCont, bool bDoAction /*= tru
 			return NTL_TSRESULT_TYPE_ERROR;
 		}
 
-		// 서버에게 다음 단계로 진행해도 되는지 물어본다
+		// Ask the server if you can proceed to the next step
 		if (bDoAction)
 		{
 			unsigned int uiParam[QUEST_REWARD_SEL_MAX_CNT] = { IsQuestShareMode() ? 0 : 0xffffffff , 0xffffffff , 0xffffffff , 0xffffffff };
 			UG_Avatar_TS_Confirm_Step(tcID, pNextCont->GetID(), uiParam, GetEventType(), GetEventData());
 		}
 	}
-	// 시작 컨테이너에서 시작을 다음으로 진행 할 수 없는 경우는 무조건 No를 실행한다
+	// If the startup container cannot proceed to the next step, execute No unconditionally.
 	else if ( (tsResult & NTL_TSRESULT_TYPE_COND_CAN_PROGRESS) || (tsResult & NTL_TSRESULT_TYPE_COND_CANT_PROGRESS) )
 	{
-		// 만약 No에 연결된 링크가 있다면 실행한다
+		// If there is a link connected to No, run it.
 		CNtlTSCont* pNextCont = GetTrigger()->GetGroup( tgID )->GetChildCont( pContStart->GetNoLinkID() );
 
 		if ( pNextCont )
 		{
-			// 서버에게 다음 단계로 진행해도 되는지 물어본다
+			// Ask the server if you can proceed to the next step
 			unsigned int uiParam[QUEST_REWARD_SEL_MAX_CNT] = { IsQuestShareMode() ? 0 : 0xffffffff , 0xffffffff , 0xffffffff , 0xffffffff };
 			if (bDoAction)
 			{
@@ -897,7 +897,7 @@ NTL_TSRESULT CDboTSCQCtrl::Cont_End( CNtlTSCont* pCont, bool bDoAction /*= true*
 	NTL_TS_TG_ID tgID = ((CNtlTSGroup*)pContEnd->GetParent())->GetID();
 	NTL_TS_TG_ID tcID = pContEnd->GetID();
 
-	// 서버에게 다음 단계로 진행해도 되는지 물어본다
+	// Ask the server if you can proceed to the next step
 	if (bDoAction)
 	{
 		unsigned int uiParam[QUEST_REWARD_SEL_MAX_CNT] = { 0xffffffff , 0xffffffff , 0xffffffff , 0xffffffff };
@@ -917,7 +917,7 @@ NTL_TSRESULT CDboTSCQCtrl::Cont_Narration( CNtlTSCont* pCont, bool bDoAction /*=
 	sKey.tgID = ((CNtlTSGroup*)pContNarration->GetParent())->GetID();
 	sKey.tcID = pContNarration->GetID();
 
-	// 유저에게 나래이션 대화 출력.
+	// Output narration dialogue to the user.
 	if ( bDoAction ) TU_ShowNarrationDialog( sKey, pContNarration );
 
 	return NTL_TSRESULT_TYPE_SUCCESS;
@@ -952,7 +952,7 @@ NTL_TSRESULT CDboTSCQCtrl::Cont_Switch( CNtlTSCont* pCont, bool bDoAction /*= tr
 
 	NTL_TS_TG_ID tcID = pContSwitch->GetID();
 
-	// 서버에게 다음 단계로 진행해도 되는지 물어본다
+	// Ask the server if you can proceed to the next step
 	if (bDoAction)
 	{
 		unsigned int uiParam[QUEST_REWARD_SEL_MAX_CNT] = { 0xffffffff , 0xffffffff , 0xffffffff , 0xffffffff };
@@ -972,7 +972,7 @@ NTL_TSRESULT CDboTSCQCtrl::Cont_UnifiedNarration( CNtlTSCont* pCont, bool bDoAct
 	sKey.tgID = ((CNtlTSGroup*)pContNarration->GetParent())->GetID();
 	sKey.tcID = pContNarration->GetID();
 
-	// 유저에게 나래이션 대화 출력.
+	// Output narration dialogue to the user.
 	if ( bDoAction ) TU_ShowUnifiedNarrationDialog( sKey, pContNarration );
 
 	return NTL_TSRESULT_TYPE_SUCCESS;
@@ -989,7 +989,7 @@ void CDboTSCQCtrl::UpdateLimitTime( void )
 		if ( m_uiUpdateTimeCnt == pTimer->uiRemainTime / 1000 ) return;
 		m_uiUpdateTimeCnt = pTimer->uiRemainTime / 1000;
 
-		// 클라이언트 UI 업데이트
+		// Client UI updates
 		((CDboTSCQAgency*)GetParent())->TU_UpdateQuestProgressInfoNfy( GetTrigger()->GetID(),
 																	   GetServerEvtDataType(),
 																	   GetServerEvtData(),
@@ -1114,7 +1114,7 @@ void CDboTSCQCtrl::UpdateTSStep( void )
 		return;
 	}
 
-	// 현재 진행 중인 컨테이너가 없다는 것은 시작을 의미함
+	// No containers currently in progress means starting
 	if ( 0 == m_pCurTSP )
 	{
 		m_pCurTSP = GetTrigger()->GetGroup( NTL_TS_MAIN_GROUP_ID )->GetChildCont( START_CONTAINER_ID );
@@ -1241,7 +1241,7 @@ void CDboTSCQCtrl::UpdateTSStep( void )
 
 void CDboTSCQCtrl::ChangeTSState( unsigned int uiChangFlag )
 {
-	// 클라이언트 UI 업데이트
+	// Client UI updates
 	((CDboTSCQAgency*)GetParent())->TU_UpdateQuestStateNfy( GetTrigger()->GetID(), GetTrigger()->IsOutStateMsg(), uiChangFlag, GetCurState(), GetTitle(), GetServerEvtDataType(), GetServerEvtData() );
 
 	if ( eTS_PROG_STATE_PROGRESS_FAILED == uiChangFlag )
@@ -1250,11 +1250,11 @@ void CDboTSCQCtrl::ChangeTSState( unsigned int uiChangFlag )
 		{
 			UnregNPCCameraStopEvt();
 
-			// 서버에게 Failed 설정 상태를 전송한다
+			// Send failed setting status to server
 			UG_TS_Update_State( eTSSTATE_TYPE_ADD, eTS_SVR_STATE_FAILED );
 
-			// 실패 상태에서 퀘스트의 등록 정보가 없으면
-			// 퀘스트를 제거한다
+			// If there is no quest registration information in failed state,
+			// remove quest
 			if ( NTL_TS_TC_ID_INVALID == m_tcQuestInfo || NTL_TS_TA_ID_INVALID == m_taQuestInfo )
 			{
 				SetExitState();
@@ -1262,7 +1262,7 @@ void CDboTSCQCtrl::ChangeTSState( unsigned int uiChangFlag )
 		}
 		else
 		{
-			// 서버에게 Failed 설정 상태를 전송한다
+			// Send failed setting status to server
 			UG_TS_Update_State( eTSSTATE_TYPE_REMOVE, eTS_SVR_STATE_FAILED );
 		}
 	}
@@ -1272,11 +1272,11 @@ void CDboTSCQCtrl::ChangeTSState( unsigned int uiChangFlag )
 		{
 			UnregNPCCameraStopEvt();
 
-			// 서버에게 에러 설정 상태를 전송한다
+			// Send error setting status to server
 			UG_TS_Update_State( eTSSTATE_TYPE_ADD, eTS_SVR_STATE_ERROR );
 
-			// 에러 상태에서 퀘스트의 등록 정보가 없으면
-			// 퀘스트를 제거한다
+			// If there is no quest registration information in an error state,
+			// remove quest
 			if ( NTL_TS_TC_ID_INVALID == m_tcQuestInfo || NTL_TS_TA_ID_INVALID == m_taQuestInfo )
 			{
 				SetExitState();
@@ -1284,7 +1284,7 @@ void CDboTSCQCtrl::ChangeTSState( unsigned int uiChangFlag )
 		}
 		else
 		{
-			// 서버에게 에러 설정 해재 상태를 전송한다
+			// Send error setting cancellation status to server
 			UG_TS_Update_State( eTSSTATE_TYPE_REMOVE, eTS_SVR_STATE_ERROR );
 		}
 	}
@@ -1312,10 +1312,10 @@ void CDboTSCQCtrl::ChangeTSState( unsigned int uiChangFlag )
 			if(bUnregCam)
 				UnregNPCCameraStopEvt();
 
-			// 클라이언트 UI 업데이트
+			// Client UI updates
 			pAgency->TU_UnregQuestInfoNfy( GetTrigger()->GetID() );
 
-			// 클라이언트에게 퀘스트 종료를 알림
+			// Notify the client of the end of the quest
 			pAgency->TU_FinishQuest( TS_TYPE_QUEST_CS, GetTrigger()->GetID() );
 		}
 	}
@@ -1416,16 +1416,16 @@ void CDboTSCQCtrl::LoadQuestProgressInfo_V0( const sPROGRESS_QUEST_INFO::uDATA& 
 					m_pSelRwd = 0;
 				}
 				
-				// 클라이언트 UI 업데이트
+				// Client UI updates
 				((CDboTSCQAgency*)GetParent())->TU_RegQuestInfoNfy( GetTrigger()->GetID(), m_tcQuestInfo, m_taQuestInfo, false, GetTrigger()->IsShareQuest(), GetArea(), GetCurState(), m_uiTitle, GetGoal(), m_eSort );
 			}
 		}
 	}
 
-	// 클라이언트 UI 업데이트
+	// Client UI updates
 	((CDboTSCQAgency*)GetParent())->TU_UpdateQuestStateNfy( GetTrigger()->GetID(), GetTrigger()->IsOutStateMsg(), GetCurState(), GetCurState(), GetTitle(), GetServerEvtDataType(), GetServerEvtData() );
 
-	// 클라이언트 UI 업데이트
+	// Client UI updates
 	((CDboTSCQAgency*)GetParent())->TU_UpdateQuestProgressInfoNfy( GetTrigger()->GetID(), GetServerEvtDataType(), GetServerEvtData(), GetLimitTime() );
 
 	CNtlTSCont* pCurTSP = GetCurTSP();
@@ -1512,23 +1512,23 @@ void CDboTSCQCtrl::UpdateQuestMark( void )
 
 	//////////////////////////////////////////////////////////////////////////
 	//
-	// 이벤터 등록
+	// Event registration
 	//
 	//////////////////////////////////////////////////////////////////////////
 
-	// 1. 이벤트 엔티티를 가지고 있으면서
+	// 1. Having an event entity
 
 	CNtlTSEntity* pEntity = m_pCurTSP->GetEventEntity();
 
 	if ( pEntity )
 	{
-		// 2. 퀘스트 마크 리스트에 등록이 안되어 있으면서
+		// 2. Not registered in the quest mark list
 
 		QM_KEY Key = ((CDboTSCQAgency*)GetParent())->MakeQuestMarkKey( QMI_PROG_TYPE_EVENTER, GetTrigger()->GetID(), m_pCurTSP->GetID() );
 
 		if ( !HasQuestMark( Key ) )
 		{
-			// 3. 이벤트와 액션 실행을 제외한 현재 컨테이너 실행이 참인 경우
+			// 3. If the current container execution excluding event and action execution is true.
 
 			NTL_TS_TG_ID tgID = ((CNtlTSGroup*)m_pCurTSP->GetParent())->GetID();
 			NTL_TS_TC_ID tcID = m_pCurTSP->GetID();
@@ -1542,7 +1542,7 @@ void CDboTSCQCtrl::UpdateQuestMark( void )
 
 			if ( NTL_TSRESULT_TYPE_SUCCESS == tsResult )
 			{
-				// 4. 퀘스트 마크 리스트에 등록한다
+				// 4. Register in the quest mark list
 
 				switch ( pEntity->GetEntityType() )
 				{
@@ -1631,7 +1631,7 @@ void CDboTSCQCtrl::UpdateQuestMark( void )
 				case DBO_EVENT_TYPE_ID_COL_RGN:
 				case DBO_EVENT_TYPE_ID_RB:
 					{
-						// 이 이벤트는 미니맵에 마크를 출력하지 않는다
+						// This event does not display a mark on the minimap.
 					}
 					break;
 				}
@@ -1642,11 +1642,11 @@ void CDboTSCQCtrl::UpdateQuestMark( void )
 
 	//////////////////////////////////////////////////////////////////////////
 	//
-	// 마크 포지션 등록
+	// Mark position registration
 	//
 	//////////////////////////////////////////////////////////////////////////
 
-	// 1. 퀘스트 정보가 등록 되어 있고
+	// 1. Quest information is registered
 
 	if ( NTL_TS_TC_ID_INVALID != m_tcQuestInfo &&
 		 NTL_TS_TA_ID_INVALID != m_taQuestInfo )
@@ -1657,11 +1657,11 @@ void CDboTSCQCtrl::UpdateQuestMark( void )
 		{
 			QM_KEY Key = ((CDboTSCQAgency*)GetParent())->MakeQuestMarkKey( QMI_PROG_TYPE_MARK_POSITION, GetTrigger()->GetID(), m_tcQuestInfo );
 
-			// 2. 퀘스트 마크 리스트에 등록이 안되어 있으면서 서버 이벤트가 진행 중인 경우
+			// 2. If a server event is in progress and is not registered in the quest mark list.
 
 			if ( !HasQuestMark( Key ) && !IsCleared() )
 			{
-				// 3. 액션에 등록된 마크 포지션 정보를 등록한다
+				// 3. Register the mark position information registered in the action.
 
 				CDboTSActRegQInfo* pQInfo = (CDboTSActRegQInfo*)pEntityInfo;
 
@@ -1686,11 +1686,11 @@ void CDboTSCQCtrl::UpdateQuestMark( void )
 
 	//////////////////////////////////////////////////////////////////////////
 	//
-	// Visit 서버 이벤트 등록
+	// Visit server event registration
 	//
 	//////////////////////////////////////////////////////////////////////////
 
-	// 퀘스트 마크 업데이트
+	// Quest Mark Update
 	if ( NTL_TS_TC_ID_INVALID != GetServerEvtContainerID() &&
 		 NTL_TS_TA_ID_INVALID != GetServerEvtActionID() &&
 		 eSTOC_EVT_DATA_TYPE_VISIT == GetServerEvtDataType() )
@@ -1765,7 +1765,7 @@ void CDboTSCQCtrl::UpdateQuestMark( void )
 
 	//////////////////////////////////////////////////////////////////////////
 	//
-	// 마크 리스트에서 등록된 엔티티 제거
+	// Remove registered entity from mark list
 	//
 	//////////////////////////////////////////////////////////////////////////
 
@@ -1783,8 +1783,8 @@ void CDboTSCQCtrl::UpdateQuestMark( void )
 	{
 		((CDboTSCQAgency*)GetParent())->SplitQuestMarkKey( itRmvQMIList->first, byRmvQProgType, rmvTId, rmvTCId, byType, uiUserData1, uiUserData2 );
 
-		// 1. 이벤터 제거 - 이벤터의 경우 현재 진행중인 컨테이너 아이디와 저장되어 있는 컨테이너 아이디와
-		//					같지 않은 경우 제거한다
+		// 1. Remove event -In the case of an event, the current container ID and the stored container ID
+		//					If not equal, remove
 		if ( QMI_PROG_TYPE_EVENTER == byRmvQProgType )
 		{
 			if ( m_pCurTSP->GetID() != rmvTCId )
@@ -1793,23 +1793,23 @@ void CDboTSCQCtrl::UpdateQuestMark( void )
 			}
 		}
 
-		// 2. 마크 포지션 제거
+		// 2. Remove mark position
 		else if ( QMI_PROG_TYPE_MARK_POSITION == byRmvQProgType )
 		{
-			// 1. 퀘스트 등록 정보가 존재하지 않는 경우는 무조건 제거한다
+			// 1. If quest registration information does not exist, it is unconditionally removed.
 
 			if ( NTL_TS_TC_ID_INVALID == m_tcQuestInfo || NTL_TS_TA_ID_INVALID == m_taQuestInfo )
 			{
 				vecRmvList.push_back( itRmvQMIList->first );
 			}
 
-			// 2. 퀘스트 등록 정보를 담고 있는 컨테이너 아이디가 다르면 제거한다
+			// 2. If the container ID containing the quest registration information is different, remove it.
 			if ( m_tcQuestInfo != rmvTCId )
 			{
 				vecRmvList.push_back( itRmvQMIList->first );
 			}
 
-			// 3. 서버 이벤트가 완료 되었거나 존재하지 않는경우 제거한다
+			// 3. If the server event is completed or does not exist, remove it.
 
 			if ( IsCleared() )
 			{
@@ -1817,7 +1817,7 @@ void CDboTSCQCtrl::UpdateQuestMark( void )
 			}
 		}
 
-		// 3. Visit 서버 이벤트 제거
+		// 3. Remove Visit server event
 		else if ( QMI_PROG_TYPE_VISIT_SVR_EVENTER == byRmvQProgType )
 		{
 			if ( eSTOC_EVT_DATA_TYPE_VISIT == GetServerEvtDataType() )
@@ -1930,8 +1930,8 @@ unsigned char CDboTSCQCtrl::CheckUnregNPCCameraStop( CNtlTSCont* pNextCont, bool
 	{
 		case DBO_CONT_TYPE_ID_CONT_GCOND:
 			{
-				// GCond는 처음 호출 시점에서만 진행 가부를 판단하며
-				// 이후 호출에서는 처음 호출이 되었을때 다시 판단한다
+				// GCond determines whether to proceed only when it is first called.
+				// In subsequent calls, the decision is made again when the first call was made.
 				if ( !bFirstCall ) return eNPC_CAMERA_DIR_TYPE_CONTINUE;
 
 				NTL_TSRESULT tsResult = Cont_GCond( pNextCont, false );
@@ -1975,8 +1975,8 @@ unsigned char CDboTSCQCtrl::CheckUnregNPCCameraStop( CNtlTSCont* pNextCont, bool
 			break;
 		case DBO_CONT_TYPE_ID_CONT_START:
 			{
-				// GStart는 처음 호출 시점에서만 진행 가부를 판단하며
-				// 이후 호출에서는 처음 호출이 되었을때 다시 판단한다
+				// GStart determines whether to proceed only when it is first called.
+				// In subsequent calls, the decision is made again when the first call was made.
 				if ( !bFirstCall ) return eNPC_CAMERA_DIR_TYPE_CONTINUE;
 
 				NTL_TSRESULT tsResult = Cont_Start( pNextCont, false );
@@ -2051,8 +2051,8 @@ unsigned char CDboTSCQCtrl::CheckUnregNPCCameraStop( CNtlTSCont* pNextCont, bool
 			break;
 		case DBO_CONT_TYPE_ID_CONT_REWARD:
 			{
-				// Reward는 처음 호출 시점에서만 진행 가부를 판단하며
-				// 이후 호출에서는 처음 호출이 되었을때 다시 판단한다
+				// Reward determines whether to proceed only at the time of the first call.
+				// In subsequent calls, the decision is made again when the first call was made.
 				if ( !bFirstCall ) return eNPC_CAMERA_DIR_TYPE_CONTINUE;
 
 				NTL_TSRESULT tsResult = Cont_Reward( pNextCont, false );
@@ -2301,7 +2301,7 @@ void CDboTSCQCtrl::GU_Avatar_TS_Confirm_Step( WORD wResultCode, NTL_TS_TC_ID tcC
 		return;
 	}
 
-	// 현재 컨테이너 실행
+	// Currently running container
 	sCQRUN_PARAM sParam;
 	sParam.SetControl( this );
 	sParam.SetAgency( GetParent() );
@@ -2312,12 +2312,12 @@ void CDboTSCQCtrl::GU_Avatar_TS_Confirm_Step( WORD wResultCode, NTL_TS_TC_ID tcC
 	{
 	case DBO_CONT_TYPE_ID_CONT_GCOND:
 		{
-			// 선 검사를 하므로 이곳에서 트리거를 Run 할 필요 없음
+			// Since line inspection is performed, there is no need to run the trigger here.
 		}
 		break;
 	case DBO_CONT_TYPE_ID_CONT_GACT:
 		{
-			// 에러 상태로 분기시에는 액션을 실행하지 않는다
+			// When branching in an error state, no action is executed.
 			if ( pNextCont->GetID() != ((CDboTSContGAct*)pCurCont)->GetErrorLinkID() )
 			{
 				tsResult = GetTrigger()->RunTarget( NTL_TS_MAIN_GROUP_ID, pCurCont->GetID(), GetParent()->GetRecv(), &sParam );
@@ -2326,17 +2326,17 @@ void CDboTSCQCtrl::GU_Avatar_TS_Confirm_Step( WORD wResultCode, NTL_TS_TC_ID tcC
 		break;
 	case DBO_CONT_TYPE_ID_CONT_USERSEL:
 		{
-			// 실행 시킬 엔티티가 존재하지 않음
+			// There is no entity to execute
 		}
 		break;
 	case DBO_CONT_TYPE_ID_CONT_REWARD:
 		{
-			// 선 검사를 하므로 이곳에서 트리거를 Run 할 필요 없음
+			// Since line inspection is performed, there is no need to run the trigger here.
 
-			// 유저가 확인을 누른 경우...
+			// If the user clicks OK...
 			if ( ((CDboTSContReward*)pCurCont)->GetNextLinkID() == pNextCont->GetID() )
 			{
-				// 사용자에게 유저가 보상을 받았음을 알려줌
+				// Notifies the user that he or she has received a reward
 				TU_AcceptReward( NTL_TS_MAIN_GROUP_ID, tcCurId, GetTitle(), GetTrigger()->IsOutStateMsg() );
 
 				MatchTimingData_PostReward();
@@ -2345,7 +2345,7 @@ void CDboTSCQCtrl::GU_Avatar_TS_Confirm_Step( WORD wResultCode, NTL_TS_TC_ID tcC
 		break;
 	case DBO_CONT_TYPE_ID_CONT_START:
 		{
-			// 선 검사를 하므로 이곳에서 트리거를 Run 할 필요 없음
+			// Since line inspection is performed, there is no need to run the trigger here.
 			SetCleared( false );
 
 			BuildEventNPCInProgressQuest( m_mapNPCIdxList );
@@ -2399,14 +2399,14 @@ void CDboTSCQCtrl::GU_Avatar_TS_Confirm_Step( WORD wResultCode, NTL_TS_TC_ID tcC
 		break;
 	case DBO_CONT_TYPE_ID_CONT_NARRATION:
 		{
-			// 실행 시킬 엔티티가 존재하지 않음
+			// There is no entity to execute
 		}
 		break;
 	case DBO_CONT_TYPE_ID_CONT_PROPOSAL:
 		{
-			// 실행 시킬 엔티티가 존재하지 않음
+			// There is no entity to execute
 
-			// 사용자에게 유저가 퀘스트를 정상적으로 수락했음을 알려줌
+			// Notifies the user that the user has successfully accepted the quest
 			CDboTSContProposal* pCurCont = (CDboTSContProposal*)GetTrigger()->GetGroup( NTL_TS_MAIN_GROUP_ID )->GetChildCont( tcCurId );
 			if ( NTL_TS_TC_ID_INVALID != tcNextId && pCurCont && pCurCont->GetOkLink() == tcNextId )
 			{
@@ -2419,13 +2419,13 @@ void CDboTSCQCtrl::GU_Avatar_TS_Confirm_Step( WORD wResultCode, NTL_TS_TC_ID tcC
 
 	case DBO_CONT_TYPE_ID_CONT_SWITCH:
 		{
-			// 실행 시킬 엔티티가 존재하지 않음
+			// There is no entity to execute
 		}
 		break;
 
 	case DBO_CONT_TYPE_ID_CONT_UNIFIED_NARRATION:
 		{
-			// 실행 시킬 엔티티가 존재하지 않음
+			// There is no entity to execute
 		}
 		break;
 	}
@@ -2448,7 +2448,7 @@ void CDboTSCQCtrl::GU_Avatar_TS_Confirm_Step( WORD wResultCode, NTL_TS_TC_ID tcC
 		}
 	}
 
-	// 다음 컨테이너로 TSP를 이동한다
+	// Move the TSP to the next container
 	MoveTSP( pCurCont, pNextCont, true );
 	
 	// disable by daneos: to avoid "mob hunt complete" and other quests shown multiple times.
@@ -2476,23 +2476,23 @@ void CDboTSCQCtrl::GU_Avatar_TS_GiveUp_Quest( WORD wResultCode )
 
 void CDboTSCQCtrl::GU_Avatar_TS_SToC_Event_Start_NFY( NTL_TS_TC_ID tcId, NTL_TS_TA_ID taId )
 {
-	// Local SToC event 시작
+	// Start Local SToC event
 	sSTOC_EVT_DB_DATA sSvrEvtData; sSvrEvtData.Init();
 	sSvrEvtData.tcId = tcId;
 	sSvrEvtData.taId = taId;
 	SetSToCEvtDBData( sSvrEvtData, true );
 
-	// 클라이언트 UI 업데이트
+	// Client UI updates
 	((CDboTSCQAgency*)GetParent())->TU_UpdateQuestProgressInfoNfy( GetTrigger()->GetID(), GetServerEvtDataType(), GetServerEvtData(), GetLimitTime() );
 }
 
 void CDboTSCQCtrl::GU_Avatar_TS_SToC_Event_End_NFY( NTL_TS_TC_ID tcId, NTL_TS_TA_ID taId )
 {
-	// Local SToC event 종료
+	// Local SToC event ends
 	sSTOC_EVT_DB_DATA sSvrEvtData; sSvrEvtData.Init();
 	SetSToCEvtDBData( sSvrEvtData, false );
 
-	// 클라이언트 UI 업데이트
+	// Client UI updates
 	((CDboTSCQAgency*)GetParent())->TU_UpdateQuestProgressInfoNfy( GetTrigger()->GetID(), GetServerEvtDataType(), GetServerEvtData(), GetLimitTime() );
 }
 
@@ -2607,7 +2607,7 @@ void CDboTSCQCtrl::GU_Avatar_TS_SToC_Event_Update_NFY( NTL_TS_TC_ID tcId, NTL_TS
 		return;
 	}
 
-	// 클라이언트 UI 업데이트
+	// Client UI updates
 	((CDboTSCQAgency*)GetParent())->TU_UpdateQuestProgressInfoNfy( GetTrigger()->GetID(), GetServerEvtDataType(), GetServerEvtData(), GetLimitTime() );
 }
 
@@ -2639,8 +2639,8 @@ void CDboTSCQCtrl::GU_TS_Update_State( unsigned char byType, unsigned short wTSS
 		break;
 	}
 
-	// 에러 상태에서 퀘스트의 등록 정보가 없으면
-	// 퀘스트를 제거한다
+	// If there is no quest registration information in an error state,
+	// remove quest
 	if ( (NTL_TS_TC_ID_INVALID == m_tcQuestInfo || NTL_TS_TA_ID_INVALID == m_taQuestInfo) &&
 		 (IsError() || IsFailed() ) )
 	{
@@ -2648,7 +2648,7 @@ void CDboTSCQCtrl::GU_TS_Update_State( unsigned char byType, unsigned short wTSS
 	}
 	else
 	{
-		// 클라이언트 UI 업데이트
+		// Client UI updates
 		((CDboTSCQAgency*)GetParent())->TU_UpdateQuestStateNfy( GetTrigger()->GetID(), GetTrigger()->IsOutStateMsg(), uiUpdatedQuestFlag, GetCurState(), GetTitle(), GetServerEvtDataType(), GetServerEvtData() );
 	}
 }
@@ -3266,7 +3266,7 @@ void CDboTSCQCtrl::UT_ShowRewardDialog( sTS_KEY& sKey, int nSelRwdIdx, bool bCan
 		}
 		else
 		{
-			// NPC 강제 카메라 이동에 대한 처리
+			// Handling NPC forced camera movement
 			UnregNPCCameraStopEvt();
 		}
 	}
@@ -3465,7 +3465,7 @@ void CDboTSCQCtrl::UT_ShowNPCConv( sTS_KEY& sKey )
 
 	SetSvrComAfterClientWait( false );
 
-	// NPC 강제 카메라 이동에 대한 처리
+	// Handling NPC forced camera movement
 	unsigned char byResult = CheckUnregNPCCameraStop( m_pCurTSP, true );
 
 	if ( byResult & eNPC_CAMERA_DIR_TYPE_STOP )
@@ -3480,7 +3480,7 @@ void CDboTSCQCtrl::TU_RegisterQuestInfo( sTS_KEY& sKey, CDboTSActRegQInfo* pAct 
 
 	SYNC_WITH_MIDDLE_BEGIN( sKey.tgID, sKey.tcID, sKey.taID );
 
-	// 기존에 등록된 Quest info 가 존재하면 클라이언트 UI 업데이트
+	// Update client UI if existing registered Quest info exists
 	if ( NTL_TS_TC_ID_INVALID != m_tcQuestInfo && NTL_TS_TA_ID_INVALID != m_taQuestInfo )
 	{
 		((CDboTSCQAgency*)GetParent())->TU_UnregQuestInfoNfy( sKey.tID );
@@ -3540,7 +3540,7 @@ void CDboTSCQCtrl::TU_RegisterQuestInfo( sTS_KEY& sKey, CDboTSActRegQInfo* pAct 
 		}
 	}
 
-	// 클라이언트 UI 업데이트
+	//Update client UI
 	((CDboTSCQAgency*)GetParent())->TU_RegQuestInfoNfy( sKey.tID, sKey.tcID, sKey.taID, true, GetTrigger()->IsShareQuest(), GetArea(), GetCurState(), GetTitle(), GetGoal(), GetSortType() );
 
 	((CDboTSCQAgency*)GetParent())->TU_RegisterQuestInfo( sKey, this );
@@ -3611,7 +3611,7 @@ void CDboTSCQCtrl::UT_ShowObjConv( sTS_KEY& sKey )
 
 	SetSvrComAfterClientWait( false );
 
-	// NPC 강제 카메라 이동에 대한 처리
+	// Handling NPC forced camera movement
 	unsigned char byResult = CheckUnregNPCCameraStop( m_pCurTSP, true );
 
 	if ( byResult & eNPC_CAMERA_DIR_TYPE_STOP )

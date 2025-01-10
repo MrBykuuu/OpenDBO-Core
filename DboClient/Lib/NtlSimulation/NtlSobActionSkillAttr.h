@@ -6,7 +6,7 @@
 * Date			: 2006. 8. 30	
 * Abstract		: Simulation object skill attribute base class
 *****************************************************************************
-* Desc          : NtlSobSkillAttr에서 분리 
+* Desc          : Separate from NtlSobSkillAttr
 *
 *****************************************************************************/
 

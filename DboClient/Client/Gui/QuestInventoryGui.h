@@ -83,7 +83,7 @@ private:
 	gui::CSlot	m_slotClickPrevInven;
 	gui::CSlot	m_slotClickDiscardButton;
 	
-	gui::CDialog*		m_pBack;			// 아이콘 선택영역.
+	gui::CDialog*		m_pBack;			//Icon selection area.
 	gui::CButton*		m_pbtnDiscard;
 	gui::CButton*		m_pNextInvenBtn;
 	gui::CButton*		m_pPrevInvenBtn;

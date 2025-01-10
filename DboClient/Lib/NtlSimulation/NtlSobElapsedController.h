@@ -22,8 +22,8 @@ class CNtlSobElapsedController
 public:
 
 	SERIAL_HANDLE m_hSerialId;		/** control simulation object serial */
-	RwReal m_fCurrTime;				/** 현재 흐른 시간 */ 
-	RwReal m_fLifeTime;				/** control 시간 */
+	RwReal m_fCurrTime;				/** time currently passed */ 
+	RwReal m_fLifeTime;				/** control time */
 	RwReal m_fWeightValue;			/** elapsed weight value */
 	
 	RwBool m_bFinish;

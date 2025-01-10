@@ -1,10 +1,10 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobElapsedController.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// simulation
+// Simulation
 #include "NtlSob.h"
 #include "NtlSobManager.h"
 #include "NtlSobProxy.h"
@@ -84,7 +84,7 @@ void CNtlSobElapsedControlManager::Reset(void)
 	ListReserved::iterator reserit;
 	for(reserit = m_listReserved.begin(); reserit != m_listReserved.end(); reserit++)
 	{
-		// 아래의 delete pController를 NTL_DELETE로 바꾸지 말아 주세요. Memory Pool을 사용합니다.
+		// Please do not change delete pController below to NTL_DELETE. Use Memory Pool.
 		// by Jang HyungSuk
 
 		delete (*reserit).pController;
@@ -120,8 +120,8 @@ void CNtlSobElapsedControlManager::AddController(CNtlSobElapsedController *pCont
 
 CNtlSobElapsedController* CNtlSobElapsedControlManager::CreateController(CNtlSob *pSobObj, RwReal fLifeTime, RwReal fWeightValue, RwReal fDelayTime)
 {
-	// 아래의 new CNtlSobElapsedController 에서 new를 NTL_NEW로 바꾸지 말아 주세요. memory pool 사용합니다.
-	// by Jang HyungSuk
+	// Please do not replace new with NTL_NEW in new CNtlSobElapsedController below. Use memory pool.
+	// by Jang Hyung-Suk
 
 	CNtlSobElapsedController *pController = new CNtlSobElapsedController;
 
@@ -164,8 +164,8 @@ void CNtlSobElapsedControlManager::CreateController(CNtlSob *pSobObj, CNtlSob *p
 	{
 		CNtlSobElapsedController *pController = (*referit).second;
 		
-		// 아래의 new CNtlSobElapsedController 에서 new를 NTL_NEW로 바꾸지 말아 주세요. memory pool 사용합니다.
-		// by Jang HyungSuk
+		// Please do not replace new with NTL_NEW in new CNtlSobElapsedController below. Use memory pool.
+		// by Jang Hyung-Suk
 
 		CNtlSobElapsedController *pCopyController = new CNtlSobElapsedController;
 		fLifeTime = pController->m_fLifeTime - pController->m_fCurrTime;
@@ -196,7 +196,7 @@ void CNtlSobElapsedControlManager::DeleteController(CNtlSobElapsedController *pC
 	{
 		if((*reserit).pController == pController)
 		{
-			// 아래의 delete pController를 NTL_DELETE로 바꾸지 말아 주세요. Memory Pool을 사용합니다.
+			// Please do not change delete pController below to NTL_DELETE. Use Memory Pool.
 			// by Jang HyungSuk
 			delete pController;
 			m_listReserved.erase(reserit);
@@ -214,7 +214,7 @@ void CNtlSobElapsedControlManager::DeleteController(CNtlSobElapsedController *pC
 
 	pController->Exit();
 
-	// 아래의 delete pController를 NTL_DELETE로 바꾸지 말아 주세요. Memory Pool을 사용합니다.
+	// Please do not change delete pController below to NTL_DELETE. Use Memory Pool.
 	// by Jang HyungSuk
 
 	delete pController;
@@ -271,7 +271,7 @@ void CNtlSobElapsedControlManager::UpdateController(RwReal fElapsed)
 		pSobObj = GetNtlSobManager()->GetSobObject(pController->GetSeiralID());
 		if(pSobObj == NULL)
 		{
-			// 아래의 delete pController를 NTL_DELETE로 바꾸지 말아 주세요. Memory Pool을 사용합니다.
+			// Please do not change delete pController below to NTL_DELETE. Use Memory Pool.
 			// by Jang HyungSuk
 
 			delete pController;
@@ -285,7 +285,7 @@ void CNtlSobElapsedControlManager::UpdateController(RwReal fElapsed)
 			{
 				pController->Exit();
 
-				// 아래의 delete pController를 NTL_DELETE로 바꾸지 말아 주세요. Memory Pool을 사용합니다.
+				// Please do not change delete pController below to NTL_DELETE. Use Memory Pool.
 				// by Jang HyungSuk
 
 				delete pController;

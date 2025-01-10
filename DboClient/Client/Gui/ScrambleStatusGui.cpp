@@ -2,7 +2,7 @@
 #include "ScrambleStatusGui.h"
 
 
-// shared
+// Shared
 #include "DojoTable.h"
 #include "TableContainer.h"
 #include "NtlDojo.h"
@@ -10,20 +10,20 @@
 #include "TextAllTable.h"
 #include "NtlLuaState.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 #include "NtlSoundManager.h"
 #include "NtlSoundEventGenerator.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEmblemMaker.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLApi.h"
 #include "NtlSLEvent.h"
 #include "NtlSobAvatar.h"
@@ -31,7 +31,7 @@
 #include "NtlSLLogic.h"
 #include "NtlSLLuaGlue.h"
 
-// client
+// Client
 #include "SideDialogManager.h"
 #include "InfoWndManager.h"
 #include "DboEventGenerator.h"
@@ -183,13 +183,13 @@ RwBool CScrambleStatusGui::Create()
 		NTL_RETURN(FALSE);
 
 
-	// 컴포넌트를 배치
+	// Place components
 	SetComponent_of_Team();
 	OnMove(0, 0);
 
 	GetNtlGuiManager()->AddUpdateFunc( this );
 
-	// sig
+	// Signals
 	m_slotMove			= m_pThis->SigMove().Connect( this, &CScrambleStatusGui::OnMove );	
 	m_slotMouseMove		= m_pThis->SigMouseMove().Connect( this, &CScrambleStatusGui::OnMouseMove );
 	m_slotMouseLeave	= m_pThis->SigMouseLeave().Connect( this, &CScrambleStatusGui::OnMouseLeave );
@@ -336,10 +336,10 @@ VOID CScrambleStatusGui::SetComponent_of_Team()
 	}
 
 
-	// 실제 월드에서 공격팀이 북쪽에 위치한다. GUI도 공격팀의 컴포넌트를 위에 위치한다.
+	// In the real world, the attacking team is located in the north. The GUI also places the attack team's components on top.
 	if( SCRAMBLE_TEAM_OFFENCE == pSCRAMBLE_INFO->eAvatarTeam )
 	{
-		// 우리팀
+		// Our team
 		m_pMyTeamEmblem			->SetPositionfromParent(8, 34);
 		m_pMyTeam_GuildName		->SetPosition(59, 49);
 		m_pMyTeam_PeoplePanel	->SetPosition(9, 81);
@@ -353,7 +353,7 @@ VOID CScrambleStatusGui::SetComponent_of_Team()
 		m_srfMyTeam_GauseBack		.SetPositionfromParent(58, 108);
 		m_srfMyTeam_NoEmblem		.SetPositionfromParent(9, 35);		
 
-		// 상대팀
+		// opposing team
 		m_pEnemyTeamEmblem			->SetPositionfromParent(8, 204);
 		m_pEnemyTeam_GuildName		->SetPosition(59, 221);
 		m_pEnemyTeam_PeoplePanel	->SetPosition(9, 251);
@@ -369,7 +369,7 @@ VOID CScrambleStatusGui::SetComponent_of_Team()
 	}
 	else
 	{
-		// 상대팀
+		// opposing team
 		m_pEnemyTeamEmblem			->SetPositionfromParent(8, 34);
 		m_pEnemyTeam_GuildName		->SetPosition(59, 49);
 		m_pEnemyTeam_PeoplePanel	->SetPosition(9, 81);
@@ -383,7 +383,7 @@ VOID CScrambleStatusGui::SetComponent_of_Team()
 		m_srfEnemyTeam_GauseBack	.SetPositionfromParent(58, 108);
 		m_srfEnemyTeam_NoEmblem		.SetPositionfromParent(9, 35);
 
-		// 우리팀
+		// Our team
 		m_pMyTeamEmblem			->SetPositionfromParent(8, 204);
 		m_pMyTeam_GuildName		->SetPosition(59, 221);
 		m_pMyTeam_PeoplePanel	->SetPosition(9, 251);
@@ -481,11 +481,11 @@ VOID CScrambleStatusGui::SetEmblem(RwBool bEnemyTeamTeam, sEmblemFactor* pEmblem
 
 VOID CScrambleStatusGui::InitSealState()
 {
-	// Seal(인장의 GUI 순서)
-	// 1					2
+	// Seal (GUI sequence for seals)
+	// 1 2
 	//			3
-	// 4					5
-	// 이 순서에 맞게 인장 오브젝트 테이블의 인덱스 순서와 배치 순서를 기획쪽과 맞추기로 했다
+	// 4 5
+	// In accordance with this order, we decided to match the index order and arrangement order of the seal object table with the planning side.
 
 
 	CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
@@ -512,10 +512,10 @@ VOID CScrambleStatusGui::InitSealState()
 		sSCRAMBLE_SEAL_INFO*	pSCRAMBLE_SEAL_INFO = it_SrambleSeal->second;
 		eDBO_TEAM				eDBOTeam			= Logic_GetScrambleTeam(pSCRAMBLE_SEAL_INFO->eState);
 
-		// 상태 설정
+		// state settings
 		SetSealState(byIndex, eDBOTeam);
 
-		// 툴팁 설정
+		// Tooltip settings
 		if( pObjectTable )
 		{
 			TBLIDX			idxObject		= it_SrambleSeal->first;
@@ -535,7 +535,7 @@ VOID CScrambleStatusGui::InitSealState()
 		++byIndex;
 	}
 
-	// 도장 쟁탈전 대기중 연출 시작
+	// Production begins while waiting for the dojo battle
 	if( eDBO_DOJO_STATUS_READY == pSCRAMBLE_INFO->eDojoState )
 	{
 		CNtlLuaState* pLuaState = GetLuaState();
@@ -688,7 +688,7 @@ VOID CScrambleStatusGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 {	
 	CRectangle rtScreen = m_pThis->GetScreenRect();
 
-	// 상대편 엠블렘
+	// Opponent emblem
 	if( m_srfEnemyTeam_NoEmblem.PtInRect(rtScreen.left + nX, rtScreen.top + nY) )
 	{
 		if( INFO_WINDOW_TYPE_DOJO_NAME_IN_UPPER_EMBLEM != m_eInfoWindowType )
@@ -840,7 +840,7 @@ VOID CScrambleStatusGui::HandleEvents( RWS::CMsg &msg )
 
 				if( SCRAMBLE_TEAM_OFFENCE == pSCRAMBLE_INFO->eAvatarTeam )
 				{
-					// 우리 유파 정보
+					// Our school information
 					m_pMyTeam_PeopleCount	->Format("%d / %d", pDOJO_SCRAMBLE_POINT->byAttCount, DBO_DOJO_SCRAMBLE_MAX_MEMBER);
 					m_pMyTeam_SealCount		->SetText(pDOJO_SCRAMBLE_POINT->byAttSealCount);
 					swprintf_s(awcBuffer, 64, L"%d", pDOJO_SCRAMBLE_POINT->dwAttCharge);
@@ -848,7 +848,7 @@ VOID CScrambleStatusGui::HandleEvents( RWS::CMsg &msg )
 					m_pMyTeam_PointGause->SetPos(pDOJO_SCRAMBLE_POINT->dwAttCharge);
 					m_pMyTeam_Point->SetText((RwUInt32)pDOJO_SCRAMBLE_POINT->dwAttPoint);
 					
-					// 상대 유파 정보
+					// Relative school information
 					m_pEnemyTeam_PeopleCount->Format("%d / %d", pDOJO_SCRAMBLE_POINT->byDefCount, DBO_DOJO_SCRAMBLE_MAX_MEMBER);
 					m_pEnemyTeam_SealCount	->SetText(pDOJO_SCRAMBLE_POINT->byDefSealCount);
 					swprintf_s(awcBuffer, 64, L"%d", pDOJO_SCRAMBLE_POINT->dwDefCharge);
@@ -858,7 +858,7 @@ VOID CScrambleStatusGui::HandleEvents( RWS::CMsg &msg )
 				}
 				else
 				{
-					// 상대 유파 정보
+					// Relative school information
 					m_pEnemyTeam_PeopleCount	->Format("%d / %d", pDOJO_SCRAMBLE_POINT->byAttCount, DBO_DOJO_SCRAMBLE_MAX_MEMBER);
 					m_pEnemyTeam_SealCount		->SetText(pDOJO_SCRAMBLE_POINT->byAttSealCount);
 					swprintf_s(awcBuffer, 64, L"%d", pDOJO_SCRAMBLE_POINT->dwAttCharge);
@@ -866,7 +866,7 @@ VOID CScrambleStatusGui::HandleEvents( RWS::CMsg &msg )
 					m_pEnemyTeam_PointGause->SetPos(pDOJO_SCRAMBLE_POINT->dwAttCharge);
 					m_pEnemyTeam_Point->SetText((RwUInt32)pDOJO_SCRAMBLE_POINT->dwAttPoint);
 
-					// 우리 유파 정보
+					// Our school information
 					m_pMyTeam_PeopleCount->Format("%d / %d", pDOJO_SCRAMBLE_POINT->byDefCount, DBO_DOJO_SCRAMBLE_MAX_MEMBER);
 					m_pMyTeam_SealCount	->SetText(pDOJO_SCRAMBLE_POINT->byDefSealCount);
 					swprintf_s(awcBuffer, 64, L"%d", pDOJO_SCRAMBLE_POINT->dwDefCharge);

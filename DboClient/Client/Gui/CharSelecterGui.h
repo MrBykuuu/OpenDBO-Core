@@ -1,33 +1,33 @@
 /******************************************************************************
-* File			: CharSelecterGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2007. 10. 15
-* Abstract		:
+*File           : CharSelecterGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : October 15, 2007
+*Abstract		:
 *****************************************************************************
-* Desc			: 자신의 캐릭터중 플레이할 캐릭터를 선택하기 위한 GUI
+*Desc           : GUI for selecting a character to play among your own characters
 *****************************************************************************/
 
 #pragma once
 
 #include <list>
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// share
+// Share
 #include "NtlSharedDef.h"
 
-// gui
+// Gui
 #include "gui_button.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "Inputhandler.h"
 
-// dbo
+// Dbo
 #include "Windowby3.h"
 
 
@@ -120,12 +120,12 @@ protected:
 	gui::CSlot			m_slotPaint;
 	gui::CSlot			m_slotPostPaint;
 
-	CWindowby3			m_Background;	///< 배경 상단
+	CWindowby3			m_Background;	///< Top of background
 
 	CSurfaceGui			m_srfInfoBack;		///<
 
-	gui::CButton*		m_pCharDelButton;	///< 캐릭터 삭제 버튼
-	gui::CButton*		m_pCharRecoveryButton;///< 캐릭터 복구 버튼
+	gui::CButton*		m_pCharDelButton;	///< Character delete button
+	gui::CButton*		m_pCharRecoveryButton;///< Character recovery button
 
 	gui::CStaticBox*	m_pTitleStatic;
 
@@ -133,5 +133,5 @@ protected:
 
 	RwUInt8				m_byFocusIndex;
 
-	sCharSlot			m_CharSlot[NTL_MAX_COUNT_USER_CHAR_SLOT];///< 캐릭터 슬롯
+	sCharSlot			m_CharSlot[NTL_MAX_COUNT_USER_CHAR_SLOT];///< Character slot
 };

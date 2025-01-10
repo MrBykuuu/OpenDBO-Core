@@ -3,7 +3,7 @@
 * Author		: Haesung, Cho
 * Copyright		: (주)NTL
 * Date			: 2008. 11. 24
-* Abstract		: 천하제일 무도회 관전자 개인전 블루팀 GUI
+* Abstract		: World's Best Martial Arts Spectator Individual Exhibition Blue Team GUI
 *****************************************************************************
 * Desc         : 
 *****************************************************************************/

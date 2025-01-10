@@ -114,7 +114,7 @@ RwBool CAltarGui::Create()
 
 	m_pWorldConceptDBC = (CNtlWorldConceptDBC*)GetNtlWorldConcept()->GetWorldConceptController(WORLD_PLAY_DRAGONBALL_COLLECT);
 
-	// [주문]
+	// [order]
 	WCHAR buf[32] = {0,};
 	swprintf_s(buf, L"[%s]", GetDisplayStringManager()->GetString("DST_DBC_KEYWORD"));
 	m_pStaticKeyword->SetText(buf);
@@ -147,7 +147,7 @@ VOID CAltarGui::Update(RwReal fElapsed)
 
 	BYTE byIncAlpha = (BYTE)(fElapsed * 255.0f);
 
-	// 드래곤볼 장착시 나타날 패널의 Fade 효과
+	// Fade effect on the panel that appears when the dragon ball is equipped
     RwInt32 nDBKind = (RwInt32)m_pWorldConceptDBC->GetDBKind();
 	for(int i = 0; i < 7; ++i)
 	{
@@ -208,11 +208,11 @@ RwInt32 CAltarGui::SwitchDialog( bool bOpen )
 
 		Logic_PlayGUISound ( GSD_SYSTEM_DRAGOBALL_UI_CLOSE );
 
-		if(!m_bSpawnDragon)	// 용신을 소환하지 않고 취소했다.
+		if(!m_bSpawnDragon)	// It was canceled without summoning the Dragon God.
 		{
 			GetNtlWorldConcept()->RemoveWorldPlayConcept(WORLD_PLAY_DRAGONBALL_COLLECT);
 			
-			//현재 세팅되어있는 드래곤볼 아이템들의 Lock을 풀어준다
+			//Unlocks the currently set Dragon Ball items.
 			for(int i = 0; i < 7; ++i)
 			{
 				RemoveDragonBallSlot(i);
@@ -237,11 +237,11 @@ VOID CAltarGui::HandleEvents( RWS::CMsg &pMsg )
 				CNtlWorldConceptDBC* pWorldConceptDBC = (CNtlWorldConceptDBC*)GetNtlWorldConcept()->GetWorldConceptController(WORLD_PLAY_DRAGONBALL_COLLECT);
 				pWorldConceptDBC->ResetRemainTime();
 
-                // 추가 UI들 인스턴스 생성
+                // Creating instances of additional UIs
                 CDBCNarrationGui::CreateInstance();
                 CDBCRewardGUI::CreateInstance();                
 
-                // 용신 소환
+                // Summon the Dragon God
 				SpawnDragon();					
 			}
 			else
@@ -254,7 +254,7 @@ VOID CAltarGui::HandleEvents( RWS::CMsg &pMsg )
 
 void CAltarGui::CreateInstance()
 {
-	// 싱글톤 생성과 함께 다이얼로그 매니저에 등록한다.
+	// Create a singleton and register it in the dialog manager.
 	if(!m_pInstance)
 	{
 		m_pInstance = NTL_NEW CAltarGui("AltarGui");
@@ -264,7 +264,7 @@ void CAltarGui::CreateInstance()
 			NTL_DELETE(m_pInstance);			
 		}
 
-		// Gui Manager에 추가한다.
+		// Add to Gui Manager.
 		GetNtlGuiManager()->AddGui(m_pInstance);
 		GetDialogManager()->RegistDialog(DIALOG_DBC_ALTAR, m_pInstance, &CAltarGui::SwitchDialog);
 
@@ -284,7 +284,7 @@ void CAltarGui::DeleteInstance()
 
 RwInt32 CAltarGui::GetChildSlotIdx( RwInt32 nX, RwInt32 nY ) 
 {
-	// Raid용 슬롯이 좀더 크기 때문에, 편의상 레전드리용 슬롯크기로 체크한다.
+	// Since the slot for Raid is larger, for convenience, check the slot size for Legendary.
 	for(RwInt32 i = 0; i < 7; ++i)
 	{
         if(m_DBSlot[DRAGON_BALL_TYPE_LEGENDARY][i].m_rt.PtInRect(nX, nY))
@@ -296,13 +296,13 @@ RwInt32 CAltarGui::GetChildSlotIdx( RwInt32 nX, RwInt32 nY )
 
 VOID CAltarGui::OnClickExitBtn( gui::CComponent* pComponent ) 
 {
-	// Lock이 걸려있으면 풀어준다.
+	// If it is locked, release it.
 	if(API_GetSLPacketLockManager()->Lock(GU_DRAGONBALL_CHECK_RES))
 		API_GetSLPacketLockManager()->Unlock(GU_DRAGONBALL_CHECK_RES);
 
 	GetDialogManager()->CloseDialog(DIALOG_DBC_ALTAR);		
 
-	// Lock을건 드래곤볼들을 모두 lock을 푼다.
+	// Unlock all locked Dragon Balls.
 	for(int i = 0; i < 7; ++i)
 	{
 		RemoveDragonBallSlot(i);
@@ -311,31 +311,31 @@ VOID CAltarGui::OnClickExitBtn( gui::CComponent* pComponent )
 
 VOID CAltarGui::OnClickOKBtn( gui::CComponent* pComponent ) 
 {
-	// 한번 클릭해서 패킷의 응답을 기다리는중이면 클릭되지 않는다.
+	// If you click once and are waiting for a packet response, it will not be clicked.
 	if(API_GetSLPacketLockManager()->IsLock(GU_DRAGONBALL_CHECK_RES))
 		return;
 
 	if(m_nDBCount < 7)
 	{
-		//드래곤볼의 개수가 부족하다는 에러 메시지 출력				
+		//An error message appears indicating that the number of dragon balls is insufficient.				
 		GetAlarmManager()->AlarmMessage( "DST_DBC_NOT_ENOUGH" );
 		return;
 	}
 
 	if(m_pInKeyword->GetLength() <= 0)
 	{
-		//주문을 입력하라는 에러 메시지 출력				
+		//An error message is displayed asking you to enter an order.				
 		GetAlarmManager()->AlarmMessage( "DST_DBC_NOT_KEYWORD" );
 		return;
 	}
 
-	// 서버에 검증 패킷을 날린다.	
+	// Send a verification packet to the server.	
 	sITEM_POSITION_DATA dbItemData[7];
     RwInt32 nDBKind = (RwInt32)m_pWorldConceptDBC->GetDBKind();
 
 	for(int i = 0; i < 7; ++i)
 	{
-        // 서버와 클라이언트간의 가방 인덱스에는 1의 차이가 난다.
+        // There is a difference of 1 in the bag index between the server and the client.
         dbItemData[i].hItem		= m_DBSlot[nDBKind][i].m_pSobItem->GetSerialID();
         dbItemData[i].byPlace	= (BYTE)m_DBSlot[nDBKind][i].m_pSobItem->GetParentItemSlotIdx() + 1;
         dbItemData[i].byPos		= (BYTE)m_DBSlot[nDBKind][i].m_pSobItem->GetItemSlotIdx();
@@ -346,12 +346,12 @@ VOID CAltarGui::OnClickOKBtn( gui::CComponent* pComponent )
 
 VOID CAltarGui::OnMove(RwInt32 iOldX, RwInt32 iOldY)
 {
-	// 슬롯의 위치를 하드 코딩한다	
+	// Hardcode the slot location	
     for(int i = 0; i < DRAGON_BALL_TYPE_COUNT; ++i)
     {
         if(i != DRAGON_BALL_TYPE_LEGENDARY)
         {
-            // 34 사이즈용
+            // For size 34
             m_DBSlot[i][0].m_rt.SetRectWH(160, 88, DB_NORMAL_ICON_SIZE, DB_NORMAL_ICON_SIZE);
             m_DBSlot[i][1].m_rt.SetRectWH(280, 85, DB_NORMAL_ICON_SIZE, DB_NORMAL_ICON_SIZE);
             m_DBSlot[i][2].m_rt.SetRectWH(351, 182, DB_NORMAL_ICON_SIZE, DB_NORMAL_ICON_SIZE);
@@ -362,7 +362,7 @@ VOID CAltarGui::OnMove(RwInt32 iOldX, RwInt32 iOldY)
         }
         else    
         {
-            // 42 사이즈용
+            // For size 42
             m_DBSlot[i][0].m_rt.SetRectWH(156, 84, DB_RAID_ICON_SIZE, DB_RAID_ICON_SIZE);
             m_DBSlot[i][1].m_rt.SetRectWH(275, 81, DB_RAID_ICON_SIZE, DB_RAID_ICON_SIZE);
             m_DBSlot[i][2].m_rt.SetRectWH(347, 176, DB_RAID_ICON_SIZE, DB_RAID_ICON_SIZE);
@@ -392,12 +392,12 @@ VOID CAltarGui::OnMouseUp( const CKey& key )
 	if(nClickIdx == -1)
 		return;
 
-	// 왼쪽 버튼으로 장착, 오른쪽 부착으로 탈착
+	// Attached with the left button, detached with the right attachment.
 	if(key.m_nID == UD_LEFT_BUTTON)
 	{
         if(GetIconMoveManager()->IsActive() && GetDialogManager()->IsMode(DIALOGMODE_UNKNOWN))            
 		{
-			// 이미 장착되어 있으면 곧바로 리턴		
+			// If already installed, return immediately		
             RwInt32 nDBKind = (RwInt32)m_pWorldConceptDBC->GetDBKind();
             if(nDBKind != DRAGON_BALL_TYPE_NONE && m_DBSlot[nDBKind][nClickIdx].m_eDBType != E_DRAGONBALL_NONE)
                 return;
@@ -430,23 +430,23 @@ VOID CAltarGui::OnMouseUp( const CKey& key )
 					return;
                 }
 
-                // 현재 놓여 있는것과 같은 타입이 아닐때
+                // When it is not the same type as the one currently in place
                 if(m_pWorldConceptDBC->GetDBKind() != byType &&
                    m_pWorldConceptDBC->GetDBKind() != DRAGON_BALL_TYPE_NONE)
                 {
-                    // 에러메시지 (같은 타입의 드래곤볼만 놓을수 있습니다)
+                    // Error message (only dragon balls of the same type can be placed)
                     GetAlarmManager()->AlarmMessage( "DST_DBC_NOT_SAME" );
                     return;
                 }
 
-                // 이미 같은 번호의 드래곤볼이 놓여있을때
+                // When a dragon ball with the same number is already placed
                 if(IsExistSameType((EDragonBallType)byNumber))
                 {
                     GetAlarmManager()->AlarmMessage( "DST_DBC_NOT_SAME_NUMBER");
                     return;
                 }       
 
-                // 현재 재단 타입을 설정
+                // Set the current foundation type
                 m_pWorldConceptDBC->SetDBKind((eDRAGON_BALL_TYPE)byType);
                 SetDragonBallSlot(nClickIdx, (EDragonBallType)byNumber);
 
@@ -463,7 +463,7 @@ VOID CAltarGui::OnMouseUp( const CKey& key )
 		}
 		else
 		{
-			// 장착되어 있는 드래곤볼을 해제한다.
+			// Disarms the equipped Dragon Ball.
 			RemoveDragonBallSlot(nClickIdx);
 		}		
 	}
@@ -486,11 +486,11 @@ VOID CAltarGui::OnPaint()
 
 VOID CAltarGui::SetDragonBallSlot( RwInt32 nSlotIdx, EDragonBallType eDragonBallType ) 
 {
-	// 제단 UI 모양을 변경한다
+	// Change the appearance of the altar UI
 	m_apPnlLight[nSlotIdx]->Show(TRUE);
 	m_apPnlLight[nSlotIdx]->SetAlpha(0);
 
-	// Item Lock을 건다.
+	// Apply Item Lock.
 	CNtlSobItem* pItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( GetIconMoveManager()->GetSrcSerial() ) );
 	CDboEventGenerator::DialogEvent( DIALOGEVENT_BEGIN_UPGRADE_ITEM_IN_BAG, PLACE_ITEMUPGRADE, PLACE_BAG, pItem->GetParentItemSlotIdx(), pItem->GetItemSlotIdx() );
 	m_pWorldConceptDBC->AddDragonBall(pItem);
@@ -528,7 +528,7 @@ VOID CAltarGui::SetDragonBallSlot( RwInt32 nSlotIdx, EDragonBallType eDragonBall
 
 	
 
-	// 드래곤볼이 7개가 장착되면 Default 소원을 표시한다.
+	// When 7 Dragon Balls are equipped, the default wish is displayed.
 	if(m_nDBCount == 7)
 	{
 		m_pPnlInputBack->Show(TRUE);
@@ -575,13 +575,13 @@ VOID CAltarGui::RemoveDragonBallSlot( RwInt32 nSlotIdx )
 		m_nDBCount = 0;
 	}
 
-	// 드래곤볼이 다 제거되면 NONE 상태로 되돌린다
+	// When all dragon balls are removed, they return to NONE state.
 	if(m_nDBCount == 0)
 	{
 		m_pWorldConceptDBC->SetDBKind(DRAGON_BALL_TYPE_NONE);
 	}
 
-	// 입력했던 주문을 취소한다.
+	// Cancel the entered order.
 	m_pPnlInputBack->Show(FALSE);
 	m_pStaticKeyword->Show(FALSE);
 	m_pInKeyword->Show(FALSE);
@@ -602,19 +602,19 @@ VOID CAltarGui::SpawnDragon()
 {
 	m_bSpawnDragon = TRUE;
 
-	//일반 채팅으로 메시지 전송	
+	//Send message via regular chat	
 	std::wstring strFilterText = GetChattingFilter()->Filtering( m_pInKeyword->GetText() );
     GetDboGlobal()->GetChatPacketGenerator()->SendChatMsgShout( strFilterText.c_str() );
     
-	// -> World Concept에서 처리
+	// -> Processed in World Concept
     CNtlWorldConceptDBC* pWorldConceptDBC = (CNtlWorldConceptDBC*)GetNtlWorldConcept()->GetWorldConceptController(WORLD_PLAY_DRAGONBALL_COLLECT);
     if(pWorldConceptDBC)
     {
         pWorldConceptDBC->ChangeState(WORLD_DBC_NIGHT_ON);        
-        pWorldConceptDBC->SetMyDragon(TRUE);                    // SpawnDragon() 함수가 호출된것은 내가 소환한 용신이라는 뜻이다.
+        pWorldConceptDBC->SetMyDragon(TRUE);                    // The fact that the SpawnDragon() function is called means that I have summoned a dragon god.
     }
 
-	// 화면상의 모든 UI들을 닫는다.		
+	// Close all UI on the screen.		
 	GetDialogManager()->CloseNotDefaultDialog();
 }
 

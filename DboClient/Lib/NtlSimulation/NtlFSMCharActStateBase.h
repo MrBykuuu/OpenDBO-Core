@@ -2,7 +2,7 @@
  *
  * File			: NtlFSMStateBase.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2006. 2. 13	
  * Abstract		: Finite state machine character action base class
  *****************************************************************************
@@ -84,11 +84,11 @@ protected:
 	virtual RwUInt32 EventProcSobFainting(RWS::CMsg &pMsg);
 	virtual RwUInt32 EventProcSobWeightTime(RWS::CMsg &pMsg);
 
-	// 컨디션 처리 관련
-    virtual RwUInt32 EventSobTransformSequela(RWS::CMsg& pMsg);             ///< 초사이야인 전용 변신 휴유증 처리
-    virtual RwUInt32 EventProcAfterEffectRemainTime(RWS::CMsg& pMsg);       ///< 변신 후유증 이벤트 처리
-    virtual RwUInt32 EventProcCondConfused(RWS::CMsg& pMsg);                ///< 혼란 상태 처리
-    virtual RwUInt32 EventProcCondTerror(RWS::CMsg& pMsg);                  ///< 공포 상태 처리
+	//Condition processing related
+    virtual RwUInt32 EventSobTransformSequela(RWS::CMsg& pMsg);             ///< Handling of aftereffects of transformation for Super Saiyan only
+    virtual RwUInt32 EventProcAfterEffectRemainTime(RWS::CMsg& pMsg);       ///< Processing of transformation aftereffects event
+    virtual RwUInt32 EventProcCondConfused(RWS::CMsg& pMsg);                ///< Handling confusion
+    virtual RwUInt32 EventProcCondTerror(RWS::CMsg& pMsg);                  ///< Handle fear state
 
 
 protected:
@@ -103,14 +103,14 @@ public:
 	virtual void Destroy(void);
 
 	/**
-    *  state의 update/event 처리 함수.
+    *  State update/event processing function.
     */
 	virtual void Enter(void);
 	virtual void Exit(void);
 	virtual RwUInt32 HandleEvents(RWS::CMsg &pMsg);
 
 	/**
-    *  state clone 함수.
+    *  state clone function.
     */
 	virtual void Clone(CNtlFSMStateBase *pState);
 };

@@ -2,15 +2,15 @@
 *
 * File			: NtlGuildWarehouse.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2008. 2. 27
 * Abstract		: Simulation Guild Warehouse class
 *****************************************************************************
-* Desc          : 길드 창고는 길드장과 부길드장이 이용할 수 있다.
-*				  길드 창고는 한번에 한명만이 이용할 수 있다.
+* Desc          : The guild warehouse can be used by the guild leader and deputy guild leader.
+*                 Only one person can use the guild warehouse at a time.
 *				  
-*				  길드 창고에 있는 아이템은 단순 데이터로만 존재하며
-*				  가방, 스카우터, 장비 슬롯 등에 옮겨야먄 Sob 객체가 된다
+*                 Items in the guild warehouse exist only as simple data.
+*                 It becomes a Sob object when moved to a bag, scouter, equipment slot, etc.
 *****************************************************************************/
 
 #ifndef __NTL_GUILD_WAREHOUSE_H__
@@ -39,7 +39,7 @@ struct sGuildWarehouseSlot
 	RwUInt8				byCurDur;
 	RwBool				bNeedToIdentify;
 	RwUInt8				byGrade;
-	RwUInt8				byBattleAttribute;		// 진기맹여락 cf) NtlBattle.h eBATTLE_ATTRIBUTE 
+	RwUInt8				byBattleAttribute;		// Exciting pleasure cf) NtlBattle.h eBATTLE_ATTRIBUTE 
 	RwUInt8				byRestrictState;
 	sITEM_OPTION_SET	sOptionSet;
 };
@@ -77,8 +77,8 @@ protected:
 	void			ItemStackMoveEventHandler(RWS::CMsg &msg);
 
 protected:
-	SERIAL_HANDLE	m_hNPC;									///< 상대하고 있는 NPC
-	RwUInt32		m_uiZenny;								///< 제니
+	SERIAL_HANDLE	m_hNPC;									///< NPC you are dealing with
+	RwUInt32		m_uiZenny;								///< zenny
 
 	sGuildWarehouseSlot	aWarehouseSlot[NTL_MAX_GUILD_BANK_COUNT][NTL_MAX_GUILD_ITEM_SLOT];
 };

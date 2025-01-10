@@ -1,7 +1,7 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobHTBSkill.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSobHTBSkillAttr.h"
 #include "NtlSobHTBSkillIcon.h"
@@ -35,7 +35,7 @@ RwBool CNtlSobHTBSkill::Create(void)
 		NTL_RETURN(FALSE);
 	}
 
-	// class name ¼³Á¤.
+	//Set class name.
 	SetClassName(SLCLASS_NAME_HTBSKILL);
 
 	m_pIcon->Create(); 

@@ -23,8 +23,8 @@
 #define DEFAULT_SCREEN_WIDTH	1024	
 #define DEFAULT_SCREEN_HEIGHT	768
 
-#define EXTRA_SCREEN_WIDTH		1280		// cj�� ��û�� ���ؼ�.
-#define EXTRA_SCREEN_HEIGHT		1024		// cj�� ��û�� ���ؼ�.
+#define EXTRA_SCREEN_WIDTH		1280		// At cj's request.
+#define EXTRA_SCREEN_HEIGHT		1024		// At cj's request.
 
 #define DEFAULT_CAMERA_NEAR		0.5f
 #define DEFAULT_CAMERA_FAR		1024.0f
@@ -65,7 +65,7 @@
 
 #define MAX_VIRTUAL_SERVER_PACKET_SIZE		2048
 #define MAX_MSG_BOX_STRING_LEN				512
-#define CHAT_MSG_BUFFER_LEN					512		/** Ŭ���̾�Ʈ ��ü ��� */
+#define CHAT_MSG_BUFFER_LEN					512		/** Client's own use */
 
 //-----------------------------------------------------------------------------
 // Message sender name
@@ -88,8 +88,8 @@
 
 //-----------------------------------------------------------------------------
 // Flash Notify Invalid index && file name
-#define dDELAY_BEFORE_VISIBLE_MESSAGEBOX		7.f		// �޼��� �ڽ��� �߱������� �ִ� �����ð�
-#define dREMAIN_FOR_SERVER_REPLY				60.f	// ���� ������ ��ٸ��� �ִ� �ð�
+#define dDELAY_BEFORE_VISIBLE_MESSAGEBOX		7.f		// Delay time until the message box appears
+#define dREMAIN_FOR_SERVER_REPLY				60.f	// Maximum time to wait for server response
 
 //-----------------------------------------------------------------------------
 // guild contribution zenny
@@ -113,9 +113,9 @@
 
 enum EMsgBoxResult
 {
-	MBR_OPENCANCELED	= -1,				/// �޽����ڽ� ������ü�� ���. �޽��� �ڽ��� �ߺ��� ���.
-	MBR_CANCEL			= 0,				/// ���.
-	MBR_OK				= 1,				/// Ȯ��, ����,	
+	MBR_OPENCANCELED	= -1,				/// Opening the message box itself is canceled. When there are duplicate message boxes.
+	MBR_CANCEL			= 0,				/// cancellation.
+	MBR_OK				= 1,				/// confirmation, approval,	
 };
 
 struct sMsgBoxCustomBtn
@@ -139,59 +139,59 @@ struct sMsgBoxCustomBtn
 
 //-----------------------------------------------------------------------------
 
-///< avooo : ǥ�õǴ� �켱������ ���� �����Ͽ���.
-///< peessi : Display String Define�� ���ǵ� ���ڿ��� ������ ��ġ�ؾ���.
+///< avooo: Organized according to displayed priority.
+///< peessi: The order of strings defined in Display String Define must also match.
 enum EIconPopupWork
 {
-	PMW_USE = 0,						    ///< ����ϱ�
-	PMW_OPEN,								///< (����)����
-	PMW_EQUIP,								///< �����ϱ�
-	PMW_CANCEL_EQUIP,						///< ��������
-	PMW_VIEW,								///< ����
-	PMW_PICKUP,								///< ����
-	PMW_STOP_USE,							///< �������
-	PMW_PULLOUT,							///< ������
-	PMW_SELL,								///< �ȱ�
-	PMW_DIVIDE,								///< ������
-	PMW_CLEAR,								///< ����
-	PMW_DELETE,								///< ������
-	PMW_PARTY_CREATE,						///< ��Ƽ �����
-	PMW_PARTY_INVITE,						///< ��Ƽ �ʴ�
-	PMW_PARTY_LEADER_CHANGE,				///< ��Ƽ�� ����
-	PMW_PARTY_KICK_OUT,						///< ��Ƽ ����
-	PMW_PARTY_LEAVE,						///< ��Ƽ Ż��
-	PMW_PVP_REQUEST_FIGHT,					///< ��� ��û
-	PMW_USER_TRADE,							///< ���� Ʈ���̵�
-	PMW_GUILD_INVITE,						///< ��� �ʴ�
-	PMW_GUILD_CHANGE_MASTER,				///< ����� �̾�
-	PMW_GUILD_APPOINT_SECOND_MASTER,		///< �α���� �Ӹ�
-	PMW_GUILD_DISAPPOINT_SECOND_MASTER,		///< �α���� �Ӹ� ����
-	PMW_GUILD_KICK_OUT,						///< ��� �߹�
-	PMW_GUILD_POST,							///< ���� ������
-	PMW_FRIEND_ADD,							///< ģ�� �߰�
-	PMW_FOLLOW,								///< ���� ����
-	PMW_SEND_WHISPER,
-	PMW_CANCEL,								///< ���
-	PMW_SET_SHARETARGET_1,					// 1�� ����Ÿ�� ����
-	PMW_SET_SHARETARGET_2,					// 2�� ����Ÿ�� ����
-	PMW_SET_SHARETARGET_3,					// 3�� ����Ÿ�� ����
-	PMW_SET_SHARETARGET_4,					// 4�� ����Ÿ�� ����
-	PMW_SET_SHARETARGET_5,					// 5�� ����Ÿ�� ����
-	PMW_UNSET_SHARETARGET_1,				// 1�� ����Ÿ�� ����
-	PMW_UNSET_SHARETARGET_2,				// 2�� ����Ÿ�� ����
-	PMW_UNSET_SHARETARGET_3,				// 3�� ����Ÿ�� ����
-	PMW_UNSET_SHARETARGET_4,				// 4�� ����Ÿ�� ����
-	PMW_UNSET_SHARETARGET_5,				// 5�� ����Ÿ�� ����
-	PMW_PARTY_MENU_SWITCH_MEMBER,			///< ��Ƽ �ɹ�â ����ġ
-	PMW_PARTY_MENU_SWITCH_MEMBER_BUFF,		///< ��Ƽ �ɹ�â ���� ����ġ
-	PMW_PARTY_DUNGEON_INIT,					///< ���� �ʱ�ȭ
-	PMW_PARTY_DUNGEON_NORMAL,				///< ���� ���̵� ����
-	PMW_PARTY_DUNGEON_HARD,					///< ���� ���̵� �����
-	PMW_PARTY_DUNGEON_LEGENDARY,
-	PMW_PARTY_DIVIDE_PICKUP_PERSON,			///< �ݴ� ��� ȹ��
-	PMW_PARTY_DIVIDE_EQUAL,					///< �Ȱ��� ������
-	PMW_PARTY_DIVIDE_ORDER,					///< �����Ƿ� �й�
-	PMW_PARTY_GRADE_ITEM,					///< ��޺� �����Ƿ� �й�
+	PMW_USE = 0,						    ///< Use
+	PMW_OPEN,								///<Open (bag)
+	PMW_EQUIP,								///< Installation
+	PMW_CANCEL_EQUIP,						///< Unequipped
+	PMW_VIEW,								///< View
+	PMW_PICKUP,								///< furniture
+	PMW_STOP_USE,							///< Discontinue use
+	PMW_PULLOUT,							///< Cancel registration
+	PMW_SELL,								///< sell
+	PMW_DIVIDE,								///< divide
+	PMW_CLEAR,								///< Empty
+	PMW_DELETE,								///< Throw away
+	PMW_PARTY_CREATE,						///< Create a party
+	PMW_PARTY_INVITE,						///< Party invitation
+	PMW_PARTY_LEADER_CHANGE,				///< Party leader delegation
+	PMW_PARTY_KICK_OUT,						///< party canceled
+	PMW_PARTY_LEAVE,						///< Leave the party
+	PMW_PVP_REQUEST_FIGHT,					///< Request for sparring
+	PMW_USER_TRADE,							///< User Trade
+	PMW_GUILD_INVITE,						///<Guild invitation
+	PMW_GUILD_CHANGE_MASTER,				///< Handover of guild leader
+	PMW_GUILD_APPOINT_SECOND_MASTER,		///< Appointment of deputy guild leader
+	PMW_GUILD_DISAPPOINT_SECOND_MASTER,		///< Vice-guild leader appointment canceled
+	PMW_GUILD_KICK_OUT,						///<Expulsion from the guild
+	PMW_GUILD_POST,							///< Send mail
+	PMW_FRIEND_ADD,							///< Add friend
+	PMW_FOLLOW,								///<Follow						    
+	PMW_SEND_WHISPER,                       ///< Send whisper
+	PMW_CANCEL,								///< Cancel
+	PMW_SET_SHARETARGET_1,					// Set sharing target number 1
+	PMW_SET_SHARETARGET_2,					// Set sharing target number 2
+	PMW_SET_SHARETARGET_3,					// Set sharing target number 3
+	PMW_SET_SHARETARGET_4,					// Set sharing target number 4
+	PMW_SET_SHARETARGET_5,					// Set sharing target number 5
+	PMW_UNSET_SHARETARGET_1,				// Remove sharing target number 1
+	PMW_UNSET_SHARETARGET_2,				// Remove sharing target number 2
+	PMW_UNSET_SHARETARGET_3,				// Remove shared target number 3
+	PMW_UNSET_SHARETARGET_4,				// Remove sharing target number 4
+	PMW_UNSET_SHARETARGET_5,				// Remove sharing target number 5
+	PMW_PARTY_MENU_SWITCH_MEMBER,			///< Party member window switch
+	PMW_PARTY_MENU_SWITCH_MEMBER_BUFF,		///< Party member window buff switch
+	PMW_PARTY_DUNGEON_INIT,					///< Dungeon reset
+	PMW_PARTY_DUNGEON_NORMAL,				///< Dungeon difficulty: average
+	PMW_PARTY_DUNGEON_HARD,					///< Dungeon Difficulty: Difficult
+	PMW_PARTY_DUNGEON_LEGENDARY,            ///< Dungeon difficulty: legendary
+	PMW_PARTY_DIVIDE_PICKUP_PERSON,			///< Acquire the picker
+	PMW_PARTY_DIVIDE_EQUAL,					///< Divide equally
+	PMW_PARTY_DIVIDE_ORDER,					///< Distribute in order
+	PMW_PARTY_GRADE_ITEM,					///< Distributed in order by grade
 	PMW_PARTY_LOOTING_BY_DICE,
 	PMW_PARTY_LOOTING_BY_DICE_BY_EQUIPPED,
 	PMW_PARTY_GRADE_NORMAL,
@@ -227,8 +227,8 @@ enum EPlace
 	PLACE_QUESTBAG,
 	PLACE_ITEMUPGRADE,
 	PLACE_WAREHOUSE,
-	PLACE_PRIVATESHOP,				///< ���λ���
-	PLACE_PRIVATESHOP_TRADEBOX,		///< ���λ��� ���� (���� ����)
+	PLACE_PRIVATESHOP,				///< Private store
+	PLACE_PRIVATESHOP_TRADEBOX,		///< Private store negotiation (price adjustment)
 	PLACE_GUILD_WAREHOUSE,
 	PLACE_DOJO_UPRAGE,
 	PLACE_DOGI,
@@ -294,7 +294,7 @@ enum ECharacterStageState
 
 	CHAR_STATE_BEGIN,
 	
-	CHAR_STATE_SERVER_INFORMAION,		// server information ���� ������ ��.
+	CHAR_STATE_SERVER_INFORMAION,		// Server information Retrieving information.
 	CHAR_STATE_SERVER_ENTER,
 	CHAR_STATE_SERVER_IDLE,
 	CHAR_STATE_SERVER_CHANGE,
@@ -305,8 +305,8 @@ enum ECharacterStageState
 	CHAR_STATE_MAKE_EXIT,
 	CHAR_STATE_MAKE_REQUEST,
 
-	CHAR_STATE_SELECT_INFOMATION,		// Channel Infomation ���� ������ ��
-	CHAR_STATE_SELECT_INFOMATION_FROM_SERVER_LIST,		// ���� ����Ʈ ȭ�鿡�� ä�� ���� ��û��	// 13 on tw
+	CHAR_STATE_SELECT_INFOMATION,		// Channel Information Retrieving information
+	CHAR_STATE_SELECT_INFOMATION_FROM_SERVER_LIST,		// Requesting channel information on server list screen	// 13 on tw
 	CHAR_STATE_SELECT_ENTER,	// 21 in tw
 	CHAR_STATE_SELECT_IDLE,		// on tw its 19
 	CHAR_STATE_SELECT_DEL_CHAR,
@@ -384,7 +384,7 @@ struct sMsgChangeItemBattleAttribute
 };
 
 /**
-* \brief UNION - ���� ����
+* \brief UNION -Caution when using
 */
 struct sMsgBoxData
 {
@@ -464,9 +464,9 @@ struct sDetailTime
 	RwUInt8				byMinute;
 	RwUInt8				bySecond;
 
-	std::wstring		strDay;			///< ����
+	std::wstring		strDay;			///< Day of the week
 
-	RwUInt8				byDay_of_Year;	///< �� ���� �� ��° ���ΰ�
+	RwUInt8				byDay_of_Year;	///< What day of the year is it?
 };
 
 struct sWorldPickInfo_for_Cursor

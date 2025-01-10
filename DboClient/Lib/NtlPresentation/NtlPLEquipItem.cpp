@@ -98,7 +98,7 @@ void CNtlPLEquipItem::AddItem(CNtlPLItem *pItem, RwBool bAttach)
 	EQUIP_ITEM_LIST_ITER it = m_listItem.begin();
 	EItemEquipSlotType	eEquipSlotType	= pItem->GetEquipSlotType();
 
-	// Body는 Slot에 하나만 장착이 가능 하다.
+	// Only one body can be installed in a slot.
 	for(; it != m_listItem.end(); ++it)
 	{
 		CNtlPLItem *plistItem = *it;
@@ -209,7 +209,7 @@ void CNtlPLEquipItem::Destroy()
 	}
 	m_mapDefaultItem.clear();
 
-	//Item 관련 Instance는 Simulation 쪽에서 해제를 한다.
+	//Item-related instances are released on the Simulation side.
 	m_listItem.clear();
 
 	if( m_pBaseFaceTexture != NULL)

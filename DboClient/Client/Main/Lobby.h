@@ -1,17 +1,17 @@
 /******************************************************************************
-* File			: Lobby.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2009. 8. 6
-* Abstract		: 
-* Update		: 
+*File			: Lobby.h
+*Author		    : Hong SungBock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2009. 8. 6
+*Abstract		: 
+*Update		    : 
 *****************************************************************************
-* Desc			: 실제 본 게임전까지의 로비 데이터를 관리한다
+*Desc			: Manages lobby data up to the actual game.
 *****************************************************************************/
 
 #pragma once
 
-// share
+// Share
 #include "NtlCharacter.h"
 #include "NtlCSArchitecture.h"
 
@@ -25,9 +25,9 @@ typedef BYTE		SERVER_HANDLE;
 
 struct sLOBBY_CHARACTER
 {
-	sPC_SUMMARY					tSummary;				///< 캐릭터 정보
-	RwBool						bReservatedDelete;		///< 삭제 대기 여부
-	RwReal						fTime_util_Deletion;	///< 삭제까지 남은 시간
+	sPC_SUMMARY					tSummary;				///< Character information
+	RwBool						bReservatedDelete;		///< Whether to wait for deletion
+	RwReal						fTime_util_Deletion;	///< Time remaining until deletion
 
 	sLOBBY_CHARACTER()
 	:bReservatedDelete(FALSE)
@@ -48,7 +48,7 @@ public:
 	VOID				Destroy();	
 
 
-	// 서버
+	// server
 	VOID				SetServerInfo(sDBO_GAME_SERVER_FARM_INFO* pServerInfo);
 	VOID				RefreshServerInfo(eDBO_SERVER_STATUS eStatus, RwUInt32 uiUseRate);
 
@@ -57,7 +57,7 @@ public:
 	eDBO_SERVER_STATUS	GetServerStatus();
 	RwUInt32			GetServerUseRate();
 
-	// 채널
+	// channel
 	VOID				SetChannelInfo(RwUInt8 byCount, sDBO_GAME_SERVER_CHANNEL_INFO* pChannelInfo);	
 	VOID				SetSelectedChannelIndex(RwUInt8 byIndex);
 
@@ -65,12 +65,12 @@ public:
 	RwUInt8				GetChannelCount();
 	sDBO_GAME_SERVER_CHANNEL_INFO*	GetChannel(RwUInt8 byIndex);
 
-	// 보유한 캐릭터
+	// characters you have
 	VOID				SetCharacterInfo(RwUInt8 byCount, sPC_SUMMARY* pPC_SUMMARY);
 	VOID				SetDeletingCharcterInfo(sDELETE_WAIT_CHARACTER_INFO* pDELETE_WAIT_CHARACTER_INFO);
 
 	RwBool				AddCharacter(sPC_SUMMARY* pSummary);
-	RwUInt8				RemoveCharacter(CHARACTERID charID);		///< 지운 캐릭터의 슬롯 인덱스를 반환, 지우지 않았다면 INVALID_BYTE 반환
+	RwUInt8				RemoveCharacter(CHARACTERID charID);		///< Returns the slot index of the deleted character, if not deleted, returns INVALID_BYTE
 
 	VOID				SetSelectedCharacterIndex(RwUInt8 byIndex);
 	VOID				SetLoadedLastCharacter(RwBool bLoaded);
@@ -87,14 +87,14 @@ public:
 	RwBool				IsLoadedLastCharacter();
 
 protected:
-	// server
+	// Server
 
 	SERVER_HANDLE				hServer;
 	WCHAR						awcServerName[NTL_MAX_SIZE_SERVER_FARM_NAME_UNICODE + 1];
 	eDBO_SERVER_STATUS			eServerState;
 	RwUInt32					uiUseRate;
 
-	//channel
+	//Channel
 
 	RwUInt8						bySelectedChannelIndex;
 	RwUInt8						byChannelCount;

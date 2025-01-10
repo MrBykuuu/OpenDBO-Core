@@ -2,7 +2,7 @@
 *
 * File			: NtlSLEventFunc.h
 * Author		: HyungSuk, Jang
-* Copyright	: (주)NTL
+* Copyright	    : (주)NTL
 * Date			: 2005. 9. 01	
 * Abstract		: Simulation layer event function
 *****************************************************************************
@@ -54,11 +54,11 @@ public:
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	static void WorldChange(RwBool bWorldChange);
-	static void CreateWorld(RwBool bCreate);            ///< 월드가 생성되거나 소멸될때 이벤트를 발생
+	static void CreateWorld(RwBool bCreate);            ///< Occurs an event when the world is created or destroyed
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
-	* avatar/camera 이동 및 회전
+	* avatar/camera movement and rotation
 	*/
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -106,7 +106,7 @@ public:
 	static void ActionScreenShot(const std::string& strFileName);
 	static void ActionSkillSelectMode(bool bSelect, SERIAL_HANDLE hSerialId);
 
-    // 액션 아이콘을 이용한 액션 (AvatarController에서 한번 걸러져서 이벤트를 보낸다)
+    // Action using action icon (event is sent once filtered from AvatarController)
     static void ActionFuncSitAndStand();
     static void ActionFuncBasicAttack();
     static void ActionFuncAssist();
@@ -123,7 +123,7 @@ public:
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//---------------------------------------------------------
-	// input에 관한 event
+	// event related to input
 
 	static void SobShowNfy(SERIAL_HANDLE hSerialId, RwBool bVisible);
 
@@ -142,32 +142,32 @@ public:
 	static void SobGotFocus(SERIAL_HANDLE hSerialId);
 	static void SobLostFocus(SERIAL_HANDLE hSerialId);
 
-	// 커뮤니티 타겟 선택/해제 이벤트
+	// Community target selection/deactivation event
 	static void CommuTargetSelect(CHARACTERID targetID, SERIAL_HANDLE hSerialId, WCHAR* wchName, ECommuTargetType type);
 	static void CommuTargetRelease(SERIAL_HANDLE hSerialId);
 
-	static void BotCaution_Nfy(SERIAL_HANDLE hSerialId);            ///< 몹이 날 발각했을때의 이벤트 발생    
-	static void BotHelpMe_Nfy(SERIAL_HANDLE hSerialId, RwBool bisRequester);    ///< 몹이 도움을 요청할때 발생하는 이벤트
+	static void BotCaution_Nfy(SERIAL_HANDLE hSerialId);            ///< Event occurs when a mob detects me    
+	static void BotHelpMe_Nfy(SERIAL_HANDLE hSerialId, RwBool bisRequester);    ///< Event that occurs when a mob asks for help
 
 
-	/// 공유 타겟 선택/해제 이벤트
+	/// Share target selection/removal event
 	static void ShareTargetMarking(SERIAL_HANDLE hSerialId, RwUInt8 bySlot);
 	static void ShareTargetRelease(SERIAL_HANDLE hSerialId);
 
-    /// 타겟 마크 선택/해제 이벤트
+    /// Target mark selection/release event
     static void SobTargetMarkSelect(SERIAL_HANDLE hSerialId);
     static void SobTargetMarkRelease(SERIAL_HANDLE hSerialId);
 
     static void AvatarTargetStateChange(void);
 
-    // 천하제일 무도회 칭호 
+    // World's Best Martial Arts Title 
 	static void TenkaichiMarking(SERIAL_HANDLE hSerialID, BYTE byType);
 
 	//
 	static void SobEventTitleEffect(SERIAL_HANDLE hSerialID, bool bCreate, const char* pchBone, const char* pchEffect);
 
 	//---------------------------------------------------------
-	// create/delete에 관한 함수.
+	// Functions related to create/delete.
 
 	static void* SobAvatarCreate(RwUInt32 uiClassId, SERIAL_HANDLE hSerialId, sCHARSTATE *pCharState, RwBool bUIAvatarCreate = FALSE);
 
@@ -220,7 +220,7 @@ public:
 	static void SobPetSkillInfo(RwUInt8 bySkillCount, const sSKILL_INFO_PET* pSkillInfoPet);
 
 	//---------------------------------------------------------
-	// move에 관한 함수.
+	// Function regarding move.
 	static void SobMove(SERIAL_HANDLE hSerialId, RwUInt8 byMoveFlags, RwUInt8 byFormFlag, RwV3d vCurrLoc, RwV3d vDir, RwUInt32 uiTimeStamp);
     static void SobMoveSync(SERIAL_HANDLE hSerialId, RwV3d& vCurLoc, RwV3d& vCurDir, DWORD dwTimeStamp);
 	static void SobSplineMove(SERIAL_HANDLE hSerialId, RwBool bGroundCheck, RwBool bRunCheck, RwChar *pSplineName, RwV3d vStartPos);
@@ -240,7 +240,7 @@ public:
 	static void SobAirAccel(SERIAL_HANDLE hSerialId, RwUInt8 byMoveFlag, RwUInt8 byMoveDirection, RwV3d& vLoc, RwV3d& vDir);
 	
 	//---------------------------------------------------------
-	// object item에 관한 함수.
+	// Function regarding object item.
 	static void SobItemAdd(SERIAL_HANDLE hSerialId, SERIAL_HANDLE hItemSerialId, RwUInt32 uiItemTblId, 
 		sITEM_OPTION_SET* sOptionSet, RwUInt8 byPlace, RwUInt8 bySlotIdx, RwUInt8 byStackCount,
 		RwUInt8 byRank, RwUInt8 byGrade, RwUInt8 byDur, RwUInt8 byMaxDur, RwBool bNeedToIdentify, RwUInt8 byBattleAttribute,
@@ -305,11 +305,11 @@ public:
 	static void EventBattleDungeonRewardFinish();
 
 	//---------------------------------------------------------
-	// object item에 관한 함수.
+	// Function regarding object item.
 	static void SobDeleteQuickSlotIcon(SERIAL_HANDLE hSerialId);
 
 	//---------------------------------------------------------
-	// object Warehouse item에 관한 함수.
+	// Function regarding object warehouse item.
 	static void SobWarehouseUpdate(RwUInt32 uiMessageType, RwUInt32 uiSerial, RwUInt32 uiValue = 0 , RwInt32 iValue2 = 0);
 
 	static void SobWarehouseItemCreate(RwUInt8 byItemCount, void* pData);
@@ -328,7 +328,7 @@ public:
 		SERIAL_HANDLE hDestSerial, RwUInt8 byDestPlace, RwUInt8 byDestSlotIdx, RwUInt8 byDestStackCount);
 
 	//---------------------------------------------------------
-	// object quest item에 관한 함수.
+	// Function regarding object quest item.
 	static void SobQuestItemAdd(SERIAL_HANDLE hSerialId, RwUInt32 uiQuestItemTblId, RwUInt8 bySlotIdx, RwUInt8 byStackCount);
 
 	static void SobAvatarQuestItemMove(SERIAL_HANDLE hSerialId, RwUInt8 ucSrcSlotIdx, RwUInt32 uiSrcTblIdx, RwUInt8 ucDestSlotIdx, RwUInt32 uiDestTblIdx);
@@ -337,8 +337,8 @@ public:
 
 	static void SobQuestItemUpdate(SERIAL_HANDLE hSerialId, RwUInt8 ucSlotIdx, RwUInt8 ucCount);
 	//---------------------------------------------------------
-	// 공격에 관한 함수.
-	// attack animation이 발동되는 시점.
+	// Function related to attack.
+	// The point at which the attack animation is triggered.
 	static void SobStanding(SERIAL_HANDLE hSerialId, RwV3d vLoc, RwV3d vDir);
 
 	static void SobFightingMode(SERIAL_HANDLE hSerialId, RwBool bFightingMode);
@@ -357,11 +357,11 @@ public:
 
 	static void SobPetBeginAttack(SERIAL_HANDLE hAttackerSerialId, SERIAL_HANDLE hDefenderSpawnId);
 
-	// attack animation이 진행되면서, 타겟에 damage를 보낼 때 발동되는 시점.
+	// The point at which it is triggered when damage is sent to the target as the attack animation progresses.
 
 	static void SobHit(SERIAL_HANDLE hSerialId, const SHitStuff *pHitStuff);
-	static void SobAutoAttackMode(SERIAL_HANDLE hSerialId, RwBool bAttackMode);                                             ///< 자동 공격 모드 On/Off를 알려준다.    
-    static void SobSendAttackEnd(SERIAL_HANDLE hSerialId);                                                                  ///< 서버에 어택상태 종료를 알려준다.
+	static void SobAutoAttackMode(SERIAL_HANDLE hSerialId, RwBool bAttackMode);                                             ///< Indicates automatic attack mode On/Off.    
+    static void SobSendAttackEnd(SERIAL_HANDLE hSerialId);                                                                  ///< Notifies the server of the end of the attack state.
 	static void SobJump(SERIAL_HANDLE hSerialId, RwUInt8 byMoveDirection, RwV3d vDir, RwV3d vJumpDir);
 	static void SobJumpDirection(SERIAL_HANDLE hSerialId, RwV3d vJumpDir, RwUInt32 uiTimeStamp);
 	static void SobJumpEnd(SERIAL_HANDLE hSerialId);
@@ -380,12 +380,12 @@ public:
 	static void SobProxyGUIUpdate(SERIAL_HANDLE hSerialId, RwUInt32 uiUpdateFlags, RwBool bShow);
 
 	//---------------------------------------------------------
-	// cooling에 관한 함수.
+	// Functions related to cooling.
 
 	static void SobCooling(SERIAL_HANDLE hSerialId, RwBool bStart);
 
 	//---------------------------------------------------------
-	// skill에 관한 함수.
+	// Function about skill.
 
 	static void SobSkillCancel(SERIAL_HANDLE hSerialId, RwUInt16 wReason);
 
@@ -419,7 +419,7 @@ public:
 	static void SobSkillInfoText(WCHAR* wchMsg, unsigned int uiColor, BYTE byMsgType);
 
 	//---------------------------------------------------------
-	// buff에 관한 함수.
+	// Function regarding buff.
 
 	static void SobBuffAdd(SERIAL_HANDLE hSerialId, BYTE byBuffIndex, BYTE byBuffType, RwUInt32 uiTblId, RwUInt32 uiRemainTime, RwUInt32 uiKeepTime, sDBO_BUFF_PARAMETER* aBuffParameter);
 	static void SobBuffDrop(SERIAL_HANDLE hSerialId, BYTE byBuffIndex, BYTE byBuffType);
@@ -433,17 +433,17 @@ public:
 	static void SobFakeBuffActivate(SERIAL_HANDLE hSerial, sBUFF_INFO* pBuffInfo);
 
 	//---------------------------------------------------------
-	// simulation object state transition에 관한 함수.
+	// Function regarding simulation object state transition.
 	static void SobStateTransition(SERIAL_HANDLE hSerialId, RwUInt32 uiTransState);
 	static void SobServerUpdateState(SERIAL_HANDLE hSerialId, sCHARSTATE *pState);
 	static void SobServerUpdateStatePostMsg(SERIAL_HANDLE hSerialId, sCHARSTATE *pState);
 	static void SobServerUpdateCondition(SERIAL_HANDLE hSerialId, QWORD qwCondition);
-	static void SobServerUpdateAspect(SERIAL_HANDLE hSerialId, sASPECTSTATE& sAspectState);                  ///< Aspect가 서버로부터 업데이트될때 호출된다.
+	static void SobServerUpdateAspect(SERIAL_HANDLE hSerialId, sASPECTSTATE& sAspectState);                  ///< Called when an aspect is updated from the server.
 	static void SobFainting(SERIAL_HANDLE hSerialId);
-    static void SobUpdateLPStatusNfy(SERIAL_HANDLE hSerialId, RwBool bEmergency);                            ///< 빈사 상태/ 일반 상태
+    static void SobUpdateLPStatusNfy(SERIAL_HANDLE hSerialId, RwBool bEmergency);                            ///< Moribund state/Normal state
 
 	//---------------------------------------------------------
-	// simulation object information update에 관한 함수.
+	// Function related to simulation object information update.
 	static void SobUpdate(SERIAL_HANDLE hSerialId, RwUInt32 uiUpdateType, RwUInt32 uiParam1);
 	static void SobNpcCommunity(SERIAL_HANDLE hSerialId, RwBool bShow, RwUInt32 uiTriggerId, RwUInt8 byInputType);
 	static void SobTriggerObjCommunity(SERIAL_HANDLE hSerialId, RwBool bShow, RwUInt32 uiTriggerId, RwUInt8 byInputType);
@@ -457,7 +457,7 @@ public:
     static void NPCCommuExit();
 
 	//---------------------------------------------------------
-	// party에 관한 함수
+	// Functions about party
 	static void PartyUpdate(RwInt32 iMessage, SERIAL_HANDLE hSerial = INVALID_SERIAL_ID, RwUInt32 uiValue = 0, RwInt32 iValue2 = 0);
 
 	static void PartyCreate(WCHAR* pcName);
@@ -476,11 +476,11 @@ public:
 
 	static void PartyMemberLocation(RwUInt32 uiSerial, RwUInt32 uiWorldID, RwUInt32 uiWorldTbl, RwV3d& vCurLoc);
 
-	static void PartyShareTargetRes(WORD wResultCode);                      ///< 공유 타겟 요청에 대한 결과 패킷 이벤트
-	static void PartyShareTargetNfy(sSHARETARGET_INFO* aShareTargetInfos);  ///< 공유 타겟에 대한 알림 패킷 이벤트
+	static void PartyShareTargetRes(WORD wResultCode);                      ///< Resulting packet events for shared target requests
+	static void PartyShareTargetNfy(sSHARETARGET_INFO* aShareTargetInfos);  ///< Notification packet event for shared target
 
 	//---------------------------------------------------------
-	// guild에 관한 함수
+	// Functions related to guild
 	static void SLGuildEvent(RwInt32 iMessage, RwUInt32 uiParam = 0xffffffff, void* pData = NULL, void* pExData = NULL);
 	static void NotifyGuildEvent(RwInt32 iMessage, RwUInt32 uiParam = 0xffffffff);
 	static void ChangeGuildName(SERIAL_HANDLE hHandle, WCHAR* pwcGuildName);
@@ -497,7 +497,7 @@ public:
 	static void GuildWarehouseItemStackMove(SERIAL_HANDLE hSrcItem, SERIAL_HANDLE hDestItem, RwUInt8 bySrcPlace, RwUInt8 bySrcPos, RwUInt8 byDestPlace, RwUInt8 byDestPos, RwUInt8 byStackCount, RwUInt8 byStackCount2);
 
 	//---------------------------------------------------------
-	// 도장
+	// coating
 	static void DojoEvent(RwUInt8 byDojoEvent, RwUInt32 uiParam = 0xffffffff, VOID* pExData = NULL, VOID* pExData2 = NULL, VOID* pExData3 = NULL);
 	static void DojoEventNotify(RwUInt8 byDojoEvent, RwUInt32 uiParam = 0xffffffff, VOID* pExData = NULL, VOID* pExData2 = NULL, VOID* pExData3 = NULL);
 	static void DojoState(RwUInt32 uiDojoTableIndex, RwUInt8 byDojoState, RwUInt64 ui64time);
@@ -513,7 +513,7 @@ public:
 	static void HTBRPResult(RwInt32 iAttackPoint, RwInt32 iDefenderPoint, RwBool bWin, RwBool bAttacker);
 
 	//---------------------------------------------------------
-	// otherparam에 관한 함수
+	// Function regarding other param
 	static void HelpHintEvent(RwUInt32 uiHelpHint);
 	static void BindEvent(RwUInt8 byBindType, RwUInt32 uiWorldID, RwUInt32 uiBindObjectTblIdx);
 	static void BindNotify();
@@ -522,7 +522,7 @@ public:
 	// SideHintIcon
 	static void RegSideHintIcon(RwUInt32 uiEventType, RwUInt32 uiTableIndex);
 
-	// PrivateShop
+	// Private shop
 	static void PrivateShopState(RwUInt32 uiEventType, RwUInt32 uiPrivateShopState, sPRIVATESHOP_SHOP_DATA* pPrivateShopData, RwBool IsAvatarPrivateShop);
 	static void PrivateShopStateVisitor(RwUInt32 uiEventType, sPRIVATESHOP_SHOP_DATA* pPrivateShopData);
 	static void PrivateShopItem(RwUInt32 uiEventType, sPRIVATESHOP_ITEM_DATA* pPrivateShopItemData);
@@ -558,7 +558,7 @@ public:
 	static void BroadMsgNfy_Emergency( std::wstring& wstrSpeech );
 	static void BroadMsgNfy_MiniNarration( RwUInt32 uiMiniNarrationTblIdx );
 
-	//--- DragonBall Collection 관련
+	//---Related to DragonBall Collection
 	static void NightEffect(RwBool bOn);
 	static void DBCNarration(const char* pszTextureName, const WCHAR* pwszText, RwInt32 eNarrationState);
 	static void DBCNarrationEnd(void);	
@@ -626,7 +626,7 @@ public:
 	static void ActionMapClientNotify( RwUInt8 byType, RwUInt16 wParam1 = 0xFFFF, RwUInt16 wParam2 = 0xFFFF );
 
 	//---------------------------------------------------------
-	// 정보 얻어오기
+	// Get information
 	static void SobGetState(SERIAL_HANDLE hSerialId, RwUInt8& byServerState, RwUInt8& byClientState, char* chClientState);
 
 	static void SobGetFightingMode(SERIAL_HANDLE hSerialId, RwBool& bFightingMode);	
@@ -638,46 +638,46 @@ public:
 	static void ReloadTS( void );
 
 	static void RegQuest_Nfy( sTS_KEY& sTSKey,
-		bool bNewRegister,						// 퀘스트 등록시 New type의 등록 여부
-		bool bQuestShare,						// 퀘스트 공유
-		RwUInt32 uiQuestAreaName,				// 퀘스트 지역 이름
-		RwUInt32 uiQuestState,					// 퀘스트 상태
-		RwUInt32 uiQuestTitle,					// 퀘스트 제목
-		RwUInt32 uiQuestGoal,					// 퀘스트 목적
-		eQUEST_SORT_TYPE eQuestSortType );		// 퀘스트 종류의 타입
+		bool bNewRegister,						// Whether to register a new type when registering a quest
+		bool bQuestShare,						// Share Quest
+		RwUInt32 uiQuestAreaName,				// Quest area name
+		RwUInt32 uiQuestState,					// Quest Status
+		RwUInt32 uiQuestTitle,					// Quest Title
+		RwUInt32 uiQuestGoal,					// Quest Purpose
+		eQUEST_SORT_TYPE eQuestSortType );		// Types of Quest Types
 
 	static void UnregQuest_Nfy( sTS_KEY& sTSKey );
 
 	static void ShowQuestWindow( sTS_KEY& sTSKey );
 
 	static void ShowQuestWindow_Nfy( sTS_KEY& sTSKey,
-		RwUInt32 uiQuestAreaName,			// 퀘스트 지역 이름
-		RwUInt32 uiQuestTitle,				// 퀘스트 제목
-		RwUInt32 uiQuestSort,				// 퀘스트 종류
-		RwUInt32 uiQuestGrade,				// 퀘스트 난이도
-		eGRADE_TYPE eGradeType,				// 퀘스트 난이도 타입
-		RwUInt32 uiQuestGoal,				// 퀘스트 목표
-		RwUInt32 uiQuestContents,			// 퀘스트 내용
-		sREWARD_INFO* psDefaultReward,		// 퀘스트 보상 정보 - 기본 보상
-		sREWARD_INFO* psSelectReward,		// 퀘스트 보상 정보 - 선택 보상
+		RwUInt32 uiQuestAreaName,			// Quest area name
+		RwUInt32 uiQuestTitle,				// Quest Title
+		RwUInt32 uiQuestSort,				// Quest type
+		RwUInt32 uiQuestGrade,				// Quest Difficulty
+		eGRADE_TYPE eGradeType,				// Quest Difficulty Type
+		RwUInt32 uiQuestGoal,				// Quest Objectives
+		RwUInt32 uiQuestContents,			// Quest contents
+		sREWARD_INFO* psDefaultReward,		// Quest Reward Information -Basic Reward
+		sREWARD_INFO* psSelectReward,		// Quest Reward Information -Select Reward
 		unsigned int uiRewardExp,
 		unsigned int uiRewardZeni,
-		eSTOC_EVT_DATA_TYPE eEvtInfoType,	// 서버 이벤트 정보 - 데이터 타입
-		const uSTOC_EVT_DATA& uEvtInfoData,	// 서버 이벤트 정보 - 데이터
-		RwUInt32 uiTimeLimit,				// 타임 제한 정보
-		RwUInt32 uiEventType,				// eEVENT_GEN_TYPE ( 현재는 eEVENT_GEN_TYPE_CLICK_NPC 만 사용함 )
-		RwUInt32 uiEventID,					// uiEventType 에 따른 인덱스, eEVENT_GEN_TYPE_CLICK_NPC : Mob table index
+		eSTOC_EVT_DATA_TYPE eEvtInfoType,	// Server event information -data type
+		const uSTOC_EVT_DATA& uEvtInfoData,	// Server event information -data
+		RwUInt32 uiTimeLimit,				// Time limit information
+		RwUInt32 uiEventType,				// eEVENT_GEN_TYPE (currently only uses eEVENT_GEN_TYPE_CLICK_NPC)
+		RwUInt32 uiEventID,					// Index according to uiEventType, eEVENT_GEN_TYPE_CLICK_NPC: Mob table index
 		RwBool bIsEventStarter );			// Event type [ True : Starter, False : Reward ]
 
 	static void UpdateQuestState_Nfy( sTS_KEY& sTSKey,
-		RwBool bOutStateMsg,					// 퀘스트 상태 메시지 출력 여부
-		RwUInt32 uiUpdatedQuestFlag,			// 갱신된 퀘스트 상태 플래그
-		RwUInt32 uiQuestState,					// 퀘스트 상태
-		RwUInt32 uiQuestTitle,					// 퀘스트 제목
-		eSTOC_EVT_DATA_TYPE eEvtInfoType,		// 서버 이벤트 정보 - 데이터 타입
-		const uSTOC_EVT_DATA& uEvtInfoData,		// 서버 이벤트 정보 - 데이터
-		RwUInt32 uiEventType,					// eEVENT_GEN_TYPE ( 현재는 eEVENT_GEN_TYPE_CLICK_NPC 만 사용함 )
-		RwUInt32 uiEventID,						// uiEventType 에 따른 인덱스, eEVENT_GEN_TYPE_CLICK_NPC : Mob table index
+		RwBool bOutStateMsg,					// Whether to display quest status messages
+		RwUInt32 uiUpdatedQuestFlag,			// Updated quest status flag
+		RwUInt32 uiQuestState,					// Quest Status
+		RwUInt32 uiQuestTitle,					// Quest Title
+		eSTOC_EVT_DATA_TYPE eEvtInfoType,		// Server event information -data type
+		const uSTOC_EVT_DATA& uEvtInfoData,		// Server event information -data
+		RwUInt32 uiEventType,					// eEVENT_GEN_TYPE (currently only uses eEVENT_GEN_TYPE_CLICK_NPC)
+		RwUInt32 uiEventID,						// Index according to uiEventType, eEVENT_GEN_TYPE_CLICK_NPC: Mob table index
 		RwBool bIsEventStarter,					// Event type [ True : Starter, False : Reward ]
 		RwV3d indicatorTargetPos,
 		RwUInt32 indicatorTargetWorldID,
@@ -685,9 +685,9 @@ public:
 
 
 	static void UpdateQuestProgressInfo_Nfy( sTS_KEY& sTSKey,
-		eSTOC_EVT_DATA_TYPE eEvtInfoType,	// 서버 이벤트 정보 - 데이터 타입
-		uSTOC_EVT_DATA& uEvtInfoData,	// 서버 이벤트 정보 - 데이터
-		RwUInt32 uiTimeLimit );			// 타임 제한 정보
+		eSTOC_EVT_DATA_TYPE eEvtInfoType,	// Server event information -data type
+		uSTOC_EVT_DATA& uEvtInfoData,	// Server event information -data
+		RwUInt32 uiTimeLimit );			// Time limit information
 
 	static void GiveUpQuest( sTS_KEY& sTSKey );
 
@@ -696,103 +696,103 @@ public:
 	static void HideIndicator( sTS_KEY& sTSKey );
 
 	static void ShowIndicator_Nfy( sTS_KEY& sTSKey,
-		RwUInt32 uiQState,						// 퀘스트 상태
-		RwUInt32 uiQuestTitle,					// 퀘스트 제목
-		RwUInt32 uiQuestGoal,					// 퀘스트 목적
-		eSTOC_EVT_DATA_TYPE eEvtInfoType,		// 서버 이벤트 정보 - 데이터 타입
-		const uSTOC_EVT_DATA& uEvtInfoData,		// 서버 이벤트 정보 - 데이터
-		RwUInt32 uiTimeLimit,					// 타임 제한 정보
+		RwUInt32 uiQState,						// Quest Status
+		RwUInt32 uiQuestTitle,					// Quest Title
+		RwUInt32 uiQuestGoal,					// Quest Purpose
+		eSTOC_EVT_DATA_TYPE eEvtInfoType,		// Server event information -data type
+		const uSTOC_EVT_DATA& uEvtInfoData,		// Server event information -data
+		RwUInt32 uiTimeLimit,					// Time limit information
 		RwBool bAuto,
 		RwV3d indicatorTargetPos,
 		RwUInt32 indicatorTargetWorldID,
 		RwUInt32 indicatorNpcTblidx,
 		eGRADE_TYPE m_eGradeType);
 
-	static void DoQuest( sQUEST_INFO& sQuestInfo,							// Quest 정보
-						 eEVENT_GEN_TYPE eEventGenType,						// Event 종류
+	static void DoQuest( sQUEST_INFO& sQuestInfo,							// About Quest
+						 eEVENT_GEN_TYPE eEventGenType,						// Event type
 						 RwUInt32 uiOwnerID,								// Owner ID
-						 RwBool bTransCameraCtrlRight);						// 카메라 제어권을 넘기는 경우 TRUE
+						 RwBool bTransCameraCtrlRight);						// TRUE if handing over camera control
 
 	static void QuestProposalDialog_Req( sTS_KEY& sTSKey,
-		RwBool bDisplaySummary,				// 퀘스트 요약 정보 미리보기 보여주기 여부
-		RwUInt32 uiQuestTitle,					// 퀘스트 제목
-		RwUInt32 uiQuestGoal,					// 퀘스트 목표
-		RwUInt32 uiQuestSort,					// 퀘스트 종류
-		RwUInt32 uiQuestGrade,					// 퀘스트 난이도
-		eGRADE_TYPE eGradeType,				// 퀘스트 난이도 타입
-		RwUInt32 uiQuestContents,				// 퀘스트 내용
-		const sREWARD_INFO* psDefaultReward,	// 퀘스트 보상 정보 - 기본 보상
+		RwBool bDisplaySummary,				// Whether to show a preview of quest summary information
+		RwUInt32 uiQuestTitle,					// Quest Title
+		RwUInt32 uiQuestGoal,					// Quest Objectives
+		RwUInt32 uiQuestSort,					// Quest type
+		RwUInt32 uiQuestGrade,					// Quest Difficulty
+		eGRADE_TYPE eGradeType,				// Quest Difficulty Type
+		RwUInt32 uiQuestContents,				// Quest contents
+		const sREWARD_INFO* psDefaultReward,	// Quest Reward Information -Basic Reward
 		const sREWARD_INFO* psSelectReward,
 		unsigned int uiRewardExp,
-		unsigned int uiRewardZeni);	// 퀘스트 보상 정보 - 선택 보상
+		unsigned int uiRewardZeni);	// Quest Reward Information -Select Reward
 
-	static void QuestProposalDialog_Res( bool bResult,							// 퀘스트 수락(true) 또는 거절(false)
+	static void QuestProposalDialog_Res( bool bResult,							// Accept (true) or reject (false) the quest.
 		sTS_KEY& sTSKey );
 
 	static void QuestUserSelectDialog_Req( sTS_KEY& sTSKey,
 		RwUInt32 uiTargetType,				// 타겟의 종류 ( eUSER_SEL_TARGET_TYPE -> eUSER_SEL_TARGET_TYPE_NPC, eUSER_SEL_TARGET_TYPE_OBJECT, eUSER_SEL_TARGET_TYPE_INVALID )
-		RwUInt32 uiTargetTblIdx,				// 타겟의 테이블 인덱스 
-		RwUInt32 uiQuestTitle,				// 퀘스트 제목
-		RwUInt32 uiConv,						// 대화
-		RwInt32 nBranchCnt,					// 현재 사용중인 Branch의 개수
+		RwUInt32 uiTargetTblIdx,				// table index of target 
+		RwUInt32 uiQuestTitle,				// Quest Title
+		RwUInt32 uiConv,						// conversation
+		RwInt32 nBranchCnt,					// Number of branches currently in use
 		sTS_BRANCH_INFO* pBranchInfo );		// Branch info
 
-	static void QuestUserSelectDialog_Res( bool bResult,						// Ok(true) 또는 Cancel(false)
+	static void QuestUserSelectDialog_Res( bool bResult,						// Ok(true) or Cancel(false)
 		sTS_KEY& sTSKey,
-		NTL_TS_TC_ID tcSelID );				// 선택된 퀘스트 아이디
+		NTL_TS_TC_ID tcSelID );				// Selected quest ID
 
 	static void QuestNarrationUserSelectDialog_Req( sTS_KEY& sTSKey,
-		eUSER_SEL_PROGRESS_STATE eProgState,	// 나래이션 진행 상태
-		RwUInt32 uiConv,						// 대화
-		RwInt32 nBranchCnt,						// 현재 사용중인 Branch의 개수
+		eUSER_SEL_PROGRESS_STATE eProgState,	// Narration progress status
+		RwUInt32 uiConv,						// conversation
+		RwInt32 nBranchCnt,						// Number of branches currently in use
 		sTS_BRANCH_INFO* pBranchInfo );			// Branch info
 
-	static void QuestNarrationUserSelectDialog_Res( bool bResult,							// Ok(true) 또는 Cancel(false)
+	static void QuestNarrationUserSelectDialog_Res( bool bResult,							// Ok(true) or Cancel(false)
 		sTS_KEY& sTSKey,
-		NTL_TS_TC_ID tcSelID );					// 선택된 퀘스트 아이디
+		NTL_TS_TC_ID tcSelID );					// Selected quest ID
 
 	static void TSFinished( unsigned char byTSType,								// Trigger type ( TS_TYPE_QUEST_CS, TS_TYPE_PC_TRIGGER_CS )
-		NTL_TS_T_ID tID );									// 종료되는 트리거 아이디
+		NTL_TS_T_ID tID );									// Trigger ID that ends
 
 	static void TSSkipContainer( NTL_TS_T_ID tID,
 		NTL_TS_TC_ID tcID );
 
 	static void QuestRewardDialog_Req( sTS_KEY& sTSKey,
-		eREWARD_CONTAINER_TYPE eRewardType,		// 보상 타입
-		RwUInt32 uiLimitTime,					// 보상 제한시간
-		RwUInt32 uiQuestTitle,					// 퀘스트 제목
-		RwUInt32 uiQuestGoal,					// 퀘스트 목표
-		RwUInt32 uiQuestSort,					// 퀘스트 종류
-		RwUInt32 uiQuestGrade,					// 퀘스트 난이도
-		eGRADE_TYPE eGradeType,					// 퀘스트 난이도 타입
-		RwUInt32 uiQuestContents,				// 퀘스트 설명
-		const sREWARD_INFO* psDefaultReward,		// 퀘스트 보상 정보 - 기본 보상
+		eREWARD_CONTAINER_TYPE eRewardType,		// Reward Type
+		RwUInt32 uiLimitTime,					// Reward time limit
+		RwUInt32 uiQuestTitle,					// Quest Title
+		RwUInt32 uiQuestGoal,					// Quest Objectives
+		RwUInt32 uiQuestSort,					// Quest type
+		RwUInt32 uiQuestGrade,					// Quest Difficulty
+		eGRADE_TYPE eGradeType,					// Quest Difficulty Type
+		RwUInt32 uiQuestContents,				// Quest Description
+		const sREWARD_INFO* psDefaultReward,		// Quest Reward Information -Basic Reward
 		const sREWARD_INFO* psSelectReward,
 		unsigned int uiRewardExp,
-		unsigned int uiRewardZeni);	// 퀘스트 보상 정보 - 선택 보상
+		unsigned int uiRewardZeni);	// Quest Reward Information -Select Reward
 
-	static void QuestRewardDialog_Res( bool bResult,							// Ok(true) 또는 Cancel(false)
+	static void QuestRewardDialog_Res( bool bResult,							// Ok(true) or Cancel(false)
 		sTS_KEY& sTSKey,
-		int nSelRwdIdx );						// 선택 보상의 선택된 인덱스
+		int nSelRwdIdx );						// Selected index of selected reward
 
 
 	static void QuestNarrationDialog_Req( sTS_KEY& sTSKey,
-		eNARRATION_PROGRESS_STATE eProgState,			// Narration 진행 상태
-		eNARRATION_OWNER_TYPE eOwnerType,				// Owner의 종류
-		RwUInt32 uiOwnerIdx,							// Owner의 테이블 인덱스
-		eNARRATION_OWNER_STATE eOwnerState,			// Owner의 상태
-		eNARRATION_DIALOG_DIR_TYPE eDialogDirType,	// 대화 연출 종류
-		RwUInt32 uiDialog,							// 대화 내용
-		eNARRATION_GUI_TYPE eGUIType,					// GUI 종류
-		RwUInt32 uiMaxLifeTime );						// 이 시간 이상 나레이션 창이 유지 되는 경우 자동으로 Next로 넘어가야 한다.
+		eNARRATION_PROGRESS_STATE eProgState,			// Narration progress status
+		eNARRATION_OWNER_TYPE eOwnerType,				// Type of Owner
+		RwUInt32 uiOwnerIdx,							// Owner's table index
+		eNARRATION_OWNER_STATE eOwnerState,			// Owner's status
+		eNARRATION_DIALOG_DIR_TYPE eDialogDirType,	// type of dialogue production
+		RwUInt32 uiDialog,							// conversation
+		eNARRATION_GUI_TYPE eGUIType,					// GUI type
+		RwUInt32 uiMaxLifeTime );						// If the narration window remains longer than this time, it should automatically move to Next.
 
-	static void QuestNarrationDialog_Res( bool bResult,							// Ok(true) 또는 Cancel(false)
+	static void QuestNarrationDialog_Res( bool bResult,							// Ok(true) or Cancel(false)
 		sTS_KEY& sTSKey );
 
 	static void QuestNPCDialog_Req( sTS_KEY& sTSKey,
-		eNPCCONV_TYPE eNPCConvType,					// NPC 대화 타입
-		unsigned int uiNPCIdx,						// NPC 테이블 인덱스
-		RwUInt32 uiDesc );							// NPC 대화
+		eNPCCONV_TYPE eNPCConvType,					// NPC conversation type
+		unsigned int uiNPCIdx,						// NPC table index
+		RwUInt32 uiDesc );							// NPC dialogue
 
 	static void QuestNPCDialog_Res( sTS_KEY& sTSKey );
 
@@ -818,10 +818,10 @@ public:
 	static void ShowQuestPosMark( sTS_KEY& sTSKey, RwBool bShow );
 
 	static void QuestObjDialog_Req( sTS_KEY& sTSKey,
-		eOBJCONV_TYPE eObjConvType,				// Object 대화 타입
-		RwUInt32 uiWorldIdx,					// Object 소속 world index
-		RwUInt32 uiObjIdx,						// Object 테이블 인덱스
-		RwUInt32 uiDesc );						// Object 대화
+		eOBJCONV_TYPE eObjConvType,				// Object conversation type
+		RwUInt32 uiWorldIdx,					// Object belonging world index
+		RwUInt32 uiObjIdx,						// Object table index
+		RwUInt32 uiDesc );						// Object conversation
 
 	static void QuestObjDialog_Res( sTS_KEY& sTSKey );
 
@@ -899,7 +899,7 @@ public:
 	static void TObjectUpdateState( SERIAL_HANDLE hSerialId, TBLIDX tblIdx, RwUInt8 byMainState, RwUInt8 bySubState, RwUInt32 uiStateTime );
 
 	//---------------------------------------------------------
-	// 트리거 오브젝트 스카우터 연출 관련
+	// Trigger object scouter production related
 	static void ScouterEvent(int iType, RwUInt32 uiSerailID = 0, int iUserData2 = 0, int iUserData3 = 0, 
 		int iUserData4 = 0, int iUserData5 = 0, int iUserData6 = 0, int iUserData7 = 0, int iUserData8 = 0);
 
@@ -914,7 +914,7 @@ public:
 	static void TMQCleintState(EWorldPlayConcept eWorldConcept, RwUInt32 uiState);
 
 	// UI
-	static void ShowToolTip(RwBool bShow, RwInt32 nX, RwInt32 nY, const std::wstring& wstrText);    //< UI의 툴팁을 표시한다. 좌표를 0으로 넣으면 마우스 커서 위치에 표시한다.
+	static void ShowToolTip(RwBool bShow, RwInt32 nX, RwInt32 nY, const std::wstring& wstrText);    //< Displays the UI tooltip. If you enter the coordinates as 0, they will be displayed at the position of the mouse cursor.
 	static void UIConfigReload();
 
 	// Portal System
@@ -935,7 +935,7 @@ public:
 	static void BlackListDelRes(WORD wResultCode, RwUInt32 uiTargetID);
 	static void FriendInfo(sFRIEND_INFO* pInfo, bool bIsFirst);
 	static void FriendInfoChange(RwUInt32 uiTargetID, BYTE byChangeType, DWORD dwChangeValue);
-	static void FriendInfoNotify(RwInt32 nNotifyType, RwUInt32 uiTargetID);             ///< UI 갱신을 위한 이벤트 (데이터->UI)
+	static void FriendInfoNotify(RwInt32 nNotifyType, RwUInt32 uiTargetID);             ///< Event for UI update (Data->UI)
 
 	// KnockDownNotify -> Client Wakeup
 	static void KnockDownNfy();
@@ -946,7 +946,7 @@ public:
 	// Popo Icon Notify
 	static void PopoNotify( const WCHAR* pwcTitle, const WCHAR* pwcBuffer, RwBool bImmediate = FALSE, RwReal fLifeTime = 0.0f );
 
-	// 버스 및 탈것 관련 이벤트
+	// Bus and vehicle related events
 	static void SobOnBus(SERIAL_HANDLE hSerialId, RwBool bRideOn, SERIAL_HANDLE hBusSerialId);
 	static void SobOnVehicle( SERIAL_HANDLE hSerialId, RwBool bRideOn, SERIAL_HANDLE hDriverId, RwUInt32 uiVehicleTblIdx );
 
@@ -961,19 +961,19 @@ public:
 	static void CharmPointUpdate(RwUInt32 uiCharmPoint);
 	static void CharmPointNotify(RwUInt32 uiCharmPoint);
 
-	// 변신 관련 이벤트
-	static void SobTransform(SERIAL_HANDLE hSerialId, const sASPECTSTATE& aspectState);                                 ///< PC의 변신 이벤트
-    static void SobMobTransform(SERIAL_HANDLE hSerialId, TBLIDX tblTransformMobId);                                     ///< Mob의 변신 이벤트
-    static void SobTransformCandy(SERIAL_HANDLE hSerialId, RwBool bTransform);                                          ///< 사탕 변신 이벤트
-    static void SobTransformSequela(SERIAL_HANDLE hSerialId);                                                           ///< 초사이야인 변신 휴유증 이벤트 (아바타 전용)
+	// Transformation-related events
+	static void SobTransform(SERIAL_HANDLE hSerialId, const sASPECTSTATE& aspectState);                                 ///< PC transformation event
+    static void SobMobTransform(SERIAL_HANDLE hSerialId, TBLIDX tblTransformMobId);                                     ///< Mob’s transformation event
+    static void SobTransformCandy(SERIAL_HANDLE hSerialId, RwBool bTransform);                                          ///< Candy Transformation Event
+    static void SobTransformSequela(SERIAL_HANDLE hSerialId);                                                           ///< Super Saiyan Transformation Aftereffects Event (Avatar only)
 
 	static void SobCinematicScale(SERIAL_HANDLE hSerialId, float fScale, float fTime);
 
-	// 컨디션 관련 이벤트
-	static void SobAfterEffectRemainTimeNfy(DWORD dwTimeRemaining);                                                     ///< 변신휴유증 남은 시간
-	static void SobCondConfused(RwBool bAffect, SERIAL_HANDLE hSubject, SERIAL_HANDLE hTargetSerialId);                 ///< 혼란 상태
-	static void SobCondTerror(RwBool bAffect, SERIAL_HANDLE hSubject, SERIAL_HANDLE hAttackerSerialId);                 ///< 공포 상태
-    static void SobCondHidingKi(RwBool bAffect, SERIAL_HANDLE hSubject);                                                ///< 기숨기기
+	// Condition-related events
+	static void SobAfterEffectRemainTimeNfy(DWORD dwTimeRemaining);                                                     ///< Remaining time after transformation
+	static void SobCondConfused(RwBool bAffect, SERIAL_HANDLE hSubject, SERIAL_HANDLE hTargetSerialId);                 ///< state of confusion
+	static void SobCondTerror(RwBool bAffect, SERIAL_HANDLE hSubject, SERIAL_HANDLE hAttackerSerialId);                 ///<state of fear
+    static void SobCondHidingKi(RwBool bAffect, SERIAL_HANDLE hSubject);                                                ///< Hide
 
 	// Tutorial
 	static void TLDefaultSkin( const char* pFontName, RwRGBA& rgbFontBackColor, RwRGBA& rgbFontColor, RwInt32 nFontSize, RwUInt32 uiFontAllign, RwV2d& vFontOffset, RwV2d& vMsgLayerOffset, RwV2d& vOkOffset, RwV2d& vIMGOffset );
@@ -997,7 +997,7 @@ public:
 	static void TLDisableDialogMoveOption(RwBool bDiableDialogMoveOption);
 	static void TLEnableSkip(RwBool bEnableSkip);
 
-	// 천하제일 무도회
+	// Budokai
 	static void MinorMatchStateUpdate( RwUInt8 byMatchState, RwUInt8 byStage, RwUInt32 dwRemainTime, RwBool bEnterState );
 	static void MinorMatchTeamInfo( RwUInt8 byMatchIndex, RwUInt8 byTeamCount, RwUInt16 wTeamInfo_var, sVARIABLE_DATA* pData );
 	static void MinorMatchPlayerState( RwUInt32 hPlayer, RwUInt8 byPcState );
@@ -1072,7 +1072,7 @@ public:
 	static void HoipoiMixItemMakeExp( RwUInt32 dwCurExp, RwUInt8 byCurLevel, DWORD dwExpGained);
 	static void HoipoiMixInfoUpdate( RwUInt8 byType, RwUInt32 dwData );
 
-	// DynamicObject
+	// Dynamic object
 	static void DynamicObjectUpdateState( SERIAL_HANDLE hSerial, sDYNAMIC_OBJECT_BRIEF* pBrief, sDYNAMIC_OBJECT_STATE* pState );
 
 	// Character battle attribute refresh ( on target )

@@ -164,7 +164,7 @@ public:
 
 #endif //__NTL_PLSKY_H__
 
-// Sky Performance 향상을 위해서 Mesh를 분할하였으나 향상되지 않았다.
+// The mesh was divided to improve sky performance, but there was no improvement.
 // #ifndef __NTL_PLSKY_H__
 // #define __NTL_PLSKY_H__
 // 

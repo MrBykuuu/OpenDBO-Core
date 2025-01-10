@@ -1,11 +1,11 @@
 /******************************************************************************
 * File			: BroadCastGui.h
 * Author		: Haesung Cho
-* Copyright		: (주)NTL
+* Copyright		: (二�)NTL
 * Date			: 2008. 10. 27
 * Abstract		: 
 *****************************************************************************
-* Desc			: 게임 TS message, Server emergency, Mini narration을 담당하는 GUI
+* Desc			: GUI responsible for game TS message, server emergency, and mini narration
 *****************************************************************************/
 
 #ifndef __BROAD_CAST_GUI_H__
@@ -13,16 +13,16 @@
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
 // Client UI Config
 #include "DBOUIConfig.h"
 
-// BroadCast
+// Broad cast
 #include "BroadCastUnit.h"
 #include "NtlPLAccelController.h"
 
@@ -40,7 +40,7 @@
 #define dBROAD_HTML_TEXT_SMALL_POSITION_X	-185
 #define dBROAD_HTML_TEXT_POSITION_Y			60
 
-// 전방 선언
+// forward declaration
 class CNtlPLAccelController;
 class CBroadCastUnit;
 
@@ -53,17 +53,17 @@ typedef std::deque< CBroadCastUnit > deqBroadUnit;
 class CBroadCastGui : public CNtlPLGui, public RWS::CEventHandler
 {
 public:
-	// 브로드캐스트 GUI의 상태
+	// Status of broadcast GUI
 	enum eBroadState
 	{
-		STATE_DIRECTION_IN_START,	// 나탄나는 연출 시작
-		STATE_DIRECTION_IN,			// 나타나는 연출 중
-		STATE_DIRECTION_IN_END,		// 나타나는 연출 끝			- 슬라이드의 경우 말풍선을 띄워준다.
-		STATE_OPEN,					// 열린 상태
-		STATE_DIRECTION_OUT_START,	// 사라지는 연출 시작		- 슬라이드의 경우 말풍선을 닫는다.
-		STATE_DIRECTION_OUT,		// 사라지는 연출 중
-		STATE_DIRECTION_OUT_END,	// 사라지는 연출 끝
-		STATE_CLOSE,				// 닫힌 상태
+		STATE_DIRECTION_IN_START,	// Natanna begins directing
+		STATE_DIRECTION_IN,			// Directing it to appear
+		STATE_DIRECTION_IN_END,		// At the end of the presentation that appears -in the case of a slide, a speech bubble appears.
+		STATE_OPEN,					// open state
+		STATE_DIRECTION_OUT_START,	// Start the disappearing presentation -In the case of a slide, close the speech bubble.
+		STATE_DIRECTION_OUT,		// Directing the disappearance
+		STATE_DIRECTION_OUT_END,	// The end of the disappearing production
+		STATE_CLOSE,				// closed state
 
 		STATE_NUMS,
 		INVALID_STATE = 0xFF
@@ -127,31 +127,31 @@ protected:
 	gui::CSlot			m_slotMove;
 
 protected:
-	// 업데이트 함수의 함수 포인터
+	// Function pointer for update function
 	typedef				VOID (CBroadCastGui::*UpdateState)( RwReal );
-	UpdateState			m_aCallUpdateState[STATE_NUMS];	///< Update 함수 포인터
+	UpdateState			m_aCallUpdateState[STATE_NUMS];	///< Update function pointer
 
-	RwUInt8				m_byState;			///< UI의 현재 상태
-	deqBroadUnit		m_deqUnit;			///< Unit의 대기열
+	RwUInt8				m_byState;			///< Current state of UI
+	deqBroadUnit		m_deqUnit;			///< Queue of Units
 	
-	CBroadCastUnit		m_CurUnit;			///< 현재 출력중인 Unit의 Data
-	RwBool				m_bCurUnit;			///< 현재 출력중인 Unit의 데이타 유효/무효 여부
+	CBroadCastUnit		m_CurUnit;			///< Data of the unit currently being output
+	RwBool				m_bCurUnit;			///< Whether the data of the unit currently being output is valid/invalid
 
-	sBROAD_MSG_DATA		m_sCurData;			///< 현재 출력되고 있는 Data ( Setting )	
-	RwUInt8				m_uSlidingFadeAlpha;		///< 현재의 Alpha ( Sliding/Fade 일 때만 쓰임 )
-	RwBool				m_bSmallText;		///< 현재 출력되고 있는 Text가 Large인지의 여부
+	sBROAD_MSG_DATA		m_sCurData;			///< Data currently being output (Setting)	
+	RwUInt8				m_uSlidingFadeAlpha;		///< Current Alpha (only used when Sliding/Fade)
+	RwBool				m_bSmallText;		///< Whether the text currently being printed is Large
 
-	RwReal				m_fElapsed;			///< 현재 GUI에서 소모되고 있는 time
+	RwReal				m_fElapsed;			///< Time currently consumed in the GUI
 
-	RwReal				m_fShakeTime;		///< Illust Shake에 쓰이는 타임 변수
-	CRectangle			m_rectBackIllust;	///< 일러스트의 흔들림 중심 좌표
+	RwReal				m_fShakeTime;		///< Time variables used in Illust Shake
+	CRectangle			m_rectBackIllust;	///< Coordinates of the center of shaking of the illustration
 
 	CNtlPLAccelController	m_conAccel;		///< AccelController
 	CNtlPLAccelController	m_conAlpha;		///< Alpha AccelController
 
-	RwBool				m_bPlay;			///< 현재 플레이 되고 있는가?
+	RwBool				m_bPlay;			///< Is it currently playing?
 
-	SUIConfigBroadCast*	m_pBroadCastConfig;	///< Broad Cast 연출 관련 옵션들
+	SUIConfigBroadCast*	m_pBroadCastConfig;	///< Options related to Broad Cast production
 };
 
 #endif//__BROAD_CAST_GUI_H__

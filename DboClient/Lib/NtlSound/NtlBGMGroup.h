@@ -2,15 +2,15 @@
 *
 * File			: NtlBGMGroup.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: (二�)NTL
 * Date			: 2009. 1. 28
 * Abstract		: Background Music Channel Group
 *****************************************************************************
-* Desc			: 다른 배경음악으로 전환될시 이전 배경음악(PostMusic)은
-*				  Fade Out 이 되며 사라진다
+* Desc			: When switching to another background music, the previous background music (PostMusic) is
+*				  Fade Out and disappear
 *
-*				  배경음악은 우선순위가 있어서 우선순위 배경음악의 연주가
-*				  끝나야 대기중인 배경음악이 Play된다.
+*				  Background music has priority, so the priority background music is played.
+*				  Only after the game is finished, the waiting background music will be played.
 *****************************************************************************/
 
 #pragma once
@@ -53,10 +53,10 @@ protected:
 	virtual void	ReleaseFinishedSound(float fElapsed);
 
 protected:
-	float			m_fReplayElapsed;						///< 현재 음악의 다음 재생까지 남은 시간
+	float			m_fReplayElapsed;						///< Time remaining until next playback of current music
 
-	sPLAY_BGM_INFO	m_tPlaySound;							///< 현재 Play 되고 있는 사운드
-	sPLAY_BGM_INFO	m_tPostSound;							///< Fade out 후 삭제될 사운드
+	sPLAY_BGM_INFO	m_tPlaySound;							///< Sound currently playing
+	sPLAY_BGM_INFO	m_tPostSound;							///< Sound to be deleted after fade out
 
 	CNtlBGMPlayList*	m_pBGMPlayList;
 };

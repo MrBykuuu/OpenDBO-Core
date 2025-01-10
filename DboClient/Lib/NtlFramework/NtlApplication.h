@@ -73,7 +73,7 @@ protected:
 
 	RwBool			m_bQuit;
 
-	RwBool			m_bRenderEnable;	// Render가 가능 한지
+	RwBool			m_bRenderEnable;	// Make sure it can render
 	
 	//The Unique Application Instance
 	static CNtlApplication *m_pInstance;

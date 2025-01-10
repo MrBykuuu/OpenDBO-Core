@@ -1,11 +1,11 @@
 #include "precomp_ntlpresentation.h"
 #include "NtlPLEntityBlend.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// presentation
+// Presentation
 #include "NtlPLEntity.h"
 
 
@@ -37,9 +37,9 @@ void CNtlPLEntityAlphaWeightBlend::Update(RwReal fElapsed)
         m_bFinish = TRUE;            
     }
 
-    if(m_byBlendType == PLEAW_END)      // 블렌드가 끝났거나 블렌드 알파가 아닐때
+    if(m_byBlendType == PLEAW_END)      // When the blend is finished or not blend alpha
     {
-        if(m_fStartWeightValue != m_fWeightValue)               // 맨 처음 한번만 계산 플래그를 켜기 위한 비교
+        if(m_fStartWeightValue != m_fWeightValue)               // Comparison to turn on the calculation flag only once at the very beginning
         {
             m_bCalcWeightValue = TRUE;
             m_fStartWeightValue = m_fWeightValue;
@@ -49,7 +49,7 @@ void CNtlPLEntityAlphaWeightBlend::Update(RwReal fElapsed)
             m_bCalcWeightValue = TRUE;
         }        
     }
-    else if(m_byBlendType == PLEAW_BLEND)   // 블렌드 중일때
+    else if(m_byBlendType == PLEAW_BLEND)   // When blending
     {
         if(m_fCurrTime >= m_fBlendTime)
         {
@@ -78,7 +78,7 @@ RwBool CNtlPLEntityAlphaWeightBlend::IsFinish(void)
 void CNtlPLEntityAlphaWeightBlend::SetWeight(RwReal fWeightValue, RwReal fLifeTime, RwBool bLoop)
 {
 	m_byBlendType	= PLEAW_END;	
-    m_fStartWeightValue = -1.0f;            // 처음 한번만 계산하기 위해서 비교값을 넣어준다.
+    m_fStartWeightValue = -1.0f;            // Enter the comparison value to calculate it only the first time.
 	m_fWeightValue	= fWeightValue;
 	m_fLifeTime		= fLifeTime;
 	m_bLoop			= bLoop;
@@ -256,8 +256,8 @@ CNtlPLAtomicAlphaWeightBlend* CNtlPLEntityBlendController::FindAtomicAlphaBlend(
 	return NULL;
 }
 
-// 일반 알파 블렌딩을 추가한다.
-// 새로운 알파 블렌딩 객체를 리스트에 추가하고, 그 객체를 반환한다.
+// Add regular alpha blending.
+// Adds a new alpha blending object to the list and returns that object.
 CNtlPLEntityAlphaWeightBlend* CNtlPLEntityBlendController::AddAlpha(RwReal fWeightAlpha, RwReal fLifeTime, RwBool bLoop)
 {
 	CNtlPLEntityAlphaWeightBlend *pAlphaBlend = NTL_NEW CNtlPLEntityAlphaWeightBlend;
@@ -268,8 +268,8 @@ CNtlPLEntityAlphaWeightBlend* CNtlPLEntityBlendController::AddAlpha(RwReal fWeig
     return pAlphaBlend;
 }
 
-// time에 따라 Fade 되는 알파 블렌딩을 추가한다.
-// 새로운 알파 블렌딩 객체를 리스트에 추가하고, 그 객체를 반환한다.
+// Add alpha blending that fades depending on time.
+// Adds a new alpha blending object to the list and returns that object.
 CNtlPLEntityAlphaWeightBlend* CNtlPLEntityBlendController::AddAlpha(RwReal fStartWeightAlpha, RwReal fEndWeightAlpha, RwReal fBlendTime, RwReal fLifeTime, RwBool bLoop)
 {
 	CNtlPLEntityAlphaWeightBlend *pAlphaBlend = NTL_NEW CNtlPLEntityAlphaWeightBlend;
@@ -282,7 +282,7 @@ CNtlPLEntityAlphaWeightBlend* CNtlPLEntityBlendController::AddAlpha(RwReal fStar
 
 CNtlPLAtomicAlphaWeightBlend* CNtlPLEntityBlendController::AddAtomicAlpha(const RwChar *pAtomicName, RwReal fWeightAlpha, RwReal fLifeTime /*= 0.0f*/, RwBool bLoop /*= TRUE*/)
 {
-    // 한 Atomic에는 하나의 Alpha Blend 객체만 적용된다.
+    // Only one Alpha Blend object applies to one Atomic.
     if(FindAtomicAlphaBlend(pAtomicName))
         return NULL;
 
@@ -296,7 +296,7 @@ CNtlPLAtomicAlphaWeightBlend* CNtlPLEntityBlendController::AddAtomicAlpha(const 
 
 CNtlPLAtomicAlphaWeightBlend*  CNtlPLEntityBlendController::AddAtomicAlpha(const RwChar *pAtomicName, RwReal fStartWeightAlpha, RwReal fEndWeightAlpha, RwReal fBlendTime, RwReal fLifeTime, RwBool bLoop)
 {
-    // 한 Atomic에는 하나의 Alpha Blend 객체만 적용된다.
+    // Only one Alpha Blend object applies to one Atomic.
     if(FindAtomicAlphaBlend(pAtomicName))
         return NULL;
 

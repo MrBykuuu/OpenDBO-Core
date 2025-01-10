@@ -1,16 +1,16 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobMonsterAttr.h"
 
-// shared
+// Shared
 #include "MobTable.h"
 #include "MobMovePatternTable.h"
 #include "TextAllTable.h"
 #include "TableContainer.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLGlobal.h"
 #include "NtlSLApi.h"

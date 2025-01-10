@@ -1,15 +1,15 @@
 #include "precomp_dboclient.h"
 #include "JudgeDump.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "NtlPacketUG.h"
 #include "NtlPacketGU.h"
 #include "NtlPacketUtil.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "NtlSLGlobal.h"
 #include "NtlSob.h"
@@ -18,7 +18,7 @@
 #include "NtlSLEventFunc.h"
 #include "NtlSLLogic.h"
 
-// cleint
+// Client
 #include "DumpCommand.h"
 #include "DboGlobal.h"
 
@@ -50,7 +50,7 @@ char* CJudgeActionDump::GetDump_SendPacket(void* pPacket)
 	sNTLPACKETHEADER *pHeader = (sNTLPACKETHEADER*)pPacket;
 	RwUInt16 wOpCode = pHeader->wOpCode;
 
-	// avooo's command : 너무 많은 패킷이 출력이 되어 주석처리 하겠습니다
+	// avooo's command: Too many packets are output, so I will comment them out.
 	/*
 	const char *pOpString = NtlGetPacketName(wOpCode);
 	if(pOpString)

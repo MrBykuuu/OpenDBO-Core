@@ -23,11 +23,11 @@ CNtlPLLinkEffect::~CNtlPLLinkEffect(void)
 }
 
 /**
- * LinkEffect를 생성하여 부착한다.
- * \param pAttach 부착할 부모 객체
- * \param pEventLinkEffect 이펙트를 생성할 프로퍼티 객체
- * \param vLinkEffect Instance Effect를 생성할 vector
- * return 생성된 Effect 객체, 실패시엔 NULL을 반환
+ *Create and attach LinkEffect.
+ * \param pAttach Parent object to attach to.
+ * \param pEventLinkEffect Property object to create the effect
+ * \param vLinkEffect Instance The vector to create the Effect.
+ *return Created Effect object; returns NULL in case of failure.
  */
 CNtlInstanceEffect* CNtlPLLinkEffect::AttachLinkEffect(CNtlPLAttach* pAttach, SEventLinkEffect* pEventLinkEffect)
 {
@@ -45,7 +45,7 @@ CNtlInstanceEffect* CNtlPLLinkEffect::AttachLinkEffect(CNtlPLAttach* pAttach, SE
 			return NULL;
 		}
 
-        // Auto Delete 이펙트는 사용할수 없다.
+        // Auto Delete effect cannot be used.
         if(pEffect->IsAutoDelete())
         {
             pEffect->SetVisible(FALSE);
@@ -54,7 +54,7 @@ CNtlInstanceEffect* CNtlPLLinkEffect::AttachLinkEffect(CNtlPLAttach* pAttach, SE
         }
     }
 
-    // Attach 한다.
+    // Attach.
     RwBool bSuccess = FALSE;
     if(pEventLinkEffect->bAttachBone)
     {
@@ -67,13 +67,13 @@ CNtlInstanceEffect* CNtlPLLinkEffect::AttachLinkEffect(CNtlPLAttach* pAttach, SE
 		bSuccess = pAttach->AttachWorldPosAndRotate(pEffect, pEventLinkEffect->vOffsetPos);
     }
 
-    if(!bSuccess)       // Attach가 정상적으로 되지 않았을때 (본이 없다던가..)
+    if(!bSuccess)       // When attaching does not work properly (for example, there is no pattern...)
     {
         GetSceneManager()->DeleteEntity(pEffect);
         return NULL;
     }
 
-    // 부모의 Visible 속성을 따른다.
+    // Follows the parent's Visible property.
     pEffect->SetVisible(pAttach->IsVisible());
 
     m_vecLinkEffect.push_back(pEffect);    
@@ -82,11 +82,11 @@ CNtlInstanceEffect* CNtlPLLinkEffect::AttachLinkEffect(CNtlPLAttach* pAttach, SE
 }
 
 /**
-* LinkEffect를 제거한다.
-* \param pAttach LinkEffect를 제거할 부모 객체
-* \param pEventLinkEffect 제거할 LinkEffect
-* \param vLinkEffect Instance Effect를 제거할 vector
-* return 성공 유무
+*Remove LinkEffect.
+* \param pAttach Parent object to remove LinkEffect from.
+* \param pEventLinkEffect LinkEffect to remove.
+* \param vLinkEffect Instance The vector from which to remove the Effect.
+*Whether return is successful or not
 */
 RwBool CNtlPLLinkEffect::DetachLinkEffect(CNtlPLAttach* pAttach, CNtlInstanceEffect* pLinkEffect)
 {
@@ -97,7 +97,7 @@ RwBool CNtlPLLinkEffect::DetachLinkEffect(CNtlPLAttach* pAttach, CNtlInstanceEff
     pLinkEffect->SetVisible(FALSE);
     GetSceneManager()->DeleteEntity(pLinkEffect);    
 
-    // Intance들의 Vector에서 제거한다.    
+    // Remove from the vector of instances.    
     VecLinkEffect::iterator it = m_vecLinkEffect.begin();
     for(; it != m_vecLinkEffect.end(); ++it)
     {
@@ -114,9 +114,9 @@ RwBool CNtlPLLinkEffect::DetachLinkEffect(CNtlPLAttach* pAttach, CNtlInstanceEff
 
 
 /**
- * Effect 인스턴트 리스트중에서 이름에 해당하는 인스턴스 이펙트를 반환한다.
- * \param szName 찾을 이펙트의 이름
- * return 찾은 인스턴스 이펙트 객체. 찾지못하면 NULL을 반환한다.
+ *Returns the instance effect corresponding to the name in the Effect instance list.
+ * \param szName Name of the effect to find.
+ *return The instance effect object found. If not found, NULL is returned.
  */
 CNtlInstanceEffect* CNtlPLLinkEffect::GetLinkEffectFromName(RwChar* szName)
 {

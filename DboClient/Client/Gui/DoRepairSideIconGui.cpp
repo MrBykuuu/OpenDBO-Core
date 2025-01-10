@@ -1,13 +1,13 @@
 #include "precomp_dboclient.h"
 #include "DoRepairSideIconGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLGlobal.h"
 #include "NtlSobManager.h"
@@ -19,7 +19,7 @@
 // Sound
 #include "GUISoundDefine.h"
 
-// client
+// Client
 #include "DboGlobal.h"
 #include "DisplayStringManager.h"
 
@@ -52,7 +52,7 @@ RwBool CDoRepairSideIconGui::Create(VOID)
 	m_slotPaint = m_pbtnIcon->SigPaint().Connect( this, &CDoRepairSideIconGui::OnPaint );
 	m_slotMove = m_pThis->SigMove().Connect( this, &CDoRepairSideIconGui::OnMove );
 
-	// FlickEffect
+	// Flick effect
 	gui::CSurface surface = GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "DoRepairSide.srf", "srfDoRepairSideIconPulse" );
 	m_feEffect.SetSurface( surface );
 	m_feEffect.SetTime( 0.0f, 0.5f );
@@ -85,7 +85,7 @@ VOID CDoRepairSideIconGui::OnSideViewClosed(VOID)
 
 VOID CDoRepairSideIconGui::HandleEvents( RWS::CMsg &msg )
 {
-	// Equip Á¤º¸
+	// Equip information
 	if( msg.Id == g_EventSobInfoUpdate )
 	{
 		SNtlEventSobInfoUpdate* pUpdate = reinterpret_cast<SNtlEventSobInfoUpdate*>( msg.pData );

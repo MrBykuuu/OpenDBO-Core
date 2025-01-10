@@ -1,28 +1,28 @@
 /******************************************************************************
-* File			: ChannelSelectGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2007. 10. 17
-* Abstract		: 
+*File           : ChannelSelectGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : October 17, 2007
+*Abstract		: 
 *****************************************************************************
-* Desc			: 로비에서 채널을 선택하기 위한 클래스
+*Desc           : Class for selecting a channel in the lobby
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// shared
+// Shared
 #include "NtlCSArchitecture.h"
 
-// gui
+// Gui
 #include "gui_button.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// dbo
+// Dbo
 #include "Windowby3.h"
 
 struct sDBO_GAME_SERVER_CHANNEL_INFO;
@@ -99,14 +99,14 @@ protected:
 	gui::CStaticBox*	m_pServerName;
 	gui::CStaticBox*	m_pSelectChannel;	///
 
-	gui::CButton*		m_pOkButton;		///< 확인 버튼
-	gui::CButton*		m_pCancelButton;	///< 취소 버튼
+	gui::CButton*		m_pOkButton;		///< OK button
+	gui::CButton*		m_pCancelButton;	///< Cancel button
 
 	CSurfaceGui			m_srfFocusBar;
 	CSurfaceGui			m_srfSelectBar;
 	CSurfaceGui			m_srfDownBar;
 
-	gui::CScrollBar*	m_pScrollBar;		///< 채널 스크롤
+	gui::CScrollBar*	m_pScrollBar;		///< Channel Scroll
 
 	RwUInt8				m_byFocusIndex;
 	RwUInt8				m_byDownIndex;

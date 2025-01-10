@@ -1,30 +1,30 @@
 /******************************************************************************
-* File			: CNumberGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2007. 9. 4
-* Abstract		: 
+*File			: CNumberGui.h
+*Author		    : Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2007. 9. 4
+*Abstract		: 
 *****************************************************************************
-* Desc			: GUI단에서 이미지로 구성된 숫자로 표시하기 위한 클래스
-*				  m_rtRect의 영역이 실제로 표시되는 공간을 가리키는 것이 아니다
-*				  m_rtRect의 구성요소중 left, top(이미지의 최상단)은 숫자가
-*				  표시되는 부모로부터의 정렬에 따른 기준 좌표 right, bottom은
-*				  정렬방법에 상관없이 left, top에서부터 무조건 넓이와 높이를 가리킨다
+*Desc			: Class for displaying numbers composed of images in the GUI level
+*The area of ??m_rtRect does not refer to the actual displayed space.
+*Among the components of m_rtRect, left and top (top of the image) have numbers.
+*The reference coordinates right and bottom according to the alignment from the displayed parent are
+*Regardless of the alignment method, the width and height are always indicated from left and top.
 *
-*				  이미지의 넓이, 높이는 모두 같다고 가정한다
+*Assume that the width and height of the image are all the same
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlCallbackWidget.h"
 
-// dbo
+// Dbo
 #include "SurfaceGui.h"
 
 
-#define dMAX_CHPHER			10		///< 숫자를 표시할 수 있는 최대 자릿수
+#define dMAX_CHPHER			10		///< Maximum number of digits that can display a number
 
 #define dNCFLAG_NONE		0x00
 #define dNCFLAG_MINUS		0x01
@@ -92,13 +92,13 @@ public:
 	CNumberGui();
 	virtual ~CNumberGui();
 	
-	/*	byHoriAlign		: 주어진 좌표에서 숫자 및 표식이 정렬되는 좌우 방향
-		byVertAlign		: 주어진 좌표에서 숫자 및 표식이 정렬되는 상하 방향
-		byNumGap		: 숫자 및 표식간의 간격
-		byFlag			: 숫자 외의 사용할 표식의 플래그를 등록
-		byRemainCipher	: 반드시 표시해야 할 숫자의 자릿수
-						  예) byRemainCipher = 2 일 때 SetNumber(1) 이면 01을 표시
-							  byRemainCipher = 4 일 때 SetNumber(1) 이면 0001을 표시 */	
+	/*	byHoriAlign: Left and right direction in which numbers and markers are aligned at given coordinates
+		byVertAlign: Up and down direction in which numbers and markers are aligned at given coordinates
+		byNumGap: Gap between numbers and marks
+		byFlag: Register the flag of the mark to be used other than numbers.
+		byRemainCipher: Number of digits that must be displayed
+						  Example) When byRemainCipher = 2, if SetNumber(1), 01 is displayed.
+							  byRWhen emainCipher = 4 and SetNumber(1), 0001 is displayed */	
 	RwBool			Create(RwUInt8 byHoriAlign = ND_LEFT, RwUInt8 byVertAlign = NVD_TOP, RwInt32 iNumGap = 0, RwUInt8 byFlag = dNCFLAG_NONE, RwUInt8 byRemainCipher = 1);
 	VOID			Update(RwReal fElapsed);
 	VOID			Destroy();
@@ -126,7 +126,7 @@ public:
 	CRectangle		GetScreenRect();
 	RwReal			GetRate();
 
-	// CNumberGui_ZoomHelper 클래스를 이용하세요. 이 함수는 차후 지울 예정입니다
+	// Use the CNumberGui_ZoomHelper class. This function will be deleted in the future
 	VOID			EffectRate(RwReal fStartRate, RwReal fEndRate, RwReal fRemainTime);
 
 	VOID			UnsetSurface(RwUInt8 byIndex);
@@ -155,7 +155,7 @@ protected:
 	VOID			CalcWidth();
 
 protected:
-	CSurfaceGui			m_srfNumber[NUM_NC];			///< 전투력을 표시하는 숫자
+	CSurfaceGui			m_srfNumber[NUM_NC];			///< Number indicating combat power
 	
 	RwUInt8				m_byFlag;
 	RwUInt8				m_byHoriDirection;
@@ -167,10 +167,10 @@ protected:
 	CPos				m_ParentPos;
 	RwReal				m_fRate;
 
-	RwUInt8				m_byCurCipher;					///< 현재 자릿수
-	RwUInt8				m_byCipher[dMAX_CHPHER];		///< 각 자릿수별 숫자
-	RwUInt8				m_byRemainCipher;				///< 유지되야할 최소 자릿수
-	RwInt64				m_i64Number;					///< 입력받은 숫자
+	RwUInt8				m_byCurCipher;					///< current digits
+	RwUInt8				m_byCipher[dMAX_CHPHER];		///< Number for each digit
+	RwUInt8				m_byRemainCipher;				///< Minimum number of digits to be maintained
+	RwInt64				m_i64Number;					///< Number entered
 
 	sEffectRate			m_EffectRate;
 };
@@ -249,7 +249,7 @@ inline RwInt32 CNumberGui::GetHeight()
 
 inline CRectangle CNumberGui::GetPosition()
 {
-	// 부모로부터의 기준 좌표와 넓이, 높이만을 참고하자
+	// Just refer to the reference coordinates, area, and height from the parent.
 	CRectangle rtRect;
 
 	rtRect.left		= m_iX_fromParent;
@@ -278,7 +278,7 @@ inline VOID CNumberGui::UnsetAll()
 
 inline RwBool CNumberGui::PtInRect(RwInt32 iPosX, RwInt32 iPosY)
 {
-	// 화면 좌표가 아닌 부모로부터의 좌표를 입력해야 한다
+	// You must enter coordinates from the parent, not screen coordinates.
 	CRectangle rtRect = GetRect();
 
 	return rtRect.PtInRect(iPosX, iPosY);

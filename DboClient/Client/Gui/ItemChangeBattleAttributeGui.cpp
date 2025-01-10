@@ -1,15 +1,15 @@
 #include "precomp_dboclient.h"
 #include "ItemChangeBattleAttributeGui.h"
 
-// shared
+// Shared
 #include "NtlCharacter.h"
 #include "TableContainer.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "NtlSLEvent.h"
 #include "NtlSobItemAttr.h"
@@ -403,7 +403,7 @@ RwInt32 CItemChangeBattleAttributeGui::GetChildSlotIdx( RwInt32 nX, RwInt32 nY )
 	return -1;
 }
 
-// Error Notify는 여기서 처리.
+// Error Notify is handled here.
 bool CItemChangeBattleAttributeGui::SetItemSlot( RwUInt32 hSerialID, RwUInt32 eSrcplace, RwUInt32 uiSrcSlotIdx, RwUInt32 uiDestSlotIdx, RwBool bNeedToIconMoveEnd )
 {
 	if( m_eState == STATE_UPGRADE_PROCESS ||
@@ -532,7 +532,7 @@ bool CItemChangeBattleAttributeGui::SetItemSlot( RwUInt32 hSerialID, RwUInt32 eS
 	// 
 	UpdateSlotIcon();
 
-	// 아이콘 무브 완료
+	// Icon Move Completed
 	if( bNeedToIconMoveEnd )
 		GetIconMoveManager()->IconMoveEnd();
 
@@ -541,13 +541,13 @@ bool CItemChangeBattleAttributeGui::SetItemSlot( RwUInt32 hSerialID, RwUInt32 eS
 
 VOID CItemChangeBattleAttributeGui::UpdateSlotIcon(VOID)
 {
-	// Info Wnd 변경
+	// Change InfoWnd
 	if( m_nMouseOnIdx >= 0 && GetInfoWndManager()->GetRequestGui() == DIALOG_ITEM_CHANGE_BATTLE_ATTRIBUTE )
 	{
 		ShowInfoWnd( TRUE, m_nMouseOnIdx );					
 	}
 
-	// UpgradeReady상태시 스카우터 파츠 관련해서 바뀌었으면 다시 세팅
+	// If there are any changes related to scouter parts in UpgradeReady state, set them again.
 	if( m_eState == STATE_UPGRADE_READY )
 	{
 		SetState( STATE_UPGRADE_READY );
@@ -576,7 +576,7 @@ VOID CItemChangeBattleAttributeGui::SetOfferItem( RwInt32 nSlotIdx, CNtlSobItem*
 		return;
 	}
 
-	// 아이템 업그레이드 내부에서 움직일때 이전 이펙트를 지운다. DeleteHoipoiStone은 업그레이드 창에서 사라질때만 호출된다. 
+	// Clears previous effects when moving inside an item upgrade. DeleteHoipoiStone is only called when it disappears from the upgrade window. 
 	if(m_pOfferItem)
 	{
 		m_surSlot[nSlotIdx].UnsetTexture();
@@ -644,7 +644,7 @@ VOID CItemChangeBattleAttributeGui::SetResult(WORD wResultcode, RwUInt8 byBattle
 {
 	NTL_ASSERT( m_pUpgradeItem, "CItemChangeBattleAttributeGui::HandleEvents : UpgradeItem Must be Present!" );
 
-	// execption.. --;; 에러메시지는 패킷핸들러에서 처리된다.
+	// execption.. --;; Error messages are processed in the packet handler.
 	if(wResultcode != GAME_SUCCESS )
 	{
 		SetState(STATE_UPGRADE_READY);
@@ -884,7 +884,7 @@ VOID CItemChangeBattleAttributeGui::ShowIconDestination( RwBool isPick )
 				return;
 			else
 			{
-				// Item 은 장착된후에는 Pickup이 되지 않는다.
+				// Items cannot be picked up after being installed.
 				for( RwInt32 i = 0 ; i < NUM_SLOTEFFECT ; ++i )
 				{
 					m_anFocusEffect[i] = m_anFocusEffect[i] | SLOT_FOCUS_CAN_MOVE;
@@ -1264,7 +1264,7 @@ VOID CItemChangeBattleAttributeGui::OnMouseUp( const CKey& key )
 				else
 					DeleteOfferItem();
 
-				// Info Wnd 변경
+				// Change InfoWnd
 				if( m_nMouseOnIdx >= 0 && GetInfoWndManager()->GetRequestGui() == DIALOG_ITEM_CHANGE_BATTLE_ATTRIBUTE )
 				{
 					ShowInfoWnd( TRUE, m_nMouseOnIdx );					

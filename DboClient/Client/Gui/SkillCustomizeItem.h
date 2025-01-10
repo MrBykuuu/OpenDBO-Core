@@ -127,7 +127,7 @@ private:
 	ICONSTATE			m_eRClickIcon;	
 	RwBool				m_bPushDownIcon;
 
-	RwReal				m_fRightClickTime;	// 오른쪽 버튼 눌렀을때의 시간. RPBonus적용
+	RwReal				m_fRightClickTime;	// Time taken when right button is pressed. Apply RPBonus
 
 	gui::CRadarEffect	m_CoolTimeEffect;
 	CSurfaceGui			m_surRPType;
@@ -142,7 +142,7 @@ private:
 	CNtlSobIcon*				m_pSobIcon;
 	CSkillCustomizeSkillItem*	m_pItem;
 
-	stSkillUpgradeInfo	m_stSkillUpgradeInfo;	// 업그레이드 정보. (Infownd용 데이터)
+	stSkillUpgradeInfo	m_stSkillUpgradeInfo;	// Upgrade information. (Data for Infound)
 };
 
 class CSkillCustomizeItemGroup
@@ -166,7 +166,7 @@ public:
 	VOID SetSkillItem( RwUInt32 uiBaseSkillIndex, CNtlSobIcon* pSobIcon, sTBLDAT* pData );
 	VOID SetRPType( RwUInt32 uiBaseSkillIndex, CNtlSobSkillAttr* pSobSkillAttr );
 	VOID CheckUpgradebleSkill(VOID);
-	VOID CheckSkillGroupShowAndSize(VOID);	// 현재 스킬이 보여지는 만큼 라인 Show, 사이즈 조절.
+	VOID CheckSkillGroupShowAndSize(VOID);	// Line Show and resize as much as the current skill is visible.
 
 	VOID SetOffset( RwInt32 nYOffset );						
 	VOID CalcScrollBar(VOID);

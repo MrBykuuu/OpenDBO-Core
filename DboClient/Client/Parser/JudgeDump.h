@@ -1,19 +1,19 @@
 /*****************************************************************************
- * File			: JudgeDump.h
- * Author		: Hong Sungbock
- * Copyright	: (주)NTL
- * Date			: 2008. 11. 29
- * Abstract		: 
+ *File			: JudgeDump.h
+ *Author	    : Hong Sungbock
+ *Copyright	    : NTL Co., Ltd.
+ *Date			: 2008. 11. 29
+ *Abstract		: 
  *****************************************************************************
- * Desc			: 메세지를 덤프 뜰 수 있는지 여부를 판단하여 가능하면 메세지를
- *				  반환한다
+ *Desc			: Determine whether the message can be dumped and, if possible, dump the message.
+ *               returns
  *****************************************************************************/
 
 #pragma once
 
 enum eDUMP_TYPE
 {
-	DUMP_DEFAULT,			// Default Dump Message는 요청하면 언제나 출력이 가능하다
+	DUMP_DEFAULT,			// Default Dump Message can be printed at any time upon request.
 	DUMP_ACTION,
 	DUMP_SOB_CREATE_DESTROY,
 	DUMP_FSM,

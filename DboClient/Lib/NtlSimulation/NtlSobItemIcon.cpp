@@ -122,11 +122,11 @@ void CNtlSobItemIcon::HandleEvents(RWS::CMsg &pMsg)
 	{
 		SNtlEventSobItemUpdate* pSobItemUpdate = reinterpret_cast<SNtlEventSobItemUpdate*>(pMsg.pData);
 		
-		// 이때는 Attr보다 먼저 Update 됨.
+		// In this case, it is updated before Attr.
 		CNtlSobItem *pSobItem = reinterpret_cast<CNtlSobItem*>(m_pSobObj);
 		CNtlSobItemAttr *pSobItemAttr = reinterpret_cast<CNtlSobItemAttr*>(pSobItem->GetSobAttr());
 				
-		// 이전엔 ItemUnIdentified였다가 풀렸을때.
+		// Previously, it was ItemUnIdentified and then released.
 		if( pSobItemAttr->IsNeedToIdentify() && !pSobItemUpdate->bNeedToIdentify )
 		{
 			sITEM_TBLDAT* pItemData = reinterpret_cast<sITEM_TBLDAT*>( API_GetTableContainer()->GetItemTable()->FindData( pSobItemUpdate->uiItemTblId ) );
@@ -256,7 +256,7 @@ RwBool CNtlSobItemIcon::Use(SERIAL_HANDLE hTargetSerialId, RwUInt32 param1/* = 0
 	}
 
 	//-----------------------------------------------------------------
-	// casting 검사.
+	// casting inspection.
 
 	if(m_byIconState == ICON_STATE_COOLING)
 	{
@@ -265,7 +265,7 @@ RwBool CNtlSobItemIcon::Use(SERIAL_HANDLE hTargetSerialId, RwUInt32 param1/* = 0
 	}
 
 	//-----------------------------------------------------------------
-	// target 유효 검사.
+	// target validation.
 	CNtlSobItem *pSobItem = reinterpret_cast<CNtlSobItem*>(m_pSobObj);
 	CNtlSobItemAttr *pSobItemAttr = reinterpret_cast<CNtlSobItemAttr*>(pSobItem->GetSobAttr());
 	sITEM_TBLDAT* pItemTbl = pSobItemAttr->GetItemTbl();
@@ -279,7 +279,7 @@ RwBool CNtlSobItemIcon::Use(SERIAL_HANDLE hTargetSerialId, RwUInt32 param1/* = 0
 		NTL_RETURN(FALSE);
 	
 	//-----------------------------------------------------------------
-	// appoint target 유효 검사.
+	// Appoint target validation.
 	//-----------------------------------------------------------------
 	// self
 	RwUInt8 byAppointTarget = pUseItemTblData->byAppoint_Target;
@@ -313,17 +313,17 @@ RwBool CNtlSobItemIcon::Use(SERIAL_HANDLE hTargetSerialId, RwUInt32 param1/* = 0
 	// self
 	if(byApplyTarget == DBO_SKILL_APPLY_TARGET_SELF)
 	{
-		// check 안함.
+		// Not checked.
 	}
 	// enemy
 	else if(byApplyTarget == DBO_SKILL_APPLY_TARGET_ENEMY)
 	{
-		// check 안함.
+		// Not checked.
 	}
 	// alliance
 	else if(byApplyTarget == DBO_SKILL_APPLY_TARGET_ALLIANCE)
 	{
-		// check 안함.
+		// Not checked.
 	}
 	// party
 	else if(byApplyTarget == DBO_SKILL_APPLY_TARGET_PARTY)
@@ -335,7 +335,7 @@ RwBool CNtlSobItemIcon::Use(SERIAL_HANDLE hTargetSerialId, RwUInt32 param1/* = 0
 	}
 
 	//-----------------------------------------------------------------
-	// Lp, Ep, Rp Max 검사. 
+	// Lp, Ep, Rp Max test. 
 	//-----------------------------------------------------------------
 	CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
 	CNtlSobAvatarAttr* pAvatarAttr = reinterpret_cast<CNtlSobAvatarAttr*>( pAvatar->GetSobAttr() );
@@ -408,7 +408,7 @@ RwBool CNtlSobItemIcon::Use(SERIAL_HANDLE hTargetSerialId, RwUInt32 param1/* = 0
 				bLPEPRPUseCheck = TRUE;
 			}
 		}
-		else // 그외의 Effect가 있는 경우 무조건 사용 가능.
+		else // If there are other effects, they can be used unconditionally.
 		{
 			bLPEPRPUseCheck = TRUE;
 			sResult[i].bResult = TRUE;

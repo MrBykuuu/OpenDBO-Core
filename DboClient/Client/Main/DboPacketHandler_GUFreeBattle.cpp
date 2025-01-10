@@ -1,9 +1,9 @@
 /*****************************************************************************
 * File			: DboPackethandler_GUFreeBattle.cpp
 * Author		: Hong sungbock
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2007. 1. 16
-* Abstract		: Free Battle 관련 패킷 핸들
+* Abstract		: Free Battle related packet handle
 *****************************************************************************
 * Desc         : 
 *****************************************************************************/
@@ -53,7 +53,7 @@ void PacketHandler_GSFreeBattleAcceptReq(void *pPacket)
 		GetDboGlobal()->SetAskedPCSerial(INVALID_SERIAL_ID);
 		return;
 	}	
-    else if(Logic_IsBlackList(pAcceptReq->hChallenger)) // 블랙리스트에 등록되어 있는 경우 거절  
+    else if(Logic_IsBlackList(pAcceptReq->hChallenger)) //Reject if registered in blacklist
     {
         GetDboGlobal()->GetGamePacketGenerator()->SendFreeBattleAcceptRes(ACCEPT_RES_TYPE_DENY);        
         GetDboGlobal()->SetAskedPCSerial(INVALID_SERIAL_ID);

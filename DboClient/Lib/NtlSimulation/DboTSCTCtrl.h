@@ -49,21 +49,21 @@ protected:
 public:
 	//////////////////////////////////////////////////////////////////////////
 	//
-	//	Client <-> Server 메시지들
+	//	Client <-> Server messages
 	//
 	//////////////////////////////////////////////////////////////////////////
 
-	// 트리거 진행 흐름에 관계된 메시지들
+	// Messages related to trigger progress flow
 	void								UG_Avatar_TS_Confirm_Step( NTL_TS_TC_ID tcCurId, NTL_TS_TC_ID tcNextId, unsigned int* uiParam, unsigned char byEventType, unsigned int uiEventData );
 	void								GU_Avatar_TS_Confirm_Step( WORD wResultCode, NTL_TS_TC_ID tcCurId, NTL_TS_TC_ID tcNextId );
 
-	// TS 상태 업데이트 메시지
+	// TS status update message
 	void								GU_TS_Update_State( unsigned char byType, unsigned short wTSState, unsigned int uiParam = 0xffffffff );
 	void								UG_TS_Update_State( unsigned char byType, unsigned short wTSState, unsigned int uiParam = 0xffffffff );
 
 	//////////////////////////////////////////////////////////////////////////
 	//
-	// 클라이언트 메시지들
+	// client messages
 	//
 	//////////////////////////////////////////////////////////////////////////
 
@@ -109,23 +109,23 @@ public:
 		//
 		//////////////////////////////////////////////////////////////////////////
 
-	// 제안 대화 상자
+	// suggestion dialog box
 	void								TU_ShowProposalDialog( sTS_KEY& sKey, CDboTSContProposal* pCont, CDboTSContReward* pContRwd );
 	void								UT_ShowProposalDialog( sTS_KEY& sKey, bool bAccept );
 
-	// 사용자 보상 선택 대화 상자
+	// User Reward Selection Dialog Box
 	void								TU_ShowRewardDialog( sTS_KEY& sKey, CDboTSContReward* pCont );
 	void								UT_ShowRewardDialog( sTS_KEY& sKey, int nSelRwdIdx, bool bCancel );
 
-	// 사용자 선택 대화 상자
+	// User Selection Dialog Box
 	void								TU_ShowUserSelectionDialog( sTS_KEY& sKey, CDboTSContUsrSel* pCont );
 	void								UT_ShowUserSelectionDialog( sTS_KEY& sKey, NTL_TS_TC_ID tcSelId, bool bCancel );
 
-	// 나래이션 대화 상자
+	// Narration dialog box
 	void								TU_ShowNarrationDialog( sTS_KEY& sKey, CDboTSContNarration* pCont );
 	void								UT_ShowNarrationDialog( sTS_KEY& sKey, bool bCancel );
 
-	// 통합 나래이션 대화 상자
+	// Integrated narration dialog box
 	void								TU_ShowUnifiedNarrationDialog( sTS_KEY& sKey, CDboTSContUnifiedNarration* pCont );
 	void								UT_ShowUnifiedNarrationDialog( sTS_KEY& sKey, bool bCancel );
 
@@ -135,28 +135,28 @@ public:
 		//
 		//////////////////////////////////////////////////////////////////////////
 
-	// 예외 타이머
+	// exception timer
 	void								TG_Avatar_TS_ExceptTimerStartNfy( sTS_KEY& sKey, CDboTSActETimerS* pAct );
 	void								TG_Avatar_TS_ExceptTimerEndNfy( sTS_KEY& sKey, CDboTSActETimerE* pAct );
 
-	// NPC 대화
+	// NPC dialogue
 	void								TU_ShowNPCConv( sTS_KEY& sKey, CDboTSActNPCConv* pAct );
 	void								UT_ShowNPCConv( sTS_KEY& sKey );
 
-	// 카메라 연출
+	// camera direction
 	void								TU_CameraDirection( sTS_KEY& sKey, CDboTSActOPCam* pAct );
 	void								UT_CameraDirection( sTS_KEY& sKey );
 
-	// TS 진행 대기
+	// Wait for TS progress
 	void								TG_WaitTSNfy( sTS_KEY& sKey, CDboTSActTWaitTS* pAct );
 
-	// SSM 업데이트
+	// SSM Update
 	void								TG_InSSMNfy( sTS_KEY& sKey, CDboTSActInSSM* pAct );
 
-	// 상태 업데이트
+	// status update
 	void								TG_TSStateNfy( sTS_KEY& sKey, CDboTSActTSState* pAct );
 
-	// Object 대화
+	// Object conversation
 	void								TU_ShowObjConv( sTS_KEY& sKey, CDboTSActObjConv* pAct );
 	void								UT_ShowObjConv( sTS_KEY& sKey );
 

@@ -149,7 +149,7 @@ protected:
 	CSurfaceGui m_surFocusSlot[NTL_MAX_EQUIP_ITEM_SLOT];
 	RwInt32		m_arrFocusEffect[NTL_MAX_EQUIP_ITEM_SLOT];
 	CSurfaceGui m_surDisableSlot[NTL_MAX_EQUIP_ITEM_SLOT];
-	CSurfaceGui m_surFritzSlot[NTL_MAX_EQUIP_ITEM_SLOT];	// 내구도가 다한녀석들 표시.
+	CSurfaceGui m_surFritzSlot[NTL_MAX_EQUIP_ITEM_SLOT];	// Indicates those whose durability has reached the end.
 
 	CSurfaceGui m_surPickedUp;
 	RwInt32	    m_nShowPickedUp;
@@ -215,7 +215,7 @@ public:
 
 /**
 * \ingroup client
-* \brief 스테이터스창의 명예 탭
+* \brief Honor tab in status window
 */
 class CStatusHonorTab
 {
@@ -271,7 +271,7 @@ private:
 
 /**
 * \ingroup client
-* \brief 스테이터스창의 Technic 탭
+* \brief Technic tab in status window
 */
 class CStatusTechnicTab
 {

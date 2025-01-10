@@ -1,15 +1,15 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlFSMCharController.h"
 
-//shared
+//Shared
 #include "NtlMovement.h"
 #include "NtlResultCode.h"
 
-//core
+//Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// simulation
+// Simulation
 #include "NtlFSMDef.h"
 #include "NtlFSMLayer.h"
 #include "NtlFSMStateBase.h"
@@ -55,7 +55,7 @@ void CNtlFSMSyncMsgAttackBegin::SetTargetSerialId( SERIAL_HANDLE hTargetSerialId
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : attack range를 검사하여 attack begin or end packet을 보낸다.
+//  des : Checks the attack range and sends an attack begin or end packet.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : delta time.
@@ -63,7 +63,7 @@ void CNtlFSMSyncMsgAttackBegin::SetTargetSerialId( SERIAL_HANDLE hTargetSerialId
 
 void CNtlFSMSyncMsgAttackBegin::Update(CNtlSobActor *pActor, RwReal fElapsed)
 {
-	// 서버로 attack end protocol을 보낸다.
+	// Send attack end protocol to server.
 	if(m_hTargetSerialId == INVALID_SERIAL_ID)
 	{
 		if(m_bAttackBegin)

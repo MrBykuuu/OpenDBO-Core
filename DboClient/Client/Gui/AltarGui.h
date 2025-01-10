@@ -8,7 +8,7 @@
 class CNtlSobItem;
 class CNtlWorldConceptDBC;
 
-/// 드래곤볼 타입
+/// dragon ball type
 enum EDragonBallType
 {
 	E_DRAGONBALL_NONE,
@@ -21,13 +21,13 @@ enum EDragonBallType
 	E_DRAGONBALL_7,
 };
 
-/// 드래곤볼 슬롯 구조체
+/// Dragon Ball Slot Structure
 struct DragonBallSlot
 {
-	CRectangle		 m_rt;		///< 드래곤볼 슬롯의 영역
-	CSurfaceGui		 m_surface;	///< 드래곤볼 슬롯의 서페이스 (텍스쳐 설정에 필요)
-	EDragonBallType	 m_eDBType;	///< 슬롯에 있는 드래곤볼 타입
-	CNtlSobItem*	 m_pSobItem; ///< 슬롯에 있는 아이템의 포인터
+	CRectangle		 m_rt;		///< Realm of Dragon Ball Slots
+	CSurfaceGui		 m_surface;	///< Surface of Dragon Ball slot (required for texture setting)
+	EDragonBallType	 m_eDBType;	///< Dragon ball type in slot
+	CNtlSobItem*	 m_pSobItem; ///< Pointer to the item in the slot
 
 	DragonBallSlot()
 	{
@@ -39,8 +39,8 @@ struct DragonBallSlot
 
 /**
  * \ingroup Client
- * \brief 드래곤볼 용신 소환 제단 클릭시 나오는 GUI
- * 드래곤볼 7개를 세팅하여 용신을 소환하기 위해서 사용한다.
+ * \brief GUI that appears when you click on the Dragon Ball Dragon God Summoning Altar
+ *Set 7 dragon balls and use them to summon the dragon god.
  * \date 2007-06-20
  * \author agebreak
  */
@@ -79,25 +79,25 @@ protected:
     VOID	OnCaptureMouseDown(const CKey& key);
 
 
-	RwInt32	GetChildSlotIdx(RwInt32 nX, RwInt32 nY);	///< 마우스를 클릭할때 어떤 Slot에 해당하는지 계산한다.
+	RwInt32	GetChildSlotIdx(RwInt32 nX, RwInt32 nY);	///< Calculate which slot it corresponds to when you click the mouse.
 
-	VOID	SetDragonBallSlot(RwInt32 nSlotIdx, EDragonBallType eDragonBallType);	///< 드래곤볼을 slot에 세팅한다.
-	VOID	RemoveDragonBallSlot(RwInt32 nSlotIdx);									///< 세팅한 드래곤볼을 slot으로부터 해제한다.
-    RwBool  IsExistSameType(EDragonBallType eType);                                 ///< 같은 타입(번호)의 드래곤볼이 이미 놓여있는지 체크한다.
+	VOID	SetDragonBallSlot(RwInt32 nSlotIdx, EDragonBallType eDragonBallType);	///< Set the dragon ball in the slot.
+	VOID	RemoveDragonBallSlot(RwInt32 nSlotIdx);									///< Release the set dragon ball from the slot.
+    RwBool  IsExistSameType(EDragonBallType eType);                                 ///< Check if a dragon ball of the same type (number) is already placed.
 
-	VOID	SpawnDragon();								///< 용신 소환 연출을 실행한다.
+	VOID	SpawnDragon();								///< Execute the dragon god summoning production.
 
 	
 
 protected:
-	static CAltarGui*	m_pInstance;			///< 싱글톤 인스턴스 객체	
+	static CAltarGui*	m_pInstance;			///< Singleton instance object	
 
-	gui::CButton*		m_pBtnExit;				///< Exit 버튼
-	gui::CButton*		m_pBtnOK;				///< OK 버튼
-	gui::CInputBox*		m_pInKeyword;			///< 주문 인풋 박스
-	gui::CPanel*		m_pPnlInputBack;		///< 인풋 박스 배경
-	gui::CPanel*		m_apPnlLight[7];		///< 드래곤볼이 삽입되면 변경될 배경
-	gui::CStaticBox*	m_pStaticKeyword;		///< 주문 인풋 박스의 앞의 텍스트
+	gui::CButton*		m_pBtnExit;				///< Exit button
+	gui::CButton*		m_pBtnOK;				///< OK button
+	gui::CInputBox*		m_pInKeyword;			///< Order input box
+	gui::CPanel*		m_pPnlInputBack;		///< Input box background
+	gui::CPanel*		m_apPnlLight[7];		///< Background that will change when Dragon Ball is inserted
+	gui::CStaticBox*	m_pStaticKeyword;		///< Text before the order input box
 
 	gui::CSlot			m_slotClickExitBtn;	
 	gui::CSlot			m_slotClickOKBtn;	
@@ -109,11 +109,11 @@ protected:
 	gui::CSlot			m_slotLostFocus;
     gui::CSlot			m_slotCaptureMouseDown;
 
-    DragonBallSlot      m_DBSlot[DRAGON_BALL_TYPE_COUNT][NTL_ITEM_MAX_DRAGONBALL];          ///< 드래곤볼 아이콘을 표시할 슬롯
-	RwInt32				m_nDBCount;				///< 현재 장착되어 있는 드래곤볼 Count
-	RwBool				m_bSpawnDragon;			///< 용신을 소환했는지 여부
+    DragonBallSlot      m_DBSlot[DRAGON_BALL_TYPE_COUNT][NTL_ITEM_MAX_DRAGONBALL];          ///< Slot to display Dragon Ball icon
+	RwInt32				m_nDBCount;				///< Currently equipped Dragon Ball Count
+	RwBool				m_bSpawnDragon;			///< Whether the Dragon God has been summoned
 	RwBool				m_bDelete;
 
-	CNtlWorldConceptDBC*	m_pWorldConceptDBC;	///< 드래곤볼 컬렉션 컨트롤러의 포인터
+	CNtlWorldConceptDBC*	m_pWorldConceptDBC;	///< Pointer to the Dragon Ball Collection Controller
 
 };

@@ -1,12 +1,12 @@
 /*****************************************************************************
 *
-* File			: NtlWareHouse.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2006. 11. 20	
-* Abstract		: Simulation Warehouse class
+*File			: NtlWareHouse.h
+*Author		: Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2006. 11. 20	
+*Abstract		: Simulation Warehouse class
 *****************************************************************************
-* Desc         : 
+*Desc         : 
 *
 *****************************************************************************/
 
@@ -28,12 +28,12 @@ public:
 
 	void			Destroy(void);
 
-	SERIAL_HANDLE	GetSlotSerailID(RwUInt8 bySlot);		///< 해당 슬롯의 핸들을 반환한다
-	RwUInt8			FindWarehouseSlot(SERIAL_HANDLE hSerial);///< 인자로 받은 핸들을 가지고 있는 슬롯을 찾는다
-	RwUInt32		GetZenny();								///< 창고안의 제니를 반환한다
+	SERIAL_HANDLE	GetSlotSerailID(RwUInt8 bySlot);		///< Returns the handle of the slot
+	RwUInt8			FindWarehouseSlot(SERIAL_HANDLE hSerial);///< Finds the slot that has the handle received as an argument.
+	RwUInt32		GetZenny();								///< Return Jenny from the warehouse
 
-	RwBool			IsHaveCommonWarehouse();				///< 공유 창고를 가지고 있는지 알아본다	
-	RwBool			IsRecieveData_from_Server();			///< 서버로 부터 창고 데이터를 모두 받았는지 여부
+	RwBool			IsHaveCommonWarehouse();				///< Find out if you have a shared warehouse	
+	RwBool			IsRecieveData_from_Server();			///< Whether all warehouse data has been received from the server
 
 	virtual	void	HandleEvents(RWS::CMsg &pMsg);
 
@@ -48,11 +48,11 @@ protected:
 	void ItemStackMoveEventHandler(RWS::CMsg &msg);
 
 protected:
-	SERIAL_HANDLE	m_hWareHouseSlot[NTL_MAX_BANKSLOT_COUNT];///< 창고 슬롯
-	RwUInt32		m_uiZenny;								///< 제니
+	SERIAL_HANDLE	m_hWareHouseSlot[NTL_MAX_BANKSLOT_COUNT];///< Warehouse slots
+	RwUInt32		m_uiZenny;								///< Zenny
 
-	RwBool			m_bHaveCommonWarehouse;					///< 공유창고 소유여부
-	RwBool			m_bRecieveData_from_Server;				///< 서버로 부터 창고 데이터를 모두 받았는지 여부
+	RwBool			m_bHaveCommonWarehouse;					///< Ownership of shared warehouse
+	RwBool			m_bRecieveData_from_Server;				///< Whether all warehouse data has been received from the server
 };
 
 #endif

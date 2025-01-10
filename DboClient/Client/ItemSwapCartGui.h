@@ -1,11 +1,11 @@
 /******************************************************************************
-* File			: ItemSwapCartGui.h
-* Author		: Daneos
-* Copyright		: Daneos
-* Date			: 14-sep-2018
-* Abstract		:
+*File			: ItemSwapCartGui.h
+*Author		    : Daneos
+*Copyright		: Daneos
+*Date			: 14-sep-2018
+*Abstract		:
 *****************************************************************************
-* Desc			: Item exchange cart
+*Desc			: Item exchange cart
 *				  SellSlot's Serial writes Sob's
 *****************************************************************************/
 
@@ -48,7 +48,7 @@ public:
 	VOID			OpenCart(RwUInt32 uiSerial);		///< Open the cart UI
 	VOID			CloseCart();						///< Close cart
 
-	RwInt32			SwitchDialog(bool bOpen);			///< DialogManager에서의 Open/Close
+	RwInt32			SwitchDialog(bool bOpen);			///< Open/Close in DialogManager
 
 	RwUInt32		GetTargetSerial();
 
@@ -64,10 +64,10 @@ protected:
 
 	VOID			ResetCartTexture();
 
-	VOID			Clear();									///< 트레이드 카트의 정보를 지운다.
-	VOID			ClearSlot(RwInt32 iSlot);///< 해당 슬롯의 내용을 지운다.
+	VOID			Clear();									///< Delete trade cart information.
+	VOID			ClearSlot(RwInt32 iSlot);///< Deletes the contents of the slot.
 
-	VOID			AddItemCount(RwInt32 iSlot, RwInt32 iCount, RwUInt32 itemSerial);	///< 슬롯의 아이템 갯수를 더하거나 뺀다.
+	VOID			AddItemCount(RwInt32 iSlot, RwInt32 iCount, RwUInt32 itemSerial);	///< Adds or subtracts the number of items in a slot.
 	VOID			UpdateCount(RwUInt8 bySlot, RwUInt8 byCount);
 
 	VOID			CalcTotalSellPrice();						///< Calculate total sale price
@@ -77,20 +77,20 @@ protected:
 	VOID			RegBuyItemByEvent(SDboEventShop& TradeInfo);
 	VOID			RegSellItemByEvent(RwInt32 iSlot, SDboEventShop& TradeInfo);
 
-	RwInt32			FindEmptySlot();			///< Slot 종류별 비어있는 가장 빠른 순서의 슬롯의 찾는다.
+	RwInt32			FindEmptySlot();			///< Find the earliest empty slot by slot type.
 	RwUInt8			FindSlot(RwUInt32 uiSerial);
 	RwInt32			PtinSlot(RwInt32 iX, RwInt32 iY);
 
-	VOID			CheckInfoWindow();							///< 상황에 따라 인포윈도우를 닫는다
+	VOID			CheckInfoWindow();							///< Close the info window depending on the situation.
 
-	VOID			FocusEffect(RwBool bPush, RwInt32 iSlotIdx = -1);		///< 슬롯 포커스 이펙트
+	VOID			FocusEffect(RwBool bPush, RwInt32 iSlotIdx = -1);		///< Slot focus effect
 
 	VOID			OnPaint();
 
-	VOID			ClickedSellButton(gui::CComponent* pComponent);		///< 선택한 물품들을 판다.
+	VOID			ClickedSellButton(gui::CComponent* pComponent);		///< Sell the selected items.
 
-	VOID			ClickUpButton(gui::CComponent* pComponent);	///< 아이템 갯수 더하기 버튼을 눌렀다
-	VOID			ClickDownButton(gui::CComponent* pComponent);	///< 아이템 갯수 빼기 버튼을 눌렀다
+	VOID			ClickUpButton(gui::CComponent* pComponent);	///<Pressed the item number plus button
+	VOID			ClickDownButton(gui::CComponent* pComponent);	///<Pressed the item count subtraction button
 
 	VOID			OnMouseDown(const CKey& key);
 	VOID			OnMouseUp(const CKey& key);
@@ -122,36 +122,36 @@ protected:
 
 	gui::CTexture*		m_pMoneyIconTexture;
 
-	gui::CButton*		m_pExitButton;				///< 창닫기 버튼
+	gui::CButton*		m_pExitButton;				///< Close window button
 
-	gui::CButton*		m_pSellButton;				///< 판매 버튼
+	gui::CButton*		m_pSellButton;				///< Sell Button
 
 	gui::CButton*		m_pUpButton[MAX_SLOT];		///< Item number plus button
 	gui::CButton*		m_pDownButton[MAX_SLOT];	///< Item number minus button
 
-	gui::CStaticBox*	m_pTotalSellMoney;			///< 총 판매 금액
+	gui::CStaticBox*	m_pTotalSellMoney;			///< Total sales amount
 
-	CSurfaceGui			m_FocusEffect;				///< 슬롯 포커스 이펙트
+	CSurfaceGui			m_FocusEffect;				///< Slot focus effect
 
-	CSurfaceGui			m_SellBar;					///< 팔기 서페이스
+	CSurfaceGui			m_SellBar;					///< sell surface
 
-	CWindowby3			m_LeftLockSurface;			///< 왼쪽 잠김 서페이스
-	CWindowby3			m_RightLockSurface;			///< 오른쪽 잠김 서페이스
+	CWindowby3			m_LeftLockSurface;			///< Left locked surface
+	CWindowby3			m_RightLockSurface;			///< Right locked surface
 
-	RwBool				m_bFocus;					///< 포커스를 얻었다.
-	bool				m_bLeftLock;				///< 왼쪽 물품 등록 잠김
-	bool				m_bRightLock;				///< 오른쪽 물품 등록 잠김
+	RwBool				m_bFocus;					///< Got focus.
+	bool				m_bLeftLock;				///< Left item registration locked
+	bool				m_bRightLock;				///< Right item registration locked
 
 	RwUInt32			m_hNPCSerial;				///<
 
-	RwInt32				m_iCurTabIndex;				///< 현재의 탭 인덱스
+	RwInt32				m_iCurTabIndex;				///< current tab index
 
-	SellSlotInfo		m_SellSlotInfo[MAX_SLOT];	///< 오른쪽 슬롯 정보
+	SellSlotInfo		m_SellSlotInfo[MAX_SLOT];	///< Right slot information
 
-	RwUInt32			m_uiTotalSellPrice;			///< 총 판매 금액
+	RwUInt32			m_uiTotalSellPrice;			///< Total sales amount
 
-	RwUInt8				m_byOthersEmptySlot;		///< 유저간 거래시 상대방의 거래 가능한 빈 슬롯수
-	RwUInt32			m_uiUserTradePacketCount;	///< 유저간 거래시 업데이트 된 상대방의 패킷의 갯수
+	RwUInt8				m_byOthersEmptySlot;		///< When trading between users, the number of empty slots available for trading by the other party
+	RwUInt32			m_uiUserTradePacketCount;	///< Number of packets updated during user-to-user transactions
 
 	RwInt32				iMouseDownSlotIndex;
 };

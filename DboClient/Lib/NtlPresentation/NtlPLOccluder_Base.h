@@ -14,12 +14,12 @@ enum EPLOccluderPlaneType
 {
 	EPLOCCLUDER_PLANE_ONESIDE	= 0,
 	EPLOCCLUDER_PLANE_TWOSIDE,
-	EPLOCCLUDER_PLANE_BILLBOARD, // 실제 빌보드는 아니다. 카메라 포지션 방향(Y)로 회전한다.
+	EPLOCCLUDER_PLANE_BILLBOARD, // It's not an actual billboard. Rotates in the camera position direction (Y).
 };
 
 enum EPLOccluderFuncFlag
 {
-	EPLOCCLUDER_FUNC_PVS		= 0x00000001, // PVS 일 경우는 아래 플래그와는 상관 없이 동작한다.
+	EPLOCCLUDER_FUNC_PVS		= 0x00000001, // In case of PVS, it operates regardless of the flags below.
 	EPLOCCLUDER_FUNC_TERRAIN	= 0x00000002,
 	EPLOCCLUDER_FUNC_OBJECT		= 0x00000004,
 	EPLOCCLUDER_FUNC_CHARACTER	= 0x00000008,
@@ -37,7 +37,7 @@ public:
 
 	virtual RwBool					Update(RwReal fElapsed);
 
-	// 면의 성질에 따른 업데이트
+	// Update according to surface properties
 	virtual RwBool					UpdateOneside(RwReal fElapsed)						= 0;
 	virtual RwBool					UpdateTwoside(RwReal fElapsed)						= 0;
 	virtual RwBool					UpdateBillboard(RwReal fElapsed)					= 0;
@@ -51,7 +51,7 @@ public:
 	virtual RwBool					OccluderTestSphere(RwSphere* pSphere)				= 0;
 	virtual RwBool					OccluderTestBox(RwBBox* pBox)						= 0;
 
-	// VisibilityTest를 통과 한다면 Update에서 Manager에 등록하게 된다.
+	// If it passes the VisibilityTest, it will be registered with the Manager in Update.
 	virtual RwBool					VisibilityTest()									= 0;
 
 	virtual RwBool					Pick(RwReal* pfDist, RwInt32* piIndex = NULL)		= 0;

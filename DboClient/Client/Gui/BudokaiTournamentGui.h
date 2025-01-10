@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: BudokaiTournamentGui.h
-// Desc: 천하제일무도회 대전표
+// Desc: World's First Martial Arts Competition Table
 //
 // 2008.06.04 Peessi@hitel.net   
 //
@@ -15,7 +15,7 @@
 #include "NtlBudokai.h"
 #include "NtlTimeQuest.h"
 
-// 참가자 
+// participant 
 class CBudokaiTournamentEntry
 {
 public:
@@ -25,12 +25,12 @@ public:
 	~CBudokaiTournamentEntry(VOID);
 
 	//! Operation
-	// 1. 참가자 패킷 받았을때 전부 채워준다.
+	// 1. When you receive the participant packet, fill it out in full.
 	VOID	SetEntry( const WCHAR* pName, RwUInt16 wJoinID );
 
 private:
 	//! Callback
-	// 1. Mouse Enter&Leave시 InfoWnd 띄우기
+	// 1. Launch InfoWnd when Mouse Enter&Leave
 	gui::CSlot	m_slotMouseEnter;
 	gui::CSlot	m_slotMouseLeave;
 	gui::CSlot	m_slotMove;
@@ -42,18 +42,18 @@ private:
 	VOID	OnPaint(VOID);
 
 	//! Variable
-	// 0. 본선 참가 번호
+	// 0. Finals participation number
 	RwUInt8			m_byPos;
 	RwUInt16		m_wJoinID;
-	// 1. 참가자 이름.
+	// 1. Participant’s name.
 	std::wstring	m_wstrName;
-	// 2. 참가번호 CPanel.
+	// 2. Participation number CPanel.
 	gui::CPanel*	m_ppnlMark;
-	// 3. 포커스 Surface 
+	// 3. Focus Surface 
 	CSurfaceGui		m_surFocus;	
 };
 
-// 대전정보
+// Daejeon Information
 class CBudokaiTournamentFightInfo
 {
 public:
@@ -81,16 +81,16 @@ public:
 	~CBudokaiTournamentFightInfo(VOID);
 
 	//! Operation
-	// 0. 업데이트
+	// 0. Update
 	VOID	Update( RwReal fElapsedTime );		
 	VOID	UpdateInitVertical( RwReal fElapsedTime );
 	VOID	UpdateHorizontal( RwReal fElapsedTime );
 	VOID	UpdateVertical( RwReal fElapsedTime );
 
-	// 1. 대전 결과 받았을때 Line데이터 채우기, 한번 들어온 결과는 플래그를 켜준다.	애니메이션 플래그도 온~!!
+	// 1. Fill in the line data when you receive the match results, and turn on the flag once the results are received.	The animation flag is also on~!!
 	VOID	SetFightResult( RwUInt16 wWinnerJoinID, RwUInt16 wJoinID1, RwUInt16 wJoinID2, RwUInt8 byScore1, RwUInt8 byScore2 );
 
-	// 2. 각 진출했을때, 밑에서 올라온 데이터로 채워준다. 
+	// 2. At each advance, it is filled with data uploaded from below. 
 	VOID	SetEntryData( RwUInt8 byIdx, RwUInt16 wJoinID );
 		
 	//! Attribute
@@ -111,7 +111,7 @@ private:
 	RwBool	IsLeftNode(VOID);
 	
 	//! Callback
-	// 1. 버튼 클릭시 대전정보 요청패킷 보내기. 	
+	// 1. Send a match information request packet when you click the button. 	
 	gui::CSlot	m_slotClickInfoBtn;
 	gui::CSlot	m_slotMove;
 	gui::CSlot	m_slotPaint;
@@ -123,7 +123,7 @@ private:
 	//! Variable
 	// 1. CButton
 	gui::CButton*	m_pbtnBattleInfo;
-	// 2. Line Surface 3개, 말단인 경우 5개, 그 만큼의 Rect정보, 말단인 경우
+	// 2. 3 Line Surfaces, 5 if at the end, as much Rect information, if at the end
 	CSurfaceGui		m_surLeftInitVerticalLine;
 	CSurfaceGui		m_surRightInitVerticalLine;
 	CSurfaceGui		m_surLeftHorizontalLine;
@@ -139,35 +139,35 @@ private:
 	RwInt32			m_nOriginLeft;
 	RwInt32			m_nHorizontalOffset;
 	
-	// 각 라인의 이동 시간( 거리(픽셀) / 속도(픽셀/시간) )
+	// Movement time of each line (distance (pixel) /speed (pixel/time))
 	RwReal			m_fMoveTimeInitVertical;
 	RwReal			m_fMoveTimeHorizontal;
 	RwReal			m_fMoveTimeVertical;
 
-	// 현재 시간
+	// current time
 	RwReal			m_fCurrentTime;
 
-	// 3. 위치 정보( 몇강 몇번째 경기 )
-	RwUInt8			m_byMatchNumber;		// 왼쪽부터 0번
-	RwUInt8			m_byMatchLevel;			// 아래부터 0번
-	RwUInt8			m_byServerMatchNumber;	// 왼쪽부터 0번, 서버넘버
-	RwUInt8			m_byServerMatchLevel;	// 결승부터 0번, 서버넘버
-	// 4. 애니메이션되야하는 플래그( 하위 노드 2개로 부터 종료 신호를 받아야함. 즉 2가 되어야 함
+	// 3. Location information (several rounds and matches)
+	RwUInt8			m_byMatchNumber;		// Number 0 from the left
+	RwUInt8			m_byMatchLevel;			// Number 0 from the bottom
+	RwUInt8			m_byServerMatchNumber;	// Number 0 from the left, server number
+	RwUInt8			m_byServerMatchLevel;	// From the finals, number 0, server number
+	// 4. Flag that must be animated (must receive termination signals from 2 child nodes. That is, it must be 2.
 	RwInt32			m_nEndOfBelowAnimation;	
-	// 5. 일정 시간이 지날때까지 패킷을 못보내도록 시간저장.
+	// 5. Save time so that packets cannot be sent until a certain period of time has passed.
 	RwUInt32		m_uiWaitTime;			
-	// 6. 각 대전자의 참가 ID
+	// 6. Participation ID of each competitor
 	stENTRYINFO		m_stEntry[2];			
-	// 7. 대전 결과
+	// 7. Match results
 	RwUInt16		m_wWinnerTeamJoinID;
 	RwUInt16		m_wLoserTeamJoinID;
-	// 8. 애니메이션 상태
-	ANIMATIONSTATE	m_eAnimationState;		// 결과 받았을때 0이외의 값이 들어옴.
-	// 9. 상위 노드 
+	// 8. Animation state
+	ANIMATIONSTATE	m_eAnimationState;		// When the result is received, a value other than 0 is received.
+	// 9. Parent node 
 	CBudokaiTournamentFightInfo* m_pAboveFightInfo;
-	// 10. 부모 컴포넌트
+	// 10. Parent component
 	gui::CComponent*	m_pdlgParent;
-	// 11. 파티 모드인가
+	// 11. Is it party mode?
 	RwBool			m_bParty;	
 };
 
@@ -196,7 +196,7 @@ public:
 	CBudokaiTournamentFightInfoGroup( RwInt32 nPosOffset, RwInt32 nEntryCount, RwInt32 nOriginX, RwInt32 nOriginY, RwInt32 nVerticalOffset, RwInt32 nHorizontalOffset, RwInt32 nEndLineY, gui::CDialog* pDialog );
 	~CBudokaiTournamentFightInfoGroup(VOID);
 
-	VOID	CreateData( RwUInt8 byIndex, CBudokaiTournamentFightInfo* pAboveFightInfo, RwUInt8 byMatchLevel, RwUInt8 byMatchNumber, RwUInt8 byServerMatchLevel, RwUInt8 byServerMatchNumber, RwBool bParty );	// peessitemp : 귀찮다 -_-
+	VOID	CreateData( RwUInt8 byIndex, CBudokaiTournamentFightInfo* pAboveFightInfo, RwUInt8 byMatchLevel, RwUInt8 byMatchNumber, RwUInt8 byServerMatchLevel, RwUInt8 byServerMatchNumber, RwBool bParty );	// peessitemp : Annoying -_-
 	//RwBool	SetEntryData( RwUInt8 byServerMatchLevel, RwUInt8 byServerMatchNumber, RwUInt16 wJoinID1, RwUInt16 wJoinID2 );
 	//RwBool	SetResultData( RwUInt8 byServerMatchLevel, RwUInt8 byServerMatchNumber, RwUInt16 wWinnerJoinID );
 
@@ -263,23 +263,23 @@ private:
 	CBudokaiTournamentEntryGroup*		m_pEntryGroup[NUM_PAGE];
 	CBudokaiTournamentFightInfoGroup*	m_pFightInfoGroup[NUM_PAGE];
 	
-	RwUInt8							m_byMaxEntry;			// 최대 몇강. 
-	ePage							m_eCurrenctPage;		// 현재 보이는 페이지.
-	RwUInt8							m_byIndividualFightInfoInputDoneCount;	// 현재 입력된 FightInfo 갯수.(서버 리퀘스트 용) 개인전
-	RwUInt8							m_byTeamFightInfoInputDoneCount;		// 현재 입력된 FightInfo 갯수.(서버 리퀘스트 용) 파티전		
+	RwUInt8							m_byMaxEntry;			// How many classes at most. 
+	ePage							m_eCurrenctPage;		// Currently visible page.
+	RwUInt8							m_byIndividualFightInfoInputDoneCount;	// Number of currently entered FightInfo. (for server request) Individual match
+	RwUInt8							m_byTeamFightInfoInputDoneCount;		// Number of currently entered FightInfo. (For server request) Party battle		
 
 	gui::CButton*					m_pbtnRightArrow;
 	gui::CButton*					m_pbtnLeftArrow;
 	gui::CStaticBox*				m_pstbIndividualGroupType;
 
-	gui::CButton*					m_pbtnParty;			// Toggle형식 버튼. 파티시 위의 세 컴포넌트가 사라지거나, 비활성화
+	gui::CButton*					m_pbtnParty;			// ToggleFormat button. When partying, the above three components disappear or are disabled.
 	gui::CButton*					m_pbtnIndividual;
 	
-	gui::CPanel*					m_ppnlLineBack;			// 라인.
+	gui::CPanel*					m_ppnlLineBack;			// line.
 	gui::CPanel*					m_ppnlQuestionMark;		// -_-;;
 	
 	gui::CStaticBox*				m_pstbTitle;			
-	gui::CStaticBox*				m_pstbInfomation;		// 설명.	
+	gui::CStaticBox*				m_pstbInfomation;		// explanation.	
 
 	gui::CButton*					m_pbtnClose;
 

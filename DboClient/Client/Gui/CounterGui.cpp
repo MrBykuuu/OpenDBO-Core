@@ -1,16 +1,16 @@
 #include "precomp_dboclient.h"
 #include "CounterGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLLogic.h"
 
 #define dNUMBER_SIZE_1			0.5f
@@ -73,7 +73,7 @@ RwBool CCounterGui::Create(eCounterDisplayType eDisplayType, RwReal fSecond, eCo
 	m_iAlarmElapsed	= (RwInt32)fSecond;
 	GetNtlGuiManager()->AddUpdateFunc( this );
 
-	// sig
+	// Sig
 	m_slotMove				= m_pThis->SigMove().Connect( this, &CCounterGui::OnMove );
 
 	if( m_eDisplayType == COUNTER_DISPLAY_1 )
@@ -91,7 +91,7 @@ VOID CCounterGui::Destroy()
 
 	GetNtlGuiManager()->RemoveUpdateFuncWithoutRefCheck( this );
 
-	// 나중에 m_pThis를 스크립트를 사용해서 생성하면 이 코드의 주석을 풀자
+	// When you create m_pThis using a script later, uncomment this code.
 	//CNtlPLGui::DestroyComponents();
 	//CNtlPLGui::Destroy();
 
@@ -120,7 +120,7 @@ VOID CCounterGui::Update(RwReal fElapsed)
 		m_fElapsed = 0.f;
 
 	
-	// 매 초마다 째깍 소리를 내기 위하여
+	// To make a ticking sound every second
 	if( m_bAlarmSound )
 	{
 		if( m_fElapsed < m_fUsableAlarmTime )
@@ -135,7 +135,7 @@ VOID CCounterGui::Update(RwReal fElapsed)
 	}
 
 
-	// 필요한 이펙트가 있는지 검사
+	// Check if the required effect is present
 	if( m_eDisplayType == COUNTER_DISPLAY_1 )
 	{
 		if( BIT_FLAG_TEST(m_byDisplayFlag, dCOUNTER_DISPLAY_FLAG_BIGGER) )
@@ -159,7 +159,7 @@ VOID CCounterGui::Update(RwReal fElapsed)
 	}
 	
 
-	// 현재 남은 시간을 설정
+	// Set the current remaining time
 	if( m_fElapsed >= 60.f )
 		m_MinuteNumberGui.SetNumber((RwInt64)m_fElapsed);
 	else

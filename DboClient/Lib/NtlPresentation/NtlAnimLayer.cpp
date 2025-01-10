@@ -86,16 +86,16 @@ RwBool CNtlAnimLayer::Update(float fElapsed)
 	{
 		SInstanceAnimData *pCurInstanceAnimData = m_AnimChannel[ANIM_CHANNEL_CURRENT].GetAnimData();
 
-        // 이벤트 콜백
+        // event callback
 		RwUInt32 uiEventSize = pCurInstanceAnimData->pTypeAnimData->vecAnimEvent.size();
 		if(uiEventSize)
 		{
-			//Model Tool에서는 Sorting이 안되어 있을 수도 있다.
+			//Sorting may not be available in Model Tool.
 			for(RwUInt32 i = 0; i < uiEventSize; i++)
 			{
 				RwReal fTime = pCurInstanceAnimData->pTypeAnimData->vecAnimEvent[i]->fTime;
 
-				// 0은 Event를 안보낸다. 0을 보낼 수 있도록 수정 후 Test (by HoDong)
+				// 0 does not display an event. Test after modification to send 0 (by HoDong)
 				if( fOldTime < fTime && fTime <= fUpdateElapsedTime)
 				{
 					m_pCallBack->Call(pCurInstanceAnimData->pTypeAnimData->vecAnimEvent[i]);
@@ -103,8 +103,8 @@ RwBool CNtlAnimLayer::Update(float fElapsed)
 			}
 		}
 
-		//Animation의 End까지 Play가 될 경우 AnimEnd Event를 보낸다.
-		//Loop가 아닐경우에만 Event를 보낸다.
+		//If the animation reaches the end, an AnimEnd Event is sent.
+		//Event is sent only when it is not a loop.
 		if( fUpdateElapsedTime >= pCurrentHierarchy->currentAnim->pCurrentAnim->duration && 
 			!m_AnimChannel[ANIM_CHANNEL_CURRENT].GetLoop())
 		{
@@ -124,7 +124,7 @@ RwBool CNtlAnimLayer::Update(float fElapsed)
 		 m_AnimChannel[ANIM_CHANNEL_CURRENT].GetAnimEnd() &&
 	    !m_bBlendChange)
 	{
-		//보간값이 갱신이 되어 있어야 Scale 적용시 문제가 안생긴다.
+		//Interpolation values ??must be updated to avoid problems when applying scale.
 		RpHAnimHierarchyCopy(m_pBaseHierarchy, pCurrentHierarchy);
 		NTL_RETURN(TRUE);
 	}
@@ -136,7 +136,7 @@ RwBool CNtlAnimLayer::Update(float fElapsed)
 	if(m_bBlendChange && m_CurBlendData.eBlendType == BLEND_MIX)
 		m_AnimChannel[ANIM_CHANNEL_NEXT].Update(fElapsed);
 	
-    // 애니메이션 블렌딩
+    // animation blending
 	if(m_bBlendChange)
 	{
 		RpHAnimHierarchyBlend(m_pBaseHierarchy, pCurrentHierarchy, pNextHierarchy, m_CurBlendData.fBlendAlpha);

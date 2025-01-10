@@ -46,14 +46,14 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 //////////////////////////////////////////////////////////////////////////
 //
 //	Event
-//	클라이언트에서는 이벤트에 한해서는 선 검사 처리가 되므로 이곳에서는
-//	검사를 실행하지 않는다
+//	In the client, line checking is processed only for events, so here
+//	Do not run tests
 //
 //////////////////////////////////////////////////////////////////////////
 
 	case DBO_EVENT_TYPE_ID_CLICK_NPC:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->IsQuestShare() ) break;
@@ -67,7 +67,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 		break;
 	case DBO_EVENT_TYPE_ID_CLICK_OBJECT:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->IsQuestShare() ) break;
@@ -82,7 +82,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 		break;
 	case DBO_EVENT_TYPE_ID_COL_OBJECT:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->IsQuestShare() ) break;
@@ -97,7 +97,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 		break;
 	case DBO_EVENT_TYPE_ID_ITEM_USE:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->GetCtrl()->GetEventGenType() == eEVENT_GEN_TYPE_ITEM_USE )
@@ -157,7 +157,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 		break;
 	case DBO_EVENT_TYPE_ID_ITEM_GET:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( !( pQParam->GetCtrl()->GetEventGenType() == eEVENT_GEN_TYPE_ITEM_GET &&
@@ -169,7 +169,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 		break;
 	case DBO_EVENT_TYPE_ID_ITEM_EQUIP:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( !( pQParam->GetCtrl()->GetEventGenType() == eEVENT_GEN_TYPE_ITEM_EQUIP &&
@@ -181,7 +181,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 		break;
 	case DBO_EVENT_TYPE_ID_SCOUT_USE:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->GetCtrl()->GetEventGenType() == eEVENT_GEN_TYPE_SCOUT_USE )
@@ -236,7 +236,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 		break;
 	case DBO_EVENT_TYPE_ID_RCV_SVR_EVT:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( !( pQParam->GetCtrl()->GetEventGenType() == eEVENT_GEN_TYPE_RCV_SVR_EVT &&
@@ -249,19 +249,19 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_EVENT_TYPE_ID_SKILL_USE:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->GetCtrl()->GetEventGenType() == eEVENT_GEN_TYPE_SKILL_USE )
 			{
 				CSkillTable* pSkillTable = API_GetTableContainer()->GetSkillTable();
 
-				// Skill type 검사
+				// Skill type test
 				if ( eEVENT_SKILL_TYPE_SKILLIDX == pQParam->GetCtrl()->GetEventGenSkillUseInfo().eSkillType )
 				{
 					if ( 0xffffffff == ((CDboTSSkillUse*)pEntity)->GetSkillIdx() || ( pSkillTable->FindBasicSkillTblidx( ((CDboTSSkillUse*)pEntity)->GetSkillIdx() ) == pSkillTable->FindBasicSkillTblidx( pQParam->GetCtrl()->GetEventGenId() ) ) )
 					{
-						// Skill target 검사
+						// Skill target inspection
 						eEVENT_SKILL_TARGET_TYPE eTargetType = ((CDboTSSkillUse*)pEntity)->GetSkillTargetType();
 						if ( eEVENT_SKILL_TARGET_TYPE_ALL != eTargetType )
 						{
@@ -304,11 +304,11 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 					}
 				}
 
-				// Skill RP 검사
+				// Skill RP Check
 				{
 					unsigned int uiSkillRPFlags = ((CDboTSSkillUse*)pEntity)->GetSkillRPFlags();
 
-					// uiSkillRPFlags == 0 이면 RP 검사를 수행하지 않는다
+					// If uiSkillRPFlags == 0, RP check is not performed.
 					if ( 0 != uiSkillRPFlags )
 					{
 						unsigned char byRpBonusType = pQParam->GetCtrl()->GetEventGenSkillUseInfo().byRpBonusType;
@@ -394,7 +394,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_EVENT_TYPE_ID_COL_RGN:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->GetCtrl()->GetEventGenType() == eEVENT_GEN_TYPE_COL_REGION )
@@ -462,7 +462,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_EVENT_TYPE_ID_RB:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->GetCtrl()->GetEventGenType() == eEVENT_GEN_TYPE_RB )
@@ -504,7 +504,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_EVENT_TYPE_ID_CLICK_MOB:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->IsQuestShare() ) break;
@@ -519,7 +519,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_EVENT_TYPE_ID_BIND_STONE:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->IsQuestShare() ) break;
@@ -533,7 +533,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_EVENT_TYPE_ID_SEARCH_QUEST:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->IsQuestShare() ) break;
@@ -547,7 +547,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_EVENT_TYPE_ID_ITEM_UPGRADE:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->IsQuestShare() ) break;
@@ -561,7 +561,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_EVENT_TYPE_ID_TELEPORT:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->IsQuestShare() ) break;
@@ -575,7 +575,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_EVENT_TYPE_ID_BUDOKAI:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->IsQuestShare() ) break;
@@ -589,7 +589,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_EVENT_TYPE_ID_SLOTMACHINE:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->IsQuestShare() ) break;
@@ -603,7 +603,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_EVENT_TYPE_ID_HOIPOIMIX:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->IsQuestShare() ) break;
@@ -617,7 +617,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_EVENT_TYPE_ID_PRIVATESHOP:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->IsQuestShare() ) break;
@@ -631,7 +631,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_EVENT_TYPE_ID_FREEBATTLE:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->IsQuestShare() ) break;
@@ -645,7 +645,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_EVENT_TYPE_ID_ITEMIDENTITY:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->IsQuestShare() ) break;
@@ -659,7 +659,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_EVENT_TYPE_ID_USERMAIL:
 		{
-			// 퀘스트 마크 검사용인 경우 이벤트 검사는 Success로 처리한다
+			// If it is for quest mark inspection, the event inspection is processed as Success.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			if ( pQParam->IsQuestShare() ) break;
@@ -744,7 +744,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 //////////////////////////////////////////////////////////////////////////
 //
 //	Condition
-//	클라이언트 모듈에서 처리 되어야 함
+//	Must be handled in client module
 //
 //////////////////////////////////////////////////////////////////////////
 
@@ -1023,15 +1023,15 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 							break;
 						}
 
-						// 필요한 아이템이 Invalid 인 경우 필요 아이템이 없는 경우로 간주
+						// If the required item is Invalid, it is considered that the required item does not exist.
 						unsigned int uiNeedItemIdx = pQParam->GetCtrl()->GetServerEvtData().sPublicMobItemCnt[i].uiRequireItemIdx;
 						if ( 0xffffffff == uiNeedItemIdx ) continue;
 
-						// 해당 퀘스트 아이템을 유저가 가지고 있는지 검사한다
+						// Check whether the user has the quest item
 						{
 							int nSumCnt = 0;
 
-							// Quest inventory를 검색
+							// Search for Quest inventory
 							for ( int j = 0; j < MAX_QUEST_INVENTORY_SLOT; ++j )
 							{
 								CNtlSobQuestItem* pQItem = pQInventory->GetQuestItemFromIdx( j );
@@ -1107,7 +1107,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 			int nSumCnt = 0;
 
-			// Equip 창을 검색
+			// Search Equip window
 			for ( int i = 0; i < NTL_MAX_EQUIP_ITEM_SLOT; ++i )
 			{
 				CNtlSobItem* pSobItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pInventory->GetEquipItem( i ) ) );
@@ -1120,7 +1120,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 				}
 			}
 
-			// Bag 창을 검색
+			// Search Bag window
 			for ( int i = 0; i < NTL_MAX_BAGSLOT_COUNT; ++i )
 			{
 				CNtlSobItem* pSobItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pInventory->GetBagItem( i ) ) );
@@ -1167,7 +1167,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 			bool bFind = false;
 
-			// Equip 창을 검색
+			// Search Equip window
 			for ( int i = 0; i < NTL_MAX_EQUIP_ITEM_SLOT; ++i )
 			{
 				CNtlSobItem* pSobItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pInventory->GetEquipItem( i ) ) );
@@ -1243,8 +1243,8 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_COND_TYPE_ID_CHECK_OBJITEM:
 		{
-			// Object 가 아이템을 줄 수 있는지 검사하는 조건은
-			// 퀘스트에서는 동작하지 않는다
+			// The condition to check whether Object can give an item is
+			// Doesn't work in quests
 			CNtlTSLog::Log( "Not supported condition. Info[%d,%d,%d]. [%s]",
 							pQParam->GetCtrl()->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -1292,7 +1292,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_COND_TYPE_ID_CHECK_OBJ_STATE:
 		{
-			// 퀘스트에서는 동작하지 않는다
+			// Doesn't work in quests
 			CNtlTSLog::Log( "Not supported condition. Info[%d,%d,%d]. [%s]",
 							pQParam->GetCtrl()->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -1321,7 +1321,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_COND_TYPE_ID_CHECK_OPERATEOBJECT:
 		{
-			// 퀘스트에서는 동작하지 않는다
+			// Doesn't work in quests
 			CNtlTSLog::Log( "Not supported condition. Info[%d,%d,%d]. [%s]",
 							pQParam->GetCtrl()->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -1333,7 +1333,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_COND_TYPE_ID_CHECK_HASCOUPON:
 		{
-			// 퀘스트에서는 동작하지 않는다
+			// Doesn't work in quests
 			CNtlTSLog::Log( "Not supported condition. Info[%d,%d,%d]. [%s]",
 							pQParam->GetCtrl()->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -1345,8 +1345,8 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_COND_TYPE_ID_CHECK_NPCDEAD:
 		{
-			// 서버의 예외 타이머에서만 동작 하는 코드로
-			// 클라이언트의 이곳이 호출 되면 안됨.
+			// Code that only operates on the server's exception timer
+			// This place must not be called by the client.
 			CNtlTSLog::Log( "Not supported condition. Info[%d,%d,%d]. [%s]",
 							pQParam->GetCtrl()->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -1358,8 +1358,8 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_COND_TYPE_ID_CHECK_DIST_WITH_NPC:
 		{
-			// 서버의 예외 타이머에서만 동작 하는 코드로
-			// 클라이언트의 이곳이 호출 되면 안됨.
+			// Code that only operates on the server's exception timer
+			// This place must not be called by the client.
 			CNtlTSLog::Log( "Not supported condition. Info[%d,%d,%d]. [%s]",
 							pQParam->GetCtrl()->GetTrigger()->GetID(),
 							((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -1373,13 +1373,13 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 		{
 			CDboTSCQCtrl* pCtrl = pQParam->GetCtrl();
 
-			// 1. 퀘스트가 Fail 또는 Error 상태인 경우 아이템을 줄 수 없다.
+			// 1. If the quest is in Fail or Error status, the item cannot be given.
 			if ( !pCtrl->IsFailed() && !pCtrl->IsError() )
 			{
-				// 2. Delivery item 서버 이벤트가 동작 중인지 검사한다.
+				// 2. Check whether the Delivery item server event is running.
 				if ( eSTOC_EVT_DATA_TYPE_DELIVERY_ITEM == pCtrl->GetServerEvtDataType() )
 				{
-					// 3. 현제 진행 중인 경우만 조건 검사를 통과한다.
+					// 3. Only cases currently in progress pass the condition check.
 
 					CDboTSCheckSToCDelivery* pDelivery = (CDboTSCheckSToCDelivery*) pEntity;
 
@@ -1406,7 +1406,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 					if ( bCanProcess )
 					{
-						// 4. SToC Condition 검사
+						// 4. SToC Condition Inspection
 
 						uSTOC_EVT_COND_DATA& uSToCCondData = pCtrl->GetServerEvtCondData();
 
@@ -1422,7 +1422,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 								{
 									if ( 0xffffffff == uSToCCondData.sAutoEquipItem[i].uiItemTblIdx ) continue;
 
-									// Equip 창에서 아이템 검사
+									// Inspect items in the Equip window
 									bool bFind = false;
 									for ( int j = 0; j < NTL_MAX_EQUIP_ITEM_SLOT; ++j )
 									{
@@ -1454,7 +1454,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 								{
 									if ( 0xffffffff == uSToCCondData.sEquipItem[i].uiItemTblIdx ) continue;
 
-									// Equip 창에서 아이템 검사
+									// Inspect items in the Equip window
 									bool bFind = false;
 									for ( int j = 0; j < NTL_MAX_EQUIP_ITEM_SLOT; ++j )
 									{
@@ -1488,7 +1488,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 									bool bFind = false;
 
-									// Equip 창에서 아이템 검사
+									// Inspect items in the Equip window
 									for ( int j = 0; j < NTL_MAX_EQUIP_ITEM_SLOT; ++j )
 									{
 										CNtlSobItem* pSobItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pInventory->GetEquipItem( j ) ) );
@@ -1502,7 +1502,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 										}
 									}
 
-									// Bag 창에서 아이템 검사
+									// Inspect items in the Bag window
 									if ( !bFind )
 									{
 										for ( int k = 0; i < NTL_MAX_BAGSLOT_COUNT; ++k )
@@ -1552,7 +1552,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 								{
 									if ( 0xffffffff == uSToCCondData.sHaveQItem[i].uiQItemTblIdx ) continue;
 
-									// 퀘스트 아이템 인벤토리에서 퀘스트 아이템 검사
+									// Inspect quest item in quest item inventory
 
 									int nSum = 0;
 									CNtlQuestInventory* pQuestInventory = GetNtlSLGlobal()->GetSobAvatar()->GetQuestInventory();
@@ -1583,8 +1583,8 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 							break;
 						}
 
-						// 5. SToC Sub Condition 검사
-						// Delivery는 Sub condition을 현재 검사할 필요 없음.
+						// 5. SToC Sub Condition Inspection
+						// Delivery does not currently need to check the sub condition.
 					}
 					else
 					{
@@ -1605,7 +1605,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 		case DBO_COND_TYPE_ID_CHECK_ATTACH_OBJ:
 			{
-				// Object trigger에서만 동작하는 condition
+				// Condition that operates only on object trigger
 				CNtlTSLog::Log( "Not supported condition. Info[%d,%d,%d]. [%s]",
 								pQParam->GetCtrl()->GetTrigger()->GetID(),
 								((CNtlTSGroup*)pEntity->GetParent()->GetParent())->GetID(),
@@ -1690,16 +1690,16 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_ITEM:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
-			// 클라이언트에서는 동작하지 않는 서버 전용 액션
+			// Server-only action that does not work on the client
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_EXCEPT_TIMER_S:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			CDboTSActETimerS* pTimer = (CDboTSActETimerS*)pEntity;
@@ -1716,7 +1716,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_EXCEPT_TIMER_E:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			CDboTSActETimerE* pTimer = (CDboTSActETimerE*)pEntity;
@@ -1733,7 +1733,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_STOCEVT:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			CDboTSActSToCEvt* pEvt = (CDboTSActSToCEvt*)pEntity;
@@ -1750,16 +1750,16 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_QITEM:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
-			// 클라이언트에서는 동작하지 않는 서버 전용 액션
+			// Server-only action that does not work on the client
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_NPCCONV:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			CDboTSActNPCConv* pConv = (CDboTSActNPCConv*)pEntity;
@@ -1776,7 +1776,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_REGQINFO:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			CDboTSActRegQInfo* pRegQInfo = (CDboTSActRegQInfo*)pEntity;
@@ -1793,13 +1793,13 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_DIR:
 		{
-			// 클라이언트에서는 아무것도 하지 않는다
+			// Does nothing on the client
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_OPCAM:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			CDboTSActOPCam* pCam = (CDboTSActOPCam*)pEntity;
@@ -1816,7 +1816,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_TWAITTS:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			CDboTSActTWaitTS* pWaitTS = (CDboTSActTWaitTS*)pEntity;
@@ -1833,7 +1833,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_INSSM:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			CDboTSActInSSM* pSSM = (CDboTSActInSSM*)pEntity;
@@ -1850,7 +1850,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_TSSTATE:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			CDboTSActTSState* pTSState = (CDboTSActTSState*)pEntity;
@@ -1867,25 +1867,25 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_PORTAL:
 		{
-			// 클라이언트에서 포탈은 동작하지 않는다
+			// Portal does not work on the client
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_OBJSTATE:
 		{
-			// 클라이언트에서 오브젝트의 상태를 변경하는 코드는 동작하지 않는다
+			// Code that changes the state of an object on the client does not work.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_CONC_CHECK:
 		{
-			// 클라이언트에서 동시 체크에 대한 동작은 하지 않는다
+			// The client does not perform simultaneous checks.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_OBJCONV:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			CDboTSActObjConv* pConv = (CDboTSActObjConv*)pEntity;
@@ -1902,7 +1902,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_HINT:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			CDboTSActHint* pHint = (CDboTSActHint*)pEntity;
@@ -1920,17 +1920,17 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 	case DBO_ACT_TYPE_ID_ACT_SEND_SVR_EVT:
 	case DBO_ACT_TYPE_ID_ACT_TMQ_STAGE:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
-			// Send server event 및 TMQ stage 변경시 1초정도의 딜레이를 둔다
+			// There is a delay of about 1 second when changing Send server event and TMQ stage.
 			pQParam->GetCtrl()->StartTimeWait( 1000 );
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_OPEN_WINDOW:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			CDboTSActOpenWindow* pAct = (CDboTSActOpenWindow*) pEntity;
@@ -1947,67 +1947,67 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_TMQ_TIMEBONUS:
 		{
-			// 클라이언트에서 타임 보너스에 대한 동작은 하지 않는다
+			// The time bonus does not work on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_TELECAST:
 		{
-			// 클라이언트에서 방송에 대한 동작은 하지 않는다
+			// The client does not perform broadcasting operations.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_DIRINDICATOR:
 		{
-			// 클라이언트에서 방향 지시에 대한 동작은 하지 않는다
+			// The client does not perform any action for direction indication.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_OPERATEOBJECT:
 		{
-			// 클라이언트에서 오브젝트 동작에 대한 동작은 하지 않는다
+			// No action is taken on object operations on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_DROP:
 		{
-			// 클라이언트에서 드랍에 대한 동작은 하지 않는다
+			// There is no action on the drop from the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_RMV_COUPON:
 		{
-			// 클라이언트에서 드랍에 대한 동작은 하지 않는다
+			// There is no action on the drop from the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_ESCORT:
 		{
-			// 클라이언트에서 에스코트 관련해서는 동작 하지 않는다
+			// Escort-related matters do not work on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_TMQINFOTYPE:
 		{
-			// 클라이언트에서 TMQ info type 관련해서는 동작 하지 않는다
+			// TMQ info type does not work on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_WORLDPLAYSCRIPT:
 		{
-			// 클라이언트에서 World play script 관련해서는 동작 하지 않는다
+			// World play script does not work on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_SWPROBSF:
 		{
-			// 클라이언트에서 Switch probability success fail 관련해서는 동작 하지 않는다
+			// Switch probability success fail does not work on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_PCCONV:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			CDboTSActPCConv* pAct = (CDboTSActPCConv*) pEntity;
@@ -2024,13 +2024,13 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_CUSTOMEVT:
 		{
-			// 클라이언트에서 custom event에 관련해서는 동작 하지 않는다
+			// It does not work with custom events on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_TELMUDOSA:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			CDboTSActTelMudosa* pAct = (CDboTSActTelMudosa*) pEntity;
@@ -2047,49 +2047,49 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_TELMINORMATCH:
 		{
-			// 클라이언트에서 teleport minor match에 관련해서는 동작 하지 않는다
+			// It does not work in relation to teleport minor matches on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_PIDGN:
 		{
-			// 클라이언트에서 Party instance dungeon에 관련해서는 동작 하지 않는다
+			// It does not work in relation to Party instance dungeon on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_TLQ:
 		{
-			// 클라이언트에서 Time leap quest dungeon에 관련해서는 동작 하지 않는다
+			// Time leap quest dungeon does not work on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_DO_SKILL:
 		{
-			// 클라이언트에서 Do skill 에 관련해서는 동작 하지 않는다
+			// It does not work regarding Do skill on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_TOBJ_FRIENDLY:
 		{
-			// 클라이언트에서 Trigger object friendly 에 관련해서는 동작 하지 않는다
+			// Trigger object friendly does not work on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_BROAD_MSG:
 		{
-			// 클라이언트에서 Broad message 에 관련해서는 동작 하지 않는다
+			// Broad messages do not work on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_MINI_NARRATION:
 		{
-			// 클라이언트에서 Mini narration 에 관련해서는 동작 하지 않는다
+			// Mini narration does not work on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_REG_C_TIMING:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			CDboTSActRegCTiming* pAct = (CDboTSActRegCTiming*) pEntity;
@@ -2106,7 +2106,7 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_EXC_C_GROUP:
 		{
-			// 퀘스트 마크 검사용인 경우 Action은 실행하지 않는다
+			// If it is for quest mark inspection, the action is not executed.
 			if ( pQParam->IsForCheckQuestMark() ) break;
 
 			CDboTSActExcCGroup* pAct = (CDboTSActExcCGroup*) pEntity;
@@ -2123,19 +2123,19 @@ NTL_TSRESULT CDboTSCQRecv::Run( CNtlTSEntity* pEntity, void* pParam )
 
 	case DBO_ACT_TYPE_ID_ACT_SKIP_CONT:
 		{
-			// 클라이언트에서 Skip cont 에 관련해서는 동작 하지 않는다
+			// Skip cont does not work on the client.
 		}
 		break;
 
 	case DBO_ACT_TYPE_ID_ACT_OBJ_WPS:
 		{
-			// 클라이언트에서 Obj WPS 에 관련해서는 동작 하지 않는다
+			// Obj WPS does not work on the client.
 		}
 		break;
 
 		case DBO_ACT_TYPE_ID_ACT_DOJO:
 		{
-			// 클라이언트에서 Dojo 에 관련해서는 동작 하지 않는다
+			// It does not work with Dojo on the client.
 		}
 		break;
 

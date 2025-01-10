@@ -1,22 +1,22 @@
 #include "precomp_dboclient.h"
 #include "DBCNarrationGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 #include "NtlPLEventGenerator.h"
 #include "NtlPLCinematicObject.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DialogManager.h"
@@ -144,7 +144,7 @@ VOID CDBCNarrationGui::SetUIData( const RwChar* szTextureName, const WCHAR* wszT
 		SetState( STATE_ING );
 	}
 
-	// 이미지 로드 및 이름 출력
+	// Load image and print name
 	if( szTextureName )
 	{
 		m_pCinematicObject->SetImageTexture( const_cast<RwChar*>( szTextureName ) );

@@ -32,8 +32,8 @@ struct SEventAnimHit
 
 struct SAnimSequenceEvent
 {
-	EAnimEvent	id;					//event의 종류
-	float		fTime;				//시작 시간 (실제 시간)
+	EAnimEvent	id;					//Type of event
+	float		fTime;				//Start time (actual time)
 };
 
 #endif

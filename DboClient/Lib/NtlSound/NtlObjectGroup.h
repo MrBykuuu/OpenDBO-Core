@@ -2,13 +2,13 @@
 *
 * File			: NtlObjectGroup.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: (횁횜)NTL
 * Date			: 2006. 7. 13
 * Abstract		: Object music channel group
 *****************************************************************************
-* Desc			: 오브젝트 채널 그룹이 다른 채널 그룹의 우선 순위에 밀렸을 때
-*				  임의의 오브젝트 채널 하나를 강제종료 시키고 그 이름을 저장한다
-*				  차후 빈 채널이 생기면 강제종료된 순서대로 사운드를 플레이한다
+* Desc			: When an object channel group loses priority to another channel group
+*				  Force quit one random object channel and save its name
+*				  If an empty channel arises in the future, the sound will be played in the order in which it was forced to stop.
 *
 *****************************************************************************/
 
@@ -16,10 +16,10 @@
 
 #include <list>
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// sound
+// Sound
 #include "NtlSoundDefines.h"
 #include "NtlChannelGroup.h"
 
@@ -46,16 +46,16 @@ public:
 	virtual void			DelSleepingSound(SOUND_HANDLE hHandle);
 	virtual void			DelReleasedSound(SOUND_HANDLE hHandle);	
 
-	virtual CNtlSound*		GetReleasedSoundbyPriority();	///< 가장 오래전에 강제 종료된 사운드의 이름을 반환한다.
-	virtual void			SuccessRelay();					///< 종료됬던 사운드를 다시 플레이하는데 성공했을 때 호출해야 한다.
+	virtual CNtlSound*		GetReleasedSoundbyPriority();	///< Returns the name of the sound that was forced to stop the longest ago.
+	virtual void			SuccessRelay();					///< This should be called when the sound that has been terminated is successfully played again.
 
 protected:
 	virtual VOID			HandleEvents( RWS::CMsg &msg );
 
 
 public:
-	SOUND_MAP			m_mapReleasedSound;			///< 상위 그룹에 의한 강제종료됬던 사운드 이름
-	///< 다른 채널이 release되면 차례대로 플레이한다.
+	SOUND_MAP			m_mapReleasedSound;			///< Name of the sound that was forcefully terminated by the parent group
+	///< When other channels are released, they are played in turn.
 
-	SOUND_MAP			m_mapSleepingSound;			///< 일정 반경밖의 사운드는 플레이되지 않고 리스트로 관리한다
+	SOUND_MAP			m_mapSleepingSound;			///<Sounds outside a certain radius are not played and are managed in a list.
 };

@@ -1,26 +1,26 @@
 #include "precomp_dboclient.h"
 #include "TBMinorMatchResultGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// share
+// Share
 
-// table
+// Table
 #include "ItemTable.h"
 #include "GraphicDataTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEvent.h"
 #include "NtlSobAvatar.h"
 #include "NtlWorldConceptTB.h"
 
-// client
+// Client
 #include "DboGlobal.h"
 #include "DboEvent.h"
 #include "InfoWndManager.h"
@@ -176,9 +176,9 @@ VOID CTBMinorMatchResultGui::Destroy(VOID)
 {
 	GetNtlGuiManager()->RemoveUpdateFunc( this );
 
-	OnMouseLeave( NULL ); // 인포윈도우 닫기.
+	OnMouseLeave( NULL ); // Close the info window.
 
-	DeleteAllRewardItem(); // 아이템 아이콘 삭제.
+	DeleteAllRewardItem(); // Delete item icon.
 
 	UnLinkMsg( g_EventMinorMatchMatchFinish );
 	UnLinkMsg( g_EventResize );
@@ -272,7 +272,7 @@ RwBool CTBMinorMatchResultGui::SetResultData( VOID* pData )
 	m_pflaResult->RestartMovie();
 	m_pflaBar->RestartMovie();
 
-	// 슬롯 삭제.
+	// Delete Slot.
 	DeleteAllRewardItem();
 
 	SNtlEventMinorMatchMatchFinish* pFinishData = reinterpret_cast<SNtlEventMinorMatchMatchFinish*>( pData );		
@@ -297,7 +297,7 @@ RwBool CTBMinorMatchResultGui::SetResultData( VOID* pData )
 	uiKOBonus = pReward->dwKillCountPoint * pFinishData->byKillCount;	
 
 	if( pTBWorldConcept->GetMyTeam() )
-	{// 참가자
+	{// Participant
 		if( pFinishData->byMatchResult == MATCH_RESULT_WIN )
 		{
 			if( pTBWorldConcept->GetMyTeamType() == pFinishData->wMatchWinner )
@@ -331,7 +331,7 @@ RwBool CTBMinorMatchResultGui::SetResultData( VOID* pData )
 		}
 	}
 	else
-	{// 관전자
+	{// Spectator
 		uiWinBonus = pReward->dwWinnerMudosaPoint;
 		SetRewardItem( 0, pReward->winnerItem, pReward->byWinerItemStackCount );			
 		SetFlashResult( NONE );
@@ -480,12 +480,12 @@ VOID CTBMinorMatchResultGui::OnFSCallBack( const RwChar* szCommand, const RwChar
 	else if( !strcmp( szCommand, "TextEnd2" ) )	// WinBonus
 	{
 		m_numWinBonus.EffectRate( BONUS_POINT_RATE * 8.0f, BONUS_POINT_RATE, 0.5f );
-		m_numWinBonus.Show( TRUE );			
+		m_numWinBonus.Show( TRUE );
 	}
 	else if( !strcmp( szCommand, "TextEnd3" ) )	// KOBonus
 	{
 		m_numKOBonus.EffectRate( BONUS_POINT_RATE * 8.0f, BONUS_POINT_RATE, 0.5f );
-		m_numKOBonus.Show( TRUE );		
+		m_numKOBonus.Show( TRUE );
 	}
 	else if( !strcmp( szCommand, "TextEnd4" ) )	// BattleScore
 	{

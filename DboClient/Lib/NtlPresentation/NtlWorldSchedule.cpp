@@ -259,8 +259,8 @@ RwBool CNtlWorldScheduler::Scheduling(RwReal fElapsedTime, RwV3d& vAvatarPos)
 // 
 // void CNtlWorldScheduler::CreateField(RwInt32 iFieldIdx)
 // {
-// 	// Create Schedule은 Delete Schedule이 비어 있을 경우만 실행하기 때문에 Remove 하지 않는다.
-// 	// Remove 할 경우 데이터가 Add 될 수 있다.
+// 	// Create Schedule is only executed when Delete Schedule is empty, so it does not Remove.
+// 	// When removing, data can be added.
 // 	//m_WDS.RemoveSchedule(iFieldIdx);
 // 	switch (GetSceneManager()->GetActiveWorldType())
 // 	{
@@ -2049,8 +2049,8 @@ CNtlWorldScheduler::~CNtlWorldScheduler()
 
 void CNtlWorldScheduler::CreateField(RwInt32 iFieldIdx)
 {
-	// Create Schedule은 Delete Schedule이 비어 있을 경우만 실행하기 때문에 Remove 하지 않는다.
-	// Remove 할 경우 데이터가 Add 될 수 있다.
+	// Create Schedule is only executed when Delete Schedule is empty, so it does not Remove.
+	// When removing, data can be added.
 	//m_WDS.RemoveSchedule(iFieldIdx);
 	switch (GetSceneManager()->GetActiveWorldType())
 	{

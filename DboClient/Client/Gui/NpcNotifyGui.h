@@ -5,7 +5,7 @@
 * Date			: 2008. 2. 11
 * Abstract		: 
 *****************************************************************************
-* Desc			: NPC가 나와서 서버의 공지를 출력한다.
+* Desc			: An NPC appears and prints a notice from the server.
 *****************************************************************************/
 
 #ifndef __NPC_NOTIFY_GUI_H__
@@ -14,9 +14,9 @@
 //#include "ceventhandler.h"
 //#include "NtlPLGui.h"
 //
-//#define dNPCNOTIFY_SLIDING_IN_TIME		0.1f			// 슬라이딩 인 되는 시간
-//#define dNPCNOTIFY_SLIDING_OUT_TIME		0.1f			// 슬라이딩 아웃 되는 시간
-//#define dNPCNOTIFY_SHOW_TIME			3.0f			// NPC Notify가 텍스트를 보여주는 시간
+//#define dNPCNOTIFY_SLIDING_IN_TIME		0.1f			// Time to slide in
+//#define dNPCNOTIFY_SLIDING_OUT_TIME		0.1f			// time to slide out
+//#define dNPCNOTIFY_SHOW_TIME			3.0f			// Time for NPC Notify to show text
 //
 //class CNpcNotifyGui : public CNtlPLGui, public RWS::CEventHandler
 //{
@@ -60,7 +60,7 @@
 //
 //	//! Variables
 //	gui::CStaticBox*	m_pStbText;			///< Text
-//	gui::CFlash*		m_pFlaBalloon;		///< 말풍선
+//	gui::CFlash*		m_pFlaBalloon;		///< speech bubble
 //	gui::CPanel*		m_pPanNpc;			///< NPC
 //
 //	RwReal		m_fCurrentTime;

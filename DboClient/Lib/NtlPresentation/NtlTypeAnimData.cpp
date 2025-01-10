@@ -14,7 +14,7 @@ void CNtlTypeAnimTable::Create()
 }
 
 /**
- * .anm Resource 해제
+ * .anm Resource Destroy
  */
 void CNtlTypeAnimTable::Destroy()
 {
@@ -36,13 +36,13 @@ void CNtlTypeAnimTable::Destroy()
 
 
 /**
- * Key값으로 vaule를 생성을 한다. 초기 생성시에만 사용
- * \param strAnimName Animation 파일 이름
+ *Create a vaule with the key value. Used only during initial creation
+ * \param strAnimName Animation file name
  * \return STypeAnimData
  */
 STypeAnimData *CNtlTypeAnimTable::Add(RwUInt32 uiKey, const std::string &strAnimName)
 {
-    // 중복 데이터가 들어오는 부분을 체크한다 (by agebreak. 2006.4.20)
+    // Check where duplicate data is coming in (by agebreak. 2006.4.20)
     STypeAnimData *pTypeAnimData = NULL;
 
     if(m_mapTypeAnim.find(uiKey) != m_mapTypeAnim.end())
@@ -64,14 +64,14 @@ STypeAnimData *CNtlTypeAnimTable::Add(RwUInt32 uiKey, const std::string &strAnim
 
 STypeAnimData *CNtlTypeAnimTable::Add(RwUInt32 uiKey, STypeAnimData *pTypeAnimData)
 {
-    // 기존의 코드로는 새로운 데이터를 추가할수가 없다.=_=; (By agebreak. 2006.4.25)	
+    // New data cannot be added using existing code.=_=; (By agebreak. 2006.4.25)	
 	pTypeAnimData->uiAnimKey = uiKey;
 	m_mapTypeAnim[uiKey] = pTypeAnimData;
 	return m_mapTypeAnim[uiKey];
 }
 
 /**
- * 내부적으로 사용하는 Map을 Return 한다.
+ *Returns the Map used internally.
  * \return TYPE_ANIM_MAP *
  */
 TYPE_ANIM_MAP *CNtlTypeAnimTable::GetTypeAnimMap()
@@ -80,8 +80,8 @@ TYPE_ANIM_MAP *CNtlTypeAnimTable::GetTypeAnimMap()
 }
 
 /**
- * Key값으로 STypeAnimData를 얻는다.
- * \param uiKey 고유 Key 값
+ *Obtain STypeAnimData as the key value.
+ * \param uiKey Unique Key value
  * \return STypeAnimData *
  */
 STypeAnimData *CNtlTypeAnimTable::Get(RwUInt32 uiKey)
@@ -97,8 +97,8 @@ STypeAnimData *CNtlTypeAnimTable::Get(RwUInt32 uiKey)
 }
 
 /**
- * Key값으로 AnimFile을 얻는다.
- * \param uiKey 고유 Key 값
+ *Obtain AnimFile as the key value.
+ * \param uiKey Unique Key value
  * \return Animation File Name
  */
 const std::string *CNtlTypeAnimTable::GetFileName(RwUInt32 uiKey)
@@ -149,7 +149,7 @@ void CNtlTypeAnimTable::SaveSerialize(  CNtlSerializer& sOut )
 		{
 			if(pEventAnim)
 			{
-				sOut<<pEventAnim->eEventID;			// 이벤트 타입을 헤더로 넣는다.
+				sOut<<pEventAnim->eEventID;			// Enter the event type as a header.
 				switch(pEventAnim->eEventID)
 				{
 				case EVENT_ANIM_HIT:	

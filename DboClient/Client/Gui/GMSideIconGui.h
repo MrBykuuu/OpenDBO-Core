@@ -1,22 +1,22 @@
 /******************************************************************************
-* File			: GMSideIconGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 11. 17
-* Abstract		: 
+*File           : GMSideIconGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : November 17, 2008
+*Abstract		: 
 *****************************************************************************
-* Desc			: GM 사이드 아이콘
+*Desc           : GM side icon
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// dbo
+// Dbo
 #include "SideIconGui.h"
 
 class CGMSideIconGui : public CSideIconBase

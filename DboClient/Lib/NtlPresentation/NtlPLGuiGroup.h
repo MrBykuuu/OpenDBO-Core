@@ -1,9 +1,9 @@
 /*****************************************************************************
  * File			: NtlPLGuiGroup.h
  * Author		: Hong Sungbock
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2007. 12. 13
- * Abstract		: PL단의 Gui group을 생성한다
+ * Abstract		: Create a PL group GUI group
  *****************************************************************************
  * Desc         : 
  *

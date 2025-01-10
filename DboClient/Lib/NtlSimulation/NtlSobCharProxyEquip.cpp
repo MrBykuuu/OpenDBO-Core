@@ -448,7 +448,7 @@ void CNtlSobCharEquipProxy::NotifyOwnerStateEnter(RwUInt32 uiStateId)
 
 void CNtlSobCharEquipProxy::NotifyOwnerStateExit(RwUInt32 uiOldState, RwUInt32 uiNewState)
 {
-    // 스킬 캐스팅상태에서는 무기를 자동으로 제거하지 않는다.
+    //The weapon is not automatically removed in skill casting state.
     if((uiOldState == NTL_FSMSID_SKILL_READY && uiNewState == NTL_FSMSID_SKILL_CASTING) ||
        (uiOldState == NTL_FSMSID_SKILL_CASTING && uiNewState == NTL_FSMSID_SKILL_ACTION))
     {
@@ -599,7 +599,7 @@ void CNtlSobCharEquipProxy::SobEquipCreateEventHandler(RWS::CMsg &pMsg)
 				}
 			}
 
-			// sub weapon 중에서 gem과 같이 움직일 수 있는 종류라면...
+			//Among the sub weapons, if it is a type that can move like a gem...
 			if(Logic_IsMoveableSubWeapon(pItemTblData))
 			{
 				m_pSubWeaponController = NTL_NEW CNtlSubWeaponController;
@@ -708,7 +708,7 @@ void CNtlSobCharEquipProxy::SobEquipCreateEventHandler(RWS::CMsg &pMsg)
 				}
 			}
 			
-			// sub weapon 중에서 gem과 같이 움직일 수 있는 종류라면...
+			// Among the sub weapons, if it is a type that can move like a gem...
 			if(Logic_IsMoveableSubWeapon(pItemTblData))
 			{
 				m_pSubWeaponController = NTL_NEW CNtlSubWeaponController;
@@ -998,7 +998,7 @@ void CNtlSobCharEquipProxy::MakeItemModelName(std::string& strModelName, RwUInt8
 	if(byModeNameRule == ITEM_MODEL_TYPE_NONE)
 		return;
 
-	// 종족
+	// tribe
 	if(byRace == RACE_HUMAN)
 	{
 		strModelName += "_H";
@@ -1012,7 +1012,7 @@ void CNtlSobCharEquipProxy::MakeItemModelName(std::string& strModelName, RwUInt8
 		strModelName += "_M";
 	}
 
-	// 성별
+	// gender
 	if(byGender == GENDER_MALE)
 	{
 		strModelName += "_M";
@@ -1049,7 +1049,7 @@ void CNtlSobCharEquipProxy::MakeItemModelName(std::string& strModelName, RwUInt8
 
 void CNtlSobCharEquipProxy::StorageMainWeapon(void)
 {
-	// main weapon을 change 해야 하는 sub weapon이면?
+	// What if it is a sub weapon that needs to be changed to the main weapon?
 	if(m_arrSlotItem[EQUIP_SLOT_TYPE_HAND].pPLItem)
 	{
 		if(Logic_IsWeaponChangeSubWeapon(m_arrSlotItem[EQUIP_SLOT_TYPE_SUB_WEAPON].uiItemTblId))

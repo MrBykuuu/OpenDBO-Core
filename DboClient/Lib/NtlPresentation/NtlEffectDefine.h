@@ -30,11 +30,11 @@ const RwRGBA RGBA_BASE = { 255, 255, 255, 255 };
 #define EFFECT_NAME_TRACE       "TraceEffect"
 #define EFFECT_NAME_GRADE       "GradeEffect"
 
-// Blur Effect 설정
+// Blur Effect settings
 #define EFFECT_BLUR_TEXTURE_WIDTH   512
 #define EFFECT_BLUR_TEXTURE_HEIGHT  384
 
-#define EFFECT_BLUR_ALPHA   100         ///< Blur Alpha 값 (0 ~ 255)
+#define EFFECT_BLUR_ALPHA   100         ///< Blur Alpha value (0 ~ 255)
 
 
 // Predefined flags in renderware.
@@ -60,12 +60,12 @@ const RwRGBA RGBA_BASE = { 255, 255, 255, 255 };
 
 */
 
-// 사용자 정의 Flag
+//Custom Flag
 #define rpPRTSTDEMITTERDATAFLAGPRTORBITPOINT				0x00000080
 
 #define rpPRTADVEMITTERDATAFLAGMULTIROTATE					0x00002000
-#define rpPRTSTDEMITTERDATAFLAGTRAIL                        0x00004000                  ///< Trail Action 플래그 
-#define rpPRTSTDEMITTERDATAFLAGUVANIM						0x00008000                  ///< UV Anim 플래그 (Decal에서 사용)
+#define rpPRTSTDEMITTERDATAFLAGTRAIL                        0x00004000                  ///< Trail Action flag 
+#define rpPRTSTDEMITTERDATAFLAGUVANIM						0x00008000                  ///< UV Anim flag (used in Decal)
 
 #define rpPRTADVEMITTERDATAFLAGMULTITEXTURES				0x01000000
 #define rpPRTSTDEMITTERDATAFLAGPRTHURRICANE					0x02000000
@@ -74,17 +74,17 @@ const RwRGBA RGBA_BASE = { 255, 255, 255, 255 };
 #define rpPRTADVEMITTERDATAFLAGSPLINEPATH					0x10000000
 #define rpPRTSTDEMITTERDATAFLAGPRTFINISH                    0x40000000
 
-// 파티클 전용 정의 Flag
-#define NTLrpPRTADVEMITTERDATAFLAGFOLLOW                    0x80000000                  ///< 생성 위치를 따라다니는 파티클 플래그
-#define NTLrpPRTSTDEMITTERDATAFLAGPRTYBILLBOARD             0x00100000                  ///< 파티클의 Y빌보드 플래그
-#define NTLrpPRTSTDEMITTERDATAFLAGPRTXBILLBOARD             0x00200000                  ///< 파티클의 X빌보드 플래그
-#define NTLrpPRTSTDEMITTERDATAFLAGPRTZBILLBOARD             0x00400000                  ///< 파티클의 Z빌보드 플래그
-#define NTLrpPRTSTDEMITTERDATAFLAGPRTZWRITE					0x00800000					///< 파티클에서 Z Write 유무 플래그
+// Particle-specific definition flag
+#define NTLrpPRTADVEMITTERDATAFLAGFOLLOW                    0x80000000                  ///< Particle flag that follows the creation location
+#define NTLrpPRTSTDEMITTERDATAFLAGPRTYBILLBOARD             0x00100000                  ///< Particle Y billboard flag
+#define NTLrpPRTSTDEMITTERDATAFLAGPRTXBILLBOARD             0x00200000                  ///< Particle’s X Billboard Flag
+#define NTLrpPRTSTDEMITTERDATAFLAGPRTZBILLBOARD             0x00400000                  ///< Particle's Z Billboard flag
+#define NTLrpPRTSTDEMITTERDATAFLAGPRTZWRITE					0x00800000					///< Flag for presence or absence of Z Write in particles
 
-// 포스트 이펙트 전용 Flag
-#define NTLrpPRTSTDEMITTERDATAFLAGPRTCENTERFIX			    0x08000000					///< 파티클에서 Z Write 유무 플래그
+// Flag for post effects only
+#define NTLrpPRTSTDEMITTERDATAFLAGPRTCENTERFIX			    0x08000000					///< Flag for presence or absence of Z Write in particles
 
-// Fade In/Out시 사용되는 플래그
+// Flag used when Fade In/Out
 enum EFadeStatus
 {
 	FADE_STATUS_IN,
@@ -186,12 +186,12 @@ struct SNtlPrtStdEmitterPrtFadeOut
 	RwChar			strFollowSystem[MAX_PATH];
 };
 
-/// UV Animation 관련 프로퍼티 구조체 (Decal에서 사용한다)
+/// UV Animation related property structure (used in Decal)
 struct SNtlPrtStdEmitterPrtUVAnim
 {
-	RwV3d			vDir;			///< UV Anim방향 (X, Z 값을 사용)
-	RwReal			fVelocity;		///< UV Anim 속도
-	RwReal			fMaxOffset;		///< Max Offset 값 (이 값을 설정하면 Offset 까지 왕복하는 UV Anim이 된다)
+	RwV3d			vDir;			///< UV Anim direction (using X, Z values)
+	RwReal			fVelocity;		///< UV Anim Speed
+	RwReal			fMaxOffset;		///< Max Offset value (If you set this value, the UV Anim will round-trip to the Offset)
 	
 	SNtlPrtStdEmitterPrtUVAnim()
 	{
@@ -222,8 +222,8 @@ struct SNtlPostEffectEmitterStandard
 {
 	RwBool			bDrawFullScreen;
 	RwInt32			nLoopCount;
-    RwInt32         nVertexCount;               ///< Post Effect의 Vertex 개수
-    RwReal          fRadius;                    ///< 반지름 (길이)
+    RwInt32         nVertexCount;               ///< Number of vertices in Post Effect
+    RwReal          fRadius;                    ///< radius (length)
 
     SNtlPostEffectEmitterStandard()
     : nVertexCount(16), nLoopCount(1), bDrawFullScreen(FALSE), fRadius(512.0f)
@@ -267,13 +267,13 @@ struct SNtlLightningEmitterStandard
 	RwReal			fUpdateTime;
 };
 
-/// Decal System의 정보를 가지고 있는 구조체
+/// Structure containing information about the Decal System
 struct SNtlDecalEmitterStandard_Old
 {
 	RwTextureAddressMode 			eWrapType;			///< Texture의 Wrap Type
-	RwReal							fVisibleDistance;	///< Decal Effect가 보이는 시야 거리
-	RwV3d							vSize;				///< Decal의 Size
-	RwReal							fScale;				///< Decal Effect의 Scale값    
+	RwReal							fVisibleDistance;	///< Viewing distance at which the Decal Effect is visible
+	RwV3d							vSize;				///< Decal's Size
+	RwReal							fScale;				///< Scale value of Decal Effect    
 	
 	SNtlDecalEmitterStandard_Old()
 	: eWrapType(rwTEXTUREADDRESSCLAMP), fVisibleDistance(40.0f),
@@ -283,15 +283,15 @@ struct SNtlDecalEmitterStandard_Old
 	}
 };
 
-/// Y Offset 값을 추가한 데이터 (스크립트 버전 8에 추가)
+/// Data with added Y Offset value (added in script version 8)
 struct SNtlDecalEmitterStandard
 {
     RwTextureAddressMode 			eWrapType;			///< Texture의 Wrap Type
-    RwReal							fVisibleDistance;	///< Decal Effect가 보이는 시야 거리
-    RwV3d							vSize;				///< Decal의 Size
-    RwReal							fScale;				///< Decal Effect의 Scale값   
+    RwReal							fVisibleDistance;	///< Viewing distance at which the Decal Effect is visible
+    RwV3d							vSize;				///< Decal's Size
+    RwReal							fScale;				///< Scale value of Decal Effect   
     RwReal                          fYOffset;           ///< Y Offset
-    RwRGBA                          color;              ///< 기본 컬러값
+    RwRGBA                          color;              ///< Basic color value
 
     SNtlDecalEmitterStandard()
     : eWrapType(rwTEXTUREADDRESSCLAMP), fVisibleDistance(40.0f),
@@ -322,24 +322,24 @@ struct SNtlHurricaneEmitterStandard
 	RwReal			revolutionAngle;
 };
 
-/// Line System의 기본 속성값들
+/// Basic property values ??of Line System
 struct SNtlLineEmitterStandard
 {
-    // 프로퍼티 속성들
-    RwReal  m_fLineLifeTime;            ///< 라인의 LifeTime
-    RwInt32 m_nMaxCount;                ///< 라인의 최대 생성 개수
-    RwInt32 m_nEmitterCount;            ///< 한 Frame에 생성되는 라인의 개수
-    RwReal  m_fEmitterGap;              ///< Emitter에서 평면이 생성되는 Gap
-    RwReal  m_fEmitterRaduis;           ///< Emitter의 반지름
-    RwReal  m_fEmitterBias;             ///< Emitter의 Bias값
-    RwReal  m_fTargetRadius;            ///< 라인이 이동할 Target의 반지름
-    RwV2d   m_sizeLine;                 ///< 생성되는 Line의 크기 (x: 넓이, y:길이)
-    RwReal  m_fVelocity;                ///< 라인이 이동하는 속도    
-    RwBool  m_bShake;                   ///< 라인의 흔들림 여부
-    RwReal  m_fShakeBias;               ///< 흔들림 값
-    RwBool  m_bMoveLine;                ///< 라인이 Dir방향으로 이동할지, 단지 늘어나기만 할지 여부
-    RwBool  m_bZBufferEnable;           ///< Z-Buffer 사용 유무
-    RwBool  m_bZBiilBoard;              ///< Z-BillBoard 적용 유무
+    // properties properties
+    RwReal  m_fLineLifeTime;            ///< LifeTime of Line
+    RwInt32 m_nMaxCount;                ///< Maximum number of lines created
+    RwInt32 m_nEmitterCount;            ///< Number of lines created in one frame
+    RwReal  m_fEmitterGap;              ///< Gap where a plane is created in the emitter
+    RwReal  m_fEmitterRaduis;           ///< Radius of Emitter
+    RwReal  m_fEmitterBias;             ///< Emitter bias value
+    RwReal  m_fTargetRadius;            ///< Target radius to which the line will move
+    RwV2d   m_sizeLine;                 ///< Size of the generated line (x: width, y: length)
+    RwReal  m_fVelocity;                ///< The speed at which the line moves    
+    RwBool  m_bShake;                   ///< Whether the line shakes or not
+    RwReal  m_fShakeBias;               ///< shake value
+    RwBool  m_bMoveLine;                ///< Whether the line will move in the Dir direction or just stretch
+    RwBool  m_bZBufferEnable;           ///< Whether or not Z-Buffer is used
+    RwBool  m_bZBiilBoard;              ///< Whether or not Z-BillBoard is applied
 
     SNtlLineEmitterStandard() : m_fLineLifeTime(1.0f),
                                 m_nMaxCount(100),
@@ -360,7 +360,7 @@ struct SNtlLineEmitterStandard
     }
 };
 
-// 구형 Emitter 프로퍼티 (타원형도 설정가능, Line System의 Emitter에 사용된다)
+// Spherical Emitter properties (Oval shape can also be set, used for Line System Emitter)
 struct SNtlPrtStdEmitterPrtSphere
 {
     RwV3d   m_vEmitterSize;    
@@ -373,19 +373,19 @@ struct SNtlPrtStdEmitterPrtSphere
     }
 };
 
-// Effect의 Finish 타입 플래그
+// Effect's Finish type flag
 enum EPrtFinishType
 {
-    FINISH_TYPE_ALPHA   = 1,      ///< 알파가 없어지면서 사라진다.
-    FINISH_TYPE_SIZE    = 2,      ///< 사이즈가 작아지면서 사라진다.
-    FINISH_TYPE_FOLLOW  = 4,      ///< 끝점을 따라서 첫점이 이동하면서 길이가 작아지면서 사라진다.
+    FINISH_TYPE_ALPHA   = 1,      ///< It disappears as Alpha disappears.
+    FINISH_TYPE_SIZE    = 2,      ///< As the size decreases, it disappears.
+    FINISH_TYPE_FOLLOW  = 4,      ///< As the first point moves along the end point, the length decreases and disappears.
 };
 
-// Finish Action에 사용될 프로퍼티
+// Properties used for Finish Action
 struct SNtlPrtStdEmitterPrtFinish
 {
     RwInt32        m_nFinishTypeFlag;
-    RwReal         m_fFinishTime;       ///< Finish 작업에 걸리는 시간
+    RwReal         m_fFinishTime;       ///< Time taken to finish task
 
     SNtlPrtStdEmitterPrtFinish()
     {
@@ -395,20 +395,20 @@ struct SNtlPrtStdEmitterPrtFinish
 };
 
 
-/// Trace Action에 사용될 프로퍼티 구조체
+/// Property structure to be used in Trace Action
 struct SNtlPrtStdEmitterTrail
 {
     RwReal  fEdgeLifeTime;            ///< Edge의 Life Time       
-    RwReal  fMaxLength;               ///< 궤적의 최대 길이
-    RwReal  fWidth;                   ///< 궤적의 넓이  
+    RwReal  fMaxLength;               ///< maximum length of trajectory
+    RwReal  fWidth;                   ///< Area of ??the trajectory  
     RwChar  strTexture[MAX_PATH];     ///< Texture File Name
     RwReal  fEdgeGap;                 ///< The value of whether Edge should be generated every few seconds
-    RwInt32 nSplinePointCount;        ///< Spline으로 생성하는 버텍스의 갯수 (두개의 Edge사이에 생성되는 버텍스의 개수이다)
-    RwInt32 nMaxEdgeCount;            ///< 최대 Edge Count    
+    RwInt32 nSplinePointCount;        ///< Number of vertices created with spline (number of vertices created between two edges)
+    RwInt32 nMaxEdgeCount;            ///< Maximum Edge Count    
     RwBlendFunction eSrcBlend;        ///< Src Blend State
     RwBlendFunction eDestBlend;       ///< Dest Blend State
-    RwRGBA  colStartColor;            ///< 시작 Color값
-    RwRGBA  colEndColor;              ///< 끝 Color값   
+    RwRGBA  colStartColor;            ///< Starting color value
+    RwRGBA  colEndColor;              ///< End color value   
     RwV3d   vOffset;                  ///< Offset from center point where trajectory will occur
 
     SNtlPrtStdEmitterTrail() : fEdgeLifeTime(0.3f),
@@ -429,18 +429,18 @@ struct SNtlPrtStdEmitterTrail
     }
 };
 
-/// 이펙트 사운드 구조체
+/// effect sound structure
 struct SEffectSound
 {
-    RwChar	chSoundName[128]; ///< Sound 파일명 (Sound 폴더및 경로명 포함)
-    RwChar	chSoundName2[128]; ///< Sound 파일명 (Sound 폴더및 경로명 포함)
-    RwChar	chSoundName3[128]; ///< Sound 파일명 (Sound 폴더및 경로명 포함)
-    RwChar	chSoundName4[128]; ///< Sound 파일명 (Sound 폴더및 경로명 포함)    
-    RwBool  bLoop;                              ///< Sound Loop 유무
+    RwChar	chSoundName[128]; ///< Sound file name (including Sound folder and path name)
+    RwChar	chSoundName2[128]; ///< Sound file name (including Sound folder and path name)
+    RwChar	chSoundName3[128]; ///< Sound file name (including Sound folder and path name)
+    RwChar	chSoundName4[128]; ///< Sound file name (including Sound folder and path name)    
+    RwBool  bLoop;                              ///< Presence of Sound Loop
     RwReal  fSoundVolume;                       ///< Sound Volume
-    RwReal  fSoundDist;                         ///< 유효 거리
-    RwReal  fSoundDecayDist;                    ///< 사운드 감쇠 거리
-    RwReal  fSoundPitchMin;                     ///< 사운드 피치 최소값    
+    RwReal  fSoundDist;                         ///< Effective distance
+    RwReal  fSoundDecayDist;                    ///< Sound attenuation distance
+    RwReal  fSoundPitchMin;                     ///< Minimum sound pitch    
 
     SEffectSound()
     {
@@ -466,11 +466,11 @@ struct SEffectSoundEx : public SEffectSound
     }
 };
 
-/// 이펙트 바운딩 스피어
+/// Effect Bounding Spear
 struct SEffectBoundingSphere
 {
-    RwBool      bDisableAuto;           ///< 바운딩 스피어를 수동으로 조절할때 True, False면 자동생성된 바운딩 스피어 사용
-    RwReal      fRadius;                ///< 바운딩 스피어 반지름. 수동 설정일때만 유효
+    RwBool      bDisableAuto;           ///< When adjusting the bounding sphere manually, if True or False, the automatically generated bounding sphere is used.
+    RwReal      fRadius;                ///< Bounding sphere radius. Valid only when setting manually
 
     SEffectBoundingSphere()
     {
@@ -481,24 +481,24 @@ struct SEffectBoundingSphere
 
 /**
 * \ingroup NtlPresentation
-* \brief LoopEffect List에 사용되는 구조체, Effect-Bone 쌍으로 구현된다.
+* \brief Structure used in LoopEffect List, implemented as an Effect-Bone pair.
 * \date 2006-08-21
 * \author agebreak
 */
 struct SLoopEffect
 {
-	CNtlInstanceEffect* pLoopEffectIntance;     ///< LoopEffect의 포인터
-	char*               szBoneName;             ///< LoopEffect가 붙는 Bone의 이름
+	CNtlInstanceEffect* pLoopEffectIntance;     ///< Pointer to LoopEffect
+	char*               szBoneName;             ///< Name of Bone with LoopEffect
 };
 
 typedef std::list<SLoopEffect*> ListLoopEffect;
 typedef std::list<SOUND_HANDLE> ListSoundHandle;
 
-/// 바닥에서 표시되는 이펙트 시스템을 설정하기 위한 구조체
+/// Structure for setting the effect system displayed on the floor
 struct SGroundFlag
 {
-    RwBool bGround;                             ///< 지면의 높이에서 표시될지의 유무 플래그
-    RwReal fOffsetY;                            ///< Y Offset 설정
+    RwBool bGround;                             ///< Flag for whether or not to display at ground level
+    RwReal fOffsetY;                            ///< Y Offset settings
 
     SGroundFlag()
     {

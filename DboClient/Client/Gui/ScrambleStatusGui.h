@@ -1,33 +1,33 @@
 /******************************************************************************
-* File			: ScrambleStatusGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2009. 4. 10
-* Abstract		: 
+*File			: ScrambleStatusGui.h
+*Author		    : Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2009. 4. 10
+*Abstract		: 
 *****************************************************************************
-* Desc			: 도장전 진행상태를 표시한다.
+*Desc			: Displays the progress status before painting.
 *
-*				  또한 도장전 말풍선 관리자의 생성, 소멸을 주관한다
+*				  It also oversees the creation and disappearance of pre-painting speech bubble managers.
 *****************************************************************************/
 
 #pragma once
 
-// shared
+// Shared
 #include "NtlSharedType.h"
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// sound
+// Sound
 #include "NtlSoundDefines.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// client
+// Client
 #include "SurfaceGui.h"
 #include "RwTextureGui.h"
 
@@ -109,7 +109,7 @@ protected:
 
 	gui::CPanel*		m_pEnemyTeam_PeoplePanel;	
 	gui::CPanel*		m_pEnemyTeam_SealPanel;
-	gui::CPanel*		m_pStatus_Seal[dNUM_SEAL];			///< 인장 상태 표시
+	gui::CPanel*		m_pStatus_Seal[dNUM_SEAL];			///< Indication of tension status
 	gui::CPanel*		m_pMyTeam_PeoplePanel;
 	gui::CPanel*		m_pMyTeam_SealPanel;
 

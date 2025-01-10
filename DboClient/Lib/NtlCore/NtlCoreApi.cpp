@@ -55,8 +55,8 @@ void API_CoreUpdate(RwReal fElapsed)
 
 /**
 * \ingroup NtlCore
-* System 의 Window Mode 가 Window <-> FullScreen으로 토글될 때 event를 보낸다.
-* screenmode가 변경될 때 작업이 필요한 core 보다 상위 레이어의 작업은 g_EventToggleFullScreen을 받아서 처리한다.
+*An event is sent when the system's Window Mode is toggled to Window <-> FullScreen.
+*When the screenmode changes, work on layers higher than the core that requires work is processed by receiving g_EventToggleFullScreen.
 */
 void API_CoreToggleFullScreenNotify(bool bFullScreen)
 {

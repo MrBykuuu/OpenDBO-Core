@@ -109,9 +109,9 @@ public:
 
 	VOID SetTextCoord( INT nX, INT nY );
 
-	VOID SetTextDownCoordDiff( INT nX, INT nY );		// 버튼다운시 텍스트가 이동하는 값.
+	VOID SetTextDownCoordDiff( INT nX, INT nY );		//The value by which the text moves when the button is pressed down.
 
-	VOID ApplyText(VOID);								// 모든 정보가 다 입력된 후 한번 실행해준다.
+	VOID ApplyText(VOID);								//Run once after all information is entered.
 
 	//: If toggle is true, pressing the button toggles it between an On and and Off state. 
 	//: If toggle is false, pressing the button causes an action, then the button returns to the unpressed state. 

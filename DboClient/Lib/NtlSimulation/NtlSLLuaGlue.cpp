@@ -1,15 +1,15 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSLLuaGlue.h"
 
-//lua
+//Lua
 #include "NtlLuaState.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlCoreUtil.h"
 #include "NtlMath.h"
 
-// presentation
+// Presentation
 #include "NtlPLEntity.h"
 #include "NtlPLAttach.h"
 #include "NtlPLSceneManager.h"
@@ -18,7 +18,7 @@
 #include "NtlDNController.h"
 #include "NtlPLResourcePack.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLLuaGlueStuff.h"
 #include "NtlSLDef.h"
@@ -79,41 +79,41 @@ SSLLuaGlueDef SLGlue[] =
 	{"LuaGlue_RegisterExplosionCamera",			LuaGlue_RegisterExplosionCamera},
     {"LuaGlue_RegisterObserverCamera",          LuaGlue_RegisterObserverCamera},
 
-	// 물리적/논리적 객체 생성 함수
+	// Physical/logical object creation function
 	{"LuaGlue_CreateEffect",					LuaGlue_CreateEffect},
 	{"LuaGlue_CreateSound",						LuaGlue_CreateSound},
 	
-	// data를 참조할 actor 객체 설정
+	// Set actor object to refer to data
 	{"LuaGlue_ActiveActor",						LuaGlue_ActiveActor},
 	{"LuaGlue_ActiveObject",					LuaGlue_ActiveObject},
 	{"LuaGlue_ActiveActorEdit",					LuaGlue_ActiveActorEdit},
 	{"LuaGlue_ActiveObjectEdit",				LuaGlue_ActiveObjectEdit},
 
-	// transform position에 관련된 함수
+	// Functions related to transform position
 	{"LuaGlue_BeginTransform",					LuaGlue_BeginTransform},
 	{"LuaGlue_EndTransform",					LuaGlue_EndTransform},
 	{"LuaGlue_SetPosition",						LuaGlue_SetPosition},
 	{"LuaGlue_SetBonePosition",					LuaGlue_SetBonePosition},
 	{"LuaGlue_AddPosition",						LuaGlue_AddPosition},
 
-	// transform direction에 관련된 함수
+	// Functions related to transform direction
 	{"LuaGlue_SetDirection",					LuaGlue_SetDirection},
 	
-	// transform scale에 관련된 함수
+	// Functions related to transform scale
 	{"LuaGlue_SetScale",						LuaGlue_SetScale},
 
-	// attach에 관련된 함수.
+	// Function related to attach.
 	{"LuaGlue_AttachWorld",						LuaGlue_AttachWorld},
 	{"LuaGlue_AttachBone",						LuaGlue_AttachBone},
 
-	// actor 정보와 관련된 함수.
+	// Function related to actor information.
 	{"LuaGlue_GetActorPosition",				LuaGlue_GetActorPosition},
 	{"LuaGlue_GetActorFrontPosition",			LuaGlue_GetActorFrontPosition},
 	{"LuaGlue_GetActorBackPosition",			LuaGlue_GetActorBackPosition},
 	{"LuaGlue_GetActorLeftPosition",			LuaGlue_GetActorLeftPosition},
 	{"LuaGlue_GetActorRightPosition",			LuaGlue_GetActorRightPosition},
 
-	// camera에 관련된 함수.
+	// Functions related to camera.
 	{"LuaGlue_CameraShake",								LuaGlue_CameraShake},
 	{"LuaGlue_SetCameraShakeFactor",					LuaGlue_SetCameraShakeFactor},
 	{"LuaGlue_ResetCameraShakeFactor",					LuaGlue_ResetCameraShakeFactor},
@@ -130,20 +130,20 @@ SSLLuaGlueDef SLGlue[] =
 	{"LuaGlue_AddSkillSplineActorRefSelfNode",			LuaGlue_AddSkillSplineActorRefSelfNode},
     {"LuaGlue_AddSplineCameraSelfNode",                 LuaGlue_AddSplineCameraSelfNode},
 
-	// actor에 관련된 함수.
+	// Functions related to actors.
 	{"LuaGlue_GetOwnerSerialId",						LuaGlue_GetOwnerSerialId},
 	{"LuaGlue_GetActorType",							LuaGlue_GetActorType},
 	{"LuaGlue_IsAvatarActor",							LuaGlue_IsAvatarActor},
 
-	// Logic => Skill camera control 속성에 관련된 함수.
+	// Logic => Function related to skill camera control properties.
 	{"LuaGlue_GetSkillAttackSerialId",					LuaGlue_GetSkillAttackSerialId},
 	{"LuaGlue_GetSkillTargetSerialId",					LuaGlue_GetSkillTargetSerialId},
 
-	// presentation => day and night에 관련된 함수.
+	// presentation => Function related to day and night.
 	{"LuaGlue_AddDNNode",								LuaGlue_AddDNNode},
 	{"LuaGlue_AddDNNodeCurrentStart",					LuaGlue_AddDNNodeCurrentStart},
 
-	// Logic => cinematic 연출에 관련된 함수.
+	// Logic => Function related to cinematic direction.
 	{"LuaGlue_BeginCinematic",							LuaGlue_BeginCinematic},
 	{"LuaGlue_EndCinematic",							LuaGlue_EndCinematic},
 	{"LuaGlue_BeignCinematicLayer",						LuaGlue_BeignCinematicLayer},
@@ -216,7 +216,7 @@ SSLLuaGlueDef SLGlue[] =
 	{"LuaGlue_AddSinExplosionAlgorithm_ZAxis",			LuaGlue_AddSinExplosionAlgorithm_ZAxis},
 	{"LuaGlue_AddCNCinematicScale",						LuaGlue_AddCNCinematicScale},
 
-	// 연출 관련
+	// Directing related
 	{"LuaGlue_DTAddController",							LuaGlue_DTAddController},
 	{"LuaGlue_DTRemoveController",						LuaGlue_DTRemoveController},    
 
@@ -311,7 +311,7 @@ void SLLua_Compile(void)
 		g_pLuaState->RunScript("script\\sl.lua");
 	}
 
-	// sl setup data setting lua 실행.
+	// Run sl setup data setting lua.
 	LuaExec_SLSetupData();
 }
 
@@ -343,7 +343,7 @@ void LuaExec_SLSetupData(void)
 
 void LuaExec_SobCreate(CNtlSob *pSobObj)
 {
-	// (형석 - 아직 사용 안함)
+	// (Fluorspar -not yet used)
 	return;
 
 	if(g_pLuaState == NULL)
@@ -359,7 +359,7 @@ void LuaExec_SobCreate(CNtlSob *pSobObj)
 
 void LuaExec_SobDestroy(CNtlSob *pSobObj)
 {
-	// (형석 - 아직 사용 안함)
+	// (Fluorspar -not yet used)
 	return;
 
 	if(g_pLuaState == NULL)
@@ -375,7 +375,7 @@ void LuaExec_SobDestroy(CNtlSob *pSobObj)
 
 void LuaExec_CharStateEnter(unsigned int uiSerialId, CNtlFSMStateBase *pState)
 {
-	// (형석 - 아직 사용 안함)
+	// (Fluorspar -not yet used)
 	return;
 
 	if(g_pLuaState == NULL)
@@ -391,7 +391,7 @@ void LuaExec_CharStateEnter(unsigned int uiSerialId, CNtlFSMStateBase *pState)
 
 void LuaExec_CharStateExit(unsigned int uiSerialId, CNtlFSMStateBase *pState)
 {
-	// (형석 - 아직 사용 안함)
+	// (Fluorspar -not yet used)
 	return;
 
 	if(g_pLuaState == NULL)
@@ -407,7 +407,7 @@ void LuaExec_CharStateExit(unsigned int uiSerialId, CNtlFSMStateBase *pState)
 
 void LuaExec_CharBehaviorEnter(unsigned int uiSerialId, CNtlBehaviorBase *pBehavior)
 {
-	// (형석 - 아직 사용 안함)
+	// (Fluorspar -not yet used)
 	return;
 
 	if(g_pLuaState == NULL)
@@ -423,7 +423,7 @@ void LuaExec_CharBehaviorEnter(unsigned int uiSerialId, CNtlBehaviorBase *pBehav
 
 void LuaExec_CharBehaviorExit(unsigned int uiSerialId, CNtlBehaviorBase *pBehavior)
 {
-	// (형석 - 아직 사용 안함)
+	// (Fluorspar -not yet used)
 	return;
 
 	if(g_pLuaState == NULL)
@@ -439,7 +439,7 @@ void LuaExec_CharBehaviorExit(unsigned int uiSerialId, CNtlBehaviorBase *pBehavi
 
 void LuaExec_Attack(unsigned int uiAttackerSerialId, unsigned int uiDefenderSerialId, const SHitStuff *pHit)
 {
-	// (Fluorite - not yet used)
+	// (Fluorite -not yet used)
 	return;
 
 	if(g_pLuaState == NULL)
@@ -456,7 +456,7 @@ void LuaExec_Attack(unsigned int uiAttackerSerialId, unsigned int uiDefenderSeri
 
 void LuaExec_Hurt(unsigned int uiAttackerSerialId, unsigned int uiDefenderSerialId, const SHitStuff *pHit)
 {
-	// (형석 - 아직 사용 안함)
+	// (Fluorspar -not yet used)
 	return;
 
 	if(g_pLuaState == NULL)
@@ -758,12 +758,12 @@ int LuaGlue_RegisterObserverCamera( lua_State* L )
 
 
 ////////////////////////////////////////////////////////////////////////////
-// lua 물리적/논리적 객체 생성 함수
+// lua physical/logical object creation functions
 ////////////////////////////////////////////////////////////////////////////
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : effect를 생성하는 lua glue 함수.
+//  des: lua glue function that creates an effect.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : effect property key name.
@@ -790,10 +790,10 @@ int LuaGlue_CreateEffect(lua_State *L)
 	}
 
 	CNtlPLEntity *pPLEntity = GetSceneManager()->CreateEntity(PLENTITY_EFFECT, pKey);
-	if(pPLEntity == NULL)
+if(pPLEntity == NULL)
 	{
 		NtlLogFilePrintArgs("LuaGlue_CreateEffect Function Error!!! - not exist effect key(%s)", pKey);
-		return INVALID_SERIAL_ID;
+return INVALID_SERIAL_ID;
 	}
 
 	GetLuaGlueStack()->SetPLEntity(pPLEntity); 
@@ -801,14 +801,14 @@ int LuaGlue_CreateEffect(lua_State *L)
 	if(!pPLEntity->IsAutoDelete())
 	{
 		RwBool bRet = GetLuaGlueStack()->AddActivePLEntity(pPLEntity);
-		if(!bRet)
+if(!bRet)
 		{
 			NtlLogFilePrintArgs("LuaGlue_CreateEffect Function Warning!!! - can't add effect key(%s)", pKey);
 		}
 	}
 
 	RwV3d vPos = pReferActor->GetPosition();
-	pPLEntity->SetPosition(&vPos); 
+pPLEntity->SetPosition(&vPos);
 
 	return 0;
 	*/
@@ -830,7 +830,7 @@ int LuaGlue_CreateSound(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : active actor를 설정하는 lua glue 함수.
+//  des: A lua glue function that sets the active actor.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : actor serial id
@@ -853,7 +853,7 @@ int LuaGlue_ActiveActor(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : active presentation entity를 설정하는 lua glue 함수.
+//  des: lua glue function that sets the active presentation entity.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : presentation entity serial id
@@ -865,9 +865,9 @@ int LuaGlue_ActiveObject(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : edit할 객체가 simulation actor로 설정한다
+//  des: Sets the object to be edited as a simulation actor.
 //  ------------------------------------------------------------------------
-//  paramater : 없슴
+//  parameter : none
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_ActiveActorEdit(lua_State *L)
@@ -878,9 +878,9 @@ int LuaGlue_ActiveActorEdit(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : edit할 객체가 presentation entity로 설정한다.
+//  des: Sets the object to be edited as a presentation entity.
 //  ------------------------------------------------------------------------
-//  paramater : 없슴
+//  parameter: none
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_ActiveObjectEdit(lua_State *L)
@@ -891,7 +891,7 @@ int LuaGlue_ActiveObjectEdit(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : edit할 active객체의 좌표를 설정한다.
+// des: Sets the coordinates of the active object to be edited.
 ////////////////////////////////////////////////////////////////////////////
 
 bool LuaGlue_PreTransformResearch(char *pString)
@@ -915,9 +915,9 @@ bool LuaGlue_PreTransformResearch(char *pString)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : edit할 active객체의 transform 시작을 설정한다.
+// des: Sets the start of the transform of the active object to be edited.
 //  ------------------------------------------------------------------------
-//  paramater : 없슴
+//  parameter : none
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_BeginTransform(lua_State *L)
@@ -928,10 +928,10 @@ int LuaGlue_BeginTransform(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : edit할 active객체의 transform을 끝났음을 알리고, 실제 transform을 
-//       적용한다. 
+// des: Notifies that the transform of the active object to be edited has been completed, and performs the actual transform. 
+//       Apply. 
 //  ------------------------------------------------------------------------
-//  paramater : 없슴
+//  parameter : none
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_EndTransform(lua_State *L)
@@ -942,11 +942,11 @@ int LuaGlue_EndTransform(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : edit할 active객체의 좌표를 설정한다.
+// des: Sets the coordinates of the active object to be edited.
 //  ------------------------------------------------------------------------
-//  paramater1 : offfset x(number)
-//  paramater2 : offfset y(number)
-//  paramater3 : offfset z(number)
+//  parameter1 : offset x(number)
+//  parameter2 : offset y(number)
+//  parameter3 : offset z(number)
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_SetPosition(lua_State *L)
@@ -969,12 +969,12 @@ int LuaGlue_SetPosition(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : edit할 active객체의 좌표를 설정한다.
+// des: Sets the coordinates of the active object to be edited.
 //  ------------------------------------------------------------------------
-//  paramater1 : bone name(string)
-//  paramater2 : offset x(number)
-//  paramater3 : offset y(number)
-//  paramater4 : offset z(number)
+//  parameter1 : bone name(string)
+//  parameter2 : offset x(number)
+//  parameter3 : offset y(number)
+//  parameter4 : offset z(number)
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_SetBonePosition(lua_State *L)
@@ -1027,11 +1027,11 @@ int LuaGlue_SetBonePosition(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : edit할 active객체의 설정된 좌표에 offset만큼 더한다.
+// des: Adds the offset to the set coordinates of the active object to be edited.
 //  ------------------------------------------------------------------------
-//  paramater1 : offset x(number)
-//  paramater2 : offset y(number)
-//  paramater3 : offset z(number)
+//  parameter1 : offset x(number)
+//  parameter2 : offset y(number)
+//  parameter3 : offset z(number)
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_AddPosition(lua_State *L)
@@ -1049,13 +1049,13 @@ int LuaGlue_AddPosition(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// lua : transform direction에 관련된 함수.
+// lua: Function related to transform direction.
 ////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////
-// des : edit할 active객체의 설정된 방향을 설정한다.(reference actor 방향 참조)
+// des: Sets the direction of the active object to be edited. (Refer to reference actor direction)
 //  ------------------------------------------------------------------------
-//  paramater1 : 없슴.
+//  parameter1 : None.
 ////////////////////////////////////////////////////////////////////////////
 int LuaGlue_SetDirection(lua_State *L)
 {
@@ -1072,17 +1072,17 @@ int LuaGlue_SetDirection(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// lua : transform scale에 관련된 함수.
+// lua: Function related to transform scale.
 ////////////////////////////////////////////////////////////////////////////
 
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : edit할 active객체의 scale을 설정한다.
+// des: Sets the scale of the active object to be edited.
 //  ------------------------------------------------------------------------
-//  paramater1 : scale x(number)
-//  paramater2 : scale y(number)
-//  paramater3 : scale z(number)
+//  parameter1 : scale x(number)
+//  parameter2 : scale y(number)
+//  parameter3 : scale z(number)
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_SetScale(lua_State *L)
@@ -1101,7 +1101,7 @@ int LuaGlue_SetScale(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// lua : attach에 관련된 함수.
+// lua: Function related to attach.
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_AttachWorld(lua_State *L)
@@ -1168,14 +1168,14 @@ int LuaGlue_AttachBone(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// lua : actor 정보와 관련된 함수.
+// lua: Function related to actor information.
 ////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////
-// des : serial에 해당하는 actor의 position을 구한다.
+// des: Find the position of the actor corresponding to serial.
 //  ------------------------------------------------------------------------
-//  paramater1 : actor serial id
-//  paramater2 : actor height offset rate
+//  parameter1 : actor serial id
+//  parameter2 : actor height offset rate
 ////////////////////////////////////////////////////////////////////////////
 int LuaGlue_GetActorPosition(lua_State *L)
 {
@@ -1211,11 +1211,11 @@ int LuaGlue_GetActorPosition(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : serial에 해당하는 actor의 front 방향의 position을 구한다.
+// des: Find the front direction position of the actor corresponding to serial.
 //  ------------------------------------------------------------------------
-//  paramater1 : actor serial id
-//  paramater2 : actor height offset rate
-//  paramater3 : front distance
+//  parameter1 : actor serial id
+//  parameter2 : actor height offset rate
+//  parameter3 : front distance
 ////////////////////////////////////////////////////////////////////////////
 int LuaGlue_GetActorFrontPosition(lua_State *L)
 {
@@ -1255,11 +1255,11 @@ int LuaGlue_GetActorFrontPosition(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : serial에 해당하는 actor의 front 방향의 position을 구한다.
+// des: Find the front direction position of the actor corresponding to serial.
 //  ------------------------------------------------------------------------
-//  paramater1 : actor serial id
-//  paramater2 : actor height offset rate
-//  paramater3 : back distance
+//  parameter1 : actor serial id
+//  parameter2 : actor height offset rate
+//  parameter3 : back distance
 ////////////////////////////////////////////////////////////////////////////
 int LuaGlue_GetActorBackPosition(lua_State *L)
 {
@@ -1298,11 +1298,11 @@ int LuaGlue_GetActorBackPosition(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : serial에 해당하는 actor의 left 방향의 position을 구한다.
+// des: Finds the left direction position of the actor corresponding to serial.
 //  ------------------------------------------------------------------------
-//  paramater1 : actor serial id
-//  paramater2 : actor height offset rate
-//  paramater3 : left distance
+//  parameter1 : actor serial id
+//  parameter2 : actor height offset rate
+//  parameter3 : left distance
 ////////////////////////////////////////////////////////////////////////////
 int LuaGlue_GetActorLeftPosition(lua_State *L)
 {
@@ -1345,11 +1345,11 @@ int LuaGlue_GetActorLeftPosition(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : serial에 해당하는 actor의 right 방향의 position을 구한다.
+// des: Find the position in the right direction of the actor corresponding to serial.
 //  ------------------------------------------------------------------------
-//  paramater1 : actor serial id
-//  paramater2 : actor height offset rate
-//  paramater3 : left distance
+//  parameter1 : actor serial id
+//  parameter2 : actor height offset rate
+//  parameter3 : left distance
 ////////////////////////////////////////////////////////////////////////////
 int LuaGlue_GetActorRightPosition(lua_State *L)
 {
@@ -1391,21 +1391,22 @@ int LuaGlue_GetActorRightPosition(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// lua : Logic : camera에 관련된 함수.
+// lua : Logic: Function related to camera.
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_CameraShake(lua_State *L)
 {
-//	CNtlSLEventGenerator::CameraShake();
+//	C ntl sl event generator::camera shake();
+
 
 	return NTL_LUA_GLUE_RESULT_NO;
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : camera shake factor 값을 변경한다.
+// des : Change the camera shake factor value.
 //  ------------------------------------------------------------------------
-//  paramater1 : shake weight value
-//  paramater1 : shake height value
+//  parameter1 : shake weight value
+//  parameter1 : shake height value
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_SetCameraShakeFactor(lua_State *L)
@@ -1419,7 +1420,7 @@ int LuaGlue_SetCameraShakeFactor(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : camera shake factor 값을 Reset 한다.
+// des : Reset the camera shake factor value.
 //  ------------------------------------------------------------------------
 ////////////////////////////////////////////////////////////////////////////
 
@@ -1432,9 +1433,9 @@ int LuaGlue_ResetCameraShakeFactor(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : camera fov를 설정한다.
+// des : Sets camera fov.
 //  ------------------------------------------------------------------------
-//  paramater1 : fov value
+//  parameter1 : fov value
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_SetCameraFov(lua_State *L)
@@ -1447,7 +1448,7 @@ int LuaGlue_SetCameraFov(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : camera direction node previous node에 attach 시키는 flag를 enable 한다.
+// des : camera direction node Enables the flag that attaches to the previous node.
 //  ------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////
@@ -1461,7 +1462,7 @@ int LuaGlue_CameraDirectChildBegin(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : camera direction node previous node에 attach 시키는 flag를 disable 한다.
+// des : Camera direction node Disables the flag that attaches to the previous node.
 //  ------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////
@@ -1488,12 +1489,12 @@ int LuaGlue_CameraDirectClear(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : soft direct node를 추가한다.
-//       지정된 actor의 위치를 구한 다음, actor의 위에 회전한 다음 거리를 계산한여, 
-//		 최종 camera 위치를 구한다.
+// des : Add soft direct node.
+//       Find the location of the specified actor, then rotate on top of the actor and calculate the distance. 
+//		 Find the final camera position.
 //  ------------------------------------------------------------------------
-//  paramater1 : actor serial id
-//  paramater2 : actor height offset
+//  parameter1 : actor serial id
+//  parameter2 : actor height offset
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -1517,15 +1518,15 @@ int LuaGlue_SetSoftCameraActorLookAt(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : soft direct node를 추가한다.
-//       지정된 actor의 위치를 구한 다음, actor의 위에 회전한 다음 거리를 계산한여, 
-//		 최종 camera 위치를 구한다.
+// des: Add soft direct node.
+//       Find the location of the specified actor, then rotate on top of the actor and calculate the distance. 
+//		 Find the final camera position.
 //  ------------------------------------------------------------------------
-//  paramater1 : actor serial id
-//  paramater2 : actor height offset
-//  paramater3 : actor 가 바라보는 방향에서 x 축으로 회전시킨다.
-//  paramater4 : actor 가 바라보는 방향에서 y 축으로 회전시킨다.
-//  paramater5 : actor 에서의 떨어진 distance
+//  parameter1 : actor serial id
+//  parameter2 : actor height offset
+//  paramater3 : Rotates the x-axis in the direction the actor is facing.
+//  paramater4 : Rotates the y-axis in the direction the actor is facing.
+//  parameter5 : distance from actor
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -1548,15 +1549,15 @@ int LuaGlue_AddSoftCameraActorDistNode(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : soft direct node를 추가한다.
-//       지정된 actor의 위치를 구한 다음, actor의 위에 회전한 다음 거리를 계산한여, 
-//		 최종 camera 위치를 구한다.
+// des : Add soft direct node.
+//       Find the location of the specified actor, then rotate on top of the actor and calculate the distance. 
+//		 Find the final camera position.
 //  ------------------------------------------------------------------------
-//  paramater1 : actor serial id
-//  paramater2 : actor height offset
-//  paramater3 : actor 가 바라보는 방향에서 x 축으로 회전시킨다.
-//  paramater4 : actor 가 바라보는 방향에서 y 축으로 회전시킨다.
-//  paramater5 : actor 에서의 떨어진 distance
+//  parameter1 : actor serial id
+//  parameter2 : actor height offset
+//  paramater3 : Rotates the x-axis in the direction the actor is facing.
+//  paramater4 : Rotates the y-axis in the direction the actor is facing.
+//  parameter5 : distance from actor
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -1576,13 +1577,14 @@ int LuaGlue_AddSoftCameraActorDynamicLookAtDistNode(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : soft direct node를 추가한다.
-//       카메라 x 축 회전
+// des : Add soft direct node.
+//       camera x axis rotation
 //  ------------------------------------------------------------------------
-//  paramater1 : last angle
-//  paramater2 : life time
+//  parameter1 : last angle
+//  parameter2 : life time
 //
 ////////////////////////////////////////////////////////////////////////////
+
 
 
 int LuaGlue_AddSoftCameraCurrentRotateX(lua_State *L)
@@ -1597,11 +1599,11 @@ int LuaGlue_AddSoftCameraCurrentRotateX(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : soft direct node를 추가한다.
-//       카메라 y 축 회전
+// des: Add soft direct node.
+//       camera y axis rotation
 //  ------------------------------------------------------------------------
-//  paramater1 : last angle
-//  paramater2 : life time
+//  parameter1 : last angle
+//  parameter2 : life time
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -1618,11 +1620,11 @@ int LuaGlue_AddSoftCameraCurrentRotateY(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : soft direct node를 추가한다.
-//       카메라 z 축 회전
+// des: Add soft direct node.
+//       camera z axis rotation
 //  ------------------------------------------------------------------------
-//  paramater1 : last angle
-//  paramater2 : life time
+//  parameter1 : last angle
+//  parameter2 : life time
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -1639,11 +1641,11 @@ int LuaGlue_AddSoftCameraCurrentRotateZ(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : soft direct node를 추가한다.
-//       fov 변화.
+// des : Add soft direct node.
+//       fov change.
 //  ------------------------------------------------------------------------
-//  paramater1 : last fov
-//  paramater2 : 보간 time
+//  parameter1 : lastfov
+//  parameter2 : interpolation time
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -1658,7 +1660,7 @@ int LuaGlue_AddSoftCameraCurrentFov(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : soft direct pause node를 추가한다.
+// des: Add soft direct pause node.
 //  ------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////
@@ -1674,13 +1676,13 @@ int LuaGlue_AddCameraPauseNode(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : camera 현재 위치에서 camera actor를 바라보면서 spline data를 적용한다.
-//		 spline data의 방향은 사용하지 않는다.
+// des: Camera Applies spline data while looking at the camera actor from the current location.
+//		 The direction of spline data is not used.
 //  ------------------------------------------------------------------------
-//  paramater1 : actor serial id
-//  paramater2 : actor height offset
-//  paramater3 : spline property key
-//  paramater4 : life time
+//  parameter1 : actor serial id
+//  parameter2 : actor height offset
+//  parameter3 : spline property key
+//  parameter4 : life time
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_AddSplineCurrentDynamicLookAtNode(lua_State *L)
@@ -1696,13 +1698,13 @@ int LuaGlue_AddSplineCurrentDynamicLookAtNode(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : Skill position actor의 현재 위치에서 look at actor를 바라보면서 spline data를 적용한다.
-//		 spline data의 방향은 사용하지 않는다.
+// des: Apply spline data while looking at the look at actor from the current position of the skill position actor.
+//		 The direction of spline data is not used.
 //  ------------------------------------------------------------------------
-//  paramater1 : position actor serial id
-//  paramater1 : look at actor serial id
-//  paramater1 : actor height offset
-//  paramater2 : spline property key
+//  parameter1 : position actor serial id
+//  parameter1 : look at actor serial id
+//  parameter1 : actor height offset
+//  parameter2 : spline property key
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_AddSkillSplineDynamicLookAtNode(lua_State *L)
@@ -1718,14 +1720,14 @@ int LuaGlue_AddSkillSplineDynamicLookAtNode(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : Skill position actor의 현재 위치에서 pos actor 와 look at actor의 center 위치를
-//       바라보면서 spline data를 적용한다.
-//		 spline data의 방향은 사용하지 않는다.
+// des: The center position of pos actor and look at actor from the current position of skill position actor.
+//       Apply spline data while looking at it.
+//		 The direction of spline data is not used.
 //  ------------------------------------------------------------------------
-//  paramater1 : position actor serial id
-//  paramater1 : look at actor serial id
-//  paramater1 : actor height offset
-//  paramater2 : spline property key
+//  parameter1 : position actor serial id
+//  parameter1 : look at actor serial id
+//  parameter1 : actor height offset
+//  parameter2 : spline property key
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_AddSkillSplineDynamicLookAtCenterNode(lua_State *L)
@@ -1773,13 +1775,13 @@ int LuaGlue_AddSkillSplineStaticPosDynamicLookAtNode(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : camera의 look at은 spline data에 의해 결정되고, 전혀 transform 시키지 않는다. 
+// des : The camera's look at is determined by spline data and is not transformed at all. 
 //		 
 //  ------------------------------------------------------------------------
-//  paramater1 : start position x
-//  paramater2 : start position y
-//  paramater3 : start position z
-//  paramater4 : direct property key name
+//  parameter1 : start position x
+//  parameter2 : start position y
+//  parameter3 : start position z
+//  parameter4 : direct property key name
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_AddSplineCameraSelfNode(lua_State *L)
@@ -1800,10 +1802,10 @@ int LuaGlue_AddSplineCameraSelfNode(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : camera의 look at은 spline data에 의해 결정되고, skill 공격 actor의 현재 좌표만 참조한다.
+// des: The camera's look at is determined by spline data and only refers to the current coordinates of the skill attack actor.
 //		 
 //  ------------------------------------------------------------------------
-//  paramater1 : spline name 
+//  parameter1 : spline name 
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_AddSkillAttackerSplineCameraSelfNode(lua_State *L)
@@ -1825,10 +1827,10 @@ int LuaGlue_AddSkillAttackerSplineCameraSelfNode(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : camera의 look at은 spline data에 의해 결정되고, skill target actor의 현재 좌표만 참조한다.
+// des: The camera's look at is determined by spline data and only refers to the current coordinates of the skill target actor.
 //		 
 //  ------------------------------------------------------------------------
-//  paramater1 : spline name 
+//  parameter1 : spline name 
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_AddSkillTargetSplineCameraSelfNode(lua_State *L)
@@ -1852,12 +1854,12 @@ int LuaGlue_AddSkillTargetSplineCameraSelfNode(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : camera의 look at은 spline data에 의해 결정되고, 
-//       node가 실행되는 시점에 actor의 좌표 및 방향을 참조한다.
+// des: The camera's look at is determined by spline data, 
+//       The actor's coordinates and direction are referenced at the time the node is executed.
 //		 
 //  ------------------------------------------------------------------------
-//  paramater1 : actor serial id
-//  paramater2 : spline name 
+//  parameter1 : actor serial id
+//  parameter2 : spline name 
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_AddSkillSplineActorRefSelfNode(lua_State *L)
@@ -1876,9 +1878,9 @@ int LuaGlue_AddSkillSplineActorRefSelfNode(lua_State *L)
 ////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////
-// des : serial에 해당하는 owner serial id를 구한다.
+// des: Obtains the owner serial ID corresponding to the serial.
 //  ------------------------------------------------------------------------
-//  paramater1 : serial id(number)
+//  parameter1 : serial id(number)
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_GetOwnerSerialId(lua_State *L)
@@ -1898,9 +1900,9 @@ int LuaGlue_GetOwnerSerialId(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : serial에 해당하는 target serial id를 구한다.
+// des: Obtains the target serial id corresponding to serial.
 //  ------------------------------------------------------------------------
-//  paramater1 : serial id(number)
+//  parameter1: serial id(number)
 ////////////////////////////////////////////////////////////////////////////
 int LuaGlue_GetActorType(lua_State *L)
 {
@@ -1919,9 +1921,9 @@ int LuaGlue_GetActorType(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : serial에 해당하는 actor가 avatar인가?
+// des: Is the actor corresponding to serial an avatar?
 //  ------------------------------------------------------------------------
-//  paramater1 : serial id(number)
+//  parameter1 : serial id(number)
 ////////////////////////////////////////////////////////////////////////////
 int LuaGlue_IsAvatarActor(lua_State *L)
 {
@@ -1943,11 +1945,11 @@ int LuaGlue_IsAvatarActor(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// lua : Logic => Skill camera control 속성에 관련된 함수.
+// lua: Logic => Function related to Skill camera control properties.
 ////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////
-// des : skill 공격자 serial id를 구한다.
+// des: skill Obtains the attacker's serial ID.
 // ------------------------------------------------------------------------
 ////////////////////////////////////////////////////////////////////////////
 
@@ -1960,7 +1962,7 @@ int LuaGlue_GetSkillAttackSerialId(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : skill 공격자 target id를 구한다.
+// des: skill Finds the attacker target ID.
 // ------------------------------------------------------------------------
 ////////////////////////////////////////////////////////////////////////////
 
@@ -1977,14 +1979,14 @@ int LuaGlue_GetSkillTargetSerialId(lua_State *L)
 ////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////
-// des : day and night control node를 추가한다.
-//       start value와 finish value를 같이 넣어준다.
+// des: Add day and night control node.
+//       Enter the start value and finish value together.
 // ------------------------------------------------------------------------
-// paramater1 : 처음 delay time.
-// paramater2 : duration time
-// paramater3 : start control value
-// paramater4 : finish control value
-// paramater5 : blend factor
+// parameter1 : initial delay time.
+// parameter2 : duration time
+// parameter3 : start control value
+// parameter4 : finish control value
+// parameter5 : blend factor
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_AddDNNode(lua_State *L)
@@ -2001,13 +2003,13 @@ int LuaGlue_AddDNNode(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : day and night control node를 추가한다.
-//       start value는 현재의 값으로 하고 finish value만 넣어준다.
+// des : Add day and night control node.
+//       Set the start value to the current value and enter only the finish value.
 // ------------------------------------------------------------------------
-// paramater1 : 처음 delay time.
-// paramater2 : duration time
-// paramater4 : finish control value
-// paramater5 : blend factor
+// parameter1 : initial delay time.
+// parameter2 : duration time
+// parameter4 : finish control value
+// parameter5 : blend factor
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_AddDNNodeCurrentStart(lua_State *L)
@@ -2023,7 +2025,7 @@ int LuaGlue_AddDNNodeCurrentStart(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : cinematic node 추가하기(begin)
+// des: Adding a cinematic node (begin)
 // ------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////
@@ -2039,7 +2041,7 @@ int LuaGlue_BeginCinematic(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : cinematic node 추가하기(end)
+// des: Adding a cinematic node (end)
 // ------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////
@@ -2053,7 +2055,7 @@ int LuaGlue_EndCinematic(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : cinematic begin layer 생성하기
+// des: Creating a cinematic begin layer
 // ------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////
@@ -2066,7 +2068,7 @@ int LuaGlue_BeignCinematicLayer(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : cinematic end layer 생성하기
+// des: Creating a cinematic end layer
 // ------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////
@@ -2079,7 +2081,7 @@ int LuaGlue_EndCinematicLayer(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : cinematic begin group 생성하기
+// des : Creating a cinematic begin group
 // ------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////
@@ -2092,7 +2094,7 @@ int LuaGlue_BeignCinematicGroup(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : cinematic begin group 생성하기
+// des : Creating a cinematic begin group
 // ------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////
@@ -2105,7 +2107,7 @@ int LuaGlue_EndCinematicGroup(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : cinematic node 병렬로 추가하기(begin)
+// des: Adding cinematic nodes in parallel (begin)
 // ------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////
@@ -2118,7 +2120,7 @@ int LuaGlue_BeginCinematicSibling(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : cinematic node 병렬로 추가하기(end)
+// des: Adding cinematic nodes in parallel (end)
 // ------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////
@@ -2132,7 +2134,7 @@ int LuaGlue_EndCinematicSibling(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : cinematic camera node sync를 시키지 않는다.
+// des: Do not enable cinematic camera node sync.
 // ------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////
@@ -2145,7 +2147,7 @@ int LuaGlue_BeginCinematicCameraAsync(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : cinematic camera node sync 시킨다.
+// des: Syncs the cinematic camera node.
 // ------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////
@@ -2158,7 +2160,7 @@ int LuaGlue_EndCinematicCameraAsync(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : cinematic camera node lock 시킨다.
+// des: Locks the cinematic camera node.
 // ------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////
@@ -2172,7 +2174,7 @@ int LuaGlue_BeginCinematicCameraLock(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : cinematic camera node unlock 시킨다.
+// des: Unlocks the cinematic camera node.
 // ------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////
@@ -2330,15 +2332,15 @@ int LuaGlue_CNFlash(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : monster을 생성하는 cinematic node를 추가한다.
-//       리턴값으로 simulation object의 serial을 넘겨준다.
+// des: Add a cinematic node that creates a monster.
+//       The serial of the simulation object is passed as a return value.
 // ------------------------------------------------------------------------
-// paramater1 : monster table id.
-// paramater2 : create position x
-// paramater3 : create position y
-// paramater4 : create position z
-// paramater5 : create angle y
-// paramater6 : delay time
+// parameter1 : monster table id.
+// parameter2 : create position x
+// parameter3 : create position y
+// parameter4 : create position z
+// parameter5 : create angle y
+// parameter6 : delay time
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_AddCNMobCreate(lua_State *L)
@@ -2362,15 +2364,15 @@ int LuaGlue_AddCNMobCreate(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : npc을 생성하는 cinematic node를 추가한다.
-//       리턴값으로 simulation object의 serial을 넘겨준다.
+// des: Adds a cinematic node that creates NPCs.
+//       The serial of the simulation object is passed as a return value.
 // ------------------------------------------------------------------------
-// paramater1 : monster table id.
-// paramater2 : create position x
-// paramater3 : create position y
-// paramater4 : create position z
-// paramater5 : create angle y
-// paramater6 : delay time
+// parameter1 : monster table id.
+// parameter2 : create position x
+// parameter3 : create position y
+// parameter4 : create position z
+// parameter5 : create angle y
+// parameter6 : delay time
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_AddCNNpcCreate(lua_State *L)
@@ -2394,10 +2396,10 @@ int LuaGlue_AddCNNpcCreate(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : simulation object를 삭제한다.
+// des: Delete the simulation object.
 // ------------------------------------------------------------------------
-// paramater1 : 삭제할 simulation object serial id.
-// paramater2 : delay time
+// paramater1 :  simulation object serial id to be deleted.
+// parameter2 : delay time
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_AddCNSobDelete(lua_State *L)
@@ -2411,13 +2413,13 @@ int LuaGlue_AddCNSobDelete(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : simulation object를 이동시킨다.
+// des : Moves the simulation object.
 // ------------------------------------------------------------------------
-// paramater1 : simulation object serial id.
-// paramater2 : 이동할 위치 x
-// paramater3 : 이동할 위치 y
-// paramater4 : 이동할 위치 z
-// paramater5 : dealy time
+// parameter1 : simulation object serial id.
+// paramater2 : position to move x
+// paramater3 : position y to move to
+// parameter4 : position z to move to
+// parameter5 : deal time
 ////////////////////////////////////////////////////////////////////////////
 
 int LuaGlue_AddCNSobMove(lua_State *L)
@@ -2497,7 +2499,7 @@ int LuaGlue_AddCNSobSplineWalkMove(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : simulation object를 spline line data에 따라 이동시킨다. (world height를 check 하지 않는다.)
+// des: Moves the simulation object according to spline line data. (Do not check world height.)
 // ------------------------------------------------------------------------
 // paramater1 : simulation object serial id.
 // paramater2 : spline data start position - x
@@ -2527,7 +2529,7 @@ int LuaGlue_AddCNSobSplineFlyMove(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : simulation object를 spline line data에 따라 이동시킨다.
+// des: Moves the simulation object according to spline line data.
 // ------------------------------------------------------------------------
 // paramater1 : simulation trigger object table id.
 // paramater2 : main state
@@ -2549,7 +2551,7 @@ int LuaGlue_AddCNSobTriggerObjectState(lua_State *L)
 
 
 ////////////////////////////////////////////////////////////////////////////
-// des : simulation object를 direct play
+// des : direct play simulation object
 // ------------------------------------------------------------------------
 // paramater1 : simulation object serial id.
 // paramater2 : table id
@@ -2569,7 +2571,7 @@ int LuaGlue_AddCNSobDirectPlay(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : simulation object를 anim play
+// des : simulation object to anim play
 // ------------------------------------------------------------------------
 // paramater1 : simulation object serial id.
 // paramater2 : animation id
@@ -2592,7 +2594,7 @@ int LuaGlue_AddCNSobAnimPlay(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : simulation object를 anim play
+// des : simulation object to anim play
 // ------------------------------------------------------------------------
 // paramater1 : simulation object serial id.
 // paramater2 : animation id
@@ -2620,7 +2622,7 @@ int LuaGlue_AddCNSobAnimPlayPositionSetting(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : simulation object를 position setting
+// des : Positioning Simulated Objects
 // ------------------------------------------------------------------------
 // paramater1 : simulation object serial id.
 // paramater2 : position x
@@ -2646,7 +2648,7 @@ int LuaGlue_AddCNSobPositionSetting(lua_State *L)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-// des : simulation object를 direct setting
+// des : simulation object direct setting
 // ------------------------------------------------------------------------
 // paramater1 : simulation object serial id.
 // paramater2 : direct x

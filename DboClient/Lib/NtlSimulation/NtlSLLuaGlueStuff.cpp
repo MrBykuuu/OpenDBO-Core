@@ -68,7 +68,7 @@ void CNtlLuaGlueStack::BeginTransform(void)
 
 void CNtlLuaGlueStack::EndTransform(void)
 {
-	// 방향 최종 결정.
+	//Final decision on direction.
 	RwV3d vRight, vUp;
 	RwV3dCrossProduct(&vRight, &m_TM.vDir, &CNtlPLGlobal::m_vYAxisV3);  
 	RwV3dCrossProduct(&vUp, &m_TM.vDir, &vRight);

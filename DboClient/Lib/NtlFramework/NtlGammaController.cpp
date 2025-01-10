@@ -4,11 +4,13 @@
 
 #include "NtlApplication.h"
 
-// SysEvent
+// Sys event
+
 #include "NtlSysEvent.h"
 #include "NtlCoreApi.h"
 
-// Gamma 근사치
+// Gamma approximation
+
 #define dNTL_GAMMA_OFFSET		0.01f
 
 CNtlGammaController::CNtlGammaController()
@@ -108,7 +110,7 @@ void CNtlGammaController::SetGamma( RwReal fGamma )
 		HWND				hWnd = CNtlApplication::GetInstance()->GetHWnd();
 		HDC					hDC	= GetDC( hWnd );
 
-		// 저장되어 있는 감마값이 새로 들어온 감마값과 똑같다면 근사값을 줘서 적용한다.
+		// If the stored gamma value is the same as the newly received gamma value, an approximate value is applied.
 		if( m_fGamma == fGamma )
 		{
 			if( m_bGammaOffset )
@@ -132,11 +134,11 @@ void CNtlGammaController::SetGamma( RwReal fGamma )
 }
 
 /**
-* \brief GAMMA RAMP값을 만든다.
-* \param pGammaRamp			unsigned short형의 256*3 크기의 메모리 공간
-* \param fGamma				감마값 ( 0 ~ 4 )
-* \param fOverBright		밝기
-* \param fContrast			대비
+* \brief Create the GAMMA RAMP value.
+* \param pGammaRamp			unsigned short memory space of size 256*3
+* \param fGamma				Gamma value (0 ~ 4)
+* \param fOverBright		brightness
+* \param fContrast			Contrast
 */
 void CNtlGammaController::GetGammaRamp( void* pGammapRamp, RwReal fGamma, RwReal fOverBright /*= 1.0f*/, RwReal fContrast /*= 1.0f*/ )
 {
@@ -170,12 +172,12 @@ void CNtlGammaController::HandleEvents(	RWS::CMsg &pMsg )
 
 			if( !(*pbFullScreen) )
 			{
-				// 바탕화면의 Gamma를 복원시킨다.
+				// Restore Gamma on the desktop.
 				RestoreBackGroundGamma();
 			}
 			else
 			{
-				// 어플리케이션의 감마로 복귀
+				// Return to application gamma
 				SetCurrentGamma();
 			}
 		}

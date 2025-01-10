@@ -1,12 +1,12 @@
-// precomp
+// Precomp
 #include "precomp_ntlsimulation.h"
 #include "InputActionMap.h"
 
-// core
+// Core
 #include "NtlSysEvent.h"
 #include "NtlMovement.h"
 
-// simulation
+// Simulation
 #include "NtlSLLogicDef.h"
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
@@ -15,7 +15,7 @@
 #include "NtlSLPacketGenerator.h"
 #include "NtlCameraManager.h"
 
-// framework
+// Framework
 #include "NtlApplication.h"
 
 CInputActionMap* CInputActionMap::m_pInstance = 0;
@@ -91,7 +91,7 @@ CInputActionMap::~CInputActionMap()
 }
 
 /**
-* \brief CInputActionMap의 인스턴스 리턴(싱글톤)
+* \brief Returning an instance of CInputActionMap (singleton)
 */
 CInputActionMap* CInputActionMap::GetInstance(void)
 {
@@ -118,15 +118,15 @@ RwBool CInputActionMap::Create(void)
 	m_hMouseDown = CInputHandler::GetInstance()->LinkMouseDown( this, &CInputActionMap::MouseDownHandler);
 	m_hMouseUp = CInputHandler::GetInstance()->LinkMouseUp( this, &CInputActionMap::MouseUpHandler);
 
-	// ActionMapManager 초기화
+	// Initialize ActionMapManager
 	InitDefaultActionMap();
 	m_ActionMapManager.ClearInputAction();
 	m_ActionMapManager.ClearReleaseAction();
 	m_ActionMapManager.ClearResult();
 
-	RegisterFlagMap();	// 상태회복을 위한 키를 등록
+	RegisterFlagMap();	// Register key for status recovery
 
-	// 어플리케이션에 핫키를 등록한다. print screen/sys rq 키를 이용하기 위해
+	// Register a hotkey in the application. To use the print screen/sys rq key
 	/*RegisterHotKey( CNtlApplication::GetInstance()->GetHWnd(), NTL_KEY_SNAPSHOT, 0, VK_SNAPSHOT );*/
 	
 	NTL_RETURN(TRUE);
@@ -188,11 +188,11 @@ void CInputActionMap::Destroy(void)
 
 /**
 * \brief Update
-* \param fElapsed	(RwReal) 이전 Update에서 경과된 시간
+* \param fElapsed (RwReal) Time elapsed from previous Update
 */
 void CInputActionMap::Update(RwReal fElapsed)
 {
-	// InputActionMap이 비활성화 상태라면 Update하지 않는다.
+	// If InputActionMap is disabled, it is not updated.
 	if(!m_bActive)
 		return;
 
@@ -216,7 +216,7 @@ void CInputActionMap::Update(RwReal fElapsed)
 
 /**
 * \brief HandleEvents
-* \param pMsg	(RWS::CMsg&) 이벤트의 메시지
+* \param pMsg (RWS::CMsg&) Message of the event
 */
 void CInputActionMap::HandleEvents(RWS::CMsg &pMsg)
 {
@@ -245,80 +245,80 @@ void CInputActionMap::HandleEvents(RWS::CMsg &pMsg)
 }
 
 /**
-* \brief 게임에 접속할 때 서버에서 내려주는 단축키 정보를 받는다.
+* \brief When connecting to a game, you receive shortcut key information provided by the server.
 */
 void CInputActionMap::HandleEventActionmapLoadInfo( RWS::CMsg& msg ) 
 {
 	SNtlEventActionMapLoadInfo* pPacket = (SNtlEventActionMapLoadInfo*)msg.pData;
 
-	// pPacket->byCount가 0 이면 서버에 저장되어 있는 단축키가 없다는 것이다.
-	// 클라이언트에 하드 코딩되어 있는 단축키로 셋팅해주고 서버에 적용한다.
+	// If pPacket->byCount is 0, there are no shortcut keys stored on the server.
+	// Set the shortcut key hard-coded on the client and apply it to the server.
 	if( 0 == pPacket->byCount )
 	{
 		m_ActionMapManager.ClearActionMap();
 
-		// ActionMap에 정의되어 있는 기본 액션맵으로 정의한다.
+		// Defined as the basic action map defined in ActionMap.
 		m_ActionMapManager.InitDefaultActionMap();
 
-		// 모든 Release Action에 관련된 사항이나 결과값 클리어
+		// Clear all Release Action-related matters and results
 		m_ActionMapManager.ClearResult();
 		m_ActionMapManager.ClearReleaseAction();
 		m_ActionMapManager.ClearInputAction();
 
-		// 서버에 저장 및 적용
+		// Save and apply to server
 		ApplyActionMap();
 
-		// 캡쳐( byCount 가 0 이라면 클라이언트의 단축키를 전적으로 신뢰 한다. )
+		// Capture (If byCount is 0, the client's shortcut keys are completely trusted.)
 		m_ActionMapManager.CaptureActionMap();
 	}
 	else
 	{
 		m_ActionMapManager.ClearActionMap();
 
-		// 서버에서 단축키를 받아서 액션맵을 구성
+		// Receive shortcut keys from the server and configure an action map
 		for( int i=0; i<pPacket->byCount; ++i )
 			m_ActionMapManager.SetCombineKey( pPacket->asData[i].wKey, pPacket->asData[i].wActionID );
 
-		// 캡쳐(서버에 있는 것)
+		// Capture (what's on the server)
 		m_ActionMapManager.CaptureActionMap();
 
-		// 기존에 선언되어 있던 디폴트 값으로 초기화
+		// Initialize to previously declared default values
 		m_ActionMapManager.InitDefaultActionMap();
 
-		// 디폴트 초기화 된 것에 다시 한번 Setting
+		// Setting once again to default initialization
 		for( int i=0; i<pPacket->byCount; ++i )
 			m_ActionMapManager.SetCombineKey( pPacket->asData[i].wKey, pPacket->asData[i].wActionID );
 
-		// 모든 Release Action에 관련된 사항이나 결과값 클리어
+		// Clear all Release Action-related matters and results
 		m_ActionMapManager.ClearResult();
 		m_ActionMapManager.ClearReleaseAction();
 		m_ActionMapManager.ClearInputAction();
 
-		// 다시 적용
+		// re-apply
 		ApplyActionMap();
 	}
 }
 
 /**
-* \breif 서버에 변경된 단축키 정보를 보내고 난 후의 결과
+*\breif Result after sending changed shortcut information to the server
 */
 void CInputActionMap::HandleEventsActionMapUpdateRes( RWS::CMsg& msg ) 
 {
 	SNtlEventActionMapUpdateRes* pPacket = (SNtlEventActionMapUpdateRes*)msg.pData;
 
-	// 성공
+	// success
 	if( pPacket->bSuccess )
 	{
-		// 서버에도 저장이 성공되었으면 완벽하게 적용을 하고
-		// 서버에 적용할 수 있는 상태로 만들어둔다.
+		// If saving to the server is successful, apply it perfectly.
+		// Leave it in a state where it can be applied to the server.
 		m_ActionMapManager.CaptureActionMap();
 		m_bAcceptServer = TRUE;
 	}
-	// 실패
+	// failure
 	else
 	{
-		// 실패하였다면 기존에 캡쳐된 단축키를 날려버리고
-		// 새롭게 기본 단축키를 구성하여 세팅한다.
+		// If it fails, discard the previously captured shortcut key.
+		// Configure and set new default shortcut keys.
 
 		m_ActionMapManager.InitDefaultActionMap();
 		m_bAcceptServer = TRUE;
@@ -352,13 +352,13 @@ void CInputActionMap::Reset(void)
 	}
 	SetFlagAction( ACTION_AVATAR_BLOCKING, FALSE );
 
-	// 퀵슬롯 회복
+	// Quick slot recovery
 	for( int i = ACTION_QUICK_1; i <= ACTION_QUICK_PLUS; ++i )
 	{
-		// 퀵슬롯이 눌러져 있었다면(?)
+		// If the quick slot was pressed(?)
 		if( IsDownAction( i ) )
 		{
-			// 0 ~ 11 ( 12개 )
+			// 0 ~ 11 (12)
 			m_pCallSkillQuickSlotUp->Call( i - ACTION_QUICK_1 );
 			SetFlagAction( i, FALSE );
 		}
@@ -405,12 +405,12 @@ void CInputActionMap::Reset(void)
 	//m_cActionMap.RemoveIgnoreKey();
 	m_mapUpdownRef.clear();
 
-	// ActionMap의 Up Down Reference를 클리어한다.
+	// Clear Up Down Reference of ActionMap.
 	m_ActionMapManager.ClearInputAction();
 }
 
 /**
-* \brief 이동에 관련된 자료만 Reset
+* \brief Reset only data related to movement
 */
 void CInputActionMap::ResetMoveFlags( void ) 
 {
@@ -439,12 +439,12 @@ void CInputActionMap::ResetMoveFlags( void )
 	m_sBackDashMap.fTime = 0.0f;
 	m_sBackDashMap.uiMoveFlags = NTL_MOVE_B;
 
-	// ActionMap의 Up Down Reference를 클리어한다.
+	// Clear Up Down Reference of ActionMap.
 	m_ActionMapManager.ClearInputAction();
 }
 
 /**
-* \brief Key가 Down된 것을 가지고 와서 액션을 찾아낸다.
+* \brief Bring the Key Down and find the action.
 */
 int CInputActionMap::KeyDownHandler(unsigned int pKeyData)
 {
@@ -452,7 +452,7 @@ int CInputActionMap::KeyDownHandler(unsigned int pKeyData)
 
 	unsigned short usAction = ACTION_INVALID;
 
-	// RepCount가 1일때만 실행한다는 것은 한번만 실행한다는 뜻이다.
+	// Executing only when RepCount is 1 means executing only once.
 	if(pData->uiRepCount == 1)
 	{
 		// TODO: The current tab key uses the hardcoded ACTION_TARGET_AUTO action ID
@@ -488,7 +488,7 @@ int CInputActionMap::KeyDownHandler(unsigned int pKeyData)
 
 		int nKey = pData->uiChar & 0xFF;
 
-		// KeyRef 증가
+		// Increase KeyRef
 		KeyReference( (unsigned char)(pData->uiChar & 0xFF) );
 
 		// Returns if the key is ignored.
@@ -513,7 +513,7 @@ int CInputActionMap::KeyDownHandler(unsigned int pKeyData)
 }
 
 /**
-* \brief 키가 Up 되었을 때 키를 가지고 와서 액션맵을 가지고 온다.
+* \brief When the key is up, the key is brought and the action map is brought.
 */
 int CInputActionMap::KeyUpHandler(unsigned int pKeyData)
 {
@@ -533,13 +533,13 @@ int CInputActionMap::KeyUpHandler(unsigned int pKeyData)
 		}
 	}
 
-	// VK_JUNJA는 ALT를 누른 상태에서 = 를 입력했을 경우 ( 하드코딩으로 치환해준다. )
+	// VK_JUNJA is replaced by hard coding when = is entered while pressing ALT.
 	if ((pData->uiChar & 0xFF) == VK_JUNJA)
 	{
 		pData->uiChar = NTL_KEY_EQUAL;
 	}
 
-	// KeyRef 감소 : 만약 Down 되었지 않는 키라면 무조건 리턴 ( Snap Shot 만은 예외로 한다. )
+	// Decrease KeyRef: If the key is not down, it is unconditionally returned (except for Snap Shot).
 	if( !KeyReference( (unsigned char)(pData->uiChar & 0xFF), FALSE ) && ( (unsigned char)(pData->uiChar & 0xFF) ) != VK_SNAPSHOT )
 		return 1;
 
@@ -557,7 +557,7 @@ int CInputActionMap::KeyUpHandler(unsigned int pKeyData)
 		// If there are no errors, it is the same as a normal INVALID.
 		if( byErr == SET_RESULT_INVALID )
 		{
-			// 만약 해제해줘야 하는 Action들의 List가 있다면 모두 해제해준다.
+			// If there is a list of actions that need to be released, release all of them.
 			if( !uiActionUpList.empty() )
 			{
 				for each( unsigned short uiActionUp in uiActionUpList )
@@ -572,7 +572,7 @@ int CInputActionMap::KeyUpHandler(unsigned int pKeyData)
 			return 1;
 		}
 
-		// 정상적으로 셋팅이 되었다면 InputActionMap의 상태를 회복시켜준다.
+		// If set properly, the state of InputActionMap is restored.
 		Reset();
 		
 		switch( byErr )
@@ -587,7 +587,7 @@ int CInputActionMap::KeyUpHandler(unsigned int pKeyData)
 				CNtlSLEventGenerator::ActionMapClientNotify( SNtlEventActionMapClientNotify::ACTIONMAP_NOTCOMBINE );
 			}
 			break;
-			case SET_RESULT_ALREADY_KEY:			// 가지고 있던 키를 해제함
+			case SET_RESULT_ALREADY_KEY:			// Release the key you had
 			{
 				CNtlSLEventGenerator::ActionMapClientNotify( SNtlEventActionMapClientNotify::ACTIONMAP_RELEASE, m_ActionMapManager.GetLastReleaseAction() );
 			}
@@ -622,7 +622,7 @@ int CInputActionMap::MouseDownHandler(unsigned int pMouseData)
 {
 
 	/*SMouseData *pData = reinterpret_cast<SMouseData*>(pMouseData);*/
-	//if(pData->chBtnType == MOUSE_RBTN)  //마우스 눌리는건 후에 구현
+	//if(pData->chBtnType == MOUSE_RBTN)  //Mouse press is implemented later
 	//m_bRBtnDown = TRUE;
 
 	//ConvertServerFlags(m_uiServerMoveFlags);
@@ -646,7 +646,7 @@ void CInputActionMap::SetActive(RwBool bActive)
 { 
 	m_bActive = bActive; 
 
-	// 비활성화라면 이동 Flag를 Reset
+	// If disabled, reset the movement flag
 	if( bActive == FALSE )
 		ResetMoveFlags();
 }
@@ -667,7 +667,7 @@ void CInputActionMap::SetInputMode( RwUInt32 nAction )
 	{
 		BYTE byErr = m_ActionMapManager.GetLastResult();
 
-		// 에러 검출
+		// Error detection
 		if( byErr == SET_RESULT_OK )
 			return;
 	}
@@ -689,10 +689,10 @@ void CInputActionMap::InitDefaultActionMap()
 }
 
 /**
-* \brief 액션맵의 적용
+* \brief Application of action map
 *
-* 자료구조인 CActionMap에서 변경된 점을 체크하고 그것을 기록하여
-* 서버로 패킷을 전송한다.
+*Check changes in the data structure CActionMap and record them.
+*Send packets to the server.
 */
 RwBool CInputActionMap::ApplyActionMap()
 {
@@ -703,8 +703,8 @@ RwBool CInputActionMap::ApplyActionMap()
 	BYTE byCount = 0;
 	if( m_ActionMapManager.GetUpdateData( pData , byCount ) )
 	{
-		// 바뀐 점이 있다면 패킷을 보내고 Result코드가 변경점이 적용되기 전까지 서버에 적용을 할 수 없는
-		// 모드로 셋팅한다.
+		// If something has changed, the packet cannot be sent and the Result code cannot be applied to the server until the change is applied.
+		// Set to mode.
 		API_GetSLPacketGenerator()->SendCharKeyUpdateReq( pData, byCount );
 
 		m_bAcceptServer = FALSE;
@@ -722,21 +722,21 @@ void CInputActionMap::CancleActionMap()
 }
 
 /**
-* \brief 무시될 키를 등록한다.
-* \param byKey		(RwUInt8) 키의 VK_CODE
-* \param nRefCount	(int) 무시될 횟수, KeyUpHandler에서 카운트를 체크한다.
-* \return 성공여부
+* \brief Registers keys to be ignored.
+* \param byKey (RwUInt8) VK_CODE of key
+* \param nRefCount (int) Number of times to be ignored, check the count in KeyUpHandler.
+* \return Success or not
 */
 RwBool CInputActionMap::RegisterIgnoreKey( RwUInt8 byKey, int nRefCount ) 
 {
 	IGNOREMAP::iterator it = m_mapIgnore.find( byKey );
-	// 이미 존재함
+	// already exists
 	if( it != m_mapIgnore.end() )
 	{
 		return FALSE;
 	}
 
-	// 존재하지 않는다면 추가한다.
+	// If it does not exist, add it.
 	m_mapIgnore[byKey] = (RwUInt8)nRefCount;
 	
 	return TRUE;
@@ -746,13 +746,13 @@ RwBool CInputActionMap::RemoveIgnoreKey( RwUInt8 byKey )
 {
 	IGNOREMAP::iterator it = m_mapIgnore.find( byKey );
 
-	// 존재하지 않음
+	// doesn't exist
 	if( it == m_mapIgnore.end() )
 	{
 		return FALSE;
 	}
 
-	// 존재하면 삭제
+	// Delete if exists
 	m_mapIgnore.erase( it );
 
 	return TRUE;
@@ -762,23 +762,23 @@ RwBool CInputActionMap::IsIgnoreKey( RwUInt8 byKey, RwBool bRef /*= FALSE */ )
 {
 	IGNOREMAP::iterator it = m_mapIgnore.find( byKey );
 
-	// 무시되는 키가 아님.
+	// Not an ignored key.
 	if( it == m_mapIgnore.end() )
 		return FALSE;
 	
-	// BYTE값이 INVALID라면 REF를 감소하지 않고 무시
+	// If the BYTE value is INVALID, REF is ignored rather than decremented.
 	if( it->second == 0xFF )
 		return TRUE;
 
-	// Ref Count 감소
+	// Decrease Ref Count
 	if( bRef )
 		(*it).second--;
 
-	// 0 보다 작거나 같으면 삭제
+	// Delete if less than or equal to 0
 	if( (*it).second <= 0 )
 		m_mapIgnore.erase( it );
 
-	// 무시하라고 알려줌
+	// Tell me to ignore it
 	return TRUE;
 }
 
@@ -932,7 +932,7 @@ void CInputActionMap::HitTestUpDbClickDashMap(SInputDashMap& sDashMap)
 
 void CInputActionMap::CallDashMove(RwUInt32 uiServerDashMoveFlags)
 {
-	// dash 보낸다(0.1 초 안에 또 다시 누르면). 
+	// Send a dash (press again within 0.1 seconds). 
 	if(!m_bActive || !m_pCallKeyboardDashMove)
 		return;
 
@@ -940,12 +940,12 @@ void CInputActionMap::CallDashMove(RwUInt32 uiServerDashMoveFlags)
 }
 
 /**
-* \ brief Handler according to move action
+*\ brief Handler according to move action
 *
-* When the key is pressed, the bit of the key is set to the current movement, and the
-It converts to * flag.
+*When the key is pressed, the bit of the key is set to the current movement, and the
+It converts to *flag.
 *
-* \ param iAction (unsigned int) Action ID
+*\ param iAction (unsigned int) Action ID
 */
 void CInputActionMap::ActionDownMoveHandler( RwUInt32 uiAction ) 
 {
@@ -965,7 +965,7 @@ void CInputActionMap::ActionDownMoveHandler( RwUInt32 uiAction )
 		m_uiKey2MoveValidFlags = m_uiMoveFlags;
 	}
 
-	// ACTION에 따른 행동 정의
+	// ACTION DEFINITIONS
 	switch( uiAction )
 	{
 	case ACTION_AVATAR_FORWARD:
@@ -1011,10 +1011,10 @@ void CInputActionMap::ActionDownMoveHandler( RwUInt32 uiAction )
 }
 
 /**
-* \brief 대쉬 이동을 체크한다.
+* \brief Check dash movement.
 *
-* 현재 액션에 맞는 대쉬의 발동을 확인하여 조건이 맞으면 대쉬를 실행한다.
-* \param iAction (unsigned int)액션ID
+*Check the activation of the dash that matches the current action and execute the dash if the conditions are met.
+* \param iAction (unsigned int)ActionID
 */
 void CInputActionMap::ActionDownDashMoveHandler( RwUInt32 uiAction ) 
 {
@@ -1055,7 +1055,7 @@ void CInputActionMap::ActionDownBehaviorHandler( RwUInt32 uiAction )
 		}
 		break;
 	}
-	case ACTION_AVATAR_JUMP:		// jump
+	case ACTION_AVATAR_JUMP:		// Jump
 		{
 			if( m_pCallJump && IsDownAction( ACTION_AVATAR_JUMP ) == FALSE )
 			{
@@ -1064,13 +1064,13 @@ void CInputActionMap::ActionDownBehaviorHandler( RwUInt32 uiAction )
 			}
 			break;
 		}
-	case ACTION_AVATAR_LOOTING:		// 루팅
+	case ACTION_AVATAR_LOOTING:		// Looting
 		{
 			if( m_pCallLooting )
 				m_pCallLooting->Call();
 			break;
 		}
-	case ACTION_AVATAR_CHARGE:		// 기 모으기
+	case ACTION_AVATAR_CHARGE:		// Gathering Ki
 		{
 			if( m_pCallCharging && IsDownAction( ACTION_AVATAR_CHARGE ) == FALSE  )
 			{
@@ -1092,11 +1092,11 @@ void CInputActionMap::ActionDownBehaviorHandler( RwUInt32 uiAction )
 }
 
 /**
-* \brief 키를 눌렀을 때 처리되는 GUI 액션들
+* \brief GUI actions processed when key is pressed
 *
-* 키를 누른 상태에서 발생할 수 있는 GUI액션들을 검사하여 실행하고 
+*Check and execute GUI actions that can occur while pressing a key 
 *
-* \param iAction (unsigned int)액션ID
+* \param iAction (unsigned int)ActionID
 */
 void CInputActionMap::ActionDownGuiHandler( RwUInt32 uiAction ) 
 {
@@ -1105,14 +1105,14 @@ void CInputActionMap::ActionDownGuiHandler( RwUInt32 uiAction )
 
 	switch( uiAction )
 	{
-	case ACTION_TARGET_SELF:		// 자기 자신 선택
+	case ACTION_TARGET_SELF:		// choose yourself
 		{
 			if( m_pCallAvatarSelect )
 				m_pCallAvatarSelect->Call();
 			break;
 		}
 
-	case ACTION_QUICK_1:			// 퀵슬롯
+	case ACTION_QUICK_1:			// quick slot
 		{
 			if( m_pCallSkillQuickSlotDown && IsDownAction( ACTION_QUICK_1 ) == FALSE )
 			{
@@ -1221,7 +1221,7 @@ void CInputActionMap::ActionDownGuiHandler( RwUInt32 uiAction )
 			break;
 		}
 
-		// 확장 1번
+		// Extension No. 1
 	case ACTION_QUICK_1_EX:
 		{
 			if( m_pCallSkillQuickSlotExDown )
@@ -1331,7 +1331,7 @@ void CInputActionMap::ActionDownGuiHandler( RwUInt32 uiAction )
 			break;
 		}
 
-		// 확장 2번
+		// expansion number 2
 	case ACTION_QUICK_1_EX2:
 		{
 			if( m_pCallSkillQuickSlotEx2Down )
@@ -1441,28 +1441,28 @@ void CInputActionMap::ActionDownGuiHandler( RwUInt32 uiAction )
 			break;
 		}
 
-	case ACTION_TARGET_1STPARTY:		// 첫번째 파티원 선택
+	case ACTION_TARGET_1STPARTY:		// Select your first party member
 		{
 			if( m_pCallPartySelect )
 				m_pCallPartySelect->Call( 0 );
 
 			break;
 		}
-	case ACTION_TARGET_2NDPARTY:		//  두번째 파티원 선택
+	case ACTION_TARGET_2NDPARTY:		//  Select a second party member
 		{
 			if( m_pCallPartySelect )
 				m_pCallPartySelect->Call( 1 );
 
 			break;
 		}
-	case ACTION_TARGET_3RDPARTY:		// 세번째
+	case ACTION_TARGET_3RDPARTY:		// third
 		{
 			if( m_pCallPartySelect )
 				m_pCallPartySelect->Call( 2 );
 
 			break;
 		}
-	case ACTION_TARGET_4THPARTY:		// 네번째
+	case ACTION_TARGET_4THPARTY:		// fourth
 		{
 			if( m_pCallPartySelect )
 				m_pCallPartySelect->Call( 3 );
@@ -1482,17 +1482,17 @@ void CInputActionMap::ActionDownGuiHandler( RwUInt32 uiAction )
 }
 
 /**
-* \brief 키업에 따른 이동액션 핸들러
+* \brief Movement action handler according to keyup
 *
-* 키 업에 따라 발생하는 이동 액션을 처리한다.
+*Handles movement actions that occur according to key up.
 *
-* \param iAction (unsigned int)액션ID
+* \param iAction (unsigned int)ActionID
 */
 void CInputActionMap::ActionUpMoveHandler( RwUInt32 uiAction ) 
 {
 	switch( uiAction )
 	{
-		case ACTION_AVATAR_FORWARD:	// 전진
+		case ACTION_AVATAR_FORWARD:	// Forward
 		{
 			m_uiMoveFlags &= (~NTL_BIT_FRONT_MOVE);
 
@@ -1510,7 +1510,7 @@ void CInputActionMap::ActionUpMoveHandler( RwUInt32 uiAction )
 
 			break;
 		}
-		case ACTION_AVATAR_LEFTTURN: // 좌회전
+		case ACTION_AVATAR_LEFTTURN: // left
 		{
 			m_uiMoveFlags &= (~NTL_BIT_TURN_LEFT_MOVE);
 
@@ -1524,7 +1524,8 @@ void CInputActionMap::ActionUpMoveHandler( RwUInt32 uiAction )
 
 			break;
 		}
-		case ACTION_AVATAR_BACKWARD: // 후진
+		case ACTION_AVATAR_BACKWARD: // Baackward
+
 		{
 			m_uiMoveFlags &= (~NTL_BIT_BACK_MOVE);
 
@@ -1537,7 +1538,7 @@ void CInputActionMap::ActionUpMoveHandler( RwUInt32 uiAction )
 				m_pCallKeyboardMove->Call(m_uiServerMoveFlags);
 		}
 		break;
-		case ACTION_AVATAR_RIGHTTURN: // 우회전
+		case ACTION_AVATAR_RIGHTTURN: // right
 		{
 			m_uiMoveFlags &= (~NTL_BIT_TURN_RIGHT_MOVE);
 
@@ -1583,11 +1584,11 @@ void CInputActionMap::ActionUpMoveHandler( RwUInt32 uiAction )
 }
 
 /**
-* \brief 키업에 따른 이동 액션의 대쉬 핸들러
+* \brief Dash handler for movement action based on keyup
 *
-* 키업에 따른 이동 액션에 대쉬를 처리해야 하는 부분인지 확인하고 실행한다.
+*Check and execute whether the dash is required for the movement action following key-up.
 *
-* \param iAction (unsigned int)액션ID
+* \param iAction (unsigned int)ActionID
 */
 void CInputActionMap::ActionUpDashMoveHandler( RwUInt32 uiAction ) 
 {
@@ -1635,13 +1636,13 @@ void CInputActionMap::ActionUpBehaviorHandler( RwUInt32 uiAction )
 
 			break;
 		}
-	case ACTION_TARGET_AUTO:			// 가까운 적 선택
+	case ACTION_TARGET_AUTO:			// Select a nearby enemy
 		{
 			if( m_pCallAutoTarget )
 				m_pCallAutoTarget->Call();
 			break;
 		}
-	case ACTION_TARGET_AUTOATK:			// 자동 공격
+	case ACTION_TARGET_AUTOATK:			// auto attack
 		{
 			if( m_pCallAutoAttack )
 				m_pCallAutoAttack->Call();
@@ -1662,7 +1663,7 @@ void CInputActionMap::ActionUpBehaviorHandler( RwUInt32 uiAction )
 			}
 			break;
 		}
-	case ACTION_AVATAR_JUMP:		// 점프 Flag 회복
+	case ACTION_AVATAR_JUMP:		// Jump Flag Recovery
 		{
 			if( m_pCallJump )
 			{
@@ -1773,9 +1774,9 @@ void CInputActionMap::ActionUpBehaviorHandler( RwUInt32 uiAction )
 }
 
 /**
-* \brief 키업에 따른 GUI 액션의 핸들러
+* \brief Handler for GUI actions based on keyup
 *
-* \param iAction (unsigned int)액션ID
+* \param iAction (unsigned int)ActionID
 */
 void CInputActionMap::ActionUpGuiHandler( RwUInt32 uiAction ) 
 {
@@ -1899,7 +1900,7 @@ void CInputActionMap::ActionUpGuiHandler( RwUInt32 uiAction )
 			break;
 		}
 
-		// 확장 1번
+		// Extension No. 1
 	case ACTION_QUICK_1_EX:
 		{
 			if( m_pCallSkillQuickSlotExUp )
@@ -2009,7 +2010,7 @@ void CInputActionMap::ActionUpGuiHandler( RwUInt32 uiAction )
 			break;
 		}
 
-	// 확장 2번
+	// expansion number 2
 	case ACTION_QUICK_1_EX2:
 		{
 			if( m_pCallSkillQuickSlotEx2Up )
@@ -2147,7 +2148,7 @@ void CInputActionMap::ActionUpGuiHandler( RwUInt32 uiAction )
 				m_pCallChatPageChange->Call( 1 );
 		}
 		break;
-	case ACTION_GLOBAL_SNAPSHOT:		// 스크린 캡쳐 기능
+	case ACTION_GLOBAL_SNAPSHOT:		// Screen capture function
 		{
 			GetNtlGameCameraManager()->SetCaptureScreenShot();
 			break;
@@ -2156,7 +2157,7 @@ void CInputActionMap::ActionUpGuiHandler( RwUInt32 uiAction )
 		break;
 	}
 
-	// 다이얼로그 액션 처리
+	// Dialog action processing
 	if( m_pCallDialogAction )
 		m_pCallDialogAction->Call( uiAction );
 }
@@ -2166,11 +2167,11 @@ void CInputActionMap::ActionUpGuiHandler( RwUInt32 uiAction )
 */
 void CInputActionMap::RegisterFlagMap() 
 {
-	m_mapFlag[ACTION_AVATAR_CHARGE] = FALSE;		// 기 모으기
-	m_mapFlag[ACTION_AVATAR_BLOCKING] = FALSE;		// 블록킹
+	m_mapFlag[ACTION_AVATAR_CHARGE] = FALSE;		// collecting Ki
+	m_mapFlag[ACTION_AVATAR_BLOCKING] = FALSE;		// blocking
 	m_mapFlag[ACTION_AVATAR_SITDOWN] = FALSE;		// sit/stand up & fly down
-	m_mapFlag[ACTION_AVATAR_JUMP] = FALSE;			// 점프
-	m_mapFlag[ACTION_QUICK_1] = FALSE;				// 퀵슬롯 단축키들
+	m_mapFlag[ACTION_AVATAR_JUMP] = FALSE;			// jump
+	m_mapFlag[ACTION_QUICK_1] = FALSE;				// Quick Slot Shortcuts
 	m_mapFlag[ACTION_QUICK_2] = FALSE;
 	m_mapFlag[ACTION_QUICK_3] = FALSE;
 	m_mapFlag[ACTION_QUICK_4] = FALSE;
@@ -2209,9 +2210,9 @@ void CInputActionMap::RegisterFlagMap()
 }
 
 /**
-* \brief 현재 액션의 상태를 가지고 온다.
-* \param iAction	액션
-* \return 액션의 상태 ( 없으면 FALSE )
+* \brief Brings the status of the current action.
+* \param iAction action
+* \return the status of the action (FALSE if not present)
 */
 RwBool CInputActionMap::IsDownAction( RwUInt32 uiAction ) 
 {
@@ -2225,10 +2226,10 @@ RwBool CInputActionMap::IsDownAction( RwUInt32 uiAction )
 }
 
 /**
-* \brief 액션의 플래그를 지정한다.
-* \param iAction	액션의 NUMBER
-* \param bDown		다운의 상태
-* \return 성공여부
+* \brief Specifies the flag of the action.
+* \param iAction NUMBER of actions
+* \param bDown Status of down
+* \return Success or not
 */
 RwBool CInputActionMap::SetFlagAction( RwUInt32 uiAction, RwBool bDown ) 
 {
@@ -2411,25 +2412,25 @@ void CInputActionMap::UnLinkChatPageChane( void )
 }
 
 /**
-* \brief 키의 Up/Down 횟수를 기록한다.
-* \param byChar		(RwUInt8) 키의 데이터
-* \param bDown		(RwBool) 키의 Up/Down 여부
-* \return 키가 이미 맵에 존재해서 Ref 증/감이 일어났을 경우 TRUE
+* \brief Records the number of Up/Down keys.
+* \param byChar (RwUInt8) Data for key
+* \param bDown (RwBool) Whether the key is Up/Down
+* \return TRUE if Ref increase/decrease occurs because the key already exists in the map.
 */
 RwBool CInputActionMap::KeyReference( RwUInt8 byChar, RwBool bDown /* = TRUE */)
 {
-	// 이미 키가 존재할 경우
+	// If the key already exists
 	UPDOWNREF::iterator it = m_mapUpdownRef.find( byChar );
 	if( it != m_mapUpdownRef.end() )
 	{
-		// Ref 증가
+		// Ref increase
 		if( bDown )
 		{
 			(*it).second++;
 		}
 		else
 		{
-			// Ref 감소
+			// Decrease Ref
 			(*it).second--;
 			if( (*it).second <= 0 )
 				m_mapUpdownRef.erase( it );
@@ -2437,7 +2438,7 @@ RwBool CInputActionMap::KeyReference( RwUInt8 byChar, RwBool bDown /* = TRUE */)
 
 		return TRUE;
 	}
-	// 키가 존재하지 않을 경우
+	// If the key does not exist
 	else
 	{
 		if( bDown )

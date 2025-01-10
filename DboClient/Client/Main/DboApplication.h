@@ -55,7 +55,7 @@ protected:
 
 protected:
 
-	void    SetErrorReport();                       ///< Error Report(Bug Trap)관련 설정을 한다.
+	void    SetErrorReport();                       ///< Make settings related to Error Report (Bug Trap).
 
 	RwBool	CreateSubSystem(RwUInt32 iWidth, RwUInt32 iHeight, RwBool zBuffer);
 	LRESULT	PreTranslateMessage(HWND window, UINT message, WPARAM wParam, LPARAM lParam);
@@ -68,7 +68,7 @@ protected:
 	void	DisplayFps();
 	RwBool	AttachPlugin();
 	
-	virtual bool RegisterMainWindowClass( HANDLE processInstance );		///< 윈도우 등록 함수를 오버라이딩 한다.
+	virtual bool RegisterMainWindowClass( HANDLE processInstance );		///< Override the window registration function.
 	virtual void SetGammaRamp( RwReal fGamma );
 
 	virtual RwBool	CanExitApp( void );

@@ -1,33 +1,33 @@
 /******************************************************************************
-* File			: ObjectClickGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2007. 11. 14
-* Abstract		: 
+*File			: ObjectClickGui.h
+*Author		    : Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2007. 11. 14
+*Abstract		: 
 *****************************************************************************
-* Desc			: 트리거 오브젝트를 클릭했을 때의 이벤트를 보여준다
+*Desc			: Shows the event when the trigger object is clicked
 *****************************************************************************/
 
 #pragma once
 
 #include <list>
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// share
+// Share
 #include "NtlTimeQuest.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// dbo
+// Dbo
 #include "SurfaceGui.h"
 
 class CObjectClickGui : public CNtlPLGui, public RWS::CEventHandler
@@ -40,7 +40,7 @@ public:
 	VOID		Update(RwReal fElapsed);
 	VOID		Destroy();
 
-	RwInt32		SwitchDialog(bool bOpen);			///< DialogManager에서의 Open/Close
+	RwInt32		SwitchDialog(bool bOpen);			///< Open/Close in DialogManager
 
 protected:
 	CObjectClickGui() {}
@@ -55,8 +55,8 @@ protected:
 
 	gui::CRadarEffect	m_TimeEffect;
 
-	CSurfaceGui			m_srfNeedle;				///< 바늘 그림
-	CSurfaceGui			m_srfReflectedLight;		///< 반사광	
+	CSurfaceGui			m_srfNeedle;				///< Needle picture
+	CSurfaceGui			m_srfReflectedLight;		///< Reflected light	
 
 	RwReal				m_fLastTime;
 	RwReal				m_fRemainTime;

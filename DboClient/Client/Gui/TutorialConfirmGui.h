@@ -1,22 +1,22 @@
 /******************************************************************************
-* File			: TutorialGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 5. 11
-* Abstract		: 
+*File			: TutorialGui.h
+*Author		    : Hong SungBock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2008. 5. 11
+*Abstract		: 
 *****************************************************************************
-* Desc			: 튜토리얼중 유저가 목표를 달성했을 때 나온다
+*Desc			: Appears when the user achieves the goal during the tutorial.
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
 

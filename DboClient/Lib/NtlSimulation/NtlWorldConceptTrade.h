@@ -4,7 +4,7 @@
 
 /**
  * \ingroup NtlSimulation
- * \brief 개인 Trade시의 제어 클래스 (현재는 아무것도 제어하지 않는다)
+ * \brief Control class for private trades (currently controls nothing)
  * \date 2007-06-14
  * \author agebreak
  */

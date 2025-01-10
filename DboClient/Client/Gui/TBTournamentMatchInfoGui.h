@@ -40,9 +40,9 @@ public:
 
 	RwInt32 SwitchDialog( bool bOpen );
 
-	VOID	SetIndividualData( sBUDOKAI_TOURNAMENT_INDIVIDUAL_ENTRY_DATA* pData, RwUInt16 wTeamType );	// pData = NULL 이면 그냥 클리어.
+	VOID	SetIndividualData( sBUDOKAI_TOURNAMENT_INDIVIDUAL_ENTRY_DATA* pData, RwUInt16 wTeamType );	// If pData = NULL, just clear.
 	VOID	SetTeamData( sBUDOKAI_TOURNAMENT_TEAM_ENTRY_DATA* pData, RwUInt16 wTeamType );	
-	VOID	SetMatchData( RwUInt8 byDepth, RwUInt8 byIndex, RwUInt8 byLeftScore, RwUInt8 byRightScore );// Score = INVALID_BYTE 아예 표시 안함.
+	VOID	SetMatchData( RwUInt8 byDepth, RwUInt8 byIndex, RwUInt8 byLeftScore, RwUInt8 byRightScore );// Score = INVALID_BYTE Do not display at all.
 
 	//! Attibutes
 

@@ -2,7 +2,7 @@
 *
 * File			: MascotGui.h
 * Author		: Alex
-* Copyright	: (주)NTL
+* Copyright	    : NTL Co., Ltd.
 * Date			: 2021. 5. 16
 * Abstract		: DBO Mascot Summon/View Status gui.
 *****************************************************************************

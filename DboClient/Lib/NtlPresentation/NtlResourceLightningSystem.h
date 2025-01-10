@@ -2,7 +2,7 @@
 //	File		:	NtlResourceLightningSystem.h
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -13,7 +13,7 @@
 
 /**
  * \ingroup NtlPresentation
- * \brief Lighting을 생성하는 리소스 클래스
+ * \brief Resource class that generates Lighting
  * \date 2006-08-11
  * \author agebreak
  */

@@ -1,10 +1,10 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSLDojo.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSobAvatar.h"
@@ -223,13 +223,13 @@ void CNtlDojo::HandleEvents( RWS::CMsg &msg)
 
 				sDOJO_SCRAMBLE_POINT* pDOJO_SCRAMBLE_POINT = (sDOJO_SCRAMBLE_POINT*)pEvent->pExData;
 
-				// 공격팀 정보
+				// Attack Team Information
 				m_pScrambleTeam[SCRAMBLE_TEAM_OFFENCE]->byPlayerCount	= pDOJO_SCRAMBLE_POINT->byAttCount;
 				m_pScrambleTeam[SCRAMBLE_TEAM_OFFENCE]->bySealCount		= pDOJO_SCRAMBLE_POINT->byAttSealCount;
 				m_pScrambleTeam[SCRAMBLE_TEAM_OFFENCE]->uiScore			= pDOJO_SCRAMBLE_POINT->dwAttCharge;
 				m_pScrambleTeam[SCRAMBLE_TEAM_OFFENCE]->uiTotalPoint	= pDOJO_SCRAMBLE_POINT->dwAttPoint;
 
-				// 방어팀 정보
+				// Defense team information
 				m_pScrambleTeam[SCRAMBLE_TEAM_DEFENCE]->byPlayerCount	= pDOJO_SCRAMBLE_POINT->byDefCount;
 				m_pScrambleTeam[SCRAMBLE_TEAM_DEFENCE]->bySealCount		= pDOJO_SCRAMBLE_POINT->byDefSealCount;
 				m_pScrambleTeam[SCRAMBLE_TEAM_DEFENCE]->uiScore			= pDOJO_SCRAMBLE_POINT->dwDefCharge;
@@ -348,7 +348,7 @@ void CNtlDojo::HandleEvents( RWS::CMsg &msg)
 		{
 			ClearScrambleInfo();
 
-			// 쟁탈전에 이겨서 쟁탈전이 끝나도 도장에 남아있는 유파원들을 위해서
+			// For the members of the school who won the contest and remain in the dojo even after the contest is over.
 			if( GetNtlWorldConcept()->IsActivePlayConcept(WORLD_PLAY_DOJO_SCRAMBLE) )
 				GetNtlWorldConcept()->DeleteGradeWorldPlayConcept(WORLD_CONCEPT_FIRST_GRADE);
 		}
@@ -380,7 +380,7 @@ void CNtlDojo::HandleEvents( RWS::CMsg &msg)
 		CNtlGuild* pGuild = pAvatar->GetGuild();		
 
 
-		// 도장 쟁탈전을 진행하는 해당 도장의 테이블 인덱스
+		//Table index of the dojo in which the dojo competition is taking place
 		m_ScrambleInfo.uiScrambleDojoTableIndex = pEvent->uiDojoTableIndex;
 
 		if( pGuild->GetGuildID() == pEvent->uiOffenceGuildID )
@@ -389,7 +389,7 @@ void CNtlDojo::HandleEvents( RWS::CMsg &msg)
 			m_ScrambleInfo.eAvatarTeam = SCRAMBLE_TEAM_DEFENCE;
 
 
-		// 공격팀 정보
+		// Attack Team Information
 		m_pScrambleTeam[SCRAMBLE_TEAM_OFFENCE] = NTL_NEW sSCRAMBLE_TEAM;
 
 		m_pScrambleTeam[SCRAMBLE_TEAM_OFFENCE]->guildID			= pEvent->uiOffenceGuildID;
@@ -412,7 +412,7 @@ void CNtlDojo::HandleEvents( RWS::CMsg &msg)
 		
 
 
-		// 방어팀 정보
+		// Defense team information
 		m_pScrambleTeam[SCRAMBLE_TEAM_DEFENCE] = NTL_NEW sSCRAMBLE_TEAM;
 
 		m_pScrambleTeam[SCRAMBLE_TEAM_DEFENCE]->guildID			= pEvent->uiDefenceGuildID;

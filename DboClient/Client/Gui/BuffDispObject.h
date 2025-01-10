@@ -1,9 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: BuffDispObject
 // Desc: Buff Gui Object. 
-//		 - 중복 생성이 가능하도록 구현.
+//		 -Implemented to enable duplicate creation.
 //
-//		 - 1. Show(), Update(), Move()등은 포함하는 객체에서 연결해 주어야 함. 
+//		 - 1. Show(), Update(), Move(), etc. must be connected to the containing object. 
 //
 // 2007.05.07 Peessi@hitel.net   
 ////////////////////////////////////////////////////////////////////////////////
@@ -159,8 +159,8 @@ public:
 	VOID	SetBuffAll( CNtlFakeBuffContainer* pFakeBuffContainer );
 	VOID	ClearBuff(VOID);
 	
-	VOID	SetMove( CRectangle& rtScreen );	// 속해 있는 GUI의 스크린 좌표를 넘겨주는 것으로 OK.
-	VOID	Show( bool bShow );					// 속해 있는 GUI의 Show시 같이 지정을 해 주도록.
+	VOID	SetMove( CRectangle& rtScreen );	// OK by passing the screen coordinates of the GUI it belongs to.
+	VOID	Show( bool bShow );					// Please specify it when showing the GUI it belongs to.
 
 	RwBool	IsShow() { return m_bShow; }
 

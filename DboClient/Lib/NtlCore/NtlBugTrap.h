@@ -10,9 +10,9 @@
 
 /**
  * \ingroup NtlCore
- * \brief BugTrap을 이용하는 클래스 (http://www.codeproject.com/tools/BugTrap.asp)
- * 이 헤더만 Include하면 프로그램이 뻑날때 버그트랩이 실행된다.
- * 출력 메시지를 변경하기 위해서는 cpp 파일의 주석을 참조한다.
+ * \brief Class that uses BugTrap (http://www.codeproject.com/tools/BugTrap.asp)
+ *If you include only this header, a bug trap will be executed when the program crashes.
+ *To change the output message, refer to the comments in the cpp file.
  * \date 2006-12-08
  * \author agebreak
  */

@@ -1,20 +1,20 @@
 #include "precomp_dboclient.h"
 #include "QuestProposalGui.h"
 
-// shared
+// Shared
 #include "QuestTextDataTable.h"
 #include "TableContainer.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// gui
+// Gui
 #include "GuiUtil.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSLGlobal.h"
@@ -22,7 +22,7 @@
 #include "DboTSCQAgency.h"
 #include "NtlSLApi.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DialogManager.h"
@@ -102,10 +102,10 @@ RwBool CQuestProposalGui::Create( CQuestGui* pQuestGui )
 	m_phbxConversation->SetLineSpace( 7 );
 	m_phbxAim->SetLineSpace( 7 );
 
-	// 보상영역 설정.
+	// Compensation area setting.
 	SetRewardRectHardcode();
 
-	// 기본설정 세팅
+	// Basic settings settings
 	SetBasicUISetting();
 	
 	Show( false );
@@ -160,7 +160,7 @@ VOID CQuestProposalGui::HandleEvents( RWS::CMsg& msg )
 	{
 		SNtlEventQuestDirect_Forward* pData = reinterpret_cast<SNtlEventQuestDirect_Forward*>( msg.pData );
 		
-		// peessi : 중복해서 Proposal이 날라오면 새로들어온 녀석을 Fail 응답처리.		
+		// peessi: If multiple proposals are sent, a Fail response will be processed for the new person.		
 		if( m_pTCUnit )
 		{
 			SNtlEventQuestDirect_Echo stEcho;
@@ -230,33 +230,33 @@ VOID CQuestProposalGui::SetBasicUISetting(VOID)
 
 VOID CQuestProposalGui::SetQuestData( SNtlEventQuestDirect_Forward* pData )
 {
-	// 다시 보내주어야할 Data
+	// Data that needs to be sent again
 	m_pTCUnit = pData->pTCUnit;
 	m_TSKey = pData->sProposal.sTSKey;
 
 	SNtlEventQuestProposalDialog_Req* pProposalData = &pData->sProposal;
 
-	// 제목
+	// title
 	SetQuestTitle( pProposalData->uiQuestTitle, pProposalData->uiQuestSort, pProposalData->eGradeType );
 
 	CQuestTextDataTable* pQuestTextTable = API_GetTableContainer()->GetQuestTextDataTable();
 	sQUEST_TEXT_DATA_TBLDAT* pQuestText;
 	
-	// 내용
+	// detail
 	pQuestText = reinterpret_cast<sQUEST_TEXT_DATA_TBLDAT*>( pQuestTextTable->FindData( pProposalData->uiQuestContents ) );
 	if( pQuestText )
 		m_phbxConversation->SetHtmlFromMemory( pQuestText->wstrText.c_str(), pQuestText->wstrText.size() );
 	else
 		m_phbxConversation->Clear();
 
-	// 목표
+	// target
 	pQuestText = reinterpret_cast<sQUEST_TEXT_DATA_TBLDAT*>( pQuestTextTable->FindData( pProposalData->uiQuestGoal ) );
 	if( pQuestText )
 		m_phbxAim->SetHtmlFromMemory( pQuestText->wstrText.c_str(), pQuestText->wstrText.size() );
 	else
 		m_phbxAim->Clear();
 
-	// 보상정보
+	// Compensation information
 	for( RwInt32 i = 0 ; i < QUEST_MAX_REWARD_SLOT ; ++i )
 	{
 		SetRewardSlot( i, &pProposalData->sSelectReward[i]);

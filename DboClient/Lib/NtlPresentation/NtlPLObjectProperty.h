@@ -2,7 +2,7 @@
  *
  * File			: NtlPLObjectProperty.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2005. 8. 22	
  * Abstract		: Presentation layer object property class
  *****************************************************************************
@@ -18,14 +18,14 @@
 
 #define XML_PARSING_BUFFER_SIZE		( 1024 )
 
-/// 오브젝트의 타입
+/// type of object
 enum EPLObjectType
 {
-    E_OBJECT_NORMAL = 0,                        ///< 일반 오브젝트
-    E_OBJECT_MILEPOST,                          ///< 이정표용 오브젝트 (화살표)
+    E_OBJECT_NORMAL = 0,                        ///< General object
+    E_OBJECT_MILEPOST,                          ///< Objects for signposts (arrows)
 };
 
-/// 오브젝트 플래그 (기존의 Bool값들도 플래그로 바꾸고 싶지만, 그러면 하위 호환성이 깨진다)
+/// Object flags (I'd like to replace the existing bool values with flags as well, but that would break backwards compatibility)
 #define OBJ_FLAG_SORT_BY_POS        0x00000001
 #define OBJ_FLAG_FORCE_PICKING      0x00000002
 #define OBJ_FLAG_PE_NAVI_PRESS      0x00000004
@@ -33,8 +33,8 @@ enum EPLObjectType
 
 /**
 * \ingroup NtlPresentation
-* CNtlPLObject에 해당하는 property class이다.
-* property data는 xml file로 작성되어져 있다.
+*This is a property class corresponding to CNtlPLObject.
+*Property data is written as an xml file.
 *
 */
 class CNtlPLObjectProperty : public CNtlPLProperty
@@ -48,25 +48,25 @@ public:
 	static std::string m_strTexPath;		/* object texture file의 path name **/
 
 	std::string m_strDffFile;				/* object mesh file name **/
-    std::string m_strUVAnimFileName;        ///< UVAnim File Name (상대 경로 포함)
-    std::string m_strAnimFileName;          ///< AnimFileName (상대 경로 포함)    
+    std::string m_strUVAnimFileName;        ///< UVAnim File Name (including relative path)
+    std::string m_strAnimFileName;          ///< AnimFileName (including relative path)    
     std::string m_strCollisionMeshName;     ///< Path Engine용 Collision Mesh File Name
 
-	std::vector<SEventLinkEffect*> m_vLinkEffect; ///< Link Effect의 리스트 
+	std::vector<SEventLinkEffect*> m_vLinkEffect; ///< List of Link Effects 
 
 protected:
     RwBBox          m_bbox;                         ///< Server Object의 BBox 
-    RwBool          m_bCollision;                   ///< Server Collision 유무
-	RwBool          m_bShadow;                      ///< Shadow 표시 유무    
+    RwBool          m_bCollision;                   ///< Presence of Server Collision
+	RwBool          m_bShadow;                      ///< presence or absence of shadow display    
     RwReal          m_fUvAnimSpeed;                 ///< UVAnim Speed    
     RwReal          m_fCullingDistance;             ///< Culling Distance
-    RwBool          m_bApplyPVS;                    ///< PVS 영향을 받는지 안받는지 유무
+    RwBool          m_bApplyPVS;                    ///< Whether PVS is affected or not
     RwInt32         m_nObjectFlag;
 
 	CNtlTypeAnimTable m_TypeAnimTable;				///< Animation Table
     EPLObjectType   m_eObjectType;                  ///< Object Type
 
-    SEventSound     m_SoundProp;                    ///< 기본 재생 사운드 프로퍼티
+    SEventSound     m_SoundProp;                    ///< Basic playback sound properties
 
     
 
@@ -74,15 +74,15 @@ public:
 	CNtlPLObjectProperty();
 	virtual ~CNtlPLObjectProperty();
 
-	// 'ObjectPropertyList.xml'에서 프로퍼티 파일명을 가져오는 함수
+	// Function to retrieve property file name from ‘ObjectPropertyList.xml’
 	virtual RwBool	Load(CNtlXMLDoc *pDoc, IXMLDOMNode *pNode);	
 	virtual RwBool	Save(CNtlXMLDoc *pDoc, IXMLDOMNode *pNode );
 
-    virtual RwBool  SaveScript(const std::string &strFileName);          ///< XML 스크립트 파일로 저장한다.
-    virtual RwBool  LoadScript(const RwChar* strFileName);          ///< XML 스크립트로 부터 데이터를 로드한다.
+    virtual RwBool  SaveScript(const std::string &strFileName);          ///< Save it as an XML script file.
+    virtual RwBool  LoadScript(const RwChar* strFileName);          ///< Load data from XML script.
 
-	virtual void	SaveSerialize(CNtlSerializer& sOut);											///< Serialize에 데이터를 저장하는 함수
-	virtual void	LoadSerialize(CNtlSerializer& sIn);												///< Serialize로부터 데이터를 가져오는 함수
+	virtual void	SaveSerialize(CNtlSerializer& sOut);											///< Function to save data in Serialize
+	virtual void	LoadSerialize(CNtlSerializer& sIn);												///< Function to retrieve data from Serialize
 	
 	void                    SetDffName(const RwChar* strDffName) {m_strDffFile = strDffName;}
 	const char *			GetDffName( void ) const { return m_strDffFile.c_str(); }
@@ -90,33 +90,33 @@ public:
     void    SetEnableShadow(RwBool bEnable) {m_bShadow = bEnable;}
     RwBool  GetEnableShadow() {return m_bShadow;}
 
-    void    SetBBox(RwBBox bbox) {m_bbox = bbox;};                                  ///< BBox를 설정한다
-    RwBBox* GetBBox() {return &m_bbox;}                                             ///< 설정된 BBox를 반환한다.
+    void    SetBBox(RwBBox bbox) {m_bbox = bbox;};                                  ///< Set up BBox
+    RwBBox* GetBBox() {return &m_bbox;}                                             ///< Returns the set BBox.
 
-    void    SetUVAnimSpeed(RwReal fSpeed) {m_fUvAnimSpeed = fSpeed;}                ///< UVAnim 속도를 설정한다
-    RwReal  GetUVAnimSpeed() {return m_fUvAnimSpeed;}                               ///< UVAnim 속도를 반환한다.
+    void    SetUVAnimSpeed(RwReal fSpeed) {m_fUvAnimSpeed = fSpeed;}                ///< Set UVAnim speed
+    RwReal  GetUVAnimSpeed() {return m_fUvAnimSpeed;}                               ///< Returns UVAnim speed.
 
-    void    SetCollision(RwBool bCollision) {m_bCollision = bCollision;}            ///< Collision 가능 유무를 설정한다.
-    RwBool  GetCollision() {return m_bCollision;}                                   ///< Collision 가능 유무를 반환한다.
+    void    SetCollision(RwBool bCollision) {m_bCollision = bCollision;}            ///< Set whether collision is possible or not.
+    RwBool  GetCollision() {return m_bCollision;}                                   ///< Returns whether collision is possible or not.
 
-    void    SetCullingDistance(RwReal fDistance) {m_fCullingDistance = fDistance;}  ///< Culling Distance를 설정한다.
-    RwReal  GetCullingDistance() {return m_fCullingDistance;}                       ///< Culling Distance를 반환한다.
+    void    SetCullingDistance(RwReal fDistance) {m_fCullingDistance = fDistance;}  ///< Set Culling Distance.
+    RwReal  GetCullingDistance() {return m_fCullingDistance;}                       ///< Returns Culling Distance.
 
-	CNtlTypeAnimTable* GetAnimTable() {return &m_TypeAnimTable;}                        ///< AnimTable을 반환한다.
+	CNtlTypeAnimTable* GetAnimTable() {return &m_TypeAnimTable;}                        ///< Returns AnimTable.
 
-    void    SetObjectType(EPLObjectType eObjectType) {m_eObjectType = eObjectType;} ///< Object Type을 설정한다.
-    EPLObjectType GetObjectType() {return m_eObjectType;}                           ///< Object Type을 반환한다.
+    void    SetObjectType(EPLObjectType eObjectType) {m_eObjectType = eObjectType;} ///< Set the Object Type.
+    EPLObjectType GetObjectType() {return m_eObjectType;}                           ///< Returns Object Type.
 
-    void    SetApplyPVS(RwBool bApplyPVS) {m_bApplyPVS = bApplyPVS;}                ///< PVS에 영향을 받는지 안받는지 설정한다.
-    RwBool  GetApplyPVS() {return m_bApplyPVS;}                                     ///< PVS에 영향을 받는지 안받는지 반환한다.
+    void    SetApplyPVS(RwBool bApplyPVS) {m_bApplyPVS = bApplyPVS;}                ///< Set whether to be affected by PVS or not.
+    RwBool  GetApplyPVS() {return m_bApplyPVS;}                                     ///< Returns whether PVS is affected or not.
 
-    SEventSound* GetSoundProp() {return &m_SoundProp;}                              ///< 오브젝트의 사운드 설정을 반환한다.
+    SEventSound* GetSoundProp() {return &m_SoundProp;}                              ///< Returns the sound settings of the object.
 
-    // 플래그 관련 함수들
+    // Flag-related functions
     RwBool  IsSortByPos() {return (GetFlag() & OBJ_FLAG_SORT_BY_POS);}
     RwBool  IsForcePicking() {return (GetFlag() & OBJ_FLAG_FORCE_PICKING);}
-    RwBool  IsNaviPress()   {return (GetFlag() & OBJ_FLAG_PE_NAVI_PRESS);}           ///< 패스 엔진용으로 Obstacle Mesh에 대한 설정
-    RwBool  IsCullTestAllAtomic() {return (GetFlag() & OBJ_FLAG_CULLTEST_ATOMIC);}     ///< 애니메이션에서 Atomic에 대해서 Culling Test를 할지 유무를 반환한다.
+    RwBool  IsNaviPress()   {return (GetFlag() & OBJ_FLAG_PE_NAVI_PRESS);}           ///< Settings for Obstacle Mesh for pass engine
+    RwBool  IsCullTestAllAtomic() {return (GetFlag() & OBJ_FLAG_CULLTEST_ATOMIC);}     ///< Returns whether or not to perform a Culling Test for Atomic in the animation.
 
 };
 #endif

@@ -1,18 +1,18 @@
 #include "precomp_dboclient.h"
 #include "GameStage.h"
 
-// core 
+// Core 
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// shared
+// Shared
 #include "WorldTable.h"
 
-// sound
+// Sound
 #include "NtlSoundManager.h"
 #include "NtlSoundEventGenerator.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 #include "NtlPLGuiManager.h"
 #include "NtlPLResourceManager.h"
@@ -31,7 +31,7 @@
 #include "NtlPLSkySphere.h"
 #include "NtlPLResourceScheduling.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSLGlobal.h"
@@ -59,7 +59,7 @@
 // Storage
 #include "NtlStorageManager.h"
 
-// dbo
+// Dbo
 #include "DboDef.h"
 #include "GameGuiGroup.h"
 #include "DboEvent.h"
@@ -80,7 +80,7 @@
 #include "MsgBoxManager.h"
 #include "LobbyManager.h"
 
-// discord
+// Discord
 #ifdef USE_DISCORD
 #include "Discord.h"
 #endif
@@ -209,7 +209,7 @@ void CGameStage::Destroy(void)
 		NTL_DELETE(m_pTeleportScene);
 	}
 	
-	// 세이브 방식 변경 ( 저장 후 메모리 삭제 )
+	// Change save method (delete memory after saving)
 	Logic_SaveScouterOption();
 	Logic_SaveQuestOption();
 	Logic_SaveCharacterOption();
@@ -254,7 +254,7 @@ void CGameStage::Destroy(void)
 	// unlink keyboard/mouse down
 	CInputHandler::GetInstance()->UnLinkKeyDown(m_hKeyboardDown);
 	
-	// 서버로 나간다고 알림.
+	// Notify that you are leaving the server.
 	CGamePacketGenerator *pGameNetSender = CDboGlobal::GetInstance()->GetGamePacketGenerator();  
 	pGameNetSender->SendGameLeaveReq(); 
 	
@@ -277,11 +277,11 @@ void CGameStage::Destroy(void)
 	// Destroy TextureCamera
 	CMapItem::DestroyCamera();
 
-	// world에서 camera remove
+	// remove camera from world
 	if(CNtlPLGlobal::m_pRpWorld)
 		RpWorldRemoveCamera(CNtlPLGlobal::m_pRpWorld, CNtlPLGlobal::m_RwCamera);
 
-	// woody1019;
+	// Woody1019;
 	DeleteWorld();
 
 	// gui destroy
@@ -367,11 +367,11 @@ void CGameStage::UpdateLoadingScene(RwReal fElapsed)
 
 RwBool CGameStage::UpdateLoadingThread(RwReal fElapsed)
 {
-	// Multi-thread가 동작하고 있지 않는 상태
+	// State where multi-thread is not operating
 	if(m_pLoadingThread == NULL)
 		return FALSE;
 
-	// Multi-thread loading 완료
+	// Multi-thread loading completed
 	if(m_pLoadingThread->GetLoadState() == CGameLoadingThread::eGAME_LOAD_STATE_LOADED)
 	{
 		PostMutiThreadLoading();
@@ -448,7 +448,7 @@ void CGameStage::UpdateGameEnterLoadingSchedulingWorld(RwReal fElapsed)
 {
 	RwV3d vWorldUpdatePos = GetUpdateWorldPosition();
 
-	// woody1019
+	// Woody1019
 	UpdateWorld(vWorldUpdatePos);
 
 	// The world and thread loading have not finished yet.
@@ -487,11 +487,11 @@ void CGameStage::UpdateGameEnterLoadingSchedulingWorld(RwReal fElapsed)
 		}
 	}
 
-	// avatar가 아직 생성되지 않았으면?
+	// What if the avatar hasn't been created yet?
 	if(!IsAvatarCreate())
 		return;
 
-	// avatar가 ready 되었는가?
+	// Is the avatar ready?
 	if(!m_bAvatarReady)
 	{
 		if(m_pAvatar->IsAvatarReady())
@@ -516,14 +516,14 @@ void CGameStage::UpdateTeleportLoadingReadyScene(RwReal fElapsed)
 {
 	RwV3d vAvatarPos = m_pAvatar->GetPosition();
 		
-	// 월드 삭제 후 다시 생성.(update 한다.)
+	// After deleting the world, create it again (update it).
 	if(m_bWorldChange)
 	{
 		RwFrameListSetAutoUpdate(FALSE);
 		
 		RpWorldRemoveCamera(CNtlPLGlobal::m_pRpWorld, CNtlPLGlobal::m_RwCamera);
 
-        CNtlSLEventGenerator::CreateWorld(FALSE);       // 이벤트 발생
+        CNtlSLEventGenerator::CreateWorld(FALSE);       // event occurs
 
 		DeleteWorld();
 
@@ -553,11 +553,11 @@ void CGameStage::UpdateTeleportLoadingReadyScene(RwReal fElapsed)
 
 		RpWorldAddCamera(CNtlPLGlobal::m_pRpWorld, CNtlPLGlobal::m_RwCamera);
 
-        CNtlSLEventGenerator::CreateWorld(TRUE);        // 이벤트 발생
+        CNtlSLEventGenerator::CreateWorld(TRUE);        // event occurs
 
 		RwFrameListSetAutoUpdate(TRUE);
 
-		// world를 한번 업데이트 한다.
+		// Update the world once.
 		if(m_pWorldEntity)
 		{
 			//RwBool bEnable = GetLoadObjectSeamlessScheduling();
@@ -594,11 +594,11 @@ void CGameStage::UpdateTeleportLoadingReadyScene(RwReal fElapsed)
 
 		GetNtlGameCameraManager()->ResetCamera();
 
-		// 월드 지형 teleport 한다.
+		// World terrain teleport.
 		if(m_pWorldEntity)
 			m_pWorldEntity->SetPortalPosition(vAvatarPos);
 
-		// world를 한번 업데이트 한다.
+		// Update the world once.
 		if(m_pWorldEntity)
 		{
 			m_pWorldEntity->SetPlayerPosition(vAvatarPos);
@@ -617,7 +617,7 @@ void CGameStage::UpdateTeleportLoadingTeleportScene(RwReal fElapsed)
 	RwV3d vWorldUpdatePos = GetUpdateWorldPosition();
 	UpdateWorld(vWorldUpdatePos);
 
-	// world가 loading 되었는가?
+	// Has the world been loaded?
 	if(!m_bWorldReady)
 	{
 		if(!m_pWorldEntity->GetWorldReady())
@@ -626,7 +626,7 @@ void CGameStage::UpdateTeleportLoadingTeleportScene(RwReal fElapsed)
 		m_bWorldReady = TRUE;
 	}
 
-	// 게임에 처음 진입하거나, teleport일 경우에는 resource를 다 읽은 다음에 처리한다.
+	// When entering the game for the first time or through teleport, the resource is processed after all resources have been read.
 	if(m_bCheckResourceScheduling)
 	{
 		if(GetNtlResourceManager()->IsEmptyLoadScheduling())
@@ -637,13 +637,13 @@ void CGameStage::UpdateTeleportLoadingTeleportScene(RwReal fElapsed)
 				AvatarCreate();
 			}
 
-			// avatar를 재생성해야 하는가?
+			// Should I recreate my avatar?
 			if(IsAvatarReCreate())
 			{
 				AvatarReCreate();
 			}
 
-			// 네트웍 데이터를 받아들인다.
+			// Accept network data.
 //			GetSceneManager()->SetThreadLoad( FALSE );
 			m_pTeleportScene->SetState(CHAR_TELEPORT_LOAD_END);
 			CPacketProc::GetInstance()->ActivePop(TRUE);
@@ -677,7 +677,7 @@ void CGameStage::UpdateTeleportLoadingSpawnReadyScene(RwReal fElapsed)
 	RwV3d vWorldUpdatePos = GetUpdateWorldPosition();
 	UpdateWorld(vWorldUpdatePos);
 
-	// avatar가 ready 되었는가?
+	// Is the avatar ready?
 	if(!m_bAvatarReady)
 	{
 		if(m_pAvatar->IsAvatarReady())
@@ -867,10 +867,10 @@ void CGameStage::EventProcUpdateTick(RwReal fElapsed)
 		UpdateGameIdle(fElapsed);
 	}
 
-    // 상황에 따른 사운드 리스너를 설정한다.
+    // Set a sound listener according to the situation.
     UpdateSoundListener();
 	
-	// avatar가 생성되어 있지 않으면?
+	// What if the avatar is not created?
 	if(!IsAvatarCreate())
 		return;
 
@@ -888,7 +888,7 @@ void CGameStage::EventProcUpdateTick(RwReal fElapsed)
 
 void CGameStage::EventProcWorldChange(RwBool bWorldChange)
 {
-	// loading을 시작한다.
+	// Start loading.
 	
 	m_pTeleportScene = NTL_NEW CGameTeleportScene(bWorldChange);
 
@@ -911,8 +911,8 @@ void CGameStage::EventProcWorldChange(RwBool bWorldChange)
 	m_eUpdageType = EGUT_GAME_TELEPORT_LOADING;
 
 	//---------------------------------------------------
-	// teleport 할 world 가 다를 경우.
-	// avatar resource를 월드에서 뺀다.
+	// When the world to teleport to is different.
+	// Remove the avatar resource from the world.
 	if(m_bWorldChange)
 	{
 	}
@@ -978,8 +978,8 @@ void CGameStage::MutiThreadLoading( void )
 		NTL_DELETE(m_pGuiGroup);
 	}
 
-	// height field world를 생성한다.
-	// avatar 좌표 얻어오기.
+	// Create a height field world.
+	// Get avatar coordinates.
 	SAvatarInfo *pAvatarInfo = GetNtlSLGlobal()->GetAvatarInfo();
 	RwV3d vAvatarPos;
 	CNtlMath::MathRwV3dAssign(&vAvatarPos,	
@@ -1023,7 +1023,7 @@ void CGameStage::MutiThreadLoading( void )
 
 void CGameStage::PostMutiThreadLoading( void )
 {
-	// 로딩 Thread를 종료한다
+	// Terminate the loading thread
 	if ( m_pLoadingThread )
 	{
 		NTL_DELETE(m_pLoadingThread);
@@ -1039,7 +1039,7 @@ void CGameStage::PostMutiThreadLoading( void )
 
 	GetNtlSobManager()->SetActive( TRUE );
 	
-	// Effect 복구
+	// Effect recovery
 	if(GetNtlStorageManager()->GetBoolData( dSTORAGE_GRAPHIC_SHADER_HDR ))
 		CNtlPostEffectCamera::SetPostEffectFilters(POST_EFFECT_FILTER_HDR);
 	else
@@ -1066,7 +1066,7 @@ void CGameStage::PostRender(void)
 	EndGuiRenderState();
 }
 
-// woody1019
+// Woody1019
 void CGameStage::CreateWorld(RwV3d& vAvatarPos)
 {
 	// set texture folder path
@@ -1140,7 +1140,7 @@ void CGameStage::AvatarCreate(void)
 	m_pAvatar = reinterpret_cast<CNtlSobAvatar*>(CNtlSLEventGenerator::SobAvatarCreate(SLCLASS_AVATAR, pAvatarInfo->uiSerialId, &pAvatarInfo->sCharState, TRUE));	
 	CDboEventGenerator::QuickSlotInfo();	
 
-	// camera 
+	// Camera 
 	GetNtlGameCameraManager()->SetActiveActor(m_pAvatar);
 
 	// avatar controller create
@@ -1166,7 +1166,7 @@ void CGameStage::AvatarReCreate(void)
 	m_pAvatar = reinterpret_cast<CNtlSobAvatar*>(CNtlSLEventGenerator::SobAvatarCreate(SLCLASS_AVATAR, pAvatarInfo->uiSerialId, &pAvatarInfo->sCharState, TRUE));	
 	CDboEventGenerator::QuickSlotInfo();	
 
-	// camera 
+	// Camera 
 	GetNtlGameCameraManager()->SetActiveActor(m_pAvatar);
 
 	SGameData *pGameData = GetDboGlobal()->GetGameData();
@@ -1243,7 +1243,7 @@ void CGameStage::UpdateSoundListener()
             return;
         }
 
-        // 시네마틱중이면 카메라로 세팅한다.
+        // If you are doing a cinematic, set up the camera.
         if(GetNtlDTCinematicManager()->IsRunning())
         {
             GetSceneManager()->SetSoundListener(NULL);

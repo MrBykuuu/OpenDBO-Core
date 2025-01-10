@@ -1,12 +1,12 @@
 /*****************************************************************************
 *
-* File			: SkillAbilityUseGui.h
-* Author		: Cho HaeSung
-* Copyright		: (주)NTL
-* Date			: 2008. 11. 17
-* Abstract		: DBO Skill Ability Use
+*File			: SkillAbilityUseGui.h
+*Author		    : Cho HaeSung
+*Copyright		: NTL Co., Ltd.
+*Date			: 2008. 11. 17
+*Abstract		: DBO Skill Ability Use
 *****************************************************************************
-* Desc          : 
+*Desc          : 
 *
 *****************************************************************************/
 
@@ -17,14 +17,14 @@
 
 #define dSKILL_HTB_RP_HEIGHT			100
 
-#define dSKILL_HTB_RP_WIDTH_OFFSET		50					///< 각 아이콘간의 간격
-#define dSKILL_HTB_RP_ICON_WIDTH		64					///< ICON 넓이
-#define dSKILL_HTB_RP_ICON_HEIGHT		64					///< ICON 높이
-#define dSKILL_HTB_RP_ICON_NUMS			7					///< ICON 갯수
+#define dSKILL_HTB_RP_WIDTH_OFFSET		50					///< Spacing between each icon
+#define dSKILL_HTB_RP_ICON_WIDTH		64					///< ICON width
+#define dSKILL_HTB_RP_ICON_HEIGHT		64					///< ICON height
+#define dSKILL_HTB_RP_ICON_NUMS			7					///< Number of ICONs
 #define dSKILL_HTB_RP_FLASH_BALL		"HTB_ball.swf"
 #define dSKILL_HTB_RP_FLASH_NONE		"HTB_cancel.swf"
 
-#define dSKILL_HTP_RP_TIME_OFFSET_Y		75					///< PROGRESS BAR의 위치
+#define dSKILL_HTP_RP_TIME_OFFSET_Y		75					///< Location of PROGRESS BAR
 #define dSKILL_HTB_RP_PGB_OFFSET_X		23
 #define dSKILL_HTB_RP_PGB_OFFSET_Y		7
 
@@ -131,8 +131,8 @@ protected:
 	RwBool				m_bSelect;								///< is select rp ball?
 	RwBool				m_bInput;
 	
-	RwUInt32			m_uiCurRpStock;							///< Active 일 때만 유효한 Rp
+	RwUInt32			m_uiCurRpStock;							///< Rp valid only when Active
 };
 
 
-#endif//__SKILL_HTB_RP_USE_H__
+#endif//Skill htb rp use h

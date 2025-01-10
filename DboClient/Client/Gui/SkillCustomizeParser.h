@@ -205,7 +205,7 @@ struct stSKILLCUSTOMIZEPARSEDSKILL : public stSKILLCUSTOMIZEPARSEDDATA
 	RwUInt8		bySkillType;
 };
 
-// Line은 일단 담아두었다가 Skill이 생성 종료되면 생성, 그 때를 위한 보존객체.
+// Line is stored once and created when the skill is created, and is a preservation object for that time.
 struct stSKILLCUSTOMIZEPARSEDLINE : public stSKILLCUSTOMIZEPARSEDDATA
 {
 	stSKILLCUSTOMIZEPARSEDLINE( RwUInt8 byType );
@@ -224,10 +224,10 @@ class CSkillCustomizeParser
 {
 public:
 	//! Type
-	typedef std::map<std::string,CSkillCustomizeSkillItem*>					MAP_SKILLITEM;	// 이 데이터가 원본. 
+	typedef std::map<std::string,CSkillCustomizeSkillItem*>					MAP_SKILLITEM;	// This data is original. 
 	typedef std::map<std::string,CSkillCustomizeSkillItem*>::iterator		MAP_SKILLITEM_ITER;	
 	
-	// SKILL Item이 생성된 후 삭제.
+	// Deleted after the SKILL Item is created.
 	typedef std::map<std::string,stSKILLCUSTOMIZEPARSEDLINE*>				MAP_PARSED_LINEDATA;		
 	typedef std::map<std::string,stSKILLCUSTOMIZEPARSEDLINE*>::iterator		MAP_PARSED_LINEDATA_ITER;	
 	typedef std::map<std::string,stSKILLCUSTOMIZEPARSEDSKILL*>				MAP_PARSED_SKILLDATA;
@@ -244,7 +244,7 @@ public:
 
 	stSKILLCUSTOMIZEPARSEDDATA* IsValidType( const RwChar* szTypeName );
 
-	//! Static Operation 생성전에 미리 지정주어야 함. 
+	//! Must be specified in advance before creating a Static Operation. 
 	static	VOID	SetCommonData( CSkillTable* pSkillTable, CHTBSetTable* pHTBTable, CActionTable* pActionTable, CTextAllTable* pTextTable, gui::CSurfaceManager* pSurfaceManager );
 
 private:

@@ -57,7 +57,7 @@ VOID Logic_NtlSoundLog(const RwChar* pcContition, const RwChar* pcSoundFileName 
 		sprintf_s(acBuffer, 1024, "[Sound] Condition : %s\n", pcContition);
 		
 
-	// 애플리케이션 실행중 이전에 발생했던 에러 메세지는 리턴	
+	// Error messages that previously occurred while running the application are returned.	
 	if( Logic_IsExistLog(acBuffer) )
 		return;
 
@@ -76,7 +76,7 @@ VOID Logic_NtlSoundLog(const RwChar* pcContition, RwInt32 iChannelGroup, const R
 		sprintf_s(acBuffer, 1024, "[Sound] Condition : %s, Channel group : %s\n", pcContition, acChannelGroupName);
 
 
-	// 애플리케이션 실행중 이전에 발생했던 에러 메세지는 리턴	
+	// Error messages that previously occurred while running the application are returned.	
 	if( Logic_IsExistLog(acBuffer) )
 		return;
 
@@ -97,7 +97,7 @@ VOID Logic_NtlSoundLog(const RwChar* pcContition, FMOD_RESULT result, const RwCh
 		sprintf_s(acBuffer, 1024, "[Sound] Condition : %s, FMOD log : %s\n", pcContition, pcResult);
 
 
-	// 애플리케이션 실행중 이전에 발생했던 에러 메세지는 리턴	
+	// Error messages that previously occurred while running the application are returned.	
 	if( Logic_IsExistLog(acBuffer) )
 		return;
 
@@ -130,7 +130,7 @@ RwReal Logic_GetFMODValidVolume(RwReal fVolume)
 
 RwReal Logic_CalcPlayVolume(sNtlVolume* pNtlVolume)
 {
-	// 모든 볼륨 인자는 Logic_GetFMODValidVolume() 함수를 거친 후여야 한다
+	// All volume arguments must be passed through the Logic_GetFMODValidVolume() function.
 	if( !pNtlVolume )
 		return 1.f;
 
@@ -203,7 +203,7 @@ SOUND_HANDLE Logic_GetNewSoundHandle()
 			{				
 				bExist = GetSoundManager()->GetChannelGroup(i)->IsExistSound(hSound);
 
-				// 현재 쓰고 있지 않은 핸들을 찾았다
+				// Found a handle that is not currently in use
 				if( !bExist )
 				{
 					return hSound;
@@ -227,17 +227,17 @@ SOUND_HANDLE Logic_GetNewSoundHandle()
 
 FMOD_RESULT API_Create_Stream(CNtlSound* pSound, sNtlSoundPlayParameta* pParameta, FMOD_MODE mode, std::string& strFullName)
 {
-	// Sound 반복 연주
+	// Sound repeat play
 	if( pParameta->bLoop )				
 		mode |= FMOD_LOOP_NORMAL;
 
 	
-	// File에 직접 접근
+	// Direct access to files
 	if( !g_fnCallback_LoadSound_from_Memory )
 		return CNtlSoundGlobal::m_pFMODSystem->createStream(strFullName.c_str(), mode, 0, &(pSound->m_pFMODSound) );
 
 
-	// Pack 모드
+	// Pack mode
 	FMOD_CREATESOUNDEXINFO exinfo;
 	memset(&exinfo, 0, sizeof(FMOD_CREATESOUNDEXINFO));
 	exinfo.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
@@ -245,7 +245,7 @@ FMOD_RESULT API_Create_Stream(CNtlSound* pSound, sNtlSoundPlayParameta* pParamet
 	(*g_fnCallback_LoadSound_from_Memory)(strFullName.c_str(), (void**)&pSound->pMemoryData, (int*)&exinfo.length);
 
 
-	// Pack 되지 않은 사운드 파일인지 검사
+	// Check if it is an unpacked sound file
 	if( !pSound->pMemoryData )		
 		return FMOD_ERR_MEMORY_CANTPOINT;
 
@@ -256,7 +256,7 @@ FMOD_RESULT API_Create_Stream(CNtlSound* pSound, sNtlSoundPlayParameta* pParamet
 
 FMOD_RESULT API_Create_Sound(CNtlSound* pSound, sNtlSoundPlayParameta* pParameta, FMOD_MODE mode, std::string& strFullName)
 {
-	// Sound 반복 연주
+	// Sound repeat play
 	if( pParameta->bLoop )				
 		mode |= FMOD_LOOP_NORMAL;
 
@@ -272,12 +272,12 @@ FMOD_RESULT API_Create_Sound(CNtlSound* pSound, sNtlSoundPlayParameta* pParameta
 	}
 
 	
-	// File에 직접 접근
+	// Direct access to files
 	if( !g_fnCallback_LoadSound_from_Memory )
 		return CNtlSoundGlobal::m_pFMODSystem->createSound(strFullName.c_str(), mode, 0, &(pSound->m_pFMODSound) );
 	
 
-	// Pack 모드
+	// Pack mode
 	void* pData = NULL;
 	FMOD_CREATESOUNDEXINFO exinfo;
 	memset(&exinfo, 0, sizeof(FMOD_CREATESOUNDEXINFO));
@@ -286,7 +286,7 @@ FMOD_RESULT API_Create_Sound(CNtlSound* pSound, sNtlSoundPlayParameta* pParameta
 	(*g_fnCallback_LoadSound_from_Memory)(strFullName.c_str(), (void**)&pData, (int*)&exinfo.length);
 
 
-	// Pack 되지 않은 사운드 파일인지 검사
+	// Check if it is an unpacked sound file
 	if( !pData )
 		return FMOD_ERR_MEMORY_CANTPOINT;
 

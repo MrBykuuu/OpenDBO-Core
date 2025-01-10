@@ -1,17 +1,17 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobTriggerObject.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
 // Sound
 #include "NtlSoundManager.h"
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "ObjectTable.h"
 #include "NtlSobTriggerObjectAttr.h"
 #include "NtlSobTriggerObjectProxy.h"
@@ -53,7 +53,7 @@ RwBool CNtlSobTriggerObject::Create(VOID)
 {
 	NTL_FUNCTION("CNtlSobTriggerObject::Create");
 
-	// proxy 설정
+	// proxy settings
 	m_pSobProxy = NTL_NEW CNtlSobTriggerObjectProxy;
 	m_pSobProxy->Create(0);
 	m_pSobProxy->SetSobObj(this);
@@ -63,7 +63,7 @@ RwBool CNtlSobTriggerObject::Create(VOID)
 		NTL_RETURN(FALSE);
 	}
 
-	// class name 설정.
+	// Set class name.
 	SetClassName(SLCLASS_NAME_TRIGGER_OBJECT);
 
 	NTL_RETURN(TRUE);
@@ -104,16 +104,15 @@ void CNtlSobTriggerObject::HandleEvents( RWS::CMsg& pMsg )
 		SNtlEventSobTriggerObjectCreate *pSobCreate = reinterpret_cast<SNtlEventSobTriggerObjectCreate*>(pMsg.pData);
 
 		// trigger object attribute events.
-		
 		GetSobAttr()->HandleEvents(pMsg);
 
-		// 초기 Trigger object의 상태를 설정한다
+		// Sets the state of the initial Trigger object.
 		InitState();
 
 		// proxy setting
 		GetSobProxy()->HandleEvents(pMsg);
 
-		// 좌표와 방향 세팅.
+		// Coordinate and direction settings.
 		RwV3dAssignMacro(&m_vPos, &pSobCreate->vLoc);
 		RwV3d vDir = GetSobProxy()->GetDirection();
 		RwV3dAssignMacro(&m_vDirection, &vDir); 
@@ -181,7 +180,7 @@ void CNtlSobTriggerObject::HandleEvents( RWS::CMsg& pMsg )
 	{
 		SNtlEventTObjectUpdateState *pSobTObjUpdateState = reinterpret_cast<SNtlEventTObjectUpdateState*>(pMsg.pData);
 
-		// Trigger object의 상태를 업데이트 한다
+		// Update the state of the trigger object
 		UpdateState(pSobTObjUpdateState);
 
 		GetSobProxy()->HandleEvents(pMsg);
@@ -275,7 +274,7 @@ void CNtlSobTriggerObject::QeustMarkCheck(RwReal fElapsed)
 		if( ( m_byQuestMark != byQuestMark ) ||
 			( byQuestMark == EQuestMarkBalloonNew && m_tID != tID ) )
 		{
-			// event 발생.	
+			// event occurs.	
 			m_byQuestMark = byQuestMark;
 			m_tID = tID;
 			CNtlSLEventGenerator::QuestMark(GetSerialID(), m_byQuestMark, (void*)pQuestInfo);
@@ -299,23 +298,23 @@ RwBool CNtlSobTriggerObject::CanClicked(void)
 		return FALSE;
 	}
 
-	// Trigger object table의 선택 가능 플래그가 꺼저 있는 경우는 클릭 불가능.
+	// If the selectable flag in the Trigger object table is turned off, it cannot be clicked.
 	if ( (pAttrTObj->m_pTriggerObjTbl->dwFunction & eDBO_TRIGGER_OBJECT_FUNC_SELECTION) != eDBO_TRIGGER_OBJECT_FUNC_SELECTION )
 	{
 		return FALSE;
 	}
 
-	// 상태가 존재하는 경우만 클릭 검사를 수행하고
-	// 그렇지 않은 경우는 무조건 클릭 가능 상태로 처리한다
+	// Perform a click check only if the state exists and
+	// Otherwise, it is always treated as clickable.
 	if ( INVALID_TOBJECT_STATE_TYPE != m_byStateType && TOBJECT_STATE_NONE != m_sCurState.byMainState )
 	{
-		// 현재 트리거 오브젝트의 상태가 보이는 상태인지 검사
+		// Check whether the current state of the trigger object is visible
 		if ( (m_sCurState.bySubState & (1<<TOBJECT_SUBSTATE_SHOW)) != (1<<TOBJECT_SUBSTATE_SHOW) )
 		{
 			return FALSE;
 		}
 
-		// 현재 트리거 오브젝트의 상태가 클릭 불가능 상태인지 검사
+		// Checks whether the state of the current trigger object is non-clickable
 		if ( (m_sCurState.bySubState & (1<<TOBJECT_SUBSTATE_UNSELECT)) == (1<<TOBJECT_SUBSTATE_UNSELECT) )
 		{
 			return FALSE;
@@ -351,7 +350,7 @@ void CNtlSobTriggerObject::ActiveQuestMark(RwBool bQuestMark)
 	{
 		if(m_byQuestMark != EQuestMarkNone)
 		{
-			// none을 보낸다.
+			// send none
 			m_byQuestMark = EQuestMarkNone;
 			CNtlSLEventGenerator::QuestMark(GetSerialID(), m_byQuestMark, NULL);
 		}
@@ -411,10 +410,10 @@ void CNtlSobTriggerObject::InitState( void )
 
 void CNtlSobTriggerObject::UpdateState( SNtlEventTObjectUpdateState *pSobTObjUpdateState )
 {
-	// 상태 저장
+	// save state
 	m_sPreState = m_sCurState;
 
-	// 새로운 상태로 업데이트
+	// update with new status
 	m_sCurState.byMainState = pSobTObjUpdateState->byMainState;
 	m_sCurState.bySubState = pSobTObjUpdateState->bySubState;
 
@@ -442,7 +441,7 @@ void CNtlSobTriggerObject::PlayClickSound( void )
 	v3Pos.y = pTriggerObjectAttr->m_pTriggerObjTbl->vLoc.y;
 	v3Pos.z = pTriggerObjectAttr->m_pTriggerObjTbl->vLoc.z;
 
-	// 트리거 오브젝트의 상태가 존재하지 않는 경우
+	// When the state of the trigger object does not exist
 	if ( INVALID_TOBJECT_STATE_TYPE != m_byStateType && TOBJECT_STATE_NONE != m_sCurState.byMainState )
 	{
 		sNtlSoundPlayParameta tSoundParam;
@@ -454,13 +453,13 @@ void CNtlSobTriggerObject::PlayClickSound( void )
 
 		GetSoundManager()->Play(&tSoundParam);
 	}
-	// 트리거 오브젝트의 상태가 존재하는 경우
+	// If the state of the trigger object exists
 	else
 	{
-		// 트리거 오브젝트를 클릭 가능 한 경우만 소리를 낸다
+		// Makes a sound only when the trigger object is clickable
 		if ( CanClicked() )
 		{
-			// 서버로 부터 상태가 잘못 내려온 경우
+			// When the status is sent incorrectly from the server
 			if ( MAX_TOBJECT_STATE <= m_sCurState.byMainState )
 			{
 				sNtlSoundPlayParameta tSoundParam;
@@ -476,7 +475,7 @@ void CNtlSobTriggerObject::PlayClickSound( void )
 			{
 				std::string strSoundName = pTriggerObjectAttr->m_pTriggerObjTbl->achClickSound[m_sCurState.byMainState];
 
-				// 상태에 따른 클릭 사운드가 존재하는 경우
+				// When there is a click sound depending on the status
 				if ( !strSoundName.empty() )
 				{
 					sNtlSoundPlayParameta tSoundParam;

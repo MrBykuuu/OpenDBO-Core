@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: TBMinorDirectionGui.h
-// Desc: 천하제일 무도회 예선 연출 Gui
+// Desc: World's Best Martial Arts Preliminaries Directed by Gui
 //
 // 2008.09.18 Peessi@hitel.net   
 ////////////////////////////////////////////////////////////////////////////////
@@ -93,8 +93,8 @@ public:
 	stWINNERINFO		m_stWinner;	
 
 	//! Timer
-	CTimerHandle		m_hDiceWinnerSelectTimer;		// 추첨상태에서 주사위가 던져지기 까지의 시간.	
-	CTimerHandle		m_hDiceWinnerShowTimer;			// 추첨상태에서 주사위의 결과가 보여지는 시간.
+	CTimerHandle		m_hDiceWinnerSelectTimer;		// The time from the drawing state until the dice are thrown.	
+	CTimerHandle		m_hDiceWinnerShowTimer;			// The time at which the results of the dice are shown in a lottery situation.
 
 	//! SelectionData
 	TEAMTYPE					m_WinnerTeam;

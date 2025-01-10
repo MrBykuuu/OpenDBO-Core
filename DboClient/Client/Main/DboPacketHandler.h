@@ -1,21 +1,21 @@
 /*****************************************************************************
 *
-* File			: DboPacketHandler.h
-* Author		: HyungSuk, Jang
-* Copyright	: (주)NTL
-* Date			: 2005. 9. 27	
-* Abstract		: DBO packet handler
+*File			: DboPacketHandler.h
+*Author		    : HyungSuk, Jang
+*Copyright	    : NTL Co., Ltd.
+*Date			: 2005. 9. 27	
+*Abstract		: DBO packet handler
 *****************************************************************************
-* Desc         : InclreiBuild 버그로 일단 함수를 별도의 .cpp 파일로 분리를
-*				 하면 링크가 되지 않는다. 이런 파일들을 굳이 분리하지 않는다.
+*Desc           : Due to an InclreiBuild bug, the function must be separated into a separate .cpp file.
+*                 If you do this, the link will not work. There is no need to separate these files.
 *
-*				 예) UserTrade 관련 패킷들..
+*				  Example) UserTrade related packets..
 *****************************************************************************/
 
 #ifndef __DBO_PACKET_HANDLER_H__
 #define __DBO_PACKET_HANDLER_H__
 
-// shared
+// Shared
 #include "NtlClientNet.h"
 #include "NtlPacketAU.h"
 #include "NtlPacketCU.h"
@@ -26,7 +26,7 @@
 #include "NtlPacketUtil.h"
 #include "TableContainer.h"
 
-// simulation
+// Simulation
 #include "NtlPacketHandler.h"
 #include "NtlSLGlobal.h"
 #include "NtlSobAvatar.h"
@@ -37,7 +37,7 @@
 #include "NtlSobManager.h"
 #include "NtlSLEventFunc.h"
 
-// dbo
+// Dbo
 #include "ChatGui.h"
 #include "AlarmManager.h"
 #include "DisplayStringManager.h"
@@ -51,11 +51,11 @@
 #define dPACKET_MEESAGE_LENGTH	1024
 static WCHAR awcPacketMessageBuffer[dPACKET_MEESAGE_LENGTH] = L"";
 
-/// 서버에서 사용하는 Vector 객체를 클라이언트의 벡터 객체로 변환하는 매크로 함수
-//#define SVector2RwV3d(rwV3d, svector) rwV3d.x = svector.x; rwV3d.y = svector.y; rwV3d.z = svector.z; // disable by daneos
+/// Macro function that converts a Vector object used on the server to a vector object on the client.
+//#define SVector2RwV3d(rwV3d, svector) rwV3d.x = svector.x; rwV3d.y = svector.y; rwV3d.z = svector.z; //disable by daneos
 
 //-----------------------------------------------------------------------------
-// packet handler 등록/삭제
+// Register/delete packet handler
 //-----------------------------------------------------------------------------
 
 void RegisterPacketHandler(void);
@@ -154,12 +154,12 @@ void PacketHandler_GSPetCharInfoEnd(void *pPacket);
 void PacketHandler_GSPetCharDesapwnedNfy(void *pPacket);
 
 
-// teleport
+// Teleport
 void PacketHandler_GSCharTeleportRes(void *pPacket);
 void PacketHandler_GSCharRevivalRes(void *pPacket);
 void PacketHandler_GSCharCrescentPopoRevivalRes(void *pPacket);
 
-// item
+// Item
 void PacketHandler_GSItemCreate(void *pPacket);
 void PacketHandler_GSItemReplace(void *pPacket);
 void PacketHandler_GSItemDelete(void *pPacket);
@@ -194,7 +194,7 @@ void PacketHandler_GSPartySelectStateNfy(void *pPacket);
 void PacketHandler_GSPartySelectStateRes(void *pPacket);
 void PacketHandler_GSPartySelectStateInitNfy(void *pPacket);
 
-// ud
+// Ud
 void PacketHandler_GSUltimateDungeonEnterRes(void *pPacket);
 
 void PacketHandler_GSBattleDungeonEnterRes(void *pPacket);
@@ -213,11 +213,11 @@ void PacketHandler_GSQuestItemDeleteRes(void *pPacket);
 void PacketHandler_GSQuestItemDeleteNfy(void *pPacket);
 
 
-// WorldItem
+// World item
 void PacketHandler_GSWorldItemPickRes(void *pPacket);
 void PacketHandler_GSWorldZennyPickRes(void *pPacket);
 
-// move
+// Move
 void PacketHandler_GSCharDestMove(void *pPacket);
 void PacketHandler_GSCharMove(void *pPacket);
 void PacketHandler_GSCharMoveSync(void* pPacket);
@@ -226,7 +226,7 @@ void PacketHandler_GSCharChangeHeading(void *pPacket);
 void PacketHandler_GSCharDirectionFloat(void *pPacket);
 void PacketHandler_GSCharNonBattleMovePatternSync(void *pPacket);
 
-// attack
+// Attack
 void PacketHandler_GSCharFightingMode(void *pPacket);
 void PacketHandler_GSCharActionAttack(void *pPacket);
 void PacketHandler_GSCharSpecialAttack(void* pPacket);
@@ -234,7 +234,7 @@ void PacketHandler_GSCharBlockingCoolTimeNfy(void *pPacket);
 void PacketHandler_GSCharGuardCrush(void *pPacket);
 void PacketHandler_GSCharPushedNfy(void* pPacket);
 
-// jump
+// Jump
 void PacketHandler_GSCharJump(void *pPacket);
 void PacketHandler_GSCharJumpDirection(void *pPacket); 
 void PacketHandler_GSCharJumpEnd(void *pPacket);
@@ -243,7 +243,7 @@ void PacketHandler_GSCharJumpEnd(void *pPacket);
 void PacketHandler_GSCharSitDown(void *pPacket);
 void PacketHandler_GSCharStandUp(void *pPacket);
 
-// skill
+// Skill
 void PacketHandler_GSCharSkillRes(void *pPacket);
 void PacketHandler_GSCharSkillCancel(void *pPacket);
 void PacketHandler_GSCharSkillAffectingCancel(void *pPacket);
@@ -268,28 +268,28 @@ void PacketHandler_GSSkillResetPlusRes(void* pPacket);
 void PacketHandler_GSCharRenameRes(void* pPacket);
 
 
-// 스카우터
+// scouter
 void PacketHandler_GUCharScouterOnNfy(void* pPacket);
 void PacketHandler_GUCharScouterOffNfy(void* pPacket);
 
 // Rp Bonus skill setting
 void PacketHandler_GUSkillRpBonusSettingRes(void *pPacket);
 
-// social 
+// Social 
 void PacketHandler_GSCharSocialAction(void *pPacket);
 
-// HTB
+// etc
 void PacketHandler_GSCharHTBLearnRes(void* pPacket);
 void PacketHandler_GSCharHTBStartRes(void* pPacket);
 
-// buff
+// Buff
 void PacketHandler_GSBuffRegisted(void *pPacket);
 void PacketHandler_GSBuffDropped(void *pPacket);
 void PacketHandler_GSBuffRefreshAll(void *pPacket);
 void PacketHandler_GSBuffDropRes(void *pPacket);
 void PacketHandler_GSBuffActivate(void *pPacket);
 
-// update
+// Update
 void PacketHandler_GSCharUpdateLp(void *pPacket);
 void PacketHandler_GSCharUpdateEp(void *pPacket);
 void PacketHandler_GSCharUpdateLpEp(void* pPacket);
@@ -331,7 +331,7 @@ void PacketHandler_GSAutoRecoverNfy(void *pPacket);
 void PacketHandler_DisplayNotice(void *pPacket);
 void PacketHandler_GameCommonMsgNfy(void *pPacket);
 
-// NPCShop
+// Npc shop
 void PacketHandler_GSNPCShopStartRes(void *pPacket);
 void PacketHandler_GSNPCShopBuyRes(void *pPacket);
 void PacketHandler_GSNPCShopSellRes(void *pPacket);
@@ -350,15 +350,15 @@ void PacketHandler_GSItemSocketDestroyBeadRes(void *pPacket);
 
 void PacketHandler_GSItemExchangeRes(void *pPacket);
 
-// Scouter & parts
+// Scouts & parties
 void PacketHandler_GSScouterIndicatorRes(void *pPacket);
 void PacketHandler_GSItemIdentificationRes(void *pPacket);
 void PacketHandler_GSScouterEquipCheckRes(void *pPacket);
 
 // Class & Child
 void PacketHandler_GSConvertClass(void *pPacket);
-void PacketHandler_GSChildAdultSwitchedNfy(void* pPacket);              ///< 어른 <-> 어린이로 변경될때의 패킷
-void PacketHandler_GSChangeClassAuthorityChangedNfy(void* pPacket);		///< 전직권한 획득 패킷
+void PacketHandler_GSChildAdultSwitchedNfy(void* pPacket);              ///< Packet when changing to adult <-> child
+void PacketHandler_GSChangeClassAuthorityChangedNfy(void* pPacket);		///< Change Change Permission Packet
 
 // Party
 void PacketHandler_GSPartyCreateRes(void *pPacket);
@@ -463,7 +463,7 @@ void PacketHandler_GSTradeCancelNfy(void *pPacket);
 void PacketHandler_GSTradeCancelRes(void *pPacket);
 void PacketHandler_GSTradeDeclineRes(void* pPacket);
 
-// guild : GS 관련
+// guild : GS related
 void PacketHandler_GSGuild_Create_Res(void* pPacket);
 void PacketHandler_GSGuild_Invite_Res(void* pPacket);
 void PacketHandler_GSGuild_NameChanged_Res(void* pPacket);
@@ -483,7 +483,7 @@ void PacketHandler_GSGuild_Create_Emblem_Res(void* pPacket);
 void PacketHandler_GSGuild_Change_Emblem_Res(void* pPacket);
 void PacketHandler_GSGuild_Change_Emblem_Nfy(void* pPacket);
 
-// 도장 
+// Dojo
 void PacketHandler_GSDojo_CreateRes(void* pPacket);
 void PacketHandler_GSDojo_FunctionAddRes(void* pPacket);
 void PacketHandler_GSDojo_LevelChangedNfy(void* pPacket);
@@ -496,14 +496,14 @@ void PacketHandler_GSDojo_SealAttackBeginNfy(void* pPacket);
 void PacketHandler_GSDojo_SealAttackEndNfy(void* pPacket);
 void PacketHandler_GSDojo_ScrambleShiftStateNfy(void* pPacket);
 
-// 도복
+// gi
 void PacketHandler_GSDogi_CreateRes(void* pPacket);
 void PacketHandler_GSDogi_ChangeRes(void* pPacket);
 void PacketHandler_GSDogi_UpdateNfy(void* pPacket);
 void PacketHandler_GSGuildDogi_CreateRes(void* pPacket);
 void PacketHandler_GSGuildDogi_ChangeRes(void* pPacket);
 
-// HelpHint
+// Help Hint
 void PacketHandler_GUTutorial_Hint_Update_Res(void *pPacket);
 
 // Time machine quest
@@ -523,7 +523,7 @@ void PacketHandler_GUTimeQuest_CouponCount(void *pPacket);
 void PacketHandler_GUTimeQuest_TMQPoint(void *pPacket);
 void PacketHandler_GUTimeQuest_GameTime(void *pPacket);
 
-// 서버로부터의 메세지
+// message from server
 void PacketHandler_GUTeleCast_Message_Beg_Nfy(void* pPacket);
 void PacketHandler_GUTeleCast_Message_End_Nfy(void* pPacket);
 
@@ -534,7 +534,7 @@ void PacketHandler_GUMini_Narration(void* pPacket);
 void PacketHandler_GU_Progess_message_Nfy(void* pPacket);
 void PacketHandler_GU_Direction_Indicate_Nfy(void* pPacket);
 
-// PrivateShop
+// Private Shop
 void PacketHandler_GUPrivateShop_Create_Res(void *pPacket);
 void PacketHandler_GUPrivateShop_Create_Nfy(void *pPacket);
 void PacketHandler_GUPrivateShop_Exit_Res(void *pPacket);
@@ -604,7 +604,7 @@ void PacketHandler_GSRBBattleEndNfy(void* pPacket);
 void PAcketHandler_GSRBForcedEndNfy(void* pPacket);
 void PacketHandler_GSRBTotalScoreUpdateNfy(void* pPacket);
 
-// MailSystem
+// Mail System
 void PacketHandler_GUMailStartRes(void* pPacket);
 void PacketHandler_GUMailLoadInfo(void* pPacket);
 void PacketHandler_GUMailLoadData(void* pPacket);
@@ -641,26 +641,26 @@ void PacketHandler_GUPortalAddRes(void* pPacket);
 void PacketHandler_GUPortalRes(void* pPacket);
 
 // Mob
-void PacketHandler_GUBotCautionNfy(void* pPacket);                          ///< 선공몹이 눈치챘을때
-void PacketHandler_GUBotHelpMeNfy(void* pPacket);                           ///< 몹이 주위 동료에게 도움을 청할때
+void PacketHandler_GUBotCautionNfy(void* pPacket);                          ///< When the leader mob notices
+void PacketHandler_GUBotHelpMeNfy(void* pPacket);                           ///< When a mob asks for help from a nearby comrade
 
-// 버스 및 탈것
+// buses and vehicles
 void PacketHandler_GURideOnBusRes(void* pPacket);
 void PacketHandler_GURideOffBusRes(void* pPacket);
 
-// 변신 관련
-void PacketHandler_GUAfterEffectRemainTimeNfy(void* pPacket);               ///< 변신 휴유중 남은 시간
-void PacketHandler_GUTransformCancelRes(void* pPacket);                     ///< 변신 취소 요청에 대한 응답
-void PacketHandler_GUMonsterTransformedNfy(void* pPacket);                  ///< 몬스터 변신 알림 패킷
+// Transformation related
+void PacketHandler_GUAfterEffectRemainTimeNfy(void* pPacket);               ///< Remaining time during transformation break
+void PacketHandler_GUTransformCancelRes(void* pPacket);                     ///< Response to request to cancel transformation
+void PacketHandler_GUMonsterTransformedNfy(void* pPacket);                  ///< Monster transformation notification packet
 
-// 컨디션 관련
-void PacketHandler_GUSkillConfuseTragetNfy(void* pPacket);                  ///< 혼란 타겟을 받는 패킷
-void PacketHandler_GUSkillTerrorCourseChangeNfy(void* pPacket);             ///< 공포 타겟을 받는 패킷
+// Condition related
+void PacketHandler_GUSkillConfuseTragetNfy(void* pPacket);                  ///< Packet receiving confusion target
+void PacketHandler_GUSkillTerrorCourseChangeNfy(void* pPacket);             ///< Packet receiving fear target
 
 // RankBattle Score
-void PacketHandler_GUCharRankBattleScore(void* pPacket);				///< 랭크배틀 Score
+void PacketHandler_GUCharRankBattleScore(void* pPacket);				///< Rank Battle Score
 
-// 천하제일 무도회
+// BUDOKAI
 void PacketHandler_GUMinorMatchStateUpdateNfy(void* pPacket);
 void PacketHandler_GUMinorMatchTeamInfoNfy(void* pPacket);
 void PacketHandler_GUMinorMatchPlayerStateNfy(void* pPacket);
@@ -708,7 +708,7 @@ void PacketHandler_GUBudokaiPrizeWinnerTeamNameRes(void* pPacket);
 void PacketHandler_GUDisconnectNfy(void* pPacket);
 void PacketHandler_GUBudokaiMarkingNfy(void* pPacket);
 
-// 주사위
+// dice
 void PacketHandler_GUDiceRollRes(void* pPacket);
 void PacketHandler_GUDiceRolledNfy(void* pPacket);
 
@@ -719,11 +719,11 @@ void PacketHandler_GUShopGambleBuyRes(void* pPacket);
 void PacketHandler_GUTeleportProposalNfy(void* pPacket);
 void PacketHandler_GUTeleportConfirmRes(void* pPacket);
 
-// HTB RP 구슬 사용
+// Use HTB RP Balls
 void PacketHandler_GUHTBLastStepChangedNfy(void *pPacket);
 void PacketHandler_GSHTBRPBallResultDecidedNfy(void* pPacket);
 
-// RPCharge
+// Rp Charge
 void PacketHandler_GURPIncreaseStartNfy(void* pPacket);
 void PacketHandler_GURPDecreaseStartNfy(void* pPacket);
 void PacketHandler_GURPIncreaseStopNfy(void* pPacket);
@@ -745,7 +745,7 @@ void PacketHandler_GUVehicleEndRes(void* pPacket);
 void PacketHandler_GUVehicleStuntNfy(void* pPacket);
 void PacketHandler_GUVehicleFuelInsertRes(void* pPacket);
 
-// sound
+// Sound
 void PacketHandler_GUSoundPlayBGM(void* pPacket);
 
 void PacketHandler_GUBusLocationNfy(void* pPacket);
@@ -819,7 +819,7 @@ void PacketHandler_TUGuild_ChangeNotice_Res(void *pPacket);
 void PacketHandler_TUGuild_changeNotice_Nfy(void *pPacket);
 void PacketHandler_TUGuild_GiveZenny_Nfy(void *pPacket);
 
-// 도장
+// coating
 void PacketHandler_TUDojo_CreateNfy(void *pPacket);
 void PacketHandler_TUDojo_DestoryNfy(void *pPacket);
 void PacketHandler_TUDojo_BriefNfy(void *pPacket);
@@ -836,7 +836,7 @@ void PacketHandler_TUDojo_NoticeChangeNfy(void *pPacket);
 void PacketHandler_TUDojo_ScrambleResultNfy(void *pPacket);
 void PacketHandler_TUDojo_ScrambleRewardNfy(void *pPacket);
 
-// 친구
+// friend
 void PacketHandler_TUFreind_Add_Res(void* pPacket);
 void PacketHandler_TUFriend_Del_Res(void* pPacket);
 void PacketHandler_TUFriend_Move_Res(void* pPacket);
@@ -883,8 +883,8 @@ void PacketHandler_GUCharRefreshBattleAttributeModifier(void* pPacket);
 void PacketHandler_GUCharRankPointResetNfy(void* pPacket);
 
 
-// 상용화 관련
-void PacketHandler_GUNetMarbleMemberShipNfy(void* pPacket);             ///< PC방 유저라는 통지 메시지
+// Commercialization related
+void PacketHandler_GUNetMarbleMemberShipNfy(void* pPacket);             ///< Notification message indicating that you are a PC room user
 
 // Calsule unlock item notify
 void PacketHandler_GUInventoryCapsuleUnlockNfy(void* pPacket);

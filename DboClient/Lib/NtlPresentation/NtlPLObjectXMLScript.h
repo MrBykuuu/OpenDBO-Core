@@ -11,7 +11,7 @@
 
 /**
  * \ingroup NtlPresentation
- * \brief 오브젝트 스크립트(XML)을 Save/Load 하는 클래스
+ * \brief Class for saving/loading object script (XML)
  * \date 2006-06-07
  * \author agebreak
  */
@@ -21,19 +21,19 @@ public:
     CNtlPLObjectXMLScript(void);
     virtual ~CNtlPLObjectXMLScript(void);
 
-    RwBool SaveObjectScript(const char* strFileName, CNtlPLObjectProperty* pProperty);      ///< 스크립트 파일을 저장한다.
-    RwBool LoadObjectScript(const char* strFileName, CNtlPLObjectProperty* pProperty);      ///< 스크립트 파일을 로드한다.
+    RwBool SaveObjectScript(const char* strFileName, CNtlPLObjectProperty* pProperty);      ///< Save the script file.
+    RwBool LoadObjectScript(const char* strFileName, CNtlPLObjectProperty* pProperty);      ///<Load the script file.
 
 protected:    
-    RwBool SaveHeader(CNtlPLObjectProperty* pProperty);             ///< 헤더 부분을 저장한다.
-    RwBool SaveBody(CNtlPLObjectProperty* pProperty);               ///< 바디 부분을 저장한다.
-    RwBool SaveLinkEffect(CNtlPLObjectProperty* pProperty);		    ///< Link Effect Data 부분을 저장한다.
-	RwBool SaveAnimTable(CNtlPLObjectProperty* pProperty);       ///< AnimTable 부분을 저장한다.      
+    RwBool SaveHeader(CNtlPLObjectProperty* pProperty);             ///< Save the header part.
+    RwBool SaveBody(CNtlPLObjectProperty* pProperty);               ///< Save the body part.
+    RwBool SaveLinkEffect(CNtlPLObjectProperty* pProperty);		    ///< Save the Link Effect Data section.
+	RwBool SaveAnimTable(CNtlPLObjectProperty* pProperty);       ///< Save the AnimTable part.      
 
-    RwBool LoadHeader(CNtlPLObjectProperty* pProperty);             ///< 헤더 부분을 로드한다.
-    RwBool LoadBody(CNtlPLObjectProperty* pProperty);               ///< 헤더 부분을 로드한다.
-    RwBool LoadLinkEffect(CNtlPLObjectProperty* pProperty);         ///< Link Effect Data 부분을 로드한다.
-	RwBool LoadAnimTable(CNtlPLObjectProperty* pProperty);                     ///< AnimTable  부분을 로드한다.
+    RwBool LoadHeader(CNtlPLObjectProperty* pProperty);             ///<Load the header part.
+    RwBool LoadBody(CNtlPLObjectProperty* pProperty);               ///<Load the header part.
+    RwBool LoadLinkEffect(CNtlPLObjectProperty* pProperty);         ///< Load the Link Effect Data section.
+	RwBool LoadAnimTable(CNtlPLObjectProperty* pProperty);                     ///< Loads the AnimTable part.
 
 protected:
     IXMLDOMElement*     m_pElemRoot;                ///< Root Element

@@ -1,26 +1,26 @@
 /******************************************************************************
-* File			: ScouterGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2006. 9. 13
-* Last Update	: 2007. 8. 28
-* Abstract		:
+*File			: ScouterGui.h
+*Author		    : Hong SungBock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2006. 9. 13
+*Last Update	: 2007. 8. 28
+*Abstract		:
 *****************************************************************************
-* Desc			:
+*Desc			:
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
 #include "NtlSLDef.h"
 #include "NtlSob.h"
 
-// dbo
+// Dbo
 #include "SurfaceGui.h"
 #include "NumberGui.h"
 
@@ -61,14 +61,14 @@ public:
 
 		RwBool				bShowScouterBack;
 
-		RwUInt32			uiOffencePower;		///< 목표 전투력
-		RwUInt32			uiMoreMeasureCount;	///< 전투력을 갱신한 횟수
+		RwUInt32			uiOffencePower;		///< Target combat power
+		RwUInt32			uiMoreMeasureCount;	///< Number of times combat power was updated
 
-		RwReal				fTimeRecievePower;	///< 전투력을 서버로부터 받은 시간
-		RwReal				fTimeAdjustPower;	///< 전투력 보간 시간
-		RwReal				fTimeDisplayPower;	///< 전투력 수치를 보여주는 시간
+		RwReal				fTimeRecievePower;	///< Time to receive combat power from server
+		RwReal				fTimeAdjustPower;	///< Combat power interpolation time
+		RwReal				fTimeDisplayPower;	///< Time to show combat power values
 
-		RwInt32				iAdjustCount;		///< 전투력 보간 횟수
+		RwInt32				iAdjustCount;		///< Combat power interpolation count
 
 		bool				bAskPower;			///< Requested attack power level	
 
@@ -93,21 +93,21 @@ public:
 	VOID		Destroy();
 	VOID		Clear();
 
-	RwInt32		SwitchDialog(bool bOpen);			///< DialogManager에서의 Open/Close
+	RwInt32		SwitchDialog(bool bOpen);			///< Open/Close in DialogManager
 
 protected:
 	CScouterMeasureDlgGui() {}
 	virtual VOID	HandleEvents(RWS::CMsg& msg);
 
-	VOID		StartMeasure();		///< 스카우터 측정을 시작한다
+	VOID		StartMeasure();		///< Start scouter measurement
 
-	// 전투력 측정 관련
+	// Related to combat power measurement
 	RwBool		MeasurePower_Init();
 	VOID		MeasurePower_Destroy();
 	VOID		MeasurePower_Display(RwUInt32 uiPower, int nPhysOffence, int nPhysDefence, int nEnergyOffence, int nEnergyDefence, int nHitRate, int nDodge);
 	VOID		MeasurePower_AskPowertoServer();
 
-	// 히든 오브젝트 찾기 관련
+	// Related to finding hidden objects
 
 	VOID		EndDisplayImmediately();
 

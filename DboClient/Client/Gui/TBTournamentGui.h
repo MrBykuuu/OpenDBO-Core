@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: TBTournamentGui.h
-// Desc: 천하제일무도회 대전표
+// Desc: The World's First Martial Arts Competition Table
 //
 // 2008.09.25 Peessi@hitel.net   
 //
@@ -15,7 +15,7 @@
 #include "NtlBudokai.h"
 #include "NtlTimeQuest.h"
 
-// 대전정보
+// Tournament Fight Information
 class CTBTournamentFightInfo
 {
 public:
@@ -41,19 +41,19 @@ public:
 	~CTBTournamentFightInfo(VOID);
 
 	//! Operation
-	// 1. 대전 결과 받았을때 Line데이터 채우기, 한번 들어온 결과는 플래그를 켜준다.	애니메이션 플래그도 온~!!
+	// 1. Fill in the line data when you receive the match results, and turn on the flag once the results are received.	The animation flag is also on~!!
 	VOID	SetFightResult( RwUInt8 byMatchResult, RwUInt16 wWinnerJoinID, RwUInt16 wJoinID1, RwUInt16 wJoinID2, RwUInt8 byScore1, RwUInt8 byScore2 );
 
-	// 2. 각 진출했을때, 밑에서 올라온 데이터로 채워준다. 
+	// 2. At each advance, it is filled with data uploaded from below. 
 	VOID	SetEntryData( RwUInt8 byIdx, RwUInt16 wJoinID );
 
-	// 3. 정보보기 버튼 눌렀을 때 동작
+	// 3. Actions when the view information button is pressed
 	VOID	ClickFightInfo(VOID);
 
-	// 4. 이름 출력
+	// 4. Print name
 	VOID	ShowNameToInfoWnd( RwUInt8 byTeamPos );
 	
-	// 4. 애니메이션이 끝났을때.
+	// 4. When the animation ends.
 	VOID	EndOfAnimation(VOID);
 
 	//! Attribute
@@ -70,19 +70,19 @@ public:
 
 private:
 	//! Variable
-	// 위치 정보( 몇강 몇번째 경기 )
-	RwUInt8			m_byMatchNumber;	// 왼쪽부터 0번, 서버넘버
-	RwUInt8			m_byMatchLevel;		// 결승부터 0번, 서버넘버
-	// 애니메이션되야하는 플래그( 하위 노드 2개로 부터 종료 신호를 받아야함. 즉 2가 되어야 함
+	// Location information (several rounds and matches)
+	RwUInt8			m_byMatchNumber;	// Number 0 from the left, server number
+	RwUInt8			m_byMatchLevel;		// From the finals, number 0, server number
+	// Flag that must be animated (must receive termination signals from 2 child nodes. That is, it must be 2)
 	RwInt32			m_nEndOfBelowAnimation;	
-	// 각 대전자의 참가 ID
+	// Participation ID of each competitor
 	stENTRYINFO		m_stEntry[2];			
-	// 대전 결과
+	// Match Results
 	RwUInt8			m_byMatchResult;	// eMATCH_RESULT
 	RwUInt16		m_wWinnerTeamJoinID;	
-	// 상위 노드 
+	// parent node 
 	CTBTournamentFightInfo* m_pAboveFightInfo;
-	// 파티 모드인가
+    // Are you in party mode
 	RwBool			m_bParty;	
 };
 
@@ -197,21 +197,21 @@ private:
 	//! Variable
 	CTBTournamentInfoGroup*			m_pInfoGroup[NUM_PAGE];
 
-	RwUInt8							m_byMaxEntry;							// 최대 몇강. 
-	ePage							m_eCurrentPage;							// 현재 보이는 페이지.
-	RwUInt8							m_byIndividualFightInfoInputDoneCount;	// 현재 입력된 FightInfo 갯수.(서버 리퀘스트 용) 개인전
-	RwUInt8							m_byTeamFightInfoInputDoneCount;		// 현재 입력된 FightInfo 갯수.(서버 리퀘스트 용) 파티전		
+	RwUInt8							m_byMaxEntry;							// A few lessons at most. 
+	ePage							m_eCurrentPage;							// Currently visible page.
+	RwUInt8							m_byIndividualFightInfoInputDoneCount;	// Number of currently entered FightInfo. (for server request) Individual match
+	RwUInt8							m_byTeamFightInfoInputDoneCount;		// Number of currently entered FightInfo. (For server request) Party battle		
 
 	gui::CButton*					m_pbtnRightArrow;
 	gui::CButton*					m_pbtnLeftArrow;
 	gui::CStaticBox*				m_pstbIndividualGroupType;
 
-	gui::CButton*					m_pbtnParty;			// Toggle형식 버튼. 파티시 위의 세 컴포넌트가 사라지거나, 비활성화
+	gui::CButton*					m_pbtnParty;			// ToggleFormat button. When partying, the above three components disappear or are disabled.
 	gui::CButton*					m_pbtnIndividual;
 
 	gui::CStaticBox*				m_pstbTitle;			
-	gui::CStaticBox*				m_pstbInfomation;		// 설명.	
-	gui::CButton*					m_pbtnNextInfomation;	// 다음 설명 버튼.
+	gui::CStaticBox*				m_pstbInfomation;		// Description.	
+	gui::CButton*					m_pbtnNextInfomation;	// Next Description button.
 
 	gui::CButton*					m_pbtnClose;
 

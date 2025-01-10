@@ -1,25 +1,25 @@
 /******************************************************************************
-* File			: DojoInfoGui.h
-* Author		: Hong SungBock
-* Copyright		: (аж)NTL
-* Date			: 2009. 1. 15
-* Abstract		: 
+*File			: DojoInfoGui.h
+*Author		    : Hong SungBock
+*Copyright		: (аж)NTL
+*Date			: 2009. 1. 15
+*Abstract		: 
 *****************************************************************************
-* Desc			: 
+*Desc			: 
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// cleint
+// Client
 #include "Windowby3.h"
 #include "DojoInfo_Info.h"
 #include "DojoInfo_Battle.h"

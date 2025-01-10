@@ -21,25 +21,25 @@ enum EDirectLookAtType
 {
 	DIRECT_LOOKAT_NOT_USE,
 
-	// camera의 look at은 spline data에 의해 결정되고, 전혀 transform 시키지 않는다. 
+	//The camera's look at is determined by spline data, and is not transformed at all. 
 	DIRECT_LOOKAT_SELF,			
 
-	// camera의 look at은 spline data에 의해 결정되고, 
-	// 연출이 시작할 때 외부에서 입력된 방향으로 spline data를 모든 축으로 rotate 한다.
+	// The camera's look at is determined by spline data, 
+	// When production begins, rotate the spline data to all axes in the direction input from the outside.
 	DIRECT_LOOKAT_SELF_ALLAXIS,		
 
-	// camera의 look at은 spline data에 의해 결정되고, 
-	// 연출이 시작할 때 외부에서 입력된 방향으로 spline data를 Y 축으로만 rotate 한다.
+	// The camera's look at is determined by spline data, 
+	// When production begins, the spline data is rotated only on the Y axis in the direction input from the outside.
 	DIRECT_LOOKAT_SELF_YAXIS,				
 	
-	// camera의 look at은 camera의 현재 position과 look at position 에 의해 항상 변경이 된다.
-	// 연출이 시작할 때 외부에서 입력된 target position으로 spline data를 scale 및 Y 축으로만 rotate 한다.
+	// The camera's look at always changes depending on the camera's current position and look at position.
+	// When production starts, the spline data is rotated only on the scale and Y axis using the externally input target position.
 	DIRECT_LOOKAT_DYNAMIC,
 
-	// spline position을 ground height check를 하여, 높이에 적용한다.
+	// Check the spline position for ground height and apply it to the height.
 	DIRECT_GROUND_MOVE,
 
-	// spline position을 ground height check를 하지 않는다.
+	// The spline position is not checked for ground height.
 	DIRECT_FLY_MOVE,
 
 	DIRECT_LOOKAT_END = DIRECT_FLY_MOVE
@@ -73,9 +73,9 @@ private:
 	CNtlDTSpline	*m_pProp;
 	CNtlSob			*m_pSobObj;
 
-	RwReal			m_fCurrTime;		/** 현재의 흐른 시간 */
-	RwReal			m_fPtTime;			/** 현재 spline point의 time */
-	RwInt32			m_iPtIdx;			/** 현재 curve data index */
+	RwReal			m_fCurrTime;		/** current time passing */
+	RwReal			m_fPtTime;			/** Time of current spline point */
+	RwInt32			m_iPtIdx;			/** Current curve data index */
 	RwV3d			m_vPtPos;
 	
 	EDirectLookAtType	m_eLookAtType;

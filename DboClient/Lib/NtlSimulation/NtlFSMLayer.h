@@ -2,7 +2,7 @@
  *
  * File			: NtlFSMBase.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2006. 2. 9	
  * Abstract		: Finite state machine class
  *****************************************************************************
@@ -46,11 +46,11 @@ public:
 	virtual void NotifyUpdateChangeState(RwUInt32 uiOldStateId, RwUInt32 uiNextStateId);    ///< update notify function(state change)
 	virtual void NotifyEvents(RWS::CMsg &pMsg, RwUInt32 uiEventResult, RwUInt32 uiParam1, RwUInt32 uiParam2);   ///< event notify function(state change)
 
-    CNtlFSMAgent*       GetFSMAgent(void) const;      ///< agent instance를 얻어오는 함수.
-	CNtlFSMBase*        GetFSM(void) const;            ///< instance를 얻어오는 함수.
-	CNtlFSMStateBase*   GetCurrentState(void) const;  ///< current state를 얻어오는 함수.
+    CNtlFSMAgent*       GetFSMAgent(void) const;      ///< Function to obtain agent instance.
+	CNtlFSMBase*        GetFSM(void) const;            ///< Function that retrieves an instance.
+	CNtlFSMStateBase*   GetCurrentState(void) const;  ///< Function to get the current state.
 	
-	void SetActor(const CNtlSobActor *pActor);          ///< actor 설정 함수.
+	void SetActor(const CNtlSobActor *pActor);          ///< actor setting function.
 	CNtlSobActor* GetActor(void) const;
 };
 

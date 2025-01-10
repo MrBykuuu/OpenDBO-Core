@@ -37,7 +37,7 @@ public:
 
 	bool SendPetDismissReq(RwUInt8 byAvatarType);
 
-	// 이동
+	//Movement
 	bool SendMouseMove(RwV3d vCurr, RwV3d vDest, RwUInt8 byAvatarType);
 
 	bool SendKeyboardMove(RwV3d vCurr, RwV3d vDir, RwUInt8 byMoveFlag, RwUInt8 byAvatarType);
@@ -63,7 +63,7 @@ public:
 
 	bool SendCharFollowMove(SERIAL_HANDLE hTargetSerialId, RwReal fFollowRange, RwUInt8 byMovementReason, RwUInt8 byAvatarType);
 
-	// jump
+	// Jump
 	bool SendJump(RwUInt8 byMoveDirection, RwV3d vLoc, RwV3d vDir);
 
 	bool SendAirJump(RwUInt8 byMoveDirection, RwV3d vLoc, RwV3d vDir);
@@ -72,7 +72,7 @@ public:
 
 	bool SendJumpEnd(void);
 
-	// charging
+	// Charging
 	bool SendCharging(void);
 
 	bool SendChargingEnd(void);
@@ -81,17 +81,17 @@ public:
 
 	bool SendBlockingEnd(void);
 
-	// 앉기/서기
+	// sit/stand
 	bool SendSitAndStand(RwBool bSitDown);
 
-	// falling
+	// Falling
 	bool SendFalling(RwBool bFalling, RwV3d vCurrPos, RwV3d vCurrDir, RwUInt8 byMoveDirection);
 
-	//air
+	//Air
 	bool SendAirFalling(RwV3d vCurrPos, RwV3d vCurrDir, RwUInt8 byMoveDirection);
 	bool SendAirEnd(RwV3d vCurrPos, RwV3d vCurrDir);
 
-	// 공격
+	// attack
 	bool SendCharToggleFighting(RwBool bFightingMode, RwUInt8 byAvatarType);
 	bool SendCharAttackBegin(RwUInt8 byType, RwUInt8 byAvatarType);
 	bool SendCharAttackEnd(RwUInt8 byType, RwUInt8 byAvatarType);
@@ -106,15 +106,15 @@ public:
 	bool SendCharDirectPlayAck(void);
     bool SendCharSkillCastingCanceledNfy(WORD uiResultCode);
 
-    // 데미지 입었을때 이동 관련 처리 (넉다운, 슬라이딩, Push)
+    // Movement-related processing when taking damage (knockdown, sliding, push)
     bool SendCharLocAfterKnockdownNfy(const RwV3d& vLoc, const RwV3d& vDir);
     bool SendCharLocAfterSlidingNfy(const RwV3d& vLoc, const RwV3d& vDir);
     bool SendCharLocAfterPushNfy(const RwV3d& vLoc, const RwV3d& vDir);
 
-	// 바인드
+	// bind
 	bool SendCharBindReq( TBLIDX bindObjectTblidx );
 
-	// 퀘스트
+	// quest
 	bool SendTSConfirmStepReq( BYTE byTSType, NTL_TS_T_ID tId, NTL_TS_TC_ID tcCurId, NTL_TS_TC_ID tcNextId, RwUInt32* uiParam, RwUInt8 byEventType, RwUInt32 uiEventData );
 	bool SendQuestGiveUpReq( NTL_TS_T_ID tId );
 	bool SendTSUpdateState( NTL_TS_T_ID tId, RwUInt8 byTSType, RwUInt8 byType, RwUInt16 wTSState, RwUInt32 uiParam );
@@ -122,23 +122,23 @@ public:
 	bool SendQuestShare( NTL_TS_T_ID tId );
 	bool SendQuestObjectVisitReq( NTL_TS_T_ID tId, RwUInt32 uiWorldID, RwUInt8 byObjType, RwUInt32 uiObjectTblIdx );
 
-	// PrivateShop
+	// Private shop
 	bool SendPrivateShopCreateReq();
 
-	// ActionMap
+	// Action map
 	bool SendCharKeyUpdateReq(sSHORTCUT_UPDATE_DATA* pUpdateData, BYTE byCount);
-
-	// MailSystem
+	
+	// Mail system
 	bool SendMailLoadReq(RwUInt32 hSerialID, RwUInt8 uiCount, MAILID aMailID[NTL_MAX_MAIL_SLOT_COUNT]);
 
-	// 공유 target
+	// share target
 	bool SendCrossFireReq(RwUInt32 hSerialID);
 
-    // 버스및 탈것
-    bool SendRideOnBus(RwUInt32 hTargetId);                     ///< 버스 탑승을 요청한다.    
-    bool SendRideOffBus();                                      ///< 버스 하차를 요청한다.    
+    // buses and vehicles
+    bool SendRideOnBus(RwUInt32 hTargetId);                     ///< Request to board the bus.    
+    bool SendRideOffBus();                                      ///< Request to get off the bus.    
 
-	// vehicle
+	// Vehicle
 	bool SendVehicle_EngineFuelRemoveNfy();
 	bool SendVehicle_EndReq();
 	bool SendVehicle_FuelInsertReq(BYTE byPlace, BYTE byPos);
@@ -147,12 +147,12 @@ public:
 
 	bool SendVehicleStuntNfy();
 
-	// 천하제일 무도회 관련
+	// Related to the world's best ballroom
 	bool SendBudokaiMudosaTeleport(RwUInt8 byMudosaIndex);
 	bool SendBudokaiJoinStateReq();
 	bool SendBudokaiSocialAction(RwUInt32 uiAnimId);
 
-	// HTB Ball
+	// HTB Member
 	bool SendHTBRPBallUseReq(RwUInt8 byBallCount);
 };
 

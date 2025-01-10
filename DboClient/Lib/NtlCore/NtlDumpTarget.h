@@ -1,13 +1,13 @@
 /*****************************************************************************
  *
  * File			: NtlDumpTarget.h
- * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
- * Date			: 2005. 12. 26	
- * Abstract		: entity dump target class
+ * Author       : HyungSuk, Jang
+ * Copyright    : NTL Co., Ltd.
+ * Date         : December 26, 2005	
+ * Abstract     : entity dump target class
  *****************************************************************************
- * Desc         : 이 class는 모든 객체의 class 내용을 dump 하기 위한 target class 이다.
- *				  dump 내용이 console window, file, graphic user interface가 될 수도 있다.	
+ * Desc         : This class is a target class for dumping the class contents of all objects.
+ *                The contents of the dump may be a console window, file, or graphic user interface.	
  *****************************************************************************/
 
 
@@ -25,7 +25,7 @@ private:
 	RwInt32 m_iCurrSize;	/** current buffer size */
 	RwInt32 m_iDataSize;	/** current 유효한 data size */
 
-	RwBool m_bActive;		/** dump target이 active 되어 있는가 ? */
+	RwBool m_bActive;		/** Is dump target active? */
 
 private:
 

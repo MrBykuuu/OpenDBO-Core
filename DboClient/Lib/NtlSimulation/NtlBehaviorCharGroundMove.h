@@ -4,7 +4,7 @@
 
 /**
  * \ingroup NtlSimulation
- * \brief 일반적인 지형 이동을 처리하는 행동 클래스
+ * \brief Behavior class that handles general terrain movement
  *
  * \date 2009-04-15
  * \author agebreak
@@ -44,9 +44,9 @@ protected:
     void	SetTransform(void);
     void	SetAnim(RwUInt8 byMoveFlags);
     void	SetDashAnimEnd(void);
-    void    SetIdle2RunAnim(void);                 ///< Idle -> Run 보간 애니메이션을 설정한다.
+    void    SetIdle2RunAnim(void);                 ///< Idle -> Run Sets interpolation animation.
     void	SetServerSyncPosition(RwV3d vSyncPos);    
-    RwBool  IsIdleAnimationPlaying();              ///< Idle 애니메이션 플레이중인지 확인한다.
+    RwBool  IsIdleAnimationPlaying();              ///< Check if idle animation is playing.
 
 
     RwBool	UpdateDirectionMove(RwReal fElapsed);
@@ -57,7 +57,7 @@ protected:
     RwBool	UpdateDashMove(RwReal fElapsed);
     RwBool	UpdateDashTargetMove(RwReal fElapsed);    
 
-    RwBool  UpdateMoveSync(RwReal fElapsedTime, OUT RwV3d* pDestPos, OUT RwV3d* pNewDir);       ///< 현재의 MoveSync 값을 계산하는 Udpate 함수
+    RwBool  UpdateMoveSync(RwReal fElapsedTime, OUT RwV3d* pDestPos, OUT RwV3d* pNewDir);       ///< Udpate function that calculates the current MoveSync value
     void	UpdateServerSyncPosition(RwReal fElapsed);
     void	UpdateSendSyncCheck(RwReal fElapsed);
 
@@ -72,9 +72,9 @@ protected:
 
     void	FootStepMaterialProc(RWS::CMsg &pMsg);
 
-    // position 변화 check
+    // check position change
     void	LimitPositionChangeCheck(RwReal fElapsed);
-    RwBool  CheckFalling(RwReal fOldActorHeight, RwReal fFinalHeight, RwReal fSpeed, RwUInt8 byMoveFlag, RwV3d* pNewPos = NULL);              ///< 폴링 상태 체크 
+    RwBool  CheckFalling(RwReal fOldActorHeight, RwReal fFinalHeight, RwReal fSpeed, RwUInt8 byMoveFlag, RwV3d* pNewPos = NULL);              ///< Check polling status 
 
 protected:
 
@@ -82,15 +82,15 @@ protected:
     SMoveStuff			m_MoveStuff;
     SWorldHeightStuff	m_sHStuff;				/** world height stuff */
     RwBool				m_bSlowMove;			/** If the target is near to the target when the movement is first started ... */
-    RwReal				m_fSlowMoveTime;		/** slow move일 경우 누적 시간을 위해 사용 */
+    RwReal				m_fSlowMoveTime;		/** Used for cumulative time in case of slow move */
 
-    // speed
+    // Speed
     RwReal				m_fDefaultWalkSpeed;
     RwReal				m_fDefaultRunSpeed;
     RwReal				m_fDefaultBackSpeed;	
 
 
-    // dash
+    // Dash
     RwUInt8				m_byDashState;
     RwReal				m_fDashDestPosY;
     RwReal				m_fDashLadingDist;
@@ -102,18 +102,18 @@ protected:
     RwReal				m_fEffectSmokeTime;
     RwV3d				m_vDashEffOffset;
 
-    // camera
+    // Camera
     RwBool				m_bDashCameraEnable;
 
-    // possible 변화 check
+    // check possible changes
     RwReal				m_fPosChangeTime;
     RwUInt8				m_byPosChangeCnt;
     RwV3d				m_vChangeOldPos;
 
-    // collision
+    // Collision
     RwUInt8				m_byCollMoveImpossCnt;		// collision move impossible count
 
-    // server 동기 위치 보정.
+    // Server synchronous position correction.
     RwBool				m_bServerSyncPos;
     RwV3d				m_vServerSyncDir;
     RwReal				m_fServerSyncDist;
@@ -124,7 +124,7 @@ protected:
     RwBool				m_bSyncSendCheck;
     RwReal				m_fSyncSendTime;
 
-    // 보간 애니메이션을 위한 변수들
+    // Variables for interpolated animation
     RwBool              m_bInterAnimEnd;
     RwReal              m_fInterAnimTime;   
 };

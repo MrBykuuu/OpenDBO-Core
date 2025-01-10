@@ -67,8 +67,8 @@ public:
 	void			SetDisableAniChange(bool bFlag) { m_bDisableAniChange = bFlag; }
 	bool			GetDisableAniChange() { return m_bDisableAniChange; }
 
-	//---------------------------------------------------
-	// proxy system flag 설정에 관한 함수.
+//---------------------------------------------------
+	//Function related to proxy system flag settings.
 	//---------------------------------------------------
 
 	virtual	void	EnableProxySystemVisible(RwBool bVisible);
@@ -77,8 +77,8 @@ public:
 	virtual void	EnableProxySystemGUILPVisible(RwBool bVisible);
 	RwBool			IsProxySystemGUILPVisible(void);
 
-	//---------------------------------------------------
-	// owner simulation object  설정에 관한 함수.
+//---------------------------------------------------
+	//Function related to owner simulation object settings.
 	//---------------------------------------------------
 
 	void			SetSobObj(CNtlSob *pSobObj);
@@ -88,42 +88,42 @@ public:
 	virtual void	NotifyStateEnter(RwUInt32 uiStateId)	{}
 	virtual void	NotifyStateExit(RwUInt32 uiOldState, RwUInt32 uiNewState)		{}
 
-	//---------------------------------------------------
-	// presentation entity 생성 함수.                                                                      
+//---------------------------------------------------
+	//Presentation entity creation function.                                                                      
 	//---------------------------------------------------
 
-	// attach 시키지 않고 effect 생성.
+// Create effect without attaching.
 	CNtlPLEntity*			CreatePLEffect(const RwChar *pKey, const RwV3d *pPos = NULL, RwBool bIgnoreVisible = FALSE );
 
-	// attach 시키지 않고 effect 생성
-	// child list에 추가한다.
+// Create effect without attaching
+	//Add to child list.
 	CNtlPLEntity*			CreatePLChildEffect(const RwChar *pKey, RwBool bIgnoreVisible = FALSE);
 	
-	// bone attach시키면서 effect 생성.
+// Create effect while attaching bone.
     virtual CNtlPLEntity*	CreatePLChildEffect(const RwChar *pKey, const RwChar *pAttachBoneName, RwV3d vOffset = ZeroAxis, RwBool bIgnoreVisible = FALSE) {return NULL;}
 
-	// offset position에 attach시키면서 effect 생성.
+// Create effect by attaching to offset position.
 	virtual CNtlPLEntity*	CreatePLChildEffect(const RwChar *pKey, RwV3d vOffset, RwBool bIgnoreVisible = FALSE, RwBool bApplyRotate = FALSE)  { return NULL; }
 
-	// offset position에 attach시키면서 effect 생성.
+// Create effect by attaching to offset position.
 	CNtlPLEntity*			CreatePLDamageBox(RwV3d vPos, RwUInt32 uiDamage, RwBool bHealing = FALSE);
 
-	// child로 생성된 effect를 삭제한다.
+// Delete the effect created as a child.
 	virtual void			DeletePLChildEffect(CNtlPLEntity *pPLEntity);
 
-	//---------------------------------------------------
-	// main presentation entity에 관련된 함수 
+//---------------------------------------------------
+	//Functions related to the main presentation entity 
 	//---------------------------------------------------
 
-	/**
-	* Functions related to add and remove in world.
+/**
+	*Functions related to add and remove in world.
 	*/
 
 	virtual void			AddWorld(void)		{}
 	virtual void			RemoveWorld(void)	{}
 
-	/**
-	* transform에 관현된 함수.
+/**
+	* Function related to transform.
 	*/
 
 	virtual void			SetPosition(const RwV3d *pPos)	{}
@@ -139,8 +139,8 @@ public:
 
 	virtual void			SetScale(RwReal fScale)			{}
 
-	/**
-	* material에 관현된 함수.
+/**
+	*Function implemented in material.
 	*/
 
 	virtual void			SetAlpha(RwUInt8 byAlpha);
@@ -159,16 +159,16 @@ public:
 
 	virtual void			SetInkColor(RwUInt8 byRed, RwUInt8 byGreen, RwUInt8 byBlue) {}
 	
-	/**
-	* animation에 관련된 함수.
+/**
+	*Functions related to animation.
 	*/
 	
-	// animation setting
+// animation setting
 	virtual void			SetBaseAnimation(RwUInt32 uiAnimKey, RwBool bLoop = TRUE, RwReal fStartTime = 0.0f) {}
 
 	virtual RwBool			IsExistBaseAnimation(RwUInt32 uiAnimKey) { return FALSE; }
 
-	// 현재 play 하는 animation key를 얻어온다.
+// Retrieves the currently playing animation key.
 	virtual RwUInt32		GetBaseAnimationKey(void)		{ return 0; }
 
 	virtual RwBool			IsBaseAnimationEnd(void)		{ return TRUE; }
@@ -178,11 +178,11 @@ public:
 
 	virtual void			SetAnimBlendNoneOneTime(void)	{}
 
-	/**
-	* Decoration에 관련된 함수
+/**
+	*Functions related to decoration
 	*/
 
-	// Entity 상단의 이름 색상을 변경한다
+//Change the name color at the top of the entity
 	virtual void			SetNameColor(const WCHAR* pwcName, COLORREF color) {}
 
 	virtual void			SetNickNameColor(const WCHAR* pwcNickName, COLORREF nickNameColor) {}
@@ -194,51 +194,51 @@ public:
 	virtual void			SetDecorationProxyAlpha(RwUInt8 byAlpha) {}
 	virtual void			EnableDecorationProxyVisible(RwBool bShow) {}
 
-	/**
-	* entity 정보에 관한 함수.
+/**
+	* Function regarding entity information.
 	*/
 
-	// main entity를 얻어오는 함수.
+// Function to get the main entity.
 	virtual CNtlPLEntity*	GetPLMainEntity(void) { return NULL; }
 
-	// bone position을 얻어온다.
+// Get the bone position.
 	virtual RwV3d			GetBonePosition(const RwChar *pBoneName);
 
-	// 장착한 무기의 bone position
+// bone position of the equipped weapon
 	virtual RwV3d			GetWeaponBonePosition(const RwChar *pBoneName);
 
-	// 장착한 sub weapon의 bone position
+// Bone position of the mounted sub weapon
 	virtual RwV3d			GetSubWeaponBonePosition(const RwChar *pBoneName);
 
-	// pl entity의 폭을 얻어온다.
+//Get the width of pl entity.
 	virtual RwReal			GetPLEntityWidth(void); 
 
-	// pl entity의 높이를 얻어온다.
+// Get the height of pl entity.
 	virtual RwReal			GetPLEntityHeight(void);
 
-	// pl entity의 depth을 얻어온다.
+// Get the depth of pl entity.
 	virtual RwReal			GetPLEntityDepth(void); 
 
-	// pl entity의 base scale을 얻어온다.
+// Obtain the base scale of pl entity.
 	virtual RwReal			GetPLEntityBaseScale(void);
 
-    // 임의로 조정된 Scale을 얻어온다.
+// Obtains a randomly adjusted scale.
     virtual RwReal          GetScale();
 
-	/**
-	* child presentation entity에 관련된 함수  
+/**
+	*Functions related to child presentation entity  
 	*/
 
-	// child entity 추가.
+//Add child entity.
 	void					AddPLChildEntity(CNtlPLEntity *pPLEntity);
 
-	// child entity 갯수 얻어오기.
+// Get the number of child entities.
 	RwInt32					GetPLChildEntityCount(void) const;
 
-	// child entity transform.
+// child entity transform.
 	void					TransformPLChildEntity(RwMatrix& mat);
 
-	/** 
+/**
 	* dynamic effect control.
 	*/
 	CNtlSobProxySystemEffect*	AddVisualSystemEffectAlphaBlend(RwReal fWeightAlpha, RwReal fLifeTime, RwBool bLoop, RwBool bExceptDecorationProxy = FALSE);	
@@ -255,26 +255,26 @@ public:
 
     RwBool                      IsExitSystemEffect(CNtlSobProxySystemEffect* pSystemEffect);
 	
-    //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 	virtual void EnableVisible(RwBool bEnable);
 	virtual void EnablePicking(RwBool bEnable) {}
 	virtual void EnableShadowRendering(RwBool bEnable) {}
 	virtual void EnableHighlight(RwBool bEnable) {}	
 	virtual void CreateElapsedController(RwReal fCtrlTime, RwReal fWeightValue);
 	virtual void DeleteElapsedController(void);
-    virtual void EnableCameraAlpha(RwBool bEnable);             ///< 카메라 거리에 따른 알파를 적용한다.
+    virtual void EnableCameraAlpha(RwBool bEnable);             ///< Apply alpha according to camera distance.
 
 //------------------------------------------------------------------------------------------------------------
-// event에 관련된 함수.  
+// Function related to event.  
 //------------------------------------------------------------------------------------------------------------
 
 public:
 
 	
-	// mouse focus를 받았을 경우.
+// When mouse focus is received.
 	virtual void SetFocus(void) {}
 
-	// mouse focus를 읽어 버렸을 경우.
+// When mouse focus is read.
 	virtual void ReleaseFocus(void) {}
 
 };
@@ -315,7 +315,7 @@ inline RwInt32 CNtlSobProxy::GetPLChildEntityCount(void) const
 	return m_listPLChild.size();
 }
 
-// pl entity의 폭을 얻어온다.
+// Get the width of pl entity.
 inline RwReal CNtlSobProxy::GetPLEntityWidth(void)
 {
 	return 1.0f;

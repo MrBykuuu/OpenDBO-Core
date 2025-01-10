@@ -2,7 +2,7 @@
 //	File		:	NtlEffectSystemFreeList.h
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	Agebreak
 //	Update		:	
 //***********************************************************************************
@@ -34,8 +34,8 @@ private:
     static  RwFreeList*     m_pTraceSystemFreeList;
     static  RwFreeList*     m_pLineSystemFreeList;    
     static  RwFreeList*     m_pTrailSystemFreeList;    
-    static  RwFreeList*     m_pVertex1024;                          ///< 버텍스(1024) 메모리 풀
-    static  RwFreeList*     m_pVertex5120;                          ///< 버텍스(5120) 메모리 풀
+    static  RwFreeList*     m_pVertex1024;                          ///< Vertex(1024) memory pool
+    static  RwFreeList*     m_pVertex5120;                          ///< Vertex (5120) memory pool
 
 public:
 	static	std::string					m_strClumpTexturePath;
@@ -43,7 +43,7 @@ public:
 	static	CNtlResourceFileManager		m_AnimationFileManager;
 	static	CNtlResourceFileManager		m_UvAnimationFileManager;
 	static	CNtlResourceFileManager		m_TextureFileManager;
-    static  CNtlResourceFileManager     m_SoundFileManager;                 ///< Sound File들의 리스트 (현재는 Venus에서만 사용한다)
+    static  CNtlResourceFileManager     m_SoundFileManager;                 ///< List of Sound Files (currently only used in Venus)
 
 	//typedef std::map<std::string, CNtlPLResource*, STRING_COMPARE_NOCASE>	smdef_PLResource;
 	//static	smdef_PLResource		m_smClumpResource;

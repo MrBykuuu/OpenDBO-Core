@@ -46,7 +46,7 @@ RwBool CResultNarrationGui::Create(VOID)
 
 VOID CResultNarrationGui::Destroy(VOID)
 {
-	// 혹시나...
+	// perhaps...
 	GetNtlGuiManager()->RemoveUpdateFunc( this );
 
 	UnLinkMsg( g_EventResize );
@@ -81,7 +81,7 @@ VOID CResultNarrationGui::Show( bool bShow )
 
 VOID CResultNarrationGui::SetData( const RwChar* szFileName, const WCHAR* szMessage )
 {
-	// Peessi: Resource문제에 따른 임시대응.
+	// Peessi: Temporary response due to resource issues.
 	if( strcmp( szFileName, "TB_MatchFinish_npc.swf" ) == 0 )
 		m_phbxMessage->SetPosition( 170, 580 );
 	else

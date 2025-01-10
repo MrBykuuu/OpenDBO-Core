@@ -1,30 +1,30 @@
 ﻿/*****************************************************************************
-* File			: DboPackethandler_Lobby.cpp
-* Author		: Hong sungbock
-* Copyright		: (주)NTL
-* Date			: 2007. 1. 16
-* Abstract		: 게임에 접속하여 실제 월드 진입까지의 패킷 핸들을 모은다
+*File			: DboPackethandler_Lobby.cpp
+*Author		    : Hong sungbock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 1. 16
+*Abstract		: Connect to the game and collect packet handles from entering the real world.
 *****************************************************************************
-* Desc         : 
+*Desc           : 
 *****************************************************************************/
 
 #include "precomp_dboclient.h"
 #include "DboPacketHandler.h"
 
-//framework
+//Framework
 #include "NtlStage.h"
 
-// table
+// Table
 #include "WorldTable.h"
 
-// sound
+// Sound
 #include "NtlSoundEventGenerator.h"
 
-// presentation
+// Presentation
 #include "NtlPLVisualManager.h"
 #include "NtlPLDojoContainer.h"
 
-// simulation
+// Simulation
 #include "NtlNetSender.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSLPacketGenerator.h"
@@ -34,7 +34,7 @@
 #include "NtlCameraController.h"
 #include "NtlStorageManager.h"
 
-// dbo
+// Dbo
 #include "StageManager.h"
 #include "LogInStageState.h"
 #include "CharStageState.h"
@@ -53,7 +53,7 @@
 
 void PacketHandler_LSLoginRes(void *pPacket)
 {
-	// event 발생(login)
+	// event occurs (login)
 	CDboEventGenerator::LoginGuiEnable();
 
 	sAU_LOGIN_RES *pLoginRes = (sAU_LOGIN_RES*)pPacket;
@@ -68,7 +68,7 @@ void PacketHandler_LSLoginRes(void *pPacket)
 		pConData->uiAccountId = pLoginRes->accountId;
 		pConData->byLastServerFarmID = pLoginRes->lastServerFarmId;		
 
-		// character server ip 정보.
+		// character server ip information.
 		pConData->ResetCharacterServer();
 
 		for(RwInt32 i = 0; i < (RwInt32)pLoginRes->byServerInfoCount; i++)
@@ -79,7 +79,7 @@ void PacketHandler_LSLoginRes(void *pPacket)
 		}
 
 
-		// login server 끊기.
+		// Disconnect from login server.
 		CLoginPacketGenerator *pLoginPacketGenerator = GetDboGlobal()->GetLoginPacketGenerator(); 
 		pLoginPacketGenerator->SendLogOutReq(pLoginRes->awchUserId, true); 
 
@@ -116,7 +116,7 @@ void PacketHandler_LSLoginDisconnectRes(void *pPacket)
 // character server packet hander class
 
 //////////////////////////////////////////////////////////////////////////
-// 캐릭터 서버에 로그인하였다
+// Logged in to the character server
 void PacketHandler_CSLoginRes(void *pPacket)
 {	
 	sCU_LOGIN_RES *pLoginRes = (sCU_LOGIN_RES*)pPacket;
@@ -140,8 +140,8 @@ void PacketHandler_CSLoginRes(void *pPacket)
 		return;
 	}
 
-	// 물리적 서버가 달라서 마지막으로 접속한 서버정보가 틀릴 수 있다.
-	// 정보를 한 번 더 갱신한다
+	// Because the physical servers are different, the last connected server information may be incorrect.
+	// Update information once more
 
 	SConnectData *pConData = GetDboGlobal()->GetConnectData();
 	pConData->byLastServerFarmID = pLoginRes->lastServerFarmId;
@@ -152,7 +152,7 @@ void PacketHandler_CSLoginRes(void *pPacket)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// 실제 서버 정보를 받는다
+// Receive actual server information
 void PacketHandler_CSCharServerFarmInfo(void *pPacket)
 {	
 	sCU_SERVER_FARM_INFO* pResult = (sCU_SERVER_FARM_INFO*)pPacket;
@@ -161,7 +161,7 @@ void PacketHandler_CSCharServerFarmInfo(void *pPacket)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// 서버 리스트를 모두 받았다
+// Received all server list
 void PacketHandler_CSCharServerListRes(void *pPacket)
 {	
 	sCU_CHARACTER_SERVERLIST_RES* pResult = (sCU_CHARACTER_SERVERLIST_RES*)pPacket;
@@ -194,13 +194,13 @@ void PacketHandler_CSCharServerListRes(void *pPacket)
 		GetCharStageState()->ChangeState(CHAR_STATE_SERVER_ENTER);
 	}
 
-	// 서버 리스트 전부를 받았다
-	// 서버 업데이트 이벤트를 보낸다
+	// Received full server list
+	// Send server update event
 	CDboEventGenerator::LobbyEvent(LMT_UPDATE_SERVER);
 }
 
 //////////////////////////////////////////////////////////////////////////
-// 서버 정보 하나만 받았다
+// Only one server information was received
 void PacketHandler_CSCharServerListOneRes(void * pPacket)
 {	
 	sCU_CHARACTER_SERVERLIST_ONE_RES* pResult = (sCU_CHARACTER_SERVERLIST_ONE_RES*)pPacket;
@@ -226,7 +226,7 @@ void PacketHandler_CSCharServerListOneRes(void * pPacket)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// 캐릭터 서버의 채널(게임 서버)정보를 받는다
+// Receive channel (game server) information of the character server
 void PacketHandler_CSCharServerChannelInfo(void *pPacket)
 {
 	sCU_SERVER_CHANNEL_INFO* pResult = (sCU_SERVER_CHANNEL_INFO*)pPacket;
@@ -244,7 +244,7 @@ void PacketHandler_CSCharServerChannelInfo(void *pPacket)
 
 
 //////////////////////////////////////////////////////////////////////////
-// 현 캐릭터 서버의 실제 캐릭터 정보를 받는다
+// Receive actual character information from the current character server
 void PacketHandler_CSCharInfo(void *pPacket)
 {
 	sCU_CHARACTER_INFO* pResult = (sCU_CHARACTER_INFO*)pPacket;
@@ -263,7 +263,7 @@ void PacketHandler_CSCharInfo(void *pPacket)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// 현 캐릭터 서버의 모든 캐릭터 정보를 받았다
+// Received information on all characters on the current character server.
 void PacketHandler_CSCharLoadRes(void *pPacket)
 {
 	GetMsgBoxManager()->DeleteNetConnectBox();
@@ -285,10 +285,10 @@ void PacketHandler_CSCharLoadRes(void *pPacket)
 		}
 	}	
 
-	// 채널 업데이트
+	// channel updates
 	CDboEventGenerator::LobbyEvent(LMT_UPDATE_CHANNEL);
 
-	// 캐릭터 내용 UI 갱신
+	// Character content UI update
 	CDboEventGenerator::LobbyEvent(LMT_UPDATE_CHARACTER_LIST);
 
 	//if( GetLobbyManager()->GetCharacterCount_inSelectedServer() > 0 )
@@ -320,7 +320,7 @@ void PacketHandler_CSCharAddRes(void *pPacket)
 	listNewCharID.push_back(pCharAddRes->sPcDataSummary.charId);
 #endif
 
-	// 새로 만든 캐릭터 정보 저장
+	// Save newly created character information
 	SERVER_HANDLE	hServer	= GetLobbyManager()->GetSelectedServerHandle();
 	CLobby*			pLobby	= GetLobbyManager()->GetLobby(hServer);
 	if( !pLobby )
@@ -331,10 +331,10 @@ void PacketHandler_CSCharAddRes(void *pPacket)
 
 	pLobby->AddCharacter(&pCharAddRes->sPcDataSummary);
 
-	// 새로 만든 캐릭터를 선택한다
+	// Select the newly created character
 	pLobby->SetSelectedCharacterIndex( pLobby->GetCharacterCount() - 1 );
 
-	// 캐릭터 내용 UI 갱신
+	// Character content UI update
 	CDboEventGenerator::LobbyEvent(LMT_UPDATE_CHARACTER_LIST);	
 
 	GetCharStageState()->ChangeState(CHAR_STATE_MAKE_EXIT);
@@ -352,8 +352,8 @@ void PacketHandler_CSCharDelRes(void *pPacket)
 		return;
 	}
 
-	// 캐릭터 삭제 대기
-	// 새로 만든 캐릭터를 선택한다
+	// Waiting for character deletion
+	// Select the newly created character
 	SERVER_HANDLE	hServer	= GetLobbyManager()->GetSelectedServerHandle();
 	CLobby*			pLobby	= GetLobbyManager()->GetLobby(hServer);
 	if( !pLobby )
@@ -364,7 +364,7 @@ void PacketHandler_CSCharDelRes(void *pPacket)
 
 	pLobby->SetReserveDeleteCharacter(pCharDelRes->charId, ((RwReal)pCharDelRes->dwRemainTick)/1000.f);
 
-	// 캐릭터가 남아있다면 처음 캐릭터를 선택한다
+	// If there are any characters left, select the first character.
 	if( pLobby->GetCharacterCount() > 0 )
 	{
 		pLobby->SetSelectedCharacterIndex( 0 );
@@ -376,7 +376,7 @@ void PacketHandler_CSCharDelRes(void *pPacket)
 		CDboEventGenerator::LobbyEvent(LMT_SELECT_CHARACTER, INVALID_BYTE);
 	}
 
-	// 캐릭터 내용 UI 갱신
+	// Character content UI update
 	CDboEventGenerator::LobbyEvent(LMT_UPDATE_CHARACTER_LIST);	
 }
 
@@ -484,7 +484,7 @@ void PacketHandler_CSCharSelectRes(void *pPacket)
 		pConnectData->sGameCon.wServerPort = pResult->wGameServerPortForClient;
 
 
-		// game server 접속.
+		// Connect to the game server.
 		CNtlClientNet *pNet = GetDboGlobal()->GetNetwork(); 
 
 		CGamePacketGenerator *pGamePacketGenerator = GetDboGlobal()->GetGamePacketGenerator(); 
@@ -516,13 +516,13 @@ void PacketHandler_CSCharSelectRes(void *pPacket)
 
 			if( GetDboGlobal()->IsEnterTutorial() )
 			{
-				// 튜토리얼 진입
+				// Enter the tutorial
 				GetCharStageState()->ReservateState(CHAR_STATE_READY_ENTER_TUTORIAL);
 				GetCharStageState()->ChangeState(CHAR_STATE_SELECT_EXIT);
 			}
 			else
 			{
-				// 게임 진입
+				// Enter the game
 				GetCharStageState()->ReservateState(CHAR_STATE_SUCCESS_ENTER_GAME);
 				GetCharStageState()->ChangeState(CHAR_STATE_SELECT_EXIT);
 			}
@@ -752,8 +752,8 @@ void PacketHandler_GSGameEnterRes(void *pPacket)
 	sGU_GAME_ENTER_RES *pGameEnterRes = (sGU_GAME_ENTER_RES*)pPacket;
 	if(pGameEnterRes->wResultCode != GAME_SUCCESS)
 	{
-		// string 문자열을 찍는다.
-		// network data reading pause 시킨다. 
+		// string Takes a string.
+        // Pause reading network data on the server. 
 		GetAlarmManager()->AlarmMessage(Logic_GetResultCodeString(pGameEnterRes->wResultCode, "GU_GAME_ENTER_RES"), TRUE );
 		return;
 	}
@@ -932,7 +932,7 @@ void PacketHandler_GSAvatarWorldInfo(void *pPacket)
 
 	GetNtlWorldConcept()->DeleteGradeWorldPlayConcept(WORLD_CONCEPT_FIRST_GRADE);
 
-	// world 정보 입력.
+	// Enter world information.
 	RwBool bWorldChange = FALSE;
 
 	SAvatarInfo *pAvatarInfo = GetNtlSLGlobal()->GetAvatarInfo(); 
@@ -994,14 +994,14 @@ void PacketHandler_GSAvatarWorldInfo(void *pPacket)
 	RwUInt8 byRuleType = pWorldInfo->worldInfo.sRuleInfo.byRuleType;
 	CWorldTable* pWorldTable = API_GetTableContainer()->GetWorldTable();
 
-	// world concept 정보 입력.
+	// Enter world concept information.
 	if(byRuleType != GAMERULE_NORMAL)
 	{
 		if(byRuleType == GAMERULE_TUTORIAL)
 		{
 			GetNtlWorldConcept()->AddWorldPlayConcept(WORLD_PLAY_TUTORIAL);
 
-			// 임시
+			// temporary
 			CNtlWorldConceptTutorial* pConcept = reinterpret_cast<CNtlWorldConceptTutorial*>(GetNtlWorldConcept()->GetWorldConceptController(WORLD_PLAY_TUTORIAL));
 			pConcept->SetTMQState(TIMEQUEST_GAME_STATE_BEGIN);
 		}
@@ -1029,7 +1029,7 @@ void PacketHandler_GSAvatarWorldInfo(void *pPacket)
 		}
 		else if(byRuleType == GAMERULE_TIMEQUEST)
 		{
-			CNtlSLEventGenerator::CameraControlDelete(CAMERA_CONTROL_TIMEMACHINE); // 타임머신 연출 카메라를 제거한다.
+			CNtlSLEventGenerator::CameraControlDelete(CAMERA_CONTROL_TIMEMACHINE); // Remove the time machine production camera.
 
 			GetNtlWorldConcept()->AddWorldPlayConcept(WORLD_PLAY_TIME_MACHINE);
 
@@ -1065,7 +1065,7 @@ void PacketHandler_GSAvatarWorldInfo(void *pPacket)
 	}	
 	else
 	{
-		// 일반 월드로 나가는 시점에서 타이머신 카메라가 존재하는 경우는 삭제한다
+		// If there is a timer scene camera when leaving the normal world, it is deleted.
 		CNtlSLEventGenerator::CameraControlDelete(CAMERA_CONTROL_TIMEMACHINE);
 	}
 
@@ -1114,7 +1114,7 @@ void PacketHandler_GSAvatarWorldInfo(void *pPacket)
 
 void Packethandler_GSAvatarWorldZoneInfo( void* pPacket )
 {
-	// Night 효과 이벤트를 날린다.
+	// Fires a Night effect event.
 	sGU_AVATAR_ZONE_INFO* pZoneInfo = reinterpret_cast<sGU_AVATAR_ZONE_INFO*>(pPacket);
 	if(pZoneInfo)
 	{
@@ -1208,7 +1208,7 @@ void PacketHandler_GSAuthKeyCommunityServerRes(void *pPacket)
 
 void PacketHandler_GSAvatarPetitionInfo(void *pPacket)
 {
-	// 유저의 계정으로 진정을 넣었던 정보
+	// Information submitted to the user's account
 	sGU_AVATAR_PETITION_INFO* pPetitionInfo = (sGU_AVATAR_PETITION_INFO*)pPacket;
 
 	GetPetitionManager()->SetPetitionID(pPetitionInfo->petitionID);
@@ -1217,7 +1217,7 @@ void PacketHandler_GSAvatarPetitionInfo(void *pPacket)
 
 void PacketHandler_GSWarFog_UpdataRes(void *pPacket)
 {
-	// 나메크 사이칸을 클릭하여 워포그를 밝힌다
+	// Click on the Namek Saikan to reveal a warfog.
 	API_GetSLPacketLockManager()->Unlock( GU_WAR_FOG_UPDATE_RES );
 
 	sGU_WAR_FOG_UPDATE_RES* pResult = (sGU_WAR_FOG_UPDATE_RES*)pPacket;
@@ -1238,7 +1238,7 @@ void PacketHandler_GSCharServerExitRes(void *pPacket)
 
 	sGU_CHAR_EXIT_RES *pCharServerRes = (sGU_CHAR_EXIT_RES*)pPacket;
 
-	// login server 끊기.
+	// Disconnect from login server.
 	CNtlClientNet *pNet = GetDboGlobal()->GetNetwork(); 
 	SConnectData *pConnectData = GetDboGlobal()->GetConnectData();
 
@@ -1269,7 +1269,7 @@ void PacketHandler_GSCharServerExitRes(void *pPacket)
 		// auth key
 		memcpy(pConnectData->sCharCon.chAuthKey, pCharServerRes->achAuthKey, NTL_MAX_SIZE_AUTH_KEY);
 
-		// character server ip 정보.
+		// character server ip information.
 		for(RwInt32 i = 0; i < (RwInt32)pCharServerRes->byServerInfoCount; i++)
 		{
 			pConnectData->AddCharacterServer(pCharServerRes->aServerInfo[i].szCharacterServerIP, 

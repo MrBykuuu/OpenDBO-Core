@@ -2,11 +2,11 @@
  *
  * File			: NtlPLRenderCallback.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: (?)NTL
  * Date			: 2005. 12. 06	
  * Abstract		: Presentation render callback 
  *****************************************************************************
- * Desc         : renderware rendering callback 관한 함수.
+ * Desc         : Function regarding renderware rendering callback.
  *
  *****************************************************************************/
 
@@ -24,7 +24,7 @@
 RpWorldSector*	NtlWorldSectorAtomicCallback(RpWorldSector *pWorldSector, void *data); 
 RpWorldSector*	NtlWorldSectorRenderCallback(RpWorldSector *pWorldSector, void *data);
 
-// 인도어 : TEST
+// Indoor : TEST
 RpWorldSector*	NtlWorldSectorRenderCallBack_PVSBBox(RpWorldSector* worldSector);
 RpWorldSector*	NtlWorldSectorRenderCallBack_PVSWire(RpWorldSector* worldSector);
 RpWorldSector*	NtlWorldSectorRenderCallBack_PVS(RpWorldSector* worldSector);

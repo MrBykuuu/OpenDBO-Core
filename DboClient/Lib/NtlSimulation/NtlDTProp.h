@@ -125,7 +125,7 @@ struct SSplineCurvePt
 struct SSplineProp
 {
 	EDTSplineShape	eShape;					/** line, circle, hurricane */
-	RwReal			fTime;					/** spline ÃÑ ½Ã°£ */
+	RwReal			fTime;					/** spline total time */
 	RwInt32			iCtrlNum;				/** control point num */
 	RwInt32			iCurveSubDivision;		/** curve sub division num */
 	RwReal			fRadius;				/** circle radius */

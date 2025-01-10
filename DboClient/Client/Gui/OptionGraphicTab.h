@@ -1,11 +1,11 @@
 /******************************************************************************
-* File			: OptionGraphicTab.h
-* Author		: Hae sung, Cho
-* Copyright		: (주)NTL
-* Date			: 2009. 3. 24
-* Abstract		: 
+*File			: OptionGraphicTab.h
+*Author		: Hae sung, Cho
+*Copyright		: NTL Co., Ltd.
+*Date			: 2009. 3. 24
+*Abstract		: 
 *****************************************************************************
-* Desc			: Tab of graphics
+*Desc			: Tab of graphics
 *****************************************************************************/
 
 #ifndef _OPTION_GRAPHIC_TAB_H_
@@ -13,7 +13,7 @@
 
 #pragma once
 
-//// Video Mode 리스트
+////Video Mode List
 typedef struct _SVideoModeInfo
 {
 	RwInt32 iWidth;
@@ -98,18 +98,18 @@ protected:
 	DEVICE_RESTORE_HANDLE m_hRestore;
 
 protected:
-	gui::CDialog*		m_pThis;			///< 현재 Dialog
-	gui::CDialog*		m_pScrollDialog;	///< 스크롤 되는 Dialog
+	gui::CDialog*		m_pThis;			///< Current Dialog
+	gui::CDialog*		m_pScrollDialog;	///< Scrolling Dialog
 
 	gui::CSlot			m_slotAbsoluteMouseWheel;
 
-	gui::CStaticBox*	m_pStbResolutionTitle;	///< 해상도 설정
-	gui::CStaticBox*	m_pStbResolution;		///< 해상도
-	gui::CComboBox*		m_pCbbResolution;		///< 해상도 설정 콤보박스
+	gui::CStaticBox*	m_pStbResolutionTitle;	///< Resolution settings
+	gui::CStaticBox*	m_pStbResolution;		///< Resolution
+	gui::CComboBox*		m_pCbbResolution;		///< Resolution setting combo box
 	gui::CSlot			m_slotListToggled;	
 
-	gui::CStaticBox*	m_pStbGamma;			///< 밝기
-	gui::CScrollBar*	m_pScbGamma;			///< 밝기 설정 스크롤바
+	gui::CStaticBox*	m_pStbGamma;			///< Brightness
+	gui::CScrollBar*	m_pScbGamma;			///< Brightness settings scrollbar
 	gui::CSlot			m_slotGammaSliderMoved;
 	gui::CSlot			m_slotGammaValueChanged;
 
@@ -118,68 +118,68 @@ protected:
 	gui::CSlot			m_slotFpsSliderMoved;
 	gui::CSlot			m_slotFpsValueChanged;
 
-	gui::CButton*		m_pBtnWindowMode;		///< 윈도우 모드 설정 토글바
+	gui::CButton*		m_pBtnWindowMode;		///< Window mode settings toggle bar
 
-	gui::CStaticBox*	m_pStbEffectTitle;		///< 효과 타이틀
-	gui::CStaticBox*	m_pStbGraphicQuality;	///< 전체 그래픽 품질
-	gui::CStaticBox*	m_pStbGraphicQualityLow;	///< 낮음
-	gui::CStaticBox*	m_pStbGraphicQualityMiddle;	///< 보통
-	gui::CStaticBox*	m_pStbGraphicQualityHigh;	///< 높음
-	gui::CStaticBox*	m_pStbGraphicQualityUser;	///< 사용자 설정
-	gui::CScrollBar*	m_pScbGraphicQuality;		///< 그래픽 품질 설정 스크롤바
+	gui::CStaticBox*	m_pStbEffectTitle;		///< Effect title
+	gui::CStaticBox*	m_pStbGraphicQuality;	///< Overall graphics quality
+	gui::CStaticBox*	m_pStbGraphicQualityLow;	///< low
+	gui::CStaticBox*	m_pStbGraphicQualityMiddle;	///< Normal
+	gui::CStaticBox*	m_pStbGraphicQualityHigh;	///< high
+	gui::CStaticBox*	m_pStbGraphicQualityUser;	///< User settings
+	gui::CScrollBar*	m_pScbGraphicQuality;		///< Graphic quality settings scrollbar
 	gui::CSlot			m_slotQualitySliderMoved;
 	gui::CSlot			m_slotQualityValueChanged;
 
-	gui::CStaticBox*	m_pStbTerrainDist;		///< 지형 시야거리
-	gui::CScrollBar*	m_pScbTerrainDist;		///< 지형 시야거리 설정 스크롤 바
+	gui::CStaticBox*	m_pStbTerrainDist;		///< Terrain viewing distance
+	gui::CScrollBar*	m_pScbTerrainDist;		///< Terrain viewing distance setting scroll bar
 	gui::CSlot			m_slotTerrainSliderMoved;
 	gui::CSlot			m_slotTerrainValueChanged;
 	
-	gui::CStaticBox*	m_pStbObjectDist;		///< 사물 시야거리
-	gui::CScrollBar*	m_pScbObjectDist;		///< 사물 시야거리 설정 스크롤 바
+	gui::CStaticBox*	m_pStbObjectDist;		///< Object viewing distance
+	gui::CScrollBar*	m_pScbObjectDist;		///< Object viewing distance setting scroll bar
 	gui::CSlot			m_slotObjectSliderMoved;
 	gui::CSlot			m_slotObjectValueChanged;
 
-	gui::CButton*		m_pBtnTerrainShadow;	///< 지형 그림자
+	gui::CButton*		m_pBtnTerrainShadow;	///< Terrain Shadows
 	gui::CSlot			m_slotTerrainShadowToggled;
 
-	gui::CButton*		m_pBtnWaterEffect;		///< 물 효과
+	gui::CButton*		m_pBtnWaterEffect;		///< water effect
 	gui::CSlot			m_slotWaterEffectToggled;
 
-	/*gui::CStaticBox*	m_pStbCharacterDist;	///< 캐릭터 시야거리
-	gui::CScrollBar*	m_pScbCharacterDist;	///< 캐릭터 시야거리 설정 스크롤 바
-	gui::CSlot			m_slotCharacterDistSliderMoved;
-	gui::CSlot			m_slotCharacterDistValueChanged;*/
+	/*gui::CStaticBox*  m_pStbCharacterDist;	///< Character viewing distance
+	gui::CScrollBar*    m_pScbCharacterDist;	///< Character viewing distance setting scroll bar
+	gui::CSlot          m_slotCharacterDistSliderMoved;
+	gui::CSlot          m_slotCharacterDistValueChanged;*/
 
-	gui::CButton*		m_pBtnCharacterShadow;	///< 캐릭터 그림자
+	gui::CButton*		m_pBtnCharacterShadow;	///< Character shadow
 	gui::CSlot			m_slotCharacterShadowToggled;
 
-	gui::CStaticBox*	m_pStbMagicEffect;		///< 마법 세부효과
-	gui::CScrollBar*	m_pScbMagicEffect;		///< 마법 세부효과 설정 스크롤 바
+	gui::CStaticBox*	m_pStbMagicEffect;		///< Magic detailed effects
+	gui::CScrollBar*	m_pScbMagicEffect;		///< Magic detailed effect settings scroll bar
 	gui::CSlot			m_slotMagicEffectSliderMoved;
 	gui::CSlot			m_slotMagicEffectValueChanged;
 
-	gui::CStaticBox*	m_pStbWeatherEffect;	///< 날씨 효과
-	gui::CScrollBar*	m_pScbWeatherEffect;	///< 날씨 효과 설정 스크롤 바
+	gui::CStaticBox*	m_pStbWeatherEffect;	///< Weather effects
+	gui::CScrollBar*	m_pScbWeatherEffect;	///< Weather effect settings scroll bar
 	gui::CSlot			m_slotWeatherEffectSliderMoved;
 	gui::CSlot			m_slotWeatherEffectValueChanged;
 
-	gui::CStaticBox*	m_pStbTextureQuality;	///< 텍스쳐 해상도
-	gui::CScrollBar*	m_pScbTextureQuality;	///< 텍스쳐 해상도 설정 스크롤 바
+	gui::CStaticBox*	m_pStbTextureQuality;	///< Texture Resolution
+	gui::CScrollBar*	m_pScbTextureQuality;	///< Texture resolution setting scroll bar
 	gui::CSlot			m_slotTextureQualitySliderMoved;
 	gui::CSlot			m_slotTextureQualityValueChanged;
 
-	gui::CStaticBox*	m_pStbCharacterEffectTitle;	///< 캐릭터 효과 타이틀
-	gui::CButton*		m_pBtnCartoonEdge;			///< 카툰식 외곽선
-	/*gui::CButton*		m_pBtnUpgradeEffect;		///< 업그레이드 효과*/
+	gui::CStaticBox*	m_pStbCharacterEffectTitle;	///< Character effect title
+	gui::CButton*		m_pBtnCartoonEdge;			///< Cartoon outline
+	/*gui::CButton*     m_pBtnUpgradeEffect;		///< Upgrade effect*/
 	gui::CSlot			m_slotCartoonEdgeToggled;
-	/*gui::CSlot			m_slotUpgradeEffectToggled;*/
+	/*gui::CSlot        m_slotUpgradeEffectToggled;*/
 
 	gui::CStaticBox*	m_pStbEtcTitle;				
-	gui::CButton*		m_pBtnHdrEffect;			///< HDR 효과
+	gui::CButton*		m_pBtnHdrEffect;			///< HDR effect
 	gui::CSlot			m_slotHdrEffectToggled;
 	
-	gui::CScrollBar*	m_pThisScrollBar;			///< 스크롤 바
+	gui::CScrollBar*	m_pThisScrollBar;			///< scroll bar
 	gui::CSlot			m_slotScrollBarChanged;
 	gui::CSlot			m_slotScrollBarSliderMoved;
 

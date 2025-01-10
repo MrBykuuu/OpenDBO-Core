@@ -42,9 +42,9 @@ class CNtlPLGameProperty;
 class CNtlPLDojo;
 
 // SectorInfo
-// : 화일 또는 화일 메모리에 접근하는 모든 코드는 이곳에 정의 한다.
-// : 화일 접근 시에는 dGET_WORLD_PARAM()의 WorldLoadVer, WorldSaveVer을 구분하여 작성한다.
-// : 화일 메모리 접근 시에는 dGET_WORLD_PARAM()의 WorldVer으로 작성한다. (단 예외의 경우가 발생 할 수 있다)
+// : All code that accesses files or file memory is defined here.
+// : When accessing a file, WorldLoadVer and WorldSaveVer of dGET_WORLD_PARAM() must be written separately.
+// : When accessing file memory, use WorldVer of dGET_WORLD_PARAM(). (However, exceptions may occur)
 class CNtlWorldSectorInfo
 {
 public:
@@ -72,7 +72,7 @@ public:
 	RwBool	NtlWorldSectorGeometryLoadFromFile(CNtlWorldSector *pNtlWorldSector, FILE* pFile, sCUR_FIELD_TEX_INFO& CurFieldTexInfo);
 	RwBool  NtlWorldSectorGeometrySaveIntoFile(CNtlWorldSector *pNtlWorldSector, FILE* pFile);
 
-	// 인도어
+	// Indoor
 	RwBool	NtlWorldSectorGeometryLoadFromFileIndoor(CNtlWorldSector *pNtlWorldSector, FILE* pFile);
 	RwBool	NtlWorldSectorGeometrySaveIntoFileIndoor(CNtlWorldSector *pNtlWorldSector, FILE* pFile);
 
@@ -219,6 +219,7 @@ public:
 	BYTE*						SectorCullSkipToFileMem(BYTE* pFileMem);
 
 	// Tile Transparency
+
 	RwBool						SectorTileTransparencyLoadFromFile(FILE* pFile, CNtlWorldSector* pNtlWorldSector);
 	RwBool						SectorTileTransparencySaveIntoFile(FILE* pFile, CNtlWorldSector* pNtlWorldSector);
 	RwInt32						SectorTileTransparencySkipToFile(FILE* pFile);
@@ -404,7 +405,7 @@ extern RwBool _RpNtlWorldSectorGeometryDeleteWithoutSwapFileSaving(CNtlWorldSect
 extern RwBool _RpNtlWorldSectorGeometryLoadFromFile(sCUR_FIELD_TEX_INFO& CurFieldTexInfo, CNtlWorldSector *pNtlWorldSector, FILE* pFile);
 extern RwBool _RpNtlWorldSectorGeometrySaveIntoFile(RpWorldSector *pWorldSector, FILE* pFile);
 
-// 인도어
+// Indoor
 extern RwBool _RpNtlWorldSectorGeometryLoadFromFileIndoor(CNtlWorldSector *pNtlWorldSector, FILE* pFile);
 extern RwBool _RpNtlWorldSectorGeometrySaveIntoFileIndoor(CNtlWorldSector *pNtlWorldSector, FILE* pFile);
 

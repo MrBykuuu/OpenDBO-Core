@@ -119,14 +119,14 @@ VOID CMsgBoxManager::DeleteMsgBox(const char* strStringID)
 
 			if( bPassPopupToNextMsgBox )
 			{
-				// 아직 Popup이 남아있을떄
+				//When the Popup still remains
 				if( iter != m_listPopupMsgBox.end() )
 				{
 					CMsgBoxGui* pMsgBox = (*iter);
 					pMsgBox->SetAlpha( (RwUInt8)MSGBOXMGR_DEFAULT_ALPHA );
 					pMsgBox->Popup( true );
 				}				
-				// Popup Msg가 없음.
+				//No Popup Msg.
 				else
 				{
 					SetMsgBoxAlpha( (RwUInt8)MSGBOXMGR_DEFAULT_ALPHA );
@@ -175,14 +175,14 @@ VOID CMsgBoxManager::DeleteAllMsgBoxExceptNetConnectBox(VOID)
 
 			if( bPassPopupToNextMsgBox )
 			{
-				// 아직 Popup이 남아있을떄
+				//When the Popup still remains
 				if( iter != m_listPopupMsgBox.end() )
 				{
 					CMsgBoxGui* pMsgBox = (*iter);
 					pMsgBox->SetAlpha( (RwUInt8)MSGBOXMGR_DEFAULT_ALPHA );
 					pMsgBox->Popup( true );
 				}				
-				// Popup Msg가 없음.
+				// Popup No Msg.
 				else
 				{
 					SetMsgBoxAlpha( (RwUInt8)MSGBOXMGR_DEFAULT_ALPHA );
@@ -231,14 +231,14 @@ VOID CMsgBoxManager::DeleteNetConnectBox(VOID)
 
 			if( bPassPopupToNextMsgBox )
 			{
-				// 아직 Popup이 남아있을떄
+				//When the Popup still remains
 				if( iter != m_listPopupMsgBox.end() )
 				{
 					CMsgBoxGui* pMsgBox = (*iter);
 					pMsgBox->SetAlpha( (RwUInt8)MSGBOXMGR_DEFAULT_ALPHA );
 					pMsgBox->Popup( true );
 				}				
-				// Popup Msg가 없음.
+				// There is no Popup Msg.
 				else
 				{
 					SetMsgBoxAlpha( (RwUInt8)MSGBOXMGR_DEFAULT_ALPHA );
@@ -370,14 +370,14 @@ VOID CMsgBoxManager::DeleteMsgBox( CMsgBoxGui* pDeletedMsgBox )
 			
 			if( bPassPopupToNextMsgBox )
 			{
-				// 아직 Popup이 남아있을떄
+				// When the Popup still remains
 				if( iter != m_listPopupMsgBox.end() )
 				{
 					CMsgBoxGui* pMsgBox = (*iter);
 					pMsgBox->SetAlpha( (RwUInt8)MSGBOXMGR_DEFAULT_ALPHA );
 					pMsgBox->Popup( true );
 				}				
-				// Popup Msg가 없음.
+				// There is no Popup Msg.
 				else
 				{
 					SetMsgBoxAlpha( (RwUInt8)MSGBOXMGR_DEFAULT_ALPHA );
@@ -640,7 +640,7 @@ VOID CMsgBoxManager::HandleEvents( RWS::CMsg &msg )
 		{
 			if( pMsgBoxResult->eResult == MBR_OK )
 			{
-				// 창고 NPC Serial
+				//Warehouse NPC Serial
 				SERIAL_HANDLE hNPCHandle = pMsgBoxResult->pData->hHandle;
 
 				// The Merchant Tabe index in the first index of the NPC table
@@ -657,7 +657,7 @@ VOID CMsgBoxManager::HandleEvents( RWS::CMsg &msg )
 		{	
 			if( pMsgBoxResult->eResult == MBR_OK )
 			{
-				// 창고 NPC Serial
+				//Warehouse NPC Serial
 				SERIAL_HANDLE hNPCHandle = pMsgBoxResult->pData->hHandle;
 
 				// The Merchant Tabe index in the first index of the NPC table
@@ -1114,7 +1114,7 @@ VOID CMsgBoxManager::HandleEvents( RWS::CMsg &msg )
 					return;
 				}
 
-				// 캐릭터 삭제
+				//delete character
 				SERVER_HANDLE	hServer	= GetLobbyManager()->GetSelectedServerHandle();
 				CLobby*			pLobby	= GetLobbyManager()->GetLobby(hServer);
 				if( !pLobby )
@@ -1153,7 +1153,7 @@ VOID CMsgBoxManager::HandleEvents( RWS::CMsg &msg )
 					return;
 				}
 
-				// 캐릭터 복구
+				//character recovery
 				SERVER_HANDLE	hServer	= GetLobbyManager()->GetSelectedServerHandle();
 				CLobby*			pLobby	= GetLobbyManager()->GetLobby(hServer);
 				if( !pLobby )

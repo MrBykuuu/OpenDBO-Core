@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: RBResultGui.h
-// Desc: Rank Battle °á°ú Gui
+// Desc: Rank Battle Results Gui
 //
 // 2007.08.23 Peessi@hitel.net   
 ////////////////////////////////////////////////////////////////////////////////
@@ -15,7 +15,7 @@
 class CRBResultGui : public CNtlPLGui, public RWS::CEventHandler
 {
 public:
-	//! enum
+	//! Enum
 	enum FLASHRESULT { LOSE, WIN, DRAW, NONE };
 	enum TEAM { BLUE, RED, TEAM_COUNT };
 	//! Constructor and Destructor

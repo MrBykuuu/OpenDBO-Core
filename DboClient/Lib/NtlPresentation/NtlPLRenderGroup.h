@@ -2,7 +2,7 @@
 *
 * File			: NtlPLSceneManager.h
 * Author		: HyungSuk, Jang
-* Copyright	: (주)NTL
+* Copyright	: (?)NTL
 * Date			: 2005. 8. 01	
 * Abstract		: Presentation scene manager base class 
 *****************************************************************************
@@ -22,8 +22,8 @@ class CNtlPLEntity;
 
 /**
 * \ingroup NtlPresentation
-* 같은 종류의 entity를 group 관리하는 객체.
-* stl 연관 배열 map을 사용한다.
+*An object that manages the same type of entity as a group.
+*Use STL associative array map.
 *
 */
 
@@ -48,13 +48,13 @@ public:
 	~CNtlPLRenderGroup();
 
 	/**
-	*  render group 객체가 생성된 다음 호출하는 함수.
+	*  A function called after the render group object is created.
 	*  \see Destroy
 	*/
 	RwBool Create(void);
 
 	/**
-	*  render group 객체가 삭제되기 전에 호출하는 함수.
+	*  A function called before the render group object is deleted.
 	*  \see Create
 	*/
 	void Destroy(void);
@@ -66,46 +66,46 @@ public:
 	void SetLayer(RwUInt32 uiLayer);
 
 	/**
-	*  render group layer 얻어오기.
+	*  Get the render group layer.
 	*  \see SetLayer
 	*/
 	RwUInt32 GetLayer(void) const;
 
 	/**
-	*  group에 entity를 add 한다.
-	*  \param pEntity는 add할 entity pointer이다.
+	*  Add entity to group.
+	*  \param pEntity is the entity pointer to add.
 	*  \see RemoveEntity
 	*/
 	RwBool AddEntity(const CNtlPLEntity *pEntity);
 
 	/**
-	*  group에 entity를 remove 한다.
-	*  \param pEntity는 remove할 entity pointer이다.
+	*  Remove entity from group.
+	*  \param pEntity is the entity pointer to remove.
 	*  \see AddEntity
 	*/
 	void RemoveEntity(CNtlPLEntity *pEntity);
 
 	/**
-	*  group에서 해당 entity를 찾는다.
-	*  \param pEntity는 container에서 찾을 entity pointer
-	*  \return 성공하면 TRUE, 실패하면 FALSE
+	*Find the relevant entity in the group.
+	*  \param pEntity is the entity pointer to find in the container.
+	*  \return TRUE if successful, FALSE if failed
 	*/
 	RwBool FindEntity(const CNtlPLEntity *pEntity);
 
 	/**
-	*  group에서 entity 갯수를 구한다.
-	*  \return entity 갯수.
+	*Find the number of entities in the group.
+	*  \return Number of entities.
 	*/
 	RwInt32 GetEntityCount(void);
 
 	/**
-	*  group에 해당하는 entity container 참조를 리턴한다.
-	*  \return entity container(m_mapEntity) 참조를 리턴.
+	*Returns a reference to the entity container corresponding to the group.
+	*  \return entity container(m_mapEntity) Returns a reference.
 	*/
 	MapEntity* GetEntities(void);
 
 	/**
-	*  group에 해당하는 모든 entity를 담는다.
+	*Contains all entities corresponding to the group.
 	*/
 	void Gets(std::list<CNtlPLEntity*>& listEntities);
 };

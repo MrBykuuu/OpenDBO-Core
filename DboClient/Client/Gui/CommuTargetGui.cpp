@@ -1,13 +1,13 @@
 #include "precomp_dboclient.h"
 #include "CommuTargetGui.h"
 
-// PL
+// Pl
 #include "NtlPLGuiManager.h"
 
-// SL
+// Sl
 
 
-// DBO
+// Dbo
 #include "DboGlobal.h"
 #include "DisplayStringManager.h"
 
@@ -107,7 +107,7 @@ VOID CCommuTargetGui::OnEventTargetSelect( SNtlEventCommuTargetSelect* data )
     }
 
     m_pSttName->SetText(data->wchName);    
-    switch(data->eTargetType)       // 타입에 따른 텍스트 설정
+    switch(data->eTargetType)       // Text settings according to type
     {
     case COMMU_TARGET_FRIEND:
         m_pSttType->SetText(GetDisplayStringManager()->GetString("DST_COMMU_TARGET_FRIEND"));

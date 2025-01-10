@@ -23,13 +23,13 @@ public:
 
 	struct SQuestMarkInfo
 	{
-		eQMI_TARGET_TYPE				eTargetType;			// 타겟 마크 종류
-		unsigned int					uiTargetWorldTblIdx;	// 타겟이 소속된 월드 테이블 인덱스
-		unsigned int					uiTargetTableIdx;		// 타겟의 테이블 인덱스
-		float							fTargetPosX;			// 타겟의 위치 ( x, y, z )
+		eQMI_TARGET_TYPE				eTargetType;			// Target mark type
+		unsigned int					uiTargetWorldTblIdx;	// World table index to which the target belongs
+		unsigned int					uiTargetTableIdx;		// table index of target
+		float							fTargetPosX;			// Location of target (x, y, z)
 		float							fTargetPosY;
 		float							fTargetPosZ;
-		unsigned int					uiTooltipTblIdx;		// 툴팁에 출력할 테이블 인덱스
+		unsigned int					uiTooltipTblIdx;		// Table index to display in tooltip
 	};
 
 	typedef std::multimap<QM_KEY, SQuestMarkInfo> mapdef_QUESTMARKINFO_LIST;
@@ -68,7 +68,7 @@ protected:
 	RwV3d								m_uiTargetPosition;
 	RwUInt32							m_uiNpcTblidx;
 
-	//new
+	//New
 	unsigned int						m_uiRewardZenny;
 	unsigned int						m_uiRewardExp;
 
@@ -207,8 +207,8 @@ protected:
 
 	void								UnregisterQuestMark( QM_KEY Key );
 
-	// Return 값 :	true	-> 카메라 스톱 함
-	//				false	-> 카메라 스톱 안함
+	// Return value: true -> Camera stops
+	//				false -> Do not stop camera
 	unsigned char						CheckUnregNPCCameraStop( CNtlTSCont* pNextCont, bool bFirstCall = true );
 
 	bool								IsRemovingTMQQuest( void ) const;
@@ -222,30 +222,30 @@ protected:
 public:
 	//////////////////////////////////////////////////////////////////////////
 	//
-	//	Client <-> Server 메시지들
+	//	Client <-> Server messages
 	//
 	//////////////////////////////////////////////////////////////////////////
 
-	// 트리거 진행 흐름에 관계된 메시지들
+	// Messages related to trigger progress flow
 	void								UG_Avatar_TS_Confirm_Step( NTL_TS_TC_ID tcCurId, NTL_TS_TC_ID tcNextId, unsigned int* uiParam, unsigned char byEventType, unsigned int uiEventData );
 	void								GU_Avatar_TS_Confirm_Step( WORD wResultCode, NTL_TS_TC_ID tcCurId, NTL_TS_TC_ID tcNextId );
 
-	// 퀘스트 포기
+	// abandon quest
 	void								UG_Avatar_TS_GiveUp_Quest( void );
 	void								GU_Avatar_TS_GiveUp_Quest( WORD wResultCode );
 
-	// 서버 이벤트
+	// server event
 	void								GU_Avatar_TS_SToC_Event_Start_NFY( NTL_TS_TC_ID tcId, NTL_TS_TA_ID taId );
 	void								GU_Avatar_TS_SToC_Event_End_NFY( NTL_TS_TC_ID tcId, NTL_TS_TA_ID taId );
 	void								GU_Avatar_TS_SToC_Event_Update_NFY( NTL_TS_TC_ID tcId, NTL_TS_TA_ID taId, BYTE bySvrEvtType, BYTE bySlot, uSTOC_EVT_UPDATE_DATA& uEvtData );
 
-	// TS 상태 업데이트 메시지
+	// TS status update message
 	void								GU_TS_Update_State( unsigned char byType, unsigned short wTSState, unsigned int uiParam = 0xffffffff );
 	void								UG_TS_Update_State( unsigned char byType, unsigned short wTSState, unsigned int uiParam = 0xffffffff );
 
 	//////////////////////////////////////////////////////////////////////////
 	//
-	// 클라이언트 메시지들
+	// client messages
 	//
 	//////////////////////////////////////////////////////////////////////////
 
@@ -305,23 +305,23 @@ public:
 		//
 		//////////////////////////////////////////////////////////////////////////
 
-	// 제안 대화 상자
+	// suggestion dialog box
 	void								TU_ShowProposalDialog( sTS_KEY& sKey, CDboTSContProposal* pCont, CDboTSContReward* pContRwd );
 	void								UT_ShowProposalDialog( sTS_KEY& sKey, bool bAccept );
 
-	// 사용자 보상 선택 대화 상자
+	// User Reward Selection Dialog Box
 	void								TU_ShowRewardDialog( sTS_KEY& sKey, CDboTSContReward* pCont );
 	void								UT_ShowRewardDialog( sTS_KEY& sKey, int nSelRwdIdx, bool bCancel );
 
-	// 사용자 선택 대화 상자
+	// User Selection Dialog Box
 	void								TU_ShowUserSelectionDialog( sTS_KEY& sKey, CDboTSContUsrSel* pCont );
 	void								UT_ShowUserSelectionDialog( sTS_KEY& sKey, NTL_TS_TC_ID tcSelId, bool bCancel );
 
-	// 나래이션 대화 상자
+	// Narration dialog box
 	void								TU_ShowNarrationDialog( sTS_KEY& sKey, CDboTSContNarration* pCont );
 	void								UT_ShowNarrationDialog( sTS_KEY& sKey, bool bCancel );
 
-	// 통합 나래이션 대화 상자
+	// Integrated narration dialog box
 	void								TU_ShowUnifiedNarrationDialog( sTS_KEY& sKey, CDboTSContUnifiedNarration* pCont );
 	void								UT_ShowUnifiedNarrationDialog( sTS_KEY& sKey, bool bCancel );
 
@@ -331,36 +331,36 @@ public:
 		//
 		//////////////////////////////////////////////////////////////////////////
 
-	// 예외 타이머
+	// exception timer
 	void								TG_Avatar_TS_ExceptTimerStartNfy( sTS_KEY& sKey, CDboTSActETimerS* pAct );
 	void								TG_Avatar_TS_ExceptTimerEndNfy( sTS_KEY& sKey, CDboTSActETimerE* pAct );
 
-	// 서버 이벤트
+	// server event
 	void								TU_ServerEvent( sTS_KEY& sKey, CDboTSActSToCEvt* pAct );
 	void								UT_ServerEvent( sTS_KEY& sKey );
 
-	// NPC 대화
+	// NPC dialogue
 	void								TU_ShowNPCConv( sTS_KEY& sKey, CDboTSActNPCConv* pAct );
 	void								UT_ShowNPCConv( sTS_KEY& sKey );
 
-	// 퀘스트 정보 등록
+	// Register quest information
 	void								TU_RegisterQuestInfo( sTS_KEY& sKey, CDboTSActRegQInfo* pAct );
 	void								UT_RegisterQuestInfo( sTS_KEY& sKey );
 
-	// 카메라 연출
+	// camera direction
 	void								TU_CameraDirection( sTS_KEY& sKey, CDboTSActOPCam* pAct );
 	void								UT_CameraDirection( sTS_KEY& sKey );
 
-	// TS 진행 대기
+	// Wait for TS progress
 	void								TG_WaitTSNfy( sTS_KEY& sKey, CDboTSActTWaitTS* pAct );
 
-	// SSM 업데이트
+	// SSM Update
 	void								TG_InSSMNfy( sTS_KEY& sKey, CDboTSActInSSM* pAct );
 
-	// 상태 업데이트
+	// status update
 	void								TG_TSStateNfy( sTS_KEY& sKey, CDboTSActTSState* pAct );
 
-	// Object 대화
+	// Object conversation
 	void								TU_ShowObjConv( sTS_KEY& sKey, CDboTSActObjConv* pAct );
 	void								UT_ShowObjConv( sTS_KEY& sKey );
 

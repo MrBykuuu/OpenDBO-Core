@@ -3,7 +3,7 @@
 
 #include "psapi.h"
 
-// shared
+// Shared
 #include "NtlResultCode.h"
 #include "MobTable.h"
 #include "NpcTable.h"
@@ -25,18 +25,18 @@
 #include "WorldZoneTable.h"
 #include "ItemOptionTable.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// framework
+// Framework
 #include "NtlTimer.h"
 
-// sound
+// Sound
 #include "NtlSoundDefines.h"
 #include "NtlSoundManager.h"
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlMath.h"
 #include "NtlPLCharacter.h"
 #include "NtlPLSceneManager.h"
@@ -49,7 +49,7 @@
 #include "NtlPLPalette.h"
 #include "NtlPLWorldEntity.h"
 
-// simulation
+// Simulation
 #include "NtlSobGroup.h"
 #include "TableContainer.h"
 #include "NtlSobPlayer.h"
@@ -142,7 +142,7 @@ RwV3d		g_v3Default = {1.f, 1.f, 1.f};
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 함수 포인터 등록
+// Register function pointer
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -273,7 +273,7 @@ RwBool Logic_IsUIDevInfoVisible(void)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // monster/player logic
-// 주의 : 속도는 table data와 상태 및 버프가 고려된 속도가 될것이다.
+//Note: Speed ??will be based on table data, status, and buffs.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -281,7 +281,7 @@ RwBool Logic_IsUIDevInfoVisible(void)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// actor 속성 logic
+// actor attribute logic
 
 const WCHAR* Logic_GetName(CNtlSob *pSobObj)
 {
@@ -525,7 +525,7 @@ void Logic_SetRpStock( CNtlSob* pSobObj, RwUInt32 uiRpStock )
 
 		if( uiRpStock > (RwUInt32)GetNtlSLGlobal()->GetAvatarInfo()->sCharPf.byCurRPBall)
         {
-            // RP Stock이 올랐을때 이벤트 
+            // Event when RP Stock rises 
             if(Logic_GetActorStateId(pSobActor) == NTL_FSMSID_CHARGING)
             {
                 pSobActor->GetSobProxy()->CreatePLEffect(NTL_VID_RPBALL_UP, &pSobActor->GetPosition());
@@ -631,7 +631,7 @@ RwUInt8 Logic_GetLevel(CNtlSob *pSobObj)
 	return NTL_INVALID_LEVEL;
 }
 
-// exp
+// Exp
 void Logic_SetExp(CNtlSob *pSobObj, RwUInt32 uiExp)
 {
 	if( !pSobObj )
@@ -1370,7 +1370,7 @@ float Logic_GetMaxDashDistanceBackLeftRight(CNtlSobActor * pActor)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// player 전직 
+// player job change 
 
 RwUInt8	Logic_GetPlayerRace(CNtlSobActor *pActor)
 {
@@ -1451,7 +1451,7 @@ RwUInt32 Logic_GetReputation(CNtlSobActor *pActor)
 
 RwUInt8	Logic_ConverClasstoRace(RwUInt8 byClass)
 {
-	// 클래스가 어떤 종족에 속하는지 알아본다
+	// Find out what race the class belongs to
 	switch(byClass)
 	{
 	case PC_CLASS_HUMAN_FIGHTER:
@@ -1766,7 +1766,7 @@ RwBool Logic_IsMasterSkill(SERIAL_HANDLE hSkillSerial)
 
 RwReal Logic_GetSkillApplyRange(CNtlSobActor* pActor, RwUInt32 uiSkillTblidx)
 {
-	// 아바타만 사용 가능
+	// Available only for avatars
 	if(!pActor || pActor->GetClassID() != SLCLASS_AVATAR)
 		return 0.0f;
 
@@ -1929,7 +1929,7 @@ RwReal Logic_GetRequiredEPFactor( CNtlSobActor* pActor )
 //	return 0.0f;
 //}
 //
-//RwReal Logic_GetCoolingTimeModifier( CNtlSobActor* pActor )
+//RwReal Logic_GetCoolingTimeModifier( CNtlSobActor*pActor )
 //{
 //	if( !pActor )
 //		return 0.f;
@@ -1944,9 +1944,9 @@ RwReal Logic_GetRequiredEPFactor( CNtlSobActor* pActor )
 //}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// actor의 상태 및 mode
+// State and mode of actor
 
-// actor가 community actor인가?(npc, trigger object, world item)
+// Is the actor a community actor? (npc, trigger object, world item)
 RwBool Logic_IsCommunityActor(CNtlSobActor *pActor)
 {
 	if( !pActor )
@@ -1992,7 +1992,7 @@ RwBool Logic_IsGambleActor( CNtlSobActor *pActor )
 	return FALSE;
 }
 
-// operation trigger actor 인가?
+// Is it an operation trigger actor?
 RwBool Logic_IsOperationTriggerActor(CNtlSobActor *pActor)
 {
 	if( !pActor )
@@ -2016,7 +2016,7 @@ RwUInt32 Logic_GetDirectIdTriggerActor(CNtlSobActor *pActor)
 	return pObjTblData->objectDirectionIndex;
 }
 
-// actor의 state id를 넘겨준다.
+// Pass the actor's state id.
 RwUInt32 Logic_GetActorStateId(CNtlSobActor *pActor)
 {
 	if( !pActor )
@@ -2052,7 +2052,7 @@ RwUInt32 Logic_GetActorStateFlags( CNtlSobActor* pActor )
 	return pStateBase->GetFlags();
 }
 
-// actor가 target 하고 있는 serial id
+// The serial id that the actor is targeting
 SERIAL_HANDLE Logic_GetActorTargetSerialId(CNtlSobActor *pActor)
 {
 	if( !pActor )
@@ -2072,7 +2072,7 @@ SERIAL_HANDLE Logic_GetActorTargetSerialId(CNtlSobActor *pActor)
 }
 
 
-// actor 현재 전투중인가?
+// actor Are you currently in combat?
 RwBool Logic_IsActorBattleMode(CNtlSobActor *pActor)
 {
 	if( !pActor )
@@ -2853,11 +2853,11 @@ CNtlSobActor* Logic_FindNearEnemyFromAvatarActor(void)
 	if(pSobAvatar == NULL)
 		return NULL;
 
-    // PVP, 랭크 배틀, 천하제일무도회등의 상황이 있기 때문에 WorldConcept에서 타겟을 검색해야 한다.
+    // Because there are situations such as PVP, ranked battles, and the World's First Budokai, you need to search for targets in WorldConcept.
     return GetNtlWorldConcept()->FindNearEnemyFromAvatarActor(pSobAvatar);
 }
 
-// 자동 타겟팅의 타겟 정보 리스
+// Target information lease for automatic targeting
 struct STargetInfo
 {
     CNtlSobActor*   pActor;
@@ -2869,16 +2869,16 @@ bool TargetInfoSorter(STargetInfo* elem1, STargetInfo* elem2)
     return elem1->fDistance < elem2->fDistance;
 }
 
-/// 일반적인 경우에서 찾는 자동 타겟
+/// Automatic targets found in common cases
 CNtlSobActor* Logic_GetAutoTarget(CNtlSobActor* pActor)
 {
     if(!pActor)
         return NULL;
 
     const RwReal  MAX_TARGET_LENGTH = 35.0f;
-    static RwUInt32 nTargetIndex = 0;                // 순차적으로 타겟을 선택하기 위한 Static 변수
-    static CNtlSobActor* pPrevTargetActor = NULL;    // 기존 타겟을 저장해둔다.
-    static CNtlSobActor* pNearTargetActor = NULL;    // 가장 가까운 타겟을 저장해둔다.
+    static RwUInt32 nTargetIndex = 0;                // Static variable for sequentially selecting targets
+    static CNtlSobActor* pPrevTargetActor = NULL;    // Save the existing target.
+    static CNtlSobActor* pNearTargetActor = NULL;    // Save the closest target.
     RwReal fLen = 0.0f;
     
     std::vector<STargetInfo*> vecTargetList;
@@ -2902,13 +2902,13 @@ CNtlSobActor* Logic_GetAutoTarget(CNtlSobActor* pActor)
             
             fLen = CNtlMath::GetLength(pActor->GetPosition(), pTarActor->GetPosition());            
 
-            // 일정 거리 이상이면 타겟팅 하지 않는다
+            // Do not target beyond a certain distance
             if ( fLen > MAX_TARGET_LENGTH)
             {
                 continue;
             }
 
-            // 시야에 들어오지 않으면 타겟팅 하지 않는다.
+            // If it's out of sight, don't target.
             sSphere.center = pTarActor->GetPosition();
             sSphere.radius = pTarActor->GetSobProxy()->GetPLEntityHeight();
             if ( !RwCameraFrustumTestSphere( GetNtlGameCameraManager()->GetCamera()->GetCamera(), &sSphere ) )
@@ -2922,7 +2922,7 @@ CNtlSobActor* Logic_GetAutoTarget(CNtlSobActor* pActor)
                 continue;                                        
             }
 
-            // 리스트에 담는다.
+            // Put it on the list.
             STargetInfo* pTargetInfo = NTL_NEW STargetInfo();
             pTargetInfo->fDistance = fLen;
             pTargetInfo->pActor = pTarActor;
@@ -2931,11 +2931,11 @@ CNtlSobActor* Logic_GetAutoTarget(CNtlSobActor* pActor)
         
         if(!vecTargetList.empty())
         {
-            // 리스트를 소팅한다.
+            // Sort the list.
             std::sort(vecTargetList.begin(), vecTargetList.end(), TargetInfoSorter);
             nTargetIndex = nTargetIndex >= vecTargetList.size() ? 0 : nTargetIndex;            
 
-            if(pNearTargetActor != vecTargetList[0]->pActor)        // 가장 가까운 타겟이 변경되면 새로 타겟팅한다. (캐릭터 이동, 몹 배치 변경)
+            if(pNearTargetActor != vecTargetList[0]->pActor)        // If the nearest target changes, a new target is set. (Character movement, mob placement changes)
             {
                 nTargetIndex = 0;                                
                 pNearTargetActor = vecTargetList[0]->pActor;
@@ -2943,7 +2943,7 @@ CNtlSobActor* Logic_GetAutoTarget(CNtlSobActor* pActor)
 
             CNtlSobActor* pTargetActor = vecTargetList[nTargetIndex++]->pActor;
             
-            if(pTargetActor == pPrevTargetActor)    // 이전 타겟과 새로운 타겟이 같으면 다음 타겟을 선택한다.
+            if(pTargetActor == pPrevTargetActor)    // If the previous target and the new target are the same, select the next target.
             {
                 nTargetIndex = nTargetIndex >= vecTargetList.size() ? 0 : nTargetIndex;
                 pTarActor = vecTargetList[nTargetIndex++]->pActor;
@@ -3342,7 +3342,7 @@ void Logic_AvatarStateChange(void)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// table data 얻어오기.
+// Get table data.
 
 void Logic_MakeMobBrief(sMOB_BRIEF *pBrief, TBLIDX tblidx)
 {
@@ -3633,7 +3633,7 @@ sITEM_TBLDAT* Logic_GetItemDataFromSob(SERIAL_HANDLE hSerial)
 		CNtlSobItemAttr* pSobItemAttr = reinterpret_cast<CNtlSobItemAttr*>(pSobItem->GetSobAttr());
 		NTL_ASSERT(pSobItemAttr, "Logic_GetItemDataFromSob, Not exist sob item attiribure of handle : " << hSerial);
 
-		// 미확인 아이템
+		// Unidentified item
 		if( pSobItemAttr->IsNeedToIdentify() )
 			return NULL;
 
@@ -4419,7 +4419,7 @@ SERIAL_HANDLE Logic_FirstItem_in_Bag(TBLIDX index)
 		sITEM_TBLDAT* pBagITEM_TBLDAT		= pSobBagItemAttr->GetItemTbl();
 
 
-		// 가방 안에 현재 등록된 연료와 같은 연료의 갯수를 세어본다.
+		// Count the number of fuels in the bag that match the currently registered fuel.
 		for( RwUInt8 k = 0 ; k < pBagITEM_TBLDAT->byBag_Size ; ++k )
 		{
 			CNtlSobItem* pSobItem			= pSobBagItem->GetChildItem(k);
@@ -4539,7 +4539,7 @@ RwReal Logic_GetItemSystemEffectValue(sITEM_TBLDAT* pITEM_TBLDAT, RwUInt32 uiSys
 		if( !pSYSTEM_EFFECT_TBLDAT )
 			continue;
 
-		// pSYSTEM_EFFECT_TBLDAT->effectCode의 값은 NtlSystemEffect.h에 정의되어 있다
+		// The value of pSYSTEM_EFFECT_TBLDAT->effectCode is defined in NtlSystemEffect.h
 		if( (RwUInt32)pSYSTEM_EFFECT_TBLDAT->effectCode == uiSystemEffect )
 		{
 			return (RwReal)pUSE_ITEM_TBLDAT->aSystem_Effect_Value[i];
@@ -4654,11 +4654,11 @@ typedef struct _SCharCollisionBrief
 	RwReal fCollDist;
 	RwV3d vCollPos;
 	RwV3d vCollNormal;
-	RwV3d vAdjustCollPos;	// char 이동 방향에 따른 collisin position을 보정한다.
+	RwV3d vAdjustCollPos;	// Corrects the collisin position according to the direction of char movement.
 	RwBool bCollRecursive;
 	RwV3d vNewPos;
-	RwBool bCollMoveImPossible;	// 충돌은 했는데, 어떤쪽으로 이동할 수 없는 경우.
-	RwBool bCollJump;           // 점프를 해서 위로 충돌했을 경우
+	RwBool bCollMoveImPossible;	// There is a collision, but you cannot move in any direction.
+	RwBool bCollJump;           // If you jump and crash upwards
 	CNtlPLEntity *pCollPLEntity;
 }SCharCollisionBrief;
 
@@ -4706,12 +4706,12 @@ void Logic_ProcWorldLight(CNtlSobActor *pActor, RwV3d vPos)
 
 	CNtlSobProxy*	pSobProxy	= pActor->GetSobProxy();
 
-	// vPos의 ShadowProperty정보를 가져온다.
+	// Retrieves ShadowProperty information of vPos.
 	RwBool			bIsInShadow	= GetNtlPLOptionManager()->GetTerrainShadow() && (GetSceneManager()->GetWorldNormalAttribute(vPos) & DBO_WORLD_ATTR_GROUP_FLAG_WORLD_SHADOW);
 
 	if (bIsInShadow && CNtlPLGlobal::m_pWHEntity && CNtlPLGlobal::m_pWHEntity->GetClassType() == PLENTITY_OBJECT)
 	{
-		// pActor가 Object 위에 있고 SelfShadow(FALSE)라면 Shadow를 적용하지 않는다.
+		// If pActor is on an Object and SelfShadow(FALSE), Shadow is not applied.
 		CNtlPLObject* pPLObject = reinterpret_cast<CNtlPLObject*>(CNtlPLGlobal::m_pWHEntity);
 		if (!(pPLObject->GetFlags() & NTL_PLEFLAG_SHADOW_PROP))
 		{
@@ -5002,7 +5002,7 @@ RwReal Logic_GetSwimmingOffset(CNtlSobActor *pActor)
 		}
         else if(pPlayerAttr->GetRace() == RACE_MAJIN && Logic_IsTransform(pActor))
         {
-            // 변신한 순수마인은 어른의 Offset을 적용해야한다.
+            // Transformed pure majin must apply an adult's offset.
             fOffset = SWIM_OFFSET_ADULT;
         }
 		else
@@ -5178,7 +5178,7 @@ void Logic_GetCharacterCollisionBBox(RwBBox *pBox, SCharCollisionBrief *pCollBri
 	RwV3d *pFront = &pCollBrief->vCharFront;
 	RwV3d *pRight = &pCollBrief->vCharRight;
 
-	// 충돌용 바운딩 박스는 원래 박스 높이의 0.3~0.8까지만 체크한다 (거대 나멕때문)
+	// The bounding box for collision only checks 0.3 to 0.8 of the original box height (due to the huge name).
 	// by agebreak 
 	vBoxVertex[0].x = pPos->x + (pRight->x * pCollBrief->fCharHalfWidth);
 	vBoxVertex[0].y = pPos->y;// + pCollBrief->fCharHeight * 0.3f;
@@ -5192,7 +5192,7 @@ void Logic_GetCharacterCollisionBBox(RwBBox *pBox, SCharCollisionBrief *pCollBri
 
 void Logic_GetCharacterCollisionLine(CNtlSobActor *pActor, RwLine *pLine, SCharCollisionBrief *pCollBrief )
 {
-	// 높이 : character 위치에 character 높이의 30% 지점으로 한다.
+	// Height: Set at 30% of the character height at the character location.
 
 	if( !pActor || !pLine || !pCollBrief )
 		return;
@@ -5205,7 +5205,7 @@ void Logic_GetCharacterCollisionLine(CNtlSobActor *pActor, RwLine *pLine, SCharC
 
 	if ( fLineY < CHAR_COLLISION_LINE_LIMIT_HEIGHT )
 	{
-		// GreatNamek가 아닌 경우는 Collision height 를 Clipping 한다
+		// If it is not GreatNamek, Collision height is clipped.
 		if ( NULL == pActor || !Logic_IsTransformGreatNamek( pActor ) )
 		{
 			fLineY = CHAR_COLLISION_LINE_LIMIT_HEIGHT;
@@ -5216,22 +5216,22 @@ void Logic_GetCharacterCollisionLine(CNtlSobActor *pActor, RwLine *pLine, SCharC
 	RwReal fRightX = pRight->x * pCollBrief->fCharHalfWidth;
 	RwReal fRightZ = pRight->z * pCollBrief->fCharHalfWidth;
 
-	// 중앙
+	// center
 	pLine[0].start.x = pPos->x;
 	pLine[0].start.y = fLineY;
 	pLine[0].start.z = pPos->z;
 
-	//// 왼쪽
+	//// left
 	pLine[1].start.x = pPos->x - fRightX;
 	pLine[1].start.y = fLineY;
 	pLine[1].start.z = pPos->z - fRightZ;
 
-	// 오른쪽
+	// right
 	pLine[2].start.x = pPos->x + fRightX;
 	pLine[2].start.y = fLineY;
 	pLine[2].start.z = pPos->z + fRightZ;
 
-	// Y축 방향 체크 라인
+	// Y-axis direction check line
 	pLine[3].start.x = pPos->x;
 	pLine[3].start.y = fLineY;
 	pLine[3].start.z = pPos->z;
@@ -5260,12 +5260,12 @@ RwBool Logic_GetCharacterCollisionAtomicNormal(RwLine *pLine, SWorldCharIntersec
 
 	RwBool bIndoorWorld = GetSceneManager()->GetActiveWorldType() == AW_RWWORLD ? TRUE : FALSE;
 
-	// 점프가 아니면 마지막 라인(y축체크)은 체크하지 않는다.
+	// Unless it is a jump, the last line (y-axis check) is not checked.
 	RwInt32 nLineCnt = bJump ? CHAR_COLLISION_LINE_COUNT : CHAR_COLLISION_LINE_COUNT - 1;
 
 	for(RwInt32 iLineIdx = 0; iLineIdx < nLineCnt; ++iLineIdx)
 	{
-		// Indoor일 경우.
+		// In case of indoor.
 		if(bIndoorWorld)
 		{
 			if(Collision_WorldIntersectionWorldSector(pLine[iLineIdx], sCharData))
@@ -5281,7 +5281,7 @@ RwBool Logic_GetCharacterCollisionAtomicNormal(RwLine *pLine, SWorldCharIntersec
 
 					pCollBrief->pCollPLEntity = NULL;
 
-					// 점프로 충돌한건지 체크한다.
+					// Check if there was a collision by jumping.
 					if(iLineIdx == CHAR_COLLISION_LINE_JUMP_INDEX)
 					{
 						pCollBrief->bCollJump = TRUE;
@@ -5305,7 +5305,7 @@ RwBool Logic_GetCharacterCollisionAtomicNormal(RwLine *pLine, SWorldCharIntersec
 
 					pCollBrief->pCollPLEntity = reinterpret_cast<CNtlPLEntity*>( RpNtlAtomicGetData(sCharInfo.pAtomic[i]) );
 
-					// 점프로 충돌한건지 체크한다.
+					// Check if there was a collision by jumping.
 					if(iLineIdx == CHAR_COLLISION_LINE_JUMP_INDEX)
 					{
 						pCollBrief->bCollJump = TRUE;
@@ -5398,7 +5398,7 @@ RwBool Logic_IsCharacterCollisionMove(CNtlSobActor *pActor, RwBool bCollision, S
 
 		RwV3dNormalize( &vDist, &vDist );
 
-		// Ray의 길이를 좀더 길게 잡아준다
+		// Makes the length of the ray longer.
 		vDist *= fLen + 1.5f;
 
 		vEndPos = vStartPos + vDist;
@@ -5520,20 +5520,20 @@ RwUInt8 Logic_CharacterCollisionBegin(CNtlSobActor *pActor, RwReal fSpeed, RwRea
 
 	Logic_GetCharacterCollisionAxis(fSpeed * fElapsed, &g_sColliBrief);
 
-	// 충돌할 bounding box 영역을 구한다.
+	// Find the bounding box area to collide with.
 	RwBBox box;
 	Logic_GetCharacterCollisionBBox(&box, &g_sColliBrief);
 
-	// bounding box 충돌을 한다.	
+	// bounding box collides.	
 	RwBool bBoxCollision = FALSE, bCollision = FALSE;
 	SWorldCharIntersectionInfo sCharInfo;
 	bBoxCollision = Collision_WorldIntersectionCharacter(box, sCharInfo);
 
-	// 충돌한 ray를 구한다.
+	// Find the collided ray.
 	RwLine Line[CHAR_COLLISION_LINE_COUNT];
 	Logic_GetCharacterCollisionLine(pActor, Line, &g_sColliBrief);
 
-	// 충돌한 atomic의 가까운 polygon을 찾아 normal을 구한다.
+	// Find the polygon close to the collided atomic and obtain its normal.
 	RwBool bIndoorWorld = GetSceneManager()->GetActiveWorldType() == AW_RWWORLD ? TRUE : FALSE;
 	if(bBoxCollision || bIndoorWorld)
 	{
@@ -5559,8 +5559,8 @@ RwUInt8 Logic_CharacterCollisionBegin(CNtlSobActor *pActor, RwReal fSpeed, RwRea
 
 			if(Logic_IsCharacterCollisionNewPosition(&g_sColliBrief))
 			{
-				// 충돌을 했을 경우.. 충돌 기울기를 구한다.
-				// 새로운 위치를 setting 한다.
+				// In case of collision, find the collision slope.
+				// Set a new location.
 				if(Logic_IsTransformGreatNamek(pActor))
 				{
 					g_sColliBrief.vNewPos = g_sColliBrief.vCharCurrPos;
@@ -5612,20 +5612,20 @@ RwBool Logic_CharacterCollisionRecusive(CNtlSobActor* pActor, RwReal fSpeed, RwR
 
 	Logic_GetCharacterCollisionAxis(fSpeed * fElapsed, &g_sColliBrief);
 
-	// 충돌할 bounding box 영역을 구한다.
+	// Find the bounding box area to collide with.
 	RwBBox box;
 	Logic_GetCharacterCollisionBBox(&box, &g_sColliBrief);
 
-	// bounding box 충돌을 한다.
+	// bounding box collides.
 	RwBool bCollision;
 	SWorldCharIntersectionInfo sCharInfo;
 	bCollision = Collision_WorldIntersectionCharacter(box, sCharInfo);
 
-	// 충돌한 ray를 구한다.
+	// Find the collided ray.
 	RwLine Line[CHAR_COLLISION_LINE_COUNT];
 	Logic_GetCharacterCollisionLine(pActor, Line, &g_sColliBrief);
 
-	// 충돌한 atomic의 가까운 polygon을 찾아 normal을 구한다.
+	// Find the polygon close to the collided atomic and obtain its normal.
 	RwBool bIndoorWorld = GetSceneManager()->GetActiveWorldType() == AW_RWWORLD ? TRUE : FALSE;
 	if(bCollision || bIndoorWorld)
 		bCollision = Logic_GetCharacterCollisionAtomicNormal(Line, sCharInfo, &g_sColliBrief, bJump);
@@ -5794,7 +5794,7 @@ RwBool Logic_IsMyPartyMember(SERIAL_HANDLE hSerial)
 
 RwBool Logic_CanPartyLeave()
 {
-	// 메인월드는 컨셉이 정의되어 있지 않아 NULL이 반환된다
+	// The concept of the main world is not defined, so NULL is returned.
 	CNtlWorldConceptController* pWorldConcept = GetNtlWorldConcept()->FindGradeExtController(WORLD_CONCEPT_FIRST_GRADE);
 	if( !pWorldConcept )
 		return TRUE;
@@ -5807,7 +5807,7 @@ RwBool Logic_CanPartyLeave()
 		return TRUE;
 	}
 
-	// State중에서 Exit가 가장 마지막이라는 가정하에 검사한다
+	// It is checked on the assumption that Exit is the last among the states.
 	if( pWorldConcept->GetState() == WORLD_STATE_EXIT ||
 		pWorldConcept->GetState() == WORLD_STATE_NONE )
 		return TRUE;
@@ -5817,7 +5817,7 @@ RwBool Logic_CanPartyLeave()
 
 RwBool Logic_CanPartyInvite()
 {
-	// 메인월드는 컨셉이 정의되어 있지 않아 NULL이 반환된다
+	// The concept of the main world is not defined, so NULL is returned.
 	CNtlWorldConceptController* pWorldConcept = GetNtlWorldConcept()->FindGradeExtController(WORLD_CONCEPT_FIRST_GRADE);
 	if( !pWorldConcept )
 		return TRUE;
@@ -5830,7 +5830,7 @@ RwBool Logic_CanPartyInvite()
 		return TRUE;
 	}
 
-	// State중에서 Exit가 가장 마지막이라는 가정하에 검사한다
+	// It is checked on the assumption that Exit is the last among the states.
 	if( pWorldConcept->GetState() == WORLD_STATE_EXIT ||
 		pWorldConcept->GetState() == WORLD_STATE_NONE )
 		return TRUE;
@@ -6033,7 +6033,7 @@ void Logic_SetHeadNameColor(CNtlSob* pSob)
 			CNtlSobTriggerObjectAttr* pTriggerObjectAttr = reinterpret_cast<CNtlSobTriggerObjectAttr*>( pTriggerObject->GetSobAttr() );
 			CNtlSobTriggerObjectProxy* pTriggerObjectAttrProxy = reinterpret_cast<CNtlSobTriggerObjectProxy*>( pTriggerObject->GetSobProxy() );
 
-			// 트리거 오브젝트는 이름이 없을 수도 있다
+			// Trigger object may have no name
 			if( pTriggerObjectAttr->GetName() )
 				pTriggerObjectAttrProxy->SetNameColor(pTriggerObjectAttr->GetName(), NTL_OBJ_NAME_COLOR);
 			else
@@ -6143,7 +6143,7 @@ RwBool Logic_IsCanCreatePrivateShop()
 
 			if(FSMUtil_IsPrivateShopping(pPlayer->GetCurrentState()))
 			{
-				// 반경 3M 이내에 개인 상점이 하나 이상 있습니다
+				// There is at least one private store within a 3M radius
 				CNtlSLEventGenerator::SysMsg(pAvater->GetSerialID(), "GAME_PRIVATESHOP_PRIVATESHOP_ANOTHER_PRIVATESHOP");
 				return FALSE;
 			}
@@ -6156,7 +6156,7 @@ RwBool Logic_IsCanCreatePrivateShop()
 
 	for(int i = 0; i < 2; i++)
 	{
-		// npc 검사.
+		// NPC inspection.
 		pSobGroup = GetNtlSobManager()->GetSobGroup(arrClass[i]);
 		if (pSobGroup)
 		{
@@ -6178,7 +6178,7 @@ RwBool Logic_IsCanCreatePrivateShop()
 				RwReal fLength = RwV2dLength(&v2Sub);
 				if (fLength <= fLimitedDistance + (fPLWidth + fPLDepth)/4.0f )
 				{
-					// 반경 2M 이내에 NPC가 존재합니다. ( NPC 와 겹치는 문제를 해결 )
+					// NPCs exist within a 2M radius. (Resolved issue overlapping with NPC)
 					CNtlSLEventGenerator::SysMsg(pAvater->GetSerialID(), "GAME_PRIVATESHOP_PRIVATESHOP_ANOTHER_NPC");
 					return FALSE;
 				}
@@ -6237,7 +6237,7 @@ RwBool Logic_IsCoolTimeUpdate(CNtlSobActor *pActor)
 	return TRUE;
 }
 
-// 블랙리스트에 있는지 확인한다.
+// Check if you are on the blacklist.
 RwBool Logic_IsBlackList( RwUInt32 uiSerialID ) 
 {
 	CNtlSob* pActor = GetNtlSobManager()->GetSobObject(uiSerialID);
@@ -6347,7 +6347,7 @@ RwInt32 Logic_isPartyShareTarget( SERIAL_HANDLE hSerial )
 		}
 	}
 
-	// 일치하는것이 없으면 -1을 반환한다.
+	// If there is no match, -1 is returned.
 	return -1;
 }
 
@@ -6367,7 +6367,7 @@ RwInt32 Logic_GetShareTargetBlankSlot()
 	static RwInt32 nBlankSlot = 0;
 
 	RwInt32 nSlot = Logic_isPartyShareTarget(INVALID_SERIAL_ID);
-	if(nSlot == -1) // 빈 슬롯이 없을때
+	if(nSlot == -1) // When there are no empty slots
 	{
 		nSlot = nBlankSlot;
 
@@ -6507,7 +6507,7 @@ RwBool Logic_CanRideOnVehicle(SERIAL_HANDLE hHandle, CNtlSobItem* pSobItem)
 
 	if ( NULL == pUseItemTbl )
 	{
-		// 해당 아이템이 vehicle 아이템이 아닌 경우는 TRUE
+		// TRUE if the item is not a vehicle item
 		return TRUE;
 	}
 
@@ -6515,7 +6515,7 @@ RwBool Logic_CanRideOnVehicle(SERIAL_HANDLE hHandle, CNtlSobItem* pSobItem)
 
 	if ( NULL == pUseItemTblData )
 	{
-		// 해당 아이템이 vehicle 아이템이 아닌 경우는 TRUE
+		// TRUE if the item is not a vehicle item
 		return TRUE;
 	}
 
@@ -6523,7 +6523,7 @@ RwBool Logic_CanRideOnVehicle(SERIAL_HANDLE hHandle, CNtlSobItem* pSobItem)
 
 	if ( NULL == pSystemEffectTbl )
 	{
-		// 해당 아이템이 vehicle 아이템이 아닌 경우는 TRUE
+		// TRUE if the item is not a vehicle item
 		return TRUE;
 	}
 
@@ -6542,11 +6542,11 @@ RwBool Logic_CanRideOnVehicle(SERIAL_HANDLE hHandle, CNtlSobItem* pSobItem)
 
 	if ( !bVehicleItem )
 	{
-		// 해당 아이템이 vehicle 아이템이 아닌 경우는 TRUE
+		// TRUE if the item is not a vehicle item
 		return TRUE;
 	}
 
-	// 지형 검사
+	// terrain inspection
 
 	CNtlSob* pSobObj = GetNtlSobManager()->GetSobObject( hHandle );
 
@@ -6711,8 +6711,8 @@ RwBool Logic_IsTransformRollingAttack(CNtlSobActor* pSobActor)
 	return FALSE;
 }
 
-// 변신스킬이 아니면, 0을 반환
-// 변신 스킬이면 몇레벨 변신 스킬인지 반환
+// If it is not a transformation skill, returns 0.
+// If it is a transformation skill, returns what level the transformation skill is.
 RwUInt32 Logic_IsTransformSkill( RwUInt32 uiSkillTblId ) 
 {
 	sSKILL_TBLDAT* pData = (sSKILL_TBLDAT*)API_GetTableContainer()->GetSkillTable()->FindData(uiSkillTblId);
@@ -6905,13 +6905,13 @@ RwBool Logic_CanTranslateIdleState( CNtlSobActor* pActor )
 
 	RwUInt32 nStateId = Logic_GetActorStateId(pActor);
 
-	if(nStateId == NTL_FSMSID_ONBUS)            // 버스인 경우에는 안됨
+	if(nStateId == NTL_FSMSID_ONBUS)            // Not for buses
 		return FALSE;
 
-	if(nStateId == NTL_FSMSID_ONVEHICLE)        // 탈것인 경우에는 안됨
+	if(nStateId == NTL_FSMSID_ONVEHICLE)        // Not for vehicles
 		return FALSE;
 
-    if(nStateId == NTL_FSMSID_KNOCKDOWN)        // 넉다운일 경우에는 안됨
+    if(nStateId == NTL_FSMSID_KNOCKDOWN)        // Not in case of knockdown
         return FALSE;
 
 	return TRUE;
@@ -7479,7 +7479,7 @@ RwBool Logic_IsUsableIndex(RwUInt32 uiIndex, RwUInt32 uiMaxIndex, RwUInt32 uiInv
 
 RwBool Logic_IsCollisionLine( RwV3d& vStartPos, RwV3d& vEndPos, OUT CNtlPLEntity* pColEntity /*= NULL*/ ) 
 {
-    // 오브젝트에 대해서만 충돌을 검사한다.
+    // Collisions are checked only for objects.
     RwLine colRay;
     colRay.start = vStartPos;
     colRay.end = vEndPos;    
@@ -7577,22 +7577,22 @@ void Logic_GetVehicleCollisionLine( RwLine* pLine, SCharCollisionBrief* pCollBri
 	RwReal fRightX = pRight->x * pCollBrief->fCharHalfWidth;
 	RwReal fRightZ = pRight->z * pCollBrief->fCharHalfWidth;
 
-	// 중앙
+	// center
 	pLine[0].start.x = pPos->x;
 	pLine[0].start.y = fLineY;
 	pLine[0].start.z = pPos->z;
 
-	// 왼쪽
+	// left
 	pLine[1].start.x = pPos->x - fRightX;
 	pLine[1].start.y = fLineY;
 	pLine[1].start.z = pPos->z - fRightZ;
 
-	// 오른쪽
+	// right
 	pLine[2].start.x = pPos->x + fRightX;
 	pLine[2].start.y = fLineY;
 	pLine[2].start.z = pPos->z + fRightZ;
 
-	// Y축 방향 체크 라인
+	// Y-axis direction check line
 	pLine[3].start.x = pPos->x;
 	pLine[3].start.y = fLineY;
 	pLine[3].start.z = pPos->z;
@@ -7717,7 +7717,7 @@ RwBool Logic_IsVehicleCollisionMove( CNtlSobVehicle* pActor, RwBool bCollision, 
 
 		RwV3dNormalize( &vDist, &vDist );
 
-		// Ray의 길이를 좀더 길게 잡아준다
+		// Makes the length of the ray longer.
 		vDist *= fLen + 1.5f;
 
 		vEndPos = vStartPos + vDist;
@@ -7853,12 +7853,12 @@ RwBool Logic_GetVehicleCollisionAtomicNormal( RwLine* pLine, SWorldCharIntersect
 
 	RwBool bIndoorWorld = GetSceneManager()->GetActiveWorldType() == AW_RWWORLD ? TRUE : FALSE;
 
-	// 점프가 아니면 마지막 라인(y축 체크)은 체크하지 않는다.
+	// Unless it is a jump, the last line (y-axis check) is not checked.
 	RwInt32 nLineCnt = bJump ? VEHICLE_COLLISION_LINE_COUNT : VEHICLE_COLLISION_LINE_COUNT - 1;
 
 	for ( RwInt32 iLineIdx = 0; iLineIdx < nLineCnt; ++iLineIdx )
 	{
-		// Indoor일 경우.
+		// In case of indoor.
 		if ( bIndoorWorld )
 		{
 			if ( Collision_WorldIntersectionWorldSector( pLine[iLineIdx], sCharData ) )
@@ -7874,7 +7874,7 @@ RwBool Logic_GetVehicleCollisionAtomicNormal( RwLine* pLine, SWorldCharIntersect
 
 					pCollBrief->pCollPLEntity = NULL;
 
-					// 점프로 충돌한건지 체크한다.
+					// Check if there was a collision by jumping.
 					if ( iLineIdx == VEHICLE_COLLISION_LINE_JUMP_INDEX )
 					{
 						pCollBrief->bCollJump = TRUE;
@@ -7898,7 +7898,7 @@ RwBool Logic_GetVehicleCollisionAtomicNormal( RwLine* pLine, SWorldCharIntersect
 
 					pCollBrief->pCollPLEntity = reinterpret_cast<CNtlPLEntity*>( RpNtlAtomicGetData( sCharInfo.pAtomic[i] ) );
 
-					// 점프로 충돌한건지 체크한다.
+					// Check if there was a collision by jumping.
 					if ( iLineIdx == CHAR_COLLISION_LINE_JUMP_INDEX )
 					{
 						pCollBrief->bCollJump = TRUE;
@@ -7918,21 +7918,21 @@ RwUInt8 Logic_VehicleCollisionBegin( CNtlSobVehicle* pActor, RwReal fSpeed, RwRe
 
 	Logic_GetVehicleCollisionAxis( &g_sColliBrief );
 
-	// 충돌할 bounding box 영역을 구한다.
+	// Find the bounding box area to collide with.
 	RwBBox box;
 	Logic_GetVehicleCollisionBBox( &box, &g_sColliBrief );
 
-	// bounding box 충돌을 한다.
+	// bounding box collides.
 	RwUInt8 byColliResult = NTL_CHARACTER_COLLI_NONE;
 	RwBool bBoxCollision = FALSE, bCollision = FALSE;
 	SWorldCharIntersectionInfo sCharInfo;
 	bBoxCollision = Collision_WorldIntersectionCharacter( box, sCharInfo );
 
-	// 충돌한 ray를 구한다.
+	// Find the collided ray.
 	RwLine Line[CHAR_COLLISION_LINE_COUNT];
 	Logic_GetVehicleCollisionLine( Line, &g_sColliBrief );
 
-	// 충돌한 atomic의 가까운 polygon을 찾아 normal을 구한다.
+	// Find the polygon close to the collided atomic and obtain its normal.
 	RwBool bIndoorWorld = GetSceneManager()->GetActiveWorldType() == AW_RWWORLD ? TRUE : FALSE;
 
 	if ( bBoxCollision || bIndoorWorld )
@@ -7999,20 +7999,20 @@ RwBool Logic_VehicleCollisionRecusive( RwReal fSpeed, RwReal fElapsed, RwBool bJ
 {
 	Logic_GetVehicleCollisionAxis( &g_sColliBrief );
 
-	// 충돌할 bounding box 영역을 구한다.
+	// Find the bounding box area to collide with.
 	RwBBox box;
 	Logic_GetVehicleCollisionBBox( &box, &g_sColliBrief );
 
-	// bounding box 충돌을 한다.
+	// bounding box collides.
 	RwBool bCollision;
 	SWorldCharIntersectionInfo sCharInfo;
 	bCollision = Collision_WorldIntersectionCharacter( box, sCharInfo );
 
-	// 충돌한 ray를 구한다.
+	// Find the collided ray.
 	RwLine Line[CHAR_COLLISION_LINE_COUNT];
 	Logic_GetVehicleCollisionLine( Line, &g_sColliBrief );
 
-	// 충돌한 atomic의 가까운 polygon을 찾아 normal을 구한다.
+	// Find the polygon close to the collided atomic and obtain its normal.
 	RwBool bIndoorWorld = GetSceneManager()->GetActiveWorldType() == AW_RWWORLD ? TRUE : FALSE;
 	if ( bCollision || bIndoorWorld )
 	{
@@ -8112,7 +8112,7 @@ SOUND_HANDLE Logic_PlayGUISound(char* pcFileName)
 
 void Logic_PlayItemPickUpSound(sITEM_TBLDAT* pITEM_TBLDAT)
 {
-	// 일단 소리가 하나이므로 null 검사하지 않고 바로 디폴트 사운드 출력
+	// Since there is only one sound, the default sound is output immediately without checking for null.
 	//switch( pITEM_TBLDAT->byItem_Type )
 	//{
 	//default: break;
@@ -8133,20 +8133,20 @@ void Logic_PlayItemPutDownSound(sITEM_TBLDAT* pITEM_TBLDAT, RwUInt8 byDestPlace)
 	{
 	case CONTAINER_TYPE_EQUIP:
 		{
-			// 캐릭터 스텟창
+			// Character stat window
 			Logic_PlayGUISound(GSD_SYSTEM_ITEM_EQUIP);
 			return;
 		}
 	}
 	/*
-	// 아마도 소리의 종류가 하나 더 늘어놔야 될듯 함. 일반 가방에 등록되는 소리로...
-	// 각종 가방
+	// Perhaps one more type of sound should be added. It's a sound that registers as a regular bag...
+	// various bags
 	CONTAINER_TYPE_BAG1
 	CONTAINER_TYPE_BAG2
 	CONTAINER_TYPE_BAG3
 	CONTAINER_TYPE_BAG4
 	CONTAINER_TYPE_BAG5
-	// 오른쪽 하단 가방 등록하는 곳
+	// Bag registration area at the bottom right
 	CONTAINER_TYPE_BAGSLOT
 	*/
 	// Defualt

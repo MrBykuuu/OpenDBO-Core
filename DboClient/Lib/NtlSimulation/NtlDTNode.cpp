@@ -1,14 +1,14 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlDTNode.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// presentation
+// Presentation
 #include "NtlPLGlobal.h"
 
-// simulation
+// Simulation
 #include "NtlSob.h"
 #include "NtlSLLogic.h"
 
@@ -284,7 +284,7 @@ void CNtlDTSplineNode::UniformTypeUpdate(RwReal fElapsed)
 		}
 	}
 
-	// position을 구한다.
+	//Find the position.
 
 	RwV3dSubMacro(&vSub, &m_vPtPos, &pCurvePt[m_iPtIdx].vPos);
 	RwReal fNextLen = RwV3dLength(&vSub) + fULen;
@@ -306,7 +306,7 @@ void CNtlDTSplineNode::UniformTypeUpdate(RwReal fElapsed)
 
 	m_vPtPos = vPos;
 
-	// 방향을 구한다.
+	// Seek direction.
 	RtQuat quat;
 	D3DXQuaternionSlerp((D3DXQUATERNION*)&quat, (D3DXQUATERNION*)&pCurvePt[m_iPtIdx].qRot, (D3DXQUATERNION*)&pCurvePt[iNextPtIdx].qRot, fLerp);
 	RtQuatConvertToMatrix(&quat, &m_matRot);
@@ -361,7 +361,7 @@ void CNtlDTSplineNode::TimeSequencetypeUpdate(RwReal fElapsed)
 		}
 	};
 
-	// position을 구한다.
+	// Find the position.
 	RwInt32 iNextPtIdx = m_iPtIdx+1;
 
 	RwV3d vPos;
@@ -377,7 +377,7 @@ void CNtlDTSplineNode::TimeSequencetypeUpdate(RwReal fElapsed)
 	vPos.y = pCurvePt[m_iPtIdx].vPos.y + fLerp * (pCurvePt[iNextPtIdx].vPos.y - pCurvePt[m_iPtIdx].vPos.y);
 	vPos.z = pCurvePt[m_iPtIdx].vPos.z + fLerp * (pCurvePt[iNextPtIdx].vPos.z - pCurvePt[m_iPtIdx].vPos.z);
 
-	// 방향을 구한다.
+	// Seek direction.
 	RtQuat quat;
 	D3DXQuaternionSlerp((D3DXQUATERNION*)&quat, (D3DXQUATERNION*)&pCurvePt[m_iPtIdx].qRot, (D3DXQUATERNION*)&pCurvePt[iNextPtIdx].qRot, fLerp);
 	RtQuatConvertToMatrix(&quat, &m_matRot);
@@ -440,7 +440,7 @@ void CNtlDTSplineNode::GroundMoveUniformUpdate(RwReal fElapsed)
 		}
 	}
 
-	// position을 구한다.
+	// Find the position.
 
 	RwV3dSubMacro(&vSub, &m_vPtPos, &pCurvePt[m_iPtIdx].vPos);
 	RwReal fNextLen = RwV3dLength(&vSub) + fULen;
@@ -462,7 +462,7 @@ void CNtlDTSplineNode::GroundMoveUniformUpdate(RwReal fElapsed)
 
 	m_vPtPos = vPos;
 
-	// 방향을 구한다.
+	// Seek direction.
 	RtQuat quat;
 	D3DXQuaternionSlerp((D3DXQUATERNION*)&quat, (D3DXQUATERNION*)&pCurvePt[m_iPtIdx].qRot, (D3DXQUATERNION*)&pCurvePt[iNextPtIdx].qRot, fLerp);
 	RtQuatConvertToMatrix(&quat, &m_matRot);
@@ -515,7 +515,7 @@ void CNtlDTSplineNode::GroundMoveTimeSequencetypeUpdate(RwReal fElapsed)
 		}
 	};
 
-	// position을 구한다.
+	// Find the position.
 	RwInt32 iNextPtIdx = m_iPtIdx+1;
 
 	RwV3d vPos;
@@ -531,7 +531,7 @@ void CNtlDTSplineNode::GroundMoveTimeSequencetypeUpdate(RwReal fElapsed)
 	vPos.y = pCurvePt[m_iPtIdx].vPos.y + fLerp * (pCurvePt[iNextPtIdx].vPos.y - pCurvePt[m_iPtIdx].vPos.y);
 	vPos.z = pCurvePt[m_iPtIdx].vPos.z + fLerp * (pCurvePt[iNextPtIdx].vPos.z - pCurvePt[m_iPtIdx].vPos.z);
 
-	// 방향을 구한다.
+	// Seek direction.
 	RtQuat quat;
 	D3DXQuaternionSlerp((D3DXQUATERNION*)&quat, (D3DXQUATERNION*)&pCurvePt[m_iPtIdx].qRot, (D3DXQUATERNION*)&pCurvePt[iNextPtIdx].qRot, fLerp);
 	RtQuatConvertToMatrix(&quat, &m_matRot);

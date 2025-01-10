@@ -219,15 +219,15 @@ RwBool CNtlFSMCharAct::Create(void)
     pState = NTL_NEW CNtlFSMCharActTurning();
     Register(pState);
 
-    // 변신 휴유증
+    //Aftereffects of transformation
     pState = NTL_NEW CNtlFSMCharTransformSequela();
     Register(pState);
 
-    // 회전 어택
+    // Spin Attack
     pState = NTL_NEW CNtlFSMCharSpinAttack();
     Register(pState);
 
-	// 회전 어택
+	// Rolling Attack
 	pState = NTL_NEW CNtlFSMCharRollingAttack();
 	Register(pState);
 

@@ -1,11 +1,11 @@
 /*****************************************************************************
-* File			: DboPackethandler_Register.cpp
-* Author		: Hong sungbock
-* Copyright		: (주)NTL
-* Date			: 2007. 1. 16
-* Abstract		: 패킷 핸들의 등록과 해제
+*File			: DboPackethandler_Register.cpp
+*Author		    : Hong sungbock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 1. 16
+*Abstract		: Registering and deregistering packet handles
 *****************************************************************************
-* Desc         : 
+*Desc           : 
 *****************************************************************************/
 
 #include "precomp_dboclient.h"
@@ -373,7 +373,7 @@ void RegisterPacketHandler(void)
 	CNtlPacketHandler::Register(GU_CHARTITLE_DELETE, PacketHandler_GSAvatarCharTitleDel);
 	CNtlPacketHandler::Register(GU_CHARTITLE_SELECT_NFY, PacketHandler_GSAvatarCharTitleSelectNfy);
 
-	// guild : 게임서버 관련
+	// guild: Game server related
 	CNtlPacketHandler::Register(GU_GUILD_CREATE_RES, PacketHandler_GSGuild_Create_Res);
 	CNtlPacketHandler::Register(GU_GUILD_INVITE_RES, PacketHandler_GSGuild_Invite_Res);
 	CNtlPacketHandler::Register(GU_GUILD_CHANGE_NAME_RES, PacketHandler_GSGuild_NameChanged_Res);
@@ -391,7 +391,7 @@ void RegisterPacketHandler(void)
 	CNtlPacketHandler::Register(GU_GUILD_CHANGE_MARK_RES, PacketHandler_GSGuild_Change_Emblem_Res);	
 	CNtlPacketHandler::Register(GU_GUILD_MARK_CHANGED_NFY, PacketHandler_GSGuild_Change_Emblem_Nfy);	
 
-	// 도장
+	// DOJO
 	CNtlPacketHandler::Register(GU_DOJO_CREATE_RES, PacketHandler_GSDojo_CreateRes);
 	CNtlPacketHandler::Register(GU_DOJO_FUNCTION_ADD_RES, PacketHandler_GSDojo_FunctionAddRes);
 	CNtlPacketHandler::Register(GU_DOJO_LEVEL_CHANGED_NFY, PacketHandler_GSDojo_LevelChangedNfy);
@@ -405,7 +405,7 @@ void RegisterPacketHandler(void)
 	CNtlPacketHandler::Register(GU_DOJO_SCRAMBLE_SHIFT_SEAL_STATE_NFY, PacketHandler_GSDojo_ScrambleShiftStateNfy);
 	
 
-	// 도복
+	// DOGI
 	CNtlPacketHandler::Register(GU_DOGI_CREATE_RES, PacketHandler_GSDogi_CreateRes);
 	CNtlPacketHandler::Register(GU_DOGI_CHANGE_RES, PacketHandler_GSDogi_ChangeRes);
 	CNtlPacketHandler::Register(GU_DOGI_UPDATE_NFY, PacketHandler_GSDogi_UpdateNfy);
@@ -421,7 +421,7 @@ void RegisterPacketHandler(void)
 	CNtlPacketHandler::Register(GU_CHAR_DIRECT_PLAY_CANCEL_NFY, PacketHandler_GSCharDirectPlayCancelNfy);
 	CNtlPacketHandler::Register(GU_CHAR_DIRECT_PLAY_END, PacketHandler_GSCharDirectPlayEnd);
 
-	// HelpSystem
+	// Help system
 	CNtlPacketHandler::Register(GU_TUTORIAL_HINT_UPDATE_RES, PacketHandler_GUTutorial_Hint_Update_Res);
 
 	// Time machine quest 
@@ -441,7 +441,7 @@ void RegisterPacketHandler(void)
 	CNtlPacketHandler::Register(GU_TIMEQUEST_UPDATE_TMQ_POINT, PacketHandler_GUTimeQuest_TMQPoint);
 	CNtlPacketHandler::Register(GU_TIMEQUEST_UPDATE_GAME_TIME, PacketHandler_GUTimeQuest_GameTime);
 
-	// 서버로부터의 메세지
+	// message from server
 	CNtlPacketHandler::Register(GU_TELECAST_MESSAGE_BEG_NFY, PacketHandler_GUTeleCast_Message_Beg_Nfy);
 	CNtlPacketHandler::Register(GU_TELECAST_MESSAGE_END_NFY, PacketHandler_GUTeleCast_Message_End_Nfy);
 
@@ -497,7 +497,7 @@ void RegisterPacketHandler(void)
 	CNtlPacketHandler::Register(GU_RANKBATTLE_BATTLE_FORCED_LEAVE_NFY, PAcketHandler_GSRBForcedEndNfy);
 	CNtlPacketHandler::Register(GU_RANKBATTLE_TOTAL_SCORE_UPDATE_NFY, PacketHandler_GSRBTotalScoreUpdateNfy);	
 
-	// MailSystem
+	// Mail System
 	CNtlPacketHandler::Register(GU_MAIL_START_RES, PacketHandler_GUMailStartRes);
 	CNtlPacketHandler::Register(GU_MAIL_LOAD_INFO, PacketHandler_GUMailLoadInfo);
 	CNtlPacketHandler::Register(GU_MAIL_LOAD_DATA, PacketHandler_GUMailLoadData);
@@ -540,20 +540,20 @@ void RegisterPacketHandler(void)
 	CNtlPacketHandler::Register(GU_BOT_BOTCAUTION_NFY, PacketHandler_GUBotCautionNfy);
 	CNtlPacketHandler::Register(GU_BOT_BOTCAUTION_HELPME_NFY, PacketHandler_GUBotHelpMeNfy);
 
-	// 버스 및 탈것
+	// buses and vehicles
 	CNtlPacketHandler::Register(GU_RIDE_ON_BUS_RES, PacketHandler_GURideOnBusRes);
 	CNtlPacketHandler::Register(GU_RIDE_OFF_BUS_RES, PacketHandler_GURideOffBusRes);
 
-	// 변신 관련
+	// Transformation related
 	CNtlPacketHandler::Register(GU_SKILL_AFTEREFFECT_REMAINING_TIME_NFY, PacketHandler_GUAfterEffectRemainTimeNfy);
 	CNtlPacketHandler::Register(GU_TRANSFORM_CANCEL_RES, PacketHandler_GUTransformCancelRes);
     CNtlPacketHandler::Register(GU_MONSTER_TRANSFORMED_NFY, PacketHandler_GUMonsterTransformedNfy);
 
-	// 컨디션 관련
+	// Condition related
 	CNtlPacketHandler::Register(GU_SKILL_CONFUSE_TARGET_NFY, PacketHandler_GUSkillConfuseTragetNfy);
 	CNtlPacketHandler::Register(GU_SKILL_TERROR_COURSE_CHANGE_NFY, PacketHandler_GUSkillTerrorCourseChangeNfy);
 
-	// 천하제일 무도회 관련
+	// Related to the world's best ballroom
 	CNtlPacketHandler::Register(GU_MATCH_MINORMATCH_STATE_UPDATE_NFY, PacketHandler_GUMinorMatchStateUpdateNfy );
 	CNtlPacketHandler::Register(GU_MATCH_MINORMATCH_TEAM_INFO_NFY, PacketHandler_GUMinorMatchTeamInfoNfy);
 	CNtlPacketHandler::Register(GU_MATCH_MINORMATCH_PLAYER_STATE_NFY, PacketHandler_GUMinorMatchPlayerStateNfy);
@@ -609,7 +609,7 @@ void RegisterPacketHandler(void)
 	CNtlPacketHandler::Register(GU_TELEPORT_PROPOSAL_NFY, PacketHandler_GUTeleportProposalNfy );
 	CNtlPacketHandler::Register(GU_TELEPORT_CONFIRM_RES, PacketHandler_GUTeleportConfirmRes );
 
-	// HTB RP 구슬 사용
+	// Use HTB RP balls
 	CNtlPacketHandler::Register(GU_HTB_LAST_STEP_CHANGED_NFY, PacketHandler_GUHTBLastStepChangedNfy );
 	CNtlPacketHandler::Register(GU_HTB_RP_BALL_RESULT_DECIDED_NFY, PacketHandler_GSHTBRPBallResultDecidedNfy );
 
@@ -650,7 +650,7 @@ void RegisterPacketHandler(void)
 	CNtlPacketHandler::Register(TU_PETITION_CHAT_USER_SAY_RES, PacketHandler_TSPetitionChatUserSayRes);
 	CNtlPacketHandler::Register(TU_PETITION_CHAT_GM_END_NFY, PacketHandler_TSPetitionChatGMEndNfy);
 
-	// guild
+	// Guild
 	CNtlPacketHandler::Register(TU_GUILD_CREATED_NFY, PacketHandler_TUGuild_CreateNfy);
 	CNtlPacketHandler::Register(TU_GUILD_INFO, PacketHandler_TUGuild_Info);
 	CNtlPacketHandler::Register(TU_GUILD_MEMBER_INFO, PacketHandler_TUGuild_MemberInfo);
@@ -690,7 +690,7 @@ void RegisterPacketHandler(void)
 	CNtlPacketHandler::Register(TU_GUILD_CHANGE_NOTICE_NFY, PacketHandler_TUGuild_changeNotice_Nfy);
 	CNtlPacketHandler::Register(TU_GUILD_GIVE_ZENNY_NFY, PacketHandler_TUGuild_GiveZenny_Nfy);
 
-	// 도장
+	// DOJO
 	CNtlPacketHandler::Register(TU_DOJO_CREATED_NFY, PacketHandler_TUDojo_CreateNfy);
 	CNtlPacketHandler::Register(TU_DOJO_DESTROYED_NFY, PacketHandler_TUDojo_DestoryNfy);
 	CNtlPacketHandler::Register(TU_DOJO_BRIEF_NFY, PacketHandler_TUDojo_BriefNfy);
@@ -724,7 +724,7 @@ void RegisterPacketHandler(void)
 	CNtlPacketHandler::Register(TU_TMQ_RECORD_LIST_RES, PacketHandler_TUTMQ_Record_List_Res);
 	CNtlPacketHandler::Register(TU_TMQ_MEMBER_LIST_RES, PacketHandler_TUTMQ_Member_List_Res);
 
-	//
+	//BUDO
 	CNtlPacketHandler::Register(TU_BUDOKAI_TOURNAMENT_INDIVIDUAL_LIST_RES, PacketHandler_TUBudokaiTournamentIndividualListRes);
 	CNtlPacketHandler::Register(TU_BUDOKAI_TOURNAMENT_INDIVIDUAL_INFO_RES, PacketHandler_TUBudokaiTournamentIndividualInfoRes);
 	CNtlPacketHandler::Register(TU_BUDOKAI_TOURNAMENT_TEAM_LIST_RES, PacketHandler_TUBudokaiTournamentTeamListRes);
@@ -770,7 +770,7 @@ void RegisterPacketHandler(void)
 	// Char RankPoint Reset
 	CNtlPacketHandler::Register(GU_CHAR_RANKPOINT_RESET_NFY, PacketHandler_GUCharRankPointResetNfy );
 
-    // 상용화 관련
+    // Commercialization related
     CNtlPacketHandler::Register(GU_NETMARBLEMEMBERIP_NFY, PacketHandler_GUNetMarbleMemberShipNfy);
     CNtlPacketHandler::Register(CU_NETMARBLEMEMBERIP_NFY, PacketHandler_GUNetMarbleMemberShipNfy);
 
@@ -1115,7 +1115,7 @@ void UnRegisterPacketHandler(void)
 	CNtlPacketHandler::UnRegister(GU_GUILD_CHANGE_MARK_RES);
 	CNtlPacketHandler::UnRegister(GU_GUILD_MARK_CHANGED_NFY);
 
-	// 도장
+	// DOJO
 	CNtlPacketHandler::UnRegister(GU_DOJO_CREATE_RES);
 	CNtlPacketHandler::UnRegister(GU_DOJO_FUNCTION_ADD_RES);
 	CNtlPacketHandler::UnRegister(GU_DOJO_LEVEL_CHANGED_NFY);
@@ -1128,7 +1128,7 @@ void UnRegisterPacketHandler(void)
 	CNtlPacketHandler::UnRegister(GU_DOJO_SEAL_ATTACK_END_NFY);
 	CNtlPacketHandler::UnRegister(GU_DOJO_SCRAMBLE_SHIFT_SEAL_STATE_NFY);
 
-	// 도복
+	// DOGI
 	CNtlPacketHandler::UnRegister(GU_DOGI_CREATE_RES);
 	CNtlPacketHandler::UnRegister(GU_DOGI_CHANGE_RES);
 	CNtlPacketHandler::UnRegister(GU_DOGI_UPDATE_NFY);
@@ -1224,7 +1224,7 @@ void UnRegisterPacketHandler(void)
 	CNtlPacketHandler::UnRegister(GU_RANKBATTLE_BATTLE_FORCED_LEAVE_NFY);
 	CNtlPacketHandler::UnRegister(GU_RANKBATTLE_TOTAL_SCORE_UPDATE_NFY);
 
-	// MailSystem
+	// Mail System
 	CNtlPacketHandler::UnRegister(GU_MAIL_START_RES);
 	CNtlPacketHandler::UnRegister(GU_MAIL_LOAD_INFO);
 	CNtlPacketHandler::UnRegister(GU_MAIL_LOAD_DATA);
@@ -1260,16 +1260,16 @@ void UnRegisterPacketHandler(void)
 	CNtlPacketHandler::UnRegister(GU_BOT_BOTCAUTION_NFY);
 	CNtlPacketHandler::UnRegister(GU_BOT_BOTCAUTION_HELPME_NFY);
 
-	// 버스 및 탈것
+	// buses and vehicles
 	CNtlPacketHandler::UnRegister(GU_RIDE_ON_BUS_RES);
 	CNtlPacketHandler::UnRegister(GU_RIDE_OFF_BUS_RES);
 
-	// 변신 관련
+	// Transformation related
 	CNtlPacketHandler::UnRegister(GU_SKILL_AFTEREFFECT_REMAINING_TIME_NFY);
 	CNtlPacketHandler::UnRegister(GU_TRANSFORM_CANCEL_RES);
     CNtlPacketHandler::UnRegister(GU_MONSTER_TRANSFORMED_NFY);
 
-	// 컨디션 관련
+	// Condition related
 	CNtlPacketHandler::UnRegister(GU_SKILL_CONFUSE_TARGET_NFY);
 	CNtlPacketHandler::UnRegister(GU_SKILL_TERROR_COURSE_CHANGE_NFY);
 
@@ -1281,7 +1281,7 @@ void UnRegisterPacketHandler(void)
 	CNtlPacketHandler::UnRegister(GU_CHAR_DIRECT_PLAY);		
 	CNtlPacketHandler::UnRegister(GU_CHAR_DIRECT_PLAY_END);		
 
-	// 천하제일 무도회.
+	// BUDO.
 	CNtlPacketHandler::UnRegister(GU_MATCH_MINORMATCH_STATE_UPDATE_NFY);
 	CNtlPacketHandler::UnRegister(GU_MATCH_MINORMATCH_TEAM_INFO_NFY);
 	CNtlPacketHandler::UnRegister(GU_MATCH_MINORMATCH_PLAYER_STATE_NFY);
@@ -1327,7 +1327,7 @@ void UnRegisterPacketHandler(void)
 	CNtlPacketHandler::UnRegister(GU_BUDOKAI_PRIZEWINNER_TEAM_NAME_RES);
 
 	CNtlPacketHandler::UnRegister(GU_DISCONNECTED_NFY);
-//	CNtlPacketHandler::UnRegister(GU_CHAR_MARKING_NFY);
+	//	CNtlPacketHandler::UnRegister(GU_CHAR_MARKING_NFY);
 
 	CNtlPacketHandler::UnRegister(GU_DICE_ROLL_RES);
 	CNtlPacketHandler::UnRegister(GU_DICE_ROLLED_NFY);
@@ -1337,7 +1337,7 @@ void UnRegisterPacketHandler(void)
 	CNtlPacketHandler::UnRegister(GU_TELEPORT_PROPOSAL_NFY);
 	CNtlPacketHandler::UnRegister(GU_TELEPORT_CONFIRM_RES);
 
-	// HTB RP 구슬 사용
+	// Use HTB RP Balls
 	CNtlPacketHandler::UnRegister(GU_HTB_RP_BALL_RESULT_DECIDED_NFY);
 
 	CNtlPacketHandler::UnRegister(GU_AVATAR_RP_INCREASE_START_NFY);
@@ -1462,7 +1462,7 @@ void UnRegisterPacketHandler(void)
 	// DYNAMIC OBJECT
 	CNtlPacketHandler::UnRegister(GU_DYNAMIC_OBJECT_UPDATE_STATE);
 
-	//// Hoipo
+	//// HOI-POI-MIX
 	CNtlPacketHandler::UnRegister(GU_HOIPOIMIX_RECIPE_REG_NFY);
 	CNtlPacketHandler::UnRegister(GU_HOIPOIMIX_ITEM_CREATE_RES);
 	CNtlPacketHandler::UnRegister(GU_HOIPOIMIX_ITEM_CREATE_EXP_NFY);
@@ -1481,7 +1481,7 @@ void UnRegisterPacketHandler(void)
 
 	CNtlPacketHandler::UnRegister(GU_CHAR_RANKPOINT_RESET_NFY);
 
-    // 상용화 관련
+    // Commercialization related
     CNtlPacketHandler::UnRegister(GU_NETMARBLEMEMBERIP_NFY);
     CNtlPacketHandler::UnRegister(CU_NETMARBLEMEMBERIP_NFY);
 
@@ -1492,14 +1492,14 @@ void UnRegisterPacketHandler(void)
 	CNtlPacketHandler::UnRegister(GU_SHOP_NETPYITEM_BUY_RES);
 	CNtlPacketHandler::UnRegister(GU_SHOP_NETPYITEM_END_RES);
 
-	// CommercialExtend
+	// Commercial extend
 	CNtlPacketHandler::UnRegister(GU_DURATION_ITEM_BUY_RES);
 	CNtlPacketHandler::UnRegister(GU_DURATION_RENEW_RES);
 
-	// 퀵슬롯
+	// quick slot
 	CNtlPacketHandler::UnRegister( GU_QUICK_SLOT_DEL_NFY );
 
-	// GMt
+	// GMT
 	CNtlPacketHandler::UnRegister(GU_GMT_INFO_NFY);
 	CNtlPacketHandler::UnRegister(GU_GMT_UPDATE_RES);
 	CNtlPacketHandler::UnRegister(GU_GMT_CHANGED_NFY);

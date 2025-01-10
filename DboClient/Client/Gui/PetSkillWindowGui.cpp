@@ -1,10 +1,10 @@
 #include "precomp_dboclient.h"
 #include "PetSkillWindowGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// PL
+// Pl
 #include "NtlPlDef.h"
 #include "NtlPLGuiManager.h"
 
@@ -19,7 +19,7 @@
 #include "NtlSobIcon.h"
 #include "NtlSobSkill.h"
 
-// dbo
+// Dbo
 #include "DialogManager.h"
 #include "DboEvent.h"
 #include "DboGlobal.h"
@@ -71,6 +71,7 @@ RwBool CPetSkillWindowGui::Create()
     m_pPnlSummonPetBack  = (gui::CPanel*)GetComponent("pnlSummonPetBack");
     m_pPnlItemPetBack    = (gui::CPanel*)GetComponent("pnlItemPetBack");
     m_pPnlTransformCancelBack = (gui::CPanel*)GetComponent("pnlTransformCancelBack");
+    // 
     m_pBtnSummonClose    = (gui::CButton*)GetComponent("btnSummonClose");
     m_pBtnItemClose      = (gui::CButton*)GetComponent("btnItemClose");
     m_pBtnSummonAttack   = (gui::CButton*)GetComponent("btnSummonAttack");
@@ -83,12 +84,12 @@ RwBool CPetSkillWindowGui::Create()
     m_slotClickSummonAttack = m_pBtnSummonAttack->SigMouseUp().Connect(this, &CPetSkillWindowGui::OnClickSummonAttack);
     m_slotMouseDownSummonAttack = m_pBtnSummonAttack->SigMouseDown().Connect(this, &CPetSkillWindowGui::OnMouseDownSummonAttack);
     m_slotMouseEnter = m_pBtnSummonAttack->SigMouseEnter().Connect(this, &CPetSkillWindowGui::OnMouseEnter);
-	m_slotMove	= m_pThis->SigMove().Connect( this, &CPetSkillWindowGui::OnMove );
+    m_slotMove  = m_pThis->SigMove().Connect( this, &CPetSkillWindowGui::OnMove );
     m_slotMouseLeave = m_pBtnSummonAttack->SigMouseLeave().Connect(this, &CPetSkillWindowGui::OnMouseLeave);
     m_slotMouseMove  = m_pThis->SigMouseMove().Connect(this, &CPetSkillWindowGui::OnMouseMove);
     m_slotMouseDialogLeave = m_pThis->SigMouseLeave().Connect(this, &CPetSkillWindowGui::OnMouseDialogLeave);
-    
-    // Surface 설정
+
+    // Surface settings
     m_surFocus.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("GameCommon.srf", "srfSlotFocusEffect"));
     for(RwInt32 i = 0; i < SUMMON_PET_MAX_SKILL; ++i)
     {
@@ -146,11 +147,11 @@ RwInt32 CPetSkillWindowGui::SwitchDialog( bool bOpen )
 
 void CPetSkillWindowGui::HandleEvents( RWS::CMsg &pMsg )
 {
-    if(pMsg.Id == g_EventSobInfoUpdate)    // Pet의 정보가 Update 되었을때
+    if(pMsg.Id == g_EventSobInfoUpdate)    // When the pet's information is updated
     {
 
     }
-    else if(pMsg.Id == g_EventSummonPet)   // Pet이 죽었을때
+    else if(pMsg.Id == g_EventSummonPet)   // When Pet Died
     {
         SDboEventSummonPet* pData = reinterpret_cast<SDboEventSummonPet*>(pMsg.pData);
         if(!pData->bCreate)
@@ -176,9 +177,10 @@ void CPetSkillWindowGui::HandleEvents( RWS::CMsg &pMsg )
 				AdjustDialog();
 			}
 			else
-				GetDialogManager()->CloseDialog( DIALOG_PET_SKILL_SLOT );
-        }
-    }
+             
+                GetDialogManager()->CloseDialog( DIALOG_PET_SKILL_SLOT );
+            }
+        }   
     else if(pMsg.Id == g_EventTransform)
     {
         SNtlEventTransform* pData = reinterpret_cast<SNtlEventTransform*>(pMsg.pData);
@@ -194,8 +196,8 @@ void CPetSkillWindowGui::HandleEvents( RWS::CMsg &pMsg )
 		}
 		else
 			GetDialogManager()->CloseDialog( DIALOG_PET_SKILL_SLOT );
+        }
     }    
-}
 
 void CPetSkillWindowGui::AdjustDialog()
 {
@@ -216,7 +218,7 @@ void CPetSkillWindowGui::AdjustDialog()
 
         if(m_uiInfoFlag & E_TRANSFORM_CANCEL)
         {
-            // 위치
+            // location
             if(m_uiInfoFlag & E_PET_TYPE_SUMMON)
             {
                 m_pPnlTransformCancelBack->SetPosition(179, 0);
@@ -228,10 +230,10 @@ void CPetSkillWindowGui::AdjustDialog()
                 m_pBtnTransformCancel->SetPosition(0, 0);
             }
 
-            // 서페이스
+            // surface
             m_pBtnTransformCancel->GetSurfaceFocus()->clear();
             m_pBtnTransformCancel->GetSurfaceUp()->clear();
-            m_pBtnTransformCancel->GetSurfaceDown()->clear();            
+            m_pBtnTransformCancel->GetSurfaceDown()->clear();  
             switch(Logic_GetPlayerRace(GetNtlSLGlobal()->GetSobAvatar()))
             {
             case RACE_HUMAN:
@@ -250,7 +252,7 @@ void CPetSkillWindowGui::AdjustDialog()
                 m_pBtnTransformCancel->AddSurfaceDown(m_surTransformMajin);
                 break;
             }
-
+ 
             m_pPnlTransformCancelBack->Show(TRUE);
             m_pBtnTransformCancel->Show(TRUE);
         }
@@ -260,7 +262,7 @@ void CPetSkillWindowGui::AdjustDialog()
             m_pBtnTransformCancel->Show(FALSE);
         }
 
-        // NOTE: 아이템펫은 아직 없다.
+        // NOTE: There are no item pets yet.
         if(m_uiInfoFlag & E_PET_TYPE_ITEM)
         {
             m_pPnlItemPetBack->Show(TRUE);
@@ -349,9 +351,9 @@ void CPetSkillWindowGui::SetTransformCancel( RwBool bEnable )
     }
 }
 
-VOID CPetSkillWindowGui::OnClickSummonCloseBtn( gui::CComponent* pComponent )
+VOID CPetSkillWindowGui::OnClickSummonCloseBtn(gui::CComponent* pComponent)
 {
-    // 클로즈 버튼을 누르면 소환 취소 된다.    
+    // Pressing the Close button will cancel the summons.      
     CNtlSobPet* pSobPet = reinterpret_cast<CNtlSobPet*>(GetNtlSobManager()->GetSobObject(m_uiSummonPetID));
     if(!pSobPet)
         return;
@@ -363,9 +365,10 @@ VOID CPetSkillWindowGui::OnClickSummonCloseBtn( gui::CComponent* pComponent )
     AdjustDialog();
 }
 
+
 VOID CPetSkillWindowGui::OnClickItemCloseBtn( gui::CComponent* pComponent )
 {
-    // 클로즈 버튼을 누르면 소환 취소 된다.
+    // If you press the close button, the summon will be canceled.
     CNtlSobPet* pSobPet = reinterpret_cast<CNtlSobPet*>(GetNtlSobManager()->GetSobObject(m_uiItemPetID));
     if(!pSobPet)
         return;
@@ -379,13 +382,13 @@ VOID CPetSkillWindowGui::OnClickItemCloseBtn( gui::CComponent* pComponent )
 
 void CPetSkillWindowGui::UpdatePetInfo()
 {
-    // 펫의 스킬정보를 가져와서 Skill Window에 표시한다. 
+    // Retrieves the pet's skill information and displays it in the Skill Window. 
     SetSkillIcon();
 }
 
 VOID CPetSkillWindowGui::OnMouseDownSummonAttack(const CKey& key)
 {
-    // 버튼위에 마우스 우클릭시 버튼 다운 이미지 표시
+    // When you right-click on the button, the button down image is displayed.
     if(!m_uiSummonPetID)
         return;
 
@@ -393,8 +396,8 @@ VOID CPetSkillWindowGui::OnMouseDownSummonAttack(const CKey& key)
         return;
     
     //m_pBtnSummonAttack->SetPosition(2, 2);            
-    //m_pBtnSummonAttack->SetWidth(NTL_ITEM_ICON_SIZE - 4);
-    //m_pBtnSummonAttack->SetHeight(NTL_ITEM_ICON_SIZE - 4);
+   //m_pBtnSummonAttack->SetWidth(NTL_ITEM_ICON_SIZE - 4);
+   //m_pBtnSummonAttack->SetHeight(NTL_ITEM_ICON_SIZE - 4);
 
     m_pBtnSummonAttack->GetSurfaceFocus()->clear();
     m_pBtnSummonAttack->AddSurfaceFocus(m_surAttackBtnDown);
@@ -406,20 +409,20 @@ VOID CPetSkillWindowGui::OnClickSummonAttack(const CKey& key)
     if(!m_uiSummonPetID)
         return;
 
-    // 마우스 우측 클릭시에만 공격하도록 한다.
+    // Only attack when right-clicking the mouse.
     if(key.m_nID != UD_RIGHT_BUTTON)
         return;
 
     m_pBtnSummonAttack->GetSurfaceFocus()->clear();
-    m_pBtnSummonAttack->AddSurfaceFocus(m_surAttackBtnUp);    
+    m_pBtnSummonAttack->AddSurfaceFocus(m_surAttackBtnUp);
     m_pBtnSummonAttack->ReleaseMouse();
 
-	// peessi: MouseCapture 상태에서 UI가 사라진 경우에, 콜백에 따른 작동을 막는다. 
+	// peessi: Prevents operation based on callbacks when the UI disappears in MouseCapture state. 
 	if( !m_pBtnSummonAttack->IsVisibleTruly() )
 		return;
 
-    //// 설정한 타겟을 펫이 공격하게 한다.  
-	// 서버로 Pet을 옮기는 작업 중
+    //// Have your pet attack the target you set.  
+	// In the process of moving the pet to the server
     CNtlSobPet* pSobPet = reinterpret_cast<CNtlSobPet*>(GetNtlSobManager()->GetSobObject(m_uiSummonPetID));
     if(!pSobPet)
         return;
@@ -428,7 +431,7 @@ VOID CPetSkillWindowGui::OnClickSummonAttack(const CKey& key)
     if(hTarget == INVALID_SERIAL_ID)
         return;
 
-    if(!Logic_IsEnemyTagetFromPetActor(pSobPet, hTarget))   // 공격할수 있는 대상인지 확인
+    if(!Logic_IsEnemyTagetFromPetActor(pSobPet, hTarget))   // Check if the target can be attacked
         return;
 
 	API_GetSLPacketGenerator()->SendPetAttackTargetNfy( pSobPet->GetServerSyncAvatarType() );
@@ -438,9 +441,9 @@ VOID CPetSkillWindowGui::OnClickSummonAttack(const CKey& key)
 
 VOID CPetSkillWindowGui::OnMouseEnter( gui::CComponent* pComponent )
 {
-    m_bVisibeFocus = TRUE;      // 아이콘 포커스를 그린다.
+    m_bVisibeFocus = TRUE;      // Draws icon focus.
 
-    // 툴팁을 뛰운다    
+    // Runs a tooltip    
     RwInt32 nX = m_pThis->GetPosition().left;
     RwInt32 nY = m_pThis->GetPosition().top - 60;
     GetInfoWndManager()->ShowInfoWindow(TRUE, CInfoWndManager::INFOWND_JUST_WTEXT, nX, nY, (void*)GetDisplayStringManager()->GetString("DST_PET_TOOLTIP_ATTACK"), DIALOG_PET_SKILL_SLOT); 
@@ -466,7 +469,7 @@ VOID CPetSkillWindowGui::OnMouseLeave( gui::CComponent* pComponent )
 {
     m_bVisibeFocus = FALSE;
 
-    // 툴팁을 없앤다.
+    // Remove tooltip.
     if(GetInfoWndManager()->GetRequestGui() == DIALOG_PET_SKILL_SLOT)
     {
         GetInfoWndManager()->ShowInfoWindow(FALSE);
@@ -524,7 +527,7 @@ void CPetSkillWindowGui::UpdateSkillIcon( RwReal fElapsedTime )
         {
             RwReal fCurrentTime = 0.0f;
 
-            // 스킬의 남은 쿨타임을 가져온다.
+            // Brings the remaining cooldown of the skill.
             fCurrentTime = m_pSobSkillIcon[i]->GetCoolingTime();            
             m_CoolTimeEffect[i].Update(fCurrentTime);            
         }
@@ -568,7 +571,7 @@ VOID CPetSkillWindowGui::OnMouseDialogLeave( gui::CComponent* pComponent )
     }
 }
 
-VOID CPetSkillWindowGui::OnClickTransformCancel( gui::CComponent* pComponent ) 
+VOID CPetSkillWindowGui::OnClickTransformCancel( gui::CComponent* pComponent )
 {
     GetDboGlobal()->GetGamePacketGenerator()->SendTransformCancelReq();
 }

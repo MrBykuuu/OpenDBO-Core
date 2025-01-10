@@ -27,7 +27,7 @@ bool CNtlJingleGroup::Stop(SOUND_HANDLE hHandle)
 {
 	bool bResult = CNtlChannelGroup::Stop(hHandle);
 
-	// 모든 Jingle Music이 종료되었다
+	// All Jingle Music has ended
 	if( bResult && m_mapGroup.size() == 0 )
 		CNtlSoundEventGenerator::SendEventMusic(EVENT_MUSIC_ALL_EVENT_MUSIC_FINISH);
 
@@ -40,7 +40,7 @@ void CNtlJingleGroup::StopGroup()
 
 	CNtlChannelGroup::StopGroup();
 
-	// 플레이 되던 모든 Jingle Music이 종료되었다
+	// All Jingle Music that was being played has ended.
 	if( bExistChannel )
 		CNtlSoundEventGenerator::SendEventMusic(EVENT_MUSIC_ALL_EVENT_MUSIC_FINISH);
 }
@@ -51,7 +51,7 @@ void CNtlJingleGroup::ReleaseFinishedSound(float fElapsed)
 
 	CNtlChannelGroup::ReleaseFinishedSound(fElapsed);
 
-	// 플레이 되던 모든 Jingle Music이 종료되었다
+	// All Jingle Music that was being played has ended.
 	if( bExistChannel && m_mapGroup.size() == 0 )
 		CNtlSoundEventGenerator::SendEventMusic(EVENT_MUSIC_ALL_EVENT_MUSIC_FINISH);
 }

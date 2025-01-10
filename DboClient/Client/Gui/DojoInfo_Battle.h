@@ -1,16 +1,16 @@
 /******************************************************************************
-* File			: DojoInfo_Battle.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2009. 1. 16
-* Abstract		: 
+*File           : DojoInfo_Battle.h
+*Author         : Hong SungBock
+*Copyright      : NTL Co., Ltd.
+*Date           : January 16, 2009
+*Abstract		: 
 *****************************************************************************
-* Desc			: 도장 정보의 전투탭
+*Desc           : Battle tab of dojo information
 *****************************************************************************/
 
 #pragma once
 
-// cleint
+// Client
 #include "SurfaceGui.h"
 #include "Windowby3.h"
 #include "DojoInfo_Base.h"

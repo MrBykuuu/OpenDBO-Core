@@ -78,8 +78,9 @@ VOID CBalloon_Generic::CalcRect(VOID)
 	nStaticWidth = m_pBalloon->m_pStaticBox->GetWidth() + 2 * m_nMarginX;
 	nStaticHeight= m_pBalloon->m_pStaticBox->GetHeight() + 2 * m_nMarginY;
 	
-	// 최소폭
-	// 일단 시간이 급하므로... 나중에 대폭 수정한다. 
+	// minimum width
+	// First of all, since time is urgent... I will make major changes later. 
+
 	
 	if( nStaticWidth + m_pOutline->GetLeftCX() + m_pOutline->GetRightCX() <
 		m_pOutline->GetTailWidth() + m_pOutline->GetLeftCornerCX() + m_pOutline->GetRightCornerCX() )
@@ -110,7 +111,8 @@ VOID CBalloon_Generic::CalcRect(VOID)
 
 	rcOutRect = m_pOutline->SetInScreenRect( rcInRect, nTailX );
 
-	// 부모 좌표의 상대 위치로 좌표 바꿈.
+	// Change the coordinates to the relative position of the parent coordinates.
+
 	if( m_pBalloon->GetParent() )
 	{
 		rcParent = m_pBalloon->GetParent()->GetScreenRect();
@@ -157,7 +159,8 @@ VOID CBalloon_Generic::OnMove( INT nOldX, INT nOldY )
 
 	CRectangle rect = m_pBalloon->GetScreenRect();
 		
-	// 스크린 좌표를 넘겨준다.
+	// Passes the screen coordinates.
+
 	m_pOutline->SetMove( rect.left, rect.top );
 }
 

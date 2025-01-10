@@ -1,19 +1,19 @@
 /******************************************************************************
-* File			: SideDialogControlGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 1. 24
-* Abstract		: 
+*File			: SideDialogControlGui.h
+*Author		    : Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2008. 1. 24
+*Abstract		: 
 *****************************************************************************
-* Desc			: 사이드 다이얼로그를 관리하는 컨트롤 GUI
+*Desc			: Control GUI to manage side dialogs
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
 class CSideDialogMiniGui;
@@ -53,7 +53,7 @@ public:
 	RwBool		Create();
 	VOID		Destroy();
 
-	RwInt32		SwitchDialog(bool bOpen);			///< DialogManager에서의 Open/Close
+	RwInt32		SwitchDialog(bool bOpen);			///< Open/Close in DialogManager
 
 	RwBool		SelectButtonType(RwUInt32 uiDialogType);
 
@@ -76,10 +76,10 @@ protected:
 	gui::CSlot			m_slotRightButton;
 	gui::CSlot			m_slotMove;
 
-	gui::CButton*		m_pLeftButton;				///< 왼쪽 버튼
-	gui::CButton*		m_pRightButton;				///< 오른쪽 버튼
+	gui::CButton*		m_pLeftButton;				///< Left button
+	gui::CButton*		m_pRightButton;				///< Right button
 
-	CSideDialogMiniGui*	m_pSideDialogMiniGui;		///< 사이드 다이얼로그의 최소화시 공통 다이얼로그
+	CSideDialogMiniGui*	m_pSideDialogMiniGui;		///< Common dialog when minimizing side dialog
 
 	sButtonType			m_aButtonType[NUM_BUTTONTYPE];
 

@@ -1,12 +1,12 @@
 #include "precomp_ntlpresentation.h"
 #include "NtlPLHelpers.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 #include "NtlCoreUtil.h"
 
-// presentation
+// Presentation
 #include "NtlPLEntity.h"
 #include "NtlPLAttach.h"
 #include "NtlPLPlayerName.h"
@@ -264,11 +264,11 @@ void Helper_DetachPLEntity(CNtlPLEntity *pSource, CNtlPLEntity *pTarget)
 }
 
 /**
-* 문자열을 파싱하여 반환한다.
-* \param szInput 입력 문자열
-* \param szOutput 출력 문자열
-* \param szSplit 파싱할 문자열 
-* \param nCount 파싱후, 가져오고 싶은 문자열의 Index, 0부터 시작한다. (Ex. "r;g;b"에서 g를 가져오고싶다면 1) 
+* Parse and return the string.
+* \param szInput input string
+* \param szOutput output string
+* \param szSplit String to parse 
+* \param nCount After parsing, index of the string you want to retrieve, starting from 0. (Ex. 1 if you want to get g from “r;g;b”) 
 */
 void Helper_StringSplit( const RwChar* szInput, RwChar* szOutput, size_t sizeOutput, const RwChar* szSplit, RwInt32 nCount ) 
 {
@@ -294,21 +294,21 @@ void Helper_StringSplit( const RwChar* szInput, RwChar* szOutput, size_t sizeOut
 		++nCnt;
 	}
 
-	// 마지막 문자열을 찾을때 필요     
+	// Needed to find the last string     
 	sprintf_s(szOutput, sizeOutput, "%s", tempIndex);       
 }
 
 /**
-* "x;y;z"형태의 문자열을 RwV3d로 변환하여 반환한다.
-* \param buf 입력될 문자열
-* return 반환된 RwV3d값
+*Converts a string in the form of "x;y;z" to RwV3d and returns it.
+* \param buf String to be input
+*return Returned RwV3d value
 */
 RwV3d Helper_String2V3D(const RwChar* buf)
 {
 	RwV3d vReturn = {0.0f, 0.0f, 0.0f};    
 	RwChar szOutput[3][64] = {0,};
 
-	// NOTE: 속도를 위해서 For문을 사용하지 않는다.
+	// NOTE: For speed, do not use the For statement.
 	Helper_StringSplit(buf, szOutput[0], 64, ";", 0);
 	Helper_StringSplit(buf, szOutput[1], 64, ";", 1);
 	Helper_StringSplit(buf, szOutput[2], 64, ";", 2);
@@ -372,7 +372,7 @@ RwUInt8 Helper_RGB2Gray(RwUInt8& _R, RwUInt8& _G, RwUInt8& _B)
 
 
 //////////////////////////////////////////////////////////////////////////
-// Callback 함수
+// Callback function
 //////////////////////////////////////////////////////////////////////////
 
 

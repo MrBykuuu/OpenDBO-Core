@@ -72,7 +72,7 @@ RwBool CNtlPLPlant::Update(RwReal fElapsed)
 	RwV3d		vNormal;
 	RwV3d		vPos = *RwMatrixGetPos(RwFrameGetMatrix(RwCameraGetFrame(pCamera)));
 
-	// 클립평면을 계산해 낸다.
+	// Calculates the clip plane.
 	RwV3dNegate(&vNormal, RwMatrixGetAt(RwFrameGetMatrix(RwCameraGetFrame(pCamera))));
 	RwV3dIncrementScaled(&vPos, RwMatrixGetAt(RwFrameGetMatrix(RwCameraGetFrame(pCamera))), m_fClipDistance);
 	m_planeCilp.PlaneFromPointNormal(&vPos, &vNormal);
@@ -99,7 +99,7 @@ RwBool CNtlPLPlant::Update(RwReal fElapsed)
 	GetSceneManager()->GetWorld()->GetWorldFieldMgr()->GetNeighborSectors(iCurIdx, vecNeighborSectorIndices);
 	vecNeighborSectorIndices.push_back(iCurIdx);
 
-	// 주변섹터를 검색하여 가시영역에 포함된 오브젝트 리스트를 구해낸다.
+	// Searches surrounding sectors to obtain a list of objects included in the visible area.
 	RwInt32 iNeighborSectorSize = vecNeighborSectorIndices.size();
 	if (vecNeighborSectorIndices.empty())
 	{
@@ -109,7 +109,7 @@ RwBool CNtlPLPlant::Update(RwReal fElapsed)
 	RwInt32 iNeighborSector = 0;
 	do 
 	{		
-		// 잊어먹지 말자. Sector는 invalid 일수도 있다.
+		// Let's not forget. Sector may be invalid.
 		if (vecNeighborSectorIndices.at(iNeighborSector) == -1)
 		{
 			continue;
@@ -147,7 +147,7 @@ RwBool CNtlPLPlant::Update(RwReal fElapsed)
 			CNtlPLPlantProperty::sPLANT_PROP&	sProperty = itProp->second;
 			RwV3d								vTemp;
 
-			// 첫번째 타일의 중심점을 구한다.
+			// Find the center point of the first tile.
 			vTemp.x = pSector->DatumPoint.x - (dGET_WORLD_PARAM()->WorldSectorSize / 2) + (dGET_WORLD_PARAM()->WorldSectorTileSize / 2);
 			vTemp.y = 0.0f;
 			vTemp.z = pSector->DatumPoint.z - (dGET_WORLD_PARAM()->WorldSectorSize / 2) + (dGET_WORLD_PARAM()->WorldSectorTileSize / 2);
@@ -157,16 +157,16 @@ RwBool CNtlPLPlant::Update(RwReal fElapsed)
 				sSECTOR_PLANT_SET_ATTR::sSECTOR_PLANT_OBJ_ATTR*	pPlantObj = *itPlantObj;
 				RwSphere										sphereTile;
 
-				// 해당 오브젝트의 중심점을 계산해 낸다.
+				// Calculates the center point of the object.
 				sphereTile.radius	= (RwReal)dGET_WORLD_PARAM()->WorldSectorTileSize;
 				sphereTile.center.x = vTemp.x + (RwReal)(((pPlantObj->iTileIdx % dGET_WORLD_PARAM()->WorldSectorTileNum)) * dGET_WORLD_PARAM()->WorldSectorTileSize);
 				sphereTile.center.y = 0.0f;
 				sphereTile.center.z = vTemp.z + (RwReal)(((pPlantObj->iTileIdx / dGET_WORLD_PARAM()->WorldSectorTileNum)) * dGET_WORLD_PARAM()->WorldSectorTileSize);
 
-				// 현재 위치의 높이값을 알아낸다.
+				// Find the height value of the current location.
 				GetSceneManager()->GetTerrainHeight(&sphereTile.center, sphereTile.center.y);
 
-				// 현재 타일이 가시영역안에 있는지 확인한다.
+				// Check whether the current tile is within the visible area.
 				if (!PlantFrustumTestSphere(&sphereTile))
 				{
 					continue;
@@ -186,7 +186,7 @@ RwBool CNtlPLPlant::Update(RwReal fElapsed)
 					std::string&													strResourceName	= sProperty.vecstrResourceName.at(iObjIdx);						
 					sSECTOR_PLANT_SET_ATTR::sSECTOR_PLANT_OBJ_ATTR::TRANSFORM_VEC*	pvecTransform	= pPlantObj->vecObjMatrix.at(iObjIdx);
 
-					// 해당타일의 오브젝트 리스트의 포인터를 통째로 리스트에 포함 시킨다.
+					// The pointer of the object list of the corresponding tile is included in the list as a whole.
 					if (!pvecTransform->empty())
 					{
 						m_mapSector[pSector][strResourceName].push_back(pvecTransform);
@@ -201,14 +201,14 @@ RwBool CNtlPLPlant::Update(RwReal fElapsed)
 
 RwBool CNtlPLPlant::PlantFrustumTestSphere(const RwSphere* pSphere)
 {
-	// bacamera.c(void CameraBuildPerspClipPlanes(RwCamera) 참조)
+	// bacamera.c(void CameraBuildPerspClipPlanes(RwCamera) Reference)
 	RwCamera* pCamera = CNtlPLGlobal::m_RwCamera;
 
-	// Far :: 클립평면으로 기존 가시영역체크와는 달리 한다.
+	// Far :: Different from the existing visible area check using the clip plane.
 	/*
-	*	renderware에서의 클립평면들의 법선은 밖을 향하고 있다.
-	*	DX renderstate를 설정하기 위해 클립면의 안을 향해야 정상적인 처리가 가능하다.
-	*	클립평면 거리도 다르고 방향도 다르기 때문에 FarClipPlane에 대해서는 처리를 달리한다.
+	*The normals of the clip planes in renderware are pointing outward.
+	*To set the DX renderstate, you must face the inside of the clip plane for normal processing.
+	*Because the clip plane distance is different and the direction is different, FarClipPlane is processed differently.
 	*/
 	if (RwV3dDotProduct(&pSphere->center, &m_planeCilp.GetNormal()) +
 		m_planeCilp.GetConstant() < -pSphere->radius)
@@ -291,8 +291,8 @@ RwBool CNtlPLPlant::RenderSector(CNtlWorldSector* pSector)
 		NTL_RETURN(TRUE);
 	}
 	/*
-	*	모든 PLANT OBJ는 똑같은 RenderState를 사용하기로 하였으므로
-	*	기존 Atomic에 설정된 Flag를 무시하고 RenderState를 외부에서 세팅한다.
+	*All PLANT OBJs decided to use the same RenderState
+	*Ignore the flag set in the existing Atomic and set the RenderState externally.
 	*/
 	RwRenderStateSet(rwRENDERSTATEALPHATESTFUNCTIONREF, (void *)0x90);
 	RwRenderStateSet(rwRENDERSTATEALPHATESTFUNCTION, (void *)rwALPHATESTFUNCTIONGREATEREQUAL);
@@ -370,9 +370,9 @@ RwBool CNtlPLPlant::SetProperty(const CNtlPLProperty *pProperty)
 }
 
 /*
-*	섹터가 로드 되면 동작된다.
-*	이 메소드가 실행되기 전에 지형 섹터 정점 정보가 존재해야 한다.
-*	섹터의 정보를 바탕으로 리소스를 로딩(직접)한다.
+*Operates when the sector is loaded.
+*Terrain sector vertex information must exist before this method is executed.
+*Load resources (directly) based on sector information.
 */
 void CNtlPLPlant::OnLoad(CNtlWorldSector* pSector)
 {
@@ -387,8 +387,8 @@ void CNtlPLPlant::OnLoad(CNtlWorldSector* pSector)
 }
 
 /*
-*	섹터가 언로드 될때 동작한다.
-*	섹터의 정보를 바탕으로 리소스를 삭제한다.
+*Operates when a sector is unloaded.
+*Delete resources based on sector information.
 */
 void CNtlPLPlant::OnUnload(CNtlWorldSector* pSector)
 {
@@ -405,8 +405,8 @@ void CNtlPLPlant::OnUnload(CNtlWorldSector* pSector)
 }
 
 /*
-*	섹터정보에는 타일인덱스 값만 가지고 있으므로 여기서 이 메소드에서
-*	매트릭스를 구성해 준다.
+*Since the sector information only has the tile index value, here in this method
+*Constructs a matrix.
 */
 void CNtlPLPlant::OnGenerator(CNtlWorldSector* pSector, sSECTOR_PLANT_SET_ATTR* pPlantSet, sSECTOR_PLANT_SET_ATTR::sSECTOR_PLANT_OBJ_ATTR* pPlantObj)
 {
@@ -460,7 +460,7 @@ void CNtlPLPlant::OnGenerator(CNtlWorldSector* pSector, sSECTOR_PLANT_SET_ATTR* 
 			continue;
 		}
 
-		// 만약 지형과 수직으로 되도록 Flag가 체크된 세트라면 이 정보를 기준으로 연산해준다.
+		// If the flag is checked to be perpendicular to the terrain, calculations are made based on this information.
 		if (sProperty.bIsRotationTerrain)
 		{
 			pmatRotate = &matRotate;

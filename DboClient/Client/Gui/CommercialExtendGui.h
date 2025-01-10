@@ -8,12 +8,12 @@
 #include "NtlSobItem.h"
 /**
 * \ingroup Client
-* \brief 상용화관련 기간 연장 처리,  기간연장확인3(제니, 넷피, 캐쉬) + 구매확인(캐쉬)
-*  크기 변동 dialog 캐쉬일때 size가 default, 제니, 넷피서 size가 줄어듬
+* \brief Processing of extension of period related to commercialization, period extension confirmation 3 (Zenny, Netpy, Cash) + Purchase confirmation (Cash)
+*Size change: When the dialog cache is used, the size is default, Zenny, and netfuser size are reduced.
 *
-*	CCommercialExtendGui는 기본적으로 기간 연장 처리용 Gui지만
+*CCommercialExtendGui is basically a Gui for processing period extensions.
 *	
-*	제일 먼저 기간제 아이템의 최초 구매 이벤트를 처리하는 가장 중요한  entry point
+*The most important entry point that handles the first purchase event of a limited-term item
 *
 * 
 * \date 2009-08-14
@@ -36,29 +36,29 @@ public:
 		int					iDefaultWndHeight;
 		int					iDefaultDescript1Top;
 		int					iDefaultCancelButtLeft;
-		/// 외부 link
-		gui::CDialog*		pDialog;						// dialog 크기 변경
-		gui::CStaticBox*	pStatic_stbTitle;				// title변경 가능
+		/// external link
+		gui::CDialog*		pDialog;						// change dialog size
+		gui::CStaticBox*	pStatic_stbTitle;				// title can be changed
 		gui::CStaticBox*	pStatic_stbConsumeGoldTitle;
 		gui::CStaticBox*	pStatic_stbMyGoldTitle;
 		gui::CStaticBox*	pStatic_stbRemainTime;
 		gui::CStaticBox*	pStatic_stbAddableTime;
 		gui::CStaticBox*	pStatic_stbConsumeGold;
-		CSurfaceGui*		pSurConsumeGoldIcon;			// 텍스처 바뀔 수 있음
+		CSurfaceGui*		pSurConsumeGoldIcon;			// Texture may change
 		gui::CStaticBox*	pStatic_stbMyGold;
-		CSurfaceGui*		pSurMyGoldIcon;					// 텍스처 바뀔 수 있음
+		CSurfaceGui*		pSurMyGoldIcon;					// Texture may change
 		gui::CPanel*		pPanel_pnlPanel2;
 		gui::COutputBox*		pInput_opbDescriptDetail;
-		gui::CStaticBox*	pStatic_stbDescript1;			// 변화 가
-		gui::CStaticBox*	pStatic_stbDescript2;			// 변화 가
-		gui::CButton*		pButt_btnConfirm;				// 숨겨질수 있음
-		gui::CButton*		pButt_btnBuyDuration;			// 숨겨짐
-		gui::CButton*		pButt_btnRefillCash;			// 숨겨짐
-		gui::CButton*		pButt_btnCancel;				// 위치 변경
+		gui::CStaticBox*	pStatic_stbDescript1;			// change
+		gui::CStaticBox*	pStatic_stbDescript2;			// change
+		gui::CButton*		pButt_btnConfirm;				// Can be hidden
+		gui::CButton*		pButt_btnBuyDuration;			// hidden
+		gui::CButton*		pButt_btnRefillCash;			// hidden
+		gui::CButton*		pButt_btnCancel;				// change location
 	};
 protected:
 	CAttributeControlSet	m_AttributeControlSet;
-	CNtlSobItem*			m_pTargetNtlSobItem;			// 연장위한 Target item
+	CNtlSobItem*			m_pTargetNtlSobItem;			// Target item for extension
 
 	RwUInt32				m_uiConsumeGold;
 	RwUInt32				m_uiMyGold;
@@ -129,13 +129,13 @@ public:
 
 protected:
 
-	GUI_EXTEND_MODE				m_eCurrExtendGuiMode;	/// 이 gui는 4개의 mode로 동작하게 되어있다
+	GUI_EXTEND_MODE				m_eCurrExtendGuiMode;	/// This GUI operates in 4 modes.
 	CCommercialExtendMode*		m_pArrayCommercialExtendMode[NUM_EXTEND_MODE];
 
-	RwUInt32					m_uiDurItemIdx;				/// 거래할 기간제 아이템
+	RwUInt32					m_uiDurItemIdx;				/// Temporary items to trade
 		
-	CNtlSobItem*				m_pTargetNtlSobItem;		/// 기간연장할 아이템
-	sITEM_TBLDAT*				m_pCurrITEM_TBLDA;			/// 기간연장을 위한 item의 정보 ref
+	CNtlSobItem*				m_pTargetNtlSobItem;		/// Items to be extended
+	sITEM_TBLDAT*				m_pCurrITEM_TBLDA;			/// Item information ref for extension of period
 
 
 	class CDataSendBuyDurItemNPC
@@ -198,8 +198,8 @@ public:
 	VOID						SetDurationItem(RwUInt32 uiItemIdx);
 	VOID						SetExtendTargetItem(CNtlSobItem* pNtlSobItem);
 	VOID						SetCurrItemTbl(RwUInt32 uiItemIdx);
-	VOID						SetCurrItemTbl(sITEM_TBLDAT* pITEM_TBLDAT);	/// 모든 item 관련 정보 setting
-																			/// setting전에 GUI_EXTEND_MODE가 결정되어 있어야 함
+	VOID						SetCurrItemTbl(sITEM_TBLDAT* pITEM_TBLDAT);	/// All item related information setting
+																			/// GUI_EXTEND_MODE must be determined before setting
 protected:
 	//! Implementation
 	VOID						ChangeExtendMode(GUI_EXTEND_MODE eMode);
@@ -216,7 +216,7 @@ protected:
 	VOID						OnMove(int nX,int nY);
 
 	// Gui Components
-	gui::CStaticBox*			m_pStatic_stbTitle;					// title변경 가능
+	gui::CStaticBox*			m_pStatic_stbTitle;					// title can be changed
 	gui::CPanel*				m_pPanel_pnlItemButt;
 	//gui::CPanel*				m_pPanel_pnlPanel1;
 	gui::CStaticBox*			m_pStatic_stbRemainTimeTitle;
@@ -230,26 +230,26 @@ protected:
 	gui::CStaticBox*			m_pStatic_stbMyGold;
 	gui::CPanel*				m_pPanel_pnlPanelMyGoldIcon;		
 
-	gui::CPanel*				m_pPanel_pnlPanel2;					// 숨겨질수 있음
+	gui::CPanel*				m_pPanel_pnlPanel2;					// Can be hidden
 	gui::COutputBox*			m_pInput_opbDescriptDetail;
 
 	gui::CPanel*				m_pPanel_pnlPanelName;
 	gui::CStaticBox*			m_pStatic_stbItemName;
-	gui::CStaticBox*			m_pStatic_stbDescript1;				// 변화 가
-	gui::CStaticBox*			m_pStatic_stbDescript2;				// 변화 가
-	gui::CButton*				m_pButt_btnConfirm;					// 숨겨질수 있음
-	gui::CButton*				m_pButt_btnCancel;					// 위치변경
-	gui::CButton*				m_pButt_btnBuyDuration;				// 숨겨짐
-	gui::CButton*				m_pButt_btnRefillCash;				// 숨겨짐
+	gui::CStaticBox*			m_pStatic_stbDescript1;				// change
+	gui::CStaticBox*			m_pStatic_stbDescript2;				// change
+	gui::CButton*				m_pButt_btnConfirm;					// Can be hidden
+	gui::CButton*				m_pButt_btnCancel;					// Change location
+	gui::CButton*				m_pButt_btnBuyDuration;				// hidden
+	gui::CButton*				m_pButt_btnRefillCash;				// hidden
 	gui::CButton*				m_pButt_btnClose;
 
 	// Variable
 	CSurfaceGui					m_surItemIconSlot;
 	CSurfaceGui					m_surEnterSlot;
-	CSurfaceGui					m_surConsumeGoldIcon;				// 텍스처 바뀔 수 있음
-	CSurfaceGui					m_surMyGoldIcon;					// 텍스처 바뀔 수 있음
+	CSurfaceGui					m_surConsumeGoldIcon;				// Texture may change
+	CSurfaceGui					m_surMyGoldIcon;					// Texture may change
 
-	CWindowby3					m_DialogSurface;					///< 크기 변경 가능한 dialog이미지
+	CWindowby3					m_DialogSurface;					///< Dialog image whose size can be changed
 
 	// Gui Signals
 	gui::CSlot					m_slotGotFocus_pnlItemButt;

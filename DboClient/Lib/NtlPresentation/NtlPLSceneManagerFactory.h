@@ -2,7 +2,7 @@
  *
  * File			: NtlPLSceneManagerFactroy.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: (?)NTL
  * Date			: 2005. 8. 01	
  * Abstract		: Presentation scene manager factroy class 
  *****************************************************************************
@@ -30,14 +30,14 @@ private:
 public:
 
 	/**
-    *  scene manager instance를 얻어오는 함수.
+    *Function to obtain a scene manager instance.
 	*
-    *  \return scene manager instance pointer를 리턴.
+    *  \return Returns the scene manager instance pointer.
     */
 	static CNtlPLSceneManager* GetInstance();
 	
 	/**
-    *  active된 scene manager pointer를 등록한다.
+    *Register the active scene manager pointer.
 	*
     *  \param scene manager pointer.
     */

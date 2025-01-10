@@ -2,7 +2,7 @@
 *
 * File			: NtlFSMUtil.h
 * Author		: HyungSuk, Jang
-* Copyright	: (주)NTL
+* Copyright	    : NTL Co., Ltd.
 * Date			: 2006. 11. 28	
 * Abstract		: fsm utility
 *****************************************************************************
@@ -16,37 +16,37 @@
 class CNtlFSMStateBase;
 class CNtlSobActor;
 
-// 이동이 가능한 상태인가?
+//Is it possible to move?
 RwBool FSMUtil_CanMoveState(CNtlFSMStateBase *pStateBase);
 
-// 공격이 가능한 상태인가?
+// Is an attack possible?
 RwBool FSMUtil_CanAttackState(CNtlFSMStateBase *pStateBase);
 
-// 공격을 받을 수 있는 상태인가?
+// Are you ready to be attacked?
 RwBool FSMUtil_CanHurtState(CNtlFSMStateBase *pStateBase);
 
-// skill을 사용 가능한 상태인가?
+// Is the skill available?
 RwBool FSMUtil_CanSkillUse(CNtlFSMStateBase *pStateBase);
 
-// idle 상태인가?
+// Is it idle?
 RwBool FSMUtil_IsIdle(CNtlFSMStateBase *pStateBase);	
 
-// 이동 상태인가?
+// Is it on the move?
 RwBool FSMUtil_IsMove(CNtlFSMStateBase *pStateBase);		
 
-// 개인 상점 상태인가?
+// Is it a private store?
 RwBool FSMUtil_IsPrivateShopping(CNtlFSMStateBase *pStateBase);
 
-// charging 상태인가?
+// Is it charging?
 RwBool FSMUtil_IsCharging(CNtlFSMStateBase *pStateBase);
 
-// teleporting 상태인가?
+// Are you in a teleporting state?
 RwBool FSMUtil_IsTeleporting(CNtlFSMStateBase *pStateBase);
 
-// 버스에 탑승 상태인가?
+// Are you on the bus?
 RwBool FSMUtil_IsOnBus(CNtlFSMStateBase* pStateBase);
 
-// 탈 것에 탑승 상태인가?
+// Are you on board the vehicle?
 RwBool FSMUtil_IsOnVehicle(CNtlFSMStateBase* pStateBase);
 
 

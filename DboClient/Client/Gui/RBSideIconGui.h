@@ -53,9 +53,9 @@ public:
 private:
 	VOID	HandleEvents( RWS::CMsg& msg );
 
-	//VOID	SetWaitData(VOID);								// 입장대기
-	//VOID	SetReadyData( VOID* pData, RwInt32 nCount );	// 입장준비
-	//VOID	SetCancelData( RwUInt32 uiString, RwUInt32 eType );	// 랭크배틀취소	
+	//VOID	SetWaitData(VOID);								//Waiting for entry
+	//VOID	SetReadyData( VOID* pData, RwInt32 nCount );	//Preparation for entry
+	//VOID	SetCancelData( RwUInt32 uiString, RwUInt32 eType );	//Cancel Rank Battle	
 
 	//VOID	SetState( RwInt32 eState );
 	VOID	SetCurrentTimeInfo( RwReal fElapsedTIme );

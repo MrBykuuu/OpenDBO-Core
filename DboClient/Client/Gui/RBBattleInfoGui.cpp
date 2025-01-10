@@ -7,7 +7,7 @@
 // Presentation
 #include "NtlPLGuiManager.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
 // Simulation
@@ -24,7 +24,7 @@
 #include "DisplayStringManager.h"
 #include "DboEventGenerator.h"
 
-#define RBENEMY_PARTYINFO_CLASSICON_X	-24		// 각 파티인포아이템 기준 좌표.
+#define RBENEMY_PARTYINFO_CLASSICON_X	-24		// The coordinates of each party info item.
 #define RBENEMY_PARTYINFO_CLASSICON_Y	0	
 
 #define RB_BATTLEINFO_KAMESCORE_X		127
@@ -149,7 +149,7 @@ RwBool CRBBattleInfoGui::Create(VOID)
 
 	m_pThis = (gui::CDialog*)GetComponent( "dlgMain" );
 
-	// RBEnemyInfo
+	// Rb enemy info
 	gui::CStaticBox* pName = NULL;
 	gui::CPanel* pNameBack = NULL;
 	gui::CStaticBox* pstbBattleOrder = NULL;
@@ -184,7 +184,7 @@ RwBool CRBBattleInfoGui::Create(VOID)
 	m_EnemyInfoArray[4].SetUI( pName );
 	m_EnemyInfoArray[4].Show( FALSE );
 
-	// RBBattleInfo
+	// Rb battle info
 	CRectangle rtScreen = m_pThis->GetScreenRect();
 	m_pstbKameTeamName = (gui::CStaticBox*)GetComponent( "stbMyTeamName" );
 	m_pstbTsuruTeamName = (gui::CStaticBox*)GetComponent( "stbEnemyTeamName" );
@@ -195,7 +195,7 @@ RwBool CRBBattleInfoGui::Create(VOID)
 	m_pstbTitle = (gui::CStaticBox*)GetComponent( "stbTitle" );
 	m_pstbEnemyMember = (gui::CStaticBox*)GetComponent( "stbEnemyMember" );
 
-	// 색설정
+	// Color settings
 	m_pstbKameTeamName->SetTextColor( NTL_BLUE_TEAM_COLOR );
 	m_pstbTsuruTeamName->SetTextColor( NTL_RED_TEAM_COLOR );
 	m_pstbKameTeamName->SetEffectColor( RANKBATTLE_COLOR_GREEN );
@@ -244,7 +244,7 @@ RwBool CRBBattleInfoGui::Create(VOID)
 
 	Show( false );
 
-	//LinkMsg( g_EventRBBattleTeamInfo );	// WorldConceptChange이전에 날라오는 이벤트, 여기에서는 생성되기 전에 호출되므로 불용.
+	//LinkMsg( g_EventRBBattleTeamInfo );	//Event fired before WorldConceptChange. Not used here as it is called before creation.
 	LinkMsg( g_EventRBBattlePlayerState );
 	LinkMsg( g_EventRBBattleStateUpdate );
 	LinkMsg( g_EventRBBattleStageFinish );

@@ -21,7 +21,7 @@
 
 /**
  * \ingroup Effect
- * Effect Entity Class(NtlInstanceComponentSystem들의 Container Class 이다.)
+ * Effect entity class (the container class for NtlInstanceComponentSystem).
  * 
  */
 class CNtlInstanceEffect : public CNtlPLAttach
@@ -32,12 +32,12 @@ public:
 
 	CNtlResourceEffect* m_pResourceEffect;
 
-	RwMatrix			m_matWorld;						///< Effect World Matrix (m_vModelScale * m_vModelAngle * m_vWorldPosition)
-														///< SetMatrix()로 Matrix 값을 직접 입력시 m_vWorldPosition 값만 혼용해서 쓸수가 있다.
-														///< Rotation과 Scale은 Matrix에 입력된 값과 충돌이 생길 수도 있다.
+	RwMatrix			m_matWorld;						///< Effect World Matrix (m_vModelScale *m_vModelAngle *m_vWorldPosition)
+														///< When directly entering the Matrix value with SetMatrix(), only the m_vWorldPosition value can be mixed.
+														///< Rotation and scale may conflict with the values ??entered in the Matrix.
 
 	RwV3d				m_vModelScale;					///< Model Scale
-	RwV3d				m_vModelAngle;					///< Model Angle (Degree - 360 - 360)
+	RwV3d				m_vModelAngle;					///< Model Angle (Degree -360 -360)
 	RwV3d				m_vWorldPosition;				///< World Position    
 
 	RwReal				m_fLifeTime;
@@ -46,20 +46,20 @@ public:
 	RwBool				m_bAutoDelete;
     RwBool              m_bApplyScale;
 
-    // Sound 관련 인스턴스
-    CNtlPLSound         m_PLSound;                      ///< Sound 객체   
+    // Sound related instance
+    CNtlPLSound         m_PLSound;                      ///< Sound object   
 
 protected:
     RwReal						m_fAnimSpeed;			///< Anim Speed
-    CNtlPLResource *			m_pVisibleBVClump;		///< Bounding Volume Clump //Tool에서 Picking을 하기 위한 용도로만	
+    CNtlPLResource *			m_pVisibleBVClump;		///< Bounding Volume Clump //Only for picking from Tool	
     RwSphere                    m_BoundingSphere;       ///< Bounding Sphere
-    RwBool                      m_bIsCulling;           ///< 바운딩 스피어에 의해서 컬링되었는지 유무 플래그
-    RwReal                      m_fNotUpdateTime;       ///< 컬링되거나 Not Visible되어서 업데이트 안된 시간    
+    RwBool                      m_bIsCulling;           ///< Flag whether culled by bounding sphere or not
+    RwReal                      m_fNotUpdateTime;       ///< Time not updated due to culling or Not Visible    
     
-    static  RwBool              m_bLowSpec;             ///< 이펙트 로우 스펙 적용 유무 플래그
-    static  RwReal              m_fLowSpecRatio;        ///< 이펙트 로우 스펙용 비율
-    static  RwBool              m_bRenderMeshSystem;    ///< 메시 시스템 렌더링 On/Off 플래그
-    static  RwBool              m_bRenderDecalSystem;   ///< 데칼 시스템 렌더링 On/Off 플래그
+    static  RwBool              m_bLowSpec;             ///< Effect low specification application status flag
+    static  RwReal              m_fLowSpecRatio;        ///< Ratio for effect low specs
+    static  RwBool              m_bRenderMeshSystem;    ///< Mesh system rendering On/Off flag
+    static  RwBool              m_bRenderDecalSystem;   ///< Decal system rendering On/Off flag
 
 public:
 	CNtlInstanceEffect(void);
@@ -70,7 +70,7 @@ public:
 
 	virtual RwBool	Create(const SPLEntityCreateParam *pParam);
 	virtual void	Destroy();
-    virtual void    Finish();                                   ///< 이펙트를 바로 종료하지 않고, 종료작업을 호출할때 사용하는 메소드 	    
+    virtual void    Finish();                                   ///< Method used when calling a termination operation instead of immediately ending the effect 	    
 	virtual RwBool	Update(RwReal fElapsedTime);
 	virtual RwBool	Render();
 	virtual RwBool  RenderToTexture(void);
@@ -79,47 +79,47 @@ public:
 
     void    AddComponentSystem(CNtlInstanceComponentSystem* pComponentSystem);
 
-	virtual RwBool IsAutoDelete()	{ return m_bAutoDelete; }						///< 자동으로 삭제가 되는 Effect 인지 아닌지
+	virtual RwBool IsAutoDelete()	{ return m_bAutoDelete; }						///< Is this an effect that is automatically deleted?
 	
-	void	SetMatrix(RwMatrix& matWorld);											///< Effect의 World Matrix를 설정한다.
-	RwMatrix &GetMatrix(void);														///< Effect의 World Matrix를 얻는다.
+	void	SetMatrix(RwMatrix& matWorld);											///< Set the World Matrix of the Effect.
+	RwMatrix &GetMatrix(void);														///< Obtain the World Matrix of the Effect.
 	
-	void	SetPosition(const RwV3d *pPos);											///< Effect를 World의 위치로 이동 시킨다.
-	RwV3d	GetPosition(void);														///< Effect의 World의 위치를 얻는다.
+	void	SetPosition(const RwV3d *pPos);											///< Move the Effect to the location of the World.
+	RwV3d	GetPosition(void);														///< Get the location of the Effect’s World.
 	
-	void	SetRotate(RwReal fXAngle, RwReal fYAngle, RwReal fZAngle);				///< Effect의 Model 공간 회전값(degree)
-	const	RwV3d* GetRotate(void) const;											///< Effect의 Model 공간 회전값 얻기
+	void	SetRotate(RwReal fXAngle, RwReal fYAngle, RwReal fZAngle);				///< Model space rotation value (degree) of Effect
+	const	RwV3d* GetRotate(void) const;											///< Obtain Model space rotation value of Effect
 
-	void	SetScale( RwReal fScale );												///< Effect의 Model 공간 Scale값
-	RwReal	GetScale(void);															///< Effect의 Model 공간 Scale값 얻어오기
-    void    SetApplyScale(RwBool bApply);                                           ///< 스케일 적용 유무를 설정한다.
+	void	SetScale( RwReal fScale );												///< Model space scale value of Effect
+	RwReal	GetScale(void);															///< Obtain model space scale value of effect
+    void    SetApplyScale(RwBool bApply);                                           ///< Set whether to apply scale.
 
-    inline RwSphere* GetBoundingSphere();                                           ///< 이펙트의 바운딩 스피어를 반환한다. (바운딩 스피어가 없으면 NULL을 반환)
+    inline RwSphere* GetBoundingSphere();                                           ///< Returns the bounding sphere of the effect. (If there is no bounding sphere, NULL is returned)
     void			 RenderBoundingSphere();                                        ///< Renders the shape of the bounding sphere. (Venus only)
 
-    virtual void	SetAlpha(RwUInt8 byValue);                                      ///< Effect의 Alpha값을 설정한다.
-    virtual void	SetVisible(RwBool bVisible);                                    ///< Effect의 Visible 유무를 설정한다
-    virtual RwBool	IsVisible(RwUInt32 uiFlags = 0xFFFFFFFF);                       ///< Effect의 Visible 유무를 반환한다.
+    virtual void	SetAlpha(RwUInt8 byValue);                                      ///< Set the Alpha value of the Effect.
+    virtual void	SetVisible(RwBool bVisible);                                    ///< Set whether the effect is visible or not
+    virtual RwBool	IsVisible(RwUInt32 uiFlags = 0xFFFFFFFF);                       ///< Returns whether the effect is visible or not.
 
 	RwBool			SetPlayAnimSpeed(RwReal fAnimSpeed);									///< Animaiton Speed (1.f: Default )
 	void			SetVisibleBoundingVolume(RwBool bVisible);								///< World Editor용 Picking Bounding Volume
-    void			SetPostEffect_CenterFixEnable(RwBool bEnable);                          ///< 포함된 Post Effect의 Center Fix기능을 설정한다.
-    void			SetCulling(RwBool bCulling) {m_bIsCulling = bCulling;}                  ///< 강제로 컬링 유무를 설정한다.
-    RwBool			IsCulling() {return m_bIsCulling;}                                      ///< 컬링 유무 플래그를 반환한다.
-    RwUInt32        GetMemoryUseSize();                                                     ///< 이펙트의 메모리 사용량을 반환한다.
+    void			SetPostEffect_CenterFixEnable(RwBool bEnable);                          ///< Set the Center Fix function of the included Post Effect.
+    void			SetCulling(RwBool bCulling) {m_bIsCulling = bCulling;}                  ///< Forcefully sets the presence or absence of culling.
+    RwBool			IsCulling() {return m_bIsCulling;}                                      ///< Returns the culling presence or absence flag.
+    RwUInt32        GetMemoryUseSize();                                                     ///< Returns the memory usage of the effect.
     
 #ifndef dNTL_WORLD_CULLING_NEW
-	virtual RwBool  CullingTest(RwCamera* pCamera);                                         ///< 컬링 유무를 검사한다.
+	virtual RwBool  CullingTest(RwCamera* pCamera);                                         ///< Check for curling.
 #endif
 
-    //-- Flag settings for Low Spec
+    //--Flag settings for Low Spec
     static void     SetLowSpecEnable(RwBool bEnable) {m_bLowSpec = bEnable;}        ///< Set whether low specification is applied or not.
     static RwBool   GetLowSpecEnable() {return m_bLowSpec;}
     static void     SetLowSpecRatio(RwReal fRatio) {m_fLowSpecRatio = fRatio;}      ///< Apply the low spec ratio.   
     static RwReal   GetLowSpecRatio() {return m_fLowSpecRatio;}
-    static void     SetRenderMeshSystem(RwBool bEnable) {m_bRenderMeshSystem = bEnable;}    ///< Mesh System Rendering On / Off
+    static void     SetRenderMeshSystem(RwBool bEnable) {m_bRenderMeshSystem = bEnable;}    ///< Mesh System Rendering On /Off
     static RwBool   GetRenderMeshSystem() {return m_bRenderMeshSystem;}
-    static void     SetRenderDecalSystem(RwBool bEnable) {m_bRenderDecalSystem = bEnable;}  ///< Decal System Rendering On / Off
+    static void     SetRenderDecalSystem(RwBool bEnable) {m_bRenderDecalSystem = bEnable;}  ///< Decal System Rendering On /Off
     static RwBool   GetRenderDecalSystem() {return m_bRenderDecalSystem;}
 
 protected:

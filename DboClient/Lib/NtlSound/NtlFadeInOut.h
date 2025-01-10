@@ -2,14 +2,14 @@
 *
 * File			: NtlFadeInOut.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: (?)NTL
 * Date			: 2006. 7. 12	
 * Abstract		: Fade In/Out Effect
 *****************************************************************************
-* Desc			: Channel, ChannelGroup에 Effect를 적용할 수 있다
+* Desc			: Effects can be applied to Channels and ChannelGroups
 *
-*				  FMOD System에서 Fade In/Out Effect를 제공하지 않아서
-*				  따로 구현하였다.
+*                 Because the FMOD System does not provide Fade In/Out Effect
+*                 Implemented separately.
 *****************************************************************************/
 
 #pragma once

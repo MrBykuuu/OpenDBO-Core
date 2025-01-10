@@ -1,10 +1,10 @@
 #include "precomp_dboclient.h"
 #include "QuestCommonGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "QuestTextDataTable.h"
 #include "ItemTable.h"
 #include "QuestItemTable.h"
@@ -12,25 +12,25 @@
 #include "HTBSetTable.h"
 #include "TableContainer.h"
 
-// gui
+// Gui
 #include "GuiUtil.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 #include "DboTSCQAgency.h"
 #include "NtlSLApi.h"
 #include "DisplayStringManager.h"
 
-// dbo
+// Dbo
 #include "DialogManager.h"
 #include "DboLogic.h"
 #include "InfoWndManager.h"
 
-// QuestTextTable의 값이 바뀌면 변경해 주어야함 !!!!
+// If the value of QuestTextTable changes, it must be changed!!!!
 #define QUEST_GRADE_OFFSET_FROM_TABLE 90
 
 CQuestCommonGui::CQuestCommonGui( const RwChar *pName )
@@ -61,7 +61,7 @@ CQuestCommonGui::~CQuestCommonGui(VOID)
 
 VOID CQuestCommonGui::SetQuestTitle( RwUInt32 uiTitle, RwUInt32 uiSort, RwInt32 eGrade )
 {
-	// peessi : uiSort 퀘스트텍스트에서 지우고, eQuestSortType데이터로 바꾼다. 
+	// peessi: Deletes uiSort quest text and replaces it with eQuestSortType data. 
 	CQuestTextDataTable* pQuestTextTable = API_GetTableContainer()->GetQuestTextDataTable();
 	sQUEST_TEXT_DATA_TBLDAT* pQuestText1 = reinterpret_cast<sQUEST_TEXT_DATA_TBLDAT*>( pQuestTextTable->FindData( uiTitle ) );
 	sQUEST_TEXT_DATA_TBLDAT* pQuestText2 = reinterpret_cast<sQUEST_TEXT_DATA_TBLDAT*>( pQuestTextTable->FindData( uiSort ) );
@@ -142,7 +142,7 @@ VOID CQuestCommonGui::SetRewardSlot( RwInt32 nIdx, sREWARD_INFO *pRewardInfo)
 	if( pRewardInfo->m_eType == eREWARD_TYPE_INVALID )
 		return;
 
-	// Data 복사.
+	// Data copy.
 	m_sReward[nIdx] = (*pRewardInfo);
 
 	switch( pRewardInfo->m_eType )
@@ -176,7 +176,7 @@ VOID CQuestCommonGui::SetRewardSlot( RwInt32 nIdx, sREWARD_INFO *pRewardInfo)
 	case eREWARD_TYPE_SKILL:
 	case eREWARD_TYPE_BUFF:
 		{
-			// peessi : REWARD의 경우, 스킬이 HTB인지 아닌지의 구분이 없이 모두 스킬이므로 예외처리 해주어야 한다.
+			// peessi: In the case of REWARD, since all skills are skills regardless of whether they are HTB or not, an exception must be made.
 			CSkillTable* pSkillTable = API_GetTableContainer()->GetSkillTable();
 			sSKILL_TBLDAT* pTableData = reinterpret_cast<sSKILL_TBLDAT*>( pSkillTable->FindData( pRewardInfo->m_uiIdx ) );
 			if( pTableData )
@@ -205,7 +205,7 @@ VOID CQuestCommonGui::SetRewardSlot( RwInt32 nIdx, sREWARD_INFO *pRewardInfo)
 		m_surReward[nIdx].SetTexture( Logic_CreateTexture( QUEST_REWARD_ICONNAME_PROB ) );
 		break;
 	case eREWARD_TYPE_REPUTATION:
-		// peessitemp: 현재 더미 텍스쳐.
+		// peessitemp: Current dummy texture.
 		m_surReward[nIdx].SetTexture( Logic_CreateTexture( QUEST_REWARD_ICONNAME_REPUTATION ) );
 		break;
 	case eREWARD_TYPE_CHANGE_ADULT:
@@ -271,7 +271,7 @@ VOID CQuestCommonGui::ShowInfoWnd( RwInt32 nIdx )
 		break;
 	case eREWARD_TYPE_SKILL:
 		{
-			// peessi : REWARD의 경우, 스킬이 HTB인지 아닌지의 구분이 없이 모두 스킬이므로 예외처리 해주어야 한다.
+			// peessi: In the case of REWARD, since all skills are skills regardless of whether they are HTB or not, an exception must be made.
 			CSkillTable* pSkillTable = API_GetTableContainer()->GetSkillTable();
 			sSKILL_TBLDAT* pTableData = reinterpret_cast<sSKILL_TBLDAT*>( pSkillTable->FindData( m_sReward[nIdx].m_uiIdx ) );
 

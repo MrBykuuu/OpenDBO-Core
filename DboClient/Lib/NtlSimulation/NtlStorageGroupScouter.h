@@ -1,13 +1,13 @@
 /*****************************************************************************
 * File			: NtlStorageGroupScouter.h
 * Author		: HaeSung, Cho
-* Copyright	: (주)NTL
+* Copyright	    : (주)NTL
 * Date			: 2009. 2. 5	
-* Abstract		: Scouter의 Storage Group
+* Abstract		: Scouter's Storage Group
 *****************************************************************************
 * Desc         : 
 *
-* 스카우터 측정 정보를 구조체로 가지고 있는다.
+* Contains scouter measurement information as a structure.
 *****************************************************************************/
 
 #ifndef __NTL_STORAGE_GROUP_SCOUTER_H__

@@ -1,14 +1,14 @@
 #include "precomp_dboclient.h"
 #include "NpcNotifyGui.h"
 
-//// core
+//// Core
 //#include "NtlDebug.h"
 //
-//// presentation
+//// Presentation
 //#include "NtlPLGuiManager.h"
 //#include "NtlPLEvent.h"
 //
-//// dbo
+//// Dbo
 //#include "DboGlobal.h"
 //#include "DboEvent.h"
 //#include "GuiFunctor.h"
@@ -18,7 +18,7 @@
 //#include "AlarmManager.h"
 //
 ///**
-//* \brief 생성자
+//*\brief constructor
 //*/
 //CNpcNotifyGui::CNpcNotifyGui( VOID ) 
 //{
@@ -26,7 +26,7 @@
 //}
 //
 ///**
-//* \brief 생성자
+//*\brief constructor
 //*/
 //CNpcNotifyGui::CNpcNotifyGui( const RwChar* pName ) 
 //: CNtlPLGui( pName )
@@ -35,7 +35,7 @@
 //}
 //
 ///**
-//* \brief 소멸자
+//*\brief destructor
 //*/
 //CNpcNotifyGui::~CNpcNotifyGui( VOID ) 
 //{
@@ -84,8 +84,8 @@
 //}
 //
 ///**
-//* \brief 초기화
-//* Npc Notify를 가장 처음 상태로 돌려준다.
+//*\brief initialization
+//*Returns Npc Notify to its initial state.
 //*/
 //VOID CNpcNotifyGui::Init( VOID ) 
 //{
@@ -97,24 +97,24 @@
 //}
 //
 ///**
-//* \brief Type에 알맞게 각종 값들을 세팅해준다.
-//* \param eType (eTYPE) NPC_LEFT, NPC_CENTER, NPC_RIGHT
-//* \return 성공여부
+//*\brief Set various values ??appropriate for the Type.
+//*\param eType (eTYPE) NPC_LEFT, NPC_CENTER, NPC_RIGHT
+//*\return Success or not
 //*/
 //RwBool CNpcNotifyGui::SetNpcNotifyReady( eTYPE eType , eSTATE eState ) 
 //{
-//	// 현재 Dialog의 크기
+//	//Size of current dialog
 //	RwInt32 nThisW = m_pThis->GetWidth();
 //	RwInt32 nThisH = m_pThis->GetHeight();
 //
-//	// 스크린의 크기
+//	//size of screen
 //	RwInt32 nScreenW = (RwInt32)GetDboGlobal()->GetScreenWidth();
 //	RwInt32 nScreenH = (RwInt32)GetDboGlobal()->GetScreenHeight();
 //
 //	CPos posStart;
 //	CPos posEnd;
 //
-//	// 타입에 따른 슬라이딩 될 좌표를 계산
+//	//Calculate the coordinates to be slid according to the type
 //	switch( eType )
 //	{
 //	case NPC_LEFT:
@@ -180,11 +180,11 @@
 //}
 //
 ///**
-//* \brief 슬라이딩 될 좌표를 입력해준다.
-//* \param nStartX	시작 X
-//* \param nStartY	시작 Y
-//* \param nEndX		슬라이딩될 X
-//* \param nEndY		슬라이딩될 Y
+//*\brief Enter the coordinates for sliding.
+//*\param nStartX Start
+//*\param nStartY Start Y
+//*\param nEndX X to be slid
+//*\param nEndY Y to be slid
 //*/
 //VOID CNpcNotifyGui::SetSlidingPosition( RwInt32 nStartX, RwInt32 nStartY, RwInt32 nEndX, RwInt32 nEndY ) 
 //{
@@ -197,9 +197,9 @@
 //}
 //
 ///**
-//* \brief 현재 포지션을 셋팅한다.
-//* \param nCurrentX	현재 X
-//* \param nCurrentY	현재 Y
+//*\brief Sets the current position.
+//*\param nCurrentX Current
+//*\param nCurrentY Current Y
 //*/
 //VOID CNpcNotifyGui::SetCurrentPosition( RwInt32 nCurrentX, RwInt32 nCurrentY ) 
 //{
@@ -235,8 +235,8 @@
 //}
 //
 ///**
-//* \brief Update
-//* \param fElapsed	(RwReal) 이전 업데이트에서 경과된 시간 
+//*\brief Update
+//*\param fElapsed (RwReal) Time elapsed from previous update.
 //*/
 //VOID CNpcNotifyGui::Update( RwReal fElapsed ) 
 //{
@@ -244,8 +244,8 @@
 //}
 //
 ///**
-//* \brief 상태를 지정하여 알맞은 함수 포인터를 넣어준다.
-//* \param eState		(eState) 상태의 ENUM
+//*\brief Specifies the state and inserts an appropriate function pointer.
+//*\param eState (ENUM of the state)
 //*/
 //VOID CNpcNotifyGui::SetState( eSTATE eState ) 
 //{
@@ -313,9 +313,9 @@
 //}
 //
 ///**
-//* \brief OnMove
-//* \param nOldX		(RwInt32) 이전 위치의 X Position
-//* \param nOldY		(RwInt32) 이전 위치의 Y Position
+//*\brief OnMove
+//*\param nOldX (RwInt32) X Position of previous position
+//*\param nOldY (RwInt32) Y Position of the previous position
 //*/
 //VOID CNpcNotifyGui::OnMove( RwInt32 nOldX, RwInt32 nOldY ) 
 //{
@@ -323,9 +323,9 @@
 //}
 //
 ///**
-//* \brief Npc Notify Update
-//* Npc Notify에서 state와 type에 맞는 함수 포인터를 호출한다.
-//* \param fElapsed	(RwReal)이전 프레임에서 경과된 시간
+//*\brief Npc Notify Update
+//*In Npc Notify, call the function pointer that matches the state and type.
+//*\param fElapsed (RwReal)Time elapsed from previous frame
 //*/
 //VOID CNpcNotifyGui::NpcUpdateProc( RwReal fElapsed ) 
 //{

@@ -97,7 +97,7 @@ RtCharset* RsCharsetPrint(RtCharset *charSet, const RwChar *string,
 
 //---------------------------------------------------------------------------
 //Name		: RsPathnameCreate
-//Desc		: file의 fullpathname을 만든다.
+//Desc		: Create a fullpathname for the file.
 //Return	: Return fullpathname
 //Parameter	: srcBuffer - filename
 //---------------------------------------------------------------------------

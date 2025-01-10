@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: MultiDialogGui.h
 // Desc: MultiDialogGui
-//		 대화와 여러 선택을 할수 있다.
+//		 You can have conversations and make many choices.
 //
 // 2006.10.11 Peessi@hitel.net   
 //
@@ -34,9 +34,9 @@ struct sMultiDialogData
 	RwInt32			eBalloonType;
 	RwBool			bTimeProc;
 	
-	// Quest Balloon 용 데이터
+	// Data for Quest Balloon 용 데이터
 	RwUInt32		uiQuestID;
-	// Quest Balloon, NPC Balloon 용 데이터
+	// Data for Quest Balloon, NPC Balloon
 	std::wstring	wstrText;	
 };
 
@@ -92,7 +92,7 @@ private:
 
 	//! Variables
 	CCommandList*	m_pCommandList;
-	gui::CStaticBox* m_pstbMsg;					// 타겟이 지정되지 않은 경우 메세지 출력.
+	gui::CStaticBox* m_pstbMsg;					//Print a message if the target is not specified.
 	CWindowby3		m_MsgBackImage;	
 		
 	RwUInt32		m_hTargetSerialID;
@@ -165,10 +165,10 @@ public:
 	~CCommandList(VOID);
 
 	RwBool	Create( CRectangle& rect, gui::CComponent* pParent, RwInt32 nLineHeight, RwInt32 nLineMargin, RwInt32 nChildXMargin, RwInt32 nScrollBarWidth, CMultiDialogGui* pOwnerGui );
-	VOID	RegistCommand( RwInt32 nID, RwUInt8 ucJob = 0xFF );			// NPC Table에서 읽어올 Command
-	VOID	RegistQuestCommand( RwUInt32 nTextID, RwUInt32 nTCIDz );	// Quest에서 날라올 Command	
+	VOID	RegistCommand( RwInt32 nID, RwUInt8 ucJob = 0xFF );			//Command to read from NPC Table
+	VOID	RegistQuestCommand( RwUInt32 nTextID, RwUInt32 nTCIDz );	//Command to be sent from Quest
 	VOID	RegistServerSelectCommand( RwInt32 nID, WCHAR* pText, RwUInt16 wCurrentUserCount );	// Server Select Command
-	VOID	RegistExitCommand( RwInt32 eNodeType );						// 어떤 곳에서든 쓰일 Exit Command	
+	VOID	RegistExitCommand( RwInt32 eNodeType );						//Exit Command to be used anywhere
 
 	//! Attribute
 	RwUInt32 GetID(VOID);
@@ -205,7 +205,7 @@ private:
 	
 
 	//! Callback
-	VOID	OnClear(VOID);			// Clear를 위함.
+	VOID	OnClear(VOID);			//For Clear.
 
 	gui::CSlot	m_slotPaint;		
 

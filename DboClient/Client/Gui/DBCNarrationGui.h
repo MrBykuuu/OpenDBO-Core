@@ -51,13 +51,13 @@ private:
 	VOID	IngStateDirection(VOID);
 	VOID	EndStateDirection(VOID);
 	
-	//! CallBack
+	//! Call back
 	VOID	OnMouseDown( const CKey& key );
 
 	gui::CSlot	m_slotOnMouseDown;
 
 	//! Variable
-	STATE				m_eUIState;					// UI자체의 State
+	STATE				m_eUIState;					// State of the UI itself
 	RwInt32				m_eNarrationState;			// Narration의 State	
 
 	CNtlPLCinematicObject*	m_pCinematicObject;

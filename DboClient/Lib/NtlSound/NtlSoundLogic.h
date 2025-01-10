@@ -47,16 +47,16 @@ RwBool Logic_IsExistLog(const RwChar* pcText);
 // Sound operation
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// FMOD에서 지원하는 볼륨으로 변환한다
+// Convert to a volume supported by FMOD
 RwReal Logic_GetFMODValidVolume(RwReal fVolume);
 
-// 실제 FMOD에서 쓰이는 볼륨을 결정한다
+// Determines the volume used in actual FMOD
 RwReal Logic_CalcPlayVolume(sNtlVolume* pNtlVolume);
 
-// FMOD에서 지원하는 Pitch으로 변환한다
+// Convert to pitch supported by FMOD
 RwReal Logic_GetFMODValidPitch(RwReal fPitch);
 
-// 실제 FMOD에서 쓰이는 Pitch를 결정한다
+// Determines the pitch used in actual FMOD
 RwReal Logic_CalcPlayPitch(sNtlPitch* pNtlPitch);
 
 RwBool Logic_IsExistFile(const RwChar* pcFileName);

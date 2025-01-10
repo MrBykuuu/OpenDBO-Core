@@ -1,7 +1,7 @@
 #include "precomp_ntlsound.h"
 #include "NtlBGMPlayList.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
@@ -192,8 +192,8 @@ sPLAY_BGM_PARAMETA* CNtlBGMPlayList::GetBGM_TopPriority()
 	tPLAY_BGM_PARAMETA.bEnableParameta = FALSE;
 
 
-	// 우선순위가 높은 BGM이 있으면 그것을 반환한다
-	// Share BGM은 Local BGM일 때 같이 검사한다
+	// If there is a high priority BGM, it is returned.
+	// Share BGM is checked together when it is local BGM.
 	for( RwUInt8 i = NUM_BGM_TYPE - 1 ; i > 0 ; --i )
 	{
 		if( BGM_TYPE_LOCAL_THEME == i )
@@ -217,7 +217,7 @@ sPLAY_BGM_PARAMETA* CNtlBGMPlayList::GetBGM_TopPriority()
 				tPLAY_BGM_PARAMETA.strFileName			= *(m_atBGM_INFO[i].listSoundFile.begin());
 			}
 
-			// Share BGM은 Local BGM일 때 같이 검사한다
+			// Share BGM is checked together when it is local BGM.
 			break;
 		}
 		else if( false == m_atBGM_INFO[i].listSoundFile.empty() )

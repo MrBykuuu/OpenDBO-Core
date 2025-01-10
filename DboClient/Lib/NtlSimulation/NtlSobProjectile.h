@@ -6,11 +6,11 @@
  * Date			: 2005. 12. 08	
  * Abstract		: Simulation projectile object
  *****************************************************************************
- * Desc         : 발사체 오브젝트로서, 화살, 폭탄, 미사일, 마법 발사체에 해당한다.
- *				  간단한 상태 머신을 가지고 있다.
-                  자신의 owner serial를 기억하고 있다.
-				  발사체는 범위 공격, 타겟 공격, 관통 스타일이 존재하며, 타겟 공격의 경우에는 
-				  target을 따라갈 수 도 있다.
+ * Desc         : As a projectile object, it corresponds to arrows, bombs, missiles, and magic projectiles.
+ *                It has a simple state machine.
+                  I remember my owner serial.
+				  Projectiles have range attack, target attack, and penetration styles, and in the case of target attack, 
+				  You can also follow the target.
  *****************************************************************************/
 
 #ifndef __NTL_SOB_PROJECTILE_H__

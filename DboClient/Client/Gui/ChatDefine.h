@@ -1,7 +1,7 @@
 /******************************************************************************
 * File			: ChatDefine.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: (?)NTL
 * Date			: 2008. 7. 2
 * Abstract		: 
 *****************************************************************************
@@ -24,8 +24,8 @@
 
 #define CHAT_DISP_MINIMUM_WIDTH				290
 #define CHAT_DISP_MINIMUM_HEIGHT			95
-#define CHAT_DISP_MAXIMUM_WIDTH				512		// ChatDisplay.frm의 outputDisplay의 넓이보다 크면 안된다
-#define CHAT_DISP_MAXIMUM_HEIGHT			512		// ChatDisplay.frm의 outputDisplay의 높이보다 크면 안된다
+#define CHAT_DISP_MAXIMUM_WIDTH				512		// Should not be larger than the width of outputDisplay of ChatDisplay.frm
+#define CHAT_DISP_MAXIMUM_HEIGHT			512		// Must not be larger than the height of outputDisplay in ChatDisplay.frm
 
 #define CHAT_DISP_LINE_GAP					2
 #define CHAT_DISP_MAX_LINE					50
@@ -39,7 +39,7 @@ enum eChatType
 	CHAT_TYPE_PARTY,
 	CHAT_TYPE_WHISPER,
 	CHAT_TYPE_SHOUT,
-//	CHAT_TYPE_RAID,
+	//	CHAT_TYPE_RAID,
 
 	NUM_NET_CHAT_TYPE,
 
@@ -51,7 +51,7 @@ enum eChatType
 
 	NUM_ALL_CHAT_TYPE,
 
-	CHAT_SHORTCUT,							// command
+	CHAT_SHORTCUT,							// Command
 
 	INVALID_CHAT_TYPE
 };

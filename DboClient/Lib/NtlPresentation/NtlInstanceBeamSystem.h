@@ -2,7 +2,7 @@
 //	File		:	NtlInstanceBeamSystem.h
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -55,5 +55,5 @@ protected:
     void	BuildEmitterStandard(SNtlBeamEmitterStandard* pEmitterStandard);
     void	UpdateVertices();
     void	UpdateVertices(RwReal fElapsedTime, RwReal fLifeTime);
-    virtual RwBool  UpdateFinish(RwReal fElapsedTime);                  ///< Finish 작업을 처리한다.
+    virtual RwBool  UpdateFinish(RwReal fElapsedTime);                  ///< Processes the Finish task.
 };

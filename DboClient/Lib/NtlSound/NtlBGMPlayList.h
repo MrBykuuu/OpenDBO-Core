@@ -1,11 +1,11 @@
 /*****************************************************************************
 * File			: NtlBGMPlayList.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: (二�)NTL
 * Date			: 2009. 7. 22
 * Abstract		: 
 *****************************************************************************
-* Desc			: 조건에 따라 Play 될 BGM의 List를 보관 및 관리한다
+* Desc			: Stores and manages the list of BGM to be played according to conditions.
 *****************************************************************************/
 
 #pragma once
@@ -13,7 +13,7 @@
 struct sPLAY_BGM_PARAMETA
 {
 	eBGMType			eType;
-	RwBool				bEnableParameta;		/// TRUE 일 때만 값이 유효하다
+	RwBool				bEnableParameta;		/// The value is valid only when TRUE
 	RwBool				bLoop;
 	RwReal				fReplayRestTime;
 	std::string			strFileName;

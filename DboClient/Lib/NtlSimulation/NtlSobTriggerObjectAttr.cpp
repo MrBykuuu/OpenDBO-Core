@@ -2,12 +2,12 @@
 #include "NtlSobTriggerObjectAttr.h"
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "ObjectTable.h"
 #include "TextAllTable.h"
 #include "TableContainer.h"
 
-// simualtion
+// Simualtion
 #include "NtlSLEvent.h"
 #include "NtlSLGlobal.h"
 

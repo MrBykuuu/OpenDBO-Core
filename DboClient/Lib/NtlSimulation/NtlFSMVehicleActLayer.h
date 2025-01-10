@@ -2,7 +2,7 @@
  *
  * File			: NtlFSMVehicleActLayer.h
  * Author		: JeongHo, Rho
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2008. 11. 12	
  * Abstract		: fsm vehicle act layer
  *****************************************************************************
@@ -30,25 +30,25 @@ public:
 	CNtlFSMVehicleActLayer( void );
 
 	/**
-    *  이 class가 생성된 후 바로 호출하는 함수
+    *Function called immediately after this class is created
     *
     */
 	virtual RwBool Create( RwUInt32 uiController );
 
 	/**
-    *  이 class가 소멸되기 전에 호출하는 함수
+    *Function called before this class is destroyed
     *
     */
 	virtual void Destroy( void );
 
 	/**
-    *  layer update 함수.
+    *layer update function.
     *
     */
 	virtual void Update( RwReal fElapsed );
 
 	/**
-    *  layer event handler 함수.
+    *Layer event handler function.
     *
     */
 	virtual RwUInt32 HandleEvents( RWS::CMsg &pMsg );

@@ -4,7 +4,7 @@
 //
 // 2006.10.21 Peessi@hitel.net   
 //
-// To Be Desired: Quest Proposal, Quest Reward Gui와 통합할 것인가 추후 결정.
+// To Be Desired: Quest Proposal, Will be decided later on whether to integrate with Quest Reward Gui.
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -78,14 +78,14 @@ private:
 		
 	//! Variables	
 	gui::CPanel*		m_ppnlConversationBack;
-	gui::CHtmlBox*		m_phbxConversation;		// Quest 대화
+	gui::CHtmlBox*		m_phbxConversation;		// Quest conversation
 	
 	gui::CPanel*		m_ppnlAimBack;
-	gui::CHtmlBox*		m_phbxAim;				// Quest 목표
+	gui::CHtmlBox*		m_phbxAim;				// Quest Goal
 
-	gui::CStaticBox*	m_pstbAimTargetTitle;	// 의뢰처, 보고처
-	gui::CStaticBox*	m_pstbAimTargetValue;	// 의뢰처, 보고처의 이름
-	gui::CStaticBox*	m_pstbAimTitle;			// 목표 타이틀. (탭이외에 의뢰처,보고처가 나올때 밑에 나온다.)
+	gui::CStaticBox*	m_pstbAimTargetTitle;	// Requester, Reporter
+	gui::CStaticBox*	m_pstbAimTargetValue;	// Name of requester and reporting party
+	gui::CStaticBox*	m_pstbAimTitle;			// Goal Title. (In addition to the tab, the request source and reporting source appear below.)
 	
 	gui::CStaticBox*	m_pstbProgressTitle;
 	gui::CStaticBox*	m_pstbTimeTitle;

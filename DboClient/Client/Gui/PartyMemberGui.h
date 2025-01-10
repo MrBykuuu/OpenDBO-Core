@@ -1,34 +1,34 @@
 /******************************************************************************
-* File			: PartyMemberGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Abstract		: 2006. 10. 13
+*File: PartyMemberGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Abstract		: October 13, 2006
 *****************************************************************************
-* Desc			: CPartyMemberBuffGui : 파티원의 버프를 보여준다.
+*Desc: CPartyMemberBuffGui: Shows the buffs of party members.
 *
-*				  CPartyMemberGui : 파티원의 정보를 보여준다.
-*									CPartyMemberBuffGui객체를 두개를
-*									가지고서 위아래 2층으로 구성된 버프를
-*									보여준다.
+*CPartyMemberGui: Shows party member information.
+*Two CPartyMemberBuffGui objects
+*With this, you can obtain a buff consisting of two floors, top and bottom.
+*Shows.
 *****************************************************************************/
 
 #pragma once
 
 #include <list>
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// shared
+// Shared
 #include "NtlParty.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// dbo
+// Dbo
 #include "SurfaceGui.h"
 
 class CBuffDispGui;
@@ -76,13 +76,13 @@ public:
 	VOID		Destroy();
 	CPartyMemberBuffGui* GetBuffsGui() { return m_pBuff; }; //Export BUFF GUI
 
-	SERIAL_HANDLE GetHandle();						///< 맴버의 핸들 반환
+	SERIAL_HANDLE GetHandle();						///< Returns the member's handle
 
-	VOID		SetLP(RwInt32 iValue, RwInt32 iMaxValue);	///< LP 설정
-	VOID		SetEP(RwInt32 iValue, RwInt32 iMaxValue);	///< EP 설정
-	VOID		SetLevel(RwInt8 byLevel);			///< Level 설정
-	VOID		SetClass(RwUInt8 byClass);			///< Class 설정
-	VOID		SetLeader(RwBool bLeader);			///< 파티 리더라면 설정
+	VOID		SetLP(RwInt32 iValue, RwInt32 iMaxValue);	///< LP settings
+	VOID		SetEP(RwInt32 iValue, RwInt32 iMaxValue);	///< EP settings
+	VOID		SetLevel(RwInt8 byLevel);			///< Level settings
+	VOID		SetClass(RwUInt8 byClass);			///< Class settings
+	VOID		SetLeader(RwBool bLeader);			///< Settings for party leader
 	VOID		SetOtherWorld(RwBool bOtherWorld);
 	VOID		SetCurEmergencyPulse(RwReal fPulse);
 	VOID		SetEmergencyState(RwBool bState);
@@ -114,38 +114,38 @@ protected:
 	gui::CSlot			m_slotPaint;
 	gui::CSlot			m_slotPostPaint;
 
-	gui::CPanel*		m_pTributarySimbol;			///< 종족과 직업 그림
+	gui::CPanel*		m_pTributarySimbol;			///< Illustration of races and occupations
 
-	gui::CStaticBox*	m_pNameStatic;				///<  맴버 이름
+	gui::CStaticBox*	m_pNameStatic;				///< member name
 
-	gui::CProgressBar*	m_pLPGauge;					///< LP 게이지
+	gui::CProgressBar*	m_pLPGauge;					///< LP gauge
 	/*
-	gui::CStaticBox*	m_pLPStatic;				///< LP 스태틱
-	gui::CStaticBox*	m_pLPSlachStatic;			///< 슬래쉬 스태틱
-	gui::CStaticBox*	m_pMaxLPStatic;				///< MaxLP 스태틱
+	gui::CStaticBox*	m_pLPStatic;				///< LP static
+	gui::CStaticBox*	m_pLPSlachStatic;			///< slash static
+	gui::CStaticBox*	m_pMaxLPStatic;				///< MaxLP static
 */
-	gui::CProgressBar*	m_pEPGauge;					///< EP 게이지
+	gui::CProgressBar*	m_pEPGauge;					///< EP gauge
 	/*
-	gui::CStaticBox*	m_pEPStatic;				///< EP 스태틱
-	gui::CStaticBox*	m_pEPSlachStatic;			///< 슬래쉬 스태틱
-	gui::CStaticBox*	m_pMaxEPStatic;				///< MAxEP 스태틱
+	gui::CStaticBox*	m_pEPStatic;				///< EP Static
+	gui::CStaticBox*	m_pEPSlachStatic;			///< slash static
+	gui::CStaticBox*	m_pMaxEPStatic;				///< MAxEP static
 */
 	gui::CStaticBox*	m_pLevel;					///< Level
 
-	CSurfaceGui			m_srfOtherWorldPanel;		///< 다른 월드에 있는 파티원의 패널
-	CSurfaceGui			m_srfDeathPanel;			///< 사망시 패널
+	CSurfaceGui			m_srfOtherWorldPanel;		///< Panel of party members in another world
+	CSurfaceGui			m_srfDeathPanel;			///< Panel upon death
 
-	CSurfaceGui			m_srfLeaderMark;			///< 리더 마크
-	CSurfaceGui			m_srfDeathMark;				///< 사망 마크
-	CSurfaceGui			m_srfTooFarMark;			///< 멀리 떨어진 파티원
+	CSurfaceGui			m_srfLeaderMark;			///< Leader Mark
+	CSurfaceGui			m_srfDeathMark;				///< Death Mark
+	CSurfaceGui			m_srfTooFarMark;			///< Party member far away
 
-	gui::CFlickerEffect	m_feEmergency;				///< LP 경고 표시등
+	gui::CFlickerEffect	m_feEmergency;				///< LP warning light
 
-	SERIAL_HANDLE		m_hSerial;					///< 맴버의 시리얼
-	RwUInt8				m_byClass;					///< 클래스
-	RwInt8				m_byMouse;					///< 맴버창이 눌렸는지 여부
+	SERIAL_HANDLE		m_hSerial;					///< Member's cereal
+	RwUInt8				m_byClass;					///< class
+	RwInt8				m_byMouse;					///< Whether the member window was pressed
 
 	RwUInt8				m_byDisplayFlag;
 
-	CPartyMemberBuffGui*	m_pBuff;				///< 버프윈도우
+	CPartyMemberBuffGui*	m_pBuff;				///< Buff Window
 };

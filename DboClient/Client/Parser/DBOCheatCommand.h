@@ -1,12 +1,12 @@
 /*****************************************************************************
  *
- * File			: DBOCheatCommand
- * Author		: agebreak
- * Copyright	: (주)NTL
- * Date			: 2007. 9. 13	
- * Abstract		: DBO Cheat Command
+ *File			: DBOCheatCommand
+ *Author	    : agebreak
+ *Copyright	    : NTL Co., Ltd.
+ *Date			: 2007. 9. 13	
+ *Abstract		: DBO Cheat Command
  *****************************************************************************
- * Desc         : DBO에서 사용하는 클라이언트 사이드의 치트 커맨드를 파싱하여 처리한다.
+ *Desc         : Parses and processes client-side cheat commands used in DBO.
  *
  *****************************************************************************/
 
@@ -26,10 +26,10 @@ public:
     CDBOCheatCommand();
     ~CDBOCheatCommand();
 
-    RwBool  OnCmdParsing(const std::string& strCmd);            ///< 치트키를 파싱한다
+    RwBool  OnCmdParsing(const std::string& strCmd);            ///< Parse the cheat key
 
 protected:
-    void		Register();                 ///< 치트 문자열과 함수들을 등록한다.
+    void		Register();                 ///< Register cheat strings and functions.
 
 	RwBool		OnElapsedTime(CNtlTokenizer* pLexer);
     RwBool		OnDump(CNtlTokenizer* pLexer);
@@ -54,11 +54,11 @@ protected:
 	RwBool		OnPacketLockMsg(CNtlTokenizer* pLexer);
 	RwBool		OnServerMsg(CNtlTokenizer* pLexer);
 	RwBool		OnShadow(CNtlTokenizer* pLexer);
-	RwBool		OnCharLoadTime(CNtlTokenizer* pLexer);			///< 캐릭터 로딩 테스트용 치트키
-    RwBool		OnTest(CNtlTokenizer* pLexer);                    ///< 테스트용 치트키
-    RwBool		OnTest2(CNtlTokenizer* pLexer);                    ///< 테스트용 치트키
-    RwBool		OnTest3(CNtlTokenizer* pLexer);                    ///< 테스트용 치트키
-	RwBool		OnTestInfoScrollTime(CNtlTokenizer* pLexer);		///< 인포박스 스크롤 속도 팩터
+	RwBool		OnCharLoadTime(CNtlTokenizer* pLexer);			///< Cheat key for character loading test
+    RwBool		OnTest(CNtlTokenizer* pLexer);                    ///< Cheat key for testing
+    RwBool		OnTest2(CNtlTokenizer* pLexer);                    ///< Cheat key for testing
+    RwBool		OnTest3(CNtlTokenizer* pLexer);                    ///< Cheat key for testing
+	RwBool		OnTestInfoScrollTime(CNtlTokenizer* pLexer);		///< Infobox scroll speed factor
 	RwBool		OnTutorialScript(CNtlTokenizer* pLexer);	
 	RwBool		OnFlashNotify(CNtlTokenizer* pLexer);
 	RwBool		OnAvatarShowOnOff(CNtlTokenizer* pLexer);
@@ -68,15 +68,15 @@ protected:
 	RwBool		OnSkipTerrain(CNtlTokenizer* pLexer);
 	RwBool		OnObjectDistance(CNtlTokenizer* pLexer);
 	RwBool		OnTerrainDistance(CNtlTokenizer* pLexer);
-    RwBool      OnLowSpecEffect(CNtlTokenizer* pLexer);         ///< 이펙트 로우 스펙 적용
-	RwBool      OnLowSpecEffectRatio(CNtlTokenizer* pLexer);    ///< 이펙트 로우 스펙 적용
-    RwBool      OnRenderMesh(CNtlTokenizer* pLexer);            ///< Mesh 이펙트 렌더링 유무
-    RwBool      OnRenderDecal(CNtlTokenizer* pLexer);           ///< 데칼 이펙트 렌더링 유무	
+    RwBool      OnLowSpecEffect(CNtlTokenizer* pLexer);         ///< Apply effect low specs
+	RwBool      OnLowSpecEffectRatio(CNtlTokenizer* pLexer);    ///< Apply effect low specs
+    RwBool      OnRenderMesh(CNtlTokenizer* pLexer);            ///< presence of mesh effect rendering
+    RwBool      OnRenderDecal(CNtlTokenizer* pLexer);           ///< Presence of decal effect rendering	
 
-	RwBool      OnRenderWaterSpecular(CNtlTokenizer* pLexer);           ///< 워터 스페큘라 렌더링 유무
-	RwBool		OnRenderTerrainShadow(CNtlTokenizer* pLexer);           ///< 지형 그림자 렌더링 유무
+	RwBool      OnRenderWaterSpecular(CNtlTokenizer* pLexer);           ///< Presence of water specular rendering
+	RwBool		OnRenderTerrainShadow(CNtlTokenizer* pLexer);           ///< Availability of terrain shadow rendering
 
-	RwBool		OnWeatherLevel(CNtlTokenizer* pLexer);           ///< 날씨 레벨 설정.
+	RwBool		OnWeatherLevel(CNtlTokenizer* pLexer);           ///< Weather level settings.
 
 	RwBool		OnBroadCastPosX(CNtlTokenizer* pLexer);
 	RwBool		OnMiniNarration(CNtlTokenizer* pLexer);
@@ -103,10 +103,10 @@ protected:
 
 	RwBool      OnPerf(CNtlTokenizer* pLexer);
 
-	RwBool      OnDialog(CNtlTokenizer* pLexer);				///< dialog 관련 /dialog all open(close)
+	RwBool      OnDialog(CNtlTokenizer* pLexer);				///< dialog related /dialog all open(close)
 	RwBool      OnPacketTrace(CNtlTokenizer* pLexer);			/// woosungs_test 20090804
 
-	// sound
+	// Sound
 	RwBool		OnPlayManySound(CNtlTokenizer* pLexer);
 	RwBool		OnStopManySound(CNtlTokenizer* pLexer);
 
@@ -119,7 +119,7 @@ protected:
 	RwBool		OnDestMove(CNtlTokenizer* pLexer);
 
 protected:
-    MapCheatHandler m_mapCheatHandler;  ///< 치트 문자열과 처리 함수 맵    
+    MapCheatHandler m_mapCheatHandler;  ///< Cheat string and processing function map    
 
 	std::list<SOUND_HANDLE>		m_listPlayList;
 	SOUND_HANDLE	m_hSound;

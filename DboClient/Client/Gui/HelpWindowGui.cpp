@@ -1,20 +1,20 @@
 #include "precomp_dboclient.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "CEventHandler.h"
 
-// gui
+// Gui
 #include "gui_define.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 #include "NtlPLGuiManager.h"
 
-// framework
+// Framework
 #include "NtlApplication.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLApi.h"
 #include "NtlSLLogic.h"
@@ -22,12 +22,12 @@
 #include "NtlSobAvatar.h"
 #include "NtlOtherParam.h"
 
-// table
+// Table
 #include "HelpTable.h"
 #include "TextAllTable.h"
 #include "TableContainer.h"
 
-// dbo
+// Dbo
 #include "DboGlobal.h"
 #include "DboDef.h"
 #include "DboEvent.h"
@@ -36,9 +36,9 @@
 #include "DisplayStringManager.h"
 #include "HelpWindowGui.h"
 
-// etc
+// Etc
 
-// define
+// Define
 #define dHELPWINDOW_LIST_SCROLL_WIDTH			12
 #define dHELPWINDOW_LIST_SCROLL_HEIGHT			19
 #define dHELPWINDOW_LIST_SLIDER_WIDTH			12
@@ -325,7 +325,7 @@ RwBool CHelpWindowGui::Create()
 	m_pStbGoList->SetText(GetDisplayStringManager()->GetString("DST_HELPWND_GOLIST"));
 	m_pBtnRequestPetition->SetText(GetDisplayStringManager()->GetString("DST_HELPWND_PETITION_TO_GM"));
 
-	// 클베 버전에서는 진성 시스템을 이용할 수 없도록 막는다
+	// Prevent the authenticity system from being available in the klee version
 	m_pBtnRequestPetition->Show(false);
 	
 
@@ -559,8 +559,8 @@ void CHelpWindowGui::OpenUserInterface(eHELPWINDOW_TYPE ehelpWindowType, TBLIDX 
 }
 
 /**
-* \brief 유저 인터페이스를 초기화한다.
-* 열려있던 트리 구조 그대로 수정.
+* \brief Initializes the user interface.
+*Modify the open tree structure as is.
 */
 void CHelpWindowGui::ClearUserInterface()
 {

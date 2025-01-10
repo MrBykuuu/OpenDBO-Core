@@ -1,11 +1,11 @@
 /*****************************************************************************
-* File			: TBRequestGui.h
-* Author		: Haesung, Cho
-* Copyright		: (주)NTL
-* Date			: 2008. 10. 22
-* Abstract		: DBO 천하제일 무도회 소식지 리뉴얼
+*File			: TBRequestGui.h
+*Author		    : Haesung, Cho
+*Copyright		:NTL Co., Ltd.
+*Date			: 2008. 10. 22
+*Abstract		: DBO World's Best Martial Arts Newsletter Renewal
 *****************************************************************************
-* Desc         : 
+*Desc           : 
 *****************************************************************************/
 
 #ifndef __TBREQUESTGUI_H__
@@ -16,7 +16,7 @@
 #include "NumberGui.h"
 #include "SurfaceGui.h"
 
-// 천하제일 무도회 신청서 GUI 스크립트 파일
+// World's Best Martial Arts Application GUI Script File
 #define dTBREQUEST_GUI_FRAMEWORK_FILE		"gui\\TBRequestGui.frm"
 #define dTBREQUEST_GUI_SURFACE_FILE			"gui\\TBRequestGui.srf"
 
@@ -24,7 +24,7 @@
 
 /**
 * \ingroup client
-* \brief 천하제일 무도회 신청서 GUI
+* \brief World's Best Martial Arts Application GUI
 */
 class CTBRequestGui : public CNtlPLGui, public RWS::CEventHandler
 {
@@ -86,7 +86,7 @@ protected:
 	gui::CSlot			m_slotClickedBtnAccept;
 	gui::CSlot			m_slotClickedBtnCancel;
 	
-	// 개인 신청서
+	// personal application
 	gui::CDialog*		m_pDlgIndividual;
 	gui::CStaticBox*	m_pStbIndiName;
 	gui::CStaticBox*	m_pStbIndiNameDisplay;
@@ -101,7 +101,7 @@ protected:
 	gui::CStaticBox*	m_pStbIndiGuild;
 	gui::CStaticBox*	m_pStbIndiGuildDisplay;
 
-	// 팀 신청서
+	// Team Application
 	gui::CDialog*		m_pDlgTeam;
 	gui::CStaticBox*	m_pStbTeamName;
 	gui::CInputBox*		m_pIpbTeamName;
@@ -110,7 +110,7 @@ protected:
 	gui::CStaticBox*	m_paMemberLevel[dTBREQUEST_TEAM_MEMBER];
 	gui::CStaticBox*	m_paMemberRankingPoint[dTBREQUEST_TEAM_MEMBER];
 
-	// 개인 접수증
+	// personal receipt
 	gui::CDialog*		m_pDlgIndiTicket;
 	gui::CStaticBox*	m_pStbTicketGuide;
 	gui::CStaticBox*	m_pStbTicketNumber;
@@ -120,7 +120,7 @@ protected:
 	gui::CStaticBox*	m_pStbDojoRecommned;
 	std::string			m_strEmblemTextureName;
 
-	// 팀 접수증
+	// team receipt
 	gui::CDialog*		m_pDlgTeamTicket;
 	gui::CStaticBox*	m_pStbTicketTeamGuide;
 	gui::CStaticBox*	m_pStbTicketTeamNumber;

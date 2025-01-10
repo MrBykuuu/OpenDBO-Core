@@ -1,19 +1,19 @@
 /******************************************************************************
 * File			: NtlPLProfilerGui.h
 * Author		: Cho Haesung
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2008. 6. 19
 * Abstract		: 
 *****************************************************************************
-* Desc			: 프로파일링 데이터를 출력한다.
+* Desc			: Outputs profiling data.
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
 #define dPROFILER_GUI_DEFAULT_COLOR		RGB(255, 255, 255)
@@ -31,20 +31,20 @@
 #define dPROFILER_GUI_PARENT_NAME_BUFFER	128
 #define dPROFILER_GUI_NAME_BUFFER			128
 
-#define dPROFILER_GUI_CURRENT_VIEW_NUMS		9	// 한번에 보여줄 수 있는 갯수
+#define dPROFILER_GUI_CURRENT_VIEW_NUMS		9	// Number of items that can be displayed at once
 
 /**
-* \brief Profiler Node의 정보를 출력할 구조체
+* \brief Structure to output profiler node information
 */
 struct SNtlProfileNode
 {
 	RwUInt32	uiIndex;									///< Index
 	RwUInt8		byHighLightField;
-	RwChar		acNodeName[dPROFILER_GUI_NAME_BUFFER];		///< Node의 이름
-	RwReal		fPercentByParent;							///< 부모에게서의 %
-	RwReal		fMSecPerFrame;								///< ms / f
-	RwReal		fMSecPerCall;								///< ms / c
-	RwReal		fCallPerFrame;								///< calls / f
+	RwChar		acNodeName[dPROFILER_GUI_NAME_BUFFER];		///< Name of Node
+	RwReal		fPercentByParent;							///< % from parents
+	RwReal		fMSecPerFrame;								///< ms /f
+	RwReal		fMSecPerCall;								///< ms /c
+	RwReal		fCallPerFrame;								///< calls /f
 };
 
 enum eNtlProfileField
@@ -61,7 +61,7 @@ enum eNtlProfileField
 
 /**
 * \ingroup presentation
-* \brief 프로파일러 GUI에서 한 노드의 정보를 표시해주는 Item
+* \brief Item that displays information about a node in the profiler GUI
 */
 class CNtlPLProfilerItem
 {
@@ -96,7 +96,7 @@ class CProfileIterator;
 
 /**
 * \ingroup presentation
-* \brief 프로파일러 GUI ( Core의 NtlProfiler 에서 정보를 얻어와서 출력한다 )
+* \brief Profiler GUI (obtains information from Core's NtlProfiler and outputs it)
 */
 class CNtlPLProfilerGui : public CNtlPLGui, public RWS::CEventHandler
 {
@@ -138,7 +138,7 @@ protected:
 	// Dialog
 	gui::CStaticBox*	m_pStbTitle;
 	
-	// 메뉴
+	// menu
 	gui::CStaticBox*	m_pStbNodeName;
 	gui::CStaticBox*	m_pStbParent;
 	gui::CStaticBox*	m_pStbMSecPerFrame;

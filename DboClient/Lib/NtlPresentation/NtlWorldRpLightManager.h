@@ -7,7 +7,7 @@
 
 #include "ceventhandler.h"
 
-//Light Mode 에서 사용할 더미 정보.
+//Dummy information to be used in Light Mode.
 struct SLightModeData
 {
 	RwV3d		vPosision;

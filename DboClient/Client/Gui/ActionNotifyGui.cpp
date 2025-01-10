@@ -251,7 +251,7 @@ VOID CActionNotifyGui::HandleEvents( RWS::CMsg& msg )
 					++nLineCount;
 			}
 
-			if( nLineCount == MAXLINE )	// 꽉차있는 경우
+			if( nLineCount == MAXLINE )	// If it's full
 			{
 				for( RwInt32 i = 0 ; i < MAXLINE ; ++i )
 				{

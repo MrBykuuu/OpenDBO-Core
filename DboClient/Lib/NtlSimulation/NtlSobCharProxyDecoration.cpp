@@ -2,11 +2,11 @@
 #include "NtlSobCharProxy.h"
 #include "NtlSobCharProxyDecoration.h"
 
-// shared
+// Shared
 #include "ItemTable.h"
 #include "MobTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLSceneManager.h"
 #include "NtlPLObject.h"
 #include "NtlPLCharacter.h"
@@ -22,7 +22,7 @@
 #include "NtlInstanceEffect.h"
 #include "NtlPLEmblemMaker.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEvent.h"
 #include "NtlSob.h"
@@ -235,7 +235,7 @@ void CNtlSobCharDecorationProxy::SobFaintingEventHandler(RWS::CMsg &pMsg)
 	DeletePLTargetMark();
     DeletePLAttackMark();
     
-    // 천하제일 무도회 우승 마크를 없앤다
+    //Remove the World's Best Martial Arts Championship Mark
     if(m_pTenkaichiMark)
     {
         m_pTenkaichiMark->SetVisible(FALSE);
@@ -344,7 +344,7 @@ void CNtlSobCharDecorationProxy::CreatePLShadowDecal(void)
 
 	m_fDefShadowScale = fVariScale * fShadowWeightScale*(fModelWidth + fModelDepth)/2.0f;
 
-    // 너무 큰경우에는 제한을 시켜준다.
+    //If it is too large, limit it.
     if(m_fDefShadowScale > 10.0f)
         m_fDefShadowScale = 10.0f;
 
@@ -355,7 +355,7 @@ void CNtlSobCharDecorationProxy::CreatePLShadowDecal(void)
 	param.fVisibleSquaredDist = 1600.0f;	
 	param.pTexName = "shadow.dds";
 	param.pTexPath = ".\\texture\\effect\\";
-	param.fYOffset = 0.01f;						// 지형 Decal이 0.1f이다. 지형 Decal 위로 그림자를 표현하기 위해 조금 더 뛰운다. (by agebreak 2007.5.11)
+	param.fYOffset = 0.01f;						//Terrain Decal is 0.1f. Jump a little further to express the shadow over the terrain decal. (by agebreak 2007.5.11)
 	param.eDecalType = DECAL_TERRAIN;    
 
 	if(m_bShadowCreate)
@@ -363,7 +363,7 @@ void CNtlSobCharDecorationProxy::CreatePLShadowDecal(void)
 		m_pShadowDecal = static_cast<CNtlPLDecal*>(GetSceneManager()->CreateEntity(PLENTITY_DECAL, "NULL", &param));
 		NTL_ASSERT(m_pShadowDecal, "CNtlSobCharProxy::CreatePLShadowDecal");
 		
-		// 컬러 설정
+		//color settings
 		RwRGBA clrShadow;
 		GetSceneManager()->GetWorldShadowColor(m_pPLCharacter->GetPosition(), &clrShadow);
 		clrShadow.red = (RwUInt8)((RwReal)clrShadow.red * DECAL_RATIO);
@@ -473,7 +473,7 @@ void CNtlSobCharDecorationProxy::CreatePLAttackMark(void)
     
     if(m_pShareTargetMark && m_pShareTargetMark->IsShareTargeting())
     {
-        // 공유 타겟 설정이 되어 있으면 일반 마크는 뜨지 않는다.
+        // If the sharing target is set, the general mark does not appear.
         CreateShareTargetMark(m_pShareTargetMark->GetSlot(), CNtlShareTargetMark::SHARE_TARGET_ATTACK);
         return;
     }
@@ -518,7 +518,7 @@ void CNtlSobCharDecorationProxy::CreatePLTargetMark(void)
 
     if(m_pShareTargetMark && m_pShareTargetMark->IsShareTargeting())
     {
-        // 공유 타겟 설정이 되어 있으면 일반 마크는 뜨지 않는다.
+        // If the sharing target is set, the general mark does not appear.
         CreateShareTargetMark(m_pShareTargetMark->GetSlot(), CNtlShareTargetMark::SHARE_TARGET_TARGET);
         return;
     }
@@ -945,7 +945,7 @@ void CNtlSobCharDecorationProxy::ResourceLoadComplete(RwBool bVisible)
 		if( m_pPlayerName->IsEnablePlayerNameVisible() )
 			m_pPlayerName->SetVisible(bVisible);
 
-		// m_bNameVisible 이 FALSE 인데 현재 m_pPlayerName이 SetVisible(TRUE)로 세팅됐다면 안 보이게 해준다.
+		// If m_bNameVisible is FALSE and m_pPlayerName is currently set to SetVisible(TRUE), it will not be visible.
 		if( !m_pPlayerName->IsEnablePlayerNameVisible() && m_pPlayerName->IsVisible() )
 			m_pPlayerName->SetVisible(FALSE);
 	}
@@ -972,7 +972,7 @@ RwBool CNtlSobCharDecorationProxy::AttachRPBonusEffect()
     if(!m_vecRPBonusEffect.empty())
         return FALSE;
 
-    // RP Bonus가 붙을 본 리스트
+    //List of bones to which RP Bonus will be attached
     std::string strBoneList1[7];
     std::string strBoneList2;
     strBoneList1[0] = "Bip01 Head";
@@ -985,7 +985,7 @@ RwBool CNtlSobCharDecorationProxy::AttachRPBonusEffect()
     strBoneList2 = "Bip01 Pelvis";    
 
     CNtlInstanceEffect* pEffect;
-    for(int i = 0; i < 7; ++i)      // 작은 이펙트
+    for(int i = 0; i < 7; ++i)      //small effect
     {
         if(m_pPLCharacter->GetBoneByName(strBoneList1[i].c_str()))
         {
@@ -998,7 +998,7 @@ RwBool CNtlSobCharDecorationProxy::AttachRPBonusEffect()
         }        
     }
 
-    if(m_pPLCharacter->GetBoneByName(strBoneList2.c_str())) // 큰 이펙트
+    if(m_pPLCharacter->GetBoneByName(strBoneList2.c_str())) //big effect
     {
         pEffect = (CNtlInstanceEffect*)GetSceneManager()->CreateEntity(PLENTITY_EFFECT, NTL_VID_RPBONUS_BIG);
         if(pEffect)
@@ -1154,7 +1154,7 @@ void CNtlSobCharDecorationProxy::SobShareTargetSelectHandler( RWS::CMsg& pMsg )
     SNtlEventShareTargetSelect* pData = (SNtlEventShareTargetSelect*)pMsg.pData;
     if(pData->hSerialId == m_pSobObj->GetSerialID())
     {
-        // 기존 타겟 마크를 삭제하기 전에 현재 상태를 저장해둔다
+        //Save the current state before deleting the existing target mark.
         RwBool bAttackMode = m_pAttackMark ? TRUE : FALSE;
         RwBool bTargetMode = m_pTargetMark ? TRUE : FALSE;
 
@@ -1213,7 +1213,7 @@ void CNtlSobCharDecorationProxy::SobTitleEffectHandler(RWS::CMsg & pMsg)
 
 RwBool CNtlSobCharDecorationProxy::IsNotCreateDecalMark() 
 {
-    // 버스는 바닥 데칼을 그리지 않는다.
+    //Bus does not draw floor decals.
     return Logic_IsBus((CNtlSobActor*)m_pSobObj);
 }
 

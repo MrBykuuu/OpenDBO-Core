@@ -16,7 +16,7 @@
 
 /**
 * \brief Construction
-* \param pName	(const RwChar*) GUI 이름
+* \param pName	(const RwChar*) GUI name
 */
 CTBMatchIndiObRedGui::CTBMatchIndiObRedGui( const RwChar* pName )
 : CNtlPLGui( pName )
@@ -36,7 +36,7 @@ CTBMatchIndiObRedGui::~CTBMatchIndiObRedGui()
 
 /**
 * \brief Create
-* 천하제일 무도회 개인전 관전자 RED 팀의 StatusBar에 관련된 GUI를 생성한다.
+*Create a GUI related to the StatusBar of the RED team, the spectator of the World's Best Martial Arts individual exhibition.
 */
 RwBool CTBMatchIndiObRedGui::Create()
 {
@@ -90,7 +90,7 @@ VOID CTBMatchIndiObRedGui::Destroy()
 
 /**
 * \brief Update
-* \param fElapsed	(RwReal) 이전 프레임에서 경과된 시간
+* \param fElapsed (RwReal) Time elapsed from previous frame
 */
 VOID CTBMatchIndiObRedGui::Update( RwReal fElapsed )
 {
@@ -100,13 +100,13 @@ VOID CTBMatchIndiObRedGui::Update( RwReal fElapsed )
 
 /**
 * \brief HandleEvents
-* \param msg		(RWS::CMsg&) Event 메시지 구조체
+* \param msg		(RWS::CMsg&) Event message structure
 */
 VOID CTBMatchIndiObRedGui::HandleEvents( RWS::CMsg& msg )
 {
 	if( msg.Id == g_EventSobInfoUpdate )
 	{
-		// Data가 지정이 안되어 있거나 현재 GUI가 보여지지 않는다면 Update 해줄 필요가 없다.
+		// If data is not specified or the GUI is not currently displayed, there is no need to update.
 		if( !m_bSetData || !IsShow() )
 			return;
 
@@ -114,11 +114,11 @@ VOID CTBMatchIndiObRedGui::HandleEvents( RWS::CMsg& msg )
 	
 		stTBudokaiMember* pMember = GetRedTeamUser();
 
-		// 현재 레드팀의 플레이어만 업데이트 해준다.
+		// Only the current red team players are updated.
 		if( pMember->hSerial != pUpdate->hSerialId )
 			return;
 		
-		// Attribute 관련 Update
+		// Attribute related updates
 		if( pUpdate->uiUpdateType & EVENT_AIUT_ATTR )
 		{
 			UpdateUserData( pUpdate->hSerialId );
@@ -136,7 +136,7 @@ VOID CTBMatchIndiObRedGui::HandleEvents( RWS::CMsg& msg )
 			{
 				if( !IsShow() )
 				{
-					// 참가자라면 리턴
+					// Return if you are a participant
 					CNtlWorldConceptTB*	pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 					DBO_ASSERT( pTBWorldConcept, "CTBMatchIndiObRedGui::HandleEvents : must World concept is valid" );
 
@@ -144,13 +144,13 @@ VOID CTBMatchIndiObRedGui::HandleEvents( RWS::CMsg& msg )
 					if( pMember )
 						return;
 
-					// 파티 플레이라면 리턴
+					// If it's a party play, return
 					if( pTBWorldConcept->IsPartyBattle() )
 						return;
 
 					pMember = GetRedTeamUser();
 
-					// Team 정보가 오면 유저의 Data를 입력해준다.
+					// When team information comes, enter the user's data.
 					SetUserData();
 
 					SetPosition( 0, 0 );
@@ -177,7 +177,7 @@ VOID CTBMatchIndiObRedGui::HandleEvents( RWS::CMsg& msg )
 			{
 				if( !IsShow() )
 				{
-					// 참가자라면 리턴
+					// Return if you are a participant
 					CNtlWorldConceptTB*	pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 					DBO_ASSERT( pTBWorldConcept, "CTBMatchIndiObRedGui::HandleEvents : must World concept is valid" );
 
@@ -185,7 +185,7 @@ VOID CTBMatchIndiObRedGui::HandleEvents( RWS::CMsg& msg )
 					if( pMember )
 						return;
 
-					// 파티 플레이라면 리턴
+					// If it's a party play, return
 					if( pTBWorldConcept->IsPartyBattle() )
 						return;
 
@@ -196,7 +196,7 @@ VOID CTBMatchIndiObRedGui::HandleEvents( RWS::CMsg& msg )
 
 					SetPosition( 0, 0 );
 
-					// Team 정보가 오면 유저의 Data를 입력해준다.
+					// When team information comes, enter the user's data.
 					SetUserData();
 
 					Show( true );
@@ -212,7 +212,7 @@ VOID CTBMatchIndiObRedGui::HandleEvents( RWS::CMsg& msg )
 }
 
 /**
-* \brief Red 팀의 Plyaer Data 업데이트
+* \brief Red Team's Plyaer Data Update
 */
 VOID CTBMatchIndiObRedGui::SetUserData()
 {
@@ -221,14 +221,14 @@ VOID CTBMatchIndiObRedGui::SetUserData()
 
 	m_bSetData = TRUE;
 	
-	// User를 검사해서 현재의 유저가 NOAPPLY또는 GIVEUP일 경우 업데이트를 하지 않는다.
+	// Check the user and do not update if the current user is NOAPPLY or GIVEUP.
 	if( pMember->byState == MATCH_MEMBER_STATE_NOAPPLY ||
 		pMember->byState == MATCH_MEMBER_STATE_GIVEUP )
 	{
 		return;
 	}
 
-	// 이름
+	// name
 	m_pStbName->SetText( pMember->wstrName.c_str() );
 
 	UpdateUserData( pMember->hSerial );
@@ -236,7 +236,7 @@ VOID CTBMatchIndiObRedGui::SetUserData()
 
 VOID CTBMatchIndiObRedGui::UpdateUserData( SERIAL_HANDLE hSerial )
 {
-	// 이름, 레벨 및 각종 Status 세팅
+	// Name, level and various status settings
 	CNtlSobPlayer* pPlayer = reinterpret_cast<CNtlSobPlayer*>(GetNtlSobManager()->GetSobObject( hSerial ));
 	DBO_ASSERT( pPlayer, "CTBMatchIndiObRedGui : must player handle is valid" );
 
@@ -258,7 +258,7 @@ VOID CTBMatchIndiObRedGui::UpdateUserData( SERIAL_HANDLE hSerial )
 }
 
 /**
-* \brief Red 팀의 User Data를 리턴
+* \brief Returns user data of the Red team
 */
 stTBudokaiMember* CTBMatchIndiObRedGui::GetRedTeamUser()
 {

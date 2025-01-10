@@ -1,15 +1,15 @@
 #include "precomp_dboclient.h"
 
-// core
+// Core
 #include "QuickTeleportGui.h"
 #include "NtlDebug.h"
 
-// shared
+// Shared
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation 
+// Simulation 
 #include "NtlSLEvent.h"
 #include "NtlSobNpc.h"
 #include "NtlSobManager.h"
@@ -19,7 +19,7 @@
 #include "NtlSobItemAttr.h"
 #include "NtlSobItemIcon.h"
 
-// dbo
+// Dbo
 #include "DboGlobal.h"
 #include "IconMoveManager.h"
 #include "DialogManager.h"

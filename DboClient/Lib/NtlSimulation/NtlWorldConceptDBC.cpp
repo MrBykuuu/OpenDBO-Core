@@ -100,7 +100,7 @@ void CNtlWorldConceptDBC::Update( RwReal fElapsedTime )
 			ChangeState(WORLD_DBC_SPAWN_DRAGON);
 		}
 		break;	
-	case WORLD_DBC_SPAWN_DRAGON: // 용신이 완전히 등장했을때
+	case WORLD_DBC_SPAWN_DRAGON: // When the dragon god fully appears
 		if(m_fStateTime >= TIME_SPAWN_DRAGON)
 		{
 			ChangeState(WORLD_DBC_NARRATION_START);
@@ -109,7 +109,7 @@ void CNtlWorldConceptDBC::Update( RwReal fElapsedTime )
 	case WORLD_DBC_NARRATION_START:
 		if(m_fStateTime >= TIME_NARRATION)
 		{
-			// 나레이션을 끈다.
+			// Turn off narration.
 			CNtlSLEventGenerator::DBCNarration("", L"", SNtlEventDBCNarration::DBC_NARRATION_END_ATONCE);
 			ChangeState(WORLD_DBC_REWARD_UI);
 		}
@@ -119,7 +119,7 @@ void CNtlWorldConceptDBC::Update( RwReal fElapsedTime )
 	case WORLD_DBC_NARRATION_END:
 		if(m_fStateTime >= TIME_NARRATION)
 		{
-			// 나레이션을 끈다.
+			// Turn off narration.
 			CNtlSLEventGenerator::DBCNarration("", L"", SNtlEventDBCNarration::DBC_NARRATION_END_ATONCE);
 			ChangeState(WORLD_DBC_DESTROY_DRAGON);
 		}
@@ -159,7 +159,7 @@ void CNtlWorldConceptDBC::ChangeState( RwInt32 iState )
 	{
 	case WORLD_DBC_NIGHT_ON:			
         {
-            // 용신 등장시의 배경음악 재생
+            // Play background music when the Dragon God appears
             CNtlSob* pSobAltar = GetNtlSobManager()->GetSobObject(GetAltarSerialID());
             RwV3d vPos = pSobAltar->GetPosition();
             sNtlSoundPlayParameta tSoundParam;
@@ -183,7 +183,7 @@ void CNtlWorldConceptDBC::ChangeState( RwInt32 iState )
 			sDRAGONBALL_TBLDAT* pData = (sDRAGONBALL_TBLDAT*)API_GetTableContainer()->GetDragonBallTable()->GetDBTbldat((BYTE)m_eDragonBallKind);
 			if(pData)
 			{
-                // 일러스트
+                // illustration
                 std::string strIllust = "";
                 sBOT_TBLDAT* pDragonTable = (sBOT_TBLDAT*)API_GetTableContainer()->GetNpcTable()->FindData(pData->dragonNPCTblidx);
                 if(pDragonTable)
@@ -199,14 +199,14 @@ void CNtlWorldConceptDBC::ChangeState( RwInt32 iState )
 	case WORLD_DBC_REWARD_UI:				
 		break;
 	case WORLD_DBC_DESTROY_DB:
-        CNtlSLEventGenerator::DBCScatter();         ///< 드래곤볼 흩어지는 연출을 카메라 연출을 위해 매니저에게 알려준다.
+        CNtlSLEventGenerator::DBCScatter();         ///< Let the manager know about the scattering of dragon balls for camera purposes.
 		break;
 	case WORLD_DBC_NARRATION_END:
 		{
 			sDRAGONBALL_TBLDAT* pData = (sDRAGONBALL_TBLDAT*)API_GetTableContainer()->GetDragonBallTable()->GetDBTbldat((BYTE)m_eDragonBallKind);
 			if(pData)
 			{
-                // 일러스트
+                // illustration
                 std::string strIllust = "";
                 sBOT_TBLDAT* pDragonTable = (sBOT_TBLDAT*)API_GetTableContainer()->GetNpcTable()->FindData(pData->dragonNPCTblidx);
                 if(pDragonTable)
@@ -229,7 +229,7 @@ void CNtlWorldConceptDBC::ChangeState( RwInt32 iState )
 
 void CNtlWorldConceptDBC::ResetRemainTime() 
 {
-    // 서버와의 시간 씽크를 위해서 약간의 오프셋값을 준다. (정확하게 맞추는것은 불가능하다)
+    // A slight offset value is given to synchronize time with the server. (It is impossible to match accurately)
 	m_uiRemainTime = DBO_MAX_TIMER_DB_UI_OK - 2000;
     m_bUpdateRemainTime = TRUE;
 }

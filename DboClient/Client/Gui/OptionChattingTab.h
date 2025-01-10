@@ -1,11 +1,11 @@
 /******************************************************************************
-* File			: OptionChattingTab.h
-* Author		: Hae sung, Cho
-* Copyright		: (주)NTL
-* Date			: 2008. 9. 11 
-* Abstract		: 
+*File			: OptionChattingTab.h
+*Author		    : Hae sung, Cho
+*Copyright		: (주)NTL
+*Date			: 2008. 9. 11 
+*Abstract		: 
 *****************************************************************************
-* Desc			: Tab of Chatting
+*Desc			: Tab of Chatting
 *****************************************************************************/
 
 #ifndef _OPTIONCHATTINGTAB_H_
@@ -27,12 +27,12 @@
 #define dOPTIONCHATTING_LIST_SLIDER_WIDTH			12
 #define dOPTIONCHATTING_LIST_SLIDER_HEIGHT			39
 
-// CGuiLineTree를 구성하는 Item들의 Size
+// Size of items that make up CGuiLineTree
 #define dOPTIONCHATTING_LINE_HEIGHT				20
 #define dOPTIONCHATTING_LINE_MARGIN				4	
 #define dOPTIONCHATTING_CHILD_MARGIN_WIDTH		20
 
-// 채팅창의 옵션을 그룹짓는 ID
+// ID that groups chat window options
 #define dOPTIONCHATTING_CATEGORY_COMMON			-2
 #define dOPTIONCHATTING_CATEGORY_BASIC			-3
 #define dOPTIONCHATTING_CATEGORY_ADDED			-4
@@ -91,23 +91,23 @@ public:
 	COptionChattingCategoryNode(CGuiLineTree* pMgr, std::wstring strTitle, RwInt32 nID);
 	virtual ~COptionChattingCategoryNode();
 
-	virtual void ShowProc();				///< CGuiLineTreeNode에서의 Override
-	virtual void HideProc();				///< CGuiLineTreeNode에서의 Override
+	virtual void ShowProc();				///< Override in CGuiLineTreeNode
+	virtual void HideProc();				///< Override in CGuiLineTreeNode
 
-	void OnClickBtnExpand(gui::CComponent* pComponent);		///< + 버튼을 클릭할때 실행되는 함수
-	void OnClickBtnReduce(gui::CComponent* pComponent);		///< - 버튼을 클릭할때 실행되는 함수
+	void OnClickBtnExpand(gui::CComponent* pComponent);		///< Function executed when the + button is clicked
+	void OnClickBtnReduce(gui::CComponent* pComponent);		///< Function executed when the - button is clicked
 
 protected:
 	gui::CButton* m_pBtnExpand;				// + Button
-	gui::CButton* m_pBtnReduce;				// - Button
+	gui::CButton* m_pBtnReduce;				// -Button
 
 	gui::CSlot m_slotClickedBtnExpand;		// + Button's signal
-	gui::CSlot m_slotClickedBtnReduce;		// - Button's signal
+	gui::CSlot m_slotClickedBtnReduce;		// -Button's signal
 };
 
 /**
 * \ingroup client
-* 체크박스를 사용하는 옵션
+*Option to use checkbox
 */
 class CCheckBoxNode : public CGuiLineTreeNode
 {
@@ -132,7 +132,7 @@ protected:
 
 /**
 * \ingroup client
-* 슬라이더를 사용하는 옵션
+*Option to use slider
 */
 class CSliderNode : public CGuiLineTreeNode
 {
@@ -167,9 +167,9 @@ public:
 
 	RwBool	Create(CRectangle& rect, gui::CComponent* pParent, RwInt32 nLineHeight, RwInt32 nLineMargin, RwInt32 nChildXMargin, RwInt32 nScrollBarWidth, COptionChatting* pOptionChatting = NULL);
 
-	void CreateTree();									///< 트리를 구축한다.
+	void CreateTree();									///< Build a tree.
 
-	///< 스크롤 바를 휠마우스 조작을 하기 위해
+	///< To operate the scroll bar with a wheel mouse
 	void OnCaptureWheelMove( RwInt32 nFlag, RwInt16 sDelta, CPos& pos );
 
 	
@@ -181,8 +181,8 @@ protected:
 
 /**
 * \ingroup client
-* COptionBase 를 상속 받아서 옵션 윈도우의 탭 중의 하나인 채팅창 관련 탭을 궛ㅇ
-* CGuiLineTree를 사용하여 채팅창과 관련된 각종 옵션을 설정할 수 있게 하는 클래스
+*Inherit COptionBase and open the chat window-related tab, one of the tabs in the options window.
+*A class that allows you to set various options related to the chat window using CGuiLineTree
 */
 class COptionChatting : public COptionBase
 {
@@ -202,14 +202,14 @@ public:
 	virtual void		OnCancel();
 	virtual void		OnHandleEvents(RWS::CMsg &pMsg);
 
-	// 구현
+	// avatar
 	VOID				LoadSerializer();
 	VOID				SaveSerializer();
 	VOID				DefaultOption();
 
 protected:
-	COptionChattingList* m_pOptionChattingList;		///< 라인트리의 매니저
-	gui::CDialog*		m_pDlgChattingList;			///< 라인트리의 부모가 될 Dialog
+	COptionChattingList* m_pOptionChattingList;		///< Manager of Line Tree
+	gui::CDialog*		m_pDlgChattingList;			///< Dialog that will be the parent of the line tree
 };
 
 #endif

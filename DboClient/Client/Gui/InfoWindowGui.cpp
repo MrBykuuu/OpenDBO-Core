@@ -230,7 +230,7 @@ VOID CInfoWindowGui::CalcPos( RwInt32 nXPos, RwInt32 nYPos )
 	RwInt32 nScreenHeight = m_pThis->GetGuiManager()->GetHeight();
 	CRectangle rtBox = m_pmdBox->GetClientRect();
 
-	// 기본위치는 Right Bottom
+	// Default position is Right Bottom
 	RwInt32 nX = nXPos + NTL_ITEM_ICON_SIZE + INFOWND_POINT_MARGIN_X;
 	RwInt32 nY = nYPos + NTL_ITEM_ICON_SIZE + INFOWND_POINT_MARGIN_Y;
 	RwInt32 nWidth = rtBox.GetWidth(); 
@@ -405,7 +405,7 @@ VOID CInfoWindowGui::SetItemInfo( gui::CMDStaticBox* pmdBox, CNtlSobItem* pItem,
 
 		case ITEM_TYPE_CAPSULE:
 		{
-			// 일단 캡슐중 탈 것만 추가한다
+			// First, add only the vehicles in the capsule.
 			RwReal fSystemEffectValue = Logic_GetItemSystemEffectValue(pData, ACTIVE_VEHICLE);
 			if( 0.f == fSystemEffectValue )
 				break;
@@ -722,7 +722,7 @@ VOID CInfoWindowGui::SetSkillInfo( CNtlSobSkill* pSkill )
 			CSkillTable* pSkillTable = API_GetTableContainer()->GetSkillTable();
 			sSKILL_TBLDAT* pNextData = reinterpret_cast<sSKILL_TBLDAT*>( pSkillTable->FindData( pData->dwNextSkillTblidx ) );
 
-			// 등급
+			// rating
 			m_pmdBox->SetBlankLine( INFOWND_BLANKLINE_HEIGHT );
 			pString = const_cast<WCHAR*>( GetDisplayStringManager()->GetString( "DST_SKILL_GRADE" ) );
 			m_pmdBox->Format( "NextSkillGrade", FONT_TEXT, COMP_TEXT_LEFT, INFOCOLOR_9, 0, FALSE, pString, pNextData->bySkill_Grade );
@@ -785,7 +785,7 @@ VOID CInfoWindowGui::SetRecipeInfo( sITEM_RECIPE_TBLDAT* pRecipeTblData )
 		{
 			if( pRecipeTblData->asMaterial[i].materialTblidx != INVALID_TBLIDX )
 			{
-				// 아이템 텍스트를 꺼내온다.
+				// Brings out the item text.
 				sITEM_TBLDAT* pItemData = (sITEM_TBLDAT*)API_GetTableContainer()->GetItemTable()->FindData( pRecipeTblData->asMaterial[i].materialTblidx );
 				if( pItemData )
 				{
@@ -1156,10 +1156,10 @@ VOID CInfoWindowGui::SetActionSkillInfo( CNtlSobActionSkill* pActionSkill )
 
 	m_pmdBox->Clear();
 
-	// 이름
+	// name
 	m_pmdBox->SetItem( pActionText->GetText( pActionData->Action_Name ).c_str(), "Name", FONT_TITLE, COMP_TEXT_LEFT, INFOCOLOR_2 );
 
-	// 스킬타입
+	// Skill type
 	switch( pActionData->byAction_Type )
 	{
 	case ACTION_TYPE_NORMAL_ACTION: pString = const_cast<WCHAR*>( GetDisplayStringManager()->GetString( "DST_ACTION_TYPE_NORMAL" ) ); break;
@@ -1168,11 +1168,11 @@ VOID CInfoWindowGui::SetActionSkillInfo( CNtlSobActionSkill* pActionSkill )
 	}
 	m_pmdBox->SetItem( pString, "Type", FONT_TEXT, COMP_TEXT_CENTER, INFOCOLOR_3 );
 
-	// 설명
+	// explanation
 	m_pmdBox->SetBlankLine( INFOWND_BLANKLINE_HEIGHT );
 	m_pmdBox->SetItem( pActionText->GetText( pActionData->Note ).c_str(), "Note", FONT_TEXT, COMP_TEXT_LEFT, INFOCOLOR_0 );
 
-	// 채팅명령
+	// Chat command
 	if( pActionData->byAction_Type == ACTION_TYPE_SOCIAL_ACTION )
 	{
 		m_pmdBox->SetBlankLine( INFOWND_BLANKLINE_HEIGHT );
@@ -1453,7 +1453,7 @@ VOID CInfoWindowGui::SetSkillUpgradeInfo( stSkillUpgradeInfo* pUpgradeInfo )
 
 VOID CInfoWindowGui::SetItemInfo_Name( gui::CMDStaticBox* pmdBox, sITEM_TBLDAT* pData, RwUInt8 ucGrade, RwUInt8 ucRank )
 {
-	// 아이템 이름
+	// item name
 
 	RwUInt32 uiColor = Logic_GetItemRankColor( ucRank );	
 	std::wstring strBuf = API_GetTableContainer()->GetTextAllTable()->GetItemTbl()->GetText( pData->Name );
@@ -1520,7 +1520,7 @@ VOID CInfoWindowGui::SetItemInfo_Attr_Info( gui::CMDStaticBox* pmdBox, sITEM_TBL
 	WCHAR* pString = NULL;	
 	WCHAR wBuf[512];
 
-	// 아이템 속성	
+	// Item Attributes	
 	if( byBattleAttribute != BATTLE_ATTRIBUTE_NONE )
 	{
 		switch( byBattleAttribute )
@@ -1536,7 +1536,7 @@ VOID CInfoWindowGui::SetItemInfo_Attr_Info( gui::CMDStaticBox* pmdBox, sITEM_TBL
 		pmdBox->SetItem( wBuf, "ItemAttribute", FONT_TEXT, COMP_TEXT_RIGHT, uiColor );
 	}
 
-	// 설명
+	// explanation
 	if( pData->Name != INVALID_TBLIDX )
 	{
 		pmdBox->SetBlankLine( INFOWND_BLANKLINE_HEIGHT );
@@ -1865,7 +1865,7 @@ RwBool CInfoWindowGui::SetItemInfo_SpecialClass( gui::CMDStaticBox* pmdBox, sITE
 	if( pData->byClass_Special != INVALID_BYTE || pData->byRace_Special != INVALID_BYTE )
 		pmdBox->SetBlankLine( INFOWND_BLANKLINE_HEIGHT );
 
-	// 특화클래스.
+	// Specialized class.
 	if( pData->byClass_Special != INVALID_BYTE )
 	{
 		RwUInt32 FlagClassSpecial = Logic_ConvertClassToClassFlag( pData->byClass_Special );
@@ -2372,7 +2372,7 @@ VOID CInfoWindowGui::SetItemInfo_SetItem( gui::CMDStaticBox* pmdBox, sITEM_TBLDA
 		stSetItemList[i].tblidx = pSetItemData->aItemTblidx[i];
 	}
 
-	// 소지품 체크
+	// Check your belongings
 	CNtlInventory* pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
 
 	for( RwInt32 i = 0 ; i < NTL_MAX_BAGSLOT_COUNT ; ++i )
@@ -2407,7 +2407,7 @@ VOID CInfoWindowGui::SetItemInfo_SetItem( gui::CMDStaticBox* pmdBox, sITEM_TBLDA
 		}			
 	}
 
-	// 장비품 체크
+	// Equipment check
 	for( RwInt32 i = 0 ; i < NTL_MAX_EQUIP_ITEM_SLOT ; ++i )
 	{
 		for( RwInt32 j = EQUIP_SLOT_TYPE_JACKET ; j <= EQUIP_SLOT_TYPE_BOOTS ; ++j )
@@ -2428,7 +2428,7 @@ VOID CInfoWindowGui::SetItemInfo_SetItem( gui::CMDStaticBox* pmdBox, sITEM_TBLDA
 		}
 	}
 
-	// 출력
+	// output of power
 	INT nEquipCount = 0;
 
 	for( RwInt32 i = 0 ; i < NTL_MAX_SET_ITEM_COUNT ; ++i )
@@ -2668,14 +2668,14 @@ VOID CInfoWindowGui::SetSkillInfo_NameGradeClass( sSKILL_TBLDAT* pData, RwBool b
 	RwUInt32 uiColor = bLearned ? INFOCOLOR_2 : INFOCOLOR_1;	
 	WCHAR* pString = NULL;	
 
-	// 이름
+	// name
 	m_pmdBox->SetItem( pSkillText->GetText( pData->Skill_Name ).c_str(), "SkillName", FONT_TITLE, COMP_TEXT_LEFT, uiColor );
 
-	// 등급
+	// rating
 	pString = const_cast<WCHAR*>( GetDisplayStringManager()->GetString( "DST_SKILL_GRADE" ) );
 	m_pmdBox->Format( "SkillGrade", FONT_TEXT, COMP_TEXT_RIGHT, uiColor, 10, TRUE, pString, pData->bySkill_Grade );
 
-	// 종류
+	// type
 	m_pmdBox->SetBlankLine( INFOWND_BLANKLINE_HEIGHT );
 	if( pData->bySkill_Class == NTL_SKILL_CLASS_PASSIVE )
 	{
@@ -2702,7 +2702,7 @@ VOID CInfoWindowGui::SetSkillInfo_NameGradeClass( sSKILL_TBLDAT* pData, RwBool b
 		m_pmdBox->SetItem( pSkillText->GetText( pData->Note ).c_str(), "SkillNote", FONT_TEXT, COMP_TEXT_LEFT, INFOCOLOR_0 );
 	}
 
-	// 필요장착
+	// Required installation
 	if( pData->byRequire_Item_Type != INVALID_BYTE )
 	{
 		const WCHAR* pFormatString = GetDisplayStringManager()->GetString( "DST_SKILL_MUST_EQUIP_ITEM" );
@@ -3023,7 +3023,7 @@ VOID CInfoWindowGui::SetSkillInfo_AppointApply( sSKILL_TBLDAT* pData, sSKILL_TBL
 								
 				for( RwInt32 i = 0 ; i < NTL_MAX_EFFECT_IN_SKILL; ++i )
 				{
-					// peessi : Warp 인 경우 예외처리.
+					// peessi: Exception handling in case of Warp.
 					sSYSTEM_EFFECT_TBLDAT* pSystemEffectData = reinterpret_cast<sSYSTEM_EFFECT_TBLDAT*>( pSystemEffectTable->FindData( pData->skill_Effect[i] ) );			
 
 					if( pSystemEffectData )
@@ -3344,18 +3344,18 @@ VOID CInfoWindowGui::SetHTBInfo_NameGradeClass( sHTB_SET_TBLDAT* pData, RwBool b
 	RwUInt32 uiColor = bLearned ? INFOCOLOR_2 : INFOCOLOR_1;	
 	WCHAR* pString = NULL;	
 
-	// 이름
+	// name
 	m_pmdBox->SetItem( pHTBTextTable->GetText( pData->HTB_Skill_Name ).c_str(), "SkillName", FONT_TITLE, COMP_TEXT_LEFT, uiColor );
 
-	// 등급
+	// rating
 	m_pmdBox->SetItem( GetDisplayStringManager()->GetString( "DST_SKILL_TYPE_HTB" ), "grade", FONT_TEXT, COMP_TEXT_RIGHT, uiColor, 10, TRUE );
 
-	// 종류
+	// type
 	m_pmdBox->SetBlankLine( INFOWND_BLANKLINE_HEIGHT );
 	pString = const_cast<WCHAR*>( GetDisplayStringManager()->GetString( "DST_SKILL_TYPE_HTB" ) );
 	m_pmdBox->SetItem( pString, "SkillClass", FONT_TEXT, COMP_TEXT_CENTER, INFOCOLOR_6, 0 );
 
-	// 설명
+	// explanation
 	m_pmdBox->SetBlankLine( INFOWND_BLANKLINE_HEIGHT );
 	m_pmdBox->SetItem( pHTBTextTable->GetText( pData->Note ).c_str(), "SkillNote", FONT_TEXT, COMP_TEXT_LEFT, INFOCOLOR_0 );
 }
@@ -3374,7 +3374,7 @@ VOID CInfoWindowGui::SetHTBInfo_UseCondition( sHTB_SET_TBLDAT* pData )
 {
 	WCHAR* pString = NULL;	
 
-	// 사용 LP,EP,RP
+	// Use LP, EP, RP
 	if( pData->wNeed_EP > 0 )
 	{
 		m_pmdBox->SetBlankLine( INFOWND_BLANKLINE_HEIGHT );
@@ -3457,10 +3457,10 @@ VOID CInfoWindowGui::SetBuffInfo_Common( sSKILL_TBLDAT* pData, RwReal fKeepTime,
 
 	CTextTable* pSkillText = API_GetTableContainer()->GetTextAllTable()->GetSkillTbl();
 	
-	// 이름
+	// name
 	m_pmdBox->SetItem( pSkillText->GetText( pData->Skill_Name ).c_str(), "SkillName", FONT_TITLE, COMP_TEXT_CENTER, INFOCOLOR_2 );
 
-	// 정보
+	// information
 	m_pmdBox->SetBlankLine( INFOWND_BLANKLINE_HEIGHT );		
 
 	for( RwInt32 i = 0 ; i < NTL_MAX_EFFECT_IN_SKILL ; ++ i )
@@ -3499,10 +3499,10 @@ VOID CInfoWindowGui::SetBuffInfo_Common( sITEM_TBLDAT* pData )
 
 	CTextTable* pItemText = API_GetTableContainer()->GetTextAllTable()->GetItemTbl();
 	
-	// 이름
+	// name
 	m_pmdBox->SetItem( pItemText->GetText( pData->Name ).c_str(), "SkillName", FONT_TITLE, COMP_TEXT_CENTER, INFOCOLOR_2 );
 
-	// 정보
+	// information
 	m_pmdBox->SetBlankLine( INFOWND_BLANKLINE_HEIGHT );		
 
 	for( RwInt32 i = 0 ; i < NTL_MAX_EFFECT_IN_ITEM ; ++ i )
@@ -3689,23 +3689,23 @@ VOID CInfoWindowGui::SetFriendInfo( sFriendMember* pMember )
 
 	WCHAR buf[128] = {0,};
 
-	// 이름
+	// name
 	swprintf_s(buf, L"%s : %s", GetDisplayStringManager()->GetString("DST_STATUS_NAME"), pMember->wszMemberName);
 	m_pmdBox->SetItem(buf, "FriendName", FONT_TITLE, COMP_TEXT_LEFT, INFOCOLOR_6);
 
-	// 직업
+	// job
 	swprintf_s(buf, L"%s : %s", GetDisplayStringManager()->GetString("DST_STATUS_JOB"), Logic_GetClassName(pMember->byClass));
 	m_pmdBox->SetItem(buf, "FriendJob", FONT_TEXT, COMP_TEXT_LEFT, INFOCOLOR_6);
 
-	// 레벨
+	// level
 	swprintf_s(buf, L"%s : %u", GetDisplayStringManager()->GetString("DST_STATUS_LEVEL"), pMember->byLevel);
 	m_pmdBox->SetItem(buf, "FriendLevel", FONT_TEXT, COMP_TEXT_LEFT, INFOCOLOR_0);
 
-	// 채널
+	// channel
 	swprintf_s(buf, L"%s : %u", GetDisplayStringManager()->GetString("DST_FRIEND_SUBJECT_CHANNEL"), pMember->byChannel);
 	m_pmdBox->SetItem(buf, "FriendChannel", FONT_TEXT, COMP_TEXT_LEFT, INFOCOLOR_0);
 
-	// 위치
+	// location
 	std::wstring strAreaName;
 	Logic_GetAreaNameFromTblIDX(pMember->mapTblIdx, &strAreaName);
 	swprintf_s(buf, L"%s : %s", GetDisplayStringManager()->GetString("DST_FRIEND_SUBJECT_LOC"), strAreaName.c_str());
@@ -3733,8 +3733,8 @@ VOID CInfoWindowGui::SetUpgradeInfo( stINFOWND_UPGRADE* pUpgrade )
 }
 
 /**
-* \brief 전투 속성에 관련된 Info Window를 띄운다.
-* \param pBattleAttr	(stINFOWND_BATTLEATTR*) CInfoWindowGui에서 사용할 전투 속성 구조체
+* \brief Opens an Info Window related to combat properties.
+* \param pBattleAttr (stINFOWND_BATTLEATTR*) Battle attribute structure to use in CInfoWindowGui.
 */
 VOID CInfoWindowGui::SetBattleAttributeDisplay( stINFOWND_BATTLEATTR* pBattleAttr )
 {
@@ -3804,8 +3804,8 @@ VOID CInfoWindowGui::SetBattleAttributeDisplay( stINFOWND_BATTLEATTR* pBattleAtt
 }
 
 /**
-* \brief 퀘스트 서치된 정보를 표시한다
-* \param pAttr	(QUEST_SEARCH_LIST*) 퀘스트 NPC이름, 퀘스트 이름 정보 포함
+* \brief Displays quest searched information
+* \param pAttr (QUEST_SEARCH_LIST*) Quest NPC name, including quest name information
 */
 VOID CInfoWindowGui::SetQuestSearch( QUEST_SEARCH_LIST* pQuestInfo )
 {
@@ -3818,11 +3818,11 @@ VOID CInfoWindowGui::SetQuestSearch( QUEST_SEARCH_LIST* pQuestInfo )
 	QUEST_SEARCH_ITER it = pQuestInfo->begin();
 	for( ; it != pQuestInfo->end() ; ++it )
 	{
-		// NPC 이름
+		// NPC Name
 		_itoa_s(byNPCCount, acBuffer, 10);
 		m_pmdBox->SetItem( it->pwstrNPCName->c_str(), acBuffer, FONT_TITLE, COMP_TEXT_LEFT, NTL_PARTY_NAME_COLOR );
 
-		// 퀘스트 이름
+		// Quest Name
 		std::list<std::wstring>* pListQuestTitle = it->pListQuestTitle;
 		std::list<std::wstring>::iterator it_QuestInfo = pListQuestTitle->begin();
 		for( ; it_QuestInfo != pListQuestTitle->end() ; ++it_QuestInfo )
@@ -3843,15 +3843,15 @@ VOID CInfoWindowGui::SetQuestSearch( QUEST_SEARCH_LIST* pQuestInfo )
 }
 
 /**
-* \brief 현재 속성의 공격 효율 정보를 출력한다.
-* \param pAttr	(stINFOWND_BATTLEATTR*) 전투 속성 정보
+* \brief Prints attack efficiency information of the current attribute.
+* \param pAttr (stINFOWND_BATTLEATTR*) Battle attribute information
 */
 VOID CInfoWindowGui::SetBattleAttrInfo_Weapon(stINFOWND_BATTLEATTR* pAttr)
 {
 	WCHAR awcBuffer[256];
 	CHAR acLine[32];
 
-	// Target Weapon Attribute 의 값이 INVALID 라면 대상이 없는 것임
+	// If the value of Target Weapon Attribute is INVALID, there is no target.
 	if (pAttr->bySourceWeaponAttr == INVALID_BYTE)
 		return;
 
@@ -3860,7 +3860,7 @@ VOID CInfoWindowGui::SetBattleAttrInfo_Weapon(stINFOWND_BATTLEATTR* pAttr)
 		sprintf_s(acLine, 32, "Info%d", i);
 		m_pmdBox->SetItem(Logic_GetBattleAttributeName(i), acLine, FONT_TEXT, COMP_TEXT_LEFT, Logic_GetBattleAttributeColor(i));
 
-		// 현재 속성에게의 공격력 + 보너스 공격력을 표시한다.
+		// Displays the attack power + bonus attack power for the current attribute.
 		RwReal fRate = GetBattleAttributeEffectApplyValue(i) + pAttr->afSourceOffenceBonus[pAttr->bySourceWeaponAttr];
 		swprintf_s(awcBuffer, 256, GetDisplayStringManager()->GetString("DST_BATTLEATTR_ATTACK_RATE_TARGET"), fRate);
 
@@ -3871,15 +3871,15 @@ VOID CInfoWindowGui::SetBattleAttrInfo_Weapon(stINFOWND_BATTLEATTR* pAttr)
 }
 
 /**
-* \brief 현재 속성의 방어 효율 정보를 출력한다.
-* \param pAttr	(stINFOWND_BATTLEATTR*) 전투 속성 정보
+* \brief Prints information on the defense efficiency of the current attribute.
+* \param pAttr (stINFOWND_BATTLEATTR*) Battle attribute information
 */
 VOID CInfoWindowGui::SetBattleAttrInfo_Armor( stINFOWND_BATTLEATTR* pAttr )
 {
 	WCHAR awcBuffer[256];
 	CHAR acLine[32];
 	DBO_WARNING_MESSAGE("B");
-	// Target Weapon Attribute 의 값이 INVALID 라면 대상이 없는 것임
+	// If the value of Target Weapon Attribute is INVALID, there is no target.
 	if( pAttr->bySourceArmorAttr == INVALID_BYTE )
 		return;
 	
@@ -3888,7 +3888,7 @@ VOID CInfoWindowGui::SetBattleAttrInfo_Armor( stINFOWND_BATTLEATTR* pAttr )
 		sprintf_s( acLine, 32, "Info%d", i );
 		m_pmdBox->SetItem( Logic_GetBattleAttributeName( i ), acLine, FONT_TEXT, COMP_TEXT_LEFT, Logic_GetBattleAttributeColor( i ) );
 		
-		// 현재 속성에게의 방어력 + 보너스 방어력을 표시한다.
+		// Displays the defense + bonus defense for the current attribute.
 		RwReal fRate = GetBattleAttributeEffectApplyValue( i ) + pAttr->afSourceDefenceBonus[pAttr->bySourceArmorAttr];
 		swprintf_s( awcBuffer, 256, GetDisplayStringManager()->GetString( "DST_BATTLEATTR_DEFENCE_RATE_TARGET" ), fRate );
 		
@@ -4027,7 +4027,7 @@ VOID CInfoWindowGui::EquipInfoProc( sITEM_TBLDAT* pData )
 	RwUInt32 flagSlotType = pData->dwEquip_Slot_Type_Bit_Flag;
 	CNtlInventory* pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
 
-	// BitFlag지만 한슬롯만 지정되어 있다. 
+	// BitFlag, but only one slot is specified. 
 	if( flagSlotType & EQUIP_SLOT_FLAG_HAND	)
 	{
 		SetEquipInfo( m_pmdEquipInfo[0], pInventory->GetEquipItem( EQUIP_SLOT_TYPE_HAND ) );		
@@ -4139,7 +4139,7 @@ VOID CInfoWindowGui::SetItemInfo_RecipeInfo( gui::CMDStaticBox* pmdBox, sITEM_TB
 		//  recipe type
 		m_pmdBox->SetItem( Logic_GetHoipoiMixSkillName( pRecipeDat->byRecipeType ), "RecipeType", FONT_TEXT, COMP_TEXT_RIGHT, INFOCOLOR_7 );
 
-		// conditions
+		// Conditions
 		m_pmdBox->SetItem( GetDisplayStringManager()->GetString( "DST_INFOWINDOW_USE_STATE" ), "UseRequirements", FONT_TEXT, COMP_TEXT_LEFT, INFOCOLOR_0);
 		m_pmdBox->SetItem( GetDisplayStringManager()->GetString( "DST_SCOUTER_SCOUTER_NAME" ), "UseRequirementsData", FONT_TEXT, COMP_TEXT_LEFT, INFOCOLOR_5 );
 		
@@ -4176,7 +4176,7 @@ VOID CInfoWindowGui::SetItemInfo_RecipeInfo( gui::CMDStaticBox* pmdBox, sITEM_TB
 		{
 			if( pRecipeDat->asCreateItemTblidx[i].itemTblidx != INVALID_TBLIDX )
 			{
-				// 아이템 텍스트를 꺼내온다.
+				// Brings out the item text.
 				sITEM_TBLDAT* pItemData = (sITEM_TBLDAT*)API_GetTableContainer()->GetItemTable()->FindData( pRecipeDat->asCreateItemTblidx[i].itemTblidx );
 
 				std::wstring strItem = API_GetTableContainer()->GetTextAllTable()->GetItemTbl()->GetText( pItemData->Name );

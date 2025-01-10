@@ -27,7 +27,7 @@ bool CNtlStorageGroupQuest::Load( CNtlStorageSerializer* pS )
 	int nCount = 0;
 	for(;;)
 	{
-		// 무한루프 방지
+		// Infinite loop prevention
 		if( nCount++ > 1000000 )
 			return false;
 

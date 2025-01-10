@@ -2,7 +2,7 @@
  *
  * File			: NtlCameraManager.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2006. 8. 08	
  * Abstract		: simulation layer camera manager
  *****************************************************************************
@@ -93,7 +93,7 @@ private:
 	// camera control attribute
 	RwReal m_fMinDist;			// minimun distance.
 	RwReal m_fMaxDist;			// maximun distance.	
-	RwReal m_fDist;				// camera 현재 거리.
+	RwReal m_fDist;				//camera current distance.
 
 	RwReal m_fMinPitch;			// camera min pitch.
 	RwReal m_fMaxPitch;			// camera max pitch.	
@@ -149,7 +149,7 @@ private:
 
 	void CollisionActor(RwV3d& vCamPos, RwV3d& vLookAt);
     void CollisionObj();
-//    void CullingEffect();                                       ///< 이펙트 컬링 유무를 테스트한다.
+//    void CullingEffect();                                       ///< Tests the presence or absence of effect culling.
 	
 public:
 
@@ -166,7 +166,8 @@ public:
 	void					SetActiveActor(const CNtlSobActor *pSobActor);
 	CNtlCameraController*	FindController(RwUInt8 byType);
 
-    // Free Camera를 위한 인터페이스
+    // Interface for Free Camera
+
     RwBool                  IsActiveFreeCamera();
     void                    FreeCameraMove(RwUInt32 moveType, RwReal fSpeed = 0.0f);    
     void                    FreeCameraMoveStop();
@@ -294,7 +295,7 @@ public:
 
 	RwBool			IsFinishLock(void);
 
-// Explosion camera 관련 함수들
+// Explosion camera related functions
 public:
 	
 	void			AddSinExplosionAlgorithm_XAxis( RwUInt32 uiExcuteID, RwReal fLifeTime, RwReal fFrequancy, RwReal fPhase, RwReal fAmp, RwReal fDescFactor );

@@ -1,23 +1,23 @@
 #include "precomp_dboclient.h"
 #include "CharSelectGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// sound
+// Sound
 #include "NtlSoundManager.h"
 #include "GUISoundDefine.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
 #include "NtlStorageManager.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "CharStageState.h"
@@ -124,7 +124,7 @@ RwBool CCharSelectGui::Create()
 	m_tMouseRol.bPressLeft = FALSE;
 	m_tMouseRol.iOldX = 0;
 
-	// sig	
+	// Signals	
 	m_slotMouseDown = m_pThis->SigMouseDown().Connect(this, &CCharSelectGui::OnMouseDown);
 	m_slotMouseUp = m_pThis->SigMouseUp().Connect(this, &CCharSelectGui::OnMouseUp);
 	m_slotMouseMove = m_pThis->SigMouseMove().Connect(this, &CCharSelectGui::OnMouseMove);
@@ -265,7 +265,7 @@ VOID CCharSelectGui::OnClickedGameStartButton(gui::CComponent* pComponent)
 	if (FALSE == Logic_IsUsableIndex(byCharIndex, NTL_MAX_COUNT_USER_CHAR_SLOT, INVALID_BYTE) ||
 		pLobby->GetCharacterCount() == 0)
 	{
-		// 캐릭터를 선택하십시요
+		// Please select a character
 		GetAlarmManager()->AlarmMessage("DST_LOBBY_MUST_CHOICE_CHAR");
 		return;
 	}
@@ -375,17 +375,17 @@ VOID CCharSelectGui::HandleEvents(RWS::CMsg &msg)
 				NTL_RETURNVOID();
 			}
 
-			// 캐릭터 모델 바꾸기			
+			// Change character model			
 			if (pLobby->GetCharacterCount() > 0)
 			{
 				if (pLobby->GetSelectedCharacterIndex() != INVALID_BYTE)
 				{
-					// 현재 서버에서 선택된 캐릭터가 있다
+					// There is a character selected on the current server.
 					CDboEventGenerator::LobbyEvent(LMT_SELECT_CHARACTER, (RwReal)pLobby->GetSelectedCharacterIndex());
 				}
 				else if (!pLobby->IsLoadedLastCharacter())
 				{
-					// 마지막으로 접속했던 캐릭터 찾기
+					// Find the last connected character
 					std::string strFinalCharName = GetNtlStorageManager()->GetStringData(dSTORAGE_ACCOUNT_LASTCHAR);
 					WCHAR awcBuffer[NTL_MAX_SIZE_CHAR_NAME + 1];
 					::MultiByteToWideChar(GetACP(), 0, strFinalCharName.c_str(), -1, awcBuffer, NTL_MAX_SIZE_CHAR_NAME + 1);
@@ -407,21 +407,21 @@ VOID CCharSelectGui::HandleEvents(RWS::CMsg &msg)
 
 					if (!pLobby->IsLoadedLastCharacter())
 					{
-						// 마지막으로 접속했던 캐릭터의 정보를 제대로 찾지 못했다
+						// I couldn't find the information for the last connected character.
 						pLobby->SetSelectedCharacterIndex(0);
 						CDboEventGenerator::LobbyEvent(LMT_SELECT_CHARACTER, 0);
 					}
 				}
 				else
 				{
-					// 마지막으로 접속했던 캐릭터의 정보가 없다
+					// There is no information about the last connected character.
 					pLobby->SetSelectedCharacterIndex(0);
 					CDboEventGenerator::LobbyEvent(LMT_SELECT_CHARACTER, 0);
 				}
 			}
 			else
 			{
-				// 캐릭터가 없다
+				// There are no characters
 				pLobby->SetSelectedCharacterIndex(INVALID_BYTE);
 				CDboEventGenerator::LobbyEvent(LMT_SELECT_CHARACTER, (RwReal)INVALID_BYTE);
 			}

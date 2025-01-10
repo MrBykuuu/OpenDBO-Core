@@ -97,7 +97,7 @@ VOID CBagBaseGui::Init(VOID)
 	m_nMouseOnIndex = -1;
 	m_nPushDownIndex = -1;
 	m_nCapsuleLockSlotIdx = -1;
-	
+
 	m_nShowPickedUp = -1;
 		
 	m_pCoolTimeEffect = NULL;	
@@ -130,7 +130,7 @@ RwBool CBagBaseGui::Create(VOID)
 	m_pCoolTimeEffect = NTL_NEW gui::CRadarEffect[m_nNumSlot];
 
 	// Gamble Effect
-	m_ppGambleBoomEffect = NTL_NEW gui::CFlash*[m_nNumSlot];	///< 겜블 붐 효과
+	m_ppGambleBoomEffect = NTL_NEW gui::CFlash*[m_nNumSlot];	///< Gamble boom effect
 	m_pSlotBoomEffectEnd = NTL_NEW gui::CSlot[m_nNumSlot];
 	m_pbIsGambleEffect = NTL_NEW RwBool[m_nNumSlot];
 	for( RwInt32 i = 0; i < m_nNumSlot; ++i )
@@ -144,7 +144,7 @@ RwBool CBagBaseGui::Create(VOID)
 		// Link
 		m_pSlotBoomEffectEnd[i] = m_ppGambleBoomEffect[i]->SigMovieEnd().Connect( this, &CBagBaseGui::OnMovieEnd );
 
-		// 플레이 안되고 있다고 초기화
+		// Initialize as not playing
 		m_pbIsGambleEffect[i] = FALSE;
 	}
 
@@ -180,7 +180,7 @@ RwBool CBagBaseGui::Create(VOID)
 	LinkMsg( g_EventItemIdentifyEffect, 0 );
 	LinkMsg( g_EventResize, 0 );
 
-	// Update 연결
+	// Connect Update
 	GetNtlGuiManager()->AddUpdateFunc( this );
 	
 	NTL_RETURN( TRUE );
@@ -261,7 +261,7 @@ VOID CBagBaseGui::Update( RwReal fElapsed )
 			m_pCoolTimeEffect[i].Update( fCurrentTime );
 		}
 
-		// Flash가 연출중이라면 Update를 시켜준다.
+		// Update if flash effect is playing
 		if( m_ppGambleBoomEffect[i]->IsPlayMovie() )
 		{
 			m_ppGambleBoomEffect[i]->Update( fElapsed );
@@ -318,7 +318,7 @@ VOID CBagBaseGui::HandleEvents( RWS::CMsg& msg )
 		{
 			CNtlSobItem* pBag = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( m_hBagSerial ) );
 
-			// Handle 제어
+			// Handle control
 			for( RwInt32 i = 0; i < m_nNumSlot; ++i )
 			{
 				if( pData->hItemHandle == pBag->GetChildSerial( i ) )
@@ -333,7 +333,7 @@ VOID CBagBaseGui::HandleEvents( RWS::CMsg& msg )
 		}
 		else
 		{
-			// Place and Pos 제어
+			// Control Place and Pos
 			RwUInt8 byBagIdx = Logic_ConvertContainerTypeToBagIdx( pData->byPlace );
 
 			CNtlInventory* pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
@@ -433,7 +433,7 @@ VOID CBagBaseGui::HandleEvents( RWS::CMsg& msg )
 		{
 			if( pData->iUserData != m_cBagPos )	
 				return;
-			
+
 			CDboEventGenerator::EnableItemIcon( TRUE, PLACE_BAG, pData->iUserData2, m_cBagPos );			
 		}
 	}
@@ -457,7 +457,7 @@ VOID CBagBaseGui::HandleEvents( RWS::CMsg& msg )
 	}
 	else if( msg.Id == g_EventCapsuleLockItem )
 	{
-		// 현재 가방의 지정된 Slot에 캡슐 Lock을 걸고 유효한 아이템의 Serial로 가방이 아닌 공간에 있는 아이콘들을 제어한다.
+		// Control icons in non-bag spaces with valid item serials by applying capsule lock to the specified slot in the current bag.
 
 		SDboEventCapsuleLockItem* pData = reinterpret_cast<SDboEventCapsuleLockItem*>( msg.pData );
 
@@ -1076,9 +1076,9 @@ VOID CBagBaseGui::SetBagName(VOID)
 }
 
 /**
-* \brief 겜블 아이템 연출 시작
-* \param hOldSerial	(RwUint32) 캡슐 아이템의 핸들
-* \param hSerial	(RwUInt32) 캡슐에서 나온 아이템의 핸들
+* \brief Start gambling item production
+* \param hOldSerial	(RwUint32) Handle of capsule item
+* \param hSerial	(RwUInt32) Handle of item that came out of capsule
 */
 VOID CBagBaseGui::BoomEffectProc( RwUInt32 hCreateSerial, RwChar* pcEffectFile )
 {
@@ -1110,7 +1110,7 @@ VOID CBagBaseGui::OnMovieEnd( gui::CComponent* pComponent )
 
 	for( RwInt32 i = 0; i < m_nNumSlot; ++i )
 	{
-		// 일치한다.
+		// Match
 		if( m_ppGambleBoomEffect[i]->GetScreenRect() == pFlash->GetScreenRect() )
 		{
 			// Item Create Effect
@@ -1126,7 +1126,7 @@ VOID CBagBaseGui::OnMovieEnd( gui::CComponent* pComponent )
 		}
 	}
 
-	// 여기까지 알고리즘이 온다면 잘못된 정보의 플래쉬 객체가 있다는 뜻.
+	// If the algorithm reaches here, it means there is a flash object with incorrect information.
 	NTL_ASSERTFAIL( "CBagBaseGui::OnMovieEnd - Invalid flash component" );
 }
 
@@ -1168,14 +1168,14 @@ VOID CBagBaseGui::MouseDown( const CKey& key )
 	}
 	else if( key.m_nID == UD_RIGHT_BUTTON )
 	{
-		// 1. 아이콘 픽업상태인가 아닌가
+		// 1. Is it in icon pickup state or not
 		if( !GetIconMoveManager()->IsActive() )
 		{
 			if( !IsDisableSlot( nClickIdx ) )
 			{				
 				m_nRSelectedSlotIdx = nClickIdx;
 			}
-			//2. 아이템 유효성검사.
+			//2. Item validation.
 			//if( IsEnableBagChildPopup( nClickIdx ) )
 			//{
 			//	m_nRSelectedSlotIdx = nClickIdx;
@@ -1185,7 +1185,7 @@ VOID CBagBaseGui::MouseDown( const CKey& key )
 
 	m_pThis->CaptureMouse();
 
-	// 동시에 눌릴때 무효처리.
+	// Invalid when pressed at the same time.
 	if( m_nLSelectedSlotIdx >= 0 && m_nRSelectedSlotIdx >= 0 )
 	{
 		m_nLSelectedSlotIdx = -1;
@@ -1197,8 +1197,8 @@ VOID CBagBaseGui::MouseDown( const CKey& key )
 
 VOID CBagBaseGui::MouseUp( const CKey& key )
 {
-	// 1. Left버튼인가 Right버튼인가
-	// 2. Src선택인가 Dest선택인가.
+	// 1. Left button or Right button
+	// 2. Src selection or Dest selection.
 
 	RwInt32 nSlotIdx = GetChildSlotIdx( (RwInt32)key.m_fX, (RwInt32)key.m_fY );
 	ClickEffect( FALSE );
@@ -1212,7 +1212,7 @@ VOID CBagBaseGui::MouseUp( const CKey& key )
 		return;
 	}
 
-	// 겜블 효과가 사용중이라면 입력을 막는다.
+	// Block input if a gamble effect is in use.
 	if( m_pbIsGambleEffect[nSlotIdx] )
 	{
 		m_nLSelectedSlotIdx = -1;
@@ -1272,8 +1272,8 @@ VOID CBagBaseGui::MouseUp( const CKey& key )
 						
 						if( pItemAttr->GetStackNum() > 1 )
 							CDboEventGenerator::CalcPopupShow( TRUE, pItem->GetSerialID(), PLACE_BAG, rtScreen.left, rtScreen.top, pItemAttr->GetStackNum() );
-					}					
-				}
+					}	
+					}
 				else
 				{
 					CNtlSobItem* pBagItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( m_hBagSerial ) );
@@ -1478,7 +1478,7 @@ RwBool CBasicBagGui::Create(VOID)
 	m_slotClickDiscardBtn = m_pbtnDiscard->SigClicked().Connect( this, &CBasicBagGui::OnClickDiscardBtn );
 	m_slotClickPopupMenuBtn = m_pbtnPopupMenu->SigClicked().Connect(this, &CBasicBagGui::OnClickPopupMenuBtn);
 
-	// 제니 아이콘
+	// zenny Icon
 	m_pMoneyIconTexture = Logic_CreateTexture( MONEYICON_NAME );
 
 	// ToolTIp
@@ -2944,7 +2944,7 @@ VOID CBagSlotGui::HandleEvents( RWS::CMsg& msg )
 
 		CNtlInventory* pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
 
-		// 가방 체크는 패킷핸들러에서 미리 함.
+		// Bag check is done in advance in the packet handler.
 		CNtlSobItem* pGetItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pData->hSerial ) );
 		if( pGetItem )
 		{
@@ -2964,7 +2964,7 @@ VOID CBagSlotGui::HandleEvents( RWS::CMsg& msg )
 
 		if( m_pBag[0] )
 		{
-			// 돈은 기본 슬롯으로만 들어간다.
+			// Money only goes into the basic slot.
 			CRectangle* pRect = &m_rtIcon[0];
 			CRectangle rtScreen = m_pThis->GetScreenRect();
 			CBasicBagGui* pBasicBag = reinterpret_cast<CBasicBagGui*>( m_pBag[0] );
@@ -3066,9 +3066,9 @@ CRectangle CBagSlotGui::GetBagSlotRect( RwInt32 nSlotIdx )
 
 RwBool CBagSlotGui::IsEnableBagPickUp( RwInt32 nSlotIdx )
 {
-	// 0. BasicItem은 이동불가
-	// 1. 가방이 슬롯안에 존재하는가
-	// 3. 이동이 가능한가
+	// 0. BasicItem cannot be moved
+    // 1. Is the bag in the slot?
+    // 3. Is it possible to move?
 	if( nSlotIdx < 0 || nSlotIdx >= VISIBLE_BAGSLOT_COUNT )
 		return FALSE;
 
@@ -3091,7 +3091,7 @@ RwBool CBagSlotGui::IsEnableBagPickUp( RwInt32 nSlotIdx )
 		return FALSE;
 	}
 
-	// 4. Disable상태가 아니어야
+	// 4. It must not be in a disabled state
 	if( IsDisableSlot( nSlotIdx ) )
 		return FALSE;
 
@@ -3158,7 +3158,7 @@ RwBool CBagSlotGui::UpdateData(VOID)
 	{
 		SERIAL_HANDLE hSerial = pInventory->GetBagItem( i );
 		
-		// 변경된 경우. 생성 삭제
+		// Changed case. Create Delete
 		if( m_hBagSerial[i] != hSerial )
 		{
 			m_hBagSerial[i] = hSerial;
@@ -3223,7 +3223,7 @@ RwBool CBagSlotGui::UpdateData(VOID)
 
 		if( i < VISIBLE_BAGSLOT_COUNT )
 		{
-			// 가방의 상태
+			// Bag status
 			if( hSerial == INVALID_SERIAL_ID )
 			{
 				DestroyStackNumber( i );
@@ -3488,8 +3488,8 @@ VOID CBagSlotGui::OnMouseDown( const CKey& key )
 
 VOID CBagSlotGui::OnMouseUp( const CKey& key )
 {
-	// 1. Left버튼인가 Right버튼인가
-	// 2. Src선택인가 Dest선택인가.
+	// 1. Left button or Right button
+    // 2. Src selection or Dest selection.
 
 	RwInt32 nSlotIdx = GetBagSlotIdx( (RwInt32)key.m_fX, (RwInt32)key.m_fY );
 	ClickEffect( FALSE );
@@ -3577,7 +3577,7 @@ VOID CBagSlotGui::OnMouseMove( INT nKey, INT nXPos, INT nYPos )
 		if( m_rtIcon[i].PtInRect( nXPos, nYPos ) )
 		{
 			m_arrFocusEffect[i] = m_arrFocusEffect[i] | SLOT_FOCUS;
-			
+
 			if( m_nMouseOnIndex != i )
 			{
 				SERIAL_HANDLE hSerial = GetNtlSLGlobal()->GetSobAvatar()->GetInventory()->GetBagItem( i );
@@ -3585,14 +3585,14 @@ VOID CBagSlotGui::OnMouseMove( INT nKey, INT nXPos, INT nYPos )
 				CRectangle rtScreen = m_pThis->GetScreenRect();
 				RwInt32 nX = m_rtIcon[i].left + rtScreen.left;
 				RwInt32 nY = m_rtIcon[i].top + rtScreen.top;
-				
+
 				if( pBag )
 				{
 					GetInfoWndManager()->ShowInfoWindow( TRUE, CInfoWndManager::INFOWND_ITEM, nX, nY, pBag, DIALOG_BAGSLOT );
 				}
 				else
 				{
-					GetInfoWndManager()->ShowInfoWindow( TRUE, CInfoWndManager::INFOWND_JUST_WTEXT, nX, nY,	(void*)GetDisplayStringManager()->GetString( "DST_BAG_SLOT" ), DIALOG_BAGSLOT );																	
+					GetInfoWndManager()->ShowInfoWindow( TRUE, CInfoWndManager::INFOWND_JUST_WTEXT, nX, nY, (void*)GetDisplayStringManager()->GetString( "DST_BAG_SLOT" ), DIALOG_BAGSLOT );
 				}
 
 				if( i == m_nPushDownIndex )

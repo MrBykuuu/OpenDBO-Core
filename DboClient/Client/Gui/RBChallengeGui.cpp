@@ -175,7 +175,7 @@
 //	// Initial Setting
 //	m_pThis->Show( false );
 //	
-//	// Event¿¬°á
+//	// Connect to Event
 //	LinkMsg( g_EventRBRoomInfo );	
 //	LinkMsg( g_EventNPCDialogOpen );
 //	LinkMsg( g_EventDialog );

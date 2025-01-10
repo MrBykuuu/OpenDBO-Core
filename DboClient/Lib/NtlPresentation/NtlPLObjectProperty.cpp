@@ -25,7 +25,7 @@ CNtlPLObjectProperty::CNtlPLObjectProperty()
     m_eObjectType = E_OBJECT_NORMAL;
     m_bApplyPVS = TRUE;
 
-    m_SoundProp.bLoop = TRUE;       // �⺻ ����� �׻� Loop�̴�.
+    m_SoundProp.bLoop = TRUE;       //The default sound is always Loop.
 }
 
 

@@ -98,50 +98,50 @@ protected:
 public:
 	//////////////////////////////////////////////////////////////////////////
 	//
-	//	Client <-> Server 메시지들
+	//	Client <-> Server messages
 	//
 	//////////////////////////////////////////////////////////////////////////
 
-	// 퀘스트 공유
+	// Share Quest
 	void								UG_Quest_Share( NTL_TS_T_ID tId );
 	void								GU_Quest_Share_Nfy( WORD wResultCode, HOBJECT hActor, NTL_TS_T_ID tId );
 
-	// 초기 게임 진입 시 처리 되는 메시지들
-	// 퀘스트 전용
+	// Messages processed upon initial game entry
+	// Quest only
 	void								GU_Avatar_TS_Completed_Info( const sCOMPLETE_QUEST_INFO& sInfo );
 	void								GU_Avatar_TS_Progress_Info( const sPROGRESS_QUEST_INFO& sInfo );
 
-	// 트리거 시스템 흐름 진행 관련 메시지들
+	// Messages related to trigger system flow progress
 	void								UG_Avatar_TS_Confirm_Step( NTL_TS_T_ID tId, NTL_TS_TC_ID tcCurId, NTL_TS_TC_ID tcNextId, unsigned int* uiParam, unsigned char byEventType, unsigned int uiEventData );
 	void								GU_Avatar_TS_Confirm_Step( WORD wResultCode, NTL_TS_T_ID tId, NTL_TS_TC_ID tcCurId, NTL_TS_TC_ID tcNextId );
 
-	// 퀘스트 포기
+	// abandon quest
 	void								UG_Avatar_TS_GiveUp_Quest( NTL_TS_T_ID tId );
 	void								GU_Avatar_TS_GiveUp_Quest( WORD wResultCode, NTL_TS_T_ID tId );
 
-	// 서버 이벤트
+	// server event
 	void								GU_Avatar_TS_SToC_Event_Start_NFY( NTL_TS_T_ID tId, NTL_TS_TC_ID tcId, NTL_TS_TA_ID taId );
 	void								GU_Avatar_TS_SToC_Event_End_NFY( NTL_TS_T_ID tId, NTL_TS_TC_ID tcId, NTL_TS_TA_ID taId );
 	void								GU_Avatar_TS_SToC_Event_Update_NFY( NTL_TS_T_ID tId, NTL_TS_TC_ID tcId, NTL_TS_TA_ID taId, BYTE bySvrEvtType, BYTE bySlot, uSTOC_EVT_UPDATE_DATA& uEvtData );
 
-	// TS 상태 업데이트 메시지
+	// TS status update message
 	void								GU_TS_Update_State( NTL_TS_T_ID tId, unsigned char byType, unsigned short wTSState, unsigned int uiParam = 0xffffffff );
 	void								UG_TS_Update_State( NTL_TS_T_ID tId, unsigned char byType, unsigned short wTSState, unsigned int uiParam = 0xffffffff );
 
-	// 서버로부터 받는 TS 진행 이벤트
+	// TS progress events received from the server
 	void								GU_TS_Update_Event_Nfy( NTL_TS_EVENT_ID eID );
 
-	// 서버로부터 받는 TS 강제 실행 명령
+	// TS force execution command received from server
 	void								GU_TS_Excute_Trigger( NTL_TS_T_ID tID );
 
-	// 서버로부터 받는 TMQ 관련 완료 및 진행중 퀘스트 제거 이벤트
+	// TMQ-related completion and ongoing quest removal events received from the server
 	void								GU_TS_RemoveTMQQuest( NTL_TS_T_ID tMin, NTL_TS_T_ID tMax );
 
 	void								GU_Qeust_Force_Completion( NTL_TS_T_ID tID );
 
 	//////////////////////////////////////////////////////////////////////////
 	//
-	//	Client <-> Client TS 메시지들
+	//	Client <-> Client TS messages
 	//
 	//////////////////////////////////////////////////////////////////////////
 
@@ -157,7 +157,7 @@ public:
 
 	void								TU_ShowQuestWindowNfy( NTL_TS_T_ID tId );
 
-	void								TU_ShowQuestIndicatorNfy(NTL_TS_T_ID tId, bool bAuto );
+	void								TU_ShowQuestIndicatorNfy( NTL_TS_T_ID tId, bool bAuto );
 
 	void								TU_UpdateQuestStateNfy( NTL_TS_T_ID tId, bool bOutStateMsg, unsigned int uiUpdatedQState, unsigned int uiQState, unsigned int uiQuestTitle, eSTOC_EVT_DATA_TYPE eEvtInfoType, const uSTOC_EVT_DATA& uEvtInfoData );
 
@@ -191,23 +191,23 @@ public:
 		//
 		//////////////////////////////////////////////////////////////////////////
 
-	// 제안 대화 상자
+	// suggestion dialog box
 	void								TU_ShowProposalDialog( sTS_KEY& sKey, CDboTSContProposal* pCont, CDboTSContReward* pContRwd );
 	void								UT_ShowProposalDialog( sTS_KEY& sKey, bool bAccept );
 
-	// 사용자 보상 선택 대화 상자
+	// User Reward Selection Dialog Box
 	void								TU_ShowRewardDialog( sTS_KEY& sKey, CDboTSCQCtrl* pQCtrl, CDboTSContReward* pContRwd );
 	void								UT_ShowRewardDialog( sTS_KEY& sKey, int nSelIdx, bool bCancel );
 
-	// 사용자 선택 대화 상자
+	// User Selection Dialog Box
 	void								TU_ShowUserSelectionDialog( sTS_KEY& sKey, CDboTSCQCtrl* pQCtrl, CDboTSContUsrSel* pCont );
 	void								UT_ShowUserSelectionDialog( sTS_KEY& sKey, NTL_TS_TC_ID tcSelId, bool bCancel );
 
-	// 나래이션 대화 상자
+	// Narration dialog box
 	void								TU_ShowNarrationDialog( sTS_KEY& sKey, CDboTSContNarration* pCont );
 	void								UT_ShowNarrationDialog( sTS_KEY& sKey, bool bCancel );
 
-	// 통합 나래이션 대화 상자
+	// Integrated narration dialog box
 	void								TU_ShowUnifiedNarrationDialog( sTS_KEY& sKey, CDboTSContUnifiedNarration* pCont );
 	void								UT_ShowUnifiedNarrationDialog( sTS_KEY& sKey, bool bCancel );
 
@@ -217,23 +217,23 @@ public:
 		//
 		//////////////////////////////////////////////////////////////////////////
 
-	// 서버 이벤트
+	// server event
 	void								TU_ServerEvent( sTS_KEY& sKey, CDboTSCQCtrl* pQCtrl );
 	void								UT_ServerEvent( sTS_KEY& sKey );
 
-	// NPC 대화
+	// NPC dialogue
 	void								TU_ShowNPCConv( sTS_KEY& sKey, CDboTSActNPCConv* pAct );
 	void								UT_ShowNPCConv( sTS_KEY& sKey );
 
-	// 퀘스트 정보 등록
+	// Register quest information
 	void								TU_RegisterQuestInfo( sTS_KEY& sKey, CDboTSCQCtrl* pQCtrl );
 	void								UT_RegisterQuestInfo( sTS_KEY& sKey );
 
-	// 카메라 연출
+	// camera direction
 	void								TU_CameraDirection( sTS_KEY& sKey, CDboTSActOPCam* pAct );
 	void								UT_CameraDirection( sTS_KEY& sKey );
 
-	// Object 대화
+	// Object conversation
 	void								TU_ShowObjConv( sTS_KEY& sKey, CDboTSActObjConv* pAct );
 	void								UT_ShowObjConv( sTS_KEY& sKey );
 

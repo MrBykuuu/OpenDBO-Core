@@ -2,15 +2,15 @@
 
 struct WaveElement
 {
-    RwV2d   v2Pos;          //굴절파발생지점
-    RwReal  fRound;         //파가번지는최대반지름
-    RwReal  fMaxHeight;     //파의최초높이(z값)
-    RwReal  fDelta;         //현재진행된시간(및현재파의반지름)
+    RwV2d   v2Pos;          //Refracted wave generation point
+    RwReal  fRound;         //The maximum radius at which waves spread
+    RwReal  fMaxHeight;     //Initial height of the wave (z value)
+    RwReal  fDelta;         //Current travel time (and radius of current wave)
 };
 
 /**
  * \ingroup NtlPresentation
- * \brief 화면의 굴절 반사 이펙트 클래스
+ * \brief Screen refraction reflection effect class
  *
  * \date 2008-08-20
  * \author agebreak
@@ -29,7 +29,7 @@ public:
 protected:
 
 protected:
-    std::list<WaveElement*> m_listWaveElement;           ///< 파동원 리스트
+    std::list<WaveElement*> m_listWaveElement;           ///< List of wave sources
     RwInt32     m_nVertexCnt;    
     RwIm2DVertex* m_pVertices;
     RwV2d*      m_pUVVerticesOrg;

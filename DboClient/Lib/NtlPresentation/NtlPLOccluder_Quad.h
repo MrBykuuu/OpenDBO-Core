@@ -38,7 +38,7 @@ public:
 
 	virtual RwUInt32		GetOccluderType() { return EPLOCCLUDER_QUAD; }
 
-	// 각 면의 종류의 따라 업데이트 호출이 다르다.
+	// The update call is different depending on the type of each face.
 	virtual RwBool			Update(RwReal fElapsed);
 	virtual RwBool			UpdateOneside(RwReal fElapsed);
 	virtual RwBool			UpdateTwoside(RwReal fElapsed);

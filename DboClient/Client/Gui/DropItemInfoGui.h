@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: DropItemInfoGui.h
-// Desc: Drop된 Item의 정보를 보여주는 GUI
+// Desc: GUI showing information on dropped items
 //
 // 2007.05.22 Peessi@hitel.net   
 //

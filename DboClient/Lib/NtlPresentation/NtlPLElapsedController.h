@@ -2,7 +2,7 @@
 *
 * File			: NtlPLElapsedController.h
 * Author		: Peessi
-* Copyright		: (주)NTL
+* Copyright		: (?)NTL
 * Date			: 2006. 8. 17	
 * Abstract		: Presentation entity elapsed controller
 *****************************************************************************
@@ -20,8 +20,8 @@ class CNtlElapsedController
 public:
 
 	CNtlPLEntity *m_pPLEntity;	/** control entity */
-	RwReal m_fCurrTime;				/** 현재 흐른 시간 */ 
-	RwReal m_fLifeTime;				/** control 시간 */
+	RwReal m_fCurrTime;				/**Current elapsed time */
+	RwReal m_fLifeTime;				/**control time */
 	RwReal m_fWeightValue;			/** elapsed weight value */
 	
 	RwBool m_bFinish;

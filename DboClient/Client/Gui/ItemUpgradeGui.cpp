@@ -1,11 +1,11 @@
 #include "precomp_dboclient.h"
 #include "ItemUpgradeGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// shared
+// Shared
 #include "NtlItem.h"
 #include "NtlCharacter.h"
 #include "ItemTable.h"
@@ -16,11 +16,11 @@
 #include "TableContainer.h"
 #include "GraphicDataTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
@@ -560,7 +560,7 @@ VOID CItemUpgradeGui::SetItemSlot( RwUInt32 hSerialID, RwUInt32 eSrcplace, RwUIn
 	// 
 	UpdateSlotIcon();
 
-	// 아이콘 무브 완료
+	// Icon Move Completed
 	if( bNeedToIconMoveEnd )
 		GetIconMoveManager()->IconMoveEnd();
 }
@@ -674,7 +674,7 @@ VOID CItemUpgradeGui::SetResult(WORD wResultcode, BYTE byGrade, WORD wResultMess
 {
 	NTL_ASSERT(m_pUpgradeItem, "CItemUpgradeGui::HandleEvents : UpgradeItem Must be Present!");
 
-	// execption.. --;; 에러메시지는 패킷핸들러에서 처리된다.
+	// execption.. --;; Error messages are processed in the packet handler.
 	if (wResultcode != GAME_SUCCESS)
 	{
 		SetState(STATE_UPGRADE_READY);
@@ -809,7 +809,7 @@ VOID CItemUpgradeGui::SetState( STATE eState )
 
 			GetAlarmManager()->AlarmMessage("DST_ITEMUPGRADE_BTNCLICK");
 
-			// UpgradeButton 활성화
+			// Enable UpgradeButton
 			m_pbtnSelect->ClickEnable( TRUE );
 
 		}

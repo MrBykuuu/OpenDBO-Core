@@ -1,14 +1,14 @@
 #include "precomp_dboclient.h"
 #include "RaceExplainGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLDef.h"
 #include "NtlPLGuiManager.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DisplayStringManager.h"
@@ -38,31 +38,31 @@ RwBool CRaceExplainGui::Create()
 
 	CRectangle rect;
 
-	// 배경
+	// background
 	m_Background.SetType(CWindowby3::WT_HORIZONTAL);
 	m_Background.SetSurface(0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharCreate_Explain.srf", "srfBackgroundUp" ));
 	m_Background.SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharCreate_Explain.srf", "srfBackgroundCenter" ));
 	m_Background.SetSurface(2, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharCreate_Explain.srf", "srfBackgroundBottom" ));	
 	m_Background.SetSize(225, 298);
 
-	// 종족 이름 배경
+	// Race Name Background
 	m_srtRaceNameBack.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharCreate_Explain.srf", "srfNameBar" ));
 
-	// 종족 이름
+	// race name
 	rect.SetRect(52, 6, 172, 26);
 	m_pTitleStatic = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pTitleStatic->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pTitleStatic->SetText(GetDisplayStringManager()->GetString("DST_RACE"));
 	m_pTitleStatic->Enable(false);
 
-	// 종족 이름
+	// race name
 	rect.SetRect(28, 37, 197, 62);
 	m_pRaceName = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER );
 	m_pRaceName->CreateFontStd( DEFAULT_FONT, 110, DEFAULT_FONT_ATTR);
 	m_pRaceName->SetTextColor( RGB(255, 192, 0) );
 	m_pRaceName->Enable(false);
 
-	// 종족 설명
+	// Race Description
 	m_pExplainHtml = (gui::CHtmlBox*)GetComponent("hbxConv");
 	m_pExplainHtml->SetLineSpace(8);
 

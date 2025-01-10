@@ -1,28 +1,28 @@
 #include "precomp_dboclient.h"
 #include "AvatarController.h"
 
-// shared
+// Shared
 #include "NtlMovement.h"
 #include "NtlResultCode.h"
 #include "NtlDirection.h"
 
-// core
+// Core
 #include "NtlSysEvent.h"
 #include "NtlEventQueue.h"
 
-// sound
+// Sound
 #include "NtlSoundDefines.h"
 
-// gui
+// Gui
 #include "gui_renderer.h"
 
-// presentation
+// Presentation
 #include "NtlPLSceneManager.h"
 #include "NtlPLGuiManager.h"
 #include "NtlDNController.h"
 #include "NtlPostEffectCamera.h"
 
-// simulation
+// Simulation
 #include "InputActionMap.h" 
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
@@ -48,10 +48,10 @@
 #include "NtlNetSender.h"
 #include "NtlSobVehicle.h"
 
-// framework
+// Framework
 #include "NtlApplication.h"
 
-// dbo 
+// Dbo 
 #include "DboDef.h"
 #include "DboGlobal.h"
 #include "DboEvent.h"
@@ -62,8 +62,8 @@
 #include "AlarmManager.h"
 #include "DialogManager.h"
 
-#include "NtlPLObject.h"		//Test 추후 삭제 예정(by HoDong)
-#include "NtlPLEventGenerator.h"//Test 추후 삭제 예정(by Peessi)
+#include "NtlPLObject.h"		//Test To be removed at a later date (by HoDong)
+#include "NtlPLEventGenerator.h"//Test To be removed at a later date (by Peessi)
 #include "NtlPLEvent.h"
 
 #include "TBGui.h"
@@ -175,7 +175,7 @@ RwBool CAvatarController::Create()
     LinkMsg(g_EventActionFuncGetItem);
     LinkMsg(g_EventActionFuncSitAndStand);
 	
-	//test
+	//Test
 	LinkMsg(g_EventSCS);
 	
 	m_uiCurMoveFlags	= 0;
@@ -236,10 +236,10 @@ void CAvatarController::Destroy()
     UnLinkMsg(g_EventActionFuncGetItem);
     UnLinkMsg(g_EventActionFuncSitAndStand);
 
-	//test
+	//Test
 	UnLinkMsg(g_EventSCS);
 	
-	// move mark를 삭제한다.
+	// Delete the move mark.
 	DeleteMoveMark();
 }
 
@@ -325,8 +325,8 @@ void CAvatarController::HandleEvents(RWS::CMsg &pMsg)
     else if(pMsg.Id == g_EventActionFuncBasicAttack)
     {
 		// by daneos..
-        //CNtlSobActor* pTargetActor = (CNtlSobActor*)GetNtlSobManager()->GetSobObject(GetNtlSLGlobal()->GetSobAvatar()->GetTargetID());
-        //if(!pTargetActor || pTargetActor->GetClassID() != SLCLASS_MONSTER)  // Only available for monster
+        //CNtlSobActor*pTargetActor = (CNtlSobActor*)GetNtlSobManager()->GetSobObject(GetNtlSLGlobal()->GetSobAvatar()->GetTargetID());
+        //if(!pTargetActor || pTargetActor->GetClassID() != SLCLASS_MONSTER)  //Only available for monster
         //    return;
 
         ActionAutoAttack();
@@ -1323,7 +1323,7 @@ int	CAvatarController::MouseDownHandler(unsigned int uiMouseData)
 		if (m_bMouseAutoRun)
 		{
 			SetAutoRun(FALSE);
-		//	CNtlSLEventGenerator::KeyboardMoveStop();
+			//	CNtlSLEventGenerator::KeyboardMoveStop();
 		}
 	}
 
@@ -1461,7 +1461,7 @@ int	CAvatarController::KeyboardDownHandler(unsigned int uiKeyData)
 #ifdef _UICONFIG
         GetDboGlobal()->GetDBOUIConfig()->Reflash();
 #endif        
-		// peessi: 천하제일무도회 대진표 테스트용.
+		// peessi: For testing the First Ball of Heaven bracket.
 		//if( !CTBGui::m_pInstance->m_pTournamentGui )
 		//{
 		//	CTBGui::m_pInstance->m_pTournamentGui = NTL_NEW CTBTournamentGui( "BudokaiTournamentGui" );
@@ -1533,7 +1533,7 @@ void CAvatarController::CreateMoveMark(const RwV3d *pPos)
 
 	m_pMoveMark->SetPosition(pPos);
 
-	// 사운드 
+	// sound 
 	RwInt32 nSoundIndex = NtlRandomNumber(0, 3);
 	Logic_PlayGUISound((char*)(SOUND_SL_GROUND_PICKING[nSoundIndex]));
 }
@@ -1550,7 +1550,7 @@ void CAvatarController::DeleteMoveMark(void)
 
 void CAvatarController::UpdateMoveMark(RwReal fElapsed)
 {
-	// move mark를 잠깐 띄웠다가 없앤다.
+	// The move mark appears briefly and then disappears.
 	if(m_pMoveMark)
 	{
 		m_fMoveMarkTime += fElapsed;
@@ -2453,7 +2453,7 @@ int CAvatarController::ActionPartySelect(unsigned int uiIdx)
 	{
 		CNtlParty *pParty = pSobAvatar->GetParty();
 
-		// 아바타 또한 파티 구조체에 파티 가입 순서에 따라 포함된다
+		// Avatars are also included in the party structure according to the order of party joining.
 		if( pParty->GetAvatarIndex() <= (RwInt32)uiIdx )
 			++uiIdx;
 
@@ -2550,7 +2550,7 @@ int CAvatarController::ActionPartyShareTargetSelect( unsigned int uiSlot )
 }
 
 /**
- * 순차적으로 파티멤버를 타겟팅한다. 
+ *Target party members sequentially. 
  */
 int CAvatarController::ActionPartyAutoSelect() 
 {

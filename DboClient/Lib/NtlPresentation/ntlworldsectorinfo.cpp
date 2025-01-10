@@ -151,7 +151,7 @@ RwBool CNtlWorldSectorInfo::NtlWorldSectorGeometryCreate(CNtlWorldSector *pNtlWo
 	RwInt32 NPosEXBy0 = (RwInt32)(SPos.x + (float)dGET_WORLD_PARAM()->WorldSizeHalf);
 	RwInt32 CurRealPt;
 
-	// 고쳐야 한다 순서가 틀리다
+	// Need to fix it. The order is wrong.
 	for(int i = (RwInt32)SPos.y; i <= (RwInt32)EPos.y; i += dGET_WORLD_PARAM()->WorldSectorTileSize)
 	{
 		for(int j = NPosSXBy0; j >= NPosEXBy0; j -= dGET_WORLD_PARAM()->WorldSectorTileSize)
@@ -242,7 +242,8 @@ RwBool CNtlWorldSectorInfo::NtlWorldSectorGeometryDelete(CNtlWorldSector *pNtlWo
 {
 	NTL_FUNCTION("_RpNtlWorldSectorGeometryDelete");
 
-	// 인도어
+	// Indoor
+
 	switch (GetSceneManager()->GetActiveWorldType())
 	{
 	case AW_HEGITHFIELD:
@@ -269,7 +270,7 @@ RwBool CNtlWorldSectorInfo::NtlWorldSectorGeometryDeleteWithoutSwapFileSaving(CN
 {
 	NTL_FUNCTION("_RpNtlWorldSectorGeometryDeleteWithoutSwapFileSaving");
 
-	// 인도어
+	// Indoor
 	switch (GetSceneManager()->GetActiveWorldType())
 	{
 	case AW_HEGITHFIELD:
@@ -741,11 +742,11 @@ RwBool CNtlWorldSectorInfo::IndoorSectorLoadFromFile(FILE* pFile, CNtlWorldSecto
 
 	SectorObjectLoadFromFile(pFile, pNtlWorldSector, AW_RWWORLD);
 	SectorWaterLoadFromFile(pFile, pNtlWorldSector);
-	SectorShadowLoadFromFile(pFile, pNtlWorldSector); // 최적화시 빼야 합니다.
+	SectorShadowLoadFromFile(pFile, pNtlWorldSector); // It must be subtracted during optimization.
 	SectorEffectLoadFromFile(pFile, pNtlWorldSector);
 	SectorSoundEffectLoadFromFile(pFile, pNtlWorldSector);
-	SectorCullLoadFromFile(pFile, pNtlWorldSector); // 최적화시 빼야 합니다.
-	SectorTileTransparencyLoadFromFile(pFile, pNtlWorldSector); // 최적화시 빼야 합니다.
+	SectorCullLoadFromFile(pFile, pNtlWorldSector); // It must be subtracted during optimization.
+	SectorTileTransparencyLoadFromFile(pFile, pNtlWorldSector); // It must be subtracted during optimization.
 	SectorShoreLineLoadFromFile(pFile, pNtlWorldSector);
 	SectorDecalLoadFromFile(pFile, pNtlWorldSector);
 	SectorPlantLoadFromFile(pFile, pNtlWorldSector);
@@ -767,11 +768,11 @@ RwBool CNtlWorldSectorInfo::IndoorSectorSaveIntoFile(FILE* pFile, CNtlWorldSecto
 
 	SectorObjectSaveIntoFile(pFile, pNtlWorldSector, AW_RWWORLD);
 	SectorWaterSaveIntoFile(pFile, pNtlWorldSector);
-	SectorShadowSaveIntoFile(pFile, pNtlWorldSector); // 최적화시 빼야 합니다.
+	SectorShadowSaveIntoFile(pFile, pNtlWorldSector); // It must be subtracted during optimization.
 	SectorEffectSaveIntoFile(pFile, pNtlWorldSector);
 	SectorSoundEffectSaveIntoFile(pFile, pNtlWorldSector);
-	SectorCullSaveIntoFile(pFile, pNtlWorldSector); // 최적화 시 빼야 합니다.
-	SectorTileTransparencySaveIntoFile(pFile, pNtlWorldSector); // 최적화 시 빼야 합니다.
+	SectorCullSaveIntoFile(pFile, pNtlWorldSector); // It must be subtracted during optimization.
+	SectorTileTransparencySaveIntoFile(pFile, pNtlWorldSector); // It must be subtracted during optimization.
 	SectorShoreLineSaveIntoFile(pFile, pNtlWorldSector);
 	SectorDecalSaveIntoFile(pFile, pNtlWorldSector);
 	SectorPlantSaveIntoFile(pFile, pNtlWorldSector);
@@ -793,11 +794,11 @@ BYTE* CNtlWorldSectorInfo::IndoorSectorSaveIntoFileFromFileMem(FILE* pFile, BYTE
 
 	pFileMem = SectorObjectSaveIntoFileFromFileMem(pFile, pFileMem, AW_RWWORLD);
 	pFileMem = SectorWaterSaveIntoFileFromFileMem(pFile, pFileMem);
-	pFileMem = SectorShadowSaveIntoFileFromFileMem(pFile, pFileMem); // 최적화시 빼야 합니다.
+	pFileMem = SectorShadowSaveIntoFileFromFileMem(pFile, pFileMem); // It must be subtracted during optimization.
 	pFileMem = SectorEffectSaveIntoFileFromFileMem(pFile, pFileMem);
 	pFileMem = SectorSoundEffectSaveIntoFileFromFileMem(pFile, pFileMem);
-	pFileMem = SectorCullSaveIntoFileFromFileMem(pFile, pFileMem); // 최적화 시 빼야 합니다.
-	pFileMem = SectorTileTransparencySaveIntoFileFromFileMem(pFile, pFileMem); // 최적화 시 빼야 합니다.
+	pFileMem = SectorCullSaveIntoFileFromFileMem(pFile, pFileMem); // It must be subtracted during optimization.
+	pFileMem = SectorTileTransparencySaveIntoFileFromFileMem(pFile, pFileMem); // It must be subtracted during optimization.
 	pFileMem = SectorShoreLineSaveIntoFileFromFileMem(pFile, pFileMem);
 	pFileMem = SectorDecalSaveIntoFileFromFileMem(pFile, pFileMem);
 	pFileMem = SectorPlantSaveIntoFileFromFileMem(pFile, pFileMem);
@@ -818,11 +819,11 @@ RwInt32 CNtlWorldSectorInfo::IndoorSectorSkipToFile(FILE* pFile)
 
 	SectorObjectSkipToFile(pFile, AW_RWWORLD);
 	SectorWaterSkipToFile(pFile);
-	SectorShadowSkipToFile(pFile); // 최적화시 빼야 합니다.
+	SectorShadowSkipToFile(pFile); // It must be subtracted during optimization.
 	SectorEffectSkipToFile(pFile);
 	SectorSoundEffectSkipToFile(pFile);
-	SectorCullSkipToFile(pFile); // 최적화 시 빼야 합니다.
-	SectorTileTransparencySkipToFile(pFile); // 최적화 시 빼야 합니다.
+	SectorCullSkipToFile(pFile); // It must be subtracted during optimization.
+	SectorTileTransparencySkipToFile(pFile); // It must be subtracted during optimization.
 	SectorShoreLineSkipToFile(pFile);
 	SectorDecalSkipToFile(pFile);
 	SectorPlantSkipToFile(pFile);
@@ -843,11 +844,11 @@ BYTE* CNtlWorldSectorInfo::IndoorSectorSkipToFileMem(BYTE* pFileMem)
 
 	pFileMem = SectorObjectSkipToFileMem(pFileMem, AW_RWWORLD);
 	pFileMem = SectorWaterSkipToFileMem(pFileMem);
-	pFileMem = SectorShadowSkipToFileMem(pFileMem); // 최적화시 빼야 합니다.
+	pFileMem = SectorShadowSkipToFileMem(pFileMem); // It must be subtracted during optimization.
 	pFileMem = SectorEffectSkipToFileMem(pFileMem);
 	pFileMem = SectorSoundEffectSkipToFileMem(pFileMem);
-	pFileMem = SectorCullSkipToFileMem(pFileMem); // 최적화 시 빼야 합니다.
-	pFileMem = SectorTileTransparencySkipToFileMem(pFileMem); // 최적화 시 빼야 합니다.
+	pFileMem = SectorCullSkipToFileMem(pFileMem); // It must be subtracted during optimization.
+	pFileMem = SectorTileTransparencySkipToFileMem(pFileMem); // It must be subtracted during optimization.
 	pFileMem = SectorShoreLineSkipToFileMem(pFileMem);
 	pFileMem = SectorDecalSkipToFileMem(pFileMem);
 	pFileMem = SectorPlantSkipToFileMem(pFileMem);
@@ -1024,7 +1025,7 @@ RwBool CNtlWorldSectorInfo::SectorMaterialLoadFromFile(FILE* pFile, CNtlWorldSec
 			{
 				fread(&uiLength, sizeof(RwUInt32), 1, pFile);
 				fread(ReadBuff, sizeof(RwChar) * uiLength, 1, pFile);
-				ReadBuff[uiLength] = '\0'; // String 끝을 표시해준다.
+				ReadBuff[uiLength] = '\0'; // Marks the end of the string.
 
 				pNtlWorldSector->m_pTextureSplat[i] = CNtlPLResourceManager::GetInstance()->LoadTexture(ReadBuff, dGET_WORLD_PARAM()->CurDefaultTexPath); 
 				DBO_ASSERT(pNtlWorldSector->m_pTextureSplat[i], "Texture load failed.");
@@ -2554,7 +2555,7 @@ void CNtlWorldSectorInfo::SectorObjectSaveIntoFileFromFileMemDiff(FILE* pFile, B
 		}
 	}
 
-	// Merge 된 후 갯수를 fwrite 한다.
+	// After merging, fwrite the number.
 	iNum = iDstTriggerCnt + iSrcNonTriggerCnt;
 	fwrite(&iNum, sizeof(RwInt32), 1, pFile);
 
@@ -2570,7 +2571,7 @@ void CNtlWorldSectorInfo::SectorObjectSaveIntoFileFromFileMemDiff(FILE* pFile, B
 		pFileMem = ObjectSkipToFileMemGetEnabledTrigger(pFileMem, eActiveWorldType, &bEnabled);
 		if (bEnabled)
 		{
-			// Trigger 라면 저장한다. pFileMem은 이미 file pos가 Skip 된 상태이므로 rewind pos로 해결하자.			
+			// If it is a trigger, save it. Since file pos has already been skipped in pFileMem, let's solve it with rewind pos.			
 			pFileMem = ObjectSaveIntoFileFromFileMem(pFile, pRewind, eActiveWorldType); 
 		}
 	}
@@ -2586,8 +2587,8 @@ void CNtlWorldSectorInfo::SectorObjectSaveIntoFileFromFileMemDiff(FILE* pFile, B
 		pFileMem = ObjectSkipToFileMemGetEnabledTrigger(pFileMem, eActiveWorldType, &bEnabled);
 		if (!bEnabled)
 		{
-			// Trigger 아니라면 저장한다. pFileMem은 이미 file pos가 Skip 된 상태이므로 rewind pos로 해결하자.
-			// FieldIdx가 다를 경우 vOffset으로 Object의 위치를 다르게 저장해야 한다.
+			// If it is not a trigger, save it. Since file pos has already been skipped in pFileMem, let's solve it with rewind pos.
+			// If FieldIdx is different, the location of the object must be stored differently as vOffset.
 			pFileMem = ObjectSaveIntoFileFromFileMem(pFile, pRewind, eActiveWorldType, &vOffset);
 		}
 	}
@@ -2798,12 +2799,12 @@ RwBool CNtlWorldSectorInfo::SectorShadowLoadFromFile(FILE* pFile, CNtlWorldSecto
 
 		if (dNTL_WORLD_VERSION_COMPARE(dGET_WORLD_PARAM()->WorldLoadVer, dNTL_WORLD_VERSION_OLD))
 		{
-			// 내부에서 8888 포맷과 888 포맷에 따라 Load가 다르다.
+			// Internally, Load is different depending on the 8888 format and the 8888 format.
 			CNtlPLResourceManager::GetInstance()->LoadTexture(pNtlWorldShadow->m_pTexShadow, pFile);		
 		}
 		else if (dNTL_WORLD_VERSION_COMPARE(dGET_WORLD_PARAM()->WorldLoadVer, dNTL_WORLD_VERSION))
 		{
-			// 내부에서 8888 포맷과 888 포맷에 따라 Load가 다르다.
+			// Internally, Load is different depending on the 8888 format and the 8888 format.
 			CNtlPLResourceManager::GetInstance()->LoadTextureShadowMap(pNtlWorldShadow->m_pTexShadow, pFile);
 		}		
 	}	
@@ -6168,7 +6169,7 @@ RwBool _RpNtlWorldSectorGeometrySaveIntoFile(RpWorldSector *pWorldSector, FILE* 
 {
 	/*
 	WorldFileFormat - SectorInfo
-	SectorInfo를 File로 Save하는 부분이다.
+	This is the part where SectorInfo is saved as a file.
 	*/
 
 	NTL_FUNCTION("_RpNtlWorldSectorGeometrySaveIntoFile");
@@ -6271,7 +6272,7 @@ RwBool _RpNtlWorldSectorGeometrySaveIntoFile(RpWorldSector *pWorldSector, FILE* 
 			fwrite(&SID, sizeof(RwUInt32), 1, pFile);
 
 			ObjectID = pNtlPLObject->GetObjectSerialID();
-#ifdef dNTL_WORLD_FORMAT_CONVERT // 월드 포맷 변환시dGET_WORLD_PARAM()->WorldObjectSerialID 저장되어야 한다.
+#ifdef dNTL_WORLD_FORMAT_CONVERT // When converting world format, dGET_WORLD_PARAM()->WorldObjectSerialID must be saved.
 			if (ObjectID == 0)
 			{
 				ObjectID = dGET_WORLD_PARAM()->WorldObjectSerialID;
@@ -6773,8 +6774,8 @@ RwBool _RpNtlWorldGetFilePosDoodads(FILE* pFile)
 RwBool _RpNtlWorldSectorGeometryLoadFromFile(sCUR_FIELD_TEX_INFO& CurFieldTexInfo, CNtlWorldSector *pNtlWorldSector, FILE* pFile)
 {
 	/*
-	WorldFileFormat - SectorInfo
-	SectorInfo를 File로부터 Load 하는 부분 이다.
+	WorldFileFormat-SectorInfo
+	This is the part where SectorInfo is loaded from File.
 	*/
 
 	NTL_FUNCTION("_RpNtlWorldSectorGeometryLoadFromFile");
@@ -7696,7 +7697,7 @@ RwBool _RpNtlWorldSectorGeometryDeleteWithoutSwapFileSaving(CNtlWorldSector *pNt
 	// 		dNTL_WORLD_LOCAL(pNtlWorldSector->m_pWorldSector, pNtlSector) = NULL;
 	// 	}
 
-	// 인도어
+	// Indoor
 	switch (GetSceneManager()->GetActiveWorldType())
 	{
 	case AW_HEGITHFIELD:
@@ -7735,7 +7736,7 @@ RwBool _RpNtlWorldSectorGeometryDelete(CNtlWorldSector *pNtlWorldSector)
 	// 		dNTL_WORLD_LOCAL(pNtlWorldSector->m_pWorldSector, pNtlSector) = NULL;
 	// 	}
 
-	// 인도어
+	// Indoor
 	switch (GetSceneManager()->GetActiveWorldType())
 	{
 	case AW_HEGITHFIELD:
@@ -7826,7 +7827,7 @@ RwBool _RpNtlWorldSectorGeometryCreate(CNtlWorldSector *pNtlWorldSector)
 	RwInt32 NPosEXBy0 = (RwInt32)(SPos.x + (float)dGET_WORLD_PARAM()->WorldSizeHalf);
 	RwInt32 CurRealPt;
 
-	// 고쳐야 한다 순서가 틀리다
+	// Need to fix it. The order is wrong.
 	for(int i = (RwInt32)SPos.y; i <= (RwInt32)EPos.y; i += dGET_WORLD_PARAM()->WorldSectorTileSize)
 	{
 		for(int j = NPosSXBy0; j >= NPosEXBy0; j -= dGET_WORLD_PARAM()->WorldSectorTileSize)
@@ -8903,7 +8904,7 @@ RwBool _RpNtlWorldSectorGeometrySaveIntoFileIndoor(CNtlWorldSector *pNtlWorldSec
 {
 	/*
 	WorldFileFormat - SectorInfo
-	SectorInfo를 File로 Save하는 부분이다.
+	This is the part where SectorInfo is saved as a file.
 	*/
 
 	NTL_FUNCTION("_RpNtlWorldSectorGeometrySaveIntoFile");
@@ -9016,11 +9017,11 @@ RwBool _RpNtlWorldSectorGeometrySaveIntoFileIndoor(CNtlWorldSector *pNtlWorldSec
 			// attach lightobject 
 			pNtlPLObject->SaveLightObjectAttachData(pFile);
 
-			// lightmap
+			// Lightmap
 			pNtlPLObject->SaveLightmap(pFile);
 		}
 
-		// water
+		// Water
 		sSECTOR_WATER_ATTR* pSectorWaterAttr = pNtlWorldSector->m_pWater;
 		if(pSectorWaterAttr)
 		{
@@ -9051,7 +9052,7 @@ RwBool _RpNtlWorldSectorGeometrySaveIntoFileIndoor(CNtlWorldSector *pNtlWorldSec
 			::fwrite(&ZeroFlag, sizeof(RwBool), 1, pFile);
 		}
 
-		// shadow
+		// Shadow
 		CNtlWorldShadow* pNtlWorldShadow = pNtlWorldSector->m_pNtlWorldShadow;
 		if(pNtlWorldShadow->m_pTexShadow)
 		{
@@ -9069,7 +9070,7 @@ RwBool _RpNtlWorldSectorGeometrySaveIntoFileIndoor(CNtlWorldSector *pNtlWorldSec
 			::fwrite(&ZeroFlag, sizeof(RwBool), 1, pFile);
 		}
 
-		// effects
+		// Effects
 		CNtlPLEntity *pEntity;
 		RwInt32 NumEff = (RwInt32)pNtlWorldSector->m_vecNtlPLEntityEffect.size();
 		fwrite(&NumEff, sizeof(RwInt32), 1, pFile);

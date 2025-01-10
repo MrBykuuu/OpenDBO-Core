@@ -1,23 +1,23 @@
 /******************************************************************************
 * File			: TutorialSideIconGui.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2008. 1. 22
 * Abstract		: 
 *****************************************************************************
-* Desc			: 튜토리얼 사이드 아이콘을 누르면 사이드 뷰를 보여주는 것이
-*				  아니라 튜토리얼을 종료할 것인지 묻는 메세지 박스를 띄운다
+* Desc			: When you press the tutorial side icon, the side view is displayed.
+*                 Instead, a message box pops up asking if you want to end the tutorial.
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// dbo
+// Dbo
 #include "SideIconGui.h"
 
 class CTutorialSideIconGui : public CSideIconBase

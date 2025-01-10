@@ -47,7 +47,7 @@ RwBool CNtlPLEntityFreeList::AllocFreeList(void)
     m_pEffectFreeList = RwFreeListCreate(sizeof(CNtlInstanceEffect), iBlockSize, 16, rwMEMHINTDUR_GLOBAL);
     RWS_ASSERT(m_pEffectFreeList, "effect failed to allocate free list");
 
-	// woody1019
+	// Woody1019
 	iBlockSize = 2;
 	m_pWorldFreeList = RwFreeListCreate(sizeof(CNtlPLWorldEntity), iBlockSize, 16, rwMEMHINTDUR_GLOBAL);
 	RWS_ASSERT(m_pWorldFreeList, "world failed to allocate free list");
@@ -64,7 +64,7 @@ RwBool CNtlPLEntityFreeList::AllocFreeList(void)
 	m_pSoundBGMFreeList = RwFreeListCreate(sizeof(CNtlPLSoundBGM), iBlockSize, 16, rwMEMHINTDUR_GLOBAL);
 	RWS_ASSERT(m_pDummyWorldFreeList, "sound failed to allocate free list");
 
-	// hodong
+	// Hodong
 	iBlockSize = 100;
 	m_pItemFreeList = RwFreeListCreate(sizeof(CNtlPLItem), iBlockSize, 16, rwMEMHINTDUR_GLOBAL);
 	RWS_ASSERT(m_pItemFreeList, "effect failed to allocate free list");
@@ -81,7 +81,7 @@ RwBool CNtlPLEntityFreeList::AllocFreeList(void)
 	m_pDecalFreeList = RwFreeListCreate(sizeof(CNtlPLDecal), iBlockSize, 16, rwMEMHINTDUR_GLOBAL);
 	RWS_ASSERT(m_pDecalFreeList, "decal failed to allocate free list");
 
-	// agebreak
+	// Agebreak
 	iBlockSize = 5;
 	m_pSunFreeList = RwFreeListCreate(sizeof(CNtlPLSun), iBlockSize, 16, rwMEMHINTDUR_GLOBAL);
 	RWS_ASSERT(m_pSunFreeList, "Sun Failed to allocate free list");
@@ -115,7 +115,7 @@ void CNtlPLEntityFreeList::DeAllocFreeList(void)
         m_pEffectFreeList = 0;
 	}
 
-	// woody1019
+	// Woody1019
 	if (m_pWorldFreeList)
 	{
 		RwFreeListDestroy(m_pWorldFreeList);
@@ -140,7 +140,7 @@ void CNtlPLEntityFreeList::DeAllocFreeList(void)
 		m_pSoundBGMFreeList = 0;
 	}
 
-	// hodong
+	// Hodong
 	if (m_pItemFreeList)
 	{
 		RwFreeListDestroy(m_pItemFreeList);
@@ -182,7 +182,7 @@ void* CNtlPLEntityFreeList::Alloc(const ENtlPLEntityType eType)
 {
 	NTL_FUNCTION("CNtlPLEntityFreeList::Alloc");
 
-	// by agebreak 왜 있는지 이유를 모르겠다. 임시로 막아둔다.
+	// by agebreak I don't know why it exists. Temporarily block it.
 	//NTL_PRE(m_pObjFreeList);
 
 	switch(eType)

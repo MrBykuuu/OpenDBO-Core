@@ -50,10 +50,10 @@ void CNtlInstanceTrailSystem::Delete()
 }
 
 /**
- * Trail 이펙트를 생성한다.
- * \param pComponentSystem Trail이 붙을 부모 InstanceComponentSystem 객체
- * \param pEmitterTrail Trail 생성 정보를 가지고 있는 프로퍼티 객체
- * return 성공 유무
+ * Create a trail effect.
+ * \param pComponentSystem The parent InstanceComponentSystem object to which the Trail will be attached.
+ * \param pEmitterTrail Property object containing Trail creation information
+ * Whether return is successful or not
  */
 RwBool CNtlInstanceTrailSystem::Create(CNtlInstanceComponentSystem* pComponentSystem, SNtlPrtStdEmitterTrail* pEmitterTrail)
 {

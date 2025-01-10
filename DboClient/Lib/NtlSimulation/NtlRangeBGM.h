@@ -1,12 +1,12 @@
 /*****************************************************************************
 * File			: NtlSoundRangeBGM.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 
 * Update		: 2009. 7. 10
 * Abstract		: Simulation sound range BGM
 *****************************************************************************
-* Desc         : 일정 반경 안에서 플레이 되는 BGM
+* Desc          : BGM played within a certain radius
 *****************************************************************************/
 
 #ifndef __NTL_RANGE_BGM_H__

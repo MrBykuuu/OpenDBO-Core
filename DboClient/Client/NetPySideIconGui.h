@@ -1,18 +1,18 @@
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 #include "NtlSLEvent.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// dbo
+// Dbo
 #include "SideIconGui.h"
 
 /**
  * \ingroup Client
- * \brief PC방 NetPy 정보/알림및 상점용 사이드 아이콘
+ * \brief PC room NetPy information/notification and side icon for store
  *
  * \date 2009-04-20
  * \author agebreak

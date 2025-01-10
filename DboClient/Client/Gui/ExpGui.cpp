@@ -4,7 +4,7 @@
 // Core
 #include "NtlDebug.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
 // Simulation
@@ -18,7 +18,7 @@
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// client
+// Client
 #include "DboEvent.h"
 #include "DialogManager.h"
 #include "InfoWndManager.h"
@@ -121,7 +121,7 @@ RwBool CExpEffect::Update( RwReal fElapsed )
                 {
 				    GetAlarmManager()->FormattedAlarmMessage( "DST_NOTIFY_GAIN_EXP", FALSE, NULL, uiExp );
                 }
-                else    // PC방 메시지
+                else    // PC room message
                 {
                     GetAlarmManager()->FormattedAlarmMessage( "DST_NOTIFY_GAIN_EXP_AND_BONUS", FALSE, NULL, m_uiAcquisitionExp, m_uiBonusExp );
                 }
@@ -162,7 +162,7 @@ RwBool CExpEffect::Update( RwReal fElapsed )
 
 VOID CExpEffect::Render(VOID)
 {
-	// Delay Time이 길어져서 시간으로 랜더여부 판별 -_-;;
+	// Delay Time is long, so it is judged by time whether it is rendered or not -_-;;
 	if( m_fCurrentTime > 0.0f )
 	{
 		m_surEXP.Render( true );

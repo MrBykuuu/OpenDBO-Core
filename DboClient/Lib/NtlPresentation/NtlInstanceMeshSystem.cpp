@@ -3,7 +3,7 @@
 //	Desc		:	
 //	Begin		:	2005. 7.28
 //                  2006. 8.17
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -20,7 +20,7 @@
 #include "NtlMaterialExt.h"
 #include "NtlPLCharacter.h"
 
-// 이유는 알수 없으나 rpPRTSTDEMITTERDATAFLAGPRTSIZE 가 정의 되지 않았다고 나와서 할수 없이 include 한다
+// I don't know the reason, but it says that rpPRTSTDEMITTERDATAFLAGPRTSIZE is not defined, so I have no choice but to include it.
 #include "rpprtstd.h"
 
 void* CNtlInstanceMeshSystem::operator new(size_t size)
@@ -46,7 +46,7 @@ CNtlInstanceMeshSystem::~CNtlInstanceMeshSystem(void)
 }
 
 /**
- * MeshSystem 초기화
+ * MeshSystem initialization
  */
 void CNtlInstanceMeshSystem::Init()
 {
@@ -137,9 +137,9 @@ void CNtlInstanceMeshSystem::Delete()
 }
 
 /**
- * MeshSystem 생성
- * \param pResourceEffect 리소스
- * \param pResourceComponentSystem 리소스 Container
+ * Create MeshSystem
+ * \param pResourceEffect Resource
+ * \param pResourceComponentSystem Resource Container
  */
 RwBool CNtlInstanceMeshSystem::Create( CNtlResourceEffect* pResourceEffect, 
 									   CNtlResourceComponentSystem* pResourceComponentSystem, 
@@ -250,7 +250,7 @@ RwBool CNtlInstanceMeshSystem::Create( CNtlResourceEffect* pResourceEffect,
 
 
 /**
- * U,V Animaiont Res Load
+ *U,V Animaiont Res Load
  */
 RtDict* CNtlInstanceMeshSystem::UVAnimDictLoad(const RwChar* strFullName)
 {
@@ -258,8 +258,8 @@ RtDict* CNtlInstanceMeshSystem::UVAnimDictLoad(const RwChar* strFullName)
 }
 
 /**
- * MeshSystem을 Update를 한다.
- * \param fElapsedTime 이전 Frame에서 현재 Frame까지 흐른 시간
+ *Update the MeshSystem.
+ * \param fElapsedTime Time elapsed from the previous frame to the current frame.
  */
 RwBool CNtlInstanceMeshSystem::Update(RwReal fElapsedTime)
 {
@@ -268,7 +268,7 @@ RwBool CNtlInstanceMeshSystem::Update(RwReal fElapsedTime)
 	m_fLifeTime += fElapsedTime;
 	if (m_bStart)
 	{
-		//Start시에 각 변수 값들을 초기화 한다.
+		//At startup, each variable value is initialized.
 		if (m_pResourceMeshSystem->m_fStartTime < m_fLifeTime )
 		{
 			m_bStart	= FALSE;
@@ -357,7 +357,7 @@ RwBool CNtlInstanceMeshSystem::Update(RwReal fElapsedTime)
         }
 	}
 
-    // 바운딩 스피어를 계산한다.
+    // Calculate the bounding sphere.
     if(CNtlResourceEffect::m_bUpdateBoundingSphere)
     {
         CalcBoundingSphere();
@@ -433,7 +433,7 @@ void CNtlInstanceMeshSystem::SetWorldMatrix(const RwMatrix& matWorld)
 
     if (m_pSplinePath != NULL)
 	{
-		// Spline 행렬은 회전이 적용되어 있지 않다. WorldMatrix의 회전을 Spline 행렬에 적용한다.
+		// Spline matrices do not have rotation applied. Apply the rotation of WorldMatrix to the Spline matrix.
 		RwMatrix tempMatrix = matWorld;
 		*RwMatrixGetPos(&tempMatrix) = ZeroAxis;
 
@@ -447,7 +447,7 @@ void CNtlInstanceMeshSystem::SetWorldMatrix(const RwMatrix& matWorld)
         }
 	}
 
-    // Rotate Action 이 있거나 Default Rotate 값이 있으면.
+    // If there is a Rotate Action or a Default Rotate value.
     if ( m_pResourceMeshSystem && 
         m_pResourceMeshSystem->IsEmitterDataFlag(rpPRTSTDEMITTERDATAFLAGPRT2DROTATE) || 
         m_bDefaultRotate)
@@ -569,7 +569,7 @@ RwBool CNtlInstanceMeshSystem::UpdateFinish( RwReal fElapsedTime )
         {
             RwUInt8 uiDeltaAlpha = UpdateFinishAlpha(m_pResourceMeshSystem->m_EmitterStandard.prtColor.alpha, fElapsedTime, m_pResourceMeshSystem->m_EmitterPrtFinish.m_fFinishTime);
             
-            // UINT의 특성상 음수가 되면 다시 MAX값이 되버리기 때문에 음수 체크를 한다.
+            // Due to the nature of UINT, if it becomes negative, it returns to the MAX value, so check for negative numbers.
             if((RwInt32)m_Color.alpha - (RwInt32)uiDeltaAlpha < 0)
             {
                 m_Color.alpha = 0;
@@ -583,7 +583,7 @@ RwBool CNtlInstanceMeshSystem::UpdateFinish( RwReal fElapsedTime )
 
     if(m_pResourceMeshSystem->m_EmitterPrtFinish.m_nFinishTypeFlag & FINISH_TYPE_SIZE)
     {
-        // 크기를 점점 줄인다.
+        // Gradually reduce the size.
         m_bUpdateRenderMatrix = TRUE;
 
         RwReal fDeltaSize = fElapsedTime / m_pResourceMeshSystem->m_EmitterPrtFinish.m_fFinishTime;
@@ -647,7 +647,7 @@ void CNtlInstanceMeshSystem::CalcBoundingSphere()
 
 void CNtlInstanceMeshSystem::CreateToonData(RpClump* pClump, SToonData* pToonData)
 {
-    // 카툰이 적용되어 있으면 적용한다.
+    // If a cartoon is applied, apply it.
     if(!Helper_IsToonClump(pClump))
         return;
 

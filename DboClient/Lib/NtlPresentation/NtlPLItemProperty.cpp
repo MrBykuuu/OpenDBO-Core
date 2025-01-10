@@ -7,7 +7,7 @@
 #include "NtlPLApi.h"
 
 unsigned int CNtlPLItemProperty::m_strVer;			  /* property file version **/
-std::string CNtlPLItemProperty::m_strItemDataPath;	  /* Item mesh file의 path name **/
+std::string CNtlPLItemProperty::m_strItemDataPath;	  /* Item mesh files path name **/
 
 CNtlPLItemProperty::CNtlPLItemProperty()
 {
@@ -25,7 +25,7 @@ CNtlPLItemProperty::~CNtlPLItemProperty()
 {
     m_TypeAnimTable.Destroy();
 
-    // Link Effect의 해제는 여기서 한다.
+    // Link Effect can be canceled here.
     for(UINT i = 0; i < m_vLinkEffect.size(); ++i)
     {
         NTL_DELETE(m_vLinkEffect[i]);
@@ -33,9 +33,9 @@ CNtlPLItemProperty::~CNtlPLItemProperty()
 }
 
 /**
-  *  xml file로부터 object property data를 loading하는 함수
-  *  \param pDoc는 xml wrapping class pointer.
-  *  \param pNod는 유효한 xml node.
+  *Function to load object property data from xml file
+  *  \param pDoc is an xml wrapping class pointer.
+  *  \param pNod is a valid xml node.
   *
   */
 RwBool CNtlPLItemProperty::Load(CNtlXMLDoc *pDoc, IXMLDOMNode *pNode)
@@ -65,10 +65,10 @@ RwBool CNtlPLItemProperty::Load(CNtlXMLDoc *pDoc, IXMLDOMNode *pNode)
 
 
 /**
-    *  xml file로 object property data를 save하는 함수
+    *Function to save object property data to xml file
 
-	*  \param pDoc는 xml wrapping class pointer.
-	*  \param pNod는 유효한 xml node.
+	*  \param pDoc is an xml wrapping class pointer.
+	*  \param pNod is a valid xml node.
     *
     */
 RwBool CNtlPLItemProperty::Save(CNtlXMLDoc *pDoc, IXMLDOMNode *pNode)

@@ -39,7 +39,7 @@ protected:
 	
 	CNtlBeCharData		*m_pBeData;				/** character behavior data */
 	CNtlInventoryBase	*m_pEquipInventory;		/** equip inventory */
-    sASPECTSTATE        m_sAspsectState;        ///< 변신 정보 구조체
+    sASPECTSTATE        m_sAspsectState;        ///< Transformation information structure
 
 	WCHAR				m_awszGuildName[NTL_MAX_SIZE_GUILD_NAME + 1];
 	sDBO_DOGI_DATA		m_sDogiData;
@@ -76,7 +76,7 @@ public:
 	void						SetDojoDogiColorIndex(RwUInt8 byColorIndex);
 	RwUInt8						GetDojoDogiColorIndex();
 
-	// 실제로 쓸 수 있는 도복의 색상을 반환한다
+	//Returns the color of the gi that can actually be used
 	RwUInt8						GetRealDogiColorIndex();
 
     void                        SetApsectState(const sASPECTSTATE& sAspectState) {m_sAspsectState = sAspectState;}

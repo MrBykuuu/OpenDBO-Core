@@ -83,7 +83,7 @@ RwReal CNtlSoundDSP::GetParameta(FMOD_DSP_TYPE eType, RwUInt8 byParametaType)
 		return 0.f;
 	}	
 
-	// FMOD 문서 참고 : getParameter의 3번째 인자 즉 버퍼로 들어오는 문자는 16자를 넘지 않는다
+	//FMOD document reference: The third argument of getParameter, that is, the characters coming into the buffer, does not exceed 16 characters.
 	RwReal fValue;
 	char acBuffer[17] = "";
 	FMOD::DSP* pDSP = it->second;

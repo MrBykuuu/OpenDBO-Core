@@ -190,16 +190,16 @@ void CNtlPLWorldState::UpdateSpace(RwV3d& vPos)
 		{
 			if (pActiveMiniIndoor)
 			{
-				// ���� -> ����
+				//Inside -> Inside
 			}
 			else
 			{
-				// �ܺ� -> ����
+				//Outside -> Inside
 			}
 		}
 		else
 		{
-			// ���� -> �ܺ�
+			//inside -> outside
 			pNtlWorldFieldManager->SetAnotherField();
 		}
 

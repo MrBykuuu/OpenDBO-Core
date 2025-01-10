@@ -1,14 +1,14 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobAvatarAttr.h"
 
-// shared
+// Shared
 #include "PCTable.h"
 #include "TableContainer.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEvent.h"
 #include "NtlSLApi.h"
@@ -27,9 +27,9 @@ CNtlSobAvatarAttr::CNtlSobAvatarAttr()
 	m_uiSp = 0;
 
 	m_uiHonorPoint = 0;
-	m_uiMudosaPoint = 0;			///< 무도사 포인트
+	m_uiMudosaPoint = 0;			///< Martial Artist Points
 
-    // PC방 관련
+    // PC room related
     m_dwNetPy = 0;
 	m_dwHlsCash = 0;
 

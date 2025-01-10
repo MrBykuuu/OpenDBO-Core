@@ -137,9 +137,9 @@ private:
 
 
 	// 가우시안 
-	enum { GAUSSION_WEIGHT_COUNT = 7, };									// 가중치 계산할 개수
-	RwReal				m_fGaussainDispersion_sq;						// 분산의 평방근
-	RwReal				m_fGaussainWeightTable[GAUSSION_WEIGHT_COUNT];	// 가중치 배열
+	enum { GAUSSION_WEIGHT_COUNT = 7, };									// Number of weights to calculate
+	RwReal				m_fGaussainDispersion_sq;						// Square root of variance
+	RwReal				m_fGaussainWeightTable[GAUSSION_WEIGHT_COUNT];	//Array of weights
 
 
 	INPUT_HANDLE		m_handleKeyDown;

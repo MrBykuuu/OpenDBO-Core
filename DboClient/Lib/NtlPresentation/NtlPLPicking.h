@@ -2,7 +2,7 @@
 *
 * File			: NtlPLPinking.h
 * Author		: All Author
-* Copyright	: (주)NTL
+* Copyright	: (?)NTL
 * Date			: 2005. 8. 11	
 * Abstract		: Presentation picking.
 *****************************************************************************
@@ -19,7 +19,7 @@
 #include <rpcollis.h>
 #include "NtlPLEntity.h"
 
-// picking
+// Picking
 typedef struct _SWorldIntersect
 {
 	RpIntersection Intersection;
@@ -32,11 +32,11 @@ typedef struct _SWorldIntersect
 
 typedef struct _SWorldPickInfo
 {
-	RwBool bTerrainExclusion;		// 지형은 제외할 것인가?
-	RwBool bCharacterExclusion;		// character은 제외할 것인가?
-	RwReal fMinDist;				// 계산에 필요한 참조 변수
-	RpAtomic *pAtomic;				// 계산에 필요한 참조 변수
-	CNtlPLEntity *pPLEntity;		// picking에 성공하면 NULL이 아니고, 실패하면 NULL
+	RwBool bTerrainExclusion;		// Should we exclude terrain?
+	RwBool bCharacterExclusion;		// Should character be excluded?
+	RwReal fMinDist;				// Reference variables required for calculations
+	RpAtomic *pAtomic;				// Reference variables required for calculations
+	CNtlPLEntity *pPLEntity;		// If picking is successful, it is not NULL. If picking fails, it is NULL.
 	RwV3d vPickPos;
 
 	_SWorldPickInfo()
@@ -49,7 +49,7 @@ typedef struct _SWorldPickInfo
 
 }SWorldPickInfo;
 
-// character
+// Character
 #define NTL_MAX_CHAR_INTERSECION	10
 
 typedef struct _SWorldCharIntersectionData
@@ -63,11 +63,11 @@ typedef struct _SWorldCharIntersectionData
 
 typedef struct _SWorldCharIntersectionInfo
 {
-	RwUInt8 byAtomicCount;							// character가 충돌하는 object atomic 갯수.
+	RwUInt8 byAtomicCount;							// Number of object atoms with which characters collide.
 	RpAtomic *pAtomic[NTL_MAX_CHAR_INTERSECION];	// atomic buffer.
 }SWorldCharIntersectionInfo;
 
-// camera
+// Camera
 #define NTL_MAX_CAMERA_INTERSECION	20
 
 typedef struct _SWorldCameraRayAtomicData
@@ -89,62 +89,62 @@ typedef struct _SWorldCameraIntersectionData
 }SWorldCameraIntersectionData;
 
 /**
-* 충돌 가능 Atomic인지 검사한다
+*Check whether collision is possible atomic
 **/
 RwBool IsCollisionAtomic(RpAtomic* pAtomic);
 
 /**
-* mouse picking을 한다.
+*Do mouse picking.
 */
 void Pick_WorldIntersectionLine(RwLine& Line, SWorldPickInfo& sPickInfo, RwReal fRayDist);
 
 /**
-* 충돌되는 height field 높이를 구하는 collision logic에 optimize 되어 있다.
+*Optimized for collision logic that determines the height of the colliding height field.
 */
 RwBool Collision_HeightFieldIntersectionLineTopDown(RwLine& Line, SWorldIntersect& sInter);
 
 /**
-* 충돌되는 Indoor 높이를 구하는 collision logic에 optimize 되어 있다.
+*Optimized for collision logic that determines the indoor height of collision.
 */
 RwBool Collision_IndoorIntersectionLineTopDown(RwLine& Line, SWorldIntersect& sInter);
 
 /**
-* 충돌되는 object 높이를 구하는 collision logic에 optimize 되어 있다.
+*Optimized for collision logic that calculates the height of colliding objects.
 */
 RwBool Collision_WorldIntersectionLineTopDown(RwLine& Line, SWorldIntersect& sInter);
 
 /**
-* 충돌되는 mini indoor object 높이를 구하는 collision logic에 optimize 되어 있다.
+*Optimized for collision logic that determines the height of colliding mini indoor objects.
 */
 RwBool Collision_MiniIndoorIntersectionLineTopDown(RwLine& Line, SWorldIntersect& sInter);
 
 /**
-* world object중에 충돌되는 atomic을 구한다.
+*Find colliding atoms among world objects.
 */
 RwBool Collision_WorldIntersectionCharacter(RwBBox& box, SWorldCharIntersectionInfo& sCharInfo);
 
 /**
-* world 중에 충돌되는 RpWorldSector(Indoor) Triangle을 구한다.
+*Find the RpWorldSector(Indoor) Triangle that collides during the world.
 */
 RwBool Collision_WorldIntersectionWorldSector(RwLine& Line, SWorldCharIntersectionData& sCharDataInfo);
 
 /**
-* world object중에 충돌되는 atomic을 구한다.
+*Find colliding atoms among world objects.
 */
 RwBool Collision_WorldIntersectionCharacterData(RwLine& Line, RpAtomic *pAtomic, SWorldCharIntersectionData& sCharDataInfo);
 
 /**
-* world상의 공간에서 camera 충돌 정보를 구한다.
+*Obtain camera collision information in space on the world.
 */
 RwBool Collision_WorldIntersectionCameraData(const RwV3d *pCameraPos, const RwV3d *pLookAt, RwReal fRadius, RwV3d& vNewPos);
 
 /**
-* 충돌되는 Object가 있는지 여부를 검사한다. (LensFlare용. by agebreak)
+*Check whether there is a conflicting object. (For LensFlare. by agebreak)
 */
 RwBool Collision_WorldIntersectionObject(const RwLine& line, SWorldPickInfo* pPickInfo );
 
 /**
-* 충돌되는 Object가 있는지 여부를 검사한다. (Targeting용)
+*Check whether there is a conflicting object. (for targeting)
 */
 RwBool Collision_WorldIntersectionObjectForTarget(const RwLine& line, SWorldPickInfo* pPickInfo );
 

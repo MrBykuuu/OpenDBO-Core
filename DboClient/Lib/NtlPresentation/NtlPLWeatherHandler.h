@@ -36,10 +36,10 @@ public:
 	void			InitWeather();
 	void			RefreshWeather();
 
-	void			LoadWeatherReal(sNTL_FIELD_PROP* pNtlFieldProp, RwReal fFadeTime);	// Field로 부터 Weather를 추가한다.
-	void			LoadWeatherDumm(RwReal fFadeTime);									// WeatherReal로 부터 Dumm를 추가한다.
-	void			UnLoadWeatherReal();												// Real List를 UnLoad 한다.
-	void			UnLoadWeatherDumm();												// Dumm List를 UnLoad 한다.
+	void			LoadWeatherReal(sNTL_FIELD_PROP* pNtlFieldProp, RwReal fFadeTime);	// Add Weather from Field.
+	void			LoadWeatherDumm(RwReal fFadeTime);									// Add Dumm from WeatherReal.
+	void			UnLoadWeatherReal();												// Unload the Real List.
+	void			UnLoadWeatherDumm();												// Unload the Dumm List.
 
 
 

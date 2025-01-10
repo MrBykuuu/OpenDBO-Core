@@ -34,7 +34,7 @@
 // Gui
 #include "GuiUtil.h"
 
-// DboClient
+// Dbo client
 #include "DboEvent.h"
 #include "DboGlobal.h"
 #include "GuiFunctor.h"
@@ -44,7 +44,7 @@
 #include "DialogManager.h"
 #include "DboLogic.h"
 
-//test
+//Test
 #include "NtlMath.h"
 
 // Define
@@ -66,7 +66,7 @@
 #define BALLOON_NPC_TEXT_Y				5
 #define BALLOON_NPC_TEXT_WIDHT			208	
 #define BALLOON_NPC_TEXT_HEIGHT			71
-//#define BALLOON_QUEST_WIDTH				229
+//#define BALLOON_QUEST_WIDTH			229
 //#define BALLOON_QUEST_HEIGHT			108
 //#define BALLOON_QUEST_TEXT_X			20
 //#define BALLOON_QUEST_TEXT_Y			29
@@ -111,7 +111,7 @@
 #define BALLOON_NAMEBAR_HEIGHT			20
 #define BALLOON_NAMEBAR_YOFFSET			-5
 
-// BaseBalloon
+// Base balloon
 VOID CBalloonGui::Show3DName( RwBool bShow )
 {
 	if( m_pOwnerSobObject->GetClassID() == SLCLASS_TRIGGER_OBJECT )
@@ -164,11 +164,11 @@ RwInt32 CBalloonGui::PriorityCheck( RwUInt32 eType )
 }
 
 // ChatBalloon 
-// 1. 20초간 표시. ( 양 끝단 1초간 Blending ) - ok
-// 2. PC 반경 60m  - ok
-// 3. PC 머리위 표시. - ok 
-// 4. 공격 받으면 사라짐.
-// 5. 파티대화만 표시 옵션
+// 1. Displayed for 20 seconds. (Blending for 1 second at both ends) -ok
+// 2. PC radius 60m -ok
+// 3. PC overhead display. -ok 
+// 4. Disappears when attacked.
+// 5. Option to display only party conversations
 
 CChatBalloonGui::CChatBalloonGui( CNtlSob* pOwnerObject, CPos& posOffsetDelta, const WCHAR* pMessage, RwInt32 eType, RwBool bPartyMsg /* = FALSE  */ )
 : CBalloonGui( pOwnerObject, BALLOON_CHAT_DISPTIME, posOffsetDelta, eType ), m_bIsPartyMessage( bPartyMsg )
@@ -202,7 +202,7 @@ CChatBalloonGui::CChatBalloonGui( CNtlSob* pOwnerObject, CPos& posOffsetDelta, c
 	m_pName->SetEffectValue( 0 );
 	m_pName->SetText( Logic_GetName( pOwnerObject ) );
 
-	// Balloon 속성 세팅
+	// Balloon property settings
 	m_pGuiBalloon->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR );
 	m_pGuiBalloon->SetTextColor( RGB( 10, 10, 10 ) );
 	m_pGuiBalloon->SetMargin( 5, 0 );
@@ -246,7 +246,7 @@ RwInt32 CChatBalloonGui::Update( RwReal fElapseTime )
 {
 	m_fCurrentTime += fElapseTime;
 
-	// Fade 효과
+	// Fade effect
 	FadeEffect();
 
 	if( m_eState == HIDE )
@@ -255,7 +255,7 @@ RwInt32 CChatBalloonGui::Update( RwReal fElapseTime )
 	if( GetGuiFuntor()->GetDistanceFromAvatar( m_pOwnerSobObject->GetPosition() ) > BALLOON_CHAT_RANGE )
 		return CBalloonManager::UR_NOTSHOW;
 
-	// 위치 변경
+	// change location
 	if( !PositionUpdate() )
 		return CBalloonManager::UR_NOTSHOW;
 
@@ -550,8 +550,8 @@ std::wstring CNPCBalloonGui::GetText(VOID)
 }
 
 // PrivateShopBalloon 
-// 1. 표시여부는 명령에의해서만 처리
-// 2. PC 반경 30m
+// 1. Display status is processed only by command
+// 2. PC radius 30m
 
 CPrivateShopBalloonGui::CPrivateShopBalloonGui( CNtlSob* pOwnerObject, CPos& posOffsetDelta, RwBool bReady, const WCHAR* pMessage )
 : CBalloonGui( pOwnerObject, 0.0f, posOffsetDelta, TYPE_PRIVATESHOP )
@@ -757,9 +757,9 @@ void CPrivateShopBalloonGui::ResizeBackground()
 }
 
 // QuestBalloon 
-// 1. 닫기전까지 혹은 1분간 표시.
-// 2. PC 반경 60m.
-// 3. NPC 머리위 표시.
+// 1. Displayed for 1 minute or until closed.
+// 2. PC radius 60m.
+// 3. Display above NPC’s head.
 
 CQuestBalloonGui::CQuestBalloonGui( CNtlSob* pOwnerObject, CPos& posOffsetDelta, std::wstring& wstrHtmlData, RwUInt32 uiID, RwBool bTimeProc )
 : CBalloonGui( pOwnerObject, BALLOON_NPC_DISPTIME, posOffsetDelta, TYPE_QUEST ), m_uiID( uiID ), m_bTimeProc( bTimeProc )
@@ -780,7 +780,7 @@ CQuestBalloonGui::CQuestBalloonGui( CNtlSob* pOwnerObject, CPos& posOffsetDelta,
 	rect.SetRectWH( BALLOON_QUEST_MARK_OFFSET, BALLOON_QUEST_MARK_OFFSET, BALLOON_QUEST_IMAGESIZE, BALLOON_QUEST_IMAGESIZE );
 	m_pMark = NTL_NEW gui::CPanel( rect, m_pBalloon, pSurfaceManager, pSurfaceManager->GetSurface( "Balloon.srf", "QuestImage" ) );
 
-	// Balloon 속성 세팅
+	// Balloon property settings
 	m_pBalloon->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR );
 	m_pBalloon->SetTextColor( RGB( 10, 10, 10 ) );
 	m_pBalloon->SetMargin( 5, 0 );
@@ -920,9 +920,9 @@ VOID CQuestBalloonGui::FadeEffect(VOID)
 }
 
 // NPCMarkBalloon 
-// 1. 이벤트에의해 표시, 삭제.
-// 2. PC 반경 10m.
-// 3. NPC 머리위 표시.
+// 1. Displayed and deleted by event.
+// 2. PC radius 10m.
+// 3. Display above NPC’s head.
 
 CMarkBalloonGui::CMarkBalloonGui( CNtlSob* pOwnerObject, CPos& posOffsetDelta, std::wstring& wstrHtmlData )
 : CBalloonGui( pOwnerObject, 0.0f, posOffsetDelta, TYPE_NPC_MARK )
@@ -943,7 +943,7 @@ CMarkBalloonGui::CMarkBalloonGui( CNtlSob* pOwnerObject, CPos& posOffsetDelta, s
 	rect.SetRectWH( BALLOON_QUEST_MARK_OFFSET, BALLOON_QUEST_MARK_OFFSET, BALLOON_QUEST_IMAGESIZE, BALLOON_QUEST_IMAGESIZE );
 	m_pMark = NTL_NEW gui::CPanel( rect, m_pBalloon, pSurfaceManager, pSurfaceManager->GetSurface( "Balloon.srf", "NPCMarkImage" ) );
 
-	// Balloon 속성 세팅
+	// Balloon property settings
 	m_pBalloon->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR );
 	m_pBalloon->SetTextColor( RGB( 10, 10, 10 ) );
 	m_pBalloon->SetMargin( 5, 0 );
@@ -1077,9 +1077,9 @@ VOID CMarkBalloonGui::FadeEffect(VOID)
 
 
 // CDiceBalloonGui 
-// 1. 이벤트에의해 표시, 삭제.
-// 2. PC 반경 10m.
-// 3. PC 머리위 표시.
+// 1. Displayed and deleted by event.
+// 2. PC radius 10m.
+// 3. PC overhead display.
 
 CDiceBalloonGui::CDiceBalloonGui( CNtlSob* pOwnerObject, CPos& posOffsetDelta, RwUInt32 uiNumber )
 : CBalloonGui( pOwnerObject, BALLOON_CHAT_DISPTIME, posOffsetDelta, TYPE_DICE )
@@ -1217,8 +1217,8 @@ VOID CDiceBalloonGui::FadeEffect(VOID)
 
 
 // BattleGauge 
-// 1. 표시여부는 명령에의해서만 처리
-// 2. PC 반경 30m
+// 1. Display status is processed only by command
+// 2. PC radius 30m
 
 CBattleGaugeGui::CBattleGaugeGui( CNtlSob* pOwnerObject, CPos& posOffsetDelta, const WCHAR* pName, RwUInt32 uiMaxLp, RwUInt32 uiLp, RwBool bMyTeam )
 : CBalloonGui( pOwnerObject, 0.0f, posOffsetDelta, TYPE_BATTLEGAUGE )
@@ -1404,7 +1404,7 @@ RwBool CBalloonManager::CreateInstance(VOID)
 	m_pInstance->m_pThis->Enable( false );
 	m_pInstance->m_pThis->SetPriority( dDIALOGPRIORITY_CHAT_BALLOON );
 
-	// TestText 
+	// Test text 
 	CRectangle rect;
 	rect.SetRectWH( 400, 300, 211, 70 );
 	m_pInstance->m_pTestText = NTL_NEW gui::CStaticBox( rect, m_pInstance->m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
@@ -1412,15 +1412,15 @@ RwBool CBalloonManager::CreateInstance(VOID)
 	m_pInstance->m_pTestText->Enable( false );
 	m_pInstance->m_pTestText->Show( false );
 
-	// Update 연결
+	// Update connection
 	GetNtlGuiManager()->AddUpdateFunc( m_pInstance );
 
-	// CallBack 연결
+	// Callback connection
 	m_pInstance->m_slotPaint = m_pInstance->m_pThis->SigPaint().Connect( m_pInstance, &CBalloonManager::OnPaint );
 
-	// Event 연결
+	// Event connection
 	m_pInstance->LinkMsg( g_EventSobDelete, 0, 0x9000 );
-	//m_pInstance->LinkMsg( g_EventCharObjDelete, 0, 0x9000 );	// 객체가 지워지기 전에 지운다. 
+	//m_pInstance->LinkMsg( g_EventCharObjDelete, 0, 0x9000 );	//Delete the object before it is deleted. 
 	m_pInstance->LinkMsg( g_EventQuestMark, 0 );
 	m_pInstance->LinkMsg( g_EventServerCharDialog, 0 );
 	m_pInstance->LinkMsg( g_EventSobInfoUpdate, 0 );
@@ -1440,16 +1440,16 @@ VOID CBalloonManager::DeleteInstance(VOID)
 
 	m_pInstance->RemoveAllBalloonData();
 
-	// TestText
+	// Test text
 	NTL_DELETE( m_pInstance->m_pTestText );
 
-	// Update 연결해제
+	// Update Disconnect
 	GetNtlGuiManager()->RemoveUpdateFunc( m_pInstance );
 
-	// CallBack 연결 해제
+	// CallBack Disconnect
 	m_pInstance->m_pThis->SigPaint().Disconnect(m_pInstance->m_slotPaint);
 
-	// Event 연결해제
+	// Event Disconnect
 	m_pInstance->UnLinkMsg( g_EventSobDelete );
 	//m_pInstance->UnLinkMsg( g_EventCharObjDelete );
 	m_pInstance->UnLinkMsg( g_EventQuestMark );
@@ -1524,13 +1524,13 @@ VOID CBalloonManager::Update( RwReal fElapsed )
 		}				
 	}
 
-	// 거리순 정렬
+	// Sort by distance
 	qsort( m_aDiaplsyBalloon, m_nDisplayCount, sizeof( stDISPLAYBALLOON ), &CBalloonManager::Compare );
 }
 
 RwInt32 CBalloonManager::Compare( const VOID* valLeft, const VOID* valRight )
 {
-	// 거리가 먼 것을 먼저 찍히도록 앞으로 정렬
+	// Sort forward so that distant items are photographed first.
 	stDISPLAYBALLOON* pLeft = (stDISPLAYBALLOON*)valLeft;
 	stDISPLAYBALLOON* pRight= (stDISPLAYBALLOON*)valRight;
 
@@ -1548,7 +1548,7 @@ VOID CBalloonManager::AddAvatarBalloon( const WCHAR* pMessage, RwBool bPartyMsg 
 	CBalloonGui* pBalloon = NULL;
 	CPos posOffsetDelta;
 
-	// ObjectClickGui가 떠있을때에는 말풍선 표시 안함.
+	// When ObjectClickGui is floating, the speech bubble is not displayed.
 	if( GetDialogManager()->IsOpenDialog( DIALOG_OBJECT_CLICK ) )
 		return;
 
@@ -1599,7 +1599,7 @@ VOID CBalloonManager::AddAvatarBalloon( const WCHAR* pMessage, RwBool bPartyMsg 
 
 		if( bNeedToCreate )
 		{
-			// 생성되어 있던 오브젝트의 오프셋을 수정할 필요는 없다.
+			// You don't need to modify the offset of the object that was created.
 			pBalloon = NTL_NEW CChatBalloonGui(pAvatar, posOffsetDelta, pMessage, CBalloonGui::TYPE_AVATAR_CHAT, bPartyMsg);
 			AddBalloonData( pBalloon );
 		}
@@ -1664,7 +1664,7 @@ VOID CBalloonManager::AddPlayerBalloon( CNtlSob* pSobObject, const WCHAR* pMessa
 
 		if( bNeedToCreate )
 		{
-			// 생성되어 있던 오브젝트의 오프셋을 수정할 필요는 없다.
+			// There is no need to modify the offset of the created object.
 			if( IsEnableToCreate( CBalloonGui::TYPE_PLAYER_CHAT ) )
 			{
 				pBalloon = NTL_NEW CChatBalloonGui( pSobObject, posOffsetDelta, pMessage, CBalloonGui::TYPE_PLAYER_CHAT, bPartyMsg);
@@ -1744,7 +1744,7 @@ VOID CBalloonManager::AddNPCBalloon( CNtlSob* pSobObject, const WCHAR* pMessage,
 
 		if( bNeedToCreate )
 		{
-			// 생성되어 있던 오브젝트의 오프셋을 수정할 필요는 없다.
+			// There is no need to modify the offset of the created object.
 			pBalloon = NTL_NEW CNPCBalloonGui( pSobObject, posOffsetDelta, pMessage, fLifeTime, eType, byBalloonType, bTimeProc );
 			AddBalloonData( pBalloon );
 		}
@@ -1862,7 +1862,7 @@ VOID CBalloonManager::AddQuestBalloon( CNtlSob* pSobObject, std::wstring& wstrHt
 
 		if( bNeedToCreate )
 		{
-			// 생성되어 있던 오브젝트의 오프셋을 수정할 필요는 없다.
+			// There is no need to modify the offset of the created object.
 			pBalloon = NTL_NEW CQuestBalloonGui( pSobObject, posOffsetDelta, wstrHtmlData, uiID, bTimeProc );
 			AddBalloonData( pBalloon );
 		}
@@ -1924,7 +1924,7 @@ VOID CBalloonManager::AddMarkBalloon( CNtlSob* pSobObject, std::wstring& wstrHtm
 
 		if( bNeedToCreate )
 		{
-			// 생성되어 있던 오브젝트의 오프셋을 수정할 필요는 없다.
+			// There is no need to modify the offset of the created object.
 			pBalloon = NTL_NEW CMarkBalloonGui( pSobObject, posOffsetDelta, wstrHtmlData );
 			AddBalloonData( pBalloon );
 		}
@@ -1986,7 +1986,7 @@ VOID CBalloonManager::AddDiceBalloon( CNtlSob* pSobObject, RwUInt32 uiNumber )
 
 		if( bNeedToCreate )
 		{
-			// 생성되어 있던 오브젝트의 오프셋을 수정할 필요는 없다.
+			// There is no need to modify the offset of the created object.
 			pBalloon = NTL_NEW CDiceBalloonGui( pSobObject, posOffsetDelta, uiNumber );
 			AddBalloonData( pBalloon );
 		}
@@ -2221,7 +2221,7 @@ VOID CBalloonManager::RemoveBalloonData( CNtlSob* pObj )
 		objit = m_mmapObjBalloon.erase( objit );		
 	}
 
-	//// peessi : 계속되는 무효포인터 에러를 잡기 위함.  
+	//// peessi: To catch persistent invalid pointer errors.  
 	//for( MMAP_TYPE_BALLOON_IT it = m_mmapTypeBalloon.begin() ; it != m_mmapTypeBalloon.end() ; ++it )
 	//{
 	//	CBalloonGui* pTypeBalloon = (*it).second;
@@ -2426,7 +2426,7 @@ VOID CBalloonManager::HandleEvents( RWS::CMsg& msg )
 		//RemoveBalloonData( GetNtlSobManager()->GetSobObject( *pDeleteSerial ) );
 		RemoveBalloonData( GetNtlSobManager()->GetSobObject( pData->hSerialId ) );
 	}
-	// 포포스톤 부활 텍스트.
+	// Popostone resurrection text.
 	else if( msg.Id == g_EventCharReady ) 
 	{
 		CNtlOtherParam* pOtherParam = GetNtlSLGlobal()->GetSobAvatar()->GetOtherParam();

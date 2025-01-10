@@ -4,7 +4,7 @@
 
 /**
 * \ingroup Client
-* \brief 클라이언트 서포트 툴(Mr.PoPo)로 부터 날라오는 이벤트를 처리하는 클래스
+* \brief Class that handles events sent from the client support tool (Mr.PoPo)
 *
 * \date 2008-08-01
 * \author agebreak
@@ -34,7 +34,7 @@ protected:
     void            OnTargetMarking(RwBool bSelect);
     void            OnPushTest();
 
-    // 그래픽 설정 관련 이벤트
+    // Events related to graphics settings
     void            OnTerrainDist(RwUInt32 uiDist);
     void            OnTerrainShadow(RwBool bEnable);
     void            OnWaterSpecular(RwBool bEnable);

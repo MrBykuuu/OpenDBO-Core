@@ -6,9 +6,9 @@
 * Abstract		: 
 * Update		: 
 *****************************************************************************
-* Desc			: RwTexture의 전체 이미지를 랜더링한다
-*				  SetTexture시 RwTexture를 직접 인자로 넘겨준 경우
-*				  생성,삭제는 책임지지 않는다
+* Desc			: Render the entire image in RwTexture
+*                 When RwTexture is passed directly as an argument when settingTexture
+*                 We are not responsible for creation or deletion
 *****************************************************************************/
 
 #pragma once

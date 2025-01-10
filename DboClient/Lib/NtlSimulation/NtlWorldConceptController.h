@@ -5,7 +5,7 @@
 #include "NtlWorldConceptDefine.h"
 /**
  * \ingroup NtlSimulation
- * \brief 각 World Concept들의 상위 클래스
+ * \brief Super class of each World Concept
  * \date 2007-06-14
  * \author agebreak
  */
@@ -19,10 +19,10 @@ public:
 	CNtlWorldConceptController(void);
 	virtual ~CNtlWorldConceptController(void);
 
-	virtual void		Update(RwReal fElapsedTime);				///< 각 컨셉에 맞는 내용들의 Update처리 함수
-	virtual RwBool		IsEnableAction(EAvatarAction eAction);		///< Avatar의 Action이 현재 처리 가능한지를 각 컨셉에 따라 판별한다.
-	virtual void		ChangeState(RwInt32 iState);				///< State 상태를 변경한다.	
-	virtual RwInt32		GetState() {return m_iWorldState;}			///< 현재 State 상태를 반환한다.
+	virtual void		Update(RwReal fElapsedTime);				///< Update processing function for contents suitable for each concept
+	virtual RwBool		IsEnableAction(EAvatarAction eAction);		///< Determine whether the Avatar's Action can currently be processed according to each concept.
+	virtual void		ChangeState(RwInt32 iState);				///< State Changes the state.	
+	virtual RwInt32		GetState() {return m_iWorldState;}			///< Returns the current State.
 	
 	virtual void		BeforeLoadingDirect(void)	{}
 	virtual void		AfterLoadingDirect(void)	{}
@@ -46,8 +46,8 @@ public:
 
 protected:
 
-	RwReal				m_fStateTime;									///< 각 State에서의 경과된 시간
-	RwInt32				m_iWorldState;									///< 현재의 State 상태		
+	RwReal				m_fStateTime;									///< Elapsed time in each state
+	RwInt32				m_iWorldState;									///< Current state		
 	EWorldPlayConcept	m_eType;
 	RwBool				m_bPause;
 };

@@ -1,10 +1,10 @@
 #include "precomp_dboclient.h"
 #include "QuestProgressGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "QuestTextDataTable.h"
 #include "NPCTable.h"
 #include "MobTable.h"
@@ -15,16 +15,16 @@
 // Gui
 #include "GuiUtil.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSLApi.h"
 #include "NtlSLLogic.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DialogManager.h"
@@ -155,7 +155,7 @@ RwBool CQuestProgressGui::Create( CQuestGui* pQuestGui )
 	m_phbxConversation->SetLineSpace( 7 );
 	m_phbxAim->SetLineSpace( 7 );
 	
-	// 보상영역 설정.
+	// Compensation area setting.
 	SetRewardRectHardcode();
 
 	SetBasicUISetting();
@@ -253,7 +253,7 @@ VOID CQuestProgressGui::HandleEvents( RWS::CMsg& msg )
 	}
 	else if( msg.Id == g_EventRegQuest_Nfy )
 	{
-		// 창이 열려있는 상태에서 같은 아이디면 창을 닫고 다시 띄운다. 
+		// If the ID is the same while the window is open, close the window and reopen it. 
 		if( !IsShow() )
 			return;
 
@@ -271,7 +271,7 @@ VOID CQuestProgressGui::SetBasicUISetting(VOID)
 	m_ptbtTab->SelectTab( (RwInt32)CONV_TAB );
 	SelectTabPage( CONV_TAB );
 	
-	// UI 세팅
+	// UI settings
 	m_pstbTitle->SetText( GetDisplayStringManager()->GetString( "DST_QUEST_PROGRESS_WINDOW_TITLE" ) );
 	m_pstbTimeTitle->SetText( GetDisplayStringManager()->GetString( "DST_QUEST_LIMIT_TIME" ) );
 	m_pstbProgressTitle->SetText( GetDisplayStringManager()->GetString( "DST_QUEST_PROGRESS_INFO" ) );
@@ -298,20 +298,20 @@ VOID CQuestProgressGui::SetBasicUISetting(VOID)
 
 VOID CQuestProgressGui::SetQuestData( SNtlEventShowQuestWindow_Nfy* pData )
 {
-	// 제목
+	// title
 	SetQuestTitle( pData->uiQuestTitle, pData->uiQuestSort, pData->eGradeType );
 
 	CQuestTextDataTable* pQuestTextTable = API_GetTableContainer()->GetQuestTextDataTable();
 	sQUEST_TEXT_DATA_TBLDAT* pQuestText;
 
-	// 내용
+	// detail
 	pQuestText = reinterpret_cast<sQUEST_TEXT_DATA_TBLDAT*>( pQuestTextTable->FindData( pData->uiQuestContents ) );
 	if( pQuestText )
 		m_phbxConversation->SetHtmlFromMemory( pQuestText->wstrText.c_str(), pQuestText->wstrText.size() );
 	else
 		m_phbxConversation->Clear();
 
-	// 목표
+	// target
 	pQuestText = reinterpret_cast<sQUEST_TEXT_DATA_TBLDAT*>( pQuestTextTable->FindData( pData->uiQuestGoal ) );
 	if( pQuestText )
 		m_phbxAim->SetHtmlFromMemory( pQuestText->wstrText.c_str(), pQuestText->wstrText.size() );
@@ -329,7 +329,7 @@ VOID CQuestProgressGui::SetQuestData( SNtlEventShowQuestWindow_Nfy* pData )
 	m_pstbRewardGetExpAmountText->SetText(pData->uiRewardExp);
 	m_pstbRewardGetZennyAmountText->SetText(pData->uiRewardZeni);
 
-	// TMQ Quest는 포기할 수 없음
+	// TMQ Quest cannot be given up
 	if( Logic_IsNormalQuest( pData->sTSKey.tID ) )
 		m_pbtnQuestGiveUp->Show( true );
 	else
@@ -457,7 +457,7 @@ VOID CQuestProgressGui::UpdateUIData( eSTOC_EVT_DATA_TYPE eEvtInfoType, uSTOC_EV
 		}
 	}
 
-	// 시간.
+	// Time.
 	if( uiTimeLimit != 0xffffffff )
 	{
 		RwUInt32 uiTime;

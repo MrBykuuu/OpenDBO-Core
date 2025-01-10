@@ -7,12 +7,12 @@
 struct sFriendMember : public sCommunityMember
 {
 	CHARACTERID		charID;			///< DB character id
-	RwUInt32		mapTblIdx;		///< 맵 테이블 인덱스
-	RwUInt8			byLevel;		///< 레벨
-	RwUInt8			byClass;		///< 클래스	
-	RwBool			bOnline;		///< 게임 접속 여부
-	RwUInt32        uiSerialID;     ///< 시리얼ID (핸들)
-	RwUInt8			byChannel;      ///< 채널
+	RwUInt32		mapTblIdx;		///< map table index
+	RwUInt8			byLevel;		///< level
+	RwUInt8			byClass;		///< class	
+	RwBool			bOnline;		///< Game access status
+	RwUInt32        uiSerialID;     ///< Serial ID (handle)
+	RwUInt8			byChannel;      ///< channel
 };
 
 enum FriendDataType
@@ -21,7 +21,7 @@ enum FriendDataType
 	COMMUNITY_FRIEND_ONLINE,
 };
 
-/// 친구리스트의 데이터를 관리하는 클래스
+/// Class that manages friend list data
 /// by agebreak 2007.12.14
 class CNtlSLFriendList : public CNtlSLCommunityGroup, public RWS::CEventHandler
 {
@@ -34,7 +34,7 @@ public:
     virtual VOID	Leave();
     virtual	void	HandleEvents(RWS::CMsg &pMsg);
 
-	// Sort를 실행하고 나서는 이전에 GetMemberbyIndex()로 받은 맴버 구조체와 다를 수 있다
+	// After executing Sort, the member structure may be different from the member structure previously received with GetMemberbyIndex().
 	virtual VOID	Sort(RwUInt8 byDataType, RwBool bAscent);
     virtual RwBool	IsHaveGroup() {return TRUE;}
 

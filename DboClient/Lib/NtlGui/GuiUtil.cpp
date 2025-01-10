@@ -329,13 +329,13 @@ VOID ChangeLineFeedToCStyle( std::wstring& wstr )
 }
 
 /**
-* \brief 2d Vector의 선형 보간 함수
-* \param v2dOutput		(RwV2d*) 결과값이 나올 벡터의 포인터
-* \param v2dStart		(RwV2d*) 선형보간의 첫번째 벡터
-* \param v2dEnd			(RwV2d*) 선형보간의 두번째 벡터
-* \param fTime			(float)	보간될 위치
-* \param fGoalTime		(float) 보간되는 위치의 최대값
-* \return 보간된 벡터의 길이
+* \brief Linear interpolation function for 2d Vector
+* \param v2dOutput (RwV2d*) Pointer to the vector where the result value will come from.
+* \param v2dStart (RwV2d*) First vector of linear interpolation
+* \param v2dEnd (RwV2d*) Second vector of linear interpolation
+* \param fTime (float) Position to be interpolated
+* \param fGoalTime (float) Maximum value of the position to be interpolated
+* \return Length of the interpolated vector
 */
 float RwV2dLineInterpolation( RwV2d* v2dOutput, RwV2d* v2dStart, RwV2d* v2dEnd, float fTime, float fGoalTime )
 {

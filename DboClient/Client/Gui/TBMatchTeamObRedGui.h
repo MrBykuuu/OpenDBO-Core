@@ -1,11 +1,11 @@
 /*****************************************************************************
-* File			: TBMatchTeamObRedGui.h
-* Author		: Haesung, Cho
-* Copyright		: (주)NTL
-* Date			: 2008. 11. 24
-* Abstract		: 천하제일 무도회 관전자 팀전 레드팀 GUI
+*File			: TBMatchTeamObRedGui.h
+*Author		    : Haesung, Cho
+*Copyright		: (주)NTL
+*Date			: 2008. 11. 24
+*Abstract		: World's Best Martial Arts Spectator Team Match Red Team GUI
 *****************************************************************************
-* Desc         : 
+*Desc         : 
 *****************************************************************************/
 
 #ifndef __TB_MATCH_TEAM_OB_RED_GUI_H__
@@ -21,7 +21,7 @@
 #define dTEAMMEMBER_GUI_HEIGHT		45
 
 /**
-* \brief 각 멤버들의 GUI
+* \brief GUI of each member
 */
 class CTBMatchTeamRedMemberGui : public CNtlPLGui, RWS::CEventHandler
 {
@@ -59,7 +59,7 @@ protected:
 };
 
 /**
-* \brief Red 팀의 GUI
+* \brief Red Team's GUI
 */
 class CTBMatchTeamObRedGui : public CNtlPLGui, RWS::CEventHandler
 {

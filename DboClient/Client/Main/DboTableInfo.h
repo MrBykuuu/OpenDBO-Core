@@ -1,12 +1,12 @@
 /****************************************************************************
  *
- * File			: DboTableInfo.h
- * Author		: Hong SungBock
- * Copyright	: (주)NTL
- * Date			: 2005. 11. 3
- * Abstract		: DBO Table Info for Client
+ *File			: DboTableInfo.h
+ *Author	    : Hong SungBock
+ *Copyright	    : NTL Co., Ltd.
+ *Date			: 2005. 11. 3
+ *Abstract		: DBO Table Info for Client
  *****************************************************************************
- * Desc         : 클라이언트에서만 사용되는 테이블의 정보를 정의한다
+ *Desc          : Defines table information used only by the client.
  *
  *****************************************************************************/
 
@@ -15,7 +15,7 @@
 #include "NtlBitFlag.h"
 
 
-///< 월드맵의 종류에 따라 화면에 표시됨
+///< Displayed on the screen depending on the type of world map
 enum eLandMark_WorldMapType
 {
 	LT_NONE,
@@ -44,7 +44,7 @@ enum eLandMark_WorldMapType_BitFlag
 	NUM_LB
 };
 
-///< 월드맵에 표시되는 방법
+///< How it is displayed on the world map
 enum eLandMark_Display_Part
 {
 	LDT_NONE,

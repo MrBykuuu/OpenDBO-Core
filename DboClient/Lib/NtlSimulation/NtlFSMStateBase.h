@@ -2,11 +2,11 @@
  *
  * File			: NtlFSMStateBase.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2006. 2. 9	
  * Abstract		: Finite state machine base class
  *****************************************************************************
- * Desc         : 
+ *Desc         : 
  *
  *****************************************************************************/
 
@@ -25,7 +25,7 @@ class CNtlFSMAgent;
 class CNtlBehaviorBase;
 class CNtlPLEntity;
 
-// 아래의 new class_name 과 delete pState를 NTL_NEW 와 NTL_DELETE로 바꾸지 말아 주세요
+// Please do not change new class_name and delete pState to NTL_NEW and NTL_DELETE below.
 // by Jang HyungSuk.
 
 #define DECLEAR_FSMSTATE_FACTROY(class_name) \
@@ -51,7 +51,7 @@ public: \
 
 #define MAX_FSMS_NAME	32
 
-///< FSM State 클래스들의 부모 추상 클래스
+///< Parent abstract class of FSM State classes
 class CNtlFSMStateBase
 {
 protected:
@@ -79,19 +79,19 @@ public:
 	virtual ~CNtlFSMStateBase();
 
 	/**
-    *  state의 생성/소멸의 factory 함수.
+    *Factory function for creation/destruction of state.
     */
 	virtual CNtlFSMStateBase* CreateStateFactory(void) = 0;
 	virtual	void DestroyStateFactory(CNtlFSMStateBase *pState) = 0;
 
 	/**
-    *  state의 생성/소멸시 호출되는 함수.
+    *Function called when creating/destructing state.
     */
 	virtual RwBool Create(void) { return TRUE; }
 	virtual void Destroy(void);
 
 	/**
-    *  state의 update/event 처리 함수.
+    *State update/event processing function.
     */
 	virtual void Enter(void);
 	virtual void Exit(void);
@@ -118,21 +118,21 @@ public:
 	CNtlSobActor*   GetActor(void) const;
 
 	/**
-    *  현재의 state가 끝나고, 예전 state로 복귀할 때 사용하는 함수.(move => jump가 들어오면 move 상태를 queuing 시킨다.)
+    *A function used to return to the previous state after the current state ends. (move => When a jump is entered, the move state is queued.)
     */
 	void                SetQueued(const CNtlFSMStateBase *pQueuedState);
 	CNtlFSMStateBase*   GetQueued(void) const;
 	void                ReleaseQueued(void);
 
     /**
-    *  현재의 state가 끝났는지를 검사하는 함수.
+    *A function that checks whether the current state has ended.
     */
     void    ResetFinish(void);
     void    Finish(void);
     RwBool  IsFinish(void) const;
 
 	/**
-    *  현재의 state에서 avtive된 behavior를 설정하는 함수.
+    *A function that sets the avtive behavior in the current state.
     */
 	void                AddBehavior(CNtlBehaviorBase *pBehavior);
 	RwInt32             GetBehaviorCount(void) const;
@@ -140,9 +140,9 @@ public:
 	void                RemoveAllBehavior(void);
 	void                UpdateBehavior(void);
 
-	void                AddPLEntity(CNtlPLEntity *pPLEntity);   ///< Visual 추가한다.	
-	CNtlFSMAgent*       GetFSMAgent(void);                      ///< 현재 Agent를 얻어온다.
-	virtual RwBool      IsActorActiveState(void);               ///< 객체가 Active 가능한 상태인가?
+	void                AddPLEntity(CNtlPLEntity *pPLEntity);   ///< Add Visual.	
+	CNtlFSMAgent*       GetFSMAgent(void);                      ///< Get the current Agent.
+	virtual RwBool      IsActorActiveState(void);               ///< Is the object in an active state?
 
 	static void Terminate(RwBool bTerminate);
 };

@@ -1,10 +1,10 @@
 #include "precomp_dboclient.h"
 #include "LittleQuestContainer.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// share
+// Share
 #include "QuestTextDataTable.h"
 #include "MobTable.h"
 #include "QuestItemTable.h"
@@ -13,10 +13,10 @@
 
 #include "GuiUtil.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEventfunc.h"
 #include "NtlSLTMQ.h"
 #include "NtlSobAvatar.h"
@@ -26,7 +26,7 @@
 #include "NtlSLApi.h"
 #include "NtlWorldconceptTMQ.h"
 
-// dbo
+// Dbo
 #include "SideDialogManager.h"
 #include "DialogManager.h"
 #include "QuestListGui.h"
@@ -107,7 +107,7 @@ VOID CLittleQuestContainer::InitQuestData()
 	CDboTSCQAgency* pQuestAgency = API_GetQuestAgency();
 	if ( NULL == pQuestAgency ) return;
 
-	// Cleint 단의 Gui에서 진행중인 퀘스트 리스트를 얻어온다
+	// Obtain a list of ongoing quests from the client side's GUI.
 	pQuestListGui->GetQuestList(&listQuest);
 
 	for( std::list<stQUESTLISTDATA>::iterator it = listQuest.begin() ; it != listQuest.end() ; ++it )
@@ -134,7 +134,7 @@ VOID CLittleQuestContainer::InitQuestData()
 		}
 	}
 
-	// 관련 퀘스트가 하나 이상 있을 때 가장 처음 것을 보여준다
+	// When there is more than one related quest, the first one is shown.
 	if( m_listQuestData.size() > 0 )
 	{
 		LIST_QUEST_ITER it = m_listQuestData.begin();
@@ -157,7 +157,7 @@ VOID CLittleQuestContainer::SetIndicator(sQuestData* pQuestData)
 	}
 
 
-	// 현재 보여지고 있는 퀘스트 ID 보관
+	// Store the currently displayed quest ID
 	m_tID = pQuestData->sTSKey.tID;
 
 	RwUInt32 uiTextColor = 0;
@@ -171,7 +171,7 @@ VOID CLittleQuestContainer::SetIndicator(sQuestData* pQuestData)
 		return;
 	}	
 
-	// 퀘스트 제목
+	// Quest Title
 	std::wstring wTitlestring = gui::GetHtmlFromMemoryString(pQUEST_TEXT_DATA_TBLDAT->wstrText.c_str(), pQUEST_TEXT_DATA_TBLDAT->wstrText.size());
 	m_pQuestTitle->Show(true);
 	m_pQuestTitle->SetText(wTitlestring.c_str());
@@ -373,7 +373,7 @@ VOID CLittleQuestContainer::SetIndicator(sQuestData* pQuestData)
 		}
 	}	
 
-	// 시간.
+	// hour.
 	if( pQuestData->uiTimeLimit != 0xffffffff )
 	{
 		if( iProgress < dMAX_QUEST_AIM )
@@ -441,15 +441,15 @@ CLittleQuestContainer::sQuestData* CLittleQuestContainer::NextData(NTL_TS_T_ID t
 
 			++it_next;
 
-			// 리스트에서 다음 퀘스트가 없으면 가장 처음 데이터를 찾는다
+			// If there is no next quest in the list, the first data is searched for.
 			if( it_next == m_listQuestData.end() )
 				it_next = m_listQuestData.begin();
 
-			// 더 이상 다음 퀘스트가 없다
+			// There are no more next quests
 			if( it_next == m_listQuestData.end() )
 				return NULL;
 
-			// 리스트의 처음에 있는 퀘스트가 입력받은 퀘스트 아이디와 같다
+			// The quest at the beginning of the list is the same as the entered quest ID.
 			if( (*it_next)->sTSKey.tID == tID_current )
 				return NULL;
 
@@ -468,10 +468,10 @@ VOID  CLittleQuestContainer::DelData(NTL_TS_T_ID& tID)
 		sQuestData* pQuestData = *it;
 		if( pQuestData->sTSKey.tID == tID )
 		{
-			// 다음에 표시될 퀘스트 데이터를 찾는다
+			// Find quest data to be displayed next
 			CLittleQuestContainer::sQuestData* pNextQuestData = NextData(m_tID);
 
-			// 현재 보여지고 있는 퀘스트 정보의 다음 정보가 지워질 정보인지 검사
+			// Check whether the next information in the currently displayed quest information is information to be deleted.
 			if( pNextQuestData )
 			{
 				if( pNextQuestData->sTSKey.tID == tID )
@@ -480,8 +480,8 @@ VOID  CLittleQuestContainer::DelData(NTL_TS_T_ID& tID)
 				}
 			}
 
-			// avooo's comment : pNextQuestData가 NULL 포인터라도 SetIndicator()를
-			//					 한 번 호출하여 GUI를 초기화하자
+			// avooo's comment: SetIndicator() is used even if pNextQuestData is a NULL pointer.
+			//					 Let's initialize the GUI with a single call:
 			SetIndicator(pNextQuestData);
 
 			NTL_DELETE(pQuestData);
@@ -517,7 +517,7 @@ VOID CLittleQuestContainer::HandleEvents( RWS::CMsg &msg )
 
 				m_listQuestData.push_back(pQuestData);
 
-				// 업데이트 된 퀘스트 정보를 보여준다
+				// Shows updated quest information
 				SetIndicator(pQuestData);
 			}
 			else

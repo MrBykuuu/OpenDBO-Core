@@ -1,24 +1,24 @@
 #include "precomp_dboclient.h"
 #include "PartyMenuGui.h"
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "WorldTable.h"
 #include "TableContainer.h"
 
-// presentation
+// Presentation
 #include "NtlPLDef.h"
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSobManager.h"
 #include "NtlSobAvatar.h"
 #include "NtlSLGlobal.h"
 #include "NtlSLLogic.h"
 
-// dbo
+// Dbo
 #include "DboGlobal.h"
 #include "DboEventGenerator.h"
 #include "DialogManager.h"
@@ -30,7 +30,7 @@
 #include "SideDialogManager.h"
 #include "PopupManager.h"
 
-//party
+//Party
 #include "PartyMemberGui.h"
 #include "BuffDispObject.h"
 #include "PartyMemberGui.h"
@@ -75,46 +75,46 @@ RwBool CPartyMenu::Create()
 
 	CRectangle rtScreen = m_pThis->GetPosition();
 
-	// 파티 이름
+	// party name
 	m_pPartyName = (gui::CStaticBox*)GetComponent("stbPartyName");
 
-	// 파티원 관리 버튼
+	// Party member management button
 	m_pMemberMenuButton = (gui::CButton*)GetComponent("btnMainMenu");
 	m_pMemberMenuButton->SetToolTip(GetDisplayStringManager()->GetString("DST_PARTYGUI_MEMBER"));
 	m_slotMemberMenuButton = m_pMemberMenuButton->SigClicked().Connect(this, &CPartyMenu::OnClick_MemberMenuButton);
 
-	// 파티 메뉴/맴버 창의 switch 버튼
+	// Switch button in party menu/member window
 	m_pSwitchButton = (gui::CButton*)GetComponent("btnSwitchMenu");
 	m_pSwitchButton->SetToolTip(GetDisplayStringManager()->GetString("DST_PARTYGUI_SWITCH"));
 	m_slotSwitchButton = m_pSwitchButton->SigClicked().Connect(this, &CPartyMenu::OnClick_SwitchButton);
 
-	// 제니 분배 방식 버튼
+	// Zenny distribution button
 	m_pDivideZennyButton = (gui::CButton*)GetComponent("btnDivideZenny");
 	m_pDivideZennyButton->SetToolTip(GetDisplayStringManager()->GetString("DST_PARTYGUI_ZENNY_LOOTING"));
 	m_slotDivideZennyButton = m_pDivideZennyButton->SigClicked().Connect(this, &CPartyMenu::OnClick_DevideZennyButton);
 
-	// 아이템 분배 방식 버튼
+	// Item distribution method button
 	m_pDivideItemButton = (gui::CButton*)GetComponent("btnDivideItem");
 	m_pDivideItemButton->SetToolTip(GetDisplayStringManager()->GetString("DST_PARTYGUI_ITEM_LOOTING"));
 	m_slotDivideItemButton = m_pDivideItemButton->SigClicked().Connect(this, &CPartyMenu::OnClick_DevideItemButton);
 
-	// 던전 버튼
+	// dungeon button
 	m_pDungeonButton = (gui::CButton*)GetComponent("btnDungeon");
 	m_pDungeonButton->SetToolTip(GetDisplayStringManager()->GetString("DST_PARTYGUI_DUNGEON"));
 	m_slotDungeonButton = m_pDungeonButton->SigClicked().Connect(this, &CPartyMenu::OnClick_DungeonButton);
 
-	// 메뉴 펼치기 버튼
+	// Menu expansion button
 	m_pSpreadMenuButton = (gui::CButton*)GetComponent("btnSpreadMenu");
 	m_pSpreadMenuButton->SetToolTip(GetDisplayStringManager()->GetString("DST_PARTYGUI_SPREAD"));
 	m_slotSpreadMenuButton = m_pSpreadMenuButton->SigClicked().Connect(this, &CPartyMenu::OnClick_SpreadMenuButton);
 	m_pSpreadMenuButton->Show(false);
 
-	// 메뉴 접기 버튼
+	// Menu Collapse Button
 	m_pFoldMenuButton = (gui::CButton*)GetComponent("btnFoldMenu");
 	m_pFoldMenuButton->SetToolTip(GetDisplayStringManager()->GetString("DST_PARTYGUI_FOLD"));
 	m_slotFoldMenuButton = m_pFoldMenuButton->SigClicked().Connect(this, &CPartyMenu::OnClick_FoldMenuButton);
 
-	// 파티 이름 배경
+	// party name background
 	m_srfPartyNameBackground.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "PartyMenu.srf", "srfPartyNameBackground" ) );
 	m_srfPartyNameBackground.SetPositionfromParent(0, -(m_srfPartyNameBackground.GetHeight() + 2));	
 
@@ -124,7 +124,7 @@ RwBool CPartyMenu::Create()
 
 	SpreadButtons();
 
-	// 파티를 만들기 전에는 보여주지 않는다
+	// Don't show it until you create a party.
 	m_pPartyName->Show(false);
 
 	MemberButton_UpdateTooltip();
@@ -133,7 +133,7 @@ RwBool CPartyMenu::Create()
 	// for default position
 	OnMove(0, 0);
 
-	// sig
+	// Signals
 	m_slotMove			= m_pThis->SigMove().Connect(this, &CPartyMenu::OnMove );
 	m_slotPaint			= m_pThis->SigPaint().Connect(this, &CPartyMenu::OnPaint );
 
@@ -208,7 +208,7 @@ VOID CPartyMenu::Update(RwReal fElapsed)
 
 VOID CPartyMenu::AddMember(sPartyMember* pMember)
 {
-	// 파티맴버와 자신까지 합한 수가 최대 파티원 수보다 크면 리턴
+	// Returns if the total number of party members and yourself is greater than the maximum number of party members.
 	if( m_listPartyMember.size() + 1 > NTL_MAX_MEMBER_IN_PARTY )
 		return;
 
@@ -304,7 +304,7 @@ VOID CPartyMenu::SetOtherWorld()
 		return;
 	}	
 
-	// 아바타와는 다른 세상에 있는 맴버를 찾아내어 표시한다(TMQ, 랭크배틀 등...)
+	// Finds and displays members in a different world from the avatar (TMQ, ranked battle, etc.)
 	PARTYMEMBER_ITER it = m_listPartyMember.begin();
 	for( ; it != m_listPartyMember.end() ; ++it )
 	{
@@ -351,7 +351,7 @@ VOID CPartyMenu::NoPartyButtons()
 	m_pDivideZennyButton	->Show(false);
 	m_pDivideItemButton		->Show(false);
 	m_pDungeonButton		->Show(false);
-	//m_pPartyCharmButton		->Show(false);
+	//M p party charm button >show(false);
 	m_pSwitchButton			->Show(false);
 
 
@@ -447,7 +447,7 @@ VOID CPartyMenu::SwitchMemberGui(bool bOpen)
 		(*it)->Show(m_MenuShape.bShowMember);
 	}
 
-	// 파티 버프
+	// party buff
 	SwitchMemberBuff(m_MenuShape.bShowMember);
 }
 
@@ -620,7 +620,7 @@ VOID CPartyMenu::HandleEvents( RWS::CMsg &msg )
 			}
 		case PMT_PARTY_MEMBER_ADD:
 			{
-				// 자기 자신은 처리하지 않는다.
+				// Doesn't deal with itself.
 				CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
 				if(pAvatar->GetSerialID() == pPacket->hSerialId)
 					return;
@@ -638,7 +638,7 @@ VOID CPartyMenu::HandleEvents( RWS::CMsg &msg )
 			}
 		case PMT_LP:
 			{
-				// LP 알람등이 작동하는 맴버창을 찾는다
+				// Find the member window where the LP alarm light operates.
 				RwReal fEmergencyPulse = 0.f;
 				RwBool bState = FALSE;
 				PARTYMEMBER_ITER it = m_listPartyMember.begin();
@@ -653,7 +653,7 @@ VOID CPartyMenu::HandleEvents( RWS::CMsg &msg )
 					}
 				}
 
-				// 모든 맴버창의 LP 알람등을 동기화
+				// Synchronize LP alarms in all member windows
 				it = m_listPartyMember.begin();
 				for( ; it != m_listPartyMember.end() ; ++it )
 				{
@@ -689,7 +689,7 @@ VOID CPartyMenu::HandleEvents( RWS::CMsg &msg )
 					SERIAL_HANDLE hTarget = Logic_GetAvatarTargetHandle();
 					if( hTarget == INVALID_SERIAL_ID )
 					{
-						// 타켓이 없습니다
+						// There is no target
 						GetAlarmManager()->AlarmMessage("DST_TARGET_NONE");
 						NTL_RETURNVOID();
 					}
@@ -715,7 +715,7 @@ VOID CPartyMenu::HandleEvents( RWS::CMsg &msg )
 					}
 
 					GetAlarmManager()->AlarmMessage( "DST_PARTY_LEAVE_ASK" );
-				}				
+}				
 
 				break;
 			}
@@ -748,7 +748,7 @@ VOID CPartyMenu::HandleEvents( RWS::CMsg &msg )
 				}
 				else if( pEvent->nWorkId == PMW_PARTY_USE_INVEN )
 				{
-					// 기본 파티 인벤 분배 방식
+					// Basic party inventory distribution method
 					GetDboGlobal()->GetGamePacketGenerator()->SendPartyItemDivision(NTL_PARTY_ITEM_LOOTING_IN_LEADER);
 				}
 

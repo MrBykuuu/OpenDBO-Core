@@ -1,19 +1,19 @@
 #include "precomp_dboclient.h"
 #include "RBSideIconGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// server
+// Server
 #include "DboPacketHandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
 // Sound
 #include "GUISoundDefine.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLGlobal.h"
 #include "NtlSobAvatar.h"
@@ -321,14 +321,14 @@ VOID CRBSideViewGui::HandleEvents( RWS::CMsg& msg )
 	//			SetCancelData( wResultCode, CDisplayStringManager::SERVER_SYNC_RESULT_MSG );
 	//		}				
 	//	}
-	//	// Match_Start에서 실패 한 경우만 들어옴.
+	//	//Only if Match_Start fails.
 	//	else if( pMatchData->type == SNtlEventRBMatch::MATCH_CANCELED )
 	//	{
 	//		SetWaitData();
 	//		SetLifeTimeInfo( 0.0f );									
 	//	}
-	//	// 자신이 취소를 누른 경우 파티전인 경우 BattleEnd를 기다림. 
-	//	// 개인전이거나 전원 취소인 경우는 RoomLeave에서 삭제.
+	// //If you press Cancel and it is a party game, wait for BattleEnd. 
+	// //If it is an individual match or a power cancellation, it will be deleted from RoomLeave.
 	//	else if( pMatchData->type == SNtlEventRBMatch::MATCH_CANCEL )
 	//	{
 	//		SetCancelData( DST_RANKBATTLE_CANCELED, CDisplayStringManager::CLIENT_ONLY_MSG );

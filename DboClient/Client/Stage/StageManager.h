@@ -1,12 +1,12 @@
 /*****************************************************************************
  *
- * File			: NtlStageManager.h
- * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
- * Date			: 2005. 7. 15	
- * Abstract		: DBO Stage Manager.
+ *File			: NtlStageManager.h
+ *Author	    : HyungSuk, Jang
+ *Copyright	    : NTL Co., Ltd.
+ *Date			: 2005. 7. 15	
+ *Abstract		: DBO Stage Manager.
  *****************************************************************************
- * Desc         : 
+ *Desc          : 
  *
  *****************************************************************************/
 
@@ -18,8 +18,8 @@
 
 /**
  * \ingroup Client
- * DBO에서 사용되는 Stage Manager 객체이며, CNtlStageManager class를 상속받는다.
- * 여기에는 실제 사용된 stage를 생성하는 부분이 존재한다.
+ *This is a Stage Manager object used in DBO, and inherits the CNtlStageManager class.
+ *Here, there is a part that creates the stage that is actually used.
  * 
  */
 class CStageManager : public CNtlStageManager
@@ -32,7 +32,7 @@ protected:
 
 	/**
 	* 
-    *  \return stage name에 해당하는 stage를 생성하여 리턴한다. 
+    *  \return Creates and returns the stage corresponding to the stage name. 
 	*/
 	virtual CNtlStage* CreateStage(const char *pStageName);
 	

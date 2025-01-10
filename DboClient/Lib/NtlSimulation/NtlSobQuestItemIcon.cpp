@@ -1,10 +1,10 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobQuestItemIcon.h"
 
-// shared
+// Shared
 #include "QuestItemTable.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSobQuestItem.h"
 #include "NtlSobQuestItemAttr.h"
@@ -49,7 +49,7 @@ void CNtlSobQuestItemIcon::HandleEvents(RWS::CMsg &pMsg)
 		CNtlSobItemAttr *pSobItemAttr = reinterpret_cast<CNtlSobItemAttr*>(pSobItem->GetSobAttr());
 		sITEM_TBLDAT* pItemTbl = pSobItemAttr->GetItemTbl();
 		
-		// 이전엔 ItemUnIdentified였다가 풀렸을때.
+		//Previously, it was ItemUnIdentified and then released.
 		if( pSobItemAttr->IsNeedToIdentify() && !pSobItemUpdate->bNeedToIdentify )
 		{
 			CreateImage(pItemTbl->strIcon_Name.c_str());

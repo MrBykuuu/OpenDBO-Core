@@ -1636,7 +1636,7 @@ RwBool CNtlWorldShadowManager::CheckShadowFilter(RwTexture* pTexture, RwInt32 iI
 	}
 	RwRasterUnlock(pTexture->raster);
 
-	// 위에서 그림자가 아닌 영역을 체크했으므로, 여기서는 그림자 아닌 영역 기준으로 바꾸서 체크한다.
+	//Since we checked the non-shadow area above, here we change and check based on the non-shadow area.
 	if (static_cast<RwReal>(iCheck) / static_cast<RwReal>(iSize * iSize) >= fShadowPer)
 	{
 		return TRUE;

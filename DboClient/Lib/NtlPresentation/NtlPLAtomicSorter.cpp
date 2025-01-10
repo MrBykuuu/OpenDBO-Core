@@ -347,7 +347,7 @@ void CNtlPLAtomicSorterContainter::Push(EPlSortType eType, void *pRenderEntity, 
 // 			{
 			RwV3d vPos = pPLEntity->GetPosition();
 
-			// water height 빠르게 구하는 방식을 써야 한다.
+			// You must use a method to quickly find the water height.
 			RwReal fWaterHeight = GetSceneManager()->GetWorldWaterHeight(vPos);
 
 			if(fWaterHeight > vPos.y)
@@ -437,7 +437,7 @@ void CNtlPLAtomicSorterContainter::Render(void)
 		}
 	}
 
-	// water
+	// Water
 	uiSortNum = m_pWaterSorter->GetSortNum(); 
 	pSortList = m_pWaterSorter->GetSortList(); 
 	SetWaterRenderStateBegin(dGET_WORLD_PARAM()->ClrDayAndNight);

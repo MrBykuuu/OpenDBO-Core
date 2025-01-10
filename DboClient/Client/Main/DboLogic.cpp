@@ -1,7 +1,7 @@
 #include "precomp_dboclient.h"
 #include "DboLogic.h"
 
-// shared
+// Shared
 #include "NtlResultCode.h"
 #include "ObjectTable.h"
 #include "ItemTable.h"
@@ -20,21 +20,21 @@
 #include "DojoTable.h"
 #include "SystemEffectTable.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 #include "NtlCoreUtil.h"
 
-// sound
+// Sound
 #include "NtlSoundEventGenerator.h"
 
-// gui
+// Gui
 #include "gui_htmlbox_item.h"
 
-// presention
+// Presention
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "NtlSLLogic.h"
 #include "NtlSLGlobal.h"
@@ -68,7 +68,7 @@
 #include "NtlStorageDefine.h"
 #include "NtlStorageManager.h"
 
-// dbo
+// Dbo
 #include "DialogManager.h"
 #include "DboGlobal.h"
 #include "NPCShop.h"
@@ -454,22 +454,22 @@ RwBool Logic_IsStackMovable( SERIAL_HANDLE hSrcSerial, SERIAL_HANDLE hDestSerial
 	if( nSplitCount == 0 )
 		return FALSE;
 
-	// 1. 목적슬롯이 비어있지 않다면
+	// 1. If the destination slot is not empty
 	if( hDestSerial != INVALID_SERIAL_ID )
 	{
 		CNtlSobItem* pDestItem= reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hDestSerial) );
 		NTL_ASSERT( pDestItem, "Logic_IsStackMove : DestItem is null" );
 		CNtlSobItemAttr* pDestItemAttr = reinterpret_cast<CNtlSobItemAttr*>( pDestItem->GetSobAttr() );
 
-		// 1-2. 미확인 아이템이 아니어야
+		// 1-2. Must not be an unidentified item
 		if( pDestItemAttr->IsNeedToIdentify() )
 			return FALSE;
 
-		// 2. 같은 종류의 아이콘이어야
+		// 2. Must be the same type of icon
 		if( pSrcItemAttr->GetItemTbl()->tblidx != pDestItemAttr->GetItemTbl()->tblidx )
 			return FALSE;
 
-		// 3. 목적지의 아이템스택이 최대값보다 작아야
+		// 3. The item stack at the destination must be less than the maximum.
 		if( pDestItemAttr->GetStackNum() >= pDestItemAttr->GetItemTbl()->byMax_Stack )
 		{
 			// 
@@ -479,13 +479,13 @@ RwBool Logic_IsStackMovable( SERIAL_HANDLE hSrcSerial, SERIAL_HANDLE hDestSerial
 				return FALSE;
 		}
 
-		// 4. 근원지가 최대 아이템 갯수보다 적게 덜어야
+		// 4. The source must be less than the maximum number of items.
 		if( nSplitCount >= pSrcItemAttr->GetItemTbl()->byMax_Stack )
 			return FALSE;
 	}	
 	else
 	{
-		// 1. 가진 만큼을 모두 들었다면 그냥 Move
+		// 1. If you’ve got everything you have, just Move
 		if( pSrcItemAttr->GetStackNum() <= nSplitCount )
 			return FALSE;
 	}
@@ -507,15 +507,15 @@ RwBool Logic_IsStackMovable_to_GuildWarehouse( sGuildWarehouseSlot* pGuildWareho
 	NTL_ASSERT(pGuildWarehouseItem, "Logic_IsStackMovable_to_GuildWarehouse, Invalid pointer");
 	if(pGuildWarehouseItem->hHandle != INVALID_SERIAL_ID)
 	{
-		// 0. 목적슬롯이 미확인 아이템이 아니어야
+		// 0. The destination slot must not be an unidentified item.
 		if( pGuildWarehouseItem->bNeedToIdentify )
 			return FALSE;
 
-		// 1. 목적슬롯이 비어있지 않다면 같은 종류의 아이콘이어야
+		// 1. If the destination slot is not empty, it must be the same type of icon.
 		if( pSrcItemAttr->GetItemTbl()->tblidx != pGuildWarehouseItem->pITEM_TBLDAT->tblidx )
 			return FALSE;
 
-		// 2. 목적지의 아이템스택이 최대값보다 작아야
+		// 2. The item stack at the destination must be less than the maximum.
 		if( pGuildWarehouseItem->byStackcount >= pGuildWarehouseItem->pITEM_TBLDAT->byMax_Stack )
 		{
 			if( nSplitCount < pSrcItemAttr->GetStackNum() )
@@ -524,13 +524,13 @@ RwBool Logic_IsStackMovable_to_GuildWarehouse( sGuildWarehouseSlot* pGuildWareho
 				return FALSE;
 		}
 
-		// 3. 근원지가 최대 아이템 갯수보다 적게 덜어야
+		// 3. The source must be less than the maximum number of items.
 		if( nSplitCount >= pSrcItemAttr->GetItemTbl()->byMax_Stack )
 			return FALSE;
 	}
 	else
 	{
-		// 1. 가진 만큼을 모두 들었다면 그냥 Move
+		// 1. If you’ve got everything you have, just Move
 		if( pSrcItemAttr->GetStackNum() <= nSplitCount )
 			return FALSE;
 	}
@@ -546,22 +546,22 @@ RwBool Logic_IsStackMovable_from_GuildWarehouse( sGuildWarehouseSlot* pGuildWare
 	if( nSplitCount == 0 )
 		return FALSE;
 
-	// 1. 목적슬롯이 비어있지 않다면
+	// 1. If the destination slot is not empty
 	if( hDestSerial != INVALID_SERIAL_ID )
 	{
 		CNtlSobItem* pDestItem= reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hDestSerial) );
 		NTL_ASSERT( pDestItem, "Logic_IsStackMovable_from_GuildWarehouse : DestItem is null" );
 		CNtlSobItemAttr* pDestItemAttr = reinterpret_cast<CNtlSobItemAttr*>( pDestItem->GetSobAttr() );
 
-		// 1-2. 목적지 아이콘이 미확인 아이템이 아니어야
+		// 1-2. Destination icon must not be an unidentified item
 		if( pDestItemAttr->IsNeedToIdentify() )
 			return FALSE;
 
-		// 2. 같은 종류의 아이콘이어야
+		// 2. Must be the same type of icon
 		if( pGuildWarehouseItem->pITEM_TBLDAT->tblidx != pDestItemAttr->GetItemTbl()->tblidx )
 			return FALSE;
 
-		// 3. 목적지의 아이템스택이 최대값보다 작아야
+		// 3. The item stack at the destination must be less than the maximum.
 		if( pDestItemAttr->GetStackNum() >= pDestItemAttr->GetItemTbl()->byMax_Stack )
 		{
 			// 
@@ -571,13 +571,13 @@ RwBool Logic_IsStackMovable_from_GuildWarehouse( sGuildWarehouseSlot* pGuildWare
 				return FALSE;
 		}
 
-		// 4. 근원지가 최대 아이템 갯수보다 적게 덜어야
+		// 4. The source must be less than the maximum number of items.
 		if( nSplitCount >= pGuildWarehouseItem->pITEM_TBLDAT->byMax_Stack )
 			return FALSE;
 	}	
 	else
 	{
-		// 1. 가진 만큼을 모두 들었다면 그냥 Move
+		// 1. If you’ve got everything you have, just Move
 		if( pGuildWarehouseItem->byStackcount <= nSplitCount )
 			return FALSE;
 	}
@@ -598,11 +598,11 @@ RwBool Logic_IsStackMovable_from_GuildWarehouse( sGuildWarehouseSlot* pGuildWare
 
 	if( pGuildWarehouseDestItem->hHandle != INVALID_SERIAL_ID )
 	{
-		// 1. 목적슬롯이 비어있지 않다면 같은 종류의 아이콘이어야
+		// 1. If the destination slot is not empty, it must be the same type of icon.
 		if( pGuildWarehouseSrcItem->pITEM_TBLDAT->tblidx != pGuildWarehouseDestItem->pITEM_TBLDAT->tblidx )
 			return FALSE;
 
-		// 2. 목적지의 아이템스택이 최대값보다 작아야
+		// 2. The item stack at the destination must be less than the maximum.
 		if( pGuildWarehouseDestItem->byStackcount >= pGuildWarehouseDestItem->pITEM_TBLDAT->byMax_Stack )
 		{
 			if( nSplitCount < pGuildWarehouseDestItem->byStackcount )
@@ -611,13 +611,13 @@ RwBool Logic_IsStackMovable_from_GuildWarehouse( sGuildWarehouseSlot* pGuildWare
 				return FALSE;
 		}
 
-		// 3. 근원지가 최대 아이템 갯수보다 적게 덜어야
+		// 3. The source must be less than the maximum number of items.
 		if( nSplitCount >= pGuildWarehouseSrcItem->pITEM_TBLDAT->byMax_Stack )
 			return FALSE;
 	}
 	else
 	{
-		// 1. 가진 만큼을 모두 들었다면 그냥 Move
+		// 1. If you’ve got everything you have, just Move
 		if( pGuildWarehouseSrcItem->byStackcount <= nSplitCount)
 			return FALSE;
 	}
@@ -681,7 +681,7 @@ RwBool Logic_ItemDeleteProc( sMsgDboItemInfo* pInfo, RwBool* pPacketLock )
 			NTL_RETURN( FALSE );
 		}
 
-		// 도장 쟁탈전 중에는 인장 제어기를 없앨 수 없다
+		// The seal controller cannot be removed during a seal contest.
 		if( pDOJO_TBLDAT->controllerTblidx == pITEM_TBLDAT->tblidx )
 		{
 			GetAlarmManager()->AlarmMessage("DST_WORLD_CONCEPT_DOJO_SCRAMBLE");
@@ -771,10 +771,10 @@ RwBool Logic_ItemDirectEquipProc( SERIAL_HANDLE hSrcSerial, EPlace eSrcPlace, Rw
 	{
 		if( pItem->IsEquipItem() )
 		{	
-			// 스카우터의 경우는 한가지 더 체크 peessi: 할 필요가 없어졌음. 내부로직에서 처리한다. 
+			// In the case of scouts, there is no need to check one more thing. Processed in internal logic. 
 			//if( pItem->IsScouterItem() )
 			//{
-			//	// 스카우터를 장착하려고 할 때 이미 스카우터가 장착되어 있는 것이 비어있지 않다면
+			//	// When trying to equip a scouter, if the scouter is already equipped is not empty.
 			//	CNtlInventory* pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
 			//	RwUInt32 uiScouterSerial = pInventory->GetEquipItem(EQUIP_SLOT_TYPE_SCOUTER);
 
@@ -789,7 +789,7 @@ RwBool Logic_ItemDirectEquipProc( SERIAL_HANDLE hSrcSerial, EPlace eSrcPlace, Rw
 			//	}				
 			//}
 
-			// 일반 장착 아이템
+			// Normal equipped items
 			for( RwUInt8 i = 0 ; i < NTL_MAX_EQUIP_ITEM_SLOT ; ++i )
 			{
 				RwUInt32 dwSlotFlag = Logic_ConvertEquipSlotIdxToFlag( i );
@@ -1010,7 +1010,7 @@ int Logic_UseProcSubForSpecialTypeItem(CNtlSob * pSob, RwUInt32 hTarget, CNtlSob
 	//DBO_WARNING_MESSAGE("pItemTbldat->byItem_Type: " << (int)pItemTbldat->byItem_Type);
 	switch (pItemTbldat->byItem_Type)
 	{
-		case ITEM_TYPE_CAPSULE: // vehicle
+		case ITEM_TYPE_CAPSULE: // Vehicle
 		{
 			if(pAvatar->IsAirMode())
 			{
@@ -1112,9 +1112,9 @@ int Logic_UseProcSubForSpecialTypeItem(CNtlSob * pSob, RwUInt32 hTarget, CNtlSob
 }
 
 /**
-* \brief Rp Bonus Skill 사용
+* \brief Use Rp Bonus Skill
 * \param hSrcSerial	
-* \retrun Up 에서 사용처리 여부 (TRUE : Up을 무시, FALSE : Up을 처리)
+*Whether or not to use \retrun Up (TRUE: ignore Up, FALSE: process Up)
 */
 RwBool Logic_UseProcRpBonusSkill( SERIAL_HANDLE hSrcSerial ) 
 {
@@ -1170,7 +1170,7 @@ RwBool Logic_IsBagClearable( SERIAL_HANDLE hSrcSerial, RwUInt8 ucSrcSlotIdx )
 
 RwInt32 Logic_ItemGetGUI_EXTEND_MODEByCommonPointType(RwUInt8 byCommonPointType)
 {
-	// item의 모드 분류 Common_Point_Type
+	// Mode classification of item Common_Point_Type
 	CCommercialExtendGui::GUI_EXTEND_MODE eMode = CCommercialExtendGui::ZENNY_EXTEND;
 	switch( byCommonPointType )
 	{
@@ -1180,7 +1180,7 @@ RwInt32 Logic_ItemGetGUI_EXTEND_MODEByCommonPointType(RwUInt8 byCommonPointType)
 	case 2:	/// Cash
 		eMode = CCommercialExtendGui::CASH_EXTEND;
 		break;
-		//default:/// Zenny
+		//default:///Zenny
 		//	break;
 	}
 	
@@ -1490,7 +1490,7 @@ CNtlSobItem* Logic_FindInventoryItemMinDurByDurationGroup(RwUInt32 uiDurationGro
 	CNtlSobItem* pRetNtlSobItem = NULL;
 	RwUInt32 uiRemaintime = 0xFFFFFFFF;
 
-	/// Bag 검색
+	/// Bag search
 	for( RwInt32 i = 0 ; i < NTL_MAX_BAGSLOT_COUNT ; ++i )
 	{
 		SERIAL_HANDLE hBagSerial = pInventory->GetBagItem( i );
@@ -1532,7 +1532,7 @@ CNtlSobItem* Logic_FindInventoryItemMinDurByDurationGroup(RwUInt32 uiDurationGro
 		}		
 	}
 
-	/// Eqip 검색 (scouter 포함)
+	/// Eqip search (with scouter)
 	for( RwInt32 i = 0 ; i < NTL_MAX_EQUIP_ITEM_SLOT; ++i )
 	{
 		SERIAL_HANDLE hEquipItemSerial = pInventory->GetEquipItem( i );
@@ -1578,7 +1578,7 @@ RwBool Logic_FindInventoryItemByItemType(eITEM_TYPE eType, BYTE * byPlace, BYTE 
 {
 	CNtlInventory* pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
 
-	/// Bag 검색
+	/// Bag search
 	for (RwInt32 i = 0; i < NTL_MAX_BAGSLOT_COUNT; ++i)
 	{
 		SERIAL_HANDLE hBagSerial = pInventory->GetBagItem(i);
@@ -1618,7 +1618,7 @@ VOID Logic_CaculDayHourMinSecond( RwUInt32 uiInSecond, CRetCaculDayHourMinSecond
 	pOut->uiSec = uiInSecond;
 	pOut->uiMin = uiInSecond / 60;		/// s -> m
 	pOut->uiSec -= pOut->uiMin * 60;
-	pOut->uiHour = pOut->uiMin / 60;	/// m -> h					/// m -> h
+	pOut->uiHour = pOut->uiMin / 60;	/// m -> h					///m -> h
 	pOut->uiMin -= pOut->uiHour * 60;
 	pOut->uiDay = pOut->uiHour / 24;	/// h -> d	
 	pOut->uiHour -= pOut->uiDay * 24;
@@ -1670,7 +1670,7 @@ VOID Logic_EnableIcon( RwBool bEnable, RwUInt8 byPlace, RwUInt8 uiSlotIdx )
 		CDboEventGenerator::EnableItemIcon( bEnable, PLACE_BAG, uiSlotIdx, byPlace - CONTAINER_TYPE_BAG1 );		
 	}	
 	else if( byPlace == CONTAINER_TYPE_EQUIP )
-	{// ScouterSlot은 Equip에 포함.
+	{// ScouterSlot included with Equip.
 		CDboEventGenerator::EnableItemIcon( bEnable, PLACE_EQUIP, uiSlotIdx );
 	}
 	else if( byPlace == CONTAINER_TYPE_BAGSLOT )
@@ -1682,12 +1682,12 @@ VOID Logic_EnableIcon( RwBool bEnable, RwUInt8 byPlace, RwUInt8 uiSlotIdx )
 		CDboEventGenerator::EnableItemIcon( bEnable, PLACE_WAREHOUSE, uiSlotIdx, byPlace - CONTAINER_TYPE_BANK1 );
 	}
 
-	// QuestIcon은 다른 패킷에서 이벤트 호출.
+	// QuestIcon calls an event in another packet.
 }
 
 RwBool Logic_IsUpdateType(RwInt32 iType, void* pData)
 {
-	// NtlSLEvent.h파일안의 EEventAvatarInfoUpdateType형의 타입만 검사
+	// Only checks the type of EEventAvatarInfoUpdateType in the NtlSLEvent.h file.
 
 	SNtlEventSobInfoUpdate* pPacket = reinterpret_cast<SNtlEventSobInfoUpdate*>( pData );
 
@@ -1750,12 +1750,12 @@ std::string Logic_GetSmallIconName(const char* pcIconName)
 }
 
 /**
-* \brief PC의 Class Icon Surface 얻기
-* 외곽선이 있는 아이콘은 가로/세로 25px 의 크기이며, 외곽선이 없는 아이콘은
-* 가로/세로 19px의 크기이다.
-* \param byClass		NtlCharacter.h 에 선언되어 있는 PC 클래스 상수
-* \param bOutLine		외곽선의 유/무 ( 디폴트 : TRUE )
-* \return 찾아낸 서페이스
+* \brief Obtaining Class Icon Surface of PC
+*Icons with outlines are 25px wide/height, and icons without outlines are 25px tall.
+*The size is 19px width/height.
+* \param byClass PC class constant declared in NtlCharacter.h
+* \param bOutLine Presence/absence of outline (default: TRUE)
+* \return the surface found
 */
 gui::CSurface& Logic_GetPCClassIconSurface(RwUInt8 byClass, RwBool bOutLine /* TRUE */ )
 {
@@ -1765,48 +1765,48 @@ gui::CSurface& Logic_GetPCClassIconSurface(RwUInt8 byClass, RwBool bOutLine /* T
 
 	switch(byClass)
 	{
-	case PC_CLASS_HUMAN_FIGHTER:	strSrfName = "srfHuman_Fighter";	break;  //(무도가)
-	case PC_CLASS_HUMAN_MYSTIC:		strSrfName = "srfHuman_Mystic";		break;	//(기공사)
-	case PC_CLASS_HUMAN_ENGINEER:	strSrfName = "srfHuman_Engineer";	break;	//(엔지니어)
-	case PC_CLASS_NAMEK_FIGHTER:	strSrfName = "srfNamek_Fighter";	break;	//(전사)
-	case PC_CLASS_NAMEK_MYSTIC:		strSrfName = "srfNamek_Mystic";		break;	//(용족)
-	case PC_CLASS_MIGHTY_MAJIN:		strSrfName = "srfMighty_Majin";		break;	//(대마인)
-	case PC_CLASS_WONDER_MAJIN:		strSrfName = "srfWonder_Majin";		break;	//(의마인)
-	case PC_CLASS_STREET_FIGHTER:	strSrfName = "srfStreet_Fighter";	break;	//(격투가)
-	case PC_CLASS_SWORD_MASTER:		strSrfName = "srfSword_Master";		break;	//(검술가)
-	case PC_CLASS_CRANE_ROSHI:		strSrfName = "srfCrane_Roshi";		break;	//(학선사)
-	case PC_CLASS_TURTLE_ROSHI:		strSrfName = "srfTurtle_Roshi";		break;	//(거북선사)
-	case PC_CLASS_GUN_MANIA:		strSrfName = "srfGun_Mania";		break;	//(건매니아)
-	case PC_CLASS_MECH_MANIA:		strSrfName = "srfMech_Mania";		break;	//(메카매니아)
-	case PC_CLASS_DARK_WARRIOR:		strSrfName = "srfDark_Warrior";		break;	//(마계전사)
-	case PC_CLASS_SHADOW_KNIGHT:	strSrfName = "srfShadow_Knight";	break;	//(마도전사)
-	case PC_CLASS_DENDEN_HEALER:	strSrfName = "srfDenden_Healer";	break;	//(덴덴도사)
-	case PC_CLASS_POCO_SUMMONER:	strSrfName = "srfPoco_Summoner";	break;	//(포코도사)
-	case PC_CLASS_GRAND_MA:			strSrfName = "srfGrand_Ma";			break;	//(그랜마)
-	case PC_CLASS_ULTI_MA:			strSrfName = "srfUlti_Ma";			break;	//(얼티마)
-	case PC_CLASS_PLAS_MA:			strSrfName = "srfPlas_Ma";			break;	//(플라즈마)
-	case PC_CLASS_KAR_MA:			strSrfName = "srfKar_Ma";			break;	//(카르마)
+	case PC_CLASS_HUMAN_FIGHTER:	strSrfName = "srfHuman_Fighter";	break;  //(Martial arts song)
+	case PC_CLASS_HUMAN_MYSTIC:		strSrfName = "srfHuman_Mystic";		break;	//(technician)
+	case PC_CLASS_HUMAN_ENGINEER:	strSrfName = "srfHuman_Engineer";	break;	//(engineer)
+	case PC_CLASS_NAMEK_FIGHTER:	strSrfName = "srfNamek_Fighter";	break;	//(warrior)
+	case PC_CLASS_NAMEK_MYSTIC:		strSrfName = "srfNamek_Mystic";		break;	//(balaur)
+	case PC_CLASS_MIGHTY_MAJIN:		strSrfName = "srfMighty_Majin";		break;	//(Daemine)
+	case PC_CLASS_WONDER_MAJIN:		strSrfName = "srfWonder_Majin";		break;	//(Uimain)
+	case PC_CLASS_STREET_FIGHTER:	strSrfName = "srfStreet_Fighter";	break;	//(fighter)
+	case PC_CLASS_SWORD_MASTER:		strSrfName = "srfSword_Master";		break;	//(swordsman)
+	case PC_CLASS_CRANE_ROSHI:		strSrfName = "srfCrane_Roshi";		break;	//(Hakseonsa Temple)
+	case PC_CLASS_TURTLE_ROSHI:		strSrfName = "srfTurtle_Roshi";		break;	//(Turtle Master)
+	case PC_CLASS_GUN_MANIA:		strSrfName = "srfGun_Mania";		break;	//(Gunmania)
+	case PC_CLASS_MECH_MANIA:		strSrfName = "srfMech_Mania";		break;	//(Mechamania)
+	case PC_CLASS_DARK_WARRIOR:		strSrfName = "srfDark_Warrior";		break;	//(Demon World Warrior)
+	case PC_CLASS_SHADOW_KNIGHT:	strSrfName = "srfShadow_Knight";	break;	//(Magic Warrior)
+	case PC_CLASS_DENDEN_HEALER:	strSrfName = "srfDenden_Healer";	break;	//(Dendendosa)
+	case PC_CLASS_POCO_SUMMONER:	strSrfName = "srfPoco_Summoner";	break;	//(Poco Dosa)
+	case PC_CLASS_GRAND_MA:			strSrfName = "srfGrand_Ma";			break;	//(Grandma)
+	case PC_CLASS_ULTI_MA:			strSrfName = "srfUlti_Ma";			break;	//(Ultima)
+	case PC_CLASS_PLAS_MA:			strSrfName = "srfPlas_Ma";			break;	//(plasma)
+	case PC_CLASS_KAR_MA:			strSrfName = "srfKar_Ma";			break;	//(karma)
 	default:
 		NTL_ASSERT( false, "Not exist class" );
 	}
 
-	// OutLine 이 있는 아이콘이라면 _Out이라는 단어를 붙여준다.
+	// If the icon has an OutLine, add the word _Out.
 	if( bOutLine )
 		strSrfName += "_Out";
 
-	// 서페이스를 가져와서 리턴
+	// Get a surface and return it
 	surface = GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GameCommon.srf", strSrfName );
 
 	return surface;
 }
 
 /**
-* \brief NPC의 Class Icon Surface 얻기
-* 외곽선이 있는 아이콘은 가로/세로 25px 의 크기이며, 외곽선이 없는 아이콘은
-* 가로/세로 14px의 크기이다.
-* \param byClass		NtlCharacter.h 에 선언되어 있는 NPC 클래스 상수
-* \param bOutLine		외곽선의 유/무 ( 디폴트 : TRUE )
-* \return 찾아낸 서페이스
+* \brief Obtaining Class Icon Surface of NPC
+*Icons with outlines are 25px wide/height, and icons without outlines are 25px tall.
+*The size is 14px width/height.
+* \param byClass NPC class constant declared in NtlCharacter.h
+* \param bOutLine Presence/absence of outline (default: TRUE)
+* \return the surface found
 */
 gui::CSurface& Logic_GetNPCClassIconSurface(RwUInt8 byClass, RwBool bOutLine /* TRUE */ )
 {
@@ -1819,71 +1819,71 @@ gui::CSurface& Logic_GetNPCClassIconSurface(RwUInt8 byClass, RwBool bOutLine /* 
 		case NPC_JOB_WEAPON_MERCHANT:			
 		case NPC_JOB_SPECIAL_WEAPON_MERCHANT:	strSrfName = "srfWeapon_Merchant";	break;	
 		case NPC_JOB_ARMOR_MERCHANT:			
-		case NPC_JOB_SPECIAL_ARMOR_MERCHANT:	strSrfName = "srfArmor_Merchant";	break;	// 의복상인
+		case NPC_JOB_SPECIAL_ARMOR_MERCHANT:	strSrfName = "srfArmor_Merchant";	break;	// clothing merchant
 
 		case NPC_JOB_GOODS_MERCHANT:			
 		case NPC_JOB_SPECIAL_GOODS_MERCHANT:
-		case NPC_JOB_ALIEN_ENGINEER:			strSrfName = "srfGoods_Merchant";	break;	// 잡화상인
+		case NPC_JOB_ALIEN_ENGINEER:			strSrfName = "srfGoods_Merchant";	break;	// general goods merchant
 
 
 		case NPC_JOB_SCOUTER_MERCHANT:
 		case NPC_JOB_SPECIAL_SCOUTER_MERCHANT:
 		case NPC_JOB_SCOUTER_MERCHANT2:			
-		case NPC_JOB_SPECIAL_SCOUTER_MERCHANT2:	strSrfName = "srfScouter_Merchant";	break;	// 스카우터상인
+		case NPC_JOB_SPECIAL_SCOUTER_MERCHANT2:	strSrfName = "srfScouter_Merchant";	break;	// Scouter Merchant
 
-		case NPC_JOB_GUARD:						strSrfName = "srfGuard";			break;	// 경비
+		case NPC_JOB_GUARD:						strSrfName = "srfGuard";			break;	// expenses
 
-		case NPC_JOB_SKILL_TRAINER_HFI:			// 무도가 교관
-		case NPC_JOB_SKILL_TRAINER_HMY:			// 기공사 교관
-		case NPC_JOB_SKILL_TRAINER_HEN:			// 엔지니어 교관
-		case NPC_JOB_SKILL_TRAINER_NFI:			// 전사 교관
-		case NPC_JOB_SKILL_TRAINER_NMY:			// 용족 교관
-		case NPC_JOB_SKILL_TRAINER_MMI:			// 대마인 교관
+		case NPC_JOB_SKILL_TRAINER_HFI:			// martial arts instructor
+		case NPC_JOB_SKILL_TRAINER_HMY:			// Qigong instructor
+		case NPC_JOB_SKILL_TRAINER_HEN:			// engineer instructor
+		case NPC_JOB_SKILL_TRAINER_NFI:			// warrior instructor
+		case NPC_JOB_SKILL_TRAINER_NMY:			// Balaur Instructor
+		case NPC_JOB_SKILL_TRAINER_MMI:			// Great Mine Instructor
 		case NPC_JOB_SKILL_TRAINER_MWO:			
-		case NPC_JOB_GRAND_SKILL_TRAINER_HFI:	// 무도가 그랜드 스킬마스터
-		case NPC_JOB_GRAND_SKILL_TRAINER_HMY:	// 기공사 그랜드 스킬마스터
-		case NPC_JOB_GRAND_SKILL_TRAINER_HEN:	// 엔지니어 그랜드 스킬마스터
-		case NPC_JOB_GRAND_SKILL_TRAINER_NFI:	// 전사 그랜드 스킬마스터
-		case NPC_JOB_GRAND_SKILL_TRAINER_NMY:	// 용족 그랜드 스킬마스터
-		case NPC_JOB_GRAND_SKILL_TRAINER_MMI:	// 대마인 그랜드 스킬마스터
-		case NPC_JOB_GRAND_SKILL_TRAINER_MWO:	strSrfName = "srfSkill_Trainer";	break;	// 의마인 교관
+		case NPC_JOB_GRAND_SKILL_TRAINER_HFI:	// Martial Artist Grand Skill Master
+		case NPC_JOB_GRAND_SKILL_TRAINER_HMY:	// Technician Grand Skill Master
+		case NPC_JOB_GRAND_SKILL_TRAINER_HEN:	// Engineer Grand Skill Master
+		case NPC_JOB_GRAND_SKILL_TRAINER_NFI:	// Warrior Grand Skill Master
+		case NPC_JOB_GRAND_SKILL_TRAINER_NMY:	// Balaur Grand Skill Master
+		case NPC_JOB_GRAND_SKILL_TRAINER_MMI:	// Daimain Grand Skill Master
+		case NPC_JOB_GRAND_SKILL_TRAINER_MWO:	strSrfName = "srfSkill_Trainer";	break;	// Uimain Instructor
 
-		case NPC_JOB_BANKER:					strSrfName = "srfBanker";			break;	// 창고지기
+		case NPC_JOB_BANKER:					strSrfName = "srfBanker";			break;	// warehouse keeper
 
 		case NPC_JOB_TALKER:
-		case NPC_JOB_COMIC_NPC:					strSrfName = "srfTalker";			break;	// 이야기꾼
+		case NPC_JOB_COMIC_NPC:					strSrfName = "srfTalker";			break;	// raconteur
 
 		case NPC_JOB_GUILD_MANAGER:
-		case NPC_JOB_DOJO_MANAGER:	// 도장 관리인
-		case NPC_JOB_DOJO_MERCHANT:	// 도장 상인
-		case NPC_JOB_DOJO_SEAL:		// 도장 인장
-		case NPC_JOB_DOJO_BANKER:				strSrfName = "srfDojoNPC";			break;// 도장 창고
+		case NPC_JOB_DOJO_MANAGER:	// dojo manager
+		case NPC_JOB_DOJO_MERCHANT:	// seal merchant
+		case NPC_JOB_DOJO_SEAL:		// seal seal
+		case NPC_JOB_DOJO_BANKER:				strSrfName = "srfDojoNPC";			break;// stamp warehouse
 
-		case NPC_JOB_SUMMON_PET:				strSrfName = "srfSummon_Pet";		break;	// 소환수
+		case NPC_JOB_SUMMON_PET:				strSrfName = "srfSummon_Pet";		break;	// summoner
 
-		case NPC_JOB_DOGI_MERCHANT:				strSrfName = "srfDogi_Merchant";	break;	// 도복 상인
+		case NPC_JOB_DOGI_MERCHANT:				strSrfName = "srfDogi_Merchant";	break;	// gi merchant
 
-		case NPC_JOB_SPECIAL_FOODS_MERCHANT:	strSrfName = "srfSpecial_Foods_Merchant";	break;	// 고급 식료품 상인
+		case NPC_JOB_SPECIAL_FOODS_MERCHANT:	strSrfName = "srfSpecial_Foods_Merchant";	break;	// gourmet grocer
 
-		case NPC_JOB_SUB_WEAPON_MERCHANT:		strSrfName = "srfSub_Weapon_Merchant";		break;// 보조 무기 상인
-		case NPC_JOB_GATE_KEEPER:				strSrfName = "srfGate_Keeper";				break;	// 문지기
-		case NPC_JOB_VENDING_MACHINE:			strSrfName = "srfVending_Machine";			break;	// 자판기
-		case NPC_JOB_TIMEMACHINE_MERCHANT:		strSrfName = "srfTimeMachine_Merchant";		break;	// 타임머신진입 NPC
-		case NPC_JOB_PORTAL_MAN:				strSrfName = "srfPortal_Man";				break;// 순간 이동 서비스맨		
-		case NPC_JOB_BUS:						strSrfName = "srfBus";						break;// 버스
+		case NPC_JOB_SUB_WEAPON_MERCHANT:		strSrfName = "srfSub_Weapon_Merchant";		break;// Secondary Weapon Vendor
+		case NPC_JOB_GATE_KEEPER:				strSrfName = "srfGate_Keeper";				break;	// gatekeeper
+		case NPC_JOB_VENDING_MACHINE:			strSrfName = "srfVending_Machine";			break;	// vending machine
+		case NPC_JOB_TIMEMACHINE_MERCHANT:		strSrfName = "srfTimeMachine_Merchant";		break;	// Time machine entry NPC
+		case NPC_JOB_PORTAL_MAN:				strSrfName = "srfPortal_Man";				break;// teleportation service man		
+		case NPC_JOB_BUS:						strSrfName = "srfBus";						break;// bus
 
-	//case NPC_JOB_RECEPTION:					strSrfName = "srfReception";				break;// The people who receive the first ball
+	//case NPC_JOB_RECEPTION:					strSrfName = "srfReception";				break;//The people who receive the first ball
 
 		case NPC_JOB_BUDOHSI_MERCHANT:			
 		case NPC_JOB_BUDOHSI_MERCHANT2:			
-		case NPC_JOB_BUDOHSI_MERCHANT3:			strSrfName = "srfBudo_Merchant";			break;// 무도사 상인
+		case NPC_JOB_BUDOHSI_MERCHANT3:			strSrfName = "srfBudo_Merchant";			break;// Martial Artist Merchant
 
-		case NPC_JOB_REFEREE:					strSrfName = "srfRefree";					break;// 심판
+		case NPC_JOB_REFEREE:					strSrfName = "srfRefree";					break;// judgment
 
 		case NPC_JOB_GAMBLE_MERCHANT:			
-		case NPC_JOB_AIR_GAMBLE_MERCHANT:		strSrfName = "srfGamble_Merchant";			break;// 뽑기 상인
+		case NPC_JOB_AIR_GAMBLE_MERCHANT:		strSrfName = "srfGamble_Merchant";			break;// lottery vendor
 
-		case NPC_JOB_CHAMPION_MERCHANT:			strSrfName = "srfChampion_Merchant";		break;// 챔피언 상인
+		case NPC_JOB_CHAMPION_MERCHANT:			strSrfName = "srfChampion_Merchant";		break;// Champion Merchant
 
 		case NPC_JOB_MIX_MASTER:				
 		case NPC_JOB_MIX_MASTER2:				strSrfName = "srfHoipoiNPC";				break;// 
@@ -1981,7 +1981,7 @@ gui::CSurface& Logic_GetBattleAttributeIconSurface( RwUInt8 byAttribute, RwBool 
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Passive skill 사용 가능 유무 검사
+// Check whether passive skill is available or not
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 RwBool Logic_IsPassiveDashUsePossible(void)
@@ -2245,7 +2245,7 @@ bool Logic_IsPassiveAirPossible()
 		return false;
 
 	// to do:
-	// - check if world-scramble - DST_WORLD_CONCEPT_DRAGONBALL_SCRAMBLE
+	// -check if world-scramble -DST_WORLD_CONCEPT_DRAGONBALL_SCRAMBLE
 
 	return true;
 }
@@ -2290,7 +2290,7 @@ bool Logic_IsPassiveAirPossibleUi()
 		return false;
 
 	// to do:
-	// - check if world-scramble - DST_WORLD_CONCEPT_DRAGONBALL_SCRAMBLE
+	// -check if world-scramble -DST_WORLD_CONCEPT_DRAGONBALL_SCRAMBLE
 
 	return true;
 }
@@ -2386,15 +2386,15 @@ RwBool Logic_MakeLoadGameOptFileName(std::string& strFileName, const WCHAR *pCha
 	RwChar chBuffer[128];
 	SUserData *pUserData = GetDboGlobal()->GetUserData();
 
-	// user
+	// User
 	std::string str = USEROPT_SERIALIZE_FOLDERNAME;
 
-	// 계정
+	// account
 	::WideCharToMultiByte(GetACP(), 0, pUserData->wchUserID, -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
 
-	// server
+	// Server
 	std::wstring wstr = Logic_GetActiveServerName();
 	WideCharToMultiByte(GetACP(), 0, wstr.c_str(), -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
@@ -2430,7 +2430,7 @@ RwBool Logic_MakeSaveGameOptFileName(std::string& strFileName, const WCHAR *pCha
 	HANDLE hFile;
 	WIN32_FIND_DATA finddata;
 
-	// user
+	// User
 	std::string str = USEROPT_SERIALIZE_FOLDERNAME;
 	hFile = ::FindFirstFile(str.c_str(), &finddata);
 	if(hFile == INVALID_HANDLE_VALUE || !(finddata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
@@ -2438,7 +2438,7 @@ RwBool Logic_MakeSaveGameOptFileName(std::string& strFileName, const WCHAR *pCha
 
 	::FindClose( hFile );
 
-	// 계정.
+	// account.
 	::WideCharToMultiByte(GetACP(), 0, pUserData->wchUserID, -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
@@ -2448,7 +2448,7 @@ RwBool Logic_MakeSaveGameOptFileName(std::string& strFileName, const WCHAR *pCha
 
 	::FindClose( hFile );
 
-	// server
+	// Server
 	std::wstring wstr = Logic_GetActiveServerName();
 	WideCharToMultiByte(GetACP(), 0, wstr.c_str(), -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
@@ -2459,7 +2459,7 @@ RwBool Logic_MakeSaveGameOptFileName(std::string& strFileName, const WCHAR *pCha
 
 	::FindClose( hFile );
 
-	// 캐릭터 이름.
+	// Character name.
 	::WideCharToMultiByte(GetACP(), 0, pCharName, -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
@@ -2474,17 +2474,17 @@ RwBool Logic_MakeSaveGameOptFileName(std::string& strFileName, const WCHAR *pCha
 	return TRUE;
 }
 /**
-* \brief eNTL_STORAGE_GROUP_ACCOUNT 관련 옵션들을 로드한다.
+* \brief Loads eNTL_STORAGE_GROUP_ACCOUNT related options.
 */
 void Logic_LoadAccountOption( void )
 {
 	RwChar chBuffer[128];
 	SUserData *pUserData = GetDboGlobal()->GetUserData();
 
-	// user
+	// User
 	std::string str = USEROPT_SERIALIZE_FOLDERNAME;
 
-	// 계정
+	// account
 	::WideCharToMultiByte(GetACP(), 0, pUserData->wchUserID, -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
@@ -2498,7 +2498,7 @@ void Logic_LoadAccountOption( void )
 
 	if(hFile == INVALID_HANDLE_VALUE || finddata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 	{
-		/*NtlLogFilePrint("Logic_LoadAccountOption");*/
+		/*Ntl log file print("logic load account option");*/
 		::FindClose( hFile );
 		return;
 	}
@@ -2509,7 +2509,7 @@ void Logic_LoadAccountOption( void )
 }
 
 /**
-* \brief eNTL_STORAGE_GROUP_ACCOUNT 관련 옵션들을 저장한다.
+* \brief eNTL_STORAGE_GROUP_ACCOUNT Stores related options.
 */
 void Logic_SaveAccountOption( void )
 {
@@ -2519,7 +2519,7 @@ void Logic_SaveAccountOption( void )
 	HANDLE hFile;
 	WIN32_FIND_DATA finddata;
 
-	// user
+	// User
 	std::string str = USEROPT_SERIALIZE_FOLDERNAME;
 	hFile = ::FindFirstFile(str.c_str(), &finddata);
 	if(hFile == INVALID_HANDLE_VALUE || !(finddata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
@@ -2527,7 +2527,7 @@ void Logic_SaveAccountOption( void )
 
 	::FindClose( hFile );
 
-	// 계정.
+	// account.
 	::WideCharToMultiByte(GetACP(), 0, pUserData->wchUserID, -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
@@ -2545,12 +2545,12 @@ void Logic_SaveAccountOption( void )
 }
 
 /**
-* \brief eNTL_STORAGE_GROUP_SYSTEM 관련 옵션들을 로드한다.
+* \brief Loads options related to eNTL_STORAGE_GROUP_SYSTEM.
 */
 void Logic_LoadSystemOption( void )
 {
 
-	// user
+	// User
 	std::string str = USEROPT_SERIALIZE_FOLDERNAME;
 
 	// file name
@@ -2562,7 +2562,7 @@ void Logic_LoadSystemOption( void )
 
 	if(hFile == INVALID_HANDLE_VALUE || finddata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 	{
-		/*NtlLogFilePrint("Logic_LoadSystemOption");*/
+		/*Ntl log file print("logic load system option");*/
 		::FindClose( hFile );
 		return;
 	}
@@ -2573,7 +2573,7 @@ void Logic_LoadSystemOption( void )
 }
 
 /**
-* \brief eNTL_STORAGE_GROUP_SYSTEM 관련 옵션들을 저장한다.
+* \brief eNTL_STORAGE_GROUP_SYSTEM Saves related options.
 */
 void Logic_SaveSystemOption( void )
 {
@@ -2581,7 +2581,7 @@ void Logic_SaveSystemOption( void )
 	HANDLE hFile;
 	WIN32_FIND_DATA finddata;
 
-	// user
+	// User
 	std::string str = USEROPT_SERIALIZE_FOLDERNAME;
 	hFile = ::FindFirstFile(str.c_str(), &finddata);
 	if(hFile == INVALID_HANDLE_VALUE || !(finddata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
@@ -2597,17 +2597,17 @@ void Logic_SaveSystemOption( void )
 }
 
 /**
-* \brief eNTL_STORAGE_GROUP_GAMEINFO 관련 옵션들을 로드한다.
+* \brief eNTL_STORAGE_GROUP_GAMEINFO Loads related options.
 */
 void Logic_LoadGameOption(void)
 {
 	RwChar chBuffer[128];
 	SUserData *pUserData = GetDboGlobal()->GetUserData();
 
-	// user
+	// User
 	std::string str = USEROPT_SERIALIZE_FOLDERNAME;
 
-	// 계정
+	// account
 	::WideCharToMultiByte(GetACP(), 0, pUserData->wchUserID, -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
@@ -2621,7 +2621,7 @@ void Logic_LoadGameOption(void)
 
 	if(hFile == INVALID_HANDLE_VALUE || finddata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 	{
-		/*NtlLogFilePrint("Logic_LoadGameOption");*/
+		/*Ntl log file print("logic load game option");*/
 		::FindClose( hFile );
 		return;
 	}
@@ -2632,7 +2632,7 @@ void Logic_LoadGameOption(void)
 }
 
 /**
-* \brief eNTL_STORAGE_GROUP_GAMEINFO 관련 옵션들을 저장한다.
+* \brief eNTL_STORAGE_GROUP_GAMEINFO Saves related options.
 */
 void Logic_SaveGameOption(void)
 {
@@ -2642,7 +2642,7 @@ void Logic_SaveGameOption(void)
 	HANDLE hFile;
 	WIN32_FIND_DATA finddata;
 
-	// user
+	// User
 	std::string str = USEROPT_SERIALIZE_FOLDERNAME;
 	hFile = ::FindFirstFile(str.c_str(), &finddata);
 	if(hFile == INVALID_HANDLE_VALUE || !(finddata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
@@ -2650,7 +2650,7 @@ void Logic_SaveGameOption(void)
 
 	::FindClose( hFile );
 
-	// 계정.
+	// account.
 	::WideCharToMultiByte(GetACP(), 0, pUserData->wchUserID, -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
@@ -2672,10 +2672,10 @@ void Logic_LoadCharacterOption( void )
 	RwChar chBuffer[128];
 	SUserData *pUserData = GetDboGlobal()->GetUserData();
 
-	// user
+	// User
 	std::string str = USEROPT_SERIALIZE_FOLDERNAME;
 
-	// 계정
+	// account
 	::WideCharToMultiByte(GetACP(), 0, pUserData->wchUserID, -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
@@ -2688,12 +2688,12 @@ void Logic_LoadCharacterOption( void )
 		return;
 	}
 
-	// 서버 이름.
+	// Server name.
 	::WideCharToMultiByte(GetACP(), 0, pLobby->GetServerName(), -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
 
-	// 캐릭터 이름.
+	// Character name.
 	RwUInt8 bySelChar = pLobby->GetSelectedCharacterIndex();
 	sLOBBY_CHARACTER* pLOBBY_CHARACTER = pLobby->GetCharacter( bySelChar );
 	if( !pLOBBY_CHARACTER )
@@ -2733,7 +2733,7 @@ void Logic_SaveCharacterOption( void )
 	HANDLE hFile;
 	WIN32_FIND_DATA finddata;
 
-	// user
+	// User
 	std::string str = USEROPT_SERIALIZE_FOLDERNAME;
 	hFile = ::FindFirstFile(str.c_str(), &finddata);
 	if(hFile == INVALID_HANDLE_VALUE || !(finddata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
@@ -2741,7 +2741,7 @@ void Logic_SaveCharacterOption( void )
 
 	::FindClose( hFile );
 
-	// 계정.
+	// account.
 	::WideCharToMultiByte(GetACP(), 0, pUserData->wchUserID, -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
@@ -2759,7 +2759,7 @@ void Logic_SaveCharacterOption( void )
 		return;
 	}
 
-	// 서버 이름.
+	// Server name.
 	::WideCharToMultiByte(GetACP(), 0, pLobby->GetServerName(), -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
@@ -2769,7 +2769,7 @@ void Logic_SaveCharacterOption( void )
 
 	::FindClose( hFile );
 
-	// 캐릭터 이름.
+	// Character name.
 	RwUInt8 bySelChar = pLobby->GetSelectedCharacterIndex();
 	sLOBBY_CHARACTER* pLOBBY_CHARACTER = pLobby->GetCharacter( bySelChar );
 	if( !pLOBBY_CHARACTER )
@@ -2795,17 +2795,17 @@ void Logic_SaveCharacterOption( void )
 }
 
 /**
-* \brief eNTL_STORAGE_GROUP_SCOUTER 관련 옵션들을 로드한다.
+* \brief eNTL_STORAGE_GROUP_SCOUTER Loads related options.
 */
 void Logic_LoadScouterOption(void)
 {
 	RwChar chBuffer[128];
 	SUserData *pUserData = GetDboGlobal()->GetUserData();
 
-	// user
+	// User
 	std::string str = USEROPT_SERIALIZE_FOLDERNAME;
 
-	// 계정
+	// account
 	::WideCharToMultiByte(GetACP(), 0, pUserData->wchUserID, -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
@@ -2818,12 +2818,12 @@ void Logic_LoadScouterOption(void)
 		return;
 	}
 
-	// 서버 이름.
+	// Server name.
 	::WideCharToMultiByte(GetACP(), 0, pLobby->GetServerName(), -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
 
-	// 캐릭터 이름.
+	// Character name.
 	RwUInt8 bySelChar = pLobby->GetSelectedCharacterIndex();
 	sLOBBY_CHARACTER* pLOBBY_CHARACTER = pLobby->GetCharacter( bySelChar );
 	if( !pLOBBY_CHARACTER )
@@ -2855,7 +2855,7 @@ void Logic_LoadScouterOption(void)
 }
 
 /**
-* \brief eNTL_STORAGE_GROUP_SCOUTER 관련 옵션들을 저장한다.
+* \brief eNTL_STORAGE_GROUP_SCOUTER Saves related options.
 */
 void Logic_SaveScouterOption(void)
 {	
@@ -2865,7 +2865,7 @@ void Logic_SaveScouterOption(void)
 	HANDLE hFile;
 	WIN32_FIND_DATA finddata;
 
-	// user
+	// User
 	std::string str = USEROPT_SERIALIZE_FOLDERNAME;
 	hFile = ::FindFirstFile(str.c_str(), &finddata);
 	if(hFile == INVALID_HANDLE_VALUE || !(finddata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
@@ -2873,7 +2873,7 @@ void Logic_SaveScouterOption(void)
 
 	::FindClose( hFile );
 
-	// 계정.
+	// account.
 	::WideCharToMultiByte(GetACP(), 0, pUserData->wchUserID, -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
@@ -2891,7 +2891,7 @@ void Logic_SaveScouterOption(void)
 		return;
 	}
 
-	// 서버 이름.
+	// Server name.
 	::WideCharToMultiByte(GetACP(), 0, pLobby->GetServerName(), -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
@@ -2901,7 +2901,7 @@ void Logic_SaveScouterOption(void)
 
 	::FindClose( hFile );
 
-	// 캐릭터 이름.
+	// Character name.
 	RwUInt8 bySelChar = pLobby->GetSelectedCharacterIndex();
 	sLOBBY_CHARACTER* pLOBBY_CHARACTER = pLobby->GetCharacter( bySelChar );
 	if( !pLOBBY_CHARACTER )
@@ -2927,17 +2927,17 @@ void Logic_SaveScouterOption(void)
 }
 
 /**
-* \brief eNTL_STORAGE_GROUP_QUEST 관련 옵션들을 로드한다.
+* \brief eNTL_STORAGE_GROUP_QUEST Loads related options.
 */
 void Logic_LoadQuestOption(void)
 {
 	RwChar chBuffer[128];
 	SUserData *pUserData = GetDboGlobal()->GetUserData();
 
-	// user
+	// User
 	std::string str = USEROPT_SERIALIZE_FOLDERNAME;
 
-	// 계정
+	// account
 	::WideCharToMultiByte(GetACP(), 0, pUserData->wchUserID, -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
@@ -2950,12 +2950,12 @@ void Logic_LoadQuestOption(void)
 		return;
 	}
 
-	// 서버 이름.
+	// Server name.
 	::WideCharToMultiByte(GetACP(), 0, pLobby->GetServerName(), -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
 
-	// 캐릭터 이름.
+	// Character name.
 	RwUInt8 bySelChar = pLobby->GetSelectedCharacterIndex();
 	sLOBBY_CHARACTER* pLOBBY_CHARACTER = pLobby->GetCharacter( bySelChar );
 	if( !pLOBBY_CHARACTER )
@@ -2987,7 +2987,7 @@ void Logic_LoadQuestOption(void)
 }
 
 /**
-* \brief eNTL_STORAGE_GROUP_QUEST 관련 옵션들을 저장한다.
+* \brief eNTL_STORAGE_GROUP_QUEST Saves related options.
 */
 void Logic_SaveQuestOption(void)
 {
@@ -3000,7 +3000,7 @@ void Logic_SaveQuestOption(void)
 	HANDLE hFile;
 	WIN32_FIND_DATA finddata;
 
-	// user
+	// User
 	std::string str = USEROPT_SERIALIZE_FOLDERNAME;
 	hFile = ::FindFirstFile(str.c_str(), &finddata);
 	if(hFile == INVALID_HANDLE_VALUE || !(finddata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
@@ -3008,7 +3008,7 @@ void Logic_SaveQuestOption(void)
 
 	::FindClose( hFile );
 
-	// 계정.
+	// account.
 	::WideCharToMultiByte(GetACP(), 0, pUserData->wchUserID, -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
@@ -3026,7 +3026,7 @@ void Logic_SaveQuestOption(void)
 		return;
 	}
 
-	// 서버 이름.
+	// Server name.
 	::WideCharToMultiByte(GetACP(), 0, pLobby->GetServerName(), -1, chBuffer, 128, NULL, NULL);
 	str += "\\";
 	str += chBuffer;
@@ -3036,7 +3036,7 @@ void Logic_SaveQuestOption(void)
 
 	::FindClose( hFile );
 
-	// 캐릭터 이름.
+	// Character name.
 	RwUInt8 bySelChar = pLobby->GetSelectedCharacterIndex();
 	sLOBBY_CHARACTER* pLOBBY_CHARACTER = pLobby->GetCharacter( bySelChar );
 	if( !pLOBBY_CHARACTER )
@@ -3062,7 +3062,7 @@ void Logic_SaveQuestOption(void)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//	game의 각종 callback 함수.
+//	Various callback functions of the game.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Logic_CallbackHtmlUserTag(const WCHAR *pTag, RwUInt32 uiId, std::wstring& strOut)
@@ -3107,7 +3107,7 @@ void Logic_CallbackHtmlUserTag(const WCHAR *pTag, RwUInt32 uiId, std::wstring& s
 	{
 		strOut = Logic_GetPlayerRaceName( uiId );
 	}
-	else if(strTag == L"place")	// 2008.1.3 추가 comment by Kell
+	else if(strTag == L"place")	// 2008.1.3 Additional comment by Kell
 	{
 		CMapNameTextTable* pPlaceText = API_GetTableContainer()->GetTextAllTable()->GetMapNameTbl();
 		strOut = pPlaceText->GetText( uiId );
@@ -3155,7 +3155,7 @@ RwUInt32 Logic_AllRepairCost()
 	sITEM_TBLDAT* pITEM_TBLDAT = NULL;
 	SERIAL_HANDLE hItem = INVALID_SERIAL_ID;
 
-	// 장착 아이템의 수리 가격
+	// Repair price for equipped items
 	for( RwUInt8 i = 0 ; i < EQUIP_SLOT_TYPE_COUNT ; ++i )
 	{
 		hItem = pInventory->GetEquipItem(i);
@@ -3174,9 +3174,9 @@ RwUInt32 Logic_AllRepairCost()
 		uiRepairCost += Dbo_GetRepairPay(pITEM_TBLDAT->dwCost, pSobItemAttr->GetMaxDur(), pSobItemAttr->GetDur());
 	}
 
-	// avooo's comment : 와우처럼 가방의 아이템도 한꺼번에 고치기 위한 값이 필요한 줄 알고 코딩했다
-	//					 기획의 변경이 있을지 모르니 지우지 말고 주석 처리해두자
-	// 가방안의 아이템
+	// avooo's comment: Like WoW, I coded the items in the bag thinking they needed a value to fix them all at once.
+	//					 There may be changes to the plan, so please comment it out rather than deleting it.
+	// Items in the bag
 	/*
 	for( RwUInt8 i = 0 ; i < NTL_MAX_BAGSLOT_COUNT ; ++i )
 	{
@@ -3247,7 +3247,7 @@ void Logic_WorldItemPick(SERIAL_HANDLE hPickSerial)
 		if(!bTSSuccess)
 			return;
 
-		// communication actor 이면?
+		// What if you are a communication actor?
 		CNtlSobActor *pTarActor = (CNtlSobActor*)pPickSobObj;
 
 		if( Logic_IsCommunityActor(pTarActor) )
@@ -3305,7 +3305,7 @@ bool Logic_AvatarTarget(void)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//  스킬 관련
+//  Skill related
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 RwReal Logic_GetHTBTotalPower( sHTB_SET_TBLDAT* pHTBData )
 {
@@ -3333,14 +3333,14 @@ RwReal Logic_GetHTBTotalPower( sHTB_SET_TBLDAT* pHTBData )
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//	배틀 속성 아이콘 및 툴팁 설정
+//	Battle attribute icon and tooltip settings
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Logic_SetBattleAttributeMark( gui::CPanel* pComponent, RwUInt8 byBattleAttribute, RwBool bOutLine /* = TRUE  */ )
 {
 	gui::CSurface surface = Logic_GetBattleAttributeIconSurface( byBattleAttribute, bOutLine );
 
-	// ToolTip은 InfoWindow로 대체한다.
+	// ToolTip is replaced by InfoWindow.
 
 	//pComponent->Show( true );
 	pComponent->GetSurface()->clear();
@@ -3428,7 +3428,7 @@ RwUInt8 Logic_GetCounterpartGradeType(CNtlSobAttr* pOriginalSobAttr, CNtlSobAttr
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//	다이얼로그 관련
+//	Dialog related
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Logic_LocateDialog_in_CleintRect(CNtlPLGui* pGui, RwBool bForce /* = FALSE */)
@@ -3466,7 +3466,7 @@ void Logic_LocateDialog_in_CleintRect(CNtlPLGui* pGui, RwBool bForce /* = FALSE 
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 부활메시지 박스 
+// Resurrection message box 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Logic_ShowRegenBox(void)
@@ -3513,7 +3513,7 @@ void Logic_ShowRegenBox(void)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 동영상 관련
+// Video related
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Logic_SetOptionMoviePlay()
@@ -3522,8 +3522,8 @@ void Logic_SetOptionMoviePlay()
 	CInputHandler::GetInstance()->SetActive(FALSE);
 	GetCursorManager()->ShowMouseCursor(FALSE);
 
-	// 동영상을 플레이 할 때는 PostEffectCamera의 Filter를 NONE으로 한다.
-	// 코드 순서에 주의한다.
+	// When playing a video, set PostEffectCamera's Filter to NONE.
+	// Pay attention to the code order.
 	CNtlPostEffectCamera::SetPostEffectFilters(POST_EFFECT_FILTER_NONE);
 	CDboApplication::GetInstance()->SetRenderEnable(FALSE);
 }
@@ -3534,8 +3534,8 @@ void Logic_SetOptionMovieStop()
 	CInputHandler::GetInstance()->SetActive(TRUE);
 	GetCursorManager()->ShowMouseCursor(TRUE);
 
-	// HDR Option을 읽어와서 복원한다.
-	// 코드 순서에 주의한다
+	// Read and restore HDR Option.
+	// Pay attention to code order
 	if( GetNtlStorageManager()->GetBoolData(dSTORAGE_GRAPHIC_SHADER_HDR) )
 		CNtlPostEffectCamera::SetPostEffectFilters(POST_EFFECT_FILTER_HDR);
 	else
@@ -3544,7 +3544,7 @@ void Logic_SetOptionMovieStop()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 색상 관련
+// color related
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 RwUInt32 Logic_GetItemRankColor( RwUInt8 byRank )
 {

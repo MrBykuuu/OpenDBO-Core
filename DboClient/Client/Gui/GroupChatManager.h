@@ -1,19 +1,19 @@
 /******************************************************************************
-* File			: GroupChatManager.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 10. 17
-* Abstract		: 
+*File           : GroupChatManager.h
+*Author         : Hong SungBock
+*Copyright      : NTL Co., Ltd.
+*Date           : October 17, 2008
+*Abstract       : 
 *****************************************************************************
-* Desc			: 그룹 채팅 관리자
+*Desc           : Group chat manager
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
 class CGroupChatGui;

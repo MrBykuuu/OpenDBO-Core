@@ -2,7 +2,7 @@
  *
  * File			: NtlPLItemFileData.h
  * Author		: HongHoDong
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2005. 11. 2.	
  * Abstract		: NTL CNtlPLItemFileData
  *****************************************************************************
@@ -24,10 +24,10 @@ public:
 
 	const std::string &GetLastError() { return m_strError; }
 
-    CNtlMatchingTable* GetItemMatchTable() {return &m_ItemMatchTable;}          ///< Item Animation Table을 반환한다	
+    CNtlMatchingTable* GetItemMatchTable() {return &m_ItemMatchTable;}          ///< Returns Item Animation Table	
 
 protected:    
-    void    CreateKeyword();                                ///< Animation Table 정보를 만든다.
+    void    CreateKeyword();                                ///< Create Animation Table information.
 
 protected:
     std::string				m_strError;

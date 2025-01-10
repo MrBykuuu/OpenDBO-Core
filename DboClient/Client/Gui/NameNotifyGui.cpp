@@ -1,17 +1,17 @@
 #include "precomp_dboclient.h"
 #include "NameNotifyGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
 /// Sound
 #include "GuiSoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// dbo
+// Dbo
 #include "DialogManager.h"
 #include "DboEventGenerator.h"
 #include "Dboglobal.h"
@@ -49,7 +49,7 @@ RwBool CNameNotifyGui::Create()
 	m_pThis = (gui::CDialog*)GetComponent( "dlgMain" );
 	m_pThis->SetPriority(dDIALOGPRIORITY_NOTIFY);
 
-	// ¸Þ¼¼Áö
+	// Message
 	rect.SetRectWH(0, 0, m_pThis->GetWidth(), m_pThis->GetHeight());
 	m_pMessageStatic = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER );
 	m_pMessageStatic->CreateFontStd(DEFAULT_FONT, 120, DEFAULT_FONT_ATTR);

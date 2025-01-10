@@ -1,18 +1,18 @@
 #include "precomp_dboclient.h"
 #include "CharMakePartGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 #include "NtlStringUtil.h"
 
-// share
+// Share
 #include "NtlCharacter.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DisplayStringManager.h"
@@ -47,10 +47,10 @@ RwBool CCharMakePartGui::Create(CCharCreateGuiGui* pCreateGui)
 
 	CRectangle rect;
 
-	// Create GUI의 포인터를 보관
+	// Holds a pointer to Create GUI
 	m_pCreateGui = pCreateGui;
 
-	// 배경 상단
+	// background top
 	m_Background.SetType(CWindowby3::WT_HORIZONTAL);
 	m_Background.SetSurface(0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharMakePart.srf", "srfBackgroundUp" ));
 	m_Background.SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharMakePart.srf", "srfBackgroundCenter" ));
@@ -64,7 +64,7 @@ RwBool CCharMakePartGui::Create(CCharCreateGuiGui* pCreateGui)
 	m_pTitleStatic->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_CHARACTER_ATTRIBUTE"));
 
 
-	// 종족 버튼
+	// race button
 	sDISPLAY_RACE_BUTTONS* pRaceDisplay = NTL_NEW sDISPLAY_RACE_BUTTONS;
 	m_aptAttributeDisplay[ATTIRIBUTE_RACE] = pRaceDisplay;
 
@@ -91,7 +91,7 @@ RwBool CCharMakePartGui::Create(CCharCreateGuiGui* pCreateGui)
 	pRaceDisplay->srfSelect.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharMakePart.srf", "srfSelect" ));
 
 
-	// 클래스 버튼
+	// class button
 	sDISPLAY_CLASS_BUTTONS* pClassDisplay = NTL_NEW sDISPLAY_CLASS_BUTTONS;
 	m_aptAttributeDisplay[ATTIRIBUTE_CLASS] = pClassDisplay;
 
@@ -127,7 +127,7 @@ RwBool CCharMakePartGui::Create(CCharCreateGuiGui* pCreateGui)
 	pClassDisplay->srfSelect.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharMakePart.srf", "srfSelect" ));
 
 
-	// 성별 버튼
+	// gender button
 	sDISPLAY_SEX_BUTTONS* pSexDisplay = NTL_NEW sDISPLAY_SEX_BUTTONS;
 	m_aptAttributeDisplay[ATTIRIBUTE_SEX] = pSexDisplay;
 
@@ -152,14 +152,14 @@ RwBool CCharMakePartGui::Create(CCharCreateGuiGui* pCreateGui)
 	pSexDisplay->srfSelect.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharMakePart.srf", "srfSelect" ));
 
 
-	// 머리, 머리색, 얼굴, 피부색
+	// hair, hair color, face, skin color
 	RwInt32 iStartLeftRightY = 327;
 	for( RwUInt8 i = ATTIRIBUTE_HAIR ; i < ATTIRIBUTE_NUM ; ++i )
 	{
 		sDISPLAY_LEFT_RIGHT_BUTTONS* pDisplayLR = NTL_NEW sDISPLAY_LEFT_RIGHT_BUTTONS;
 		m_aptAttributeDisplay[i] = pDisplayLR;
 
-		// 왼쪽 버튼
+		// left button
 		rect.SetRectWH(35, iStartLeftRightY, 20, 20);
 		pDisplayLR->pLeftButton = (gui::CButton*) NTL_NEW gui::CButton(rect, "",
 									GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharMakePart.srf", "srfLeftBtnUp" ),
@@ -170,7 +170,7 @@ RwBool CCharMakePartGui::Create(CCharCreateGuiGui* pCreateGui)
 									GUI_BUTTON_DOWN_COORD_X, GUI_BUTTON_DOWN_COORD_Y, m_pThis, GetNtlGuiManager()->GetSurfaceManager() );
 		pDisplayLR->m_slotLeftButton = pDisplayLR->pLeftButton->SigClicked().Connect(this, &CCharMakePartGui::OnClick_LeftButton);
 
-		// 오른쪽 버튼
+		// right button
 		rect.SetRectWH(168, iStartLeftRightY, 20, 20);
 		pDisplayLR->pRightButton = (gui::CButton*) NTL_NEW gui::CButton(rect, "",
 									GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharMakePart.srf", "srfRightBtnUp" ),
@@ -181,7 +181,7 @@ RwBool CCharMakePartGui::Create(CCharCreateGuiGui* pCreateGui)
 									GUI_BUTTON_DOWN_COORD_X, GUI_BUTTON_DOWN_COORD_Y, m_pThis, GetNtlGuiManager()->GetSurfaceManager() );
 		pDisplayLR->m_slotRightButton = pDisplayLR->pRightButton->SigClicked().Connect(this, &CCharMakePartGui::OnClick_RightButton);
 
-		// 속성 이름
+		// property name
 		rect.SetRectWH(64, iStartLeftRightY + 3, 100, 14);
 		pDisplayLR->pAttributeName = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER );
 		pDisplayLR->pAttributeName->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -197,14 +197,14 @@ RwBool CCharMakePartGui::Create(CCharCreateGuiGui* pCreateGui)
 
 		pDisplayLR->pAttributeName->Enable(false);
 
-		// 배경바
+		// background bar
 		pDisplayLR->srfBackground.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CharMakePart.srf", "srfLeftRightBackground" ));
 		pDisplayLR->srfBackground.SetPositionfromParent(49, iStartLeftRightY + 1);
 
 		iStartLeftRightY	+= 46;
 	}
 
-	// 자동 선택 버튼
+	// auto select button
 	m_pRendomButton = (gui::CButton*)GetComponent("btnRendom");
 	m_pRendomButton->SetText( GetDisplayStringManager()->GetString("DST_LOBBY_RANDOM_CHOICE") );
 	m_slotRendomButton = m_pRendomButton->SigClicked().Connect(this, &CCharMakePartGui::OnClick_RendomButton);
@@ -218,7 +218,7 @@ RwBool CCharMakePartGui::Create(CCharCreateGuiGui* pCreateGui)
 	m_atAttributeChar[ATTIRIBUTE_SKIN].byMaxValue		= DBO_CHAR_SKIN_COLOR_COUNT;
 
 
-	// sig
+	// Signals
 	m_slotMove			= m_pThis->SigMove().Connect(this, &CCharMakePartGui::OnMove );
 	m_slotPaint			= m_pThis->SigPaint().Connect( this, &CCharMakePartGui::OnPaint );
 	m_slotPostPaint		= m_pRendomButton->SigPaint().Connect( this, &CCharMakePartGui::OnPostPaint );
@@ -280,7 +280,7 @@ VOID CCharMakePartGui::UpdateAttribute()
 		}
 	case RACE_NAMEK:
 		{
-			m_atAttributeChar[ATTIRIBUTE_SEX].byMaxValue	= 0;	// 성별이 없다
+			m_atAttributeChar[ATTIRIBUTE_SEX].byMaxValue	= 0;	// no gender
 			m_atAttributeChar[ATTIRIBUTE_CLASS].byMaxValue	= dNUM_NAMEK_DEFAULT_CLASS;
 			break;
 		}
@@ -297,18 +297,18 @@ VOID CCharMakePartGui::UpdateAttribute()
 		}
 	}	
 
-	// 기본값
+	// default
 	for( RwUInt8 i = ATTIRIBUTE_CLASS ; i < ATTIRIBUTE_NUM ; ++i )
 	{		
 		m_atAttributeChar[i].Select(0);
 		m_atAttributeChar[i].byPostValue = 0;
 	}
 
-	// 종족별 기본 클래스 보여주기
+	// Show basic classes by race
 	sDISPLAY_CLASS_BUTTONS* pDisplay = reinterpret_cast<sDISPLAY_CLASS_BUTTONS*>( m_aptAttributeDisplay[ATTIRIBUTE_CLASS] );
 	pDisplay->ActivateClass(m_atAttributeChar[ATTIRIBUTE_RACE].byValue);
 
-	// 리스트가 바뀌면 모델은 정지한 상태로 정면을 바라보나
+	// When the list changes, does the model remain still and look straight ahead?
 	CDboEventGenerator::LobbyEvent(LMT_ROTATION_FOREWARD);
 }
 
@@ -332,7 +332,7 @@ VOID CCharMakePartGui::SetAttribute(RwUInt8 byAttribute, RwUInt8 byIndex)
 
 VOID CCharMakePartGui::CheckEnableButton()
 {
-	// 종족 비활성화 여부 판단
+	// Determination of whether to deactivate a race
 	sDISPLAY_RACE_BUTTONS* pDisplayRace = reinterpret_cast<sDISPLAY_RACE_BUTTONS*>( m_aptAttributeDisplay[ATTIRIBUTE_RACE] );
 	for( RwUInt8 i = 0 ; i < DBO_ALLOWED_FUNC_FOR_DEV_COUNT ; ++i )
 	{
@@ -355,13 +355,13 @@ VOID CCharMakePartGui::CheckEnableButton()
 			{
 				if( m_atAttributeChar[ATTIRIBUTE_HAIR].byValue == 1 )
 				{
-					// 휴먼 대머리는 머리색을 선택할 수 없다
+					// Human baldness cannot choose hair color
 					m_aptAttributeDisplay[ATTIRIBUTE_HAIR_COLOR]->Enable(false);					
 				}
 				else if( m_atAttributeChar[ATTIRIBUTE_HAIR].byPostValue == 1 &&
 						 m_atAttributeChar[ATTIRIBUTE_HAIR].byPostValue != m_atAttributeChar[ATTIRIBUTE_HAIR].byValue )
 				{
-					// 대머리였다
+					// was bald
 					m_aptAttributeDisplay[ATTIRIBUTE_HAIR_COLOR]->Enable(true);
 					m_atAttributeChar[ATTIRIBUTE_HAIR_COLOR].Select( m_atAttributeChar[ATTIRIBUTE_HAIR_COLOR].byValue );
 				}
@@ -380,21 +380,21 @@ VOID CCharMakePartGui::CheckEnableButton()
 					m_aptAttributeDisplay[i]->Enable(true);
 				}
 
-				// 남자로 선택되어 있을 때 대머리였을지도 모르기에 다시 설정
+				// Reset because he may have been bald when selected as male
 				m_atAttributeChar[ATTIRIBUTE_HAIR_COLOR].Select( m_atAttributeChar[ATTIRIBUTE_HAIR_COLOR].byValue );
 			}
 			break;
 		}
 	case RACE_NAMEK:
 		{
-			// 나메크인의 경우 성별, 머리색을 고를 수 없다
+			// Namekians cannot choose their gender or hair color.
 			m_aptAttributeDisplay[ATTIRIBUTE_SEX]->Enable(false);
 			m_aptAttributeDisplay[ATTIRIBUTE_HAIR_COLOR]->Enable(false);
 			break;
 		}
 	case RACE_MAJIN:
 		{
-			// 마인의 경우 머리색을 고를 수 없다
+			// In the case of Mine, you can't choose your hair color.
 			m_aptAttributeDisplay[ATTIRIBUTE_HAIR_COLOR]->Enable(false);
 			break;
 		}
@@ -414,7 +414,7 @@ VOID CCharMakePartGui::ChangeModel(RwBool bSetDefaultCamera)
 		m_atAttributeChar[ATTIRIBUTE_HAIR_COLOR].byValue = m_atAttributeChar[ATTIRIBUTE_SKIN].byValue;
 	}
 
-	byClass = ConverIndexToClass( m_atAttributeChar[ATTIRIBUTE_CLASS].byValue );
+    byClass = ConverIndexToClass( m_atAttributeChar[ATTIRIBUTE_CLASS].byValue );
 	byGender = ConverIndexToGenderbyRace( m_atAttributeChar[ATTIRIBUTE_RACE].byValue );
 
 	// +1 : Model indexes start at 1
@@ -444,7 +444,7 @@ VOID CCharMakePartGui::CreateCharacter()
 	byClass = ConverIndexToClass(m_atAttributeChar[ATTIRIBUTE_CLASS].byValue);
 	byGender = ConverIndexToGenderbyRace(m_atAttributeChar[ATTIRIBUTE_RACE].byValue);
 
-	// +1 : 모델 인덱스가 1부터 시작하는 것도 있다
+	// +1: Some model indices start from 1.
 	GetDboGlobal()->GetLobbyPacketGenerator()->SendCharAddReq(pwcNameText,
 										m_atAttributeChar[ATTIRIBUTE_RACE].byValue,
 										byClass, 
@@ -562,7 +562,7 @@ VOID CCharMakePartGui::OnClick_RendomButton(gui::CComponent* pComponent)
 	if( GetCharStageState()->GetCurrentState() != CHAR_STATE_MAKE_IDLE )
 		return;
 
-	// 랜덤값 얻어오기
+	// Get random value
 	m_atAttributeChar[ATTIRIBUTE_HAIR]		.Select((RwUInt8)NtlRandomNumber(0, DBO_CHAR_HAIR_SHAPE_COUNT - 1));
 	m_atAttributeChar[ATTIRIBUTE_HAIR_COLOR].Select((RwUInt8)NtlRandomNumber(0, DBO_CHAR_HAIR_COLOR_COUNT - 1));
 	m_atAttributeChar[ATTIRIBUTE_FACE]		.Select((RwUInt8)NtlRandomNumber(0, DBO_CHAR_FACE_SHAPE_COUNT - 1));
@@ -570,7 +570,7 @@ VOID CCharMakePartGui::OnClick_RendomButton(gui::CComponent* pComponent)
 
 	CheckEnableButton();
 
-	// 실제 모델 바꾸기
+	// Changing the actual model
 	ChangeModel(false);
 }
 
@@ -644,7 +644,7 @@ VOID CCharMakePartGui::OnPostPaint()
 {
 	for( RwUInt8 i = 0 ; i < ATTIRIBUTE_NUM ; ++i )
 	{
-		// 나메크 일 때는 성별의 선택사항을 표시하지 않는다
+		// When on Namek, gender options are not displayed.
 		if( m_atAttributeChar[ATTIRIBUTE_RACE].byValue == RACE_NAMEK )
 		{
 			if( ATTIRIBUTE_SEX == i )
@@ -681,7 +681,7 @@ VOID CCharMakePartGui::HandleEvents( RWS::CMsg &msg )
 		{
 			m_atAttributeChar[ATTIRIBUTE_SEX].byValue = GENDER_UNKNOWN;
 
-			// 종족 비활성화 여부 판단
+			// Determination of whether to deactivate a race
 			for( RwUInt8 i = 0 ; i < DBO_ALLOWED_FUNC_FOR_DEV_COUNT ; ++i )
 			{
 				if( GetDboGlobal()->HaveFunction((eDBO_ALLOWED_FUNC_FOR_DEV)i) )
@@ -699,11 +699,11 @@ VOID CCharMakePartGui::HandleEvents( RWS::CMsg &msg )
 			
 			if( GENDER_UNKNOWN == m_atAttributeChar[ATTIRIBUTE_SEX].byValue )
 			{
-				// 서버에서 모든 종족을 만들 수 없게 만든 경우이다
+				// This is a case where all races cannot be created on the server.
 				EnableButtons(false);
 				NTL_RETURNVOID();
 			}
-			
+
 			UpdateAttribute();
 			CheckEnableButton();
 			ChangeModel(true);

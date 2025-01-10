@@ -7,7 +7,7 @@
 #include "NtlStage.h"
 #include "DboGlobal.h"
 
-// dbo
+// Dbo
 #include "IconMoveManager.h"
 #include "DisplayStringManager.h"
 #include "DboLogic.h"
@@ -53,12 +53,12 @@ void CCommercialExtendMode::InitShowComponent()
 		m_AttributeControlSet.pButt_btnRefillCash->Show(true);
 	}
 
-	/// 크기 위치 조정
+	/// size position adjustment
 	CRectangle rect = m_AttributeControlSet.pDialog->GetPosition();
 	rect.bottom = rect.top + m_AttributeControlSet.iDefaultWndHeight;
 	m_AttributeControlSet.pDialog->SetPosition(rect);
 
-		/// 크기 변경에 따른 하부 component 위치 조정
+		/// Adjustment of lower component position according to size change
 	int iDiff1 = m_AttributeControlSet.pStatic_stbDescript2->GetPosition().top - 
 		m_AttributeControlSet.pStatic_stbDescript1->GetPosition().top;
 
@@ -90,7 +90,7 @@ void CCommercialExtendMode::InitShowComponent()
 	rect.Offset(0, m_AttributeControlSet.iDefaultDescript1Top + iDiff2 - rect.top);
 	m_AttributeControlSet.pButt_btnCancel->SetPosition(rect);
 
-	/// 하부 버튼 횡 위치 조정
+	/// Lower button lateral position adjustment
 	rect = m_AttributeControlSet.pButt_btnCancel->GetPosition();
 	int iWidth = rect.right - rect.left;
 
@@ -105,7 +105,7 @@ void CCommercialExtendMode::SetCurrItemInfo(sITEM_TBLDAT* pITEM_TBLDAT)
 	CRetCaculDayHourMinSecond TimeRes;
 	WCHAR text[GUI_TEXT_BUFFER_SIZE];
 
-	/// 남은 사용기간 설정
+	/// Set remaining usage period
 	CNtlSobItem* pNtlSobItem = Logic_FindInventoryItemMinDurByDurationGroup(pITEM_TBLDAT->dwDurationGroup);
 
 	m_pTargetNtlSobItem = pNtlSobItem;
@@ -131,7 +131,7 @@ void CCommercialExtendMode::SetCurrItemInfo(sITEM_TBLDAT* pITEM_TBLDAT)
 		m_AttributeControlSet.pStatic_stbRemainTime->SetText( text );
 	}
 
-	/// 추가 사용기간 설정
+	/// Additional usage period settings
 	Logic_CaculDayHourMinSecond( pITEM_TBLDAT->dwUseDurationMax, &TimeRes );
 
 	if( TimeRes.uiDay > 0 )
@@ -163,14 +163,14 @@ void CCommercialExtendZennyMode::SetCurrItemInfo(sITEM_TBLDAT* pITEM_TBLDAT)
 {
 	CCommercialExtendMode::SetCurrItemInfo( pITEM_TBLDAT );
 
-	/// 소모 제니
+	/// Consumption Jenny
 	WCHAR text[GUI_TEXT_BUFFER_SIZE];
 	swprintf_s( text, GUI_TEXT_BUFFER_SIZE, L"%s%s", Logic_FormatZeni(pITEM_TBLDAT->dwCost), GetDisplayStringManager()->GetString( "DST_ZENNY" ) );
 	text[GUI_TEXT_BUFFER_SIZE - 1] = NULL;
 
 	m_AttributeControlSet.pStatic_stbConsumeGold->SetText( text );
 
-	/// 보유 제니
+	/// holding Jenny
 	CNtlSobAvatar* pSobAvatar = GetNtlSLGlobal()->GetSobAvatar();
 	CNtlSobAvatarAttr* pAvatarAttr = reinterpret_cast<CNtlSobAvatarAttr*>( pSobAvatar->GetSobAttr() );
 
@@ -179,10 +179,10 @@ void CCommercialExtendZennyMode::SetCurrItemInfo(sITEM_TBLDAT* pITEM_TBLDAT)
 
 	m_AttributeControlSet.pStatic_stbMyGold->SetText( text );
 
-	/// icon skin 변경
+	/// change icon skin
 	m_AttributeControlSet.pSurConsumeGoldIcon->SetSurface( 
 		GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CommercialExtend.srf", "srfImageZenny" ) );
-	/// icon skin 변경
+	/// change icon skin
 	m_AttributeControlSet.pSurMyGoldIcon->SetSurface( 
 		GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CommercialExtend.srf", "srfImageZenny" ) );
 
@@ -192,7 +192,7 @@ void CCommercialExtendZennyMode::SetCurrItemInfo(sITEM_TBLDAT* pITEM_TBLDAT)
 
 RwBool CCommercialExtendZennyMode::ConFirm()
 {
-	/// 기간 연장  m_pTargetNtlSobItem
+	/// Extend Period m_pTargetNtlSobItem
 	if(m_pTargetNtlSobItem)
 	{
 		if( m_uiMyGold < m_uiConsumeGold )
@@ -246,14 +246,14 @@ void CCommercialExtendNetphyMode::SetCurrItemInfo(sITEM_TBLDAT* pITEM_TBLDAT)
 {
 	CCommercialExtendMode::SetCurrItemInfo( pITEM_TBLDAT );
 
-	/// 소모 넷피
+	/// consumption net fee
 	WCHAR text[GUI_TEXT_BUFFER_SIZE];
 	swprintf_s( text, GUI_TEXT_BUFFER_SIZE, L"%s%s", Logic_FormatZeni(pITEM_TBLDAT->CommonPoint), GetDisplayStringManager()->GetString( "DST_NETPY" ) );
 	text[GUI_TEXT_BUFFER_SIZE - 1] = NULL;
 
 	m_AttributeControlSet.pStatic_stbConsumeGold->SetText( text );
 
-	/// 보유 넷피
+	/// Possessed Netpy
 	CNtlSobAvatar* pSobAvatar = GetNtlSLGlobal()->GetSobAvatar();
 	CNtlSobAvatarAttr* pAvatarAttr = reinterpret_cast<CNtlSobAvatarAttr*>( pSobAvatar->GetSobAttr() );
 
@@ -262,10 +262,10 @@ void CCommercialExtendNetphyMode::SetCurrItemInfo(sITEM_TBLDAT* pITEM_TBLDAT)
 
 	m_AttributeControlSet.pStatic_stbMyGold->SetText( text );
 
-	/// icon skin 변경
+	/// change icon skin
 	m_AttributeControlSet.pSurConsumeGoldIcon->SetSurface( 
 		GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CommercialExtend.srf", "srfPannelNetpy" ) );
-	/// icon skin 변경
+	/// change icon skin
 	m_AttributeControlSet.pSurMyGoldIcon->SetSurface( 
 		GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CommercialExtend.srf", "srfPannelNetpy" ) );
 
@@ -276,7 +276,7 @@ void CCommercialExtendNetphyMode::SetCurrItemInfo(sITEM_TBLDAT* pITEM_TBLDAT)
 
 RwBool CCommercialExtendNetphyMode::ConFirm()
 {
-	/// 기간 연장  m_pTargetNtlSobItem
+	/// Extend Period m_pTargetNtlSobItem
 	if(m_pTargetNtlSobItem)
 	{
 		if( m_uiMyGold < m_uiConsumeGold )
@@ -341,29 +341,29 @@ void CCommercialExtendCashMode::Init()
 void CCommercialExtendCashMode::SetCurrItemInfo(sITEM_TBLDAT* pITEM_TBLDAT)
 {
 	CCommercialExtendMode::SetCurrItemInfo( pITEM_TBLDAT );
-	/// Cash는 아직 미완성	///미구현
+	/// Cash is not yet complete ///Not implemented
 
-	/// 소모 Cash
+	/// Consumption Cash
 	WCHAR text[GUI_TEXT_BUFFER_SIZE];
 	swprintf_s( text, GUI_TEXT_BUFFER_SIZE, L"%d%s", pITEM_TBLDAT->CommonPoint, GetDisplayStringManager()->GetString( "DST_CASH" ) );
 	text[GUI_TEXT_BUFFER_SIZE - 1] = NULL;
 
 	m_AttributeControlSet.pStatic_stbConsumeGold->SetText( text );
 
-	/// 보유 넷피
+	/// Possessed Netpy
 	CNtlSobAvatar* pSobAvatar = GetNtlSLGlobal()->GetSobAvatar();
 	CNtlSobAvatarAttr* pAvatarAttr = reinterpret_cast<CNtlSobAvatarAttr*>( pSobAvatar->GetSobAttr() );
-	/// Cash는 아직 미완성
+	/// Cash is still unfinished
 	//swprintf_s( text, GUI_TEXT_BUFFER_SIZE, L"%d%s", pAvatarAttr->m_dwNetPy, GetDisplayStringManager()->GetString( DST_CASH ) );
 	//text[GUI_TEXT_BUFFER_SIZE - 1] = NULL;
 
 	//m_AttributeControlSet.pStatic_stbMyGold->SetText( text );
 	m_AttributeControlSet.pStatic_stbMyGold->SetText( " " );
 
-	/// icon skin 변경
+	/// change icon skin
 	m_AttributeControlSet.pSurConsumeGoldIcon->SetSurface( 
 		GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CommercialExtend.srf", "srfPannelCash" ) );
-	/// icon skin 변경
+	/// change icon skin
 	m_AttributeControlSet.pSurMyGoldIcon->SetSurface( 
 		GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CommercialExtend.srf", "srfPannelCash" ) );
 
@@ -380,13 +380,13 @@ void CCommercialExtendCashMode::Cancel()
 
 void CCommercialExtendCashMode::Buy()
 {
-	/// CCommercialExtendCashBuyMode로
+	/// C commercial extend cash buy mode로
 	CDboEventGenerator::ChangeCommercialExtendmode( CCommercialExtendGui::CASH_BUY );
 }
 
 void CCommercialExtendCashMode::Refill()
 {
-	/// 캐쉬충전창............  web연동	///미구현
+	/// Cash recharge window.......Web linkage ///Not implemented
 
 }
 
@@ -430,12 +430,12 @@ void CCommercialExtendCashBuyMode::SetCurrItemInfo(sITEM_TBLDAT* pITEM_TBLDAT)
 {
 	CCommercialExtendMode::SetCurrItemInfo( pITEM_TBLDAT );
 
-	/// Cash는 아직 미완성	///미구현
+	/// Cash is not yet complete ///Not implemented
 }
 
 RwBool CCommercialExtendCashBuyMode::ConFirm()
 {
-	/// 기간 연장  m_pTargetNtlSobItem
+	/// Extend Period m_pTargetNtlSobItem
 	if(m_pTargetNtlSobItem)
 	{
 		if( m_uiMyGold < m_uiConsumeGold )
@@ -487,7 +487,7 @@ CCommercialExtendGui::~CCommercialExtendGui()
 VOID CCommercialExtendGui::Init(VOID)
 {
 	m_pCurrITEM_TBLDA = NULL;
-	m_pTargetNtlSobItem = NULL;			/// 기간연장을 위한 item의 정보 ref
+	m_pTargetNtlSobItem = NULL;			/// Item information ref for extension of period
 }
 
 RwBool CCommercialExtendGui::Create(VOID)
@@ -595,8 +595,8 @@ RwBool CCommercialExtendGui::Create(VOID)
 	LinkMsg( g_EventCommercialExtendCommand, 0 );
 	LinkMsg(g_EventMsgBoxResult, 0);
 
-	//// Update 연결
-	//GetNtlGuiManager()->AddUpdateFunc( this );	/// 기간 update
+	//// Update connection
+	//GetNtlGuiManager()->AddUpdateFunc( this );	///period update
 
 	NTL_RETURN( TRUE );
 }
@@ -604,7 +604,7 @@ RwBool CCommercialExtendGui::Create(VOID)
 VOID CCommercialExtendGui::Destroy(VOID)
 {
 	NTL_FUNCTION( "CCommercialExtendGui::Destroy" );
-//return;
+	//return;
 	for(int i = 0; i < NUM_EXTEND_MODE; i++)
 		NTL_DELETE( m_pArrayCommercialExtendMode[i] );
 
@@ -661,11 +661,11 @@ VOID CCommercialExtendGui::OpenDialog()
 
 VOID CCommercialExtendGui::OpenDialog(GUI_EXTEND_MODE eMode, sITEM_TBLDAT* pITEM_TBLDAT, RwUInt32 uiItemIdx)
 {
-	if( NUM_EXTEND_MODE == eMode)		/// open시엔 내부 계산 mode
+	if( NUM_EXTEND_MODE == eMode)		/// When open, internal calculation mode
 	{
 		if( NULL == pITEM_TBLDAT )
 		{
-			if( INVALID_TBLIDX == uiItemIdx )		/// 미리 setting된 item
+			if( INVALID_TBLIDX == uiItemIdx )		/// Pre-set item
 				uiItemIdx = m_uiDurItemIdx;
 
 			pITEM_TBLDAT = (sITEM_TBLDAT*)API_GetTableContainer()->GetItemTable()->FindData(uiItemIdx);
@@ -674,7 +674,7 @@ VOID CCommercialExtendGui::OpenDialog(GUI_EXTEND_MODE eMode, sITEM_TBLDAT* pITEM
 		if( NULL == pITEM_TBLDAT )
 			return;
 
-		// 기간제 검사
+		// fixed-term inspection
 		if( FALSE == Logic_IsTimeLimitItem( pITEM_TBLDAT ) )
 			return;
 
@@ -693,7 +693,7 @@ VOID CCommercialExtendGui::OpenDialog(GUI_EXTEND_MODE eMode, sITEM_TBLDAT* pITEM
 	{
 		if( INVALID_TBLIDX == uiItemIdx )
 		{
-			SetCurrItemTbl( m_uiDurItemIdx );	/// 미리 setting된 item
+			SetCurrItemTbl( m_uiDurItemIdx );	/// Pre-set item
 		}
 		else
 		{
@@ -707,10 +707,10 @@ VOID CCommercialExtendGui::OpenDialog(GUI_EXTEND_MODE eMode, sITEM_TBLDAT* pITEM
 
 sITEM_TBLDAT* CCommercialExtendGui::StartBuyDurItemProcessCommonForItem( RwUInt32 uiItemIdx )
 {
-	/// 기간제 item 구매 시작 event를 받으면 실행....  entry point
+	/// Run when you receive the event to start purchasing a limited-term item.... entry point
 	// Work Flow
 	//
-	//	MBW_BUY_DUR_ITEM --->  MBW_DUR_ITEM_EXTEND			--------->    CCommercialExtendGui
+    //	MBW_BUY_DUR_ITEM --->  MBW_DUR_ITEM_EXTEND			--------->    CCommercialExtendGui
 	//				|	  |->  MBW_DUR_ITEM_BAG_EXTEND      ----|
 	//			    |					 |
 	//				|------------------------->   MBW_BUY_DUR_ITEM_CONFIRM
@@ -722,7 +722,7 @@ sITEM_TBLDAT* CCommercialExtendGui::StartBuyDurItemProcessCommonForItem( RwUInt3
 	if( NULL == pITEM_TBLDAT ||  FALSE == Logic_IsTimeLimitItem( pITEM_TBLDAT ) )
 		return NULL;
 
-	/// change
+	/// Change
 	ChangeExtendMode( (CCommercialExtendGui::GUI_EXTEND_MODE) Logic_ItemGetGUI_EXTEND_MODEByCommonPointType( 
 		pITEM_TBLDAT->byCommonPointType ));
 	/// item set
@@ -736,7 +736,7 @@ VOID CCommercialExtendGui::StartBuyDurItemProcessNPC( RwUInt32 uiItemIdx,  RwUIn
 	sITEM_TBLDAT* pITEM_TBLDAT = StartBuyDurItemProcessCommonForItem( uiItemIdx );
 
 	if( pITEM_TBLDAT )
-	{	/// Start MessageBox 시작		MBW_BUY_DUR_ITEM
+	{	/// Start MessageBox Start     MBW_BUY_DUR_ITEM
 		if (CCommercialExtendGui::ZENNY_EXTEND == m_eCurrExtendGuiMode)
 		{
 			CTextTable* pItemTextTable = API_GetTableContainer()->GetTextAllTable()->GetItemTbl();
@@ -754,7 +754,7 @@ VOID CCommercialExtendGui::StartBuyDurItemProcessNetpy( RwUInt32 uiItemIdx, RwUI
 	sITEM_TBLDAT* pITEM_TBLDAT = StartBuyDurItemProcessCommonForItem( uiItemIdx );
 
 	if( pITEM_TBLDAT )
-	{	/// Start MessageBox 시작		MBW_BUY_DUR_ITEM
+	{	/// Start MessageBox Start      MBW_BUY_DUR_ITEM
 		if (CCommercialExtendGui::NETPY_EXTEND == m_eCurrExtendGuiMode)
 		{
 			CTextTable* pItemTextTable = API_GetTableContainer()->GetTextAllTable()->GetItemTbl();
@@ -776,7 +776,7 @@ VOID CCommercialExtendGui::StartMoveDurItemProcessCash( RwUInt32 uiItemIdx, RwUI
 
 	m_NetSendData.DataSendMoveDurItemFromYardrat.m_uiProductId = uiProductId;
 
-	/// change
+	/// Change
 	ChangeExtendMode( (CCommercialExtendGui::GUI_EXTEND_MODE) Logic_ItemGetGUI_EXTEND_MODEByCommonPointType( 
 		pITEM_TBLDAT->byCommonPointType ));
 	/// item set
@@ -818,7 +818,7 @@ VOID CCommercialExtendGui::SetExtendTargetItem(CNtlSobItem* pNtlSobItem)
 VOID CCommercialExtendGui::SetCurrItemTbl(RwUInt32 uiItemIdx)
 {
 	sITEM_TBLDAT* pITEM_TBLDAT = (sITEM_TBLDAT*)API_GetTableContainer()->GetItemTable()->FindData(uiItemIdx);	
-	//Logic_GetItemDataFromTable	
+	//Logic_GetItemDataFromTable		
 	SetCurrItemTbl( pITEM_TBLDAT );
 }
 
@@ -838,7 +838,7 @@ VOID CCommercialExtendGui::SetCurrItemTbl(sITEM_TBLDAT* pITEM_TBLDAT)
 
 		m_pStatic_stbItemName->SetText(pItemTextTable->GetText(pITEM_TBLDAT->Name).c_str());
 
-		if(  TRUE == Logic_IsTimeLimitItem( pITEM_TBLDAT ) )	/// 기간제일때만 
+		if(  TRUE == Logic_IsTimeLimitItem( pITEM_TBLDAT ) )	/// Only during the first period 
 			m_pArrayCommercialExtendMode[m_eCurrExtendGuiMode]->SetCurrItemInfo( pITEM_TBLDAT );
 
 		SetIcon( pITEM_TBLDAT->szIcon_Name );
@@ -932,8 +932,8 @@ VOID CCommercialExtendGui::OnPaint(VOID)
 {
 	m_DialogSurface.Render();
 
-	m_surConsumeGoldIcon.Render();				// 텍스처 바뀔 수 있음
-	m_surMyGoldIcon.Render();					// 텍스처 바뀔 수 있음
+	m_surConsumeGoldIcon.Render();				// Texture may change
+	m_surMyGoldIcon.Render();					// Texture may change
 
 	m_surItemIconSlot.Render();
 	m_surEnterSlot.Render();
@@ -1019,7 +1019,7 @@ VOID CCommercialExtendGui::HandleEventsSubMsgBox( RWS::CMsg& msg )
 			{
 				case CCommercialExtendGui::ZENNY_EXTEND:	/// Purchase of NPC Stores
 				{
-					if (m_pTargetNtlSobItem)	    /// 인벤에 같은 Duration_group의 item 존재하는지 검사(StartBuyDurItemProcess서 완료)
+					if (m_pTargetNtlSobItem)	    /// Check whether an item of the same Duration_group exists in the inventory (completed in StartBuyDurItemProcess)
 					{
 						CNtlSobItemAttr* pItemAttr = reinterpret_cast<CNtlSobItemAttr*>( m_pTargetNtlSobItem->GetSobAttr() );
 
@@ -1042,7 +1042,7 @@ VOID CCommercialExtendGui::HandleEventsSubMsgBox( RWS::CMsg& msg )
 					else
 					{
 						NetSendBuyDurItemNPC();
-					//	GetAlarmManager()->AlarmMessage("DST_COMMERCIAL_MB_ITEM_BUY_CONFIRM_MSG");
+						//	GetAlarmManager()->AlarmMessage("DST_COMMERCIAL_MB_ITEM_BUY_CONFIRM_MSG");
 					}
 				}
 				break;
@@ -1133,12 +1133,12 @@ VOID CCommercialExtendGui::HandleEventsSubMsgBox( RWS::CMsg& msg )
 
 //	switch (pEvent->uiWorkId)
 //	{
-//	case MBW_COMMERCIAL_MB_UPDATE_TERM_LIMETED_ITEM:	/// inven에서 아이템 연장시 메시지박스 처리
+//	case MBW_COMMERCIAL_MB_UPDATE_TERM_LIMETED_ITEM: ///Process message box when extending item in inven
 //		{
-//			// peessi : 현재는 그냥 아이템을 유효화 하지만, 이후 여기서는 취소할때만 유효화 ok시 연장창 생성, 아이템 연장창을 닫을때 유효화.
-//			if( pEvent->eResult == MBR_OK )	/// 20090820 woosung_test
+//			// peessi: Currently, the item is just validated, but from now on, it will only be validated when canceled, an extension window will be created when OK, and it will be validated when the item extension window is closed.
+//			if( pEvent->eResult == MBR_OK ) ///20090820 woosung_test
 //			{
-//				// 유효기간 연장창 열기.
+//				// Open the validity period extension window.
 //				CNtlSobItem* pItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pEvent->pData->sItemDeleteInfo.hSerial ) );
 //				if( pItem )
 //				{
@@ -1161,11 +1161,11 @@ VOID CCommercialExtendGui::HandleEventsSubMsgBox( RWS::CMsg& msg )
 //		break;	
 //
 ///// NPC, Netpy Shop
-//	case MBW_COMMERCIAL_MB_DIRECT_BUY:			// 기간제아이템 구매 시작(엔트리 포인트)  DST_COMMERCIAL_MB_DIRECT_BUY_MSG
+//	case MBW_COMMERCIAL_MB_DIRECT_BUY:			//Start purchasing limited-term items (entry point) DST_COMMERCIAL_MB_DIRECT_BUY_MSG
 //		{
 //			if( pEvent->eResult == MBR_OK )		
 //			{
-//				if( m_pTargetNtlSobItem )	    /// 인벤에 같은 Duration_group의 item 존재하는지 검사(StartBuyDurItemProcess서 완료)
+//				if( m_pTargetNtlSobItem )	    ///Check whether an item of the same Duration_group exists in the inventory (completed in StartBuyDurItemProcess)
 //				{
 //					CNtlSobItemAttr* pItemAttr = reinterpret_cast<CNtlSobItemAttr*>( m_pTargetNtlSobItem->GetSobAttr() );
 //
@@ -1173,7 +1173,7 @@ VOID CCommercialExtendGui::HandleEventsSubMsgBox( RWS::CMsg& msg )
 //						break;
 //					if( pItemAttr && pItemAttr->GetItemTbl() )
 //					{
-//						if( ITEM_TYPE_BAG == pItemAttr->GetItemTbl()->byItem_Type )	/// bag item인지 검사
+//						if( ITEM_TYPE_BAG == pItemAttr->GetItemTbl()->byItem_Type )	///Check if it is a bag item
 //						{
 //							GetAlarmManager()->AlarmMessage("DST_COMMERCIAL_MB_CAPSULEKIT_ITEM_TERM_EXTENTION");
 //						}
@@ -1183,44 +1183,44 @@ VOID CCommercialExtendGui::HandleEventsSubMsgBox( RWS::CMsg& msg )
 //						}
 //					}
 //				}
-//				else	/// 바로 구매 한다(인벤내에 기간제 존재 않으면)
+//				else ///Buy it right away (if there is no limited-term offer in the inventory)
 //				{
 //					GetAlarmManager()->AlarmMessage("DST_COMMERCIAL_MB_ITEM_BUY_CONFIRM_MSG");
 //				}
 //			}
 //		}
 //		break;
-//	case MBW_COMMERCIAL_MB_ITEM_TERM_EXTENTION:		// 기간제아이템 기간연장 확인 -  : ok  DST_COMMERCIAL_MB_ITEM_BUY_MSG
+//	case MBW_COMMERCIAL_MB_ITEM_TERM_EXTENTION: //Check period extension for limited-term item -: ok DST_COMMERCIAL_MB_ITEM_BUY_MSG
 //		{
-//		/// 기간연장 확인창 open		CCommercialExtendGui command event
+//		/// Period extension confirmation window open CCommercialExtendGui command event
 //			if( pEvent->eResult == MBR_OK )		
 //				OpenDialog();
 //		}
 //		break;
-//	case MBW_COMMERCIAL_MB_CAPSULEKIT_TERM_EXTENTION: // Bag type 기간제아이템 기간연장 확인 or 구매: DST_COMMERCIAL_MB_CAPSULEKIT_ITEM_TERM_EXTENTION
+//	case MBW_COMMERCIAL_MB_CAPSULEKIT_TERM_EXTENTION: //Bag type Check or purchase period extension of limited-term item: DST_COMMERCIAL_MB_CAPSULEKIT_ITEM_TERM_EXTENTION
 //		{
-//		/// 기간연장 확인창 open		CCommercialExtendGui command event
+//		/// Period extension confirmation window open CCommercialExtendGui command event
 //			OpenDialog();
 //		}
 //		break;
-//	case MBW_COMMERCIAL_MB_CAPSULEKIT_BUY: // Bag type 기간제아이템 기간연장 확인 or 구매: DST_COMMERCIAL_MB_CAPSULEKIT_ITEM_TERM_EXTENTION
+//	case MBW_COMMERCIAL_MB_CAPSULEKIT_BUY: //Bag type Check or purchase period extension of limited-term item: DST_COMMERCIAL_MB_CAPSULEKIT_ITEM_TERM_EXTENTION
 //		{
 //			GetAlarmManager()->AlarmMessage("DST_COMMERCIAL_MB_ITEM_BUY_CONFIRM_MSG");
 //		}
 //		break;
-///// 야드레트 창고(Cash)
-//	case MBW_COMMERCIAL_MB_DUR_ITEM_GET_FROM_YARDRAT:// 기간제아이템 구매 시작(엔트리 포인트)  DST_COMMERCIAL_MB_ITEM_TAKE_CONFIRM_MSG
+///// Yardlet Warehouse (Cash)
+//	case MBW_COMMERCIAL_MB_DUR_ITEM_GET_FROM_YARDRAT://Start purchasing limited-term items (entry point) DST_COMMERCIAL_MB_ITEM_TAKE_CONFIRM_MSG
 //		if( pEvent->eResult == MBR_OK )		
 //		{
-//			if( m_pTargetNtlSobItem )	    /// 인벤에 같은 Duration_group의 item 존재하는지 검사(StartBuyDurItemProcessCash서 완료)
+//			if( m_pTargetNtlSobItem )	   ///Check whether an item of the same Duration_group exists in the inventory (completed with StartBuyDurItemProcessCash)
 //			{
-//				CNtlSobItemAttr* pItemAttr = reinterpret_cast<CNtlSobItemAttr*>( m_pTargetNtlSobItem->GetSobAttr() );
+//				CNtlSobItemAttr*pItemAttr = reinterpret_cast<CNtlSobItemAttr*>( m_pTargetNtlSobItem->GetSobAttr() );
 //
 //				if( NULL == pItemAttr )
 //					break;
 //				if( pItemAttr && pItemAttr->GetItemTbl() )
 //				{
-//					if( ITEM_TYPE_BAG == pItemAttr->GetItemTbl()->byItem_Type )	/// bag item인지 검사
+//					if( ITEM_TYPE_BAG == pItemAttr->GetItemTbl()->byItem_Type )	/// bag item inspection
 //					{
 //						GetAlarmManager()->AlarmMessage("DST_COMMERCIAL_MB_CAPSULEKIT_ITEM_SELECT");
 //					}
@@ -1230,21 +1230,21 @@ VOID CCommercialExtendGui::HandleEventsSubMsgBox( RWS::CMsg& msg )
 //					}
 //				}
 //			}
-//			else	/// 바로 이동 한다(인벤내에 기간제 존재 않으면)
+//			else	/// Move immediately (if there is no fixed term in the inventory)
 //			{
 //				GetAlarmManager()->AlarmMessage("DST_COMMERCIAL_MB_ITEM_MOVE_CONFIRM_MSG");
 //			}
 //		}
 //		break;
-//	case MBW_COMMERCIAL_MB_TERM_OR_BUY_SELECT_CONFIRM: // DST_COMMERCIAL_MB_TERM_OR_BUY_SELECT_CONFIRM_MSG
+//	case MBW_COMMERCIAL_MB_TERM_OR_BUY_SELECT_CONFIRM://DST_COMMERCIAL_MB_TERM_OR_BUY_SELECT_CONFIRM_MSG
 //		{
-//			/// 기간연장 확인창 open		CCommercialExtendGui command event
+//			/// Period extension confirmation window open CCommercialExtendGui command event
 //			OpenDialog();
 //		}
 //		break;
 //	case MBW_COMMERCIAL_MB_CAPSULEKIT_ITEM_TERM_EXTENTION:
 //		{
-//			/// 기간연장 확인창 open		CCommercialExtendGui command event
+//			/// Period extension confirmation window open CCommercialExtendGui command event
 //			OpenDialog();
 //		}
 //		break;
@@ -1253,21 +1253,21 @@ VOID CCommercialExtendGui::HandleEventsSubMsgBox( RWS::CMsg& msg )
 //			GetAlarmManager()->AlarmMessage("DST_COMMERCIAL_MB_ITEM_MOVE_CONFIRM_MSG");
 //		}
 //		break;
-///// 구입 재확인
-//	case MBW_COMMERCIAL_MB_ITEM_BUY_CONFIRM:	// 기간제아이템 구매 재확인 DST_COMMERCIAL_MB_ITEM_BUY_CONFIRM_MSG, 
+///// Reconfirm your purchase
+//	case MBW_COMMERCIAL_MB_ITEM_BUY_CONFIRM: //Reconfirm purchase of limited-term item DST_COMMERCIAL_MB_ITEM_BUY_CONFIRM_MSG, 
 //		{
-//			/// 기간제아이템 구매			CCommercialExtendGui command event
+//			/// Purchase a limited-term item CCommercialExtendGui command event
 //			if( pEvent->eResult == MBR_OK )	
 //			{
 //				switch( m_eCurrExtendGuiMode )
 //				{
-//				case CCommercialExtendGui::ZENNY_EXTEND:	/// NPC상점서 기간제 구입
+//				case CCommercialExtendGui::ZENNY_EXTEND: ///Temporary purchase at NPC store
 //					NetSendBuyDurItemNPC();
 //					break;
-//				case CCommercialExtendGui::NETPY_EXTEND:	/// Netpy상점서 기간제 구입
+//				case CCommercialExtendGui::NETPY_EXTEND: ///Fixed-term purchase at Netpy store
 //					NetSendBuyDurItemNetpy();
 //					break;
-//				case CCommercialExtendGui::CASH_EXTEND:		/// 야드래트로부터 이동
+//				case CCommercialExtendGui::CASH_EXTEND: ///Move from yardrat
 //				case CCommercialExtendGui::CASH_BUY:
 //					NetSendMoveDurItemFromYardrat();
 //					break;

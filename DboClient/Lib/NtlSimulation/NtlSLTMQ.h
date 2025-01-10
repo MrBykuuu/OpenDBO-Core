@@ -1,27 +1,28 @@
 /*****************************************************************************
 *
-* File			: NtlSLTMQ.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 
-* Update		: 10. 29
-* Abstract		: Simulation time machine class
+*File			: NtlSLTMQ.h
+*Author		: Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 
+*Update		: 10. 29
+*Abstract		: Simulation time machine class
 *****************************************************************************
-* Desc         : 
+*Desc         : 
 *
 *****************************************************************************/
 
 #ifndef __NTL_MACHINE_H__
 #define __NTL_MACHINE_H__
 
-// core
+// Core
+
 #include "NtlDebug.h"
 #include "ceventhandler.h"
 
-// share
+// Share
 #include "NtlTimeQuest.h"
 
-// simulation
+// Simulation
 #include "NtlSLCommunityAgent.h"
 
 struct sTIMEQUEST_TBLDAT;
@@ -38,29 +39,29 @@ public:
 
 	struct sWaitInfo
 	{
-		sTIMEQUEST_TBLDAT*			pTMQTable;	///< TMQ 테이블		
-		RwReal						fRemainTime;///< TMQ 추첨/진입까지 남은 시간
-		RwBool						bTeleport;	///< TMQ 추첨이 되어 1회 텔레포트 할 수 있다
-		SERIAL_HANDLE				hNPCHandle;	///< TMQ 신청을 한 NPC의 핸들
+		sTIMEQUEST_TBLDAT*			pTMQTable;	///< TMQ table		
+		RwReal						fRemainTime;///< Time remaining until TMQ draw/entry
+		RwBool						bTeleport;	///< You can teleport once through the TMQ lottery.
+		SERIAL_HANDLE				hNPCHandle;	///< Handle of NPC that applied for TMQ
 	};
 
 	struct sTMQRunning
 	{
-		sTIMEQUEST_TBLDAT*		pTMQTable;			///< TMQ 테이블
-		eTIMEQUEST_DIFFICULTY	byDifficultyFlag;	///< 난이도 플래그( eTIMEQUEST_DIFFICULTY_FLAG )
+		sTIMEQUEST_TBLDAT*		pTMQTable;			///< TMQ table
+		eTIMEQUEST_DIFFICULTY	byDifficultyFlag;	///< Difficulty flag (eTIMEQUEST_DIFFICULTY_FLAG)
 		eTIMEQUEST_MODE			eTimeQuestMode;		///< eTIMEQUEST_MODE
 
 		RwUInt8				byStage;
-		RwReal				fLimitedTime;		///< 남은 시간
-		RwBool				bUpdateTime;		///< 남은 시간 업데이트 여부
+		RwReal				fLimitedTime;		///< Time remaining
+		RwBool				bUpdateTime;		///< Whether to update remaining time
 
-		RwReal				fLastDayRecord;		///< 지금까지의 TMQ 최단기록
+		RwReal				fLastDayRecord;		///< Shortest TMQ record so far
 		RwUInt32			uiClearTime;
 		RwUInt32			uiBonusTime;
 		RwBool				bDayRecord;
 		RwBool				bBestRecord;
 
-		// avooo's comment: 진행에 관한 보다 자세한 정보는 SAvatarInfo의 sWORLD_INFO 로 통해서..
+		// avooo's comment: For more detailed information about the progress, go to sWORLD_INFO in SAvatarInfo.
 	};
 
 	virtual	RwBool			Create(void);
@@ -72,13 +73,13 @@ public:
 
 	VOID					SetNPCHandle(SERIAL_HANDLE hNPCHandle);
 
-	// TMQ 예약 정보
+	// TMQ Reservation Information
 	sTIMEQUEST_TBLDAT*		GetTMQTable_for_RegRoom();
 	RwReal					GetRemainTime_in_Room();
 	RwBool					CanTMQTeleport();
 	SERIAL_HANDLE			GetNPCHandle();
 
-	// TMQ 진행 정보
+	// TMQ progress information
 	VOID					SetStage(RwUInt8 byStage) { m_RunningInfo.byStage = byStage; }
 
 	sTIMEQUEST_TBLDAT*		GetTMQTable();
@@ -98,8 +99,8 @@ protected:
 	RwUInt8					GetNearDifficult(TBLIDX tmqTblidx);
 
 protected:
-	sWaitInfo		m_WaitInfo;			///< 등록후 대기 정보
-	sTMQRunning		m_RunningInfo;		///< TMQ 진행 정보
+	sWaitInfo		m_WaitInfo;			///< Waiting information after registration
+	sTMQRunning		m_RunningInfo;		///< TMQ progress information
 };
 
 inline VOID CNtlTMQ::SetNPCHandle(SERIAL_HANDLE hNPCHandle)

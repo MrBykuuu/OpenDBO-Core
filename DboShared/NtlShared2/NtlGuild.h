@@ -12,6 +12,7 @@
 //
 //***********************************************************************************
 
+
 #pragma once
 
 #include "NtlSharedDef.h"
@@ -25,11 +26,12 @@ const DWORD DBO_ZENNY_FOR_GUILD_POINT = 10000;
 const DWORD DBO_POINT_FOR_GUILD_ZENNY = 5;
 const DWORD DBO_ZENNY_FOR_GUILD_CHANGE_MARK = 10000000;
 
-// WARNING :
+// WARNING:
 // You can add a new guild function but MUST NOT REMOVE one. These index numbers are synchronized with DB.
-// Guild 기능을 추가할 수는 있지만 삭제해서는 안 됩니다. 인덱스 번호들이 DB와 동기화되어 있습니다.
+// Guild features can be added, but not removed. Index numbers are synchronized with the DB.
 // by YOSHIKI(2007-04-25)
-// itzrnb - DB와 동기와 되어 있으므로 맨 앞이나 중간에 삽입도 안 됩니다. 추가만 가능
+// itzrnb -Since it is synchronized with the DB, it cannot be inserted at the beginning or in the middle. Add only
+
 enum eDBO_GUILD_FUNCTION
 {
 	DBO_GUILD_FUNCTION_MAX_MEMBER_30 = 0,
@@ -55,7 +57,8 @@ enum eDBO_GUILD_FUNCTION
 	DBO_GUILD_FUNCTION_CAN_USE_DOJO_TELEPORT,
 
 	DBO_GUILD_FUNCTION_MAX_MEMBER_150,
-//	DBO_GUILD_FUNCTION_DOJO_UPGRADE_1,
+//	Dbo guild function dojo upgrade 1,
+
 	DBO_GUILD_FUNCTION_CAN_MAKE_DOGI,
 	DBO_GUILD_FUNCTION_CAN_CHANGE_EMBLEM,
 	DBO_GUILD_FUNCTION_DOJO_UPGRADE_2,
@@ -138,8 +141,11 @@ struct sDBO_DOGI_DATA
 	}
 	GUILDID         guildId;
 	BYTE			byType;			// Lodging type
+
 	BYTE		    byGuildColor;	// Guild Uniform Color
+
 	BYTE			byDojoColor;	// Uniform coating color
+
 
 };
 
@@ -147,6 +153,7 @@ struct sDBO_GUILD_DATA
 {
 	GUILDID			guildId;
 	WCHAR			wszName[NTL_MAX_SIZE_GUILD_NAME + 1]; // Guild Name
+
 
 	CHARACTERID		guildMaster;
 	CHARACTERID		guildSecondMaster[DBO_MAX_SECOND_MASTER_IN_GUILD];
@@ -159,6 +166,7 @@ struct sDBO_GUILD_DATA
 
 	sDBO_GUILD_MARK	sMark;
 	WCHAR			awchName[NTL_MAX_SIZE_CHAR_NAME + 1]; //Player Name who wrote announcement
+
 	WCHAR			awchNotice[NTL_MAX_LENGTH_OF_GUILD_NOTICE + 1];	
 	sDBO_DOGI_DATA  sDogi; 
 };
@@ -166,7 +174,8 @@ struct sDBO_GUILD_DATA
 typedef sDBO_GUILD_DATA sDBO_GUILD_INFO;
 
 
-// GMTool용 데이타 [4/22/2008 SGpro]
+// Data for GMTool [4/22/2008 SGpro]
+
 struct sDBO_GMTOOL_GUILD_DATA
 	: public sDBO_GUILD_DATA
 {
@@ -175,7 +184,8 @@ struct sDBO_GMTOOL_GUILD_DATA
 	DWORD			dwZenny;	
 };
 
-// GMTool용 Search 데이타 [7/1/2008 SGpro]
+// Search data for GMTool [7/1/2008 SGpro]
+
 struct sDBO_GMTOOL_GUILD_SEARCH_DATA
 {
 	GUILDID			guildId;
@@ -233,10 +243,12 @@ struct sDBO_GUILD_MEMBER_INFO
 	BYTE			byLevel;
 	DWORD			dwReputation;
 	bool			bIsOnline;
-	TBLIDX			mapNameTblidx; //new
+	TBLIDX			mapNameTblidx; //New
+
 };
 
-// GMTool용 데이타 [4/22/2008 SGpro]
+// Data for GMTool [4/22/2008 SGpro]
+
 struct sDBO_GMTOOL_GUILD_MEMBER_DATA
 	: public sDBO_GUILD_MEMBER_DATA
 {
@@ -266,15 +278,22 @@ struct sDBO_GUILD_CAHNGE_INFO
 {
 	WCHAR			wszName[NTL_MAX_SIZE_GUILD_NAME + 1];	// ''
 
-	DWORD			dwGuildReputation;		// 길드명성
-	DWORD			dwMaxGuildPointEver;	// Load 그동안 dwGuildReputation 가장 최고값
+
+	DWORD			dwGuildReputation;		// Guild reputation
+
+	DWORD			dwMaxGuildPointEver;	// Load The highest dwGuildReputation value so far
+
 
 	DWORD64			qwGuildFunctionFlag;	// Replace
 
-	sDBO_GUILD_MARK	sMark;					// 초기 0xff
+
+	sDBO_GUILD_MARK	sMark;					// initial 0xff
+
 
 	WCHAR			awchName[NTL_MAX_SIZE_CHAR_NAME + 1];	// ''
+
 	WCHAR			awchNotice[NTL_MAX_LENGTH_OF_GUILD_NOTICE + 1];	//''	
+
 	sDBO_DOGI_DATA  sDogi; 
 };
 
@@ -291,29 +310,37 @@ enum eDBO_GUILD_UPDATE_TYPE
 
 enum eDBO_GUILD_ZENNY_UPDATE_TYPE
 {
-	DBO_GUILD_ZENNY_UPDATE_TYPE_LEADER_INCOME = 0,	// 파티리더에의한 입금 -> 현재는 이 내역밖에 없음
-	DBO_GUILD_ZENNY_UPDATE_TYPE_LEADER_OUTCOME,	// 파티리더에의한 출금-> 현재는 이 내역밖에 없음
-	DBO_GUILD_ZENNY_UPDATE_TYPE_VILLAGE_INCOME,		// 마을퀘스트등
-	DBO_GUILD_ZENNY_UPDATE_TYPE_BATTLE_OUTCOME,		// 도장 쟁탈/비무전의 거부 배상금액 
-	DBO_GUILD_ZENNY_UPDATE_TYPE_BATTLE_INCOME,		// 도장 쟁탈/비무전의 신청금액 환불
+	DBO_GUILD_ZENNY_UPDATE_TYPE_LEADER_INCOME = 0,	// Deposit by party leader -> Currently, this is the only information available.
+
+	DBO_GUILD_ZENNY_UPDATE_TYPE_LEADER_OUTCOME,	// Withdrawal by party leader -> Currently, this is the only information available.
+
+	DBO_GUILD_ZENNY_UPDATE_TYPE_VILLAGE_INCOME,		// Village quests, etc.
+
+	DBO_GUILD_ZENNY_UPDATE_TYPE_BATTLE_OUTCOME,		// Compensation amount for dojo contest/non-radio refusal 
+
+	DBO_GUILD_ZENNY_UPDATE_TYPE_BATTLE_INCOME,		// Refund of application fee for dojo battle/non-military battle
+
 };
 
 
 extern const sDBO_GUILD_FUNCTION_INFO g_aGuildFunctionInfo[DBO_GUILD_FUNCTION_COUNT];
 
 // Checks if a guild has a specified guild function.
-// 길드 function을 가지고 있는지 판단한다.
+// Determine whether it has a guild function.
 // by YOSHIKI(2007-04-25)
+
 bool Dbo_HasGuildFunction(DWORD64 qwGuildFunctionFlag, eDBO_GUILD_FUNCTION eGuildFunction);
 
 // Retrieves information of a specified guild function.
-// 지정한 길드 function에 대한 정보를 얻는다.
+// Obtain information about the specified guild function.
 // by YOSHIKI(2007-04-25)
+
 const sDBO_GUILD_FUNCTION_INFO* Dbo_GetGuildFunctionInfo(eDBO_GUILD_FUNCTION eGuildFunction);
 
 // Checks if a guild can obtain guild function.
-// 길드 function을 획득할 수 있는지 판단한다.
+// Determine whether the guild function can be acquired.
 // by YOSHIKI(2007-04-25)
+
 bool Dbo_CanGetGuildFunction(DWORD64 qwGuildFunctionFlag, DWORD dwPoint, DWORD dwZenny, eDBO_GUILD_FUNCTION eGuildFunction, WORD* pwResultCode);
 
 bool Dbo_CanGetDojoFunction(DWORD64 qwGuildFunctionFlag, DWORD dwPoint, DWORD dwZenny, eDBO_GUILD_FUNCTION eGuildFunction, WORD* pwResultCode);
@@ -324,13 +351,15 @@ bool Dbo_GetUIGuildFunction(DWORD64 qwGuildFunctionFlag, eDBO_GUILD_FUNCTION eGu
 bool Dbo_GetUIDojoFunction(DWORD64 qwGuildFunctionFlag, eDBO_GUILD_FUNCTION eGuildFunction);
 
 // Returns how many members a guild can have at most.
-// 길드가 최대 몇 명의 길드원을 가질 수 있는지 알려준다.
+// It tells you the maximum number of guild members a guild can have.
 // by YOSHIKI(2007-04-26)
+
 DWORD Dbo_GetMaxGuildMemberCount(DWORD64 qwGuildFunctionFlag);
 
 // Returns how many second masters a guild can have at most.
-// 길드가 최대 몇 명의 Second Master를 가질 수 있는지 알려준다.
+// This tells you the maximum number of Second Masters a guild can have.
 // by YOSHIKI(2007-04-26)
+
 DWORD Dbo_GetMaxGuildSecondMasterCount(DWORD64 qwGuildFunctionFlag);
 
 DWORD Dbo_GetGuildPoint(DWORD dwZenny);

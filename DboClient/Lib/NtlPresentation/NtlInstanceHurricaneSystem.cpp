@@ -2,7 +2,7 @@
 //	File		:	NtlInstanceHurricaneSystem.cpp
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -111,7 +111,7 @@ RwBool CNtlInstanceHurricaneSystem::Create(CNtlResourceEffect* pResourceEffect, 
 
 	BuildEmitterStandard(&m_pResourceHurricaneSystem->m_EmitterStandard);
 
-    // 첫 위치는 원점으로 설정한다.
+    //Set the first position to the origin.
     //RwIm3DVertexSetPos(&m_pVertices[m_nCurrentPoint * 2 + 0], 0.0f, 0.0f, 0.0f);
     //RwIm3DVertexSetPos(&m_pVertices[m_nCurrentPoint * 2 + 1], 0.0f, 0.0f, 0.0f);
 
@@ -145,7 +145,7 @@ RwBool CNtlInstanceHurricaneSystem::Create(CNtlResourceEffect* pResourceEffect, 
 //------------------------------------------------------------------
 void CNtlInstanceHurricaneSystem::SetVertexColor(RwRGBA& color)
 {
-    // NOTE: 알파값은 바꾸질 않는다. (허리케인의 특성상 버텍스들의 알파값이 전부다르기 때문)
+    //NOTE: The alpha value does not change. (Due to the nature of the hurricane, the alpha values ??of the vertices are all different)
 	RwInt32 nAlpha;
 	for(RwInt32 i = 0; i < m_nVertexCount; ++i)
 	{
@@ -158,8 +158,8 @@ void CNtlInstanceHurricaneSystem::SetVertexColor(RwRGBA& color)
 
 void CNtlInstanceHurricaneSystem::SetAlpha( RwUInt8 byValue ) 
 {
-    // NOTE: 허리케인에서 SetVertexColor 메소드는 알파값을 변경하지 않는다.
-    // 알파값을 변경할때는 이 메소드를 사용한다.
+    //NOTE: In Hurricane, the SetVertexColor method does not change the alpha value.
+    //Use this method when changing the alpha value.
 
     m_sColor.alpha = byValue;
 
@@ -207,7 +207,7 @@ RwBool CNtlInstanceHurricaneSystem::Update(RwReal fElapsedTime)
 			m_bReady	= TRUE;
 			m_bUpdate	= TRUE;
 
-			// 스타트가 되면 라이프 타임을 초기화 한다.
+			//When starting, initialize the life time.
 			m_fLifeTime = fElapsedTime;
 		}
 		else
@@ -316,7 +316,7 @@ void CNtlInstanceHurricaneSystem::UpdateVertices(RwReal fElapsedTime, RwReal fLi
 	if (m_nCurrentPoint > (m_pResourceHurricaneSystem->m_EmitterStandard.maxPolygonCount / 2)-1) return;
 
 	// ===============================================================================
-	// 폴리곤 조각 각도 계산
+	// Calculating polygon slice angles
 	// ===============================================================================
 	RwReal fFramePerSecond = (RwReal)m_pResourceHurricaneSystem->m_EmitterStandard.revolutionCount * 360.f;
 	m_fDeltaAngle += (fElapsedTime * fFramePerSecond);
@@ -394,7 +394,7 @@ void CNtlInstanceHurricaneSystem::UpdateVertices(RwReal fElapsedTime, RwReal fLi
 
     //++m_nCurrentPoint;
 
-	// 각도로 계산한다.
+	// Calculate by angle.
 	//while(m_fDeltaAngle >=m_pResourceHurricaneSystem->m_EmitterStandard.revolutionAngle)
 	//{
 	//	m_fDeltaAngle -= m_pResourceHurricaneSystem->m_EmitterStandard.revolutionAngle;
@@ -454,7 +454,7 @@ void CNtlInstanceHurricaneSystem::UpdateVanish( RwReal fElapsedTime )
     m_fDeltaAlpha += fElapsedTime;
 
     // ===============================================================================
-    // 알파 마이너스 하기
+    // Subtract alpha
     // ===============================================================================
     if (m_fDeltaAlpha > fManus)
     {

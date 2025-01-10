@@ -21,8 +21,8 @@ class CNtlXMLDoc;
 
 /**
  * \ingroup NtlPresentation
- * entity의 attibute를 나타내는 base class이다.
- * 모든 entity들은 instance가 생성된 후에 SetProperty interface 함수를 통하여 property data를 전달된다.
+ *This is a base class that represents the attribute of the entity.
+ *For all entities, property data is passed through the SetProperty interface function after an instance is created.
  *
  */
 class CNtlPLProperty
@@ -32,7 +32,7 @@ protected:
 	RwUInt32 m_uiId;
 	std::string m_strName;				/**< String describing the presentation entity property name */
 	std::string m_strClassID;			/**< String describing the presentation entity property class id */
-    RwUInt32    m_uiFlag;               ///< 각 Entity에 따른 Flag 
+    RwUInt32    m_uiFlag;               ///< Flag for each entity 
 
 public:
 
@@ -57,7 +57,7 @@ public:
 
 	/**
 	*  prosentation entity property name setting.
-	*  \return property id을 리턴한다.
+	*  \return Returns property id.
 	*  \see SetId
 	*/
 	RwUInt32 GetId(void) const;
@@ -70,8 +70,8 @@ public:
 	void SetName(const RwChar *pName);
 
 	/**
-	*  prosentation entity property name을 얻어오는 함수.
-	*  \return property name string을 리턴한다.
+	*  Function to obtain the prosentation entity property name.
+	*  \return Returns property name string.
 	*  \see SetName
 	*/
 	const RwChar* GetName(void);
@@ -84,30 +84,31 @@ public:
 	void SetClassID(const RwChar *pClassID);
 
 	/**
-	*  prosentation entity property class id를 얻어오는 함수.
-	*  \return property class id string을 리턴한다.
+	*  Function to obtain the prosentation entity property class id.
+	*  \return property class id string.
 	*  \see SetClassID
 	*/
 	const RwChar* GetClassID(void);
 
 	///**
-	//*  property data load 함수.
-	//*  \return 성공이면TRUE, 실패이면 FALSE
+	//*  property data load function.
+	//*  \return TRUE if success, FALSE if failure
 	//*  \param pNode XML doc node
 	//*  \see Save
 	//*/
+
 	virtual RwBool Load(CNtlXMLDoc *pDoc, IXMLDOMNode *pNode) = 0;
 
 	///**
-	//*  property data save 함수.
-	//*  \return 성공이면TRUE, 실패이면 FALSE
+	//*  property data save function.
+	//*  \return TRUE if success, FALSE if failure
 	//*  \param pNode XML doc node
 	//*  \see Load
 	//*/
 	virtual RwBool Save(CNtlXMLDoc *pDoc, IXMLDOMNode *pNode) = 0;
 
-	virtual void	SaveSerialize(CNtlSerializer& sOut) {}											///< Serialize에 데이터를 저장하는 함수
-	virtual void	LoadSerialize(CNtlSerializer& sIn) {}											///< Serialize로부터 데이터를 가져오는 함수
+	virtual void	SaveSerialize(CNtlSerializer& sOut) {}											///< Function to save data in Serialize
+	virtual void	LoadSerialize(CNtlSerializer& sIn) {}											///< Function to retrieve data from Serialize
 
     virtual RwUInt32 GetFlag() {return m_uiFlag;}
     virtual void     SetFlag(RwUInt32 uiFlag) {m_uiFlag = uiFlag;}

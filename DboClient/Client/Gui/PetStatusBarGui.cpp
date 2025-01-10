@@ -1,10 +1,10 @@
 #include "precomp_dboclient.h"
 #include "PetStatusBarGui.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLApi.h"
 #include "NtlSLEvent.h"
 #include "NtlSLGlobal.h"
@@ -16,10 +16,10 @@
 #include "NPCTable.h"
 #include "NtlSLPacketGenerator.h"
 
-//sound
+//Sound
 #include "GUISoundDefine.h"
 
-// dbo
+// Dbo
 #include "BuffDispObject.h"
 #include "DboLogic.h"
 #include "DboEvent.h"
@@ -122,7 +122,7 @@ RwBool CPetStatusBarGui::Create()
     m_pSttInfoPD->CreateFontStd(DETAIL_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
     m_pSttInfoED->CreateFontStd(DETAIL_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);    
 
-    // label        
+    // Label        
     m_pSttInfoHRLabel->SetText(GetDisplayStringManager()->GetString("DST_STATUS_ATTACK_RATE"));
     m_pSttInfoDRLabel->SetText(GetDisplayStringManager()->GetString("DST_STATUS_DODGE"));
     m_pSttInfoPOLabel->SetText(GetDisplayStringManager()->GetString("DST_STATUS_ATTACK"));
@@ -216,7 +216,7 @@ void CPetStatusBarGui::UpdateBeforeCamera( RwReal fElapsed )
 	if(!IsShow())
 		return;
 
-	// TODO: 일러스트로 대체
+	// TODO: Replaced with illustrations
 	if (m_uiPetID)
 	{
 		CNtlSobPet* pSobPet = reinterpret_cast<CNtlSobPet*>(GetNtlSobManager()->GetSobObject(m_uiPetID));		
@@ -240,7 +240,7 @@ VOID CPetStatusBarGui::OnMove( RwInt32 iOldX, RwInt32 iOldY )
 {
 	CRectangle rect = m_pThis->GetScreenRect();
 
-	// 일러스트
+	// illustration
 	m_surCharacter.SetRectWH( rect.left + SUR_CHAR_LEFT_OFFSET, rect.top + SUR_CHAR_TOP_OFFSET, 38, 38 );
 
 	// Emergency Effect
@@ -249,7 +249,7 @@ VOID CPetStatusBarGui::OnMove( RwInt32 iOldX, RwInt32 iOldY )
 	surface.m_Original.rtRect.GetCenterPosition(&nCenterX, &nCenterY);
 	m_feEmergency.SetCenterPos(rect.left + nCenterX, rect.top + nCenterY);
 
-	// 버프 아이콘
+	// buff icon
 	m_pBuff->SetMove(rect);
 }
 
@@ -286,7 +286,7 @@ void CPetStatusBarGui::DeleteInstance()
 
 void CPetStatusBarGui::HandleEvents( RWS::CMsg &pMsg )
 {
-	if(pMsg.Id == g_EventSobInfoUpdate)	// Pet의 정보가 Update 되었을때
+	if(pMsg.Id == g_EventSobInfoUpdate)	// When the pet's information is updated
 	{
 		SNtlEventSobInfoUpdate *pUpdate = reinterpret_cast<SNtlEventSobInfoUpdate*>(pMsg.pData); 
 
@@ -308,7 +308,7 @@ void CPetStatusBarGui::HandleEvents( RWS::CMsg &pMsg )
 
 		/*UpdatePetPowerValue();*/
 	}
-	else if(pMsg.Id == g_EventSummonPet)		// Pet이 죽었을때 UI도 삭제한다.
+	else if(pMsg.Id == g_EventSummonPet)		// When the pet dies, the UI is also deleted.
 	{
 		SDboEventSummonPet* pData = reinterpret_cast<SDboEventSummonPet*>(pMsg.pData);
 
@@ -342,7 +342,7 @@ void CPetStatusBarGui::SetPetID( RwUInt32 uiSerialId )
 		if( pPetAttr == NULL)
 			DBO_ASSERT( 0 , "CPetStatusBarGui::SetPetID - pPetAttr is NULL" );
 
-		// 이전에 있던 Texture 삭제
+		// Delete the previously existing Texture
 		if( m_surCharacter.GetTexture() )
 		{
 			Logic_DeleteTexture( m_surCharacter.GetTexture() );
@@ -352,7 +352,7 @@ void CPetStatusBarGui::SetPetID( RwUInt32 uiSerialId )
 		CHAR acPetIllustBuffer[256];
 		sprintf_s( acPetIllustBuffer, 256, "Pet_%s.png", pPetAttr->GetModelName() );
 
-		// Create Textrue
+		// Create Texture
 		m_surCharacter.SetTexture( Logic_CreateTexture( acPetIllustBuffer, TEXTYPE_ICON ) );
 	}
 }
@@ -389,19 +389,19 @@ void CPetStatusBarGui::UpdatePetInfo()
     sprintf_s(buf, "%u", uiEP);
     m_pSttInfoEP->SetText(buf);
 
-    // Pet의 Status는 차후에 서버로 부터 정보를 받아서 표시한다.
+    // The Pet's Status receives information from the server later and displays it.
     sprintf_s(buf, "%u", pPetAttr->m_wAttackRate);
     m_pSttInfoHR->SetText(buf);
 
     sprintf_s(buf, "%u", pPetAttr->m_wDodgeRate);
     m_pSttInfoDR->SetText(buf);
 
-    // 물리/기공 속성에 따라서 펫의 공격력을 표시한다.
-    if(BATTLE_ATTACK_TYPE_PHYSICAL == pPetAttr->m_pNpcTbl->byAttack_Type)  // 물리 공격 펫
+    // Displays the pet's attack power according to physical/technical properties.
+    if(BATTLE_ATTACK_TYPE_PHYSICAL == pPetAttr->m_pNpcTbl->byAttack_Type)  // physical attack pet
     {
         sprintf_s(buf, "%u", pPetAttr->m_wPhysicalOffence);    
     }
-    else // 기공 공격 펫
+    else // Qigong Attack Pet
     {
         sprintf_s(buf, "%u", pPetAttr->m_wEnergyOffence);    
     }

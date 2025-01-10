@@ -2,7 +2,7 @@
  *
  * File			: NtlPLEvent.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: (?)NTL
  * Date			: 2005. 9. 29	
  * Abstract		: presentation layer event type
  *****************************************************************************
@@ -15,23 +15,23 @@
 
 #include "ceventhandler.h"
 
-//AnimationEvent 관련
-extern RWS::CEventId g_EventAnimEnd;			 //Animation이 끝났을 경우
+//AnimationEvent related
+extern RWS::CEventId g_EventAnimEnd;			 //When animation is finished
 extern RWS::CEventId g_EventAnimHit;             //Animation Hit Event
-extern RWS::CEventId g_EventAnimFootStep;		 //Animation 발바닥 땅에 닿을때
+extern RWS::CEventId g_EventAnimFootStep;		 //Animation When the soles of your feet touch the ground
 extern RWS::CEventId g_EventWeightTime;			 //Animaiton Weight Event
-extern RWS::CEventId g_EventSubWeaponActive;	 //sub weapon을 active 시킨다 ( 예 : 등에 차고 있는 칼을 뽑는다. )
-extern RWS::CEventId g_EventSubWeaponDeActive;	 //sub weapon을 deactive 시킨다 ( 예 : 뽑았던 칼을 다시 등에 찬다. )
-extern RWS::CEventId g_EventSummon;				 //summmon active 시킨다.( 소환수가 소환물을 소환시키는 timing event. )
-extern RWS::CEventId g_EventAlpha;               // Alpha Fade용 이벤트
-extern RWS::CEventId g_EventAnimTMQ;             // TMQ 연출용 이벤트
-extern RWS::CEventId g_EventExplosion;           // 폭발 이벤트
+extern RWS::CEventId g_EventSubWeaponActive;	 //Activate the sub weapon (e.g. pull out the sword worn on your back)
+extern RWS::CEventId g_EventSubWeaponDeActive;	 //Deactivate the sub weapon (e.g. put the drawn sword on your back again)
+extern RWS::CEventId g_EventSummon;				 //Make summmon active. (Timing event where a summon summons a summon.)
+extern RWS::CEventId g_EventAlpha;               // Events for Alpha Fade
+extern RWS::CEventId g_EventAnimTMQ;             // TMQ production event
+extern RWS::CEventId g_EventExplosion;           // explosion event
 extern RWS::CEventId g_EventAnimPostEffect;      // Post Effect Event
-extern RWS::CEventId g_EventAnimDirect;          // 연출용 이벤트
-extern RWS::CEventId g_EventAnimColorChange;     // 색상변경 이벤트
-extern RWS::CEventId g_EventAnimStretch;         // 본이 늘어나는 이벤트
-extern RWS::CEventId g_EventAnimTrigger;         // 다양하게 사용되는 트리거 이벤트
-extern RWS::CEventId g_EventAnimSkillCancel;	 // 스킬animation 도중 animatin이 cancel이 가능한 point.
+extern RWS::CEventId g_EventAnimDirect;          // Production event
+extern RWS::CEventId g_EventAnimColorChange;     // Color change event
+extern RWS::CEventId g_EventAnimStretch;         // An event that increases the number of examples
+extern RWS::CEventId g_EventAnimTrigger;         // Trigger events used in a variety of ways
+extern RWS::CEventId g_EventAnimSkillCancel;	 // A point at which animatin can be canceled during skill animation.
 
 struct SNtlEventAnimEnd
 {
@@ -49,10 +49,10 @@ struct SNtlEventAnimHit
 
 struct SNtlEventFootStep
 {
-	RwUInt32 uiSerialId;                        ///< 캐릭터 객체의 시리얼 ID
-    void*    pData;                             // SEventFootStep
+	RwUInt32 uiSerialId;                        ///< Serial ID of character object
+    void*    pData;                             // S event foot step
 
-    //RwBool   bLeftFoot;                         ///< 발 종류 (True : 왼쪽, False : 오른쪽)
+    //RwBool   bLeftFoot;                        ///< Foot type (True: left, False: right)
 };
 
 struct SNtlEventWeightTime						//SEventWeightTime(Character\Base NtlAnimEventData.h)
@@ -61,17 +61,17 @@ struct SNtlEventWeightTime						//SEventWeightTime(Character\Base NtlAnimEventDa
 	void		*pData;
 };
 
-struct SNtlEventSubWeaponActive					//sub weapon을 active 시킨다 ( 예 : 등에 차고 있는 칼을 뽑는다. )
+struct SNtlEventSubWeaponActive					//Activate the sub weapon (e.g. pull out the sword worn on your back)
 {
 	RwUInt32 uiSerialId;
 };
 
-struct SNtlEventSubWeaponDeActive				//sub weapon을 deactive 시킨다 ( 예 : 뽑았던 칼을 다시 등에 찬다. )
+struct SNtlEventSubWeaponDeActive				//Deactivate the sub weapon (e.g. put the drawn sword on your back again)
 {
 	RwUInt32 uiSerialId;
 };
 
-struct SNtlEventSummon							//summmon active 시킨다.( 소환수가 소환물을 소환시키는 timing event. )
+struct SNtlEventSummon							//Make summmon active. (Timing event where a summon summons a summon.)
 {
 	RwUInt32 uiSerialId;
 };
@@ -79,52 +79,52 @@ struct SNtlEventSummon							//summmon active 시킨다.( 소환수가 소환물을 소환시�
 struct SNtlEventAlpha                           /// Alpha Fade Event
 {
     RwUInt32 uiSerialId;
-    void*    pData;                             ///< Alpha Fade Event 객체의 포인터
+    void*    pData;                             ///< Pointer to Alpha Fade Event object
 };
 
 struct SNtlPLEventTMQ
 {
-    RwUInt32    uiSeiralID;                         ///< 이벤트를 보낸 타임머신 오브젝트의 시리얼 ID
-    RwBool      bIn;                                ///< TMQ 진입 여부 (True면 진입/False면 아웃)
+    RwUInt32    uiSeiralID;                         ///< Serial ID of the time machine object that sent the event
+    RwBool      bIn;                                ///< Whether to enter TMQ (if True, enter /if False, exit)
 };
 
 struct SNtlPlEventExplosion
 {
-    RwUInt32    uiSerialID;                     ///< 오브젝트의 시리얼 ID
-    void*       pData;                          ///< Explosion Event 구조체의 포인터
+    RwUInt32    uiSerialID;                     ///< Serial ID of object
+    void*       pData;                          ///< Pointer to Explosion Event structure
 };
 
 struct SNtlEventPostEffect
 {
-    RwUInt32    uiSerialID;                     ///< 이벤트를 발생하는 아바타의 ID
-    void*       pData;                          ///< Post Effect Event 구조체의 포인터
+    RwUInt32    uiSerialID;                     ///< ID of the avatar that generates the event
+    void*       pData;                          ///< Pointer to Post Effect Event structure
 };
 
-/// 연출용 이벤트
+/// Production event
 struct SNtlEventDirect
 {
-    RwUInt32    uiSerialID;                     ///< 이벤트를 발생하는 객체의 ID
-    void*       pData;                          ///< SEventDirect 구조체의 포인터
+    RwUInt32    uiSerialID;                     ///< ID of the object that generates the event
+    void*       pData;                          ///< Pointer to SEventDirect structure
 };
 
-/// 컬러 변경 이벤트
+/// color change event
 struct SNtlEventColorChange
 {
     RwUInt32    uiSerialID;
-    void*       pData;                          ///< SEventColorChange 구조체의 포인터
+    void*       pData;                          ///< Pointer to SEventColorChange structure
 };
 
-/// 본늘리기 이벤트
+/// Bonus event
 struct SNtlEventStretch
 {
     RwUInt32    uiSerialID;
-    void*       pData;                          ///< SEventStretch 구조체의 포인터
+    void*       pData;                          ///< Pointer to SEventStretch structure
 };
 
 struct SNtlEventTrigger
 {
     RwUInt32    uiSerialID;
-    void*       pData;                          ///< SEventTrigger 구조체의 포인터
+    void*       pData;                          ///< Pointer to SEventTrigger structure
 };
 
 struct SNtlEventAnimSkillCancel
@@ -182,7 +182,7 @@ struct sNTL_EVENT_TRI_DOODADS
 };
 
 extern RWS::CEventId g_EventCreateEventObject;
-extern RWS::CEventId g_EventThreadLoadingComplete; // 엔티티의 스레드 로딩이 끝났음을 통지하는 이벤트
+extern RWS::CEventId g_EventThreadLoadingComplete; // An event that notifies the end of thread loading of an entity.
 
 /// EVENT Object
 struct SNtlPLEventEventObject
@@ -193,7 +193,7 @@ struct SNtlPLEventEventObject
 
 struct SNtlPlThreadLoadingComplete
 {
-    RwUInt32    uiSerialID;                     ///< 엔티티의 시리얼 ID
+    RwUInt32    uiSerialID;                     ///< Serial ID of the entity
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -225,7 +225,7 @@ extern RWS::CEventId g_EventCinematicViewShow;
 extern RWS::CEventId g_EventCinematicBalloon;
 extern RWS::CEventId g_EventCinematicFlash;
 extern RWS::CEventId g_EventCinematicEcho;
-extern RWS::CEventId g_EventResetCinematic;				// Cinematic Action을 Reset한다. GUI에서만 호출
+extern RWS::CEventId g_EventResetCinematic;				// Reset Cinematic Action. Called only from GUI
 
 
 //////////////////////////////////////////////
@@ -234,8 +234,8 @@ extern RWS::CEventId g_EventResetCinematic;				// Cinematic Action을 Reset한다. 
 */
 //////////////////////////////////////////////
 
-extern RWS::CEventId g_EventCinematicFadeOut;           // 시네마틱 연출 시작
-extern RWS::CEventId g_EventCinematicFadeIn;	        // 시네마틱 연출 종료
+extern RWS::CEventId g_EventCinematicFadeOut;           // Cinematic directing begins
+extern RWS::CEventId g_EventCinematicFadeIn;	        // End of cinematic production
 
 //////////////////////////////////////////////
 /**
@@ -263,7 +263,7 @@ extern RWS::CEventId g_EventHideAllSpectatorBalloon;
 
 //////////////////////////////////////////////
 /**
-* Player 관련
+* Player related
 */
 //////////////////////////////////////////////
 extern RWS::CEventId g_EventShowPlayerName;                     ///< Name Show/Hide
@@ -310,7 +310,7 @@ struct SNtlEventCinematicFlash
 
 	RwBool			bShow;
 	RwChar*			pFilename;
-	RwBool			bUseTime;							// True : 시간제 False : 1회연출
+	RwBool			bUseTime;							// True: Part-time False: Directed once
 	RwReal			fLifeTime;
 	void*			pEchoData;
 	RwReal			fBeginAlphaTime;
@@ -341,7 +341,7 @@ enum ECinematicFadeInOutType
 struct SNtlEventCinematicFadeInOut
 {
 	RwUInt8		byType;
-	RwReal		fLifeTime;		// 보간 시간.
+	RwReal		fLifeTime;		// Interpolation time.
 	RwUInt8		byRed;
 	RwUInt8		byGreen;
 	RwUInt8		byBlue;

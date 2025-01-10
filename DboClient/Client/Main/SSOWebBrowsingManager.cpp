@@ -28,12 +28,12 @@ CSSOWebBrowsingManager::~CSSOWebBrowsingManager(void)
 
 BOOL CSSOWebBrowsingManager::Create( HWND hWndMain, LPCTSTR strAuthCookie, LPCTSTR strDataCookie, LPCTSTR strCpCookie )
 {
-	// SSO 웹브라우저 모듈을 초기화 한다
+	//Initialize the SSO web browser module
 	if(!InitSSOWebBrowser(hWndMain, strAuthCookie, strDataCookie, strCpCookie)) 
 	{
-		// 실패하는 경우 프로그램 종료
-		MessageBoxA(NULL, "error", "SSO WebBrowser 모듈을 초기화할 수 없습니다.", MB_OK);
-		// 프로그램 종료
+		//Terminate the program in case of failure
+		MessageBoxA(NULL, "error", "The SSO WebBrowser module could not be initialized.", MB_OK);
+		//end program
 		return FALSE;
 	}
 
@@ -44,14 +44,14 @@ BOOL CSSOWebBrowsingManager::Create( HWND hWndMain, LPCTSTR strAuthCookie, LPCTS
 
 void CSSOWebBrowsingManager::Destroy()
 {
-	// SSO웹브라우저 모듈을 파괴하기전에 웹브라우저를 먼저 파괴해야한다
+	//Before destroying the SSO web browser module, you must destroy the web browser first.
 	for( int i = 0; i < m_vecMembers.size(); i++)
 	{
 		m_vecMembers[i].m_pSSOWebBrowser->Destroy();
 		delete( m_vecMembers[i].m_pSSOWebBrowser );
 	}
 
-	// SSO웹브라우저 모듈을 파괴
+	//Destroy the SSO web browser module
 	UnInitSSOWebBrowser();
 
 }

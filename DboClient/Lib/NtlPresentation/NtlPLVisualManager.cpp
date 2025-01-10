@@ -1,17 +1,17 @@
 #include "precomp_ntlpresentation.h"
 #include "NtlPLVisualManager.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 #include "NtlAtomic.h"
 
 #include "NtlWorldInterface.h"
 
-// sound
+// Sound
 #include "NtlSoundManager.h"
 
-// presentation
+// Presentation
 #include "NtlPLGlobal.h"
 #include "NtlPLEntity.h"
 #include "NtlPlEntityFactory.h"
@@ -331,9 +331,9 @@ void CNtlPLVisualManager::RemoveReservedUpdate(CNtlPLEntity *pEntity)
 	CNtlPLRenderGroup *pRenderGroup = FindUpdateGroup(uiClassType);
 	NTL_ASSERTE(pRenderGroup);
 
-	// AddReservedUpdate에서는 NTL_PLEFLAG_NOTUPDATE Flag를 뺀다.
-	// 한번이라도 AddReservedUpdate Update 상태가 유지된다.
-	// 추후 문제가 되지 않을지 파악해둔다. // Cz
+	// In AddReservedUpdate, remove the NTL_PLEFLAG_NOTUPDATE Flag.
+	// The AddReservedUpdate Update status is maintained even once.
+	// Find out if it will be a problem in the future. //Cz
 	pRenderGroup->RemoveEntity(pEntity); 
 }
 
@@ -355,7 +355,7 @@ void CNtlPLVisualManager::Update(RwReal fElapsed)
 		NTL_RPROFILE_VOID()
 	}
 
-	// distance filter 처리.
+	// Distance filter processing.
 	UpdateDistanceFilter(fElapsed);
 
 	// update sound
@@ -364,7 +364,7 @@ void CNtlPLVisualManager::Update(RwReal fElapsed)
 	// DN Control
 	GetDnController()->Update( fElapsed );
 
-	// update
+	// Update
 	CNtlPLRenderGroup *pGroup, *pInstanceGroup, *pRenderingGroup;
 	CNtlPLEntity* pEntity;
 	MapRenderGroup::iterator it;
@@ -413,7 +413,7 @@ void CNtlPLVisualManager::Update(RwReal fElapsed)
 
 	ProcReservedAdd();
 
-	// gui
+	// Gui
 	CNtlPLGuiManager::GetInstance()->Update( fElapsed ); 
 
 	NTL_EPROFILE()
@@ -492,7 +492,7 @@ void CNtlPLVisualManager::Render(void)
 
 	m_CullScheduler.Update(g_GetElapsedTime());
 
-    // Entity 컬링 체크
+    // Entity Curling Check
 // 	static RwReal	g_fCullTimeCur	= 0.0f;
 // 	static RwReal	g_fCullTime		= 0.05f / 3.0f;
 // 	static RwInt32	g_iCullMode		= 0;
@@ -502,7 +502,7 @@ void CNtlPLVisualManager::Render(void)
 // 	{
 // 		CNtlPLRenderGroup* pNtlPLRenderGroup = NULL;
 // 
-// 		// Object Culling Test를 Frustum Sector 기준으로 Visible에 문제가 생긴다.
+// 		// Visibility problems arise based on the Frustum Sector in the Object Culling Test.
 // 		switch (g_iCullMode)
 // 		{
 // 		case 0:
@@ -564,7 +564,7 @@ void CNtlPLVisualManager::Render(void)
 				RwCameraForAllSectorsInFrustum(CNtlPLGlobal::m_RwCamera, NtlWorldSectorRenderCallback, NULL);
 				RwCameraForAllSectorsInFrustum(CNtlPLGlobal::m_RwCamera, NtlWorldSectorAtomicCallback, NULL);
 				break;
-				// 인도어
+				// Indoor
 			case AW_RWWORLD:
 				Render4RWWorld();
 				break;
@@ -634,7 +634,7 @@ void CNtlPLVisualManager::PostRender()
 		NTL_RPROFILE_VOID()
 	}
 
-	// gui
+	// Gui
 	BeginGuiRenderState();
 	CNtlPLGuiManager::GetInstance()->Render();
 	CNtlPLGuiManager::GetInstance()->PostRender();
@@ -760,7 +760,7 @@ RwBool CNtlPLVisualManager::AddPLEntity(CNtlPLEntity *pEntity)
     {
 		AddDistanceFilter(pEntity);
 
-        // Event Object라면 SL에 Event를 날린다.
+        // If it is an Event Object, an Event is sent to SL.
         CNtlPLObject* pObject = reinterpret_cast<CNtlPLObject*>(pEntity);
         if(pObject && pObject->GetProperty()->GetObjectType() == E_OBJECT_MILEPOST)
         {
@@ -847,7 +847,7 @@ void CNtlPLVisualManager::RemovePLEntity(CNtlPLEntity *pEntity)
 	if(pRenderGroup)
 		pRenderGroup->RemoveEntity(pEntity); 
 
-	// reserved 에서 remove
+	// remove from reserved
 	MapReservedUpdate::iterator it;
 	it = m_mapAddUpdate.find(pEntity);
 	if(it != m_mapAddUpdate.end())
@@ -857,7 +857,7 @@ void CNtlPLVisualManager::RemovePLEntity(CNtlPLEntity *pEntity)
 	if(it != m_mapRemoveUpdate.end())
 		m_mapRemoveUpdate.erase(it);
 
-	// distane filter group에서 remove 한다.
+	// Remove from distane filter group.
 	if(m_pDistFiterGroup)
 	{
 		RemoveDistanceFilter(pEntity);
@@ -974,7 +974,7 @@ RwBool CNtlPLVisualManager::GetRWWorldHeight(const RwV3d *pWorldPos, RwReal& fHe
 		return FALSE;
 	}
 
-	// object line collision 높이 얻어오기.
+	// Get object line collision height.
 	RwLine Line;
 	RwV3dAssign(&Line.start, pWorldPos);
 	RwV3dAssign(&Line.end, pWorldPos);
@@ -1003,7 +1003,7 @@ RwBool CNtlPLVisualManager::GetRWWorldHeight(const RwV3d *pWorldPos, RwReal& fHe
 		}
 	}
 
-	// height field 높이 얻어오기
+	// height field get height
 	static SWorldIntersect sHFInter;
 	static RwBool bHFColl = FALSE;
 	bHFColl = Collision_IndoorIntersectionLineTopDown(Line, sHFInter);
@@ -1082,7 +1082,7 @@ RwBool CNtlPLVisualManager::GetHeightFieldWorldHeight(const RwV3d *pWorldPos, Rw
 		return FALSE;
 	}
 
-	// object line collision 높이 얻어오기.
+	// Get object line collision height.
 	RwLine Line;
 	RwV3dAssign(&Line.start, pWorldPos);
 	RwV3dAssign(&Line.end, pWorldPos);
@@ -1111,7 +1111,7 @@ RwBool CNtlPLVisualManager::GetHeightFieldWorldHeight(const RwV3d *pWorldPos, Rw
 		}
 	}
 
-	// height field 높이 얻어오기
+	// height field get height
 	static SWorldIntersect sHFInter;
 	static RwBool bHFColl = FALSE;
 	bHFColl = Collision_HeightFieldIntersectionLineTopDown(Line, sHFInter);
@@ -1153,8 +1153,8 @@ RwBool CNtlPLVisualManager::GetHeightFieldWorldHeight(const RwV3d *pWorldPos, Rw
 		}
 		else
 		{
-			// 아무것도 충돌이 안되었을 경우.. start 위치를 올려서 한번더 한다.
-			Line.start.y += fLineLen; // 기존 200.0f;
+			// If nothing crashes... Raise the start position and try again.
+			Line.start.y += fLineLen; // existing 200.0f;
 			bHFColl = Collision_HeightFieldIntersectionLineTopDown(Line, sHFInter);
 			if(bHFColl)
 			{
@@ -1188,7 +1188,7 @@ RwBool CNtlPLVisualManager::GetRWTerrainHeight(const RwV3d *pWorldPos, RwReal& f
 		return FALSE;
 	}
 
-	// height field 높이 얻어오기
+	// height field get height
 	RwV3d vTmp;
 	CNtlMath::MathRwV3dAssign(&vTmp, pWorldPos->x, pWorldPos->y, pWorldPos->z);
 	fHeight = GetWorld()->GetWorldSectorHeight(vTmp);
@@ -1204,7 +1204,7 @@ RwBool CNtlPLVisualManager::GetHeightFieldTerrainHeight(const RwV3d *pWorldPos, 
 		return FALSE;
 	}
 
-	// height field 높이 얻어오기
+	// height field get height
 	RwV3d vTmp;
 	CNtlMath::MathRwV3dAssign(&vTmp, pWorldPos->x, pWorldPos->y, pWorldPos->z);
 	fHeight = GetWorld()->GetWorldSectorHeight(vTmp);
@@ -1214,7 +1214,7 @@ RwBool CNtlPLVisualManager::GetHeightFieldTerrainHeight(const RwV3d *pWorldPos, 
 
 RwBool CNtlPLVisualManager::IsWorldReady(void)
 {
-	// 인도어
+	// Indoor
 	EActiveWorldType eWorldType = GetActiveWorldType();
 
 	if(eWorldType == AW_NONE)
@@ -1244,9 +1244,9 @@ RwBool CNtlPLVisualManager::GetWorldHeight( const RwV3d *pWorldPos, RwReal& fHei
 }
 
 /**
-*  world position에 해당하는 terrain 지형만 해당하는 height를 구하는 interface 함수.
-*  \return terrain height value를 리턴한다.
-*  \param pWorldPos world position에 해당하는 RwV3d pointer
+*Interface function that calculates the height of only the terrain corresponding to the world position.
+*  \return Returns the terrain height value.
+*  \param pWorldPos RwV3d pointer corresponding to world position
 *
 */
 RwBool CNtlPLVisualManager::GetTerrainHeight(const RwV3d *pWorldPos, RwReal& fHeight)
@@ -1270,11 +1270,11 @@ RpWorld* CNtlPLVisualManager::GetWorldPtr(void)
 
 
 /**
-*  world에 pick된 polygon을 찾는다.
-* 캐릭터를 피킹하고... 피킹된 캐릭터끼리 거리 구해서 가까운 놈 선택하고,
-* 지형과 다시 거리 비교를 해서 지형이 가까우면 sPickInfo.pPLEntity = GetTerrain() 을 넣어주고,
-* 캐릭터가 가까우면 sPickInfo.pPLEntity = CNtlPLCharacter를 넣어주면 된다.
-*  \return 충동된 polygon의 좌표.
+*Find the polygon picked in the world.
+*Pick the characters... find the distance between the picked characters and select the closest one,
+*Compare the distance with the terrain again, and if the terrain is close, add sPickInfo.pPLEntity = GetTerrain(),
+*If the character is close, just put sPickInfo.pPLEntity = CNtlPLCharacter.
+*  \return The coordinates of the driven polygon.
 *
 */
 
@@ -1405,7 +1405,7 @@ RwBool CNtlPLVisualManager::PickWorld_New(RwInt32 iPosX, RwInt32 iPosY, SWorldPi
 
 	//////////////////////////////////////////////////////////////////////////
 	//
-	//	지형 Picking
+	//	Terrain Picking
 	//
 	//////////////////////////////////////////////////////////////////////////
 	RwBool bPickTerrain = FALSE;
@@ -1437,7 +1437,7 @@ RwBool CNtlPLVisualManager::PickWorld_New(RwInt32 iPosX, RwInt32 iPosY, SWorldPi
 
 	//////////////////////////////////////////////////////////////////////////
 	//
-	//	충돌 판단
+	// Determine collisions
 	//
 	//////////////////////////////////////////////////////////////////////////
 	RwLine CameraRay;
@@ -1534,8 +1534,8 @@ RwBool CNtlPLVisualManager::CTChar2Poly(sNPE_COLLISION_PARAM& sNPECollisionParam
 }
 */
 /**
- * Map Tool에서 Object Fade 효과 유무를 설정할때 사용한다.
- * \param bEnable Fade 효과 유무 
+ *Used to set the presence or absence of the Object Fade effect in the Map Tool.
+ * \param bEnable Fade effect or not 
  */
 void CNtlPLVisualManager::SetDistanceFilter(RwBool bEnable)
 {
@@ -1559,7 +1559,7 @@ void CNtlPLVisualManager::SetDistanceFilter(RwBool bEnable)
 
 DWORD CNtlPLVisualManager::GetWorldAttribute(RwV3d vPos)
 {
-	// 인도어
+	// Indoor
 	EActiveWorldType eWorldType = GetActiveWorldType();
 
 	if(eWorldType == AW_NONE)
@@ -1570,7 +1570,7 @@ DWORD CNtlPLVisualManager::GetWorldAttribute(RwV3d vPos)
 
 DWORD CNtlPLVisualManager::GetWorldNormalAttribute(RwV3d vPos)
 {
-	// 인도어
+	// Indoor
 	EActiveWorldType eWorldType = GetActiveWorldType();
 
 	if(eWorldType == AW_NONE)
@@ -1584,7 +1584,7 @@ DWORD CNtlPLVisualManager::GetWorldNormalAttribute(RwV3d vPos)
 
 DWORD CNtlPLVisualManager::GetWorldSpecialAttribute(RwV3d vPos)
 {
-	// 인도어
+	// Indoor
 	EActiveWorldType eWorldType = GetActiveWorldType();
 
 	if(eWorldType == AW_NONE)
@@ -1597,7 +1597,7 @@ DWORD CNtlPLVisualManager::GetWorldSpecialAttribute(RwV3d vPos)
 
 BYTE CNtlPLVisualManager::GetWorldMaterialAttribute(RwV3d vPos)
 {
-	// 인도어
+	// Indoor
 	EActiveWorldType eWorldType = GetActiveWorldType();
 	if(eWorldType == AW_NONE)
 		return 0;
@@ -1607,7 +1607,7 @@ BYTE CNtlPLVisualManager::GetWorldMaterialAttribute(RwV3d vPos)
 
 RwReal CNtlPLVisualManager::GetWorldWaterHeight(RwV3d vPos)
 {
-	// 인도어
+	// Indoor
 	EActiveWorldType eWorldType = GetActiveWorldType();
 	if(eWorldType == AW_NONE)
 		return -9999.0f;
@@ -1618,7 +1618,7 @@ RwReal CNtlPLVisualManager::GetWorldWaterHeight(RwV3d vPos)
 
 RwReal CNtlPLVisualManager::GetActiveBloomFactor(void) 
 {
-	// 인도어
+	// Indoor
 	EActiveWorldType eWorldType = GetActiveWorldType();
 	if(eWorldType == AW_NONE)
 		return dMONO_POWER_DEFAULT;
@@ -1632,7 +1632,7 @@ RwReal CNtlPLVisualManager::GetActiveBloomFactor(void)
 
 RwBool CNtlPLVisualManager::GetAvailablePos(RwV3d& _CurPos)
 {
-	// 인도어
+	// Indoor
 	EActiveWorldType eWorldType = GetActiveWorldType();
 	if(eWorldType == AW_NONE)
 		return TRUE;
@@ -1663,7 +1663,7 @@ RwBool CNtlPLVisualManager::GetAvailablePos(RwV3d& _CurPos)
 
 VOID CNtlPLVisualManager::SetWorldPVSActivation(RwBool _Flag)
 {
-	// 인도어 에서는 다른 의미로 쓰인다 수정요구 이대로는 인도어에서 의미가 없다
+	// It is used with a different meaning in Indoor. Request for correction. As it is, it has no meaning in Indoor.
 
 	CNtlPLGlobal::m_UseTerrainPVSMode = _Flag;
 }

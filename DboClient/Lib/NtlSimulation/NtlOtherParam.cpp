@@ -2,10 +2,10 @@
 #include "NtlOtherParam.h"
 
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// share
+// Share
 #include "NPCTable.h"
 #include "WorldTable.h"
 #include "TextAllTable.h"
@@ -13,10 +13,10 @@
 #include "QuestTextDataTable.h"
 #include "TableContainer.h"
 
-// gui
+// Gui
 #include "gui_precomp.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
@@ -201,7 +201,7 @@ VOID CNtlOtherParam::HandleEvents(RWS::CMsg &pMsg)
 
 				if(!nextQuest.pNPC_TBLDAT)
 				{
-					// Release 버전에서 뻑나는 것을 방지하기 위해
+					//To prevent crashes in Release version
 					char acBuffer[256] = "";
 					WCHAR awcBuffer[256] = L"";
 					sprintf_s(acBuffer, 256, "preparation NPC table of index : %d", nextQuest.Tblidx);
@@ -225,7 +225,7 @@ VOID CNtlOtherParam::HandleEvents(RWS::CMsg &pMsg)
 
 				if(!pOBJECT_TBLDAT)
 				{
-					// Release 버전에서 뻑나는 것을 방지하기 위해
+					// To prevent things from breaking in the Release version
 					char acBuffer[128] = "";
 					WCHAR awcBuffer[256] = L"";
 					sprintf_s(acBuffer, 128, "preparation Object table of index : %d", nextQuest.Tblidx);
@@ -249,7 +249,7 @@ VOID CNtlOtherParam::HandleEvents(RWS::CMsg &pMsg)
 
 				if(!pQUEST_TEXT_DATA_TBLDAT)
 				{
-					// Release 버전에서 뻑나는 것을 방지하기 위해
+					// To prevent things from breaking in the Release version
 					char acBuffer[128] = "";
 					WCHAR awcBuffer[256] = L"";
 					sprintf_s(acBuffer, 128, "preparation quest text table of index : %d", nextQuest.Tblidx);

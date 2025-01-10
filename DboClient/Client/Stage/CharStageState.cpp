@@ -1,10 +1,10 @@
 #include "precomp_dboclient.h"
 #include "CharStageState.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 
@@ -32,8 +32,8 @@ namespace
 	{		
 		GUI_MIN_ALPHA			= 10,
 		GUI_MAX_ALPHA			= 255,
-		GUI_FADE_IN_TIME		= 1,			// FADE IN 시간(단위 : 초)
-		GUI_FADE_OUT_TIME		= 1,			// FADE OUT 시간(단위 : 초)
+		GUI_FADE_IN_TIME		= 1,			// FADE IN time (unit: seconds)
+		GUI_FADE_OUT_TIME		= 1,			// FADE OUT time (unit: seconds)
 	};	
 };
 
@@ -136,7 +136,7 @@ void CCharStageState::FuncUpdateInformation(RwReal fElapsed)
 
 		if( m_fElapedTime > CDT_WAITFOR_SERVER_REPLY )
 		{
-			// 서버로부터 응답이 없습니다
+			// No response from server
 			GetAlarmManager()->AlarmMessage( "DST_LOBBY_NO_RELPY_SERVER" );
 		}
 
@@ -226,7 +226,7 @@ void CCharStageState::FuncUpdateMakeRequest(RwReal fElapsed)
 
 	if( m_fElapedTime > CDT_WAITFOR_SERVER_REPLY )
 	{
-		// 서버로 부터 응답이 없습니다
+		// There is no response from the server
 		GetAlarmManager()->AlarmMessage( "DST_LOBBY_NO_RELPY_SERVER" );
 	}
 }
@@ -237,7 +237,7 @@ void CCharStageState::FuncUpdateSelectInfomation(RwReal fElapsed)
 
 	if( m_fElapedTime > CDT_WAITFOR_SERVER_REPLY )
 	{
-		// 서버로 부터 응답이 없습니다
+		// There is no response from the server
 		GetAlarmManager()->AlarmMessage( "DST_LOBBY_NO_RELPY_SERVER" );
 	}
 }
@@ -248,7 +248,7 @@ void CCharStageState::FuncUpdateSelectInfomationFromServerList(RwReal fElapsed)
 
 	if( m_fElapedTime > CDT_WAITFOR_SERVER_REPLY )
 	{
-		// 서버로 부터 응답이 없습니다
+		// There is no response from the server
 		GetAlarmManager()->AlarmMessage( "DST_LOBBY_NO_RELPY_SERVER" );
 
 		GetLobbyManager()->SetWaitChannelInfo(FALSE);
@@ -265,7 +265,7 @@ void CCharStageState::FuncUpdateSelectEnter(RwReal fElapsed)
 
 		if( m_fElapedTime > CDT_WAITFOR_SERVER_REPLY )
 		{
-			// 서버로 부터 응답이 없습니다
+			// There is no response from the server
 			GetAlarmManager()->AlarmMessage( "DST_LOBBY_NO_RELPY_SERVER" );
 		}
 
@@ -294,7 +294,7 @@ void CCharStageState::FuncUpdateSelectDelChar(RwReal fElapsed)
 
 	if( m_fElapedTime > CDT_WAITFOR_SERVER_REPLY )
 	{
-		// 서버로 부터 응답이 없습니다
+		// There is no response from the server
 		GetAlarmManager()->AlarmMessage( "DST_LOBBY_NO_RELPY_SERVER" );
 	}
 }
@@ -305,7 +305,7 @@ void CCharStageState::FuncUpdateSelectRecoveryChar(RwReal fElapsed)
 
 	if( m_fElapedTime > CDT_WAITFOR_SERVER_REPLY )
 	{
-		// 서버로 부터 응답이 없습니다
+		// There is no response from the server
 		GetAlarmManager()->AlarmMessage( "DST_LOBBY_NO_RELPY_SERVER" );
 	}
 }
@@ -316,7 +316,7 @@ void CCharStageState::FuncUpdateSelectRenameReq(RwReal fElapsed)
 
 	if( m_fElapedTime > CDT_WAITFOR_SERVER_REPLY )
 	{
-		// 서버로 부터 응답이 없습니다
+		// There is no response from the server
 		GetAlarmManager()->AlarmMessage( "DST_LOBBY_NO_RELPY_SERVER" );
 	}
 }
@@ -379,7 +379,7 @@ void CCharStageState::FuncUpdateCharacterSelectReq(RwReal fElapsed)
 	{
 		m_bShowMessageBox = false;
 
-		// 서버로 부터 응답이 없습니다
+		// There is no response from the server
 		GetAlarmManager()->AlarmMessage( "DST_LOBBY_NO_RELPY_SERVER" );
 	}	
 }
@@ -424,7 +424,7 @@ void CCharStageState::FuncUpdateWaitingGameServerResponse(RwReal fElapsed)
 	{
 		m_bShowMessageBox = false;
 
-		// 서버로 부터 응답이 없습니다
+		// There is no response from the server
 		GetAlarmManager()->AlarmMessage( "DST_LOBBY_NO_RELPY_SERVER" );
 	}
 }
@@ -435,14 +435,14 @@ void CCharStageState::FuncUpdateFailEnter(RwReal fElapsed)
 
 	if( m_fElapedTime > CDT_IMMEDIATLY_RETURN_LOGIN_MESSAGE )
 	{
-		// 서버로 부터 응답이 없습니다
+		// There is no response from the server
 		GetAlarmManager()->AlarmMessage( "DST_LOBBY_NO_RELPY_SERVER" );
 	}
 }
 
 void CCharStageState::FuncUpdateImmediatelyReturnLoginEnter(RwReal fElapsed)
 {
-	// 로비 정보 지우기
+	// Clear lobby information
 	GetLobbyManager()->ClearLobby();
 
 	ChangeState(CHAR_STATE_IMMEDIATLY_RETURN_LOGIN_IDLE);
@@ -480,7 +480,7 @@ void CCharStageState::FuncUpdateReadyEnterTutorial(RwReal fElapsed)
 
 	if(byAlpha == GUI_MIN_ALPHA)
 	{
-		// 서버로 튜토리얼 진입 패킷을 보낸다
+		// Send tutorial entry packet to server
 		if(!m_bSendGameEnterPacket)
 		{
 			SERVER_HANDLE	hServer	= GetLobbyManager()->GetSelectedServerHandle();
@@ -519,7 +519,7 @@ void CCharStageState::FuncUpdateReadyEnterTutorial(RwReal fElapsed)
 	{
 		m_bShowMessageBox = false;
 
-		// 서버로 부터 응답이 없습니다
+		// There is no response from the server
 		GetAlarmManager()->AlarmMessage( "DST_LOBBY_NO_RELPY_SERVER" );
 	}
 }
@@ -543,7 +543,7 @@ void CCharStageState::FuncUpdateWaitCancel(RwReal fElapsed)
 	{
 		m_bShowMessageBox = false;
 
-		// 서버로 부터 응답이 없습니다
+		// There is no response from the server
 		GetAlarmManager()->AlarmMessage( "DST_LOBBY_NO_RELPY_SERVER" );
 	}	
 }
@@ -567,7 +567,7 @@ void CCharStageState::FuncUpdateCancelWaitGameServerConnect(RwReal fElapsed)
 	{
 		m_bShowMessageBox = false;
 
-		// 서버로 부터 응답이 없습니다
+		// There is no response from the server
 		GetAlarmManager()->AlarmMessage( "DST_LOBBY_NO_RELPY_SERVER" );
 	}	
 }
@@ -593,10 +593,10 @@ void CCharStageState::EnterState(ECharacterStageState eState)
 
 	m_bSendGameEnterPacket = FALSE;
 
-	// 새로운 상태 설정
+	// Set new state
 	m_eState = eState;	
 
-	// 업데이트 타임
+	// update time
 	m_fElapedTime = 0.f;
 
 	switch(m_eState)
@@ -634,7 +634,7 @@ void CCharStageState::EnterState(ECharacterStageState eState)
 		}
 	case CHAR_STATE_SELECT_ENTER:
 		{
-			// 캐릭터 내용 UI 갱신
+			// Character content UI update
 			CDboEventGenerator::LobbyEvent(LMT_UPDATE_CHARACTER_LIST);	
 
 			m_pTurnOverBackboard->SetAlpha(GUI_MAX_ALPHA);

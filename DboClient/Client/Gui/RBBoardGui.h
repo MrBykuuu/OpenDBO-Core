@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: RBBoardGui.h
-// Desc: Rank Battle 게시판 Gui
+// Desc: Rank Battle Bulletin Board Gui
 //
 // 2007.07.20 Peessi@hitel.net   
 ////////////////////////////////////////////////////////////////////////////////
@@ -17,10 +17,10 @@ struct sRANKBATTLE_ARENA_INFO;
 
 struct sRBBoardData
 {
-	UINT32			_uiFieldID;			// 데이터의 TableIndex;
+	UINT32			_uiFieldID;			// TableIndex of data;
 	std::wstring	_wstrFieldName;		
 	UINT32			_uiAppliedCount;
-	UINT32			_infoIndex;		// tooltip
+	UINT32			_infoIndex;		// Tooltip
 };
 
 typedef std::vector<sRBBoardData>				VEC_RBBOARDDATA;
@@ -55,7 +55,7 @@ protected:
 			
 //! Variables	
 	RwUInt32			m_uiFieldID;				
-	RwInt32				m_nItemID;				// 위에서 부터 0 ~ 4, GUI No.
+	RwInt32				m_nItemID;				// From the top, 0 to 4, GUI No.
 
 	gui::CStaticBox*	m_pTitle;
 	gui::CPanel*		m_pGaugeBack;
@@ -106,7 +106,7 @@ private:
 	VOID	EnableButtons( bool bEnable );
 	VOID	ResetItem(VOID);
 
-//! CallBack
+//! Call back
 public:
 	VOID	OnClickBoardItem( RwInt32 nItemIndex, RwUInt32 uiFieldID );			
 
@@ -170,10 +170,10 @@ private:
 
 	RwUInt8				m_byBattleType;					
 	RwInt32				m_nOffset;			
-	RwUInt32			m_uiSelectedItemFieldID;		// FieldID	
+	RwUInt32			m_uiSelectedItemFieldID;		// Field id	
 		
-	RwReal				m_fCurrentTime;					// 리스트 업데이트 체크를 위한 시간. 
-	RwReal				m_fMatchRemainTime;				// 게임이 시작
+	RwReal				m_fCurrentTime;					// Time to check for list updates. 
+	RwReal				m_fMatchRemainTime;				// the game starts
 };
 
 #endif//__RB_BOARD_GUI_H__

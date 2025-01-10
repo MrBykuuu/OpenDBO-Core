@@ -55,8 +55,8 @@ enum eCHARSTATE
 	CHARSTATE_SLEEPING,				// Sleeping
 	CHARSTATE_PARALYZED,			// Paralyzed
 
-	CHARSTATE_HTB,					// HTB를 실행하고 있음
-	CHARSTATE_SANDBAG,				// HTB를 당하고 있음
+	CHARSTATE_HTB,					// Running HTB
+	CHARSTATE_SANDBAG,				// I am suffering from HTB
 	CHARSTATE_CHARGING,				// CHARGING RP
 	CHARSTATE_GUARD,				// Guard mode
 
@@ -77,16 +77,16 @@ enum eCHARSTATE
 
 
 //-----------------------------------------------------------------------------------
-// Aspect ( 캐릭터 특이 상태 : 변신등 )중복불가 개념
+// Aspect (character unique state: transformation, etc.) Non-overlapping concept
 //-----------------------------------------------------------------------------------
 enum eASPECTSTATE
 {
-	ASPECTSTATE_SUPER_SAIYAN,		// 수퍼 사이어인
-	ASPECTSTATE_PURE_MAJIN,			// 순수 마인
-	ASPECTSTATE_GREAT_NAMEK,		// 그레이트 나메크인
-	ASPECTSTATE_KAIOKEN,				// 계왕권
-	ASPECTSTATE_SPINNING_ATTACK,		// 회전 공격
-	ASPECTSTATE_VEHICLE,			// 탈 것
+	ASPECTSTATE_SUPER_SAIYAN,		// super saiyan
+	ASPECTSTATE_PURE_MAJIN,			// pure majin
+	ASPECTSTATE_GREAT_NAMEK,		// Great Namekian
+	ASPECTSTATE_KAIOKEN,				// Kaioken
+	ASPECTSTATE_SPINNING_ATTACK,		// spinning attack
+	ASPECTSTATE_VEHICLE,			// vehicle
 	ASPECTSTATE_ROLLING_ATTACK,
 
 	ASPECTSTATE_COUNT,
@@ -95,7 +95,7 @@ enum eASPECTSTATE
 
 
 //-----------------------------------------------------------------------------------
-// Condition, 중복가능 개념
+// Condition, overlapping concept
 //-----------------------------------------------------------------------------------
 enum eCHARCONDITION
 {
@@ -190,12 +190,12 @@ enum eCHARCONDITION_FLAG
 //-----------------------------------------------------------------------------------
 enum eCHARLEAVING_TYPE
 {
-	CHARLEAVING_DISCONNECT,			// 접속이 끈어짐
-	CHARLEAVING_SERVER_CHANGE,		// 다른 게임 서버로의 이동
-	CHARLEAVING_CHANNEL_CHANGE,		// 다른 게임 채널로의 이동
-	CHARLEAVING_CHARACTER_EXIT,		// 캐릭터 종료 : Lobby로 이동
-	CHARLEAVING_GAME_EXIT,			// ACCOUNT 종료 : 게임 종료
-	CHARLEAVING_GAME_KICK,			// 시스템에 의한 종료(KICK 등)
+	CHARLEAVING_DISCONNECT,			// Disconnected
+	CHARLEAVING_SERVER_CHANGE,		// Move to another game server
+	CHARLEAVING_CHANNEL_CHANGE,		// Move to another gaming channel
+	CHARLEAVING_CHARACTER_EXIT,		// Exit Character: Go to Lobby
+	CHARLEAVING_GAME_EXIT,			// ACCOUNT END: Game ends
+	CHARLEAVING_GAME_KICK,			// Termination by system (KICK, etc.)
 
 	INVALID_CHARLEAVING = INVALID_BYTE,
 };
@@ -220,14 +220,14 @@ const char *				NtlGetAspectStateString(BYTE byStateID);
 const char *				NtlGetConditionStateString(BYTE byStateID);
 
 //-----------------------------------------------------------------------------------
-// 상태 관련 구조체
+// State-related structures
 //-----------------------------------------------------------------------------------
 #pragma pack(1)
 
 //-----------------------------------------------------------------------------------
 struct sCHARSTATE_SPAWNING
 {
-	BYTE			byTeleportType;		// eTELEPORT_TYPE
+	BYTE			byTeleportType;		// E teleport type
 
 	bool			bSpawnDirection : 1; //if this is true, then it shows spawn effect
 	bool			bIsFaint : 1;
@@ -278,11 +278,11 @@ struct sCHARSTATE_DESTMOVE
 //-----------------------------------------------------------------------------------
 struct sCHARSTATE_FOLLOWING
 {
-	HOBJECT			hTarget; // 타겟 따라가기일때 따라갈 타겟 핸들
-	float			fDistance; // 타겟 앞에서 멈출 거리
-	BYTE			byMovementReason; // 공격 or 스킬사용 등의 FOLLOW의 이유를 설정
-	BYTE			byMoveFlag;//new
-	sVECTOR3		vDestLoc;//new
+	HOBJECT			hTarget; // Target handle to follow when following target
+	float			fDistance; // Distance to stop in front of target
+	BYTE			byMovementReason; // Set the reason for FOLLOW, such as attack or skill use
+	BYTE			byMoveFlag;//New
+	sVECTOR3		vDestLoc;//New
 };
 //-----------------------------------------------------------------------------------
 struct sCHARSTATE_FALLING
@@ -388,7 +388,7 @@ struct sCHARSTATE_PRIVATESHOP
 //-----------------------------------------------------------------------------------
 struct sCHARSTATE_DIRECT_PLAY
 {
-	BYTE				byDirectPlayType; // 연출 타입 ( eDIRECT_PLAY_TYPE )
+	BYTE				byDirectPlayType; // Direction type (eDIRECT_PLAY_TYPE)
 	TBLIDX				directTblidx; // production TBLIDX
 };
 //-----------------------------------------------------------------------------------
@@ -401,7 +401,7 @@ struct sCHARSTATE_OPERATING
 //-----------------------------------------------------------------------------------
 struct sCHARSTATE_RIDEON
 {
-	HOBJECT				hTarget; // 타겟 핸들
+	HOBJECT				hTarget; // target handle
 };
 //-----------------------------------------------------------------------------------
 struct sCHARSTATE_TURNING

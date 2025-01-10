@@ -1,35 +1,35 @@
 /******************************************************************************
-* File			: CharMakeDisplayPart.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2009. 2. 5
-* Abstract		: 
+*File           : CharMakeDisplayPart.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : February 5, 2009
+*Abstract		: 
 *****************************************************************************
-* Desc			: 캐릭터를 만들기 위해 캐릭터의 각 부분을 표시하는 구조체 모음
+*Desc           : A collection of structures that display each part of the character to create the character.
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "NtlCharacter.h"
 
-// gui
+// Gui
 #include "gui_button.h"
 
 enum eDefaultClass
 {
-	DEFAULT_CLASS_HUMAN_FIGHTER,			// 무도가
-	DEFAULT_CLASS_HUMAN_MYSTIC,				// 기공사
+	DEFAULT_CLASS_HUMAN_FIGHTER,			// Martial artist
+	DEFAULT_CLASS_HUMAN_MYSTIC,				// Technician
 	DEFAULT_CLASS_HUMAN_ENGINEER,				// 
 
-	DEFAULT_CLASS_NAMEK_FIGHTER,			// 나메크 전사
-	DEFAULT_CLASS_NAMEK_MYSTIC,				// 용족
+	DEFAULT_CLASS_NAMEK_FIGHTER,			// namek warrior
+	DEFAULT_CLASS_NAMEK_MYSTIC,				// Balaur
 
-	DEFAULT_CLASS_MAJIN_MIGHTY,				// 대마인
-	DEFAULT_CLASS_MAJIN_WONDER,				// 의마인
+	DEFAULT_CLASS_MAJIN_MIGHTY,				// Great Mine
+	DEFAULT_CLASS_MAJIN_WONDER,				// Uimain
 
 	NUM_DEFAULT_CLASS
 };

@@ -2,7 +2,7 @@
 *
 * File			: NtlPLHelpers.h
 * Author		: All Author
-* Copyright	: (주)NTL
+* Copyright	    : NTL Co., Ltd.
 * Date			: 2005. 8. 11	
 * Abstract		: Presentation layer helper function.
 *****************************************************************************
@@ -32,39 +32,39 @@ ENtlPLEntityType Helper_PLEntityTypeToName(const RwChar* pName);
 
 const RwChar* Helper_PLEntityNameToType(const ENtlPLEntityType eType);
 
-/// 상대경로,절대경로에서 파일 이름만을 추출한다.
+/// Extracts only the file name from relative and absolute paths.
 RwChar* Helper_AbstractFileName(RwChar *pPathName);
 
-/// 문자열을 파싱한다. (by agebreak 2006.06.26)
+/// Parse the string. (by agebreak 2006.06.26)
 void Helper_StringSplit(const RwChar* szInput, RwChar* szOutput, size_t sizeOutPut, const RwChar* szSplit, RwInt32 nCount);
 
 //////////////////////////////////////////////////////////////////////////
-// 기본 구조체들의 내용을 L"x;y;z;" 형태들의 문자열로 변경한다.
+// The contents of the basic structures are L"x;y;z;" Convert it to a string of forms.
 //////////////////////////////////////////////////////////////////////////
 
-/// RwV3d 구조체 내용을 L"x;y;z" 형태의 문자열로 변경한다. (by agebreak 2006.08.16)
+/// Change the contents of the RwV3d structure to a string in the form L"x;y;z". (by agebreak 2006.08.16)
 #define  Helper_V3D2StringU(buf, vPos)   swprintf_s(buf, L"%.2f;%.2f;%.2f", vPos.x, vPos.y, vPos.z);
-RwV3d Helper_String2V3D(const RwChar* buf); // "x;y;z;"형태의 문자열을 RwV3d형태로 변환하여 반환한다.
+RwV3d Helper_String2V3D(const RwChar* buf); // Converts a string in the form "x;y;z;" to RwV3d form and returns it.
 
-// RwV2d 구조체 내용을 L"x;y"형태의 문자열로 변경한다. (by agebreak 2006.08.16)
+// Change the contents of the RwV2d structure to a string in the form L"x;y". (by agebreak 2006.08.16)
 #define  Helper_V2D2StringU(buf, vPos)   swprintf_s(buf, L"%.2f;%.2f", vPos.x, vPos.y);
 
-// "x;y"형태의 문자열을 RwV2d형태로 변환하여 반환한다.
+// Converts a string in "x;y" format to RwV2d format and returns it.
 RwV2d Helper_String2V2D(const RwChar* buf);
 RwV2d Helper_String2V2D(const WCHAR* buf);
 
-// "r;g;b;a;" 형태의 문자열을 RwRGBA형태로 변환하여 반환한다.
+// "r;g;b;a;" Converts the string in the form RwRGBA and returns it.
 RwRGBA Helper_String2RGBA(const RwChar* buf);
 #define Helper_RGBA2String(buf, rgba) swprintf_s(buf, L"%d;%d;%d;%d", rgba.red, rgba.green, rgba.blue, rgba.alpha);
 
-// RGB 정보를 Gray Color로 변환한다.
+// Converts RGB information to Gray Color.
 RwUInt8 Helper_RGB2Gray(RwUInt8& _R, RwUInt8& _G, RwUInt8& _B);
 
 //////////////////////////////////////////////////////////////////////////
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// presentation entity 생성.
+// Create a presentation entity.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //CNtlPLPlayerName* Helper_CreatePlayerName(const RwV3d *pPos, COLORREF Color, const WCHAR *pName);
@@ -78,12 +78,12 @@ CNtlPLPlayerName* Helper_CreatePlayerName(const RwV3d *pPos, COLORREF Color, con
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Helper_AttachWorldPos(CNtlPLEntity *pSource, CNtlPLEntity *pTarget, RwV3d vOffset = ZeroAxis, RwBool bApplyRotate = FALSE);
-void Helper_AttachWorldPosHeight(CNtlPLEntity* pSource, CNtlPLEntity* pTarget);           ///< 월드 위치에 붙이는데 높이는 그 위치의 World Height 값을 적용한다.
+void Helper_AttachWorldPosHeight(CNtlPLEntity* pSource, CNtlPLEntity* pTarget);           ///< When attaching to a world location, the World Height value of that location is applied.
 void Helper_AttachBone(CNtlPLEntity *pSource, CNtlPLEntity *pTarget, const RwChar *pBoneName, RwV3d vOffset = ZeroAxis);
 void Helper_DetachPLEntity(CNtlPLEntity *pSource, CNtlPLEntity *pTarget);
 
 //////////////////////////////////////////////////////////////////////////
-// Bit Flag 설정 관련
+// Bit flag setting related
 //////////////////////////////////////////////////////////////////////////
 
 __inline void Helper_SetBigFlag(BITFLAG* bitFlag, int index, BOOL bBool)
@@ -111,7 +111,7 @@ __inline BOOL Helper_GetBitFlag(BITFLAG bitFlag, int index)
 
 
 //////////////////////////////////////////////////////////////////////////
-// Callback 함수
+// Callback function
 //////////////////////////////////////////////////////////////////////////
 
 typedef RwUInt8 (*Callback_GetDogiColorIndex)(RwUInt32 uiSerialID);

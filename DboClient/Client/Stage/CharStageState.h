@@ -1,20 +1,20 @@
 
 /*****************************************************************************
  *
- * File			: CharStageState.h
- * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
- * Date			: 2006. 12. 11	
- * Abstract		: Character stage state
+ *File			: CharStageState.h
+ *Author	    : HyungSuk, Jang
+ *Copyright	    : NTL Co., Ltd.
+ *Date			: 2006. 12. 11	
+ *Abstract		: Character stage state
  *****************************************************************************
- * Desc         : 
+ *Desc          : 
  *
  *****************************************************************************/
 
 #ifndef __CHARACTER_STAGE_STATE_H__
 #define __CHARACTER_STAGE_STATE_H__
 
-// dbo
+// Dbo
 #include "DboDef.h"
 
 class CBackboardGui;
@@ -28,15 +28,15 @@ class CCharStageState
 protected:
 	enum eChangeDelayTime
 	{		
-		CDT_WAITFOR_SERVER_REPLY			= 30, // 서버로 부터 패킷을 받기까지 기다리는 시간(단위 : 초)
+		CDT_WAITFOR_SERVER_REPLY			= 30, // Time to wait to receive a packet from the server (unit: seconds)
 
-		CDT_IMMEDIATLY_RETURN_LOGIN_MESSAGE	= 3, // 즉시 로그인으로 돌아간다는 메세지를 보여주는 시간
+		CDT_IMMEDIATLY_RETURN_LOGIN_MESSAGE	= 3, // Time to display a message indicating that you will return to logging in immediately
 	};
 
 	static CCharStageState* m_pInstance;
 
-	ECharacterStageState	m_eState;			///< 현재 상태
-	ECharacterStageState	m_eReservateState;	///< 예약된 상태
+	ECharacterStageState	m_eState;			///< Current status
+	ECharacterStageState	m_eReservateState;	///< Reserved status
 
 	CBackboardGui*			m_pTurnOverBackboard;
 	CCharCreateGuiGui*		m_pCharCreateGui;
@@ -45,8 +45,8 @@ protected:
 
 	RwReal					m_fElapedTime;
 	
-	RwBool					m_bReadyModel;		///< 모델 로딩이 끝났다
-	RwBool					m_bReadyWorld;		///< 배경 로딩이 끝났다
+	RwBool					m_bReadyModel;		///< Model loading is complete
+	RwBool					m_bReadyWorld;		///< Background loading is complete
 	RwBool					m_bShowMessageBox;
 	RwBool					m_bSendGameEnterPacket;
 

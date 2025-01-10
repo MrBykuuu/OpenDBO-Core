@@ -59,7 +59,7 @@ RwBool CNtlSobItem::Create(void)
 		NTL_RETURN(FALSE);
 	}
 
-	// class name 설정.
+	// Set class name.
 	SetClassName(SLCLASS_NAME_SLOT_ITEM);
 
 	m_pIcon->Create(); 
@@ -72,7 +72,7 @@ void CNtlSobItem::Destroy(void)
 {
 	NTL_FUNCTION("CNtlSobItem::Destroy");
 
-	// Update 가 걸려있는 경우 삭제.
+	// Delete if update is active.
 	if( reinterpret_cast<CNtlSobItemAttr*>( GetSobAttr() )->GetDurationType() )
 		GetNtlSobManager()->RemoveUpdateQueue( this );
 
@@ -84,14 +84,14 @@ void CNtlSobItem::Destroy(void)
 		NTL_DELETE( m_pIcon );
 	}
 
-	// parent에 자신을 등록을 없애준다.
+	// Unregisters itself from parent.
 	CNtlSobItem *pParentSobItem = GetParentItem();
 	if(pParentSobItem)
 	{
 		pParentSobItem->SetChildSerial(GetItemSlotIdx(), INVALID_SERIAL_ID);
 	}
 
-	// child item을 없애준다.
+	// Removes child items.
 	if(m_pChildSerial)
 	{
 		for(RwInt32 i = 0; i < m_iChildNum; ++i)
@@ -130,11 +130,11 @@ void CNtlSobItem::CreateEventHandler(RWS::CMsg &pMsg)
 	SNtlEventSobItemCreate *pSobItemCreate = reinterpret_cast<SNtlEventSobItemCreate*>(pMsg.pData);
 	CNtlSobItemAttr *pItemAttr = reinterpret_cast<CNtlSobItemAttr*>( GetSobAttr() );
 
-	// 현재 아이템이 Child Slot을 가지는 아이템이면
+	// If the current item is an item with a Child Slot
 	if(pItemAttr->IsContainerItem())
 		AllocateChild(pItemAttr->GetChildSlotSize());
 
-	// peessi : 사용기간 제한 아이템은 Update
+	// peessi: Update items with limited usage period
 	if( pSobItemCreate->byDurationType )
 		GetNtlSobManager()->AddUpdate( this );
 

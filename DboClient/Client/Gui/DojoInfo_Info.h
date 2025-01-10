@@ -1,19 +1,19 @@
 /******************************************************************************
-* File			: DojoInfo_Info.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2009. 1. 16
-* Abstract		: 
+*File           : DojoInfo_Info.h
+*Author         : Hong SungBock
+*Copyright      : NTL Co., Ltd.
+*Date           : January 16, 2009
+*Abstract		: 
 *****************************************************************************
-* Desc			: 도장 정보의 정보탭
+*Desc           : Information tab of stamp information
 *****************************************************************************/
 
 #pragma once
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// cleint
+// Client
 #include "SurfaceGui.h"
 #include "DojoInfo_Base.h"
 #include "Windowby3.h"

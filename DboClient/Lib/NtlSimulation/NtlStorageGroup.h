@@ -1,18 +1,18 @@
 /*****************************************************************************
 * File			: NtlStorageGroup.h
 * Author		: HaeSung, Cho
-* Copyright	: (주)NTL
+* Copyright	    : NTL Co., Ltd.
 * Date			: 2009. 2. 5	
 * Abstract		: Ntl Storage Group base
 *****************************************************************************
-* Desc          : Unit들을 Group으로 가지는 StorageGroup의 Base class
-* 만약 NtlStorageGroup을 상속 받는 클래스의 특수한 작동의 Load/Save 를 사용하려고
-* 한다면 Load와 Save를 짝을 맞춰서 작성해줘야 한다.
+* Desc          :Base class of StorageGroup that groups units
+*If you try to use the special Load/Save operation of a class that inherits NtlStorageGroup
+*If so, Load and Save must be written in pairs.
 *
-* [Category]
-* Key = Value;
+*[Category]
+*Key = Value;
 *
-* 형식의 데이터를 사용하려고 한다면 Base의 Load/Save 함수를 그대로 사용해도 상관없다.
+If you want to use data in *format, you can just use Base’s Load/Save function.
 *****************************************************************************/
 
 #if !defined(_CNTLSTORAGEGROUP_H)

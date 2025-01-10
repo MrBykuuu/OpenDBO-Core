@@ -2,11 +2,11 @@
  *
  * File			: NtlWorldConceptDefine.h
  * Author		: Hong Sungbock
- * Copyright	: (주)NTL
+ * Copyright	: (二�)NTL
  * Date			: 2007. 7. 13
  * Abstract		: Simulation world concept defines
  *****************************************************************************
- * Desc         : World Concept에 관련된 사항을 정의해 둔다
+ * Desc         : Defines matters related to the World Concept.
  *
  *****************************************************************************/
 
@@ -19,36 +19,36 @@
 #define WORLD_CONCEPT_THIRD_GRADE	0x00040000
 #define WORLD_CONCEPT_FOURTH_GRADE	0x00080000
 
-/// World Concept 클래스에서 제어하는 상태의 종류
-// avooo's comment : Logic_WorldConceptMessage 에 인덱스를 추가해 주세요
+/// What kind of state is controlled by the World Concept class?
+// avooo's comment: Please add an index to Logic_WorldConceptMessage
 enum EWorldPlayConcept
 {
 	WORLD_PLAY_NONE					= 0,
 
-	//-- 1단계 컨셉--//
-	WORLD_PLAY_TUTORIAL				= 0x00010001,		///< 튜터리얼
-	WORLD_PLAY_TIME_MACHINE			= 0x00010002,		///< 타임머신 퀘스트
-	WORLD_PLAY_RANK_BATTLE			= 0x00010003,		///< 랭크 배틀
-	WORLD_PLAY_T_BUDOKAI			= 0x00010004,		///< 천하제일 무도회(배틀상태)
+	//--Stage 1 Concept--//
+	WORLD_PLAY_TUTORIAL				= 0x00010001,		///< Tutorial
+	WORLD_PLAY_TIME_MACHINE			= 0x00010002,		///< Time Machine Quest
+	WORLD_PLAY_RANK_BATTLE			= 0x00010003,		///< Rank Battle
+	WORLD_PLAY_T_BUDOKAI			= 0x00010004,		///< World's Best Martial Arts Club (Battle Status)
 	WORLD_PLAY_PARTY_DUNGEON		= 0x00010005,		///< Party Dungeon
-	WORLD_PLAY_TLQ					= 0x00010006,		///< 타임 립 퀘스트 ( TLQ )
-	WORLD_PLAY_DOJO_SCRAMBLE		= 0x00010007,		///< 도장 쟁탈전
-	WORLD_PLAY_DOJO_DUEL			= 0x00010008,		///< 도장 비무전
+	WORLD_PLAY_TLQ					= 0x00010006,		///< Time Leap Quest (TLQ)
+	WORLD_PLAY_DOJO_SCRAMBLE		= 0x00010007,		///< Dojo competition
+	WORLD_PLAY_DOJO_DUEL			= 0x00010008,		///< Dojo non-radio
 	WORLD_PLAY_CCBD					= 0x00010009,
 	WORLD_PLAY_DWC					= 0x00010010,
 
-	//-- 2단계 컨셉 --//
+	//--Stage 2 Concept --//
 	WORLD_PLAY_FREEPVP				= 0x00020000,		///< PVP(Battle) state
-	WORLD_PLAY_NPC_COMMU			= 0x00020001,		///< NPC 대화 상태
-	WORLD_PLAY_TRADE				= 0x00020002,		///< 유저 Trade 상태
-	WORLD_PLAY_DRAGONBALL_COLLECT	= 0x00020003,		///< 드래곤볼을 수집하여, 용신을 불러내는 이벤트 상태
-	WORLD_PLAY_PRIVATESHOP			= 0x00020004,		///< 개인상점 상태(판매자)
-	WORLD_PLAY_PRIVATESHOP_VISITOR	= 0x00020005,		///< 개인상점 상태(구매자)
+	WORLD_PLAY_NPC_COMMU			= 0x00020001,		///< NPC conversation status
+	WORLD_PLAY_TRADE				= 0x00020002,		///< User Trade Status
+	WORLD_PLAY_DRAGONBALL_COLLECT	= 0x00020003,		///< Event state to collect dragon balls and summon the dragon god
+	WORLD_PLAY_PRIVATESHOP			= 0x00020004,		///< Personal store status (seller)
+	WORLD_PLAY_PRIVATESHOP_VISITOR	= 0x00020005,		///< Personal store status (buyer)
 	WORLD_PLAY_REMOTE_BEHAVIOUR		= 0x00020006,
 	WORLD_PLAY_MASCOTEX_SKILL		= 0x00020007,
 	
-	//-- 3단계 컨셉 --//
-	WORLD_PLAY_DIRECT				= 0x00040006,		///< 연출 상태(cinematic, narraion)
+	//--Stage 3 Concept --//
+	WORLD_PLAY_DIRECT				= 0x00040006,		///< Direction status (cinematic, narraion)
 
 	WORLD_PLAY_DRAGONBALL_SCRAMBLE	= 0x00080001,
 
@@ -56,7 +56,7 @@ enum EWorldPlayConcept
 };
 
 
-/// World Concept의 전이 상태 플래그
+/// Transition state flags in World Concept
 enum EWorldState
 {
 	WORLD_STATE_NONE,
@@ -64,7 +64,7 @@ enum EWorldState
 	WORLD_STATE_IDLE,
 	WORLD_STATE_EXIT,
 
-	// 드래곤볼 컬렉션 관련 상태
+	// Status related to Dragon Ball Collection
 	WORLD_DBC_ALTAR_UI,
 	WORLD_DBC_NIGHT_ON,
 	WORLD_DBC_ALTAR_EFFECT,
@@ -86,7 +86,7 @@ enum EWorldStateNPC
 	WORLD_NPC_GUILD_WAREHOUSE,
 };
 
-/// 아바타 액션 가능 유무를 판단하기 위한 플래그 리스트
+/// Flag list for determining whether avatar action is possible or not
 enum EAvatarAction
 {
 	E_ACTION_MOVE,
@@ -103,18 +103,18 @@ enum EAvatarAction
 
 enum EWorldStateTMQ
 {
-	WORLD_STATE_TMQ_WAIT,					// TMQ 생성하고 플레이어 진입 대기
-	WORLD_STATE_TMQ_TERRAIN_READY,			// 지형 로딩 완료
-	WORLD_STATE_TMQ_PREPARE,				// 모든 플레이어 진입후 컨디션 체크 후 시작 여부 결정
-	WORLD_STATE_TMQ_ARRIVE,					// 연출 상태 ( TS부터의 이벤트 대기, 유저 나타나는 시간 이벤트 대기 )
-	WORLD_STATE_TMQ_BEGIN,					// 게임 시작 ( 스크립트 제어 )
-	WORLD_STATE_TMQ_STAGE_READY,			// 스테이지 준비 ( 스크립트 제어 )
-	WORLD_STATE_TMQ_STAGE_START,			// 스테이지 시작 ( 스크립트 제어 )
-	WORLD_STATE_TMQ_STAGE_FINISH,			// 스테이지 종료 ( 스크립트 제어 )
-	WORLD_STATE_TMQ_END,					// 게임 끝
-	WORLD_STATE_TMQ_LEAVE,					// 게임 나가기 상태
-	WORLD_STATE_TMQ_FAIL,					// 게임 끝 ( TMQ 실패 )
-	WORLD_STATE_TMQ_CLOSE,					// TMQ 종료
+	WORLD_STATE_TMQ_WAIT,					// Create TMQ and wait for player entry
+	WORLD_STATE_TMQ_TERRAIN_READY,			// Terrain loading complete
+	WORLD_STATE_TMQ_PREPARE,				// After all players enter, check their conditions and decide whether to start or not.
+	WORLD_STATE_TMQ_ARRIVE,					// Presentation status (waiting for event from TS, waiting for event when user appears)
+	WORLD_STATE_TMQ_BEGIN,					// Start Game (Script Control)
+	WORLD_STATE_TMQ_STAGE_READY,			// Stage preparation (script control)
+	WORLD_STATE_TMQ_STAGE_START,			// Start Stage (Script Control)
+	WORLD_STATE_TMQ_STAGE_FINISH,			// End Stage (Script Control)
+	WORLD_STATE_TMQ_END,					// game over
+	WORLD_STATE_TMQ_LEAVE,					// exit game status
+	WORLD_STATE_TMQ_FAIL,					// Game over (TMQ failed)
+	WORLD_STATE_TMQ_CLOSE,					// TMQ ends
 };
 
 #endif

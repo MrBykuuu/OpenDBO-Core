@@ -2,21 +2,21 @@
 #include "ScrambleNotifyGui.h"
 
 
-// shared
+// Shared
 #include "DojoTable.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlDTCinematicManager.h"
 
-//client
+//Client
 #include "DboGlobal.h"
 #include "DialogPriority.h"
 #include "DialogManager.h"
@@ -37,9 +37,9 @@
 #define dFLASH_SCRAMBLE_REWARD			"Dojo_Scramble_Result.swf"
 #define dFLASH_SCRAMBLE_REWARD_NPC		"Dojo_Scramble_Result_npc.swf"
 
-#define dWARNING_REST_TIME					(180.f)			///< 경고를 하기 위한 최소 휴지 시간(단위 : 초)
-#define dWARNING_POINT_GAP					(90)			///< 지고 있을 경우 경고를 하기 위한 점수차
-#define dWARNING_BE_STEALED_SEAL_COUNT		(5)				///< 인장을 뺏겼을 경우 경고를 하기 위한 최소 갯수
+#define dWARNING_REST_TIME					(180.f)			///< Minimum pause time for warning (unit: seconds)
+#define dWARNING_POINT_GAP					(90)			///< Score difference to warn when losing
+#define dWARNING_BE_STEALED_SEAL_COUNT		(5)				///< Minimum number to issue a warning when a seal is lost
 
 
 CScrambleNotifyGui::CScrambleNotifyGui(const RwChar* pName)
@@ -64,13 +64,13 @@ RwBool CScrambleNotifyGui::Create()
 	m_pThis = (gui::CDialog*)GetComponent("dlgMain");
 	m_pThis->SetPriority(dDIALOGPRIORITY_NOTIFY);
 
-	// notify
+	// Notify
 	pFlash_Notify			= (gui::CFlash*)GetComponent("flashNotify");
 	pFlash_Notify2			= (gui::CFlash*)GetComponent("flashNotify2");
 
 	m_slotMovieEnd_Notify		= pFlash_Notify->SigMovieEnd().Connect( this, &CScrambleNotifyGui::OnMovieEnd_Notify );
 
-	// StartWidget
+	// Start widget
 	m_tSTART_WIDGET.pParentDialog		= (gui::CDialog*)GetComponent("dlgStart");
 	m_tSTART_WIDGET.pFlash				= (gui::CFlash*)GetComponent("flash");
 	m_tSTART_WIDGET.pOffenceGuildName	= (gui::CStaticBox*)GetComponent("stbStart_OffenceGuildName");
@@ -88,7 +88,7 @@ RwBool CScrambleNotifyGui::Create()
 	m_tSTART_WIDGET.slotMovieEnd	= m_tSTART_WIDGET.pFlash->SigMovieEnd().Connect( this, &CScrambleNotifyGui::OnMovieEnd_Notify );
 
 
-	// REWARD_WIDGET
+	// Reward widget
 	m_tREWARD_WIDGET.pParentDialog				= (gui::CDialog*)GetComponent("dlgReward");
 	m_tREWARD_WIDGET.pFlash						= (gui::CFlash*)GetComponent("flashReward");
 	m_tREWARD_WIDGET.pGuildNameStatic			= (gui::CStaticBox*)GetComponent("stbGuildNameStatic");
@@ -185,7 +185,7 @@ RwBool CScrambleNotifyGui::Create()
 
 	GetNtlGuiManager()->AddUpdateFunc( this );
 
-	// sig
+	// Signals
 	m_slotMouseMove		= m_tREWARD_WIDGET.pFlash->SigMouseMove().Connect( this, &CScrambleNotifyGui::OnMouseMove );
 	m_slotMouseLeave	= m_tREWARD_WIDGET.pFlash->SigMouseLeave().Connect( this, &CScrambleNotifyGui::OnMouseLeave );
 	m_slotPaint			= m_tREWARD_WIDGET.pFlash->SigPaint().Connect( this, &CScrambleNotifyGui::OnPaint );	
@@ -421,19 +421,19 @@ VOID CScrambleNotifyGui::OnFSCallback_RewardWidget(const char* pcString, const c
 
 	m_tREWARD_WIDGET.bShowRewardItem = TRUE;
 
-	// 이긴 길드 이름
+	// Winning guild name
 	m_tREWARD_WIDGET.pGuildName->SetText( pGuild->GetGuildName() );
 
-	// 획득 유파 포인트
+	// Acquired School Points
 	m_tREWARD_WIDGET.pRewardReputationPoint->SetText( m_tREWARD_WIDGET.uiGuildReputation );			
 
-	// 도장 지역 이름 얻어오기
+	// Get dojo area name
 	std::wstring wstrDojoName = pGuild->GetGuildName();
 	wstrDojoName += L" ";
 	wstrDojoName += GetDisplayStringManager()->GetString("DST_DOJO");
 	m_tREWARD_WIDGET.pDojoName->SetText( wstrDojoName.c_str() );
 
-	// 획득 아이템
+	// Acquired Items
 	if( INVALID_TBLIDX == m_tREWARD_WIDGET.uiItemTableIndex )
 	{
 		m_tREWARD_WIDGET.pRewardItem->SetText(L"-");
@@ -458,7 +458,7 @@ VOID CScrambleNotifyGui::OnFSCallback_RewardWidget(const char* pcString, const c
 		}
 	}
 
-	// NPC 나레이션
+	// NPC narration
 	if( !m_tREWARD_WIDGET.pResultNarration )
 	{
 		m_tREWARD_WIDGET.pResultNarration = NTL_NEW CResultNarrationGui( "ScrambleResultNarration" );
@@ -567,8 +567,8 @@ VOID CScrambleNotifyGui::HandleEvents( RWS::CMsg &msg )
 		{
 		case DOJO_EVENT_SCRAMBLE_SCORE:
 			{
-				// 다른 정보가 더 중요하기에 우선 순위를 낮췄다.
-				// 플래쉬가 이미 연출중이면 경고 플래쉬는 보여주지 않는다
+				// I lowered the priority because other information was more important.
+				// If the flash is already running, the warning flash is not shown.
 				if( IsShow() )
 					NTL_RETURNVOID();
 
@@ -701,7 +701,7 @@ VOID CScrambleNotifyGui::HandleEvents( RWS::CMsg &msg )
 				}
 				else
 				{
-					// 졌다면 임시로 서버에서 연출 상태가 추가될 때까지 막는다
+					// If you lose, it will be temporarily blocked until the server adds a production state.
 					NTL_RETURNVOID();
 
 					pFlash_Notify->Invoke("Conclusion", "%d", 0);
@@ -718,8 +718,8 @@ VOID CScrambleNotifyGui::HandleEvents( RWS::CMsg &msg )
 
 				if( m_strFileName.empty() )
 				{
-					// 아무런 연출중이 아닐 때만 보상 연출을 바로 보여준다
-					// 만약 결과창을 보여주고 있다면 결과창 이후에 보상 연출을 보여줄 것이다
+					// Compensation presentation is shown immediately only when no presentation is in progress.
+					// If the results window is being displayed, the compensation display will be displayed after the results window.
 					PlayReward();
 				}
 
@@ -761,7 +761,7 @@ VOID CScrambleNotifyGui::HandleEvents( RWS::CMsg &msg )
 			NTL_RETURNVOID();
 
 
-		// 도장 쟁탈전 대기중 GUI 연출
+		// GUI production while waiting for the stamp competition
 		if( pEvent->bShow )
 		{
 			LoadFlash(m_tSTART_WIDGET.pFlash, dFLASH_SCRAMBLE_TITLE);

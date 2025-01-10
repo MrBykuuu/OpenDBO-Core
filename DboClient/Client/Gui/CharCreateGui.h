@@ -1,31 +1,31 @@
-			/******************************************************************************
-* File			: CharCreateGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2006. 12. 7
-* Update		: 2007. 10. 11
-* Abstract		: 
+/******************************************************************************
+*File			: CharCreateGui.h
+*Author		    : Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2006. 12. 7
+*Update		    : 2007. 10. 11
+*Abstract		: 
 *****************************************************************************
-* Desc			: CharCreateGui
+*Desc			: CharCreateGui
 *****************************************************************************/
 
 #pragma once
 
 #include <list>
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// gui
+// Gui
 #include "gui_button.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "Inputhandler.h"
 
-// dbo
+// Dbo
 #include "Windowby3.h"
 #include "SlotGui.h"
 
@@ -59,7 +59,7 @@ public:
 
 	const WCHAR*	GetInputText();
 
-	// 캐릭터 스테이지(로비)에서의 GUI의 컨트롤의 위한 함수
+	// Functions for GUI control in the character stage (lobby)
 	VOID		SwitchDialog(bool bShow);
 
 protected:
@@ -75,7 +75,7 @@ protected:
 
 	VOID			OnClick_MakeButton(gui::CComponent* pComponent);
 	VOID			OnClick_ReturnButton(gui::CComponent* pComponent);
-	
+
 	VOID			OnMouseDown(const CKey& key);
 	VOID			OnMouseUp(const CKey& key);
 	VOID			OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY);
@@ -98,22 +98,23 @@ public:
 	gui::CSlot			m_slotCaptureMouseUp;
 	gui::CSlot			m_slotPaint;
 
-	gui::CButton*		m_pLeftRotButton;	///< 왼쪽 회전 버튼
-	gui::CButton*		m_pRightRotButton;	///< 오른쪽 회전 버튼
-	gui::CButton*		m_pReturnButton;	///< 돌아가기 버튼
-	gui::CButton*		m_pMakeButton;		///< 만들기 버튼
+	gui::CButton*		m_pLeftRotButton;	///< Left rotation button
+	gui::CButton*		m_pRightRotButton;	///< Rotate right button
+	gui::CButton*		m_pReturnButton;	///< Return button
+	gui::CButton*		m_pMakeButton;		///< Create button
+	gui::CButton*		m_pSaveButton;
 
 	CSurfaceGui			m_srfNameBack;		///< Name Back
 
-	gui::CStaticBox*	m_pNameStatic;		///< '이름'
+	gui::CStaticBox*	m_pNameStatic;		///< 'name'
 
-	gui::CInputBox*		m_pNameInput;		///< 이름 입력란
+	gui::CInputBox*		m_pNameInput;		///< Name input field
 
-	CRaceExplainGui*	m_pRaceExplainGui;	///< 종족 설명 Gui
-	CClassExplainGui*	m_pClassExplainGui;	///< 클래스 설명 Gui
-	CCharMakePartGui*	m_pCharMakePartGui;	///< 캐릭터의 각 부분을 선택하는 클래스
+	CRaceExplainGui*	m_pRaceExplainGui;	///< Race Description Gui
+	CClassExplainGui*	m_pClassExplainGui;	///< Class Description Gui
+	CCharMakePartGui*	m_pCharMakePartGui;	///< A class that selects each part of the character
 
-	RwUInt8				m_byRotationState;	///< 캐릭터 회전상태
+	RwUInt8				m_byRotationState;	///< Character rotation status
 
 	sMOUSE_ROL			m_tMouseRol;
 };

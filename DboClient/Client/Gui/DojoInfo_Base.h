@@ -1,22 +1,22 @@
 /******************************************************************************
-* File			: DojoInfo_Base.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2009. 1. 16
-* Abstract		: 
+*File           : DojoInfo_Base.h
+*Author         : Hong SungBock
+*Copyright      : NTL Co., Ltd.
+*Date           : January 16, 2009
+*Abstract		: 
 *****************************************************************************
-* Desc			: 도장 정보 창의 탭 상위 클래스
+*Desc           : Tab parent class of stamp information window
 *****************************************************************************/
 
 #pragma once
 
-// shared
+// Shared
 #include "NtlSharedType.h"
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentatione
+// Presentatione
 #include "NtlPLGui.h"
 
 class CDojoInfo_Base

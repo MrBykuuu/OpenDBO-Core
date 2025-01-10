@@ -2,7 +2,7 @@
 *
 * File			: NtlPLDistanceFilterGroup.h
 * Author		: HyungSuk, Jang
-* Copyright	: (주)NTL
+* Copyright	    : (?)NTL
 * Date			: 2006. 12. 12	
 * Abstract		: Presentation distance filtering group 
 *****************************************************************************
@@ -17,8 +17,8 @@ class CNtlPLEntity;
 
 /**
 * \ingroup NtlPresentation
-* 같은 종류의 entity를 group 관리하는 객체.
-* stl 연관 배열 map을 사용한다.
+*An object that manages the same type of entity as a group.
+*Use STL associative array map.
 *
 */
 
@@ -45,60 +45,60 @@ private:
 public:
 
 	/**
-	*  constructor for Presentation distance filtering group
+	* constructor for Presentation distance filtering group
 	*
 	*/
 
 	CNtlPLDistanceFilterGroup();
 
 	/**
-	*  destructor for Presentation distance filtering group
+	* destructor for Presentation distance filtering group
 	*
 	*/
 
 	~CNtlPLDistanceFilterGroup();
 
 	/**
-	*  distance filtering group 객체가 생성된 다음 호출하는 함수.
+	*Function called after the distance filtering group object is created.
 	*  \see Destroy
 	*/
 	RwBool Create(void);
 
 	/**
-	*  distance filtering group 객체가 삭제되기 전에 호출하는 함수.
+	*Function called before the distance filtering group object is deleted.
 	*  \see Create
 	*/
 	void Destroy(void);
 
 	/**
-	*  distance filtering group에 entity를 추가한다.
+	*Add entity to distance filtering group.
 	*  \see RemoveEntity
 	*/
 	void AddEntity(CNtlPLEntity *pPLEntity);
 
 	/**
-	*  distance filtering group에 entity를 제거한다.
+	*Remove entity from distance filtering group.
 	*  \see RemoveEntity
 	*/
 	void RemoveEntity(CNtlPLEntity *pPLEntity);
 
 	/**
-	*  next update filter을 얻어온다.
+	*Get the next update filter.
 	*/
 	const MapSet* GetNextUpdateSet(void);
 
 	/**
-	*  distance filtering group을 얻어온다.
+	*Get the distance filtering group.
 	*/
 	const ListGroup& GetEntities(void) const;
 
 	/**
-	*  distance filtering set 갯수.
+	*Number of distance filtering sets.
 	*/
 	RwInt32 GetFilterSetCount(void);
 
 	/**
-	*  distance filtering group에 포함된 총 entity의 갯수.
+	*Total number of entities included in the distance filtering group.
 	*/
 	RwInt32 GetEntityCount(void);
 };

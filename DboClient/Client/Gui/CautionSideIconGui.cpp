@@ -51,7 +51,7 @@ CCautionSideViewUnit::~CCautionSideViewUnit()
 
 /**
 * \brief Update
-* \param fElapsed	(RwReal) 이전 업데이트에서 경과된 시간
+* \param fElapsed (RwReal) Time elapsed from previous update.
 */
 void CCautionSideViewUnit::Update( RwReal fElapsed ) 
 {
@@ -65,9 +65,9 @@ void CCautionSideViewUnit::Update( RwReal fElapsed )
 }
 
 /**
-* \brief 부모 컴포넌트에서의 위치를 정한다.
-* \param nPosX		(RwInt32) X의 시작 좌표
-* \param nPosY		(RwInt32) Y의 시작 좌표
+* \brief Determines the location in the parent component.
+* \param nPosX (RwInt32) Starting coordinate of X
+* \param nPosY (RwInt32) Starting coordinate of Y
 */
 void CCautionSideViewUnit::SetPositionFromParent( RwInt32 nPosX, RwInt32 nPosY ) 
 {
@@ -97,8 +97,8 @@ CCautionSideIconGui::~CCautionSideIconGui()
 }
 
 /**
-* \brief Caution SideIcon의 기본적인 컴포넌트를 생성하며 UI의 기능적 슬롯을 연결한다.
-* \returns 성공 여부
+* \brief Caution Creates the basic components of SideIcon and connects the functional slots of the UI.
+* \returns success or failure
 */
 RwBool CCautionSideIconGui::Create() 
 {
@@ -124,7 +124,7 @@ RwBool CCautionSideIconGui::Create()
 }
 
 /**
-* \brief Caution SideIcon의 기본적인 컴포넌트 해제 및 클래스에서 사용한 자원을 해제한다.
+* \brief Caution Releases the basic components of SideIcon and releases resources used in the class.
 */
 void CCautionSideIconGui::Destroy() 
 {
@@ -133,8 +133,8 @@ void CCautionSideIconGui::Destroy()
 }
 
 /**
-* \brief 사이드아이콘에서 사이드뷰의 들어있는 유닛의 갯수를 받는다.
-* \param pData	(void*) SCautionSideViewUnits*을 void* 으로 변환한 자료
+* \brief Receives the number of units in the side view from the side icon.
+* \param pData (void*) Data converted from SCautionSideViewUnits*to void*
 */
 void CCautionSideIconGui::OnSideIconReceive( void* pData ) 
 {
@@ -142,7 +142,7 @@ void CCautionSideIconGui::OnSideIconReceive( void* pData )
 
 	m_nSize = pUnitSize->nSize;
 
-	// 사이즈가 0이거나 더 낮으면 닫는다.
+	// If size is 0 or lower, close.
 	if( m_nSize <= 0 )
 	{
 		Show(false);
@@ -158,7 +158,7 @@ void CCautionSideIconGui::OnSideIconReceive( void* pData )
 }
 
 /**
-* \brief 연결된 SideView가 닫 힐 때
+* \brief When the connected Side View is closed
 */
 void CCautionSideIconGui::OnSideViewClosed() 
 {
@@ -166,7 +166,7 @@ void CCautionSideIconGui::OnSideViewClosed()
 }
 
 /**
-* \brief SideIcon을 클릭했을 때 실행되도록 등록한 함수
+* \brief Function registered to run when SideIcon is clicked
 */
 void CCautionSideIconGui::OnIconButtonClicked( gui::CComponent* pComponent ) 
 {
@@ -174,9 +174,9 @@ void CCautionSideIconGui::OnIconButtonClicked( gui::CComponent* pComponent )
 }
 
 /**
-* \brief 기본 Dialog가 Move되거나 Resize 됐을 때 호출
-* \param nOldX	(RwInt32) 이전 X 좌표
-* \param nOldY	(RwInt32) 이전 Y 좌표
+* \brief Called when the basic dialog is moved or resized.
+* \param nOldX (RwInt32) Old X coordinate
+* \param nOldY (RwInt32) Old Y coordinate
 */
 void CCautionSideIconGui::OnMove( RwInt32 nOldX, RwInt32 nOldY ) 
 {
@@ -206,8 +206,8 @@ CCautionSideViewGui::~CCautionSideViewGui()
 }
 
 /**
-* \brief CautionSideView의 컴포넌트와 리소스를 생성하고 필요한 Event를 등록한다.
-* \return	성공여부
+* \brief Create the components and resources of CautionSideView and register the necessary Events.
+* \return Success or not
 */
 RwBool CCautionSideViewGui::Create() 
 {
@@ -246,7 +246,7 @@ RwBool CCautionSideViewGui::Create()
 }
 
 /**
-* \brief CautionSideView에서 사용된 자원과 리소스를 해제한다.
+* \brief Caution Release resources and resources used inSideView.
 */
 void CCautionSideViewGui::Destroy() 
 {
@@ -279,14 +279,14 @@ void CCautionSideViewGui::Destroy()
 */
 void CCautionSideViewGui::Update( RwReal fElapsed ) 
 {
-	// List에 아무런 Unit도 없다면 Update하지 않는다.	
+	// If there are no units in the list, it is not updated.	
 	if( m_listUnit.empty() )
 	{
 		/*CSideIconGui::GetInstance()->*/
 		return;
 	}
 	
-	// 갱신된 목록이 있는 검사한다.
+	// Check for updated lists.
 	RwBool bIsDelete = FALSE;
 	ListUnitsIt it = m_listUnit.begin();
 	while( it != m_listUnit.end() )
@@ -305,13 +305,13 @@ void CCautionSideViewGui::Update( RwReal fElapsed )
 			it++;
 	}
 
-	// 사라진거싱 있다면 재 계산
+	// Recalculate if any missing items have disappeared.
 	if( bIsDelete )
 	{
-		// 높이를 재계산하고 유닛을 재배치
+		// Recalculate height and relocate units
 		OnSideViewLocate( m_rectIcon );
 
-		// SideIcon에 갯수를 알려준다.
+		// It tells the number of SideIcons.
 		SendUnitSizeToIcon();
 	}
 }
@@ -333,7 +333,7 @@ void CCautionSideViewGui::OnMove( RwInt32 nOldX, RwInt32 nOldY )
 }
 
 /**
-* \brief 닫기 버튼을 클릭했을 때
+* \brief When the close button is clicked
 */
 void CCautionSideViewGui::OnCloseButtonClicked( gui::CComponent* pComponent ) 
 {
@@ -349,11 +349,11 @@ void CCautionSideViewGui::HandleEvents( RWS::CMsg& msg )
 	{
 		SDboEventCautionSideNotify* pNotify = reinterpret_cast<SDboEventCautionSideNotify*>( msg.pData );
 
-		// bActive 가 TRUE면 등록
-		// FALSE면 삭제 ( 히스토리를 남기는 것이 목적이기 때문에 따로 삭제를 하진 않는다.
+		// Register if bActive is TRUE
+		// If FALSE, delete (since the purpose is to leave a history, no separate deletion is performed.
 		if( pNotify->bActive )
 		{
-			// 생성을 하고 생성이 성공하면 윈도우 사이즈를 조절한다.
+			// Create it, and if creation is successful, adjust the window size.
 			if( CreateUnit( pNotify->strStringID, pNotify->pString, pNotify->fLifeTime ) )
 			{
 				SendUnitSizeToIcon();
@@ -362,7 +362,7 @@ void CCautionSideViewGui::HandleEvents( RWS::CMsg& msg )
 		}
 		//else
 		//{
-		//	// StringID를 삭제해주고 만약 삭제된 것이 있다면 윈도우 사이즈를 조절한다.
+		//	// Delete the StringID and, if deleted, adjust the window size.
 		//	if ( DestroyUnit( pNotify->uiStringID ) )
 		//	{
 		//		SendUnitSizeToIcon();
@@ -373,7 +373,7 @@ void CCautionSideViewGui::HandleEvents( RWS::CMsg& msg )
 }
 
 /**
-* \brief ESC 키를 눌렀을 경우
+* \brief When ESC key is pressed
 */
 void CCautionSideViewGui::OnPressESC() 
 {
@@ -385,7 +385,7 @@ void CCautionSideViewGui::OnPressESC()
 */
 void CCautionSideViewGui::OnSideViewOpen( const void* pData ) 
 {
-	// 보여지고 있다거나 List에 아무것도 없으면 끄고 아니라면 켠다.
+	// If it is being shown or there is nothing in the list, turn it off, otherwise turn it on.
 	if( m_pThis->IsVisible() || m_listUnit.empty() )
 		Show(false);
 	else
@@ -394,7 +394,7 @@ void CCautionSideViewGui::OnSideViewOpen( const void* pData )
 
 /**
 * \brief OnSideViewReceive
-* \param pData	(void*) Side Icon의 크기를 받기 위해서 CRectangle을 전달받는다.
+* \param pData (void*) CRectangle is received to receive the size of the Side Icon.
 */
 void CCautionSideViewGui::OnSideViewReceive( void* pData ) 
 {
@@ -412,8 +412,8 @@ void CCautionSideViewGui::OnSideViewClose()
 }
 
 /**
-* \brief 유닛들의 높이로 현재의 View의 크기를 정하고 Unit들을 배치한다.
-* \param rectSideIcon	(const CRectangle&) Caution SideIcon의 화면 위치 및 크기
+* \brief Set the size of the current view based on the height of the units and place the units.
+* \param rectSideIcon (const CRectangle&) Caution Screen position and size of SideIcon
 */
 void CCautionSideViewGui::OnSideViewLocate( const CRectangle& rectSideIcon ) 
 {
@@ -437,14 +437,14 @@ void CCautionSideViewGui::OnSideViewLocate( const CRectangle& rectSideIcon )
 }
 
 /**
-* \brief Unit을 생성한다.
-* \param uiStringID		(RwUInt32) 문자열 인덱스 (DisplayStringManager)
-* \param pString		(const WCHAR*) 문자열
-* \param fLifeTime		(RwReal) 경고 메시지가 살아 있는 시간
+* \brief Create Unit.
+* \param uiStringID (RwUInt32) string index (DisplayStringManager)
+* \param pString (const WCHAR*) string
+* \param fLifeTime (RwReal) How long the warning message is alive.
 */
 RwBool CCautionSideViewGui::CreateUnit(std::string& uiStringID, const WCHAR* pString, RwReal fLifeTime )
 {
-	// 10개 이상일 경우 하나를 지워준다.
+	// If there are more than 10, delete one.
 	if( (RwInt32)m_listUnit.size() >= dMAX_CAUTION_SIDE_VIEW_UNIT )
 	{
 		CCautionSideViewUnit* pUnit = m_listUnit.back();
@@ -452,7 +452,7 @@ RwBool CCautionSideViewGui::CreateUnit(std::string& uiStringID, const WCHAR* pSt
 		DestroyUnit( pUnit );
 	}
 	
-	// 생성 후 넣기
+	// Insert after creation
 	CCautionSideViewUnit* pUnit = NTL_NEW CCautionSideViewUnit( m_pThis, uiStringID, pString, fLifeTime );
 	m_listUnit.push_front( pUnit );
 
@@ -460,8 +460,8 @@ RwBool CCautionSideViewGui::CreateUnit(std::string& uiStringID, const WCHAR* pSt
 }
 
 /**
-* \brief Unit을 삭제한다.
-* \param pUnit	(CCautionSideViewUnit*) Unit을 메모리 해제한다.
+* \brief Delete the Unit.
+* \param pUnit (CCautionSideViewUnit*) Releases the memory of the Unit.
 */
 RwBool CCautionSideViewGui::DestroyUnit( CCautionSideViewUnit* pUnit ) 
 {
@@ -471,9 +471,9 @@ RwBool CCautionSideViewGui::DestroyUnit( CCautionSideViewUnit* pUnit )
 }
 
 /**
-* \brief uiStringID를 가지고 있는 Unit을 모두 삭제한다.
-* \param uiStringID		(RwUInt32) 문자열 인덱스
-* \return 성공여부
+* \brief Delete all Units that have uiStringID.
+* \param uiStringID (RwUInt32) String index
+* \return Success or not
 */
 RwBool CCautionSideViewGui::DestroyUnit(std::string& uiStringID )
 {
@@ -496,7 +496,7 @@ RwBool CCautionSideViewGui::DestroyUnit(std::string& uiStringID )
 }
 
 /**
-* \brief SideIcon에 Unit의 갯수를 보낸다.
+* \brief Send the number of units to SideIcon.
 */
 void CCautionSideViewGui::SendUnitSizeToIcon() 
 {

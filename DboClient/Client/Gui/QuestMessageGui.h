@@ -21,7 +21,7 @@ struct stMESSAGEBUTTONITEM
 	//static RwBool		m_bSyncState;
 	//static RwReal		m_fSyncTime;
 	gui::CButton*		m_pBtn;
-	//gui::CFlickerEffect	m_Effect;
+	//Gui::c flicker effect	m effect;
 
 	stMESSAGEBUTTONITEM::stMESSAGEBUTTONITEM(VOID) : m_pBtn( NULL ) {}
 
@@ -97,7 +97,7 @@ private:
 	RwInt32				m_nReadPage;
 	RwUInt8				m_eType;		// eQuestMessageType	
 
-	// Visit 퀘스트 관련 데이터
+	// Visit quest related data
 	sQUEST_INFO			m_QuestInfo;
 	RwUInt32			m_uiEventGenType;
 	RwUInt32			m_uiID;

@@ -1,18 +1,18 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobEventObjectProxy.h"
 
-// shared
+// Shared
 
-// core
+// Core
 #include "NtlMath.h"
 
-//// presentation
+//// Presentation
 #include "NtlPLEvent.h"
 #include "NtlPLSceneManager.h"
 #include "NtlPLObject.h"
 #include "NtlPlApi.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSob.h"
 #include "NtlSLEventFunc.h"
@@ -65,7 +65,7 @@ void CNtlSobEventObjectProxy::HandleEvents( RWS::CMsg &pMsg )
         
         if(m_pPLObject->GetMilepostID())
         {
-            // 클라이언트 레이어의 UI쪽으로 메시지를 쏴서 툴팁 표시        
+            // Send a message towards the UI of the client layer and display a tooltip        
             std::wstring& wstrString = API_GetTableContainer()->GetTextAllTable()->GetMilePostTable()->GetText(m_pPLObject->GetMilepostID());
             CNtlSLEventGenerator::ShowToolTip(TRUE, 0, 0, wstrString.c_str());
         }
@@ -76,7 +76,7 @@ void CNtlSobEventObjectProxy::HandleEvents( RWS::CMsg &pMsg )
 
         if(m_pPLObject->GetMilepostID())
         {
-            // 클라이언트 레이어의 UI쪽으로 메시지를 쏴서 툴팁 제거
+            // Remove tooltip by shooting a message towards the UI of the client layer
             CNtlSLEventGenerator::ShowToolTip(FALSE, 0, 0, L"");
         }        
 	}		

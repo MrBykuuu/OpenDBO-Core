@@ -1,21 +1,21 @@
 #include "precomp_dboclient.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "CEventHandler.h"
 
-// shared
+// Shared
 #include "NtlResultCode.h"
 #include "NtlItem.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 #include "NtlPLGuiManager.h"
 
-// framework
+// Framework
 #include "NtlApplication.h"
 
-// simulation
+// Simulation
 #include "InputActionMap.h" 
 #include "NtlSLEvent.h"
 #include "NtlSLGlobal.h"
@@ -30,12 +30,12 @@
 #include "NtlSLEventFunc.h"
 #include "NtlSLPrivateShop.h"
 
-// table
+// Table
 #include "ItemTable.h"
 #include "TextAllTable.h"
 #include "TableContainer.h"
 
-// dbo
+// Dbo
 #include "DboGlobal.h"
 #include "DboDef.h"
 #include "DboEvent.h"
@@ -54,17 +54,17 @@
 
 #include "DumpCommand.h"
 
-// PrivateShop
+// Private shop
 #include "PrivateShopGui.h"
 
-// etc
+// Etc
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // CPrivateShopItem
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-* \brief 생성자
+* \brief constructor
 */
 CPrivateShopItemGui::CPrivateShopItemGui()
 :m_pPrivateShopGui(NULL)
@@ -82,7 +82,7 @@ CPrivateShopItemGui::CPrivateShopItemGui()
 }
 
 /**
-* \brief 소멸자
+* \brief destructor
 */
 CPrivateShopItemGui::~CPrivateShopItemGui()
 {
@@ -90,12 +90,12 @@ CPrivateShopItemGui::~CPrivateShopItemGui()
 
 /**
 * \brief Create
-* \param rectArea			현재 슬롯의 영역
-* \param pEffectSelect		선택하였을 경우의 Effect Surface
-* \param pEffectFocus		포커스 되었을 경우의 Effect Surface
-* \param pEffectBusiness	흥정 중의 Effect Surface
-* \param pParent			부모 Component
-* \param pPrivateShopGui	슬롯을 가지고 있는 Gui
+* \param rectArea Area of ??current slot
+* \param pEffectSelect Effect Surface when selected
+* \param pEffectFocus Effect Surface when focused
+* \param pEffectBusiness Effect Surface during bargaining
+* \param pParent Parent Component
+* \param pPrivateShopGui The Gui that has the slot.
 */
 RwBool CPrivateShopItemGui::Create(const CRectangle& rectArea, 
 								   CSurfaceGui* pEffectSelect, 
@@ -105,22 +105,22 @@ RwBool CPrivateShopItemGui::Create(const CRectangle& rectArea,
 {
 	NTL_FUNCTION("CPrivateShopItemGui::Create");
 
-	// 아이템 슬롯의 기본이 되는 뒷 배경
+	// The background behind the item slot
 	CRectangle rect = rectArea;
 	m_pShopItem = NTL_NEW gui::CDialog(rect, pParent, GetNtlGuiManager()->GetSurfaceManager());
 
-	// 아이템 뒷 배경의 그림 ( gui::CPanet )
+	// Picture of the background behind the item ( gui::CPanet )
 	rect.SetRectWH(0, 0, 283, 48);
 	m_pShopItemBg = NTL_NEW gui::CPanel(rect, m_pShopItem, GetNtlGuiManager()->GetSurfaceManager(),
 		GetNtlGuiManager()->GetSurfaceManager()->GetSurface("PrivateShop.srf", "srfBackGroundShopItem"));
 	m_pShopItemBg->Enable(false);
 
-	// 아이템 이름
+	// item name
 	rect.SetRectWH(48, 2, 200, 16);
 	m_pShopItemName = NTL_NEW gui::CStaticBox(rect, m_pShopItem, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER);
 	m_pShopItemName->Enable(false);
 
-	// 가격 
+	// price 
 	rect.SetRectWH(176, 22, 103, 20);
 	m_pShopItemPrice = NTL_NEW gui::CButton(rect, L"0",m_pShopItem, GetNtlGuiManager()->GetSurfaceManager());
 
@@ -137,7 +137,7 @@ RwBool CPrivateShopItemGui::Create(const CRectangle& rectArea,
 	m_pShopItemIcon->Create(m_pShopItem, DIALOG_PRIVATESHOP, REGULAR_SLOT_ITEM_TABLE, SDS_COUNT);
 	m_pShopItemIcon->SetPosition_fromParent(7, 6);
 
-	// Pick 되었을 때의 Surface를 세팅
+	// Setting the Surface when Picked
 	m_EffectPick.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("PrivateShop.srf", "srfShopItemPick"));
 	m_EffectPick.SetPositionfromParent(7, 6);
 
@@ -184,7 +184,7 @@ void CPrivateShopItemGui::Destroy()
 
 /**
 * \brief clear
-* 현재 슬롯의 아이템 정보를 모두 초기화한다.
+*Initializes all item information in the current slot.
 */
 void CPrivateShopItemGui::Clear()
 {
@@ -328,7 +328,7 @@ CRectangle CPrivateShopItemGui::GetShopItemRect()
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-* \brief 생성자
+* \brief constructor
 */
 CPrivateShopGui::CPrivateShopGui(const RwChar* pName) : CNtlPLGui(pName)
 ,m_pTitle(NULL)
@@ -359,7 +359,7 @@ CPrivateShopGui::CPrivateShopGui(const RwChar* pName) : CNtlPLGui(pName)
 }
 
 /**
-* \brief 소멸자
+* \brief destructor
 */
 CPrivateShopGui::~CPrivateShopGui()
 {
@@ -367,7 +367,7 @@ CPrivateShopGui::~CPrivateShopGui()
 
 /**
 * \brief Create
-* 공통된 다이얼로그 컴포넌트를 생성하고 하위 Tab 컴포넌트 역시 생성한다.
+*Create a common dialog component and also create a child Tab component.
 */
 RwBool CPrivateShopGui::Create()
 {
@@ -411,7 +411,7 @@ RwBool CPrivateShopGui::Create()
 	// TAB_NOTE : Create Component
 	CreateTabNote(m_apDialogTab[TAB_NOTE]);
 
-	// 링크
+	// link
 	LinkMsg(g_EventPrivateShopState, 0);
 	LinkMsg(g_EventPrivateShopStateVisitor, 0);
 	LinkMsg(g_EventPrivateShopItem, 0);	
@@ -437,8 +437,8 @@ RwBool CPrivateShopGui::Create()
 }
 
 /**
-* \brief TAB_SHOP의 UI를 생성한다.
-* \param pParent	부모 Dialog
+* \brief Creates the UI of TAB_SHOP.
+* \param pParent Parent Dialog
 */
 RwBool CPrivateShopGui::CreateTabShop(gui::CDialog* pParent)
 {
@@ -458,27 +458,27 @@ RwBool CPrivateShopGui::CreateTabShop(gui::CDialog* pParent)
 	m_slotEffectPaint	= m_pSaleButton->SigPaint().Connect(this, &CPrivateShopGui::OnPaintEffect);
 	m_slotSaleClicked	= m_pSaleButton->SigClicked().Connect(this, &CPrivateShopGui::OnClickedBtnSale);
 
-	// 이펙트
+	// effect
 	m_EffectFocus.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("GameCommon.srf", "srfSlotFocusEffect"));
 	m_EffectSelect.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("GameCommon.srf", "srfSlotGrayedEffect"));
 	
-	// Item Slot을 생성
+	// Create an Item Slot
 	for (int i = 0; i < SLOT_NUM; ++i )
 	{
 		CRectangle	rect;
 		rect.SetRectWH(dPRIVATESHOP_UI_ITEM_LEFT,						// LEFT
-			dPRIVATESHOP_UI_ITEM_TOP + (dPRIVATESHOP_UI_ITEM_GAP*i),	// TOP ( GAP만큼 증가 )
+			dPRIVATESHOP_UI_ITEM_TOP + (dPRIVATESHOP_UI_ITEM_GAP*i),	// TOP (increased by GAP)
 			283,														// WIDTH
 			48);														// HEIGHT
 
-		// 아이템 Slot 생성
+		// Create item slot
 		m_aShopItem[i].Create(rect, &m_EffectSelect, &m_EffectFocus, pParent, this);
 	}
 
 	// Setting
 	m_pZennyTitle->SetText(GetDisplayStringManager()->GetString("DST_PRIVATESHOP_ZENNY"));
 	m_pStbSoldOut->SetText(GetDisplayStringManager()->GetString("DST_PRIVATESHOP_EMPTY_SLOT"));
-	m_pSaleButton->Raise(); // 아이템 슬롯 보다 Sale 버튼을 상위로 올린다.
+	m_pSaleButton->Raise(); // Raise the Sale button higher than the item slot.
 	m_pSoldOut->Raise();
 	m_pStbSoldOut->Raise();
 
@@ -486,8 +486,8 @@ RwBool CPrivateShopGui::CreateTabShop(gui::CDialog* pParent)
 }
 
 /**
-* \brief TAB_NOTE의 UI를 생성
-* \param pParent	부모 다이얼로그
+* \brief Create UI for TAB_NOTE
+* \param pParent parent dialog
 */
 RwBool CPrivateShopGui::CreateTabNote(gui::CDialog* pParent)
 {
@@ -501,7 +501,7 @@ RwBool CPrivateShopGui::CreateTabNote(gui::CDialog* pParent)
 	m_pMailButton			= (gui::CButton*)GetComponent("btnMail");
 	m_pNoticeMaxNum			= (gui::CStaticBox*)GetComponent("stbMaxNumText");
 
-	// 슬롯
+	// slot
 	m_slotNameGotFocus			= m_pShopNameInput->SigGotFocus().Connect(this, &CPrivateShopGui::OnGotFocus);
 	m_slotNameLostFocus			= m_pShopNameInput->SigLostFocus().Connect(this, &CPrivateShopGui::OnLostFocus);
 	m_slotNoticeGotFocus		= m_pShopNoticeInput->SigGotFocus().Connect(this, &CPrivateShopGui::OnGotFocus);
@@ -567,13 +567,13 @@ void CPrivateShopGui::Destroy()
 }
 
 /**
-* \breif SwitchDialog
-* \param bOpen 오픈 여부
-* 게임 룰 컨셉에 물어보는 부분 때문에 Show(bOpen) 부분을 가장 아래로 변경하였다.
+*\breif SwitchDialog
+* \param bOpen Whether to open or not
+*The Show(bOpen) part was changed to the bottom because it asks about the game rule concept.
 */
 RwInt32 CPrivateShopGui::SwitchDialog(bool bOpen)
 {
-	// 만약 Dialog를 닫는다면 손님이나 주인이나 개인상점을 껐다는 것을 의미한다.
+	// If the dialog is closed, it means that the customer, the owner, or the individual store has been turned off.
 	if ( bOpen == FALSE )
 	{  
 		if (GetIconMoveManager()->GetSrcPlace() == PLACE_PRIVATESHOP)
@@ -581,15 +581,15 @@ RwInt32 CPrivateShopGui::SwitchDialog(bool bOpen)
 			GetIconMoveManager()->IconMoveEnd();
 		}
 
-		// 상점의 Type에 따라서 종료 하는 패킷 보내줌.
+		// Sending packets that terminate depending on the type of store.
 		switch (m_eShopType)
 		{
 		case PRIVATESHOP_NONE:
 			break;
-		case PRIVATESHOP_BUY:	// 손님
+		case PRIVATESHOP_BUY:	// customer
 			GetDboGlobal()->GetGamePacketGenerator()->SendPrivateShopLeaveReq(m_ShopData.hOwner);
 			break;
-		case PRIVATESHOP_SELL:	// 주인
+		case PRIVATESHOP_SELL:	// master
 			{
 				GetDboGlobal()->GetGamePacketGenerator()->SendPrivateShopExitReq();
 			}
@@ -604,14 +604,14 @@ RwInt32 CPrivateShopGui::SwitchDialog(bool bOpen)
 
 /**
 * \brief HandleEvents
-* Todo
-* 관련 된 이벤트들 끼리 분할해야함
+*Todo
+*Must be divided into related events
 */
 void CPrivateShopGui::HandleEvents(RWS::CMsg& msg)
 {
 	NTL_FUNCTION("CPrivateShopGui::HandleEvents");
 
-	// Handle Events : Comment는 class 정의 부분에...
+	// Handle Events: Comment is in the class definition part...
 
 	if (msg.Id == g_EventMsgBoxResult)
 		HandleMsgboxResult( msg.pData );
@@ -648,8 +648,8 @@ void CPrivateShopGui::HandleEvents(RWS::CMsg& msg)
 }
 
 /**
-* \brief 개인상점에 관련된 MessageBox의 Result를 처리한다.
-* \param pMsgBoxResult		메시지박스의 결과 구조체
+* \brief Processes the Result of the MessageBox related to the personal store.
+* \param pMsgBoxResult message box result structure
 */
 void CPrivateShopGui::HandleMsgboxResult( void* pData ) 
 {
@@ -674,7 +674,7 @@ void CPrivateShopGui::HandleMsgboxResult( void* pData )
 }
 
 /**
-* \brief 계산기로 숫자를 입력하였을 경우
+* \brief When numbers are entered using a calculator
 */
 void CPrivateShopGui::HandleCalcPopupResult( void* pData ) 
 {
@@ -686,7 +686,7 @@ void CPrivateShopGui::HandleCalcPopupResult( void* pData )
 }
 
 /**
-* \brief 아바타 주위의 개인상점이 업데이트 됐을 경우 상태를 알려준다.
+* \brief Notifies you of the status of personal stores around the avatar when they are updated.
 */
 void CPrivateShopGui::HandleSobPrivateShopCommunity( void *pData ) 
 {
@@ -694,7 +694,7 @@ void CPrivateShopGui::HandleSobPrivateShopCommunity( void *pData )
 
 	switch( pPrivateShopCommunity->byShopState )
 	{
-		case PRIVATESHOP_STATE_OPEN:				// 오픈
+		case PRIVATESHOP_STATE_OPEN:				// open
 		{
 			if (pPrivateShopCommunity->hSerialId != INVALID_SERIAL_ID)
 			{
@@ -709,7 +709,7 @@ void CPrivateShopGui::HandleSobPrivateShopCommunity( void *pData )
 }
 
 /**
-* \brief 개인상점의 아이템을 등록하였을 경우
+* \brief When registering an item from a personal store
 */
 void CPrivateShopGui::HandleRegPrivateShopItem( void* pData ) 
 {
@@ -729,7 +729,7 @@ void CPrivateShopGui::HandleRegPrivateShopItem( void* pData )
 }
 
 /**
-* \brief 개인상점에서 필요한 SOB의 Infomation이 Update
+* \brief Information on SOB required for personal stores has been updated
 */
 void CPrivateShopGui::HandleSobInfoUpdate( void* pData ) 
 {
@@ -744,7 +744,7 @@ void CPrivateShopGui::HandleSobInfoUpdate( void* pData )
 }
 
 /**
-* \brief 개인상점 아이템이 픽업 되어서 Hide 되었을 때 
+* \brief When a personal store item is picked up and hidden 
 */
 void CPrivateShopGui::HandlePickedUpHide( void* pData ) 
 {
@@ -755,25 +755,25 @@ void CPrivateShopGui::HandlePickedUpHide( void* pData )
 }
 
 /**
-* \brief 상점 상태의 변경
+* \brief Change of store status
 */
 void CPrivateShopGui::HandlePrivateShopState( void* pData ) 
 {
 	SNtlEventPrivateShopState*	pShopState	= reinterpret_cast<SNtlEventPrivateShopState*>( pData );
 	sPRIVATESHOP_SHOP_DATA*		pShopData	= pShopState->pPrivateShopData;
 
-	// 아바타가 개인상점 상태가 아니라면 리턴
+	// Return if the avatar is not in personal store status
 	if (!pShopState->IsAvatarPrivateShop)
 	{
 		NTL_RETURNVOID();
 	}
 
-	// 상점 상태의 변경
+	// Change in store status
 	switch (pShopState->uiEventType)
 	{
-	case PRIVATESHOP_EVENT_CREATE:	// 상점 시작
+	case PRIVATESHOP_EVENT_CREATE:	// Start a store
 		{
-			// DATA LOADING중이라면 Break
+			// Break if DATA LOADING
 			if( pShopState->uiPrivateShopState == PRIVATESHOP_STATE_DATALOADING )
 				break;
 
@@ -788,17 +788,17 @@ void CPrivateShopGui::HandlePrivateShopState( void* pData )
 			GetDialogManager()->OpenDialog(DIALOG_PRIVATESHOP);
 		}
 		break;
-	case PRIVATESHOP_EVENT_EXIT:	// 상점 끝
+	case PRIVATESHOP_EVENT_EXIT:	// end of store
 		Clear();
 		GetDialogManager()->CloseDialog(DIALOG_PRIVATESHOP);
 		break;
-	case PRIVATESHOP_EVENT_OPEN:	// 판매 개시
+	case PRIVATESHOP_EVENT_OPEN:	// Sales start
 		{
 			SetUserInterface(PRIVATESHOP_SELL, pShopData, true);
 			CNtlSLEventGenerator::TSPrivateShop();
 		}
 		break;
-	case PRIVATESHOP_EVENT_CLOSE:	// 판매 중지
+	case PRIVATESHOP_EVENT_CLOSE:	// stop selling
 		SetSale(false);
 		break;
 	}
@@ -806,7 +806,7 @@ void CPrivateShopGui::HandlePrivateShopState( void* pData )
 }
 
 /**
-* \brief 손님이 방문 하였을 경우
+* \brief When a guest visits
 */
 void CPrivateShopGui::HandlePrivateShopStateVisitor( void *pData ) 
 {
@@ -846,7 +846,7 @@ void CPrivateShopGui::HandlePrivateShopStateVisitor( void *pData )
 }
 
 /**
-* \brief 아이템이 업데이트 되었을 때
+* \brief When an item is updated
 */
 void CPrivateShopGui::HandlePrivateShopItem( void* pData ) 
 {
@@ -856,13 +856,13 @@ void CPrivateShopGui::HandlePrivateShopItem( void* pData )
 
 	switch (pShopItem->uiEventType)
 	{
-	case PRIVATESHOP_EVENT_ITEM_INSERT: // 물품 등록 
+	case PRIVATESHOP_EVENT_ITEM_INSERT: // Goods registration 
 		SetShopItemData(sShopItemData.byPrivateShopInventorySlotPos, &sShopItemData);
 		break;
-	case PRIVATESHOP_EVENT_ITEM_UPDATE: // 물품 정보 변경
+	case PRIVATESHOP_EVENT_ITEM_UPDATE: // Change product information
 		m_aShopItemData[sShopItemData.byPrivateShopInventorySlotPos].dwZenny = sShopItemData.dwZenny;
 		break;
-	case PRIVATESHOP_EVENT_ITEM_DELETE: // 물품 삭제
+	case PRIVATESHOP_EVENT_ITEM_DELETE: // Delete item
 		SetShopItemData(sShopItemData.byPrivateShopInventorySlotPos, NULL);
 		break;
 	}
@@ -870,7 +870,7 @@ void CPrivateShopGui::HandlePrivateShopItem( void* pData )
 }
 
 /**
-* \brief 개인상점 아이템 데이터를 업데이트할 경우
+* \brief When updating personal store item data
 */
 void CPrivateShopGui::HandlePrivateShopItemDataInfo( void* pData ) 
 {
@@ -884,19 +884,19 @@ void CPrivateShopGui::HandlePrivateShopItemDataInfo( void* pData )
 }
 
 /**
-* \brief 개인상점의 Item을 누군가가 찜한 경우
+* \brief When someone has added an item from a personal store to their wishlist
 */
 void CPrivateShopGui::HandlePrivateShopItemSelect( void* pData ) 
 {
 	SNtlEventPrivateShopItemSelect* pPrivateShopItemSelect = reinterpret_cast<SNtlEventPrivateShopItemSelect*>(pData);
 
-	// 아이템의 상태를 변경
+	// Change the state of an item
 	m_aShopItemData[pPrivateShopItemSelect->uiPrivateShopPos].byItemState = pPrivateShopItemSelect->uiItemState;
 	UpdateShopItem();
 }
 
 /**
-* \brief 개인상점의 Item을 누군가가 찜한 경우
+* \brief When someone has added an item from a personal store to their wishlist
 */
 void CPrivateShopGui::HandlePrivateShopSelectNfy( void* pData ) 
 {
@@ -911,7 +911,7 @@ void CPrivateShopGui::HandlePrivateShopSelectNfy( void* pData )
 }
 
 /**
-* \brief 개인상점의 물건을 누가 구매했을 경우
+* \brief When someone purchases an item from a private store
 */
 void CPrivateShopGui::HandlePrivateShopItemBuying( void* pData ) 
 {
@@ -931,7 +931,7 @@ void CPrivateShopGui::HandlePrivateShopItemBuying( void* pData )
 }
 
 /**
-* \brief 개인상점 안의 아이템의 상태가 변경되었을 경우
+* \brief When the status of an item in a personal store changes
 */
 void CPrivateShopGui::HandlePrivateShopItemState( void* pData ) 
 {
@@ -947,7 +947,7 @@ void CPrivateShopGui::HandlePrivateShopItemState( void* pData )
 
 
 /**
-* \brief 개인상점의 NameTag Update
+* \brief NameTag update of personal store
 */
 void CPrivateShopGui::HandlePrivateShopNameTag( void* pData ) 
 {
@@ -1032,10 +1032,10 @@ void CPrivateShopGui::SetShopItemData(RwUInt8 uiPrivateShopPos, sPRIVATESHOP_ITE
 }
 
 /**
-* \brief 효과를 렌더링 한다.
-* 각 아이템 슬롯에 알맞은 상태를 그려준다.
-* m_pItemSelect : 선택된 상태
-* m_pItemFocus : 포커스 된 상태
+* \brief Render the effect.
+*Draws the appropriate state for each item slot.
+*m_pItemSelect: Selected state
+*m_pItemFocus: Focused state
 */
 void CPrivateShopGui::OnPaintEffect()
 {
@@ -1116,7 +1116,7 @@ void CPrivateShopGui::OnTabShopMouseLeave(gui::CComponent* pComponent)
 
 void CPrivateShopGui::OnClickedBtnNext(gui::CComponent* pComponent)
 {
-	// 무엇인가를 들고 있을 경우
+	// If you are holding something
 	if (GetIconMoveManager()->GetSrcPlace() == PLACE_PRIVATESHOP)
 		GetIconMoveManager()->IconMoveEnd();
 
@@ -1220,7 +1220,7 @@ void CPrivateShopGui::OnShopItemClicked(CPrivateShopItemGui* pShopItem, const CK
 	{
 	case PRIVATESHOP_BUY:
 		{
-			// 현재는 마우스 오른쪽 버튼으로만 사용 가능하다.
+			// Currently, it can only be used with the right mouse button.
 			if (Key.m_nID == UD_LEFT_BUTTON)
 			{
 				if (!GetIconMoveManager()->IsActive())
@@ -1257,7 +1257,7 @@ void CPrivateShopGui::OnShopItemClicked(CPrivateShopItemGui* pShopItem, const CK
 			{
 				if (GetIconMoveManager()->IsActive() && GetIconMoveManager()->GetSrcPlace() == PLACE_BAG)
 				{
-					// peessi : 사용기간제한 속성추가로 인해 로직변경
+					// peessi: Logic changed due to addition of usage period limit attribute
 					CNtlSobItemAttr* pSobItemAttr = Logic_GetItemSobAttrFromSobSerial( GetIconMoveManager()->GetSrcSerial() );
 					sITEM_TBLDAT* pTlbData = NULL;
 
@@ -1268,7 +1268,7 @@ void CPrivateShopGui::OnShopItemClicked(CPrivateShopItemGui* pShopItem, const CK
 						(Logic_IsCanSellItem(pSobItemAttr) && Logic_IsCanUserTradeItem(pSobItemAttr) &&
 						Logic_IsCanSaveWarehouse(pSobItemAttr) && Logic_IsCanSaveCommonWarehouse(pSobItemAttr)))
 					{
-						// Cz To Kell : 아래 소스 수정
+						// Cz To Kell: Edit the source below
 						//if (pShopItem->GetSerial() != INVALID_SERIAL_ID)
 						if (GetIconMoveManager()->GetSrcSerial() != INVALID_SERIAL_ID)
 						{
@@ -1309,13 +1309,13 @@ void CPrivateShopGui::OnShopItemClicked(CPrivateShopItemGui* pShopItem, const CK
 }
 
 /**
-* \brief 가격 버튼을 눌렀을 경우
-* \param pShopItem		누른 개인상점의 아이템
-* \param pComponent		Click된 컴포넌트
+* \brief When the price button is pressed
+* \param pShopItem The item of the personal shop that was pressed
+* \param pComponent Clicked component
 */
 void CPrivateShopGui::OnShopItemPriceClicked(CPrivateShopItemGui* pShopItem, gui::CComponent* pComponent)
 {
-	// 가격 조정을 하기 위한 계산기 를 띄운다.
+	// Launches a calculator to adjust the price.
 	CRectangle rect = pComponent->GetScreenRect();
 	CDboEventGenerator::CalcPopupShow(TRUE, pShopItem->GetPos(), PLACE_PRIVATESHOP,
 		rect.left - dPRIVATESHOP_UI_CALC_OFFSET, rect.top, NTL_MAX_USE_ZENI);
@@ -1357,7 +1357,7 @@ void CPrivateShopGui::SetUserInterface(ePrivateShopType eType, sPRIVATESHOP_SHOP
 	m_pSaleButton->Show(bBool);
 	m_pMailButton->Show(!bBool);
 	
-	// 공통 정보
+	// Common information
 	SetAway(pShopData->sSummaryPrivateShopData.bIsOwnerEmpty);
 	m_pZenny->SetText(Logic_FormatZeni(Logic_GetZenny()));
 	
@@ -1440,7 +1440,7 @@ void CPrivateShopGui::ClearShopItem()
 
 /**
 * \brief Update
-* 아이템의 상태가 변경된 것이 있는 것을 체크해준다.
+*Checks whether the status of the item has changed.
 */
 void CPrivateShopGui::UpdateShopItem()
 {
@@ -1480,7 +1480,7 @@ void CPrivateShopGui::UpdateShopItem()
 					continue;
 				}
 
-				// 구매자는 흥정 버튼이 보인다.
+				// The buyer sees a bargain button.
 				m_aShopItem[i].Show(FALSE);
 			}
 			break;
@@ -1662,7 +1662,7 @@ void CPrivateShopGui::OnKeyUp(gui::CComponent* pComponenet, CInputDevice* pDevic
 
 void CPrivateShopGui::OnNoticeCharChanged(int iLength)
 {
-	// Input Box의 최대 글자 수를 넘겼을 때 출력된다.
+	// Printed when the maximum number of characters in the input box is exceeded.
 	CalcNoticeMaxNum();	
 	if( iLength >= m_pShopNoticeInput->GetMaxLength() )
 	{

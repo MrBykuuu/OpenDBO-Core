@@ -209,7 +209,7 @@ RwBool CNtlPLBalloonManager::CreateInstance(VOID)
 	m_pInstance->m_pThis->Enable( false );
 	m_pInstance->m_pThis->SetPriority( 200 );
 
-	// TestText 
+	// Test text 
 	CRectangle rect;
 	rect.SetRectWH( 400, 300, 211, 70 );
 	m_pInstance->m_pTestText = NTL_NEW gui::CStaticBox( rect, m_pInstance->m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
@@ -217,13 +217,13 @@ RwBool CNtlPLBalloonManager::CreateInstance(VOID)
 	m_pInstance->m_pTestText->Enable( false );
 	m_pInstance->m_pTestText->Show( false );
 
-	// Update 연결
+	// Update connection
 	GetNtlGuiManager()->AddUpdateFunc( m_pInstance );
 
-	// CallBack 연결
+	// Callback connection
 	m_pInstance->m_slotPaint = m_pInstance->m_pThis->SigPaint().Connect( m_pInstance, &CNtlPLBalloonManager::OnPaint );
 
-	// Event 연결
+	// Event connection
 	m_pInstance->LinkMsg( g_EventShowSpectatorBalloon );
 	m_pInstance->LinkMsg( g_EventHideAllSpectatorBalloon );
 	
@@ -237,16 +237,16 @@ VOID CNtlPLBalloonManager::DeleteInstance(VOID)
 
 	m_pInstance->RemoveAllBalloonData();
 
-	// TestText
+	// Test text
 	NTL_DELETE( m_pInstance->m_pTestText );
 
-	// Update 연결해제
+	// Update Disconnect
 	GetNtlGuiManager()->RemoveUpdateFunc( m_pInstance );
 
-	// CallBack 연결 해제
+	// CallBack Disconnect
 	m_pInstance->m_pThis->SigPaint().Disconnect(m_pInstance->m_slotPaint);
 
-	// Event 연결해제
+	// Event Disconnect
 	m_pInstance->UnLinkMsg( g_EventShowSpectatorBalloon );
 	m_pInstance->UnLinkMsg( g_EventHideAllSpectatorBalloon );
 	
@@ -312,13 +312,13 @@ VOID CNtlPLBalloonManager::Update( RwReal fElapsed )
 		}				
 	}
 
-	// 거리순 정렬
+	// Sort by distance
 	qsort( m_aDiaplsyBalloon, m_nDisplayCount, sizeof( stDISPLAYBALLOON ), &CNtlPLBalloonManager::Compare );
 }
 
 RwInt32 CNtlPLBalloonManager::Compare( const VOID* valLeft, const VOID* valRight )
 {
-	// 거리가 먼 것을 먼저 찍히도록 앞으로 정렬
+	// Sort forward so that distant items are photographed first.
 	stDISPLAYBALLOON* pLeft = (stDISPLAYBALLOON*)valLeft;
 	stDISPLAYBALLOON* pRight= (stDISPLAYBALLOON*)valRight;
 

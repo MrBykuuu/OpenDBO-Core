@@ -1,20 +1,20 @@
 #include "precomp_dboclient.h"
 #include "CharCreateGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// sound 
+// Sound 
 #include "GUISoundDefine.h"
-// share
+// Share
 #include "NtlCharacter.h"
 
-// presentation
+// Presentation
 #include "NtlPLDef.h"
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DboGlobal.h"
@@ -104,7 +104,7 @@ RwBool CCharCreateGuiGui::Create()
 	m_pNameStatic->SetText(GetDisplayStringManager()->GetString("DST_STATUS_NAME"));
 	m_pNameStatic->Enable(false);
 
-	// 이름 입력란
+	// Name field
 	m_pNameInput = (gui::CInputBox*)GetComponent( "NameInput" );
 	m_pNameInput->SetMaxLength(NTL_MAX_SIZE_CHAR_NAME);
 	m_pNameInput->SetCaretSize(dINPUTBOX_CARET_WIDTH, dINPUTBOX_CARET_HEIGHT);
@@ -116,7 +116,7 @@ RwBool CCharCreateGuiGui::Create()
 	m_tMouseRol.bPressLeft	= FALSE;
 	m_tMouseRol.iOldX		= 0;	
 
-	// sig	
+	// Signals	
 	m_slotMouseDown		= m_pThis->SigMouseDown().Connect(this, &CCharCreateGuiGui::OnMouseDown );
 	m_slotMouseUp		= m_pThis->SigMouseUp().Connect(this, &CCharCreateGuiGui::OnMouseUp);
 	m_slotMouseMove		= m_pThis->SigMouseMove().Connect(this, &CCharCreateGuiGui::OnMouseMove );	

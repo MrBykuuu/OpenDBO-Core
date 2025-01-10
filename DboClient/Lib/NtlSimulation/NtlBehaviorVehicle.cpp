@@ -43,17 +43,17 @@ void CNtlBahaviorVehicleRideOn::Enter( void )
 	}
 	else
 	{
-		// Vehicle item을 투척한다
+		// Throws a Vehicle item
 		CNtlBHVehicleEntityMng::AttachEntity( NTL_NEW CNtlBHVehicleCharThrowVehicleItem( m_pSobDriver, (CNtlSobVehicle*)m_pActor ) );
 
-		// Vehicle 탑승
+		// Vehicle boarding
 		CNtlBHVehicleEntityMng::AttachEntity( NTL_NEW CNtlBHVehicleNoDirRideOn( m_pSobDriver, (CNtlSobVehicle*)m_pActor ) );
 	}
 }
 
 void CNtlBahaviorVehicleRideOn::Exit( void )
 {
-	// Avatar인 경우 UI를 출력 한다
+	// In case of Avatar, UI is output.
 
 	if ( m_pSobDriver->GetClassID() == SLCLASS_AVATAR )
 	{
@@ -123,13 +123,13 @@ void CNtlBahaviorVehicleRideOff::Enter( void )
 
 	m_pSobDriver->SetEventHook( FALSE );
 
-	// Driver의 상태를 복구 시킨다
+	// Restore the driver status
 
 	sCHARSTATE* pState = m_pActor->GetServerFullState();
 	CNtlSLEventGenerator::SobServerUpdateAspect( m_pSobDriver->GetSerialID(), pState->sCharStateBase.aspectState );
 	CNtlSLEventGenerator::SobServerUpdateState( m_pSobDriver->GetSerialID(), pState );
 
-	// Avatar인 경우 UI를 제거 한다
+	// In case of Avatar, remove the UI
 
 	if ( m_pSobDriver->GetClassID() == SLCLASS_AVATAR )
 	{

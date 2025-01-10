@@ -1,7 +1,7 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSLCommunityGroup.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
 
@@ -45,7 +45,7 @@ sCommunityMember* CNtlSLCommunityGroup::GetMemberbyName(WCHAR* pwcName)
 	if( !pwcName )
 		return NULL;
 
-    // NOTE: 서버에서 보내는 이름은 NULL 보장을 안한다. 그래서 새로 담아야 한다.
+    // NOTE: The name sent from the server is not guaranteed to be NULL. So you have to put it in a new way.
     std::wstring strCharName = pwcName;
 
 	COMMUNITY_ITER it_list = m_listMember.begin();

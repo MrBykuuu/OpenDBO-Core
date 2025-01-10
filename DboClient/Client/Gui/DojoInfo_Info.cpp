@@ -2,22 +2,22 @@
 #include "DojoInfo_Info.h"
 
 
-// shared
+// Shared
 #include "NPCTable.h"
 #include "DojoTable.h"
 #include "TableContainer.h"
 #include "NtlDojo.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLDojo.h"
 
-// client
+// Client
 #include "DisplayStringManager.h"
 #include "DboGlobal.h"
 #include "GuildNoticeGui.h"
@@ -84,7 +84,7 @@ RwBool CDojoInfo_Info::Create(CNtlPLGui* pParent)
 	m_NoticeBackground.SetPositionfromParent(15, 318);
 
 	
-	// 스트링
+	// string
 	m_pTenkaichiPlayerButton	->SetToolTip(GetDisplayStringManager()->GetString("DST_DOJO_INFO_SET_TENKAI_SEED_PLAYER"));
 	m_pNoticeButton				->SetToolTip(GetDisplayStringManager()->GetString("DST_DOJO_INFO_GUILD_NOTICE"));
 
@@ -100,12 +100,12 @@ RwBool CDojoInfo_Info::Create(CNtlPLGui* pParent)
 
 	m_pNoticeBarStatic			->SetText(GetDisplayStringManager()->GetString("DST_DOJO_INFO_GUILD_NOTICE"));
 
-	// setup
+	// Setup
 	m_pNoticeOutput->SetLineSpace(dNOTICE_OUTPUT_LINE_GAP);
 	m_pNoticeOutput->SetMaxLine(dNOTICE_OUTPUT_MAX_LINE);
 
 
-	// sig
+	// Signals
 	m_slotTenkaichiPlayerButton	= m_pTenkaichiPlayerButton->SigClicked().Connect(this, &CDojoInfo_Info::OnClicked_TenkaichiPlayerButton);
 	m_slotNoticeButton			= m_pNoticeButton->SigClicked().Connect(this, &CDojoInfo_Info::OnClicked_NoticeButton);
 
@@ -183,7 +183,7 @@ VOID CDojoInfo_Info::SetDojoInfo(sDBO_DOJO_NPC_INFO* pDBO_DOJO_NPC_INFO)
 		return;
 	}
 
-	// 지역 이름 얻어오기
+	// Get region name
 	CTextTable* pTextTable = API_GetTableContainer()->GetTextAllTable()->GetTextTbl(CTextAllTable::MAP_NAME);
 	std::wstring wstrRegionName = pTextTable->GetText(pDOJO_TBLDAT->mapName);
 
@@ -365,7 +365,7 @@ VOID CDojoInfo_Info::HandleEvents( RWS::CMsg &msg )
 {
 	if( msg.Id == g_EventDojoNotify )
 	{
-		// GUI를 열 때마다 정보를 갱신하기에 닫혀있는 상태에서는 갱신하지 않는다
+		// Since the information is updated every time the GUI is opened, it is not updated when it is closed.
 		if( FALSE == GetDialogManager()->IsOpenDialog(DIALOG_DOJO_INFO) )
 			return;
 
@@ -410,12 +410,12 @@ VOID CDojoInfo_Info::HandleEvents( RWS::CMsg &msg )
 	}
 	else if( msg.Id == g_EventNotifyGuild )
 	{
-		// GUI를 열 때마다 정보를 갱신하기에 닫혀있는 상태에서는 갱신하지 않는다
+		// Since the information is updated every time the GUI is opened, it is not updated when it is closed.
 		if( FALSE == GetDialogManager()->IsOpenDialog(DIALOG_DOJO_INFO) )
 			return;
 
 
-		// 현재 보고 있는 정보가 자신이 공격 유파에 속하지 않는다면 굳이 정보를 갱신할 필요없다
+		// If the information you are currently viewing does not belong to the attack school, there is no need to update the information.
 		SNtlEventNotifyGuild* pEvent = reinterpret_cast<SNtlEventNotifyGuild*>( msg.pData );
 
 		if( SLGE_MEM_REPUTATION		== pEvent->iMessage ||

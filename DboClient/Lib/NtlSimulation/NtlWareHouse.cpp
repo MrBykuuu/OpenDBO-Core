@@ -84,24 +84,24 @@ VOID CNtlWarehouse::HandleEvents(RWS::CMsg &pMsg)
 		{
 		case NESWUT_RECIEVE_DATA:
 			{
-				// 게임중 처음 창고 데이터를 받았다
+				// I received warehouse data for the first time during the game.
 				m_bRecieveData_from_Server = TRUE;
 				break;
 			}
 		case NESWUT_WAREHOUSE_START:
 			{
-				// 게임중 처음으로 창고를 열었다
+				// Opened a warehouse for the first time in the game.
 				break;
 			}
 		case NESWUT_ADD_ZENNY:
 			{
-				// 창고에 제니가 늘었다
+				// There are more Zennys in the warehouse
 				m_uiZenny += pSobWarehouseUpdate->uiValue;
 				break;
 			}
 		case NESWUT_SUB_ZENNY:
 			{
-				// 창고에 제니가 줄었다
+				// Zenny has decreased in the warehouse.
 				m_uiZenny -= pSobWarehouseUpdate->uiValue;
 				break;
 			}
@@ -217,15 +217,15 @@ void CNtlWarehouse::CreateEventHandler(RWS::CMsg &pMsg)
 			RwInt8 bySlot = (RwInt8)(pItemProfile[i].byPos + CONTAINER_TYPE_BANK1);
 			if(bySlot == CONTAINER_TYPE_BANK4)
 			{
-				// 공유 창고를 구입하였다
+				// Purchased a shared warehouse
 				m_bHaveCommonWarehouse = TRUE;
 			}
 			else if(bySlot >= CONTAINER_TYPE_BANK1 && bySlot <= CONTAINER_TYPE_BANK3)
 			{
-				// 일반 창고를 구입하였다
+				// Purchased a general warehouse
 			}
 
-			// 창고를 구입했음을 클라이언트 단에 알린다			
+			// Notify the client that a warehouse has been purchased			
 			CNtlSLEventGenerator::SobUpdate(GetNtlSLGlobal()->GetSobAvatar()->GetSerialID(), EVENT_AIUT_WAREHOUSE, NESWUT_BUY_SLOT);
 		}
 		else if(byPlace >= CONTAINER_TYPE_BANK1 && byPlace <= CONTAINER_TYPE_BANK4)
@@ -252,7 +252,7 @@ void CNtlWarehouse::AddEventHandler(RWS::CMsg &pMsg)
 
 	RwUInt8 byPlace = pSobItemAdd->byPlace;
 	if(byPlace == CONTAINER_TYPE_BANK1)
-	{	// 기본적으로 창고 하나는 주어지기에 사실상 이 경우는 실행되지 않는다
+	{	// Since one warehouse is given by default, this case is not actually implemented.
 		CreateItem(GetNtlSobManager()->GetSobObject(m_hWareHouseSlot[0]), pSobItemAdd);
 	}
 	else if(byPlace == CONTAINER_TYPE_BANK2)
@@ -329,7 +329,7 @@ void CNtlWarehouse::ItemMoveEventHandler(RWS::CMsg &pMsg)
 
 	if(pItemMove->byDestPlace > CONTAINER_TYPE_BANK_FIRST && pItemMove->byDestPlace <= CONTAINER_TYPE_BANK_LAST)
 	{	
-		// 창고로 아이템을 넣는 경우
+		// When putting an item into the warehouse
 
 		RwUInt8 byDestParentSlotIdx = (RwUInt8)(pItemMove->byDestPlace - CONTAINER_TYPE_BANK1);
 
@@ -346,7 +346,7 @@ void CNtlWarehouse::ItemMoveEventHandler(RWS::CMsg &pMsg)
 			NTL_RETURNVOID();
 		}		
 
-		// source 이동.
+		// Go to source.
 		pSrcSobItem->SetParentItemSerial(m_hWareHouseSlot[byDestParentSlotIdx]);
 		pDestParentBagSobItem->SetChildSerial(pItemMove->byDestSlotIdx, pItemMove->hSrcSerial);
 
@@ -367,7 +367,7 @@ void CNtlWarehouse::ItemMoveEventHandler(RWS::CMsg &pMsg)
 				NTL_RETURNVOID();
 			}
 
-			// dest 이동.															
+			// move to dest.															
 			if(pItemMove->hDestSerial != INVALID_SERIAL_ID)
 			{
 				CNtlSobItem* pDestSobItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pItemMove->hDestSerial ) );
@@ -384,7 +384,7 @@ void CNtlWarehouse::ItemMoveEventHandler(RWS::CMsg &pMsg)
 		}
 		else if(pItemMove->bySrcPlace == CONTAINER_TYPE_BAGSLOT)
 		{	
-			// dest 이동.
+			// move to dest.
 			CNtlInventory* pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
 			pInventory->SetBagItem(pItemMove->bySrcSlotIdx, pItemMove->hDestSerial);
 		}
@@ -400,7 +400,7 @@ void CNtlWarehouse::ItemMoveEventHandler(RWS::CMsg &pMsg)
 				NTL_RETURNVOID();
 			}
 
-			// dest 이동.
+			// move to dest.
 			if(pItemMove->hDestSerial != INVALID_SERIAL_ID)
 			{
 				CNtlSobItem *pDestSobItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pItemMove->hDestSerial ) );
@@ -419,7 +419,7 @@ void CNtlWarehouse::ItemMoveEventHandler(RWS::CMsg &pMsg)
 		{	
 			CNtlInventory* pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
 
-			// dest 이동.						
+			// move to dest.						
 			if(pItemMove->hDestSerial != INVALID_SERIAL_ID)
 			{
 				CNtlSobItem *pDestSobItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pItemMove->hDestSerial ) );
@@ -437,7 +437,7 @@ void CNtlWarehouse::ItemMoveEventHandler(RWS::CMsg &pMsg)
 	}
 	else if(pItemMove->bySrcPlace > CONTAINER_TYPE_BANK_FIRST && pItemMove->bySrcPlace <= CONTAINER_TYPE_BANK_LAST)
 	{
-		// 창고에서 아이템을 다른 컨테이너로 옮기는 경우
+		// When moving items from a warehouse to another container
 		
 		CNtlInventory* pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
 		RwUInt8 bySrcParentSlotIdx = (RwUInt8)(pItemMove->bySrcPlace - CONTAINER_TYPE_BANK1);
@@ -455,7 +455,7 @@ void CNtlWarehouse::ItemMoveEventHandler(RWS::CMsg &pMsg)
 			NTL_RETURNVOID();
 		}
 
-		// dest 이동.
+		// move to dest.
 		if(pItemMove->hDestSerial != INVALID_SERIAL_ID)
 		{
 			CNtlSobItem* pDestSobItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pItemMove->hDestSerial ) );
@@ -472,13 +472,13 @@ void CNtlWarehouse::ItemMoveEventHandler(RWS::CMsg &pMsg)
 
 		if(pItemMove->byDestPlace == CONTAINER_TYPE_BAGSLOT)
 		{
-			// source 이동.
+			// Go to source.
 			pSrcSobItem->SetParentItemSerial(INVALID_SERIAL_ID);
 			pInventory->SetBagItem(pItemMove->byDestSlotIdx, pItemMove->hSrcSerial);			
 		}
 		else if(pItemMove->byDestPlace >= CONTAINER_TYPE_BAG_FIRST && pItemMove->byDestPlace <= CONTAINER_TYPE_BAG_LAST)
 		{
-			// source 이동.
+			// Go to source.
 			RwUInt8 byDestParentSlotIdx = (RwUInt8)(pItemMove->byDestPlace - CONTAINER_TYPE_BAG1);
 			SERIAL_HANDLE hDestItemHandle = pInventory->GetBagItem(byDestParentSlotIdx);
 			CNtlSobItem *pDestParentBagSobItem = reinterpret_cast<CNtlSobItem*>(GetNtlSobManager()->GetSobObject( hDestItemHandle ) );
@@ -493,7 +493,7 @@ void CNtlWarehouse::ItemMoveEventHandler(RWS::CMsg &pMsg)
 		}
 		else if(pItemMove->byDestPlace == CONTAINER_TYPE_EQUIP)
 		{
-			// source 이동.
+			// Go to source.
 			pSrcSobItem->SetParentItemSerial(INVALID_SERIAL_ID);
 			pInventory->SetEquipItem(pItemMove->byDestSlotIdx, pItemMove->hSrcSerial);
 		}
@@ -563,7 +563,7 @@ void CNtlWarehouse::ItemStackMoveEventHandler(RWS::CMsg &msg)
 		NTL_RETURNVOID();
 	}	
 
-	// 둘로 나뉠 때
+	// When divided in two
 	if( pDestBag->GetChildSerial( pItemStackMove->byDestSlotIdx ) == INVALID_SERIAL_ID )
 	{		
 		CNtlSobItemAttr* pSrcItemAttr = reinterpret_cast<CNtlSobItemAttr*>( pSrcItem->GetSobAttr() );
@@ -597,7 +597,7 @@ void CNtlWarehouse::ItemStackMoveEventHandler(RWS::CMsg &msg)
 		pSrcItem->HandleEvents( msg );
 	}
 
-	//  하나로 합쳐질 때
+	//  When we merge into one
 	else if( pItemStackMove->bySrcStackCount == 0 )
 	{
 		CNtlSobItem* pDestItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pItemStackMove->hDestSerial ) );
@@ -619,11 +619,11 @@ void CNtlWarehouse::ItemStackMoveEventHandler(RWS::CMsg &msg)
 				pItemStackMove->hSrcSerial, pItemStackMove->bySrcPlace, pItemStackMove->bySrcSlotIdx );
 		}		
 
-		// Stack 적용
+		// Stack application
 		pDestItem->HandleEvents( msg );
 	}
 
-	// 둘다 존재할 때
+	// When both exist
 	else
 	{
 		CNtlSobItem* pDestItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pItemStackMove->hDestSerial ) );

@@ -1,9 +1,9 @@
 /*****************************************************************************
 * File			: DboPackethandler_GUPrivateShop.cpp
 * Author		: Hong sungbock
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2007. 1. 16
-* Abstract		: 개인상점 관련 패킷 핸들
+* Abstract		: Personal store related packet handle
 *****************************************************************************
 * Desc         : 
 *****************************************************************************/
@@ -58,7 +58,7 @@ void PacketHandler_GUPrivateShop_Create_Res(void *pPacket)
 }
 
 /**
-* \brief 주변에 개인상점이 열렸을 경우 브로드 캐스팅을 받는다.
+*\brief Receives broadcasting when a private store is opened nearby.
 */
 void PacketHandler_GUPrivateShop_Create_Nfy(void *pPacket)
 {

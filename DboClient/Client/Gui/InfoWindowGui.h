@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: InfoWindowGui.h
-// Desc: Skill및 Item의 정보를 보여주는 GUI
+// Desc: GUI showing skill and item information
 //
 // 2006.05.22 Peessi@hitel.net   
 //
@@ -78,7 +78,7 @@ public:
 	VOID	SetRewardInfo(stINFOWND_REWARD* pReward);
 	VOID	SetMiniMapInfo(MINIMAPINFO_LIST* pMINIMAPINFO);
 	VOID    SetPortalInfo(RwUInt32 nPortalID, RwInt32 ePortalIconType, DWORD dwZenny);
-	VOID    SetFriendInfo(sFriendMember* pMember);                             // 친구 리스트에 등록된 친구의 세부정보 표시 툴팁
+	VOID    SetFriendInfo(sFriendMember* pMember);                             // Tooltip to display detailed information of friends registered in the friend list
 	VOID	SetUpgradeInfo(stINFOWND_UPGRADE* pUpgrade);
 	VOID	SetBattleAttributeDisplay(stINFOWND_BATTLEATTR* pBattleAttr);
 	VOID	SetQuestSearch(QUEST_SEARCH_LIST* pQuestInfo);
@@ -120,7 +120,7 @@ private:
 	// Skill ////////////////////////////////////////////////////////////////////////////////
 	VOID	SetSkillInfo_NameGradeClass(sSKILL_TBLDAT* pData, RwBool bLearned);
 	VOID	SetSkillInfo_LearnCondition(sSKILL_TBLDAT* pData, RwBool bGray);
-	VOID	SetSkillInfo_UseCondition(sSKILL_TBLDAT* pData, sSKILL_TBLDAT* pBaseData, RwBool bGrayed = FALSE, CNtlSobSkill* pSkill = NULL); // pSkill 적용시 RPBonusType관련 텍스트 출력 및 Required EP Factor 적용
+	VOID	SetSkillInfo_UseCondition(sSKILL_TBLDAT* pData, sSKILL_TBLDAT* pBaseData, RwBool bGrayed = FALSE, CNtlSobSkill* pSkill = NULL); // When pSkill is applied, text related to RPBonusType is output and Required EP Factor is applied.
 	VOID	SetSkillInfo_EffectData(sSKILL_TBLDAT* pData, RwUInt32 uiColor, RwInt32 nOrder = 0, CNtlSobSkill* pSkill = NULL);
 	VOID	SetSkillInfo_AppointApply(sSKILL_TBLDAT* pData, sSKILL_TBLDAT* pBaseData = NULL);
 	VOID	SetSkillInfo_AppointApplySetString(std::string stringKey, RwUInt8 byRange1 = 0, RwUInt8 byRange2 = 0, BYTE byMaxTarget = 0, sSKILL_TBLDAT* pBaseData = NULL, RwInt32 i = 0);
@@ -163,7 +163,7 @@ private:
 	VOID	EquipInfoProc(sITEM_TBLDAT* pData);
 	RwBool  SetEquipInfo(gui::CMDStaticBox* pmdBox, RwUInt32 hSerial);
 
-	// Recipe ( Item Data의 툴팁과, 레시피의 툴팁 )
+	// Recipe (Item Data tooltip and Recipe tooltip)
 	VOID	SetItemInfo_RecipeInfo(gui::CMDStaticBox* pmdBox, sITEM_TBLDAT* pData);
 
 	//! Variables

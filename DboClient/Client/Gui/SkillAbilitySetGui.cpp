@@ -1,10 +1,10 @@
 #include "precomp_dboclient.h"
 #include "SkillAbilitySetGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
 // Simulation
@@ -50,7 +50,7 @@ RwBool CSkillAbilitySetGui::Create()
 	m_pStbTitle	= (gui::CStaticBox*)GetComponent( "stbTitle" );
 	m_pBtnClose	= (gui::CButton*)GetComponent( "btnClose" );
 
-	// Sklill Ability Type들
+	// Sklill Ability Type field
 	m_paBtn[DBO_RP_BONUS_TYPE_KNOCKDOWN]		= (gui::CButton*)GetComponent("btnKnockDown");
 	m_paBtn[DBO_RP_BONUS_TYPE_RESULT_PLUS]		= (gui::CButton*)GetComponent("btnResult");
 	m_paBtn[DBO_RP_BONUS_TYPE_EP_MINUS]			= (gui::CButton*)GetComponent("btnEp");
@@ -67,7 +67,7 @@ RwBool CSkillAbilitySetGui::Create()
 	m_pBtnAccept	= (gui::CButton*)GetComponent("btnAccept");
 	m_pBtnCancel	= (gui::CButton*)GetComponent("btnCancel");
 
-	// Icon의 위치들
+	// Locations of Icons
 	m_aIconPosX[ICONPOS_FIRST_LEFT]		= 12;
 	m_aIconPosX[ICONPOS_FIRST_CENTER]	= 66;
 	m_aIconPosX[ICONPOS_FIRST_RIGHT]	= 120;
@@ -145,34 +145,34 @@ VOID CSkillAbilitySetGui::HandleEvents( RWS::CMsg& msg )
 		m_bySlotIdx = pSkill->GetSlotIdx();
 		
 
-		// 만약 열려 있었다면 닫아주고 다시 연다. ( Show / Hide 를 제대로 적용하기 위하여 )
+		// If it was open, close it and open it again. (To apply Show/Hide properly)
 		if( GetDialogManager()->IsOpenDialog( DIALOG_SKILLABILITYSET ) )
 			GetDialogManager()->CloseDialog( DIALOG_SKILLABILITYSET );
 
 		GetDialogManager()->OpenDialog( DIALOG_SKILLABILITYSET );
 
-		// 타입 세팅
+		// Type Setting
 		ShowAllAbility( false );
 
-		// Tooltip 정보 초기화
+		// Reset tooltip information
 		SetMoveToolTipPos();
 		memset( m_asTooltipType, 0xFF, sizeof( SAbilityInfo ) * ICONPOS_NUMS );
 
 		for(int i=0; i < ICONPOS_NUMS; ++i )
 			SetAbility( (eICONPOS)i, pSkillTbl->abyRpEffect[i], pSkillTbl->afRpEffectValue[i], pSkillTbl );
 
-		// Focus 세팅
+		// Focus settings
 		m_pPanFocus->Show( false );
 		if( !pSkillAttr->m_bRPBonusAutoMode )
 		{
-			// 수동 모드
+			// manual mode
 			m_pBtnManual->ClickEnable( false );
 		}
 		else
 		{
 			if( pSkillAttr->m_byRPBonusType == DBO_RP_BONUS_TYPE_INVALID )
 			{
-				// 사용 안함
+				// Disabled
 				m_pBtnDisable->ClickEnable( false );
 			}
 			else
@@ -247,12 +247,12 @@ VOID CSkillAbilitySetGui::SetAbility( eICONPOS eIconPos, RwUInt8 byAbilityType, 
 			return;
 		}
 
-		// 만약 RPBONUS TYPE이 INVALID값이라면 다음 테이블의 인덱스를 참조한다.
+		// If RPBONUS TYPE is an INVALID value, refer to the index of the following table.
 		sSKILL_TBLDAT* pNextSkillTbl = Logic_GetSkillDataFromTable( pSkillTbl->dwNextSkillTblidx );
 
-		// 다음 스킬 테이블에 있는 배열 인덱스의 값도 INVALID라면 그 다음 값을 검사하게 해준다.
-		// 그리고 이때부터 참조하는 것은 무조건 현재 레벨의 스킬이 아니기 때문에 Disable상태로
-		// 표시한다.
+		// If the value of the array index in the next skill table is also INVALID, the next value can be checked.
+		// And from this point on, the skills referenced are not necessarily at the current level, so they are in a disabled state.
+		// Display.
 		SetAbility( eIconPos, pNextSkillTbl->abyRpEffect[ eIconPos ],
 			pNextSkillTbl->afRpEffectValue[ eIconPos ], pNextSkillTbl, FALSE );
 	}
@@ -276,7 +276,7 @@ VOID CSkillAbilitySetGui::SetAbility( eICONPOS eIconPos, RwUInt8 byAbilityType, 
 		m_paBtn[ byAbilityType ]->SetPosition( m_aIconPosX[ eIconPos ], m_aIconPosY[ eIconPos ] );
 		CRectangle rect = m_paBtn[ byAbilityType ]->GetScreenRect();
 
-		// ToolTip의 Info 저장
+		// Save ToolTip's Info
 		m_asTooltipType[eIconPos].byAbilityType = byAbilityType;
 		m_asTooltipType[eIconPos].fValue = fValue;
 		m_asTooltipType[eIconPos].byEffectType = pSkillTbl->bySkill_Effect_Type[NTL_SYSTEM_EFFECT_1];
@@ -287,7 +287,7 @@ VOID CSkillAbilitySetGui::SetAbility( eICONPOS eIconPos, RwUInt8 byAbilityType, 
 			m_paBtn[ byAbilityType ]->ClickEnable( false );
 
 		m_paBtn[ byAbilityType ]->Show( true );
-		// uiValue 를 참조하여 ToolTip을 달아준다.
+		// Add a ToolTip by referring to uiValue.
 	}
 }
 
@@ -376,7 +376,7 @@ VOID CSkillAbilitySetGui::OnMouseMove( RwInt32 nFlags, RwInt32 nX, RwInt32 nY )
 
 	for( int i=0; i < ICONPOS_NUMS; ++i )
 	{
-		// 마우스가 정해진 위치에 올라오게 되면 그에 알맞은 인포윈도우를 띄워주게 된다.
+		// When the mouse moves to a designated location, an appropriate info window appears.
 		if( m_rtIconPos[i].PtInRect( nX, nY ) && m_asTooltipType[i].byAbilityType != DBO_RP_BONUS_TYPE_INVALID )
 		{
 			SetToolTip( m_asTooltipType[i].nX,

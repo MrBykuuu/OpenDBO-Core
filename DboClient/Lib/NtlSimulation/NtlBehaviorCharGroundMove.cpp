@@ -1,24 +1,30 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlBehaviorCharGroundMove.h"
 
-// shared 
+// Shared 
+
 #include "NtlMovement.h"
 
-// inventory
+// Inventory
+
 #include "NtlInventory.h"
 
-// sound
+// Sound
+
 #include "NtlSoundDefines.h"
 #include "NtlSoundManager.h"
 
-// framework
+// Framework
+
 #include "NtlCamera.h"
 
-// presentation
+// Presentation
+
 #include "NtlPLEvent.h"
 #include "NtlPLPropertyContainer.h"
 
-// simulation
+// Simulation
+
 #include "NtlSobActor.h"
 #include "NtlSLLogic.h"
 #include "NtlSobCharProxy.h"
@@ -94,7 +100,7 @@ void CNtlBehaviorCharGroundMove::Enter(void)
     //{
         SetAnim(m_MoveStuff.byMoveFlags);
 
-        // Idle -> Run 보간 애니메이션
+        // Idle -> Run interpolated animation
         SetIdle2RunAnim();
 
         //m_fSyncSendTime = MOVE_SYNC_SEND_TIME;
@@ -114,11 +120,11 @@ void CNtlBehaviorCharGroundMove::SetIdle2RunAnim( void )
     if(m_pActor->GetSobProxy()->GetDisableAniChange() || Logic_IsTransformSpinAttack(m_pActor) || Logic_IsTransformRollingAttack(m_pActor))
         return;
 
-    // 변신시에는 보간 애니메이션을 안한다.
+    // No interpolation animation is performed during transformation.
     if(Logic_GetPlayerRace(m_pActor) == RACE_NAMEK && Logic_IsTransform(m_pActor))
         return;
 
-    // Idle 애니메이션 중일때만 전환한다.
+    // Switches only during idle animation.
     if(!IsIdleAnimationPlaying())
         return;
 
@@ -129,11 +135,11 @@ void CNtlBehaviorCharGroundMove::SetIdle2RunAnim( void )
         {
             CNtlSobCharProxy *pSobProxy = reinterpret_cast<CNtlSobCharProxy*>(m_pActor->GetSobProxy());            
             sITEM_TBLDAT *pItemTblData = Logic_GetEquipedWeaponItemTableData(m_pActor);
-            if(pItemTblData && Logic_IsEquipedStaffWeapon(pItemTblData))    // 스태프를 들고 있을때
+            if(pItemTblData && Logic_IsEquipedStaffWeapon(pItemTblData))    // When holding a staff
             {
                 pSobProxy->SetBaseAnimation(NML_STAFF_IDLE_RUN_FRONT, FALSE);
             }
-            else    // 아무것도 들고 있지 않을때
+            else    // When you're not holding anything
             {
                 pSobProxy->SetBaseAnimation(IDLE_RUN_FRONT, FALSE);   
             }
@@ -159,7 +165,7 @@ void CNtlBehaviorCharGroundMove::Exit(void)
     }
     
 
-    // 나중에 base class enter를 호출한다.
+    // Later, base class enter is called.
     CNtlBehaviorBase::Exit(); 
 }
 
@@ -167,10 +173,10 @@ void CNtlBehaviorCharGroundMove::Update(RwReal fElapsed)
 {
     fElapsed = min(fElapsed, 0.2f);
 
-    if(IsFinish() && !m_pActor->GetSobProxy()->GetDisableAniChange()) // 애니메이션 변경안되는 상태에서는 끝내지 않는다. (회전공격을 위해)
+    if(IsFinish() && !m_pActor->GetSobProxy()->GetDisableAniChange()) // It does not end if the animation is not changed. (For spinning attack)
         return;
 
-    // 보간 애니메이션 처리 (2Frame 후부터 이동한다)
+    // Interpolation animation processing (moves after 2 frames)
     if(!m_bInterAnimEnd)
     {
         if(m_fInterAnimTime < FRAME_2)
@@ -279,7 +285,7 @@ RwUInt32 CNtlBehaviorCharGroundMove::HandleEvents(RWS::CMsg &pMsg)
     else if(pMsg.Id == g_EventTransform)
     {
         SNtlEventTransform* pEvent = (SNtlEventTransform*)pMsg.pData;
-        if(pEvent->sApsectState.sAspectStateBase.byAspectStateId == ASPECTSTATE_INVALID)     // 변신 해제
+        if(pEvent->sApsectState.sAspectStateBase.byAspectStateId == ASPECTSTATE_INVALID)     // Transformation off
         {
             SetAnim(m_MoveStuff.byMoveFlags);
         }
@@ -316,15 +322,15 @@ void CNtlBehaviorCharGroundMove::FootStepMaterialProc(RWS::CMsg &pMsg)
         BYTE						byMaterial	= 0;
         RwReal						fHeight		= 0.0f;
 
-        // Cz : CNtlPLGlobal::m_pWHEntity 보장성을 때문에 GetWorldHeight를 호출합니다.
-        //		Performance에 문제가 될 요지가 보이지 않으므로 사용하기로 하였습니다.
-        //		문제의 요지가 있을 경우 진성이를 호출해 주세요.
+        // Cz: CNtlPLGlobal::m_pWHEntity calls GetWorldHeight because of the guarantee.
+        //		Since I didn't see any issues with performance, I decided to use it.
+        //		If there is a gist of the problem, please call Jinseong.
         if (!(GetSceneManager()->GetWorldHeight(&vPos, fHeight, NULL) && CNtlPLGlobal::m_pWHEntity))
         {
             byMaterial = GetSceneManager()->GetWorldMaterialAttribute(vPos);
         }
 
-        if(pEvent->eFootStepMobType == FOOT_TYPE_LARGE || (m_pActor->GetFlags() & SLFLAG_LARGE_FOOT_SOUND)) // 대형 몹 발자국 소리
+        if(pEvent->eFootStepMobType == FOOT_TYPE_LARGE || (m_pActor->GetFlags() & SLFLAG_LARGE_FOOT_SOUND)) // Large mob footsteps
         {
             sprintf_s(cSoundResoureName, 64, "%s_L_%u.wav", NAMING_SOUND_FOOTSTEP, NtlRandomNumber(0, 3));
 
@@ -342,7 +348,7 @@ void CNtlBehaviorCharGroundMove::FootStepMaterialProc(RWS::CMsg &pMsg)
 
 			GetSoundManager()->Play(&tSoundParam);
         }
-        else    // 일반 몹 발자국 소리
+        else    // Normal mob footsteps sound
         {
             sprintf_s(cSoundResoureName, 64, "%s_%u_%u.wav", NAMING_SOUND_FOOTSTEP, byMaterial, NtlRandomNumber(0, 3));
 
@@ -404,7 +410,7 @@ RwBool CNtlBehaviorCharGroundMove::IsInFollowMoveRound(void)
     // Obtain the current distance.
     RwReal fCurrLen = RwV3dLength(&vDir);
 
-    RwReal fInRange = m_MoveStuff.fFollowRange/**FOLLOW_ERROR_RANGE*/;// disable by daneos
+    RwReal fInRange = m_MoveStuff.fFollowRange/**follow error range*/;// disable by daneos
 
     if(fCurrLen <= fInRange)
         return TRUE;
@@ -484,7 +490,7 @@ void CNtlBehaviorCharGroundMove::SetTransform(void)
         {	
             RwV3d vDestPos = pTargetActor->GetPosition(); 
 
-            // 지형 위를 낮게 떠서 날라다니는 객체일 경우.
+            // In the case of an object floating low above the terrain and flying.
             if(pTargetActor->GetFlags() & SLFLAG_CAN_GROUND_FLY)
                 vDestPos.y -= Logic_GetGroundFlyHeight(pTargetActor);
 
@@ -641,7 +647,7 @@ void CNtlBehaviorCharGroundMove::SetAnim(RwUInt8 byMoveFlags)
         }
         else
         {
-            if(Logic_IsTransformGreatNamek(m_pActor))  // 변신시
+            if(Logic_IsTransformGreatNamek(m_pActor))  // When transformed
             {
                 uiNextAnimKey = TRANS_RUN_FRONT;
             }
@@ -1055,7 +1061,7 @@ RwBool CNtlBehaviorCharGroundMove::UpdateDirectionMove(RwReal fElapsed)
 				CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData());
 
 				SMoveStuff *pMoveStuff = pBeData->GetMoveStuff();
-				pMoveStuff->byMoveResult |= NTL_MOVE_RESULT_COLLISION;// NTL_MOVE_RESULT_FALLING; // BY DANEOS
+				pMoveStuff->byMoveResult |= NTL_MOVE_RESULT_COLLISION;// NTL_MOVE_RESULT_FALLING; //BY DANEOS
 
 			//	API_GetSLPacketGenerator()->SendCharMoveCollision(m_pActor);
 
@@ -1076,7 +1082,7 @@ RwBool CNtlBehaviorCharGroundMove::UpdateDirectionMove(RwReal fElapsed)
     m_pActor->SetPosition(&vNewPos);
     m_pActor->SetDirection(&vNewDir);
 
-    // 일정 시간 동안 이동한 거리가 limit 거리 안에 있으면? 멈춘다.
+    // What if the distance traveled during a certain period of time is within the limit distance? It stops.
     if( !bTurn && byColliResult != NTL_CHARACTER_COLLI_WORLD_ATTR_TERRAIN_SLANT)
     {
         LimitPositionChangeCheck(fElapsed);        
@@ -1088,7 +1094,7 @@ RwBool CNtlBehaviorCharGroundMove::UpdateDirectionMove(RwReal fElapsed)
 RwBool CNtlBehaviorCharGroundMove::UpdateLocationMove(RwReal fElapsed)
 {
     //-------------------------------------
-    // speed 및 anim speed 결정.
+    // Determining speed and anim speed.
     RwBool bWalkMove = Logic_IsActorWalkMove(m_pActor, m_MoveStuff.byFormFlag);
     RwReal fSpeed; 
     if(bWalkMove)
@@ -1178,7 +1184,7 @@ RwBool CNtlBehaviorCharGroundMove::UpdateLocationMove(RwReal fElapsed)
         Logic_GetWorldHeight(m_pActor, &vPos, m_sHStuff);
         vPos.y = m_sHStuff.fFinialHeight;
 
-        // object 충돌 처리.
+        // object collision handling.
         RwUInt8 byColliResult = NTL_CHARACTER_COLLI_NONE;
         if (ObjectCollision(vPos, fOldActorHeight, fSpeed, fElapsed, &byColliResult))
 		{
@@ -1233,7 +1239,7 @@ RwBool CNtlBehaviorCharGroundMove::UpdateTargetMove(RwReal fElapsed)
     RwV3d vDestPos = pTargetActor->GetPosition(); 
     RwReal fOldActorHeight = vPos.y;
 
-    // 지형 위를 낮게 떠서 날라다니는 객체일 경우.
+    // In the case of an object floating low above the terrain and flying.
     if(pTargetActor->GetFlags() & SLFLAG_CAN_GROUND_FLY)
         vDestPos.y -= Logic_GetGroundFlyHeight(pTargetActor);
 
@@ -1298,13 +1304,13 @@ RwBool CNtlBehaviorCharGroundMove::UpdateTargetMove(RwReal fElapsed)
         return TRUE;
     }
 
-    // 좌표 update
+    // coordinate update
     vPos += vDelta;    
 
     Logic_GetWorldHeight(m_pActor, &vPos, m_sHStuff);
     vPos.y = m_sHStuff.fFinialHeight;
 
-    // slow move일 경우.
+    // In case of slow movement.
     if(m_bSlowMove)
     {
         m_fSlowMoveTime += fElapsed;
@@ -1312,7 +1318,7 @@ RwBool CNtlBehaviorCharGroundMove::UpdateTargetMove(RwReal fElapsed)
             return TRUE;
     }
 
-    // 충돌 체크.
+    // Collision check.
     RwUInt8 byColliResult = NTL_CHARACTER_COLLI_NONE;
 
     if(m_pActor->GetFlags() & SLFLAG_OBJECT_COLLISION)
@@ -1356,7 +1362,7 @@ RwBool CNtlBehaviorCharGroundMove::UpdateTargetMove(RwReal fElapsed)
         }
     }
 
-    // 폴링 체크
+    // colli check
     if(CheckFalling(fOldActorHeight, m_sHStuff.fFinialHeight, fSpeed, NTL_MOVE_F))
         return TRUE;
 
@@ -1365,7 +1371,7 @@ RwBool CNtlBehaviorCharGroundMove::UpdateTargetMove(RwReal fElapsed)
     if(byColliResult == NTL_CHARACTER_COLLI_NONE)
         return FALSE;
 
-    // 일정 시간 동안 이동한 거리가 limit 거리 안에 있으면? 멈춘다.
+    // What if the distance traveled during a certain period of time is within the limit distance? It stops.
     if(byColliResult != NTL_CHARACTER_COLLI_WORLD_ATTR_TERRAIN_SLANT)
     {
         LimitPositionChangeCheck(fElapsed);
@@ -1486,7 +1492,7 @@ RwBool CNtlBehaviorCharGroundMove::UpdateDashMove(RwReal fElapsed)
     RwV3dNormalize(&vDir, &vDir); 
     RwReal fSpeed = fDashSpeed * fElapsed;
 
-    // data를 로딩하여 값자기 elapsed time이 크게 들어올 경우 이런 경우가 생긴다
+    // This happens when loading data and the elapsed time becomes large.
     if(fSpeed >= fCurrLen)
     {
         fSpeed = fCurrLen;
@@ -1580,7 +1586,7 @@ RwBool CNtlBehaviorCharGroundMove::UpdateDashMove(RwReal fElapsed)
 
     m_pActor->SetPosition(&vPos);
 
-    // 일정 시간 동안 이동한 거리가 limit 거리 안에 있으면? 멈춘다.
+    // What if the distance traveled during a certain period of time is within the limit distance? It stops.
     if(byColliResult != NTL_CHARACTER_COLLI_WORLD_ATTR_TERRAIN_SLANT)
     {
         LimitPositionChangeCheck(fElapsed);
@@ -1613,14 +1619,14 @@ RwBool CNtlBehaviorCharGroundMove::UpdateDashTargetMove(RwReal fElapsed)
     RwV3d vPos = m_pActor->GetPosition();
     RwV3d vDestPos = pTargetActor->GetPosition(); 
 
-    // 지형 위를 낮게 떠서 날라다니는 객체일 경우.
+    // In the case of an object floating low above the terrain and flying.
     if(pTargetActor->GetFlags() & SLFLAG_CAN_GROUND_FLY)
         vDestPos.y -= Logic_GetGroundFlyHeight(pTargetActor);
 
     RwV3d vDir;
     RwV3dSubMacro(&vDir, &vDestPos, &vPos); 
 
-    // 현재 남은 거리를 구한다.
+    // Find the current remaining distance.
     RwReal fCurrLen = RwV3dLength(&vDir);
     vDir.y = 0.0f;
     RwV3dNormalize(&vDir, &vDir);
@@ -1710,10 +1716,10 @@ RwBool CNtlBehaviorCharGroundMove::UpdateDashTargetMove(RwReal fElapsed)
         }
     }
 
-    // 새로운 좌표 setting
+    // New coordinate setting
     m_pActor->SetPosition(&vPos);
 
-    // 일정 시간 동안 이동한 거리가 limit 거리 안에 있으면? 멈춘다.
+    // What if the distance traveled during a certain period of time is within the limit distance? It stops.
     if(byColliResult != NTL_CHARACTER_COLLI_WORLD_ATTR_TERRAIN_SLANT)
     {
         LimitPositionChangeCheck(fElapsed);
@@ -1776,7 +1782,7 @@ void CNtlBehaviorCharGroundMove::UpdateDashEffect(RwUInt32 uiMoveDirFlags, RwV3d
 {
     RwV3d vPos = m_pActor->GetPosition();
 
-    // 뒤에 따라 붙는 effect
+    // Effect that follows
     RwMatrix mat;
     RwMatrixSetIdentity(&mat);
 
@@ -1788,7 +1794,7 @@ void CNtlBehaviorCharGroundMove::UpdateDashEffect(RwUInt32 uiMoveDirFlags, RwV3d
     RwV3dAssignMacro(&mat.up, &CNtlPLGlobal::m_vYAxisV3);
     RwMatrixUpdate(&mat);
 
-    // effect 방향 setting.
+    // Effect direction setting.
     if(uiMoveDirFlags == NTL_MOVE_F)
         CNtlMath::MathRwV3dAssign(&m_vDashEffOffset, vDir.x*0.6f, 0.86f, vDir.z*0.6f);
     else if(uiMoveDirFlags == NTL_MOVE_B)
@@ -1817,7 +1823,7 @@ void CNtlBehaviorCharGroundMove::UpdateDashLineEffect(RwV3d& vPos, RwV3d& vDir)
     {
         m_pDashLine->SetPosition(&vPos);
 
-        // 카메라 방향 얻어오기
+        // Get camera direction
         RwMatrix *pMatrix = RwFrameGetMatrix( RwCameraGetFrame( CNtlPLGlobal::m_RwCamera ) );
         RwV3d *pCamDir = RwMatrixGetAt( pMatrix );
 
@@ -1855,13 +1861,13 @@ RwBool CNtlBehaviorCharGroundMove::UpdateMoveSync(RwReal fElapsedTime, OUT RwV3d
 
     RwReal fSpeed = GetMoveSpeed(pMoveSyncStuff->m_pMoveSyncCurr->byMoveFlag);                
 
-    //keyboard 이동을 처리한다	
+    //Handles keyboard movement	
     CNtlVector vHeading, vDest;
     NtlGetDestination_Keyboard(vMoveDir.x, vMoveDir.y, vMoveDir.z, fSpeed, vPos.x, vPos.y, vPos.z, byMoveFlags, fElapsedTime * 1000.f, 1.0f, &vHeading, &vDest);
     CNtlMath::MathRwV3dAssign(&vDestPos, vDest.x, vDest.y, vDest.z);      
     CNtlMath::MathRwV3dAssign(&vDestDir, vHeading.x, 0.0f, vHeading.z);
 
-    // 원래 MoveSync에 맞춰 있어야할 위치를 계산한 후, 그 위치로 가기위한 포스를 결정한다.    
+    // After calculating the position that should be based on the original MoveSync, determine the force to get to that position.    
     RwV3d vSyncDir = pMoveSyncStuff->m_pMoveSyncCurr->vLoc - vDestPos;
     vSyncDir.y = 0.0f;
     RwV3dNormalize(&vSyncDir, &vSyncDir);
@@ -1869,12 +1875,12 @@ RwBool CNtlBehaviorCharGroundMove::UpdateMoveSync(RwReal fElapsedTime, OUT RwV3d
     RwV3d vMoveDest = vSyncDir * (fSyncDistance / MOVE_SYNC_SPEED) * fElapsedTime;    
     vDestPos += vMoveDest;
 
-    // 방향 결정
+    // direction decision
     *pNewDir = pMoveSyncStuff->m_pMoveSyncCurr->vDir;
     //*pNewDir = vSyncDir;  // If you set the direction to go, you will have problems when you go back, and there will be collisions in other parts.
+
     
-    
-    // 최종 위치    
+    // final position    
     Logic_GetWorldHeight(m_pActor, &vDestPos, m_sHStuff);
     vDestPos.y = m_sHStuff.fFinialHeight;
     *pDestPos = vDestPos;    

@@ -180,7 +180,7 @@ void CNtlSobCharProxy::RegisterEventHandler(void)
     m_mapEventFunc[g_EventAnimPostEffect.Get_pEventId()] = &CNtlSobCharProxy::SobPostEffectEventHandler;
     m_mapEventFunc[g_EventAnimColorChange.Get_pEventId()] = &CNtlSobCharProxy::SobColorChangeEventHandler;
 
-    // 데코레이션에서 처리하는 이벤트들
+    //Events handled by decoration
     m_mapEventFunc[g_EventSobFainting.Get_pEventId()] =             &CNtlSobCharProxy::SobDecorationNotify;
     m_mapEventFunc[g_EventSobTargetSelect.Get_pEventId()] =         &CNtlSobCharProxy::SobDecorationNotify;
     m_mapEventFunc[g_EventSobAttackSelect.Get_pEventId()] =         &CNtlSobCharProxy::SobDecorationNotify;
@@ -386,7 +386,7 @@ void CNtlSobCharProxy::UpdateResourceLoadCheck(RwReal fElapsed)
 
 	ResourceLoadComplete(bVisible);
 
-	// 3D 이름과 2D 이름이 같이 보이는 것 때문에 수정 -by Kell
+	// Fix for 3D name and 2D name appearing together -by Kell
 	if(m_pDecorationProxy)
 		m_pDecorationProxy->ResourceLoadComplete(bVisible);
 
@@ -617,7 +617,7 @@ void CNtlSobCharProxy::SobSubWeaponDeActiveEventHandler(RWS::CMsg &pMsg)
 
 void CNtlSobCharProxy::SobConvertClass(RWS::CMsg &pMsg)
 {
-    // 이펙트를 표시한다.
+    //Displays the effect.
     CNtlInstanceEffect* pEffect = (CNtlInstanceEffect*)GetSceneManager()->CreateEntity(PLENTITY_EFFECT, NTL_VID_CLASS_CHANGE);
     if(pEffect)
     {
@@ -627,10 +627,10 @@ void CNtlSobCharProxy::SobConvertClass(RWS::CMsg &pMsg)
 
 void CNtlSobCharProxy::SobChangeAdult( RWS::CMsg &pMsg ) 
 {
-    // 스케쥴 로딩을 끈다.
+    //Turn off scheduled loading.
 	GetNtlResourceManager()->SetLoadScheduling(FALSE);
 
-    // 변신 해제등을 위해서 캐릭터가 체인지 되기 전에 호출한다.
+    //Called before the character is changed to cancel transformation.
     if(m_pDecorationProxy)
     {
 		m_pDecorationProxy->HandleEvents(pMsg);
@@ -685,7 +685,7 @@ void CNtlSobCharProxy::SobChangeAdult( RWS::CMsg &pMsg )
 
 	GetNtlResourceManager()->SetLoadScheduling(TRUE);
 
-    // 이펙트를 표시한다.
+    //Display the effect.
 	CNtlInstanceEffect* pEffect = (CNtlInstanceEffect*)GetSceneManager()->CreateEntity(PLENTITY_EFFECT, NTL_VID_CLASS_CHANGE);
 	if(pEffect)
 	{
@@ -698,7 +698,7 @@ void CNtlSobCharProxy::SobChangeAdult( RWS::CMsg &pMsg )
 	}
 }
 
-// 모델 포인터를 변경한다. 원래 모델을 삭제하지는 않는다. 
+//Change the model pointer. It does not delete the original model.
 void CNtlSobCharProxy::ChangeModel(CNtlPLCharacter* pCharacter, RwBool bEquipItem, RwBool bDeleteOrgModel)
 {
 	if(m_pCharacter)
@@ -706,7 +706,7 @@ void CNtlSobCharProxy::ChangeModel(CNtlPLCharacter* pCharacter, RwBool bEquipIte
 		m_pDecorationProxy->DetachConvertClassEquipItem();
 	}
 
-    // 원래 모델 삭제 유무 
+    //Whether or not to delete the original model
     if(bDeleteOrgModel)
     {
 		GetSceneManager()->DeleteEntity(m_pCharacter);
@@ -726,7 +726,7 @@ void CNtlSobCharProxy::ChangeModel(CNtlPLCharacter* pCharacter, RwBool bEquipIte
 
     if(bEquipItem)
     {
-        // 아이템 장착
+        //Equip item
 		m_pEquipProxy->AttachConvertClassEquipItem(m_pCharacter);        
     }    
 }
@@ -857,7 +857,7 @@ void CNtlSobCharProxy::SetInkColor(RwUInt8 byRed, RwUInt8 byGreen, RwUInt8 byBlu
     if(!m_pCharacter)
         return;
 
-    // 초사이야인 변신중이면 Ink Color는 흰색이다.
+    //When in Super Saiyan transformation, the Ink Color is white.
     if(byRed + byGreen + byBlue == 0 && 
        Logic_GetPlayerRace((CNtlSobActor*)m_pSobObj) == RACE_HUMAN && Logic_IsTransform((CNtlSobActor*)m_pSobObj))
     {
@@ -923,7 +923,7 @@ CNtlPLEntity* CNtlSobCharProxy::CreatePLChildEffect(const RwChar *pKey, const Rw
 	return pPLEntity;
 }
 
-// offset position에 attach시키면서 effect 생성.
+//Create effect by attaching to offset position.
 CNtlPLEntity* CNtlSobCharProxy::CreatePLChildEffect(const RwChar *pKey, RwV3d vOffset, RwBool bIgnoreVisible /* = FALSE */, RwBool bApplyRotate /* = FALSE */)
 {
 	CNtlPLEntity *pPLEntity = CNtlSobProxy::CreatePLChildEffect(pKey, bIgnoreVisible);
@@ -1186,7 +1186,7 @@ CNtlPLCharacter* CNtlSobCharProxy::CreatePLCharacter(RwBool bNotShading)
 	NTL_ASSERT(pPLCharacter, "Character proxy is NULL  : " << pModelKey);
 	pPLCharacter->SetSerialID(m_pSobObj->GetSerialID());
 
-	// Monster일 경우 resize picking box를 flag를 setting 해 준다.
+	//In case of Monster, set the flag in the resize picking box.
 	if(m_pSobObj->GetClassID() == SLCLASS_MONSTER)
 	{
 		RwUInt32 uiFlags = pPLCharacter->GetFlags();
@@ -1536,7 +1536,7 @@ RwV3d CNtlSobCharProxy::GetSubWeaponBonePosition(const RwChar *pBoneName)
 	return m_pEquipProxy->GetSubWeaponBonePosition(pBoneName);
 }
 
-// pl entity의 높이를 얻어온다.
+//Get the height of pl entity.
 RwReal CNtlSobCharProxy::GetPLEntityHeight(void)
 {
 	if(m_pPrivateShopProxy)
@@ -1545,13 +1545,13 @@ RwReal CNtlSobCharProxy::GetPLEntityHeight(void)
 	return m_pCharacter->GetHeight();
 }
 
-// pl entity의 폭을 얻어온다.
+//Get the width of pl entity.
 RwReal CNtlSobCharProxy::GetPLEntityWidth(void)
 {
 	return m_pCharacter->GetWidth();
 }
 
-// pl entity의 깊이을 얻어온다.
+//Get the depth of pl entity.
 RwReal CNtlSobCharProxy::GetPLEntityDepth(void)
 {
 	return m_pCharacter->GetDepth();
@@ -1565,7 +1565,7 @@ RwReal CNtlSobCharProxy::GetPLEntityBaseScale(void)
 
 void CNtlSobCharProxy::EnableVisible(RwBool bEnable)
 {
-    // 투명상태 처리
+    //Transparent state handling
     if(bEnable && Logic_IsCondition((CNtlSobActor*)m_pSobObj, CHARCOND_FLAG_TRANSPARENT))
     {
         if(m_pSobObj->GetClassID() == SLCLASS_PLAYER)
@@ -1576,7 +1576,7 @@ void CNtlSobCharProxy::EnableVisible(RwBool bEnable)
 
 	if(IsProxySystemVisible())
 	{
-		// 캐릭터는 로딩되지 않아도 그림자는 로딩되기 깨문에, 캐릭터와 별개로 처리한다. (by agebreak)
+		//Even if the character is not loaded, the shadow is loaded, so it is processed separately from the character. (by agebreak)
 		if(m_pDecorationProxy)
 			m_pDecorationProxy->SetVisible(bEnable);
 
@@ -1652,10 +1652,10 @@ void CNtlSobCharProxy::CreateElapsedController(RwReal fLifeTime, RwReal fWeightV
 		m_pDecorationProxy->CreateWeightElapsedController(fLifeTime, fWeightValue);
 
 	/*
-	// 일단은 attach된 entity만 control 조정한다.
-	// 여기는 attach된 entity외에 attach 되지 않으면서, character 가 생성한 entity도 찾을 수 있는 방법인데,
-	// attach된 entity와 겹칠 수 있다... 또한 모든 effect를 검색하므로 속도가 저하될 수 있다. (형석)
-	// 기존에 출력된 effect에 elapsed control setting
+	// First, control only the attached entity.
+	// This is a way to find entities created by character without being attached, in addition to the attached entity.
+	// It may overlap with attached entities... Also, since all effects are searched, speed may be slowed. (fluorite)
+	// Elapsed control setting on previously output effects
 	if(GetNtlSobElapsedControlManager()->GetControlFactor(m_pSobObj, fLifeTime, fWeightValue))
 	{
 		SERIAL_HANDLE hSerialId = m_pSobObj->GetSerialID();
@@ -1693,10 +1693,10 @@ void CNtlSobCharProxy::DeleteElapsedController(void)
 }
 
 
-// mouse focus를 받았을 경우.
+//When mouse focus is received.
 void CNtlSobCharProxy::SetFocus(void) 
 {
-	// input enable 켜 있지 않으면?
+	//What if input enable is not turned on?
 	if(!m_pSobObj->IsInput())
 		return;
 
@@ -1707,10 +1707,10 @@ void CNtlSobCharProxy::SetFocus(void)
 	}
 }
 
-// mouse focus를 읽어 버렸을 경우.
+//When mouse focus is read.
 void CNtlSobCharProxy::ReleaseFocus(void) 
 {
-	// input enable 켜 있지 않으면?
+	//What if input enable is not turned on?
 	if(!m_pSobObj->IsInput())
 		return;
 
@@ -1877,13 +1877,13 @@ RwReal CNtlSobCharProxy::GetScale()
 
 void CNtlSobCharProxy::AttachRPBonusEffect() 
 {
-    // 이펙트 생성
+   //Create effect
     m_pDecorationProxy->AttachRPBonusEffect();
 }
 
 void CNtlSobCharProxy::DetachRPBonusEffect() 
 {
-    // 이펙트 해제
+    //Disable effect
     m_pDecorationProxy->DetachRPBonusEffect();    
 }
 
@@ -2099,7 +2099,7 @@ void CNtlSobCharProxy::SobPostEffectEventHandler( RWS::CMsg& pMsg )
     }
     else if(pEventPostEffect->eTarget == POST_EFFECT_TARGET_TYPE_TARGET)
     {
-        // 타겟이 대상인 경우에는 타겟에 이펙트 생성
+        //If the target is the target, create the effect on the target
         CNtlSob* pSobTarget = GetNtlSobManager()->GetSobObject(Logic_GetActorTargetSerialId((CNtlSobActor*)m_pSobObj));
         if(!pSobTarget)
             return;

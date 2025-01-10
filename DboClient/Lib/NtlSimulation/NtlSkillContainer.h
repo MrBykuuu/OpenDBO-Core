@@ -2,7 +2,7 @@
  *
  * File			: NtlSkillContainer.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2006. 4. 24	
  * Abstract		: Simulation skill container
  *****************************************************************************
@@ -13,13 +13,13 @@
 #ifndef __NTL_SKILL_CONTAINER_H__
 #define __NTL_SKILL_CONTAINER_H__
 
-// shared
+// Shared
 #include "NtlSkill.h"
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "NtlSLServerDeclear.h"
 
@@ -33,8 +33,8 @@ class CNtlSkillContainer : public RWS::CEventHandler
 {
 protected:
 
-	SERIAL_HANDLE m_hSerial[NTL_MAX_PC_HAVE_SKILL];		/** skill 전체 slot */
-	SERIAL_HANDLE m_hHTBSerial[NTL_HTB_MAX_PC_HAVE_HTB_SKILL];	/** HTB Skill 분리*/
+	SERIAL_HANDLE m_hSerial[NTL_MAX_PC_HAVE_SKILL];		/** skill all slots */
+	SERIAL_HANDLE m_hHTBSerial[NTL_HTB_MAX_PC_HAVE_HTB_SKILL];	/** HTB Skill Separation*/
 	SERIAL_HANDLE m_hActionSerial[NTL_MAX_PC_HAVE_ACTION_SKILL];
 
 public:
@@ -57,7 +57,7 @@ public:
 	CNtlSobSkill* GetSameKindSkillFromTableId(RwUInt32 uiTblId);
 	sSKILL_TBLDAT* GetSkillFromTable(RwInt32 iSlotIdx);
 	RwInt32 GetSkillSlotIdx( SERIAL_HANDLE hSerial );
-	RwBool SkillExists( TBLIDX minIdx, TBLIDX maxIdx );	// Upgrade 체크용.
+	RwBool SkillExists( TBLIDX minIdx, TBLIDX maxIdx );	// For upgrade check.
 
 	RwInt32 GetHTBSkillCount(void);
 	CNtlSobHTBSkill* GetHTBSkill(RwInt32 iSlotIdx);
@@ -107,7 +107,7 @@ private:
 	void SkillInitHandler( RWS::CMsg& msg );
 	void PassiveSkillEffectHandler( RWS::CMsg& msg );
 		
-	// passive skill 판단.
+	// Passive skill judgment.
 	void PassiveSkillDetecting(RwUInt32 uiTblId);
 
 public:
@@ -156,10 +156,10 @@ class CNtlPetSkillContainer : public RWS::CEventHandler
 {
 protected:
 
-	SERIAL_HANDLE	m_hSerial[NTL_MAX_NPC_HAVE_SKILL];		/** skill 전체 slot */
+	SERIAL_HANDLE	m_hSerial[NTL_MAX_NPC_HAVE_SKILL];		/** skill all slots */
 	RwUInt8			m_byUseBasis[NTL_MAX_NPC_HAVE_SKILL];	/** skill AI Basis */
-	RwUInt16		m_wUseLp[NTL_MAX_NPC_HAVE_SKILL];		/** skill AI Lp 조건 */
-	RwUInt16		m_wUseTime[NTL_MAX_NPC_HAVE_SKILL];		/** skill AI Time 조건 */
+	RwUInt16		m_wUseLp[NTL_MAX_NPC_HAVE_SKILL];		/** skill AI Lp conditions */
+	RwUInt16		m_wUseTime[NTL_MAX_NPC_HAVE_SKILL];		/** skill AI Time conditions */
 
 public:
 

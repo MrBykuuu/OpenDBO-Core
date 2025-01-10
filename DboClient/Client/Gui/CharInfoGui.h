@@ -1,25 +1,25 @@
 /******************************************************************************
-* File			: CharInfoGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2007. 10. 17
-* Abstract		:
+*File           : CharInfoGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : October 17, 2007
+*Abstract		:
 *****************************************************************************
-* Desc			: 로비에서 현재 선택된 캐릭터의 정보를 보여준다
+*Desc: Shows information about the currently selected character in the lobby.
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "Inputhandler.h"
 
-// dbo
+// Dbo
 #include "Windowby3.h"
 
 class CCharacterInfoGui : public CNtlPLGui, public RWS::CEventHandler
@@ -45,23 +45,23 @@ protected:
 protected:
 	gui::CSlot			m_slotPaint;
 
-	CWindowby3			m_Background;		///< 배경
+	CWindowby3			m_Background;		///< background
 
-	CSurfaceGui			m_srtInfoBack;		///< 캐릭터 정보 배경
+	CSurfaceGui			m_srtInfoBack;		///< Character information background
 
 	gui::CStaticBox*	m_pTitleStatic;		///<
-	gui::CStaticBox*	m_pNameStatic;		///< '이름'
-	gui::CStaticBox*	m_pLevelStatic;		///< '레벨'
-	gui::CStaticBox*	m_pClassStatic;		///< '클래스'
-	gui::CStaticBox*	m_pZennyStatic;		///< '소유제니'
-	gui::CStaticBox*	m_pLastLocationStatic;///< '최종위치'
-	gui::CStaticBox*	m_pDeleteDayStatic;	///< '삭제 예정일'
-	gui::CStaticBox*	m_pName;			///< 캐릭터 이름
-	gui::CStaticBox*	m_pLevel;			///< 캐릭터 레벨
-	gui::CStaticBox*	m_pClass;			///< 캐릭터 클래스
-	gui::CStaticBox*	m_pZenny;			///< 캐릭터 소유 제니
-	gui::CStaticBox*	m_pLastLocation;	///< 캐릭터 최종 위치
+	gui::CStaticBox*	m_pNameStatic;		///< 'name'
+	gui::CStaticBox*	m_pLevelStatic;		///< 'Level'
+	gui::CStaticBox*	m_pClassStatic;		///< 'class'
+	gui::CStaticBox*	m_pZennyStatic;		///< ‘SoZennyenny’
+	gui::CStaticBox*	m_pLastLocationStatic;///< 'Final location'
+	gui::CStaticBox*	m_pDeleteDayStatic;	///< 'Scheduled deletion date'
+	gui::CStaticBox*	m_pName;			///< Character name
+	gui::CStaticBox*	m_pLevel;			///< Character level
+	gui::CStaticBox*	m_pClass;			///< Character class
+	gui::CStaticBox*	m_pZenny;			///< Character Owner Zenny
+	gui::CStaticBox*	m_pLastLocation;	///< Character final location
 
-	gui::CStaticBox*	m_pDeleteDay;		///< 캐릭터 삭제 예정일
-	gui::CStaticBox*	m_pDeleteDayExplain;///< 캐릭터 삭제 예정일 상세 설명
+	gui::CStaticBox*	m_pDeleteDay;		///< Expected date of character deletion
+	gui::CStaticBox*	m_pDeleteDayExplain;///< Detailed description of character deletion date
 };

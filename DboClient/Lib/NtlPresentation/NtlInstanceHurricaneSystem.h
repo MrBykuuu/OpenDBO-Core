@@ -2,7 +2,7 @@
 //	File		:	NtlInstanceHurricaneSystem.h
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -43,7 +43,7 @@ public:
 	virtual RwBool	Create(CNtlResourceEffect* pResourceEffect, CNtlResourceComponentSystem* pResourceComponentSystem, const RwMatrix& matWorld);
 
 	virtual void	SetVertexColor(RwRGBA& color);
-    virtual void    SetAlpha(RwUInt8 byValue);                     ///< 알파값을 설정한다.
+    virtual void    SetAlpha(RwUInt8 byValue);                     ///< Set the alpha value.
 
 	virtual RwBool	Update(RwReal fElapsedTime);
 	virtual RwBool	Render();
@@ -52,7 +52,7 @@ public:
 protected:
     void	BuildEmitterStandard(SNtlHurricaneEmitterStandard* pEmitterStandard);
 	void	UpdateVertices(RwReal fElapsedTime, RwReal fLifeTime);
-    void    UpdateVanish(RwReal fElapsedTime);                      ///< 알파를 없애서 소멸효과를 만든다.
-    virtual RwBool  UpdateFinish(RwReal fElapsedTime);              ///< Finish 효과를 처리한다.
+    void    UpdateVanish(RwReal fElapsedTime);                      ///< Creates a extinction effect by removing alpha.
+    virtual RwBool  UpdateFinish(RwReal fElapsedTime);              ///< Processes the Finish effect.
 
 };

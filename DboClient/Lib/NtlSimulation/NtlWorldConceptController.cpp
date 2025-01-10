@@ -1,7 +1,7 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlWorldConceptController.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 #include "NtlWorldConcept.h"
@@ -24,9 +24,9 @@ CNtlWorldConceptController::~CNtlWorldConceptController(void)
 }
 
 /**
- * 디폴트는 모든 액션이 가능한 상태이다. 각 컨셉에 따라 하면 안되는 액션이 있는 경우에는 오버라이딩한다.
- * \param eAction 액션 가능 유무 판별 플래그
- * return 액션 가능 유무
+ *The default is a state where all actions are possible. If there are actions that should not be performed according to each concept, override them.
+ * \param eAction Flag for determining whether action is possible or not
+ *Is return action possible?
  */
 RwBool CNtlWorldConceptController::IsEnableAction( EAvatarAction eAction ) 
 {
@@ -34,7 +34,7 @@ RwBool CNtlWorldConceptController::IsEnableAction( EAvatarAction eAction )
 }
 
 /**
- * 디폴트는 아무것도 하지 않는다. 컨셉에 따라 하위 클래스에서 오버라이딩한다. 
+ *The default is to do nothing. Override in subclasses depending on the concept. 
  */
 void CNtlWorldConceptController::Update( RwReal fElapsedTime ) 
 {

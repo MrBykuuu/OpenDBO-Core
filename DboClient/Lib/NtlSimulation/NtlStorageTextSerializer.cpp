@@ -216,8 +216,7 @@ CNtlSerializer& CNtlStorageTextSerializer::operator<<(std::string	&str)
 		memcpy(&m_pBuffer[m_iEndPointer], str.c_str(), iTypeSize);
 		m_iEndPointer += iTypeSize;
 	}
-
-	// 끝에 널문자를 넣어준다.
+//Add a null character at the end.
 	/*operator<<('\0');*/
 
 	return *this;

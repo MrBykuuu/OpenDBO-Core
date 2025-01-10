@@ -1,13 +1,13 @@
 ﻿/*****************************************************************************
 * File			: ActionMap.h
 * Author		: Haesung, Cho
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2007. 9. 20
 * Abstract		: Action Map
 *****************************************************************************
-* Desc			: 액션맵의 자료구조를 정의하고 액션맵의 매니저를 작성한다.
+* Desc			: Define the data structure of the action map and create the manager of the action map.
 * History  -----
-* 2008.  2. 22	: 리팩토링, 기존의 액션맵 방식에서 자료구조와 매니저를 분리( 속성 추가 )
+* 2008.  2. 22	: Refactoring, separation of data structure and manager from existing action map method (addition of properties)
 *****************************************************************************/
 
 #ifndef __ACTION_MAP_H__
@@ -17,7 +17,7 @@
 #include "NtlActionMapDef.h"
 #include "InputHandler.h"
 
-// shared
+// Shared
 #include "NtlCharacter.h"
 
 #include <map>
@@ -28,25 +28,25 @@ class CActionMapManager;
 
 /**
 * \ingroup simulation
-* \brief NTL ActionMap의 자료구조
+* \brief Data structure of NTL ActionMap
 */
 class CActionMap
 {
 public:
-	// 생성자 & 소멸자
+	// Constructor & Destructor
 	CActionMap(void);
 	CActionMap( CActionMapManager* pManager );
 	CActionMap(const CActionMap& rhs);
 	~CActionMap(void);
 
-	WORD	FindAction( WORD wKey );			// Key 값으로 Action을 찾는다.
-	WORD	FindKey( WORD wAction );			// Action 으로 Key를 찾는다.
+	WORD	FindAction( WORD wKey );			// Find Action by Key value.
+	WORD	FindKey( WORD wAction );			// Find the Key with Action.
 
-	BYTE			SetAction( WORD wKey, WORD wAction );	// 키를 지정
+	BYTE			SetAction( WORD wKey, WORD wAction );	// specify the key
 	VOID			SetLastReleaseAction( WORD wOldAction );
 	WORD			GetLastReleaseAction();
 
-	VOID			Clear();									// ActionMap을 초기화한다.
+	VOID			Clear();									// Initialize ActionMap.
 	VOID			ClearReleaseAction();
 
 	VOID			CaptureMap( CActionMap* pCaptureMap );
@@ -56,12 +56,12 @@ public:
 	ACTIONMAP&		GetActionMap()							{	return m_mapAction;	}
 	ACTIONMAP&		GetKeyMap()							{	return m_mapKey;	}
 
-	CActionMap& operator=(const CActionMap& rhs);				// 연산자 오버로딩
+	CActionMap& operator=(const CActionMap& rhs);				// Operator overloading
 
 protected:
-	ACTIONMAP		m_mapKey;				// 자료구조 < ACTION , KEY >
-	ACTIONMAP		m_mapAction;			// 자료구조 < KEY, ACTION >
-	ACTIONVEC		m_vecReleaseAction;		// 해제된 액션을 기억하기 위한 자료구조
+	ACTIONMAP		m_mapKey;				// Data structure < ACTION , KEY >
+	ACTIONMAP		m_mapAction;			// Data structure < KEY, ACTION >
+	ACTIONVEC		m_vecReleaseAction;		// Data structure for remembering released actions
 	CActionMapManager*	m_pManager;	
 };
 
@@ -145,20 +145,20 @@ protected:
 	TYPEMAP		m_mapActionType;
 
 	typedef std::map< unsigned short, unsigned int > mapdef_InputAction;
-	mapdef_InputAction	m_mapInputAction;							///< 현재 InputHandlerDown으로 검출된 Action들의 참조 리스트
+	mapdef_InputAction	m_mapInputAction;							///< Reference list of Actions currently detected with InputHandlerDown
 
 	RESULTVEC	m_vecResult;
 
-	WORD		m_wInputAction;										///< 키 입력을 받을 때는 ACTION_INVALID 이외의 값을 가지고 있는다.
+	WORD		m_wInputAction;										///< When receiving key input, it has a value other than ACTION_INVALID.
 	
-	CActionMap*		m_pActionMap;									///< 클라이언트에서 사용되는 ActionMap
-	CActionMap*		m_pCaptureMap;									///< 서버에 저장된 것을 가지고 있는다.
-	CActionMap*		m_pDefaultMap;									///< 가장 기본적으로 지정되는 ActionMap
+	CActionMap*		m_pActionMap;									///< ActionMap used in the client
+	CActionMap*		m_pCaptureMap;									///< It has something saved on the server.
+	CActionMap*		m_pDefaultMap;									///< The most default ActionMap
 
-	sSHORTCUT_UPDATE_DATA	m_asUpdateData[NTL_SHORTCUT_MAX_COUNT];	///< 변경된 사항을 저장하는 배열
-	BYTE					m_byUpdateCount;						///< 키의 변경사항이 있을때	
+	sSHORTCUT_UPDATE_DATA	m_asUpdateData[NTL_SHORTCUT_MAX_COUNT];	///< Array to store changes
+	BYTE					m_byUpdateCount;						///< When there is a change in the key	
 
-	BYTE					m_byActionMapMode;						///< ACTIONMAP의 사용 모드
+	BYTE					m_byActionMapMode;						///< ACTIONMAP usage mode
 	
 };
 

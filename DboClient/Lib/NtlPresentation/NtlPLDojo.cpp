@@ -308,7 +308,7 @@ void CNtlPLDojo::RefreshDojo()
 	SNtlPLDojoProp sNtlPLDojoProp;
 	if (GetSceneManager()->GetDojoContainer()->GetDojo(m_iDojoID, &sNtlPLDojoProp))
 	{
-		m_sEmblemNew = sNtlPLDojoProp.sEmblem; // SetLevel를 호출 하기 전에 Setting 해야 한다.
+		m_sEmblemNew = sNtlPLDojoProp.sEmblem; // Setting must be done before calling SetLevel.
 		SetLevel(sNtlPLDojoProp.iLevel);
 	}
 }

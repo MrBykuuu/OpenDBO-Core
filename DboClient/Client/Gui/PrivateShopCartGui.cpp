@@ -1,17 +1,17 @@
 #include "precomp_dboclient.h" 
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "CEventHandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 #include "NtlPLGuiManager.h"
 
-// framework
+// Framework
 #include "NtlApplication.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLGlobal.h"
 #include "NtlSLApi.h"
@@ -23,12 +23,12 @@
 #include "NtlSLEventFunc.h"
 #include "NtlSLPrivateShop.h"
 
-// table
+// Table
 #include "ItemTable.h"
 #include "TextAllTable.h"
 #include "TableContainer.h"
 
-// dbo
+// Dbo
 #include "DboGlobal.h"
 #include "DboDef.h"
 #include "DboEvent.h"
@@ -41,7 +41,7 @@
 #include "IconMoveManager.h"
 #include "PrivateShopCartGui.h"
 
-// etc
+// Etc
 
 CPrivateShopCartGui::CPrivateShopCartGui(const RwChar* pName) : CNtlPLGui(pName)
 ,m_pTotalBuyMoneyTitle(NULL)
@@ -335,7 +335,7 @@ void CPrivateShopCartGui::OnMouseUp(const CKey& key)
 	{
 		if (m_pFocusItem == m_pClickItem)
 		{
-			// 현재 마우스 왼쪽 버튼을 이용하여 아이템을 등록하는 것은 막혀 있음
+			// Currently, registering items using the left mouse button is blocked.
 			if (key.m_nID == UD_LEFT_BUTTON)
 			{
 				if (GetIconMoveManager()->IsActive() && GetIconMoveManager()->GetSrcPlace() == PLACE_PRIVATESHOP)
@@ -375,7 +375,7 @@ void CPrivateShopCartGui::OnMouseDown(const CKey& key)
 	m_pClickItem = m_pFocusItem;
 	if ( m_pClickItem )
 	{
-		// 오른쪽 버튼만 효과를 준다.
+		// Only the right button has an effect.
 		if( key.m_nID == UD_RIGHT_BUTTON )
 			m_pClickItem->slotCart.ClickEffect(true);
 
@@ -420,7 +420,7 @@ void CPrivateShopCartGui::ShowInfoWindow(RwBool bIsShow, RwInt32 iIndex)
 	}
 	else
 	{
-		// 자신의 Dialog에서 요청한 InfoWindow인지 검사하고 닫아준다.
+		// Checks whether it is the InfoWindow requested in your dialog and closes it.
 		if( DIALOG_PRIVATESHOP_CART == GetInfoWndManager()->GetRequestGui() )
 			GetInfoWndManager()->ShowInfoWindow(FALSE);
 	}
@@ -443,7 +443,7 @@ void CPrivateShopCartGui::OnBuyButtonClicked(gui::CComponent* pComponent)
 	memset( auiBuy, INVALID_BYTE, sizeof(RwUInt8) * NTL_MAX_BUY_SHOPPING_CART );
 	RwUInt8 byCount = 0;
 
-	// autBuy 배열에 순서대로 쌓아서 서버로 보낸다. ( 중간에 빈 곳이 있으면 구입이 되지 않는다. )
+	// Stack them in order in the autBuy array and send them to the server. (If there is an empty space in the middle, purchase is not possible.)
 	for (int i = 0; i < NTL_MAX_BUY_SHOPPING_CART; ++i)
 	{
 		if( m_CartItem[i].uiPrivateShopPos != INVALID_BYTE )

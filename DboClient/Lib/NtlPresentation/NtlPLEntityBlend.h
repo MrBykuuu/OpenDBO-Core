@@ -2,7 +2,7 @@
  *
  * File			: NtlPLEntityBlend.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: (?)NTL
  * Date			: 2007. 11. 05	
  * Abstract		: Presentation object entity blend class
  *****************************************************************************
@@ -16,15 +16,15 @@
 
 class CNtlPLEntity;
 
-// Alpha Blend의 가중치 정보를 관리하는 클래스
+// Class that manages weight information in Alpha Blend
 class CNtlPLEntityAlphaWeightBlend
 {
 private:
 
 	enum 
 	{
-		PLEAW_BLEND,                    // 블렌드 중
-		PLEAW_END                       // 블렌드가 끝난 상태
+		PLEAW_BLEND,                    // Blending
+		PLEAW_END                       // Blended finished
 	};
 
 	RwUInt8	m_byBlendType;
@@ -87,7 +87,7 @@ inline std::string& CNtlPLAtomicAlphaWeightBlend::GetAtomicName(void)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// 알파 블렌드 가중치 객체들을 관리하는 컨트롤러
+// Controller that manages alpha blend weight objects
 class CNtlPLEntityBlendController
 {
 
@@ -103,7 +103,7 @@ public:
 	CNtlPLAtomicAlphaWeightBlend*  AddAtomicAlpha(const RwChar *pAtomicName, RwReal fWeightAlpha, RwReal fLifeTime = 0.0f, RwBool bLoop = TRUE);
     CNtlPLAtomicAlphaWeightBlend*  AddAtomicAlpha(const RwChar *pAtomicName, RwReal fStartWeightAlpha, RwReal fEndWeightAlpha, RwReal fBlendTime, RwReal fLifeTime, RwBool bLoop);    
     
-    void AddAlphaBlend(CNtlPLEntityAlphaWeightBlend* pAlphaBlend);              ///< 임의의 알파 블렌딩 객체를 리스트에 추가한다.
+    void AddAlphaBlend(CNtlPLEntityAlphaWeightBlend* pAlphaBlend);              ///< Adds an arbitrary alpha blending object to the list.
     void RemoveAlpha(CNtlPLEntityAlphaWeightBlend* pAlphaBlend);
 	void RemoveAtomicAlpha(CNtlPLAtomicAlphaWeightBlend *pAtomicAlphaBlend);
 

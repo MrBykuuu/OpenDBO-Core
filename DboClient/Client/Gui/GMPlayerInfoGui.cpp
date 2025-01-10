@@ -1,18 +1,18 @@
 #include "precomp_dboclient.h"
 #include "GMPlayerInfoGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlWorldConceptTB.h"
 #include "NtlSLLogic.h"
 
-// dbo
+// Dbo
 #include "DialogPriority.h"
 #include "DboEventGenerator.h"
 #include "DisplayStringManager.h"

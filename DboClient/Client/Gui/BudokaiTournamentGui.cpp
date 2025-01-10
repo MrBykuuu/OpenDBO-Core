@@ -1,17 +1,17 @@
 #include "precomp_dboclient.h"
 #include "BudokaiTournamentGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "NtlBudokai.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// client
+// Client
 #include "DboGlobal.h"
 #include "DboPacketGenerator.h"
 #include "DboEvent.h"
@@ -38,7 +38,7 @@ CBudokaiTournamentEntry::CBudokaiTournamentEntry( gui::CComponent* pParent, RwUI
 {
 	gui::CSurfaceManager* pSurfaceManager = GetNtlGuiManager()->GetSurfaceManager();
 
-	// 포지션 위치정보와 서피스를 선택.
+	// Select position location information and surface.
 	CRectangle rtMark;
 	rtMark.SetRectWH( nMark1Left + byPos * nOffset, nMark1Top, nWidth, nHeight );					  
 
@@ -64,7 +64,7 @@ CBudokaiTournamentEntry::~CBudokaiTournamentEntry(VOID)
 
 VOID CBudokaiTournamentEntry::SetEntry( const WCHAR* pName, RwUInt16 wJoinID )
 {
-	// 이름 세팅
+	// Name setting
 	m_wstrName = pName;
 	m_wJoinID = wJoinID;
 }
@@ -76,17 +76,17 @@ VOID CBudokaiTournamentEntry::OnMouseEnter( gui::CComponent* pComponent )
 	// Focus
 	m_surFocus.Show( TRUE );
 
-	// 팝업
+	// popup
 	if( m_wstrName.size() )
 		GetInfoWndManager()->ShowInfoWindow( TRUE, CInfoWndManager::INFOWND_JUST_WTEXT, rect.right, rect.bottom, (VOID*)m_wstrName.c_str(), DIALOG_BUDOKAI_TOURNAMENT );
 }
 
 VOID CBudokaiTournamentEntry::OnMouseLeave( gui::CComponent* pComponent )
 {
-	// Focus 종료
+	// Exit Focus
 	m_surFocus.Show( FALSE );
 
-	// 팝업 종료
+	// Close popup
 	if( GetInfoWndManager()->GetRequestGui() == DIALOG_BUDOKAI_TOURNAMENT )
 		GetInfoWndManager()->ShowInfoWindow( FALSE );
 }
@@ -115,7 +115,7 @@ VOID CBudokaiTournamentEntry::OnPaint(VOID)
 
 #define BUDOKAI_TOURNAMENT_ENTRY_FIGHTINFO_LINE_WIDTH			2
 #define BUDOKAI_TOURNAMENT_ENTRY_FIGHTINFO_LINE_HEIGHT			2
-#define BUDOKAI_TOURNAMENT_ENTRY_FIGHTINFO_ANIMATION_SPEED		100		// pixel / second
+#define BUDOKAI_TOURNAMENT_ENTRY_FIGHTINFO_ANIMATION_SPEED		100		// pixel /second
 #define BUDOKAI_TOURNAMENT_ENTRY_FIGHTINFO_CLICK_WAIT_TIME		1000
 
 CBudokaiTournamentFightInfo::CBudokaiTournamentFightInfo( CBudokaiTournamentFightInfo* pAboveNode, gui::CComponent* pParent, RwUInt8 byMatchNumber, RwUInt8 byMatchLevel, RwUInt8 byServerMatchNumber, RwUInt8 byServerMatchLevel, RwBool bParty, 
@@ -126,7 +126,7 @@ CBudokaiTournamentFightInfo::CBudokaiTournamentFightInfo( CBudokaiTournamentFigh
 {
 	gui::CSurfaceManager* pSurfaceManager = GetNtlGuiManager()->GetSurfaceManager();
 
-	// 포지션 위치정보와 서피스를 선택.
+	// Select position location information and surface.
 	CRectangle rtMark;
 	rtMark.SetRectWH( GetHorizontalOrigin() + byMatchNumber * GetHorizontalOffset(), nOriginTop - ( byMatchLevel * nVerticalOffset ), nWidth, nHeight );
 		
@@ -135,12 +135,12 @@ CBudokaiTournamentFightInfo::CBudokaiTournamentFightInfo( CBudokaiTournamentFigh
 	m_pbtnBattleInfo->AddSurfaceDown( pSurfaceManager->GetSurface( "BudokaiTournament.srf", "srfFightInfoDown" ) );
 	m_pbtnBattleInfo->AddSurfaceUp( pSurfaceManager->GetSurface( "BudokaiTournament.srf", "srfFightInfoUp" ) );
 
-	// Bar 위치 저장
+	// Save bar location
 	RwInt32 nMarkCenterX, nMarkCenterY;
 	gui::CSurface surLine = pSurfaceManager->GetSurface( "BudokaiTournament.srf", "srfRedLine" );
 	rtMark.GetCenterPosition( &nMarkCenterX, &nMarkCenterY );
 
-	// 맨 밑단에는 Line이 하나 더 있음.
+	// There is one more line at the bottom.
 	if( byMatchLevel == 0 )
 	{
 		m_surLeftInitVerticalLine.SetSurface( surLine );
@@ -390,7 +390,7 @@ RwBool CBudokaiTournamentFightInfo::IsLeftNode(VOID)
 
 VOID CBudokaiTournamentFightInfo::OnClickInfoBtn( gui::CComponent* pComponent )
 {
-	// 연속클릭방지 시간 저장 및 시간 정보 유효 확인
+	// Prevent continuous clicks, save time and check time information validity
 	RwUInt32 uiCurrentTime = GetTickCount();
 
 	if( m_uiWaitTime - uiCurrentTime > BUDOKAI_TOURNAMENT_ENTRY_FIGHTINFO_CLICK_WAIT_TIME )
@@ -664,7 +664,7 @@ RwBool CBudokaiTournamentGui::Create(VOID)
 
 	m_pbtnClose = reinterpret_cast<gui::CButton*>( GetComponent( "btnClose" ) );
 
-	// peessitemp:
+	// Peessitemp:
 	m_pstbInfomation->SetText( GetDisplayStringManager()->GetString( "DST_BUDOKAI_TOURNAMENT_INFO_1" ) );
 
 	m_pbtnIndividual->SetText( GetDisplayStringManager()->GetString( "DST_BUDOKAI_NOTICE_SOLO" ) );
@@ -677,7 +677,7 @@ RwBool CBudokaiTournamentGui::Create(VOID)
 	m_slotClickPartyBtn = m_pbtnParty->SigToggled().Connect( this, &CBudokaiTournamentGui::OnToggledPartyBtn );
 	m_slotClickIndividualBtn = m_pbtnIndividual->SigToggled().Connect( this, &CBudokaiTournamentGui::OnToggledIndividualBtn );
 
-	// 토너먼트 컴포넌트 생성.
+	// Creating tournament components.
 	CreateDataGroup();
 
 	Show( false );
@@ -694,7 +694,7 @@ RwBool CBudokaiTournamentGui::Create(VOID)
 
 VOID CBudokaiTournamentGui::Destroy(VOID)
 {
-	// 혹시나.
+	// Just in case.
 	m_mapIndividualEntryData.clear();
 	m_mapTeamEntryData.clear();
 
@@ -765,7 +765,7 @@ VOID CBudokaiTournamentGui::HandleEvents( RWS::CMsg& msg )
 					continue;
 			}
 			
-			// 맨 밑단에만 일단 ID를 전해준다.
+			// The ID is given only at the bottom.
 			RwUInt8 byDepth = (RwUInt8)( log( (RwReal)( BUDOKAI_MAJOR_MATCH_PLAYER_NUMBER ) ) / log( 2.0f ) ) - 1;
 			if( pCurrentMatchData->byDepth == byDepth )
 			{
@@ -797,7 +797,7 @@ VOID CBudokaiTournamentGui::HandleEvents( RWS::CMsg& msg )
 			if( !pFightInfo )
 				continue;
 
-			// 맨 밑단에만 일단 ID를 전해준다.
+			// The ID is given only at the bottom.
 			RwUInt8 byDepth = (RwUInt8)( log( (RwReal)( BUDOKAI_MAJOR_MATCH_TEAM_NUMBER ) ) / log( 2.0f ) ) - 1;
 			if( pCurrentMatchData->byDepth == byDepth )
 			{
@@ -890,7 +890,7 @@ VOID CBudokaiTournamentGui::CreateDataGroup(VOID)
 	for( RwInt32 i = 0 ; i < NUM_PAGE ; ++i )
 	{
 		m_pPageDialog[i] = NTL_NEW gui::CDialog( CRectangle( 0, 0, m_pThis->GetWidth(), m_pThis->GetHeight() ), m_pThis, GetNtlGuiManager()->GetSurfaceManager() );
-		m_pPageDialog[i]->SetPriority( 0x7000 );	// 낮은 Priority		
+		m_pPageDialog[i]->SetPriority( 0x7000 );	// low priority		
 	}	
 
 	m_pEntryGroup[TOURNAMENT_INDIVIDUAL_A] = NTL_NEW CBudokaiTournamentEntryGroup( 0, BUDOKAI_MAJOR_MATCH_PLAYER_NUMBER / 2, BUDOKAI_TOURNAMENT_ENTRY_MARK_1_LEFT, BUDOKAI_TOURNAMENT_ENTRY_MARK_1_TOP, BUDOKAI_TOURNAMENT_ENTRY_MARK_OFFSET, m_pPageDialog[TOURNAMENT_INDIVIDUAL_A] );
@@ -963,7 +963,7 @@ VOID CBudokaiTournamentGui::SetPage( ePage ePageType )
 		m_pstbIndividualGroupType->Show( false );		
 		m_pPageDialog[TOURNAMENT_PARTY]->Show( true );
 
-		// 버튼 세팅
+		// Button Settings
 		m_pbtnParty->ClickEnable( FALSE );
 		m_pbtnIndividual->ClickEnable( TRUE );
 		m_pbtnIndividual->SetDown( false );	
@@ -987,7 +987,7 @@ VOID CBudokaiTournamentGui::SetPage( ePage ePageType )
 			m_pPageDialog[TOURNAMENT_INDIVIDUAL_B]->Show( true );
 		}
 
-		// 버튼 세팅
+		// Button Settings
 		m_pbtnIndividual->ClickEnable( FALSE );
 		m_pbtnParty->ClickEnable( TRUE );
 		m_pbtnParty->SetDown( false );

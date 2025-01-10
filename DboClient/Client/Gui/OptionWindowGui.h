@@ -1,14 +1,14 @@
 /******************************************************************************
-* File			: OptionWindowGui.h
-* Author		: Kim Jinsung
-* Copyright		: (주)NTL
-* Date			: 2007. . 
-* Abstract		: 
+*File: OptionWindowGui.h
+*Author		    : Jinsung Kim
+*Copyright	    : NTL Co., Ltd.
+*Date           : 2007. . 
+*Abstract		: 
 *****************************************************************************
-* Desc			: COptionWindowGui
-* Modify		: 2007. 10. 1 - Cho haesung 추가(COptionControl)
+*Desc           : COptionWindowGui
+*Modify         : 2007. 10. 1 - Cho haesung added (COptionControl)
 
-옵션 윈도우 GUI
+Optional Windows GUI
 *****************************************************************************/
 
 #ifndef _OPTIONWINDOWGUI_H_
@@ -26,14 +26,14 @@ class COptionInfo;
 class COptionETC;
 class COptionChatting;
 
-#define dOPTION_VIRTUAL_NUM				9			// 보여질 리스트의 갯수
-#define dOPTION_VIRTUAL_NUM_CONTROL		9			// 조작키에서 보여질 리스트의 갯수
+#define dOPTION_VIRTUAL_NUM				9			// Number of lists to be shown
+#define dOPTION_VIRTUAL_NUM_CONTROL		9			// Number of lists to be displayed on the control keys
 #define	dOPTION_VIRTUAL_HEIGHT			21			// The height of the list
-#define	dOPTION_VIRTUAL_HEIGHT_EX		300			// 콤보박스 클릭 후 높이
-#define dOPTION_SCROLL_HEIGHT			345			// 스크롤바 높이
-#define dOPTION_SCROLL_HEIGHT_CONRTOL	200			// 조작키에서 스크롤바 높이
+#define	dOPTION_VIRTUAL_HEIGHT_EX		300			// Height after clicking the combo box
+#define dOPTION_SCROLL_HEIGHT			345			// scrollbar height
+#define dOPTION_SCROLL_HEIGHT_CONRTOL	200			// Scroll bar height on control keys
 //
-//// Video Mode 리스트
+//// Video Mode List
 //typedef struct _SVideoModeInfo
 //{
 //	RwInt32 iWidth;
@@ -45,7 +45,7 @@ class COptionChatting;
 
 /**
 * \ingroup Client
-* 옵션윈도우의 매니저 클래스
+*Option window manager class
 */
 class COptionWindowGui : public CNtlPLGui, public RWS::CEventHandler
 {
@@ -148,10 +148,10 @@ public:
 
 /**
 * \ingroup client
-* \brief 사운드 옵션
-* 현재 볼륨을 지정하는 수치를 0 부터 50까지 설정해놓음
-* 사운드 라이브러리와 BGM의 동기를 맞추기 위하여
-* BGM의 볼륨만 Get * 200  ,  Set * 0.005 를 함. Comment by Kell(2007. 12. 31)
+* \brief Sound Options
+*The number that specifies the current volume is set from 0 to 50.
+*To synchronize the sound library and BGM
+*Only the volume of BGM is Get *200, Set *0.005. Comment by Kell(2007. 12. 31)
 */
 class COptionSound : public COptionBase
 {

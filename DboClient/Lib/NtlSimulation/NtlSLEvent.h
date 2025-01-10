@@ -1,12 +1,12 @@
-﻿/*****************************************************************************
+/*****************************************************************************
 *
 * File			: NtlSLEvent.h
 * Author		: HyungSuk, Jang
-* Copyright	: (ÁÖ)NTL
+* Copyright	    : (??)NTL
 * Date			: 2005. 9. 01	
 * Abstract		: Simulation layer event type
 *****************************************************************************
-* Desc         : 
+* Desc          : 
 *
 *****************************************************************************/
 
@@ -54,8 +54,8 @@ extern RWS::CEventId g_EventFormatSysStringMsg;
 
 extern RWS::CEventId g_EventNetSendError;		// network
 
-extern RWS::CEventId g_EventNotifySendPacket;			// packetÀ» º¸³¾¶§¹ß»ýÇÏ´Â ÀÌº¥Æ®(PacketTrace¿ë)
-extern RWS::CEventId g_EventNotifyReceivePacket;		// packetÀ» ¹ÞÀ»¶§¹ß»ýÇÏ´Â ÀÌº¥Æ®(PacketTrace¿ë)
+extern RWS::CEventId g_EventNotifySendPacket;			// Event that occurs when sending a packet (for PacketTrace)
+extern RWS::CEventId g_EventNotifyReceivePacket;		// Event that occurs when receiving a packet (for PacketTrace)
 
 //////////////////////////////////////////////
 /**
@@ -64,30 +64,30 @@ extern RWS::CEventId g_EventNotifyReceivePacket;		// packetÀ» ¹ÞÀ»¶§¹ß
 //////////////////////////////////////////////
 
 extern RWS::CEventId g_EventWorldChange;		
-extern RWS::CEventId g_EventCreateWorld;                 // ¿ùµå°¡ DestroyµÇ´ø°¡ CreateµÉ¶§
+extern RWS::CEventId g_EventCreateWorld;                 // When the world is destroyed or created
 
 //////////////////////////////////////////////
 /**
-* avatar/camera ÀÌµ¿ ¹× È¸Àü
+*Move and rotate avatar/camera
 */
 //////////////////////////////////////////////
 
 extern RWS::CEventId g_EventCameraSmoothingMove;		// camera smoothing move.
-extern RWS::CEventId g_EventCameraShake;				// Áøµ¿ camera.
+extern RWS::CEventId g_EventCameraShake;				// Vibrating camera.
 extern RWS::CEventId g_EventCameraDash;					// dash camera.
-extern RWS::CEventId g_EventCameraNpc;					// npc click ¿¬Ãâ camera.
-extern RWS::CEventId g_EventCameraDB;					// dragon ball ¿¬Ãâ camera.
+extern RWS::CEventId g_EventCameraNpc;					// npc click directing camera.
+extern RWS::CEventId g_EventCameraDB;					// dragon ball directing camera.
 extern RWS::CEventId g_EventCameraDTClear;				// camera direct node clear.
 extern RWS::CEventId g_EventCameraDTSplineNode;			// camera direct spline node.
 extern RWS::CEventId g_EventCameraFree;					// Free Camera
-extern RWS::CEventId g_EventCameraTimeMachine;			// Å¸ÀÓ¸Ó½Å Ãâ¹ß ¿¬Ãâ Ä«¸Þ¶ó ÀÌº¥Æ®
-extern RWS::CEventId g_EventCameraExplosion;			// Æø¹ß Ä«¸Þ¶ó ÀÌº¥Æ®
-extern RWS::CEventId g_EventCameraTimeMachineArrive;	// Å¸ÀÌ¸Ó½Å µµÂø Ä«¸Þ¶ó ÀÌº¥Æ®
-extern RWS::CEventId g_EventCameraKnockDownMatrix;		// knockdown matrix camera ¿¬Ãâ.
-extern RWS::CEventId g_EventCameraFPS;                  // 1ÀÎÄª Ä«¸Þ¶ó
-extern RWS::CEventId g_EventCameraBus;					// ¹ö½º Ä«¸Þ¶ó
-extern RWS::CEventId g_EventCameraObserver;             // ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ ¿ÉÀú¹ö Ä«¸Þ¶ó
-extern RWS::CEventId g_EventCameraControlDelete;		// Ä«¸Þ¶ó »èÁ¦
+extern RWS::CEventId g_EventCameraTimeMachine;			// Time machine departure production camera event
+extern RWS::CEventId g_EventCameraExplosion;			// explosion camera event
+extern RWS::CEventId g_EventCameraTimeMachineArrive;	// Timer scene arrival camera event
+extern RWS::CEventId g_EventCameraKnockDownMatrix;		// Knockdown matrix camera production.
+extern RWS::CEventId g_EventCameraFPS;                  // first person camera
+extern RWS::CEventId g_EventCameraBus;					// bus camera
+extern RWS::CEventId g_EventCameraObserver;             // World's Best Martial Arts Observer Camera
+extern RWS::CEventId g_EventCameraControlDelete;		// delete camera
 
 //////////////////////////////////////////////
 /**
@@ -100,24 +100,24 @@ extern RWS::CEventId g_EventActionMapHalt;				// action halt action mapping
 extern RWS::CEventId g_EventActionMapJump;				// jump action mapping
 extern RWS::CEventId g_EventActionMapAirJump;			// air jump action mapping
 extern RWS::CEventId g_EventActionMapSitAndStand;		// sit and stand action mapping
-extern RWS::CEventId g_EventActionMapSkillUse;			// skill »ç¿ë.
-extern RWS::CEventId g_EventActionMapHTBUse;			// htb »ç¿ë.
-extern RWS::CEventId g_EventActionMapItemUse;			// item »ç¿ë.
-extern RWS::CEventId g_EventActionMapSocialUse;			// social action »ç¿ë.
+extern RWS::CEventId g_EventActionMapSkillUse;			// Use skill.
+extern RWS::CEventId g_EventActionMapHTBUse;			// Use htb.
+extern RWS::CEventId g_EventActionMapItemUse;			// Use item.
+extern RWS::CEventId g_EventActionMapSocialUse;			// Use social action.
 extern RWS::CEventId g_EventActionMapPrivateShopOpen;	// private shop Open;
-extern RWS::CEventId g_EventActionMapCharging;			// charging »ç¿ë.
-extern RWS::CEventId g_EventActionMapBlocking;			// blocking »ç¿ë.
-extern RWS::CEventId g_EventActionMapAutoFollow;		// auto follow »ç¿ë.
-extern RWS::CEventId g_EventActionMapDice;				// ¾×¼Ç ÁÖ»çÀ§ »ç¿ë
-extern RWS::CEventId g_EventScreenShot;                 // ½ºÅ©¸°¼¦À» ÂïÀºÈÄ¿¡ ¹ß»ýÇÏ´Â ÀÌº¥Æ®
+extern RWS::CEventId g_EventActionMapCharging;			// Use charging.
+extern RWS::CEventId g_EventActionMapBlocking;			// Use blocking.
+extern RWS::CEventId g_EventActionMapAutoFollow;		// Use auto follow.
+extern RWS::CEventId g_EventActionMapDice;				// Use action dice
+extern RWS::CEventId g_EventScreenShot;                 // Event that occurs after taking a screenshot
 
 extern RWS::CEventId g_EventSkillSelectMode;
 
-// ¾×¼Ç ½ºÅ³ ¾ÆÀÌÄÜÀ» ÀÌ¿ëÇÑ ¾×¼Ç (AvatarController¿¡¼­ ÇÑ¹ø °É·¯Á®¼­ ÀÌº¥Æ®¸¦ º¸³½´Ù)
-extern RWS::CEventId g_EventActionFuncBasicAttack;      ///< ±âº» °ø°Ý ¾ÆÀÌÄÜ
-extern RWS::CEventId g_EventActionFuncAssist;            ///< ¾î½Ã½ºÆ® ¾ÆÀÌÄÜ
-extern RWS::CEventId g_EventActionFuncGetItem;          ///< ¾ÆÀÌÅÛ ½Àµæ ¾ÆÀÌÄÜ
-extern RWS::CEventId g_EventActionFuncSitAndStand;      ///< ¾É±â ¾ÆÀÌÄÜ
+// Action using action skill icon (event is sent once filtered from AvatarController)
+extern RWS::CEventId g_EventActionFuncBasicAttack;      ///< Basic attack icon
+extern RWS::CEventId g_EventActionFuncAssist;            ///< Assist icon
+extern RWS::CEventId g_EventActionFuncGetItem;          ///< Item acquisition icon
+extern RWS::CEventId g_EventActionFuncSitAndStand;      ///< Sit icon
 
 
 extern RWS::CEventId g_EventESCinNarrationMode;
@@ -129,72 +129,72 @@ extern RWS::CEventId g_EventESCinNarrationMode;
 //////////////////////////////////////////////
 
 //--------------------
-// simulation ±âº» event
+// simulation basic event
 //--------------------
 
 extern RWS::CEventId g_EventSobShowNfy;
 
 //--------------------
-// input¿¡ °üÇÑ event
+// event related to input
 //--------------------
 
-// mouse·Î terrainÀ» click ÇßÀ» °æ¿ì ¹ß»ýµÇ´Â eventÀÌ´Ù.
+// This is an event that occurs when you click on the terrain with the mouse.
 extern RWS::CEventId g_EventTerrainClick;		
 
-// avatar¸¦ keyboard ÀÌµ¿½ÃÅ³¶§ ¹ß»ýÇÏ´Â event.
+// An event that occurs when the avatar is moved by the keyboard.
 extern RWS::CEventId g_EventKeyboardMove;		
 
-// avatar¸¦ keyboard ÀÌµ¿À» ¸ØÃâ ¶§ ¹ß»ýÇÏ´Â event.
+// An event that occurs when the avatar stops moving the keyboard.
 extern RWS::CEventId g_EventKeyboardMoveStop;	
 
-// avatar¸¦ mouse dash move ÀÌµ¿.
+// Move the avatar with mouse dash move.
 extern RWS::CEventId g_EventMouseDashMove;
 
-// avatar¸¦ keyboard dash move ÀÌµ¿.
+// Move the avatar with keyboard dash move.
 extern RWS::CEventId g_EventKeyboardDashMove;
 
 extern RWS::CEventId g_EventAirDashMove;
 extern RWS::CEventId g_EventAirAccelMove;
 
-// avatar¸¦ headingÀ» ¹Ù²Ü¶§ ¹ß»ýÇÏ´Â event.
+// An event that occurs when changing the heading of an avatar.
 extern RWS::CEventId g_EventInputChangeHeading;
 
-// mouse·Î simulation object¸¦ click ÇßÀ» °æ¿ì ¹ß»ýµÇ´Â eventÀÌ´Ù.
+// This is an event that occurs when a simulation object is clicked with the mouse.
 extern RWS::CEventId g_EventSobTargetSelect;     
 
-// mouse·Î simulation object¸¦ click ÇØÁ¦ eventÀÌ´Ù.
+// This is an event where the simulation object is clicked off with the mouse.
 extern RWS::CEventId g_EventSobTargetSelectRelease;     
 
-// mouse·Î simulation object¸¦ attack mark release ÇØÁ¦ eventÀÌ´Ù.
+// This is an attack mark release event where the simulation object is released with the mouse.
 extern RWS::CEventId g_EventSobAttackMarkRelease;
 
-// mouse·Î simulation object¸¦ double click ÇßÀ» °æ¿ì ¹ß»ýµÇ´Â eventÀÌ´Ù.
+// This is an event that occurs when a simulation object is double-clicked with the mouse.
 extern RWS::CEventId g_EventSobAttackSelect;     
 
-extern RWS::CEventId g_EventSobTargetMarkSelect;                    ///< Å¸°Ù ¸¶Å·ÇÒ ¿ÀºêÁ§Æ®¸¦ ¼±ÅÃÇÒ¶§ (¸Þ°¡ µµµ¿ÆÄ ½ºÅ³) 
+extern RWS::CEventId g_EventSobTargetMarkSelect;                    ///< When selecting an object for target marking (Mega Dodongpa skill) 
 
-extern RWS::CEventId g_EventSobTargetMarkRelease;                   ///< Å¸°Ù ¸¶Å·ÇÒ ¿ÀºêÁ§Æ®¸¦ ¸±¸®Áî
+extern RWS::CEventId g_EventSobTargetMarkRelease;                   ///< Release the object for target marking
 
-// mouse·Î simulation object¿¡ mouse focus°¡ µé¾î¿ÔÀ» °æ¿ì.
+// When mouse focus is placed on a simulation object using a mouse.
 extern RWS::CEventId g_EventSobGotFocus;     
 
-// mouse·Î simulation object¿¡ mouse focus°¡ ÇØÁ¦ µÇ¾úÀ» °æ¿ì.
+// When mouse focus is released on a simulation object using a mouse.
 extern RWS::CEventId g_EventSobLostFocus;     
 
-extern RWS::CEventId g_EventCommuTargetSelect;      // Ä¿¹Â´ÏÆ¼ TargetÀ» ¼±ÅÃÇÒ¶§ÀÇ ÀÌº¥Æ®
-extern RWS::CEventId g_EventCommuTargetRelease;     // Ä¿¹Â´ÏÆ¼ TargetÀ» ÇØÁ¦ÇÒ¶§ÀÇ ÀÌº¥Æ®
+extern RWS::CEventId g_EventCommuTargetSelect;      // Event when selecting a community target
+extern RWS::CEventId g_EventCommuTargetRelease;     // Event when community target is released
 
 
-/// ¼±°ø¸÷ÀÌ ³¯ ´«Ä¡Ã«À»¶§ ¹ß»ýÇÏ´Â ÀÌº¥Æ®
+/// An event that occurs when the first attacker notices me
 extern RWS::CEventId g_EventBotCaution_Nfy;
 
-/// ¸÷ÀÌ ÁÖÀ§ µ¿·á¿¡°Ô µµ¿òÀ» Ã»ÇÒ¶§ ¹ß»ýÇÏ´Â ÀÌº¥Æ®
+/// An event that occurs when a mob asks for help from nearby allies.
 extern RWS::CEventId g_EventBotHelpMe_Nfy;
 
-/// °øÀ¯ Å¸°Ù ¸¶Å©¸¦ ÁöÁ¤ÇÏ´Â ÀÌº¥Æ®
+/// Events that specify shared target marks
 extern RWS::CEventId g_EventShareTargetSelect;
 
-// °øÀ¯ Å¸°Ù ¸¶Å©¸¦ ¾ø¾Ö´Â ÀÌº¥Æ®
+// Event to remove shared target mark
 extern RWS::CEventId g_EventShareTargetRelease;
 
 extern RWS::CEventId g_EventTenkaichiMarking;
@@ -206,28 +206,28 @@ extern RWS::CEventId g_EventAvatarTargetStateChange;
 extern RWS::CEventId g_EventAvatarReset;
 
 //-----------------------------
-// create/delete¿¡ °üÇÑ ÇÔ¼ö.
+// Functions related to create/delete.
 //-----------------------------
 
-// simulatin object »ý¼º event.
+// simulation object creation event.
 extern RWS::CEventId g_EventSobCreate;
 
-// simulation object ¼Ò¸ê event.
+// simulation object �Ҹ� event.
 extern RWS::CEventId g_EventSobDelete;
 
 // 
 extern RWS::CEventId g_EventSobSummonPetSpawnSync;
 
 //--------------------------------
-// Æê »ý¼º¿¡ °ü·ÃµÈ ÀÌº¥Æ®
+// Events related to pet creation
 //--------------------------------
-extern RWS::CEventId g_EventSobPetSkillInfo;	// Æê ½ºÅ³¿¡ ´ëÇÑ Á¤º¸
+extern RWS::CEventId g_EventSobPetSkillInfo;	// Information about pet skills
 
 //-----------------------------
-// server µ¿±â °´Ã¼ÀÇ ÀÌµ¿¿¡ °üÇÑ ÇÔ¼ö.
+// Server Function related to movement of synchronous objects.
 //-----------------------------
 extern RWS::CEventId g_EventSobMove;				// simulation object move event
-extern RWS::CEventId g_EventSobMoveSync;            // ¿òÁ÷ÀÓ µ¿±âÈ­ ÀÌº¥Æ®
+extern RWS::CEventId g_EventSobMoveSync;            // movement synchronization event
 extern RWS::CEventId g_EventSobSecondDestMove;		// simulation object second dest move event
 extern RWS::CEventId g_EventSobSplineMove;			// simulation object spline move event
 extern RWS::CEventId g_EventSobAdjustMovePosition;  // simulation object adjust move position event
@@ -236,14 +236,14 @@ extern RWS::CEventId g_EventSobMoveStop;			// simulation object move stop event
 extern RWS::CEventId g_EventSobDirectionFloat;		// simulation object direction float
 extern RWS::CEventId g_EventSobFollowMove;			// simulation object follow move
 extern RWS::CEventId g_EventSobAdjustMove;			// simulation object adjust move event
-extern RWS::CEventId g_EventSobPushingNfy;			///< È¸Àü °ø°ÝÀ» ¹Þ¾Æ¼­ ½½¶óÀÌµù µÇ´Â ÀÌº¥Æ®
-extern RWS::CEventId g_EventSobGuardCrush;			// simulation object guard crush¸¦ ´çÇÑ´Ù.
-extern RWS::CEventId g_EventSobMovePatternSync;		// ÇöÀç monster¸¸ »ç¿ëÇÏ°í ÀÖ½¿.
+extern RWS::CEventId g_EventSobPushingNfy;			///< Event of sliding due to rotational attack
+extern RWS::CEventId g_EventSobGuardCrush;			// Simulation object gets guard crushed.
+extern RWS::CEventId g_EventSobMovePatternSync;		// Currently only monster is being used.
 extern RWS::CEventId g_EventSobAirJump;
 extern RWS::CEventId g_EventSobAirAccel;
 
 //-----------------------------
-// item ÀåÂø°ú ÇØÁ¦¿¡ °üÇÑ event.
+// Events related to equipping and unmounting items.
 //-----------------------------
 
 // simulation item add event
@@ -288,7 +288,7 @@ extern RWS::CEventId g_EventSobEquippedItemUpgradeAll;
 // simulation avatar item cancel event
 extern RWS::CEventId g_EventSobItemCancel;
 
-// ItemUseRes °¡ ½ÇÆÐ·Î ³¯¶ó¿ÔÀ» ¶§ ¹ßµ¿µÇ´Â ÀÌº¥Æ®
+// Event fired when ItemUseRes fails
 extern RWS::CEventId g_EventSobItemUseResFailed;
 
 // simulation avatar item casting event
@@ -304,22 +304,22 @@ extern RWS::CEventId g_EventItemSocketInsertBead;
 extern RWS::CEventId g_EventItemSocketDestroyBead;
 
 //////////////////////////////////////////////////////////////////////////
-// Dynamic Object °ü·Ã ÀÌº¥Æ®
+// Dynamic Object related events
 //////////////////////////////////////////////////////////////////////////
 extern RWS::CEventId g_EventDynamicObjectUpdateState;
 extern RWS::CEventId g_EventHoipoiMixRecipeRegNfy;
-extern RWS::CEventId g_EventHoipoiMixItemRecipeInfo;	///< ¾ÆÀÌÅÛ ·¹½ÃÇÇ Á¤º¸
-extern RWS::CEventId g_EventHoipoiMixItemMakeExpNfy;	///< ¾ÆÀÌÅÛ ¸¸µé±â °æÇèÄ¡ Áõ°¡ ¾Ë¸²
-extern RWS::CEventId g_EventHoipoiMixInfoUpdate;			///< È£ÀÌÆ÷ÀÌ¹Í½º ÀÎÆ÷ ¾÷µ¥ÀÌÆ®
+extern RWS::CEventId g_EventHoipoiMixItemRecipeInfo;	///< Item recipe information
+extern RWS::CEventId g_EventHoipoiMixItemMakeExpNfy;	///< Notification of item creation experience increase
+extern RWS::CEventId g_EventHoipoiMixInfoUpdate;			///< Hoipomix info update
 
 
-// º¯½Å ÀÌº¥Æ®
+// transformation event
 extern RWS::CEventId g_EventTransform;
-extern RWS::CEventId g_EventMobTransform;               ///< ¸÷ÀÌ º¯½ÅÇÒ¶§ÀÇ ÀÌº¥Æ®
-extern RWS::CEventId g_EventTransformCandy;             ///< »çÅÁÀ¸·Î º¯½ÅÇÏ´Â ÀÌº¥Æ®
-extern RWS::CEventId g_EventSobTransformSequela;        ///< º¯½Å ÈÞÀ¯Áõ
+extern RWS::CEventId g_EventMobTransform;               ///< Event when a mob transforms
+extern RWS::CEventId g_EventTransformCandy;             ///< Event that transforms into candy
+extern RWS::CEventId g_EventSobTransformSequela;        ///< Aftereffects of transformation
 
-// ÄÁµð¼Ç ÀÌº¥Æ®
+// condition event
 extern RWS::CEventId g_EventAfterEffectRemainTimeNfy;
 extern RWS::CEventId g_EventSobCondTerror;
 extern RWS::CEventId g_EventSobCondConfused;
@@ -344,7 +344,7 @@ extern RWS::CEventId g_EventBattleDungeonRewardFinish;
 
 
 //-----------------------------
-// QuickSlot¿¡ °ü·ÃµÈ event
+// Events related to QuickSlot
 //-----------------------------
 extern RWS::CEventId g_EventSobDeleteQuickSlotIcon;
 
@@ -365,7 +365,7 @@ extern RWS::CEventId g_EventSobWarehouseItemMove;
 extern RWS::CEventId g_EventSobWarehouseItemStackMove;
 
 //-----------------------------
-// quest item ÀåÂø°ú ÇØÁ¦¿¡ °üÇÑ event.
+// Events related to equipping and dismounting quest items.
 //-----------------------------
 
 extern RWS::CEventId g_EventSobQuestItemAdd;
@@ -378,29 +378,29 @@ extern RWS::CEventId g_EventSobQuestItemUpdate;
 
 
 //-----------------------------
-// server µ¿±â¿¡ ´ëÇÑ actionµé¿¡ °üÇÑ event.
+// Events about actions related to server synchronization.
 //-----------------------------
 
-// simulation object °¡ knockdown¿¡¼­ stand·Î º¯ÇÒ ¶§ º¸³»´Â ÀÌº¥Æ®.
+// Event sent when the simulation object changes from knockdown to stand.
 extern RWS::CEventId g_EventSobStanding;
 
 // simulation object fighting mode
 extern RWS::CEventId g_EventSobFightingMode;
 
-// simulation object attack event(target¿¡ °ø°ÝÀ» ½ÃÀÛ½ÃÅ°´Â ÀÌº¥Æ®)
+// simulation object attack event (event that starts an attack on the target)
 extern RWS::CEventId g_EventSobAttack;
 
 extern RWS::CEventId g_EventSobSpecialAttack;
 
 extern RWS::CEventId g_EventSobBattleNotification;
 
-// simulation object attacked event(°ø°Ý½ÃÀÛÀº ¹Ý´ë·Î °ø°Ý´çÇßÀ»¶§ ÀÇ¹Ì -> g_EventSobAttackÀÇ ¹Ý´ë ÀÌº¥Æ®)
+// simulation object attacked event (starting an attack means when you are attacked -> the opposite event of g_EventSobAttack)
 extern RWS::CEventId g_EventSobAttacked;
 
-// simulation object attack event(target¿¡ °ø°ÝÀ» ½ÃÀÛ½ÃÅ°´Â ÀÌº¥Æ®)
+// simulation object attack event (event that starts an attack on the target)
 extern RWS::CEventId g_EventSobPetBeginAttack;
 
-// simulation object hit event(attackÀÌ ½ÃÀÛµÈÈÄ target¿¡°Ô damage¸¦ Àü´ÞÇØ ÁÖ´Â event)
+// simulation object hit event (an event that delivers damage to the target after the attack begins)
 extern RWS::CEventId g_EventSobHit;
 
 // simulation object attack follow event
@@ -409,7 +409,7 @@ extern RWS::CEventId g_EventSobAttackFollow;
 // simulation object attack mode event
 extern RWS::CEventId g_EventSobAttackMode;
 
-extern RWS::CEventId g_EventSobSendAttackEnd;           ///< ¾îÅÃ¸ðµå Á¾·á¸¦ ¼­¹ö¿¡ ¾Ë¸®´Â ÀÌº¥Æ®
+extern RWS::CEventId g_EventSobSendAttackEnd;           ///< Event notifying the server of the end of attack mode
 
 // simulation object jump event
 extern RWS::CEventId g_EventSobJump;
@@ -427,8 +427,8 @@ extern RWS::CEventId g_EventSobSit;
 extern RWS::CEventId g_EventSobPrivateShop;
 
 // simulation player convert class
-extern RWS::CEventId g_EventSobConvertClass;            ///< ÀüÁ÷ ÀÌº¥Æ®
-extern RWS::CEventId g_EventSobChangeAdult;             ///< ¸ðµ¨À» ¹Ù²Ù´Â ÀÌº¥Æ® (¼ºÀÎ <-> ¾î¸°ÀÌ)
+extern RWS::CEventId g_EventSobConvertClass;            ///< Job change event
+extern RWS::CEventId g_EventSobChangeAdult;             ///< Event to change model (Adult <-> Child)
 
 extern RWS::CEventId g_EventCharTitleSelectNfy;
 
@@ -465,7 +465,7 @@ extern RWS::CEventId g_EventSobSkillCasting;
 // simulation object skill act event
 extern RWS::CEventId g_EventSobSkillAction;
 
-// simulation object skill acted event    g_EventSobSkillActiondÀÇ ¹Ý´ë
+// simulation object skill acted event    Opposite of g_EventSobSkillActiond
 extern RWS::CEventId g_EventSobSkillActioned;
 
 // simulation object skill add
@@ -533,7 +533,7 @@ extern RWS::CEventId g_EventSobServerUpdateState;
 extern RWS::CEventId g_EventSobServerUpdateCondition;
 extern RWS::CEventId g_EventSobServerUpdateAspect;
 extern RWS::CEventId g_EventSobFainting;
-extern RWS::CEventId g_EventSobUpdateLPStatusNfy;           ///< SobÀÌ ºó»ç »óÅÂ¿¡ ºü ºÀ»¶§ÀÇ ÀÌº¥Æ®
+extern RWS::CEventId g_EventSobUpdateLPStatusNfy;           ///< Event when Sob is in a dying state
 
 //-----------------------------
 // party event
@@ -555,8 +555,8 @@ extern RWS::CEventId g_EventPartyUpdateValue;
 
 extern RWS::CEventId g_EventPartyMemberLocation;
 
-extern RWS::CEventId g_EventPartyShareTargetRes;            ///< °øÀ¯ Å¸°Ù ¼±ÅÃ¿¡ ´ëÇÑ ¼­¹ö ÀÀ´ä
-extern RWS::CEventId g_EventPartyShareTargetNfy;            ///< °øÀ¯ Å¸°Ù ¼±ÅÃ¿¡ ´ëÇÑ ¼­¹ö ¾Ë¸²
+extern RWS::CEventId g_EventPartyShareTargetRes;             ///< Server response to sharing target selection
+extern RWS::CEventId g_EventPartyShareTargetNfy;             ///< Server notification about sharing target selection
 
 //-----------------------------
 // Guild event
@@ -590,7 +590,7 @@ extern RWS::CEventId g_EventScrambleDefaultInfoNotify;
 // HTB RP
 //-----------------------------
 
-extern RWS::CEventId g_EventHTBRPStock;						// HTB RP Stock ¼±ÅÃ GUI
+extern RWS::CEventId g_EventHTBRPStock;						// HTB RP Stock Selection GUI
 extern RWS::CEventId g_EventHTBRPResult;	
 
 
@@ -605,7 +605,7 @@ extern RWS::CEventId g_EventBlackListAdd_Res;
 extern RWS::CEventId g_EventBlackListDel_Res;
 extern RWS::CEventId g_EventFriendInfo;
 extern RWS::CEventId g_EventFriendInfoChange;
-extern RWS::CEventId g_EventFriendInfoNotify;           ///< UI¸¦ ¾÷µ¥ÀÌÆ® ÇÏ±â À§ÇÑ ÀÌº¥Æ® (µ¥ÀÌÅÍ->UI)
+extern RWS::CEventId g_EventFriendInfoNotify;           ///< Event to update UI (Data->UI)
 
 
 //-----------------------------
@@ -656,24 +656,24 @@ extern RWS::CEventId g_EventBroadMsgEndNfy;
 // RankBattle
 //_____________________________
 
-extern RWS::CEventId g_EventRBBoardInfo;		// ·©Å©¹èÆ² °Ô½ÃÆÇ °»½Å
-extern RWS::CEventId g_EventRBJoin;				// ·©Å©¹èÆ² ½ÅÃ»°ü·Ã.
+extern RWS::CEventId g_EventRBBoardInfo;		// Rank Battle bulletin board update
+extern RWS::CEventId g_EventRBJoin;				// Regarding application for ranked battle.
 
-//extern RWS::CEventId g_EventRBBoardUpdate;	// ·©Å©¹èÆ² °Ô½ÃÆÇ °»½Å
-//extern RWS::CEventId g_EventRBRoomInfo;		// ¹æÀÇ »ó¼¼ Á¤º¸
-//extern RWS::CEventId g_EventRBRoom;			// ·©Å©¹èÆ² ½ÅÃ» Ãë¼Ò
-//extern RWS::CEventId g_EventRBMatch;			// ·©Å©¹èÆ² ÁØºñ ½ÃÀÛ Ãë¼Ò
+//extern RWS::CEventId g_EventRBBoardUpdate;	//Rank Battle bulletin board update
+//extern RWS::CEventId g_EventRBRoomInfo;		//room details
+//extern RWS::CEventId g_EventRBRoom;			//Cancel rank battle application
+//extern RWS::CEventId g_EventRBMatch;			//Cancel rank battle preparation start
 
-extern RWS::CEventId g_EventRBBattleStateUpdate;	// ·©Å©¹èÆ² °æ±âÀå »óÅÂÁ¤º¸
-extern RWS::CEventId g_EventRBBattleTeamInfo;		// ÆÀ Á¤º¸ ¾Ë¸²
-extern RWS::CEventId g_EventRBBattlePlayerState;	// ÇÃ·¹ÀÌ¾î »óÅÂ
-extern RWS::CEventId g_EventRBBattleKillScoreUpdate;// Å³ ½ºÄÚ¾î ¾÷µ¥ÀÌÆ®
-extern RWS::CEventId g_EventRBBattleStageFinish;	// ½ºÅ×ÀÌÁö ¸¶Ä§
-extern RWS::CEventId g_EventRBBattleMatchFinish;	// °æ±â ¸¶Ä§
-extern RWS::CEventId g_EventRBBattleEnd;			// RBBattle ¿ùµå ³ª°¡±â Á÷Àü
-extern RWS::CEventId g_EventRBForcedEnd;			// ¼­¹öÂÊ¿¡¼­ÀÇ ·©Å©¹èÆ² °­Á¦Á¾·á
+extern RWS::CEventId g_EventRBBattleStateUpdate;	// Ranked Battle Stadium Status Information
+extern RWS::CEventId g_EventRBBattleTeamInfo;		// Team information notifications
+extern RWS::CEventId g_EventRBBattlePlayerState;	// player status
+extern RWS::CEventId g_EventRBBattleKillScoreUpdate;// Kill Score Updates
+extern RWS::CEventId g_EventRBBattleStageFinish;	// Stage finish
+extern RWS::CEventId g_EventRBBattleMatchFinish;	// Match finish
+extern RWS::CEventId g_EventRBBattleEnd;			// Right before leaving RBattle world
+extern RWS::CEventId g_EventRBForcedEnd;			// Rank battle forced to end on server side
 
-extern RWS::CEventId g_EventRBTotalScoreUpdate;		// °³ÀÎ ÀüÀû ¾÷µ¥ÀÌÆ®
+extern RWS::CEventId g_EventRBTotalScoreUpdate;		// Personal record update
 
 //-----------------------------
 // MailSystem
@@ -718,10 +718,10 @@ extern RWS::CEventId g_EventActionMapClientNotify;
 //_____________________________
 // Portal System
 //_____________________________
-extern RWS::CEventId g_EventPortalInfoRes;          ///< Æ÷Å» Á¤º¸¸¦ ¹ÞÀ»¶§
+extern RWS::CEventId g_EventPortalInfoRes;           ///< When receiving portal information
 extern RWS::CEventId g_EventPortalAddReq;
-extern RWS::CEventId g_EventPortalAddRes;           ///< Æ÷Å»À» µî·Ï Ãß°¡ÇßÀ» ¶§ÀÇ ÀÀ´ä
-extern RWS::CEventId g_EventPortalRes;              ///< Æ÷Å»À» ÀÌµ¿¿äÃ» ÇßÀ» ¶§ÀÇ ÀÀ´ä
+extern RWS::CEventId g_EventPortalAddRes;           ///< Response when registering and adding a portal
+extern RWS::CEventId g_EventPortalRes;              ///< Response when requesting to move the portal
 
 //_____________________________
 // Popo Icon String Notify
@@ -729,7 +729,7 @@ extern RWS::CEventId g_EventPortalRes;              ///< Æ÷Å»À» ÀÌµ¿¿
 extern RWS::CEventId g_EventPopoNotify;
 
 //_____________________________
-// ¹ö½º ¹× Å»°Í °ü·Ã ÀÌº¥Æ®
+// Bus and vehicle related events
 //_____________________________
 extern RWS::CEventId g_EventSobOnBus;
 extern RWS::CEventId g_EventSobOnVehicle;
@@ -742,7 +742,7 @@ extern RWS::CEventId g_EventSobVehicleStunt;
 extern RWS::CEventId g_EventBusMove;
 
 //////////////////////////////////////////////////////////////////////////
-// Client ¿Í TS °£ÀÇ ¿¬µ¿ ¸Þ½ÃÁöµé
+// Linked messages between Client and TS
 //////////////////////////////////////////////////////////////////////////
 
 // TS => Client
@@ -795,13 +795,13 @@ extern RWS::CEventId g_EventQuestAcceptGiveUp_Nfy;
 extern RWS::CEventId g_EventQuestObjDialog_Req;
 extern RWS::CEventId g_EventQuestObjDialog_Res;
 
-extern RWS::CEventId g_EventShowTutorialNfy;		// Æ©Åä¸®¾ó °ü·Ã ¾Ë¸² ÀÌº¥Æ®
+extern RWS::CEventId g_EventShowTutorialNfy;		// Tutorial-related notification events
 
-extern RWS::CEventId g_EventTSRemovingTMQQuest_Nfy;	// TMQ Äù½ºÆ® Á¦°Å ¾Ë¸²
+extern RWS::CEventId g_EventTSRemovingTMQQuest_Nfy;	// TMQ Quest Removal Notice
 
 extern RWS::CEventId g_EventTSPCDialog_Nfy;
 
-extern RWS::CEventId g_EventTSMudosaTeleport_Req;	// ¹«µµ»ç ÅÚ·¹Æ÷Æ®
+extern RWS::CEventId g_EventTSMudosaTeleport_Req;	// Martial Artist Teleport
 
 extern RWS::CEventId g_EventTSMudosaTeleport_Res;
 
@@ -816,25 +816,25 @@ extern RWS::CEventId g_EventTSSkipContainer;
 
 // Client => TS
 
-extern RWS::CEventId g_EventTSItemUse;			// ¾ÆÀÌÅÛ »ç¿ë
-extern RWS::CEventId g_EventTSItemGet;			// ¾ÆÀÌÅÛ È¹µæ
-extern RWS::CEventId g_EventTSItemEquip;		// ¾ÆÀÌÅÛ ÀåÂø
-extern RWS::CEventId g_EventTSScoutUse;			// ½ºÄ«¿ìÅÍ »ç¿ë
-extern RWS::CEventId g_EventTSSkillUse;			// ½ºÅ³ »ç¿ë
-extern RWS::CEventId g_EventTSRankBattle;		// ·©Å©¹èÆ²
-extern RWS::CEventId g_EventTSColTriggerObject;	// Æ®¸®°Å ¿ÀºêÁ§Æ® Ãæµ¹
-extern RWS::CEventId g_EventTSBindStone;		// ¹ÙÀÎµå ½ºÅæ¿¡ ¹ÙÀÎµå ½Ã
-extern RWS::CEventId g_EventTSSearchQuest;		// ½ºÄ«¿ìÅÍ¿¡¼­ Äù½ºÆ® Ã£±â ½Ã
-extern RWS::CEventId g_EventTSItemUpgrade;		// ¾ÆÀÌÅÛ ¾÷±×·¡ÀÌµå ½Ã
-extern RWS::CEventId g_EventTSTeleport;			// ÅÚ·¹Æ÷Æ® ½Ã
-extern RWS::CEventId g_EventTSBudokai;			// ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸
-extern RWS::CEventId g_EventTSSlotMachine;		// ½½·Ô ¸Ó½Å
-extern RWS::CEventId g_EventTSHoipoiMix;		// È£ÀÌÆ÷ÀÌ ¹Í½º
-extern RWS::CEventId g_EventTSPrivateShop;		// °³ÀÎ»óÁ¡
-extern RWS::CEventId g_EventTSFreeBattle;		// ÀüÅõ
-extern RWS::CEventId g_EventTSItemIdentity;		// ¾ÆÀÌÅÛ ÀÎÁõ
-extern RWS::CEventId g_EventTSUseMail;			// ¸ÞÀÏ »ç¿ë
-extern RWS::CEventId g_EventTSParty;			// ÆÄÆ¼
+extern RWS::CEventId g_EventTSItemUse;			// Use item
+extern RWS::CEventId g_EventTSItemGet;			// Acquire Item
+extern RWS::CEventId g_EventTSItemEquip;		// Equip item
+extern RWS::CEventId g_EventTSScoutUse;			// Use Scouter
+extern RWS::CEventId g_EventTSSkillUse;			// Use skill
+extern RWS::CEventId g_EventTSRankBattle;		// Rank Battle
+extern RWS::CEventId g_EventTSColTriggerObject;	// Trigger object collision
+extern RWS::CEventId g_EventTSBindStone;		// When bound to a bind stone
+extern RWS::CEventId g_EventTSSearchQuest;		// When searching for quests in Scouter
+extern RWS::CEventId g_EventTSItemUpgrade;		// When upgrading an item
+extern RWS::CEventId g_EventTSTeleport;			// When teleporting
+extern RWS::CEventId g_EventTSBudokai;			// The best ballroom in the world
+extern RWS::CEventId g_EventTSSlotMachine;		// slot machine
+extern RWS::CEventId g_EventTSHoipoiMix;		// hoipoi mix
+extern RWS::CEventId g_EventTSPrivateShop;		// private store
+extern RWS::CEventId g_EventTSFreeBattle;		// battle
+extern RWS::CEventId g_EventTSItemIdentity;		// Item Authentication
+extern RWS::CEventId g_EventTSUseMail;			// use mail
+extern RWS::CEventId g_EventTSParty;			// party
 
 extern RWS::CEventId g_EventTSClickSideIcon;	// 
 extern RWS::CEventId g_EventTSLevelCheck;		// 
@@ -842,7 +842,7 @@ extern RWS::CEventId g_EventTSQuest;			//
 extern RWS::CEventId g_EventTSDialogOpen;		// 
 
 //////////////////////////////////////////////////////////////////////////
-// Server ¿Í TS °£ÀÇ ¿¬µ¿ ¸Þ½ÃÁöµé
+// Link messages between Server and TS
 //////////////////////////////////////////////////////////////////////////
 
 
@@ -871,14 +871,14 @@ extern RWS::CEventId  g_EventTObjectUpdateState;
 * DragonBall Collection
 */
 //////////////////////////////////////////////////////////////////////////
-extern RWS::CEventId  g_EventNightEffect;				// ¿ë½Å µîÀå½Ã È­¸éÀÌ ¾îµÎ¿öÁö´Â È¿°ú 
-extern RWS::CEventId  g_EventDBCNarration;				// ¿ë½Å ³ª·¹ÀÌ¼Ç¿ë ÀÌº¥Æ®
-extern RWS::CEventId  g_EventDBCNarrationEnd;			// ¿ë½Å ³ª·¹ÀÌ¼Ç Á¾·á ÀÌº¥Æ®
-extern RWS::CEventId  g_EventDBCCheck_Res;				// Check ÀÀ´ä ÆÐÅ¶
-extern RWS::CEventId  g_EventDBCReward_Res;				// º¸»ó ÀÀ´ä ÆÐÅ¶
-extern RWS::CEventId  g_EventDBCCollect_Nfy;			// ¼­¹ö¿¡¼­ ÀÏ¹æÀûÀ¸·Î ³¡³¾¶§ ÆÐÅ¶
-extern RWS::CEventId  g_EventDBCShedule_Info;			// DBCÀÇ ½ºÄÉÁì Á¤º¸ ÆÐÅ¶
-extern RWS::CEventId  g_EventDBCScatter;                 // µå·¡°ïº¼ÀÌ Èð¾îÁö´Â ¿¬Ãâ ½ÃÀÛÀ» ¾Ë¸®´Â ÀÌº¥Æ®
+extern RWS::CEventId  g_EventNightEffect;				// The screen becomes dark when the dragon god appears. 
+extern RWS::CEventId  g_EventDBCNarration;				// Event for dragon god narration
+extern RWS::CEventId  g_EventDBCNarrationEnd;			// Dragon God Narration End Event
+extern RWS::CEventId  g_EventDBCCheck_Res;				// Check response packet
+extern RWS::CEventId  g_EventDBCReward_Res;				// Compensation Response Packet
+extern RWS::CEventId  g_EventDBCCollect_Nfy;			// Packet when unilaterally terminated by the server
+extern RWS::CEventId  g_EventDBCShedule_Info;			// DBC's Schedule Information Packet
+extern RWS::CEventId  g_EventDBCScatter;                 // An event announcing the start of the Dragon Ball scattering production.
 
 //////////////////////////////////////////////
 /**
@@ -900,12 +900,12 @@ extern RWS::CEventId g_EventSobTargetChanged;
 extern RWS::CEventId g_EventSobPickWorldItem;
 extern RWS::CEventId g_EventSobCastingDirect;
 extern RWS::CEventId g_EventSobRevivalNotify;
-extern RWS::CEventId g_EventNPCCommuExit;              // Ä¿¹Â´ÏÆ¼ »óÅÂ¸¦ ºüÁ®³ª¿À´Â ÀÌº¥Æ®
+extern RWS::CEventId g_EventNPCCommuExit;              // Events that leave community state
 
 
 //////////////////////////////////////////////
 /**
-* Á¤º¸ ¾ò¾î¿À±â.
+*Get information.
 */
 //////////////////////////////////////////////
 
@@ -917,11 +917,11 @@ extern RWS::CEventId g_EventSobGetAirMode;
 
 //////////////////////////////////////////////
 /**
-* Æ®¸®°Å ¿ÀºêÁ§Æ® ½ºÄ«¿ìÅÍ ¿¬Ãâ °ü·Ã
+*Trigger object scouter production related
 */
 //////////////////////////////////////////////
 
-extern RWS::CEventId g_EventScouter;				// ½ºÄ«¿ìÅÍ ÀÌº¥Æ®
+extern RWS::CEventId g_EventScouter;				// Scouter Event
 
 //////////////////////////////////////////////
 /**
@@ -929,7 +929,7 @@ extern RWS::CEventId g_EventScouter;				// ½ºÄ«¿ìÅÍ ÀÌº¥Æ®
 */
 //////////////////////////////////////////////
 
-extern RWS::CEventId g_EventCharReady;								// ¿ùµå ·Îµå°¡ ³¡³­ ½ÃÁ¡¿¡ ¹ß»ý
+extern RWS::CEventId g_EventCharReady;								// Occurs when the world load ends
 
 //////////////////////////////////////////////
 /**
@@ -1033,28 +1033,28 @@ extern RWS::CEventId g_EventFinalMatchStageFinish;
 extern RWS::CEventId g_EventFinalMatchMatchFinish;
 extern RWS::CEventId g_EventAwardInfo;
 
-extern RWS::CEventId g_EventBudokaiNoticeNfy;					///< ÃµÇÏÁ¦ÀÏ¹«µµÈ¸ °øÁö
-extern RWS::CEventId g_EventBudokaiStateInfoNfy;				///< ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ÀÇ ÇöÀç »óÅÂ¸¦ Àü¼Û
-extern RWS::CEventId g_EventBudokaiUpdateStateNfy;				///< ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ Main State update
-extern RWS::CEventId g_EventBudokaiUpdateMatchStateNfy;			///< ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ Match State Update
-extern RWS::CEventId g_EventBudokaiJoinIndividualRes;			///< °³ÀÎ µî·Ï
-extern RWS::CEventId g_EventBudokaiLeaveIndividualRes;			///< °³ÀÎ Ãë¼Ò
-extern RWS::CEventId g_EventBudokaiJoinTeamInfoRes;				///< ÆÀ Æ÷ÀÎÆ®
-extern RWS::CEventId g_EventBudokaiJoinTeamRes;					///< ÆÀ µî·Ï
-extern RWS::CEventId g_EventBudokaiJoinTeamNfy;					///< ÆÀ µî·Ï ¾Ë¸²
-extern RWS::CEventId g_EventBudokaiLeaveTeamRes;				///< ÆÀ µî·Ï Ãë¼Ò
-extern RWS::CEventId g_EventBudokaiLeaveTeamNfy;				///< ÆÀ µî·Ï Ãë¼Ò ¾Ë¸²
-extern RWS::CEventId g_EventBudokaiLeaveTeamMemberRes;			///< ÆÀ ¸â¹ö Ãë¼Ò
-extern RWS::CEventId g_EventBudokaiLeaveTeamMemberNfy;			///< ÆÀ ¸â¹ö Ãë¼Ò ¾Ë¸²
-extern RWS::CEventId g_EventBudokaiJoinInfoRes;					///< ÆÀ µî·Ï Á¤º¸
-extern RWS::CEventId g_EventBudokaiMudosaInfoRes;				///< ¹«µµ»ç ÅÚ·¹Æ÷Æ® Á¤º¸
-extern RWS::CEventId g_EventBudokaiJoinStateNfy;				///< ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ Âü°¡»óÅÂ
-extern RWS::CEventId g_EventBudokaiJoinStateRes;				///< Âü°¡ »óÅÂ Á¤º¸ °á°ú
+extern RWS::CEventId g_EventBudokaiNoticeNfy;					///< Notice of the World's First Martial Arts Club
+extern RWS::CEventId g_EventBudokaiStateInfoNfy;				///< Sending the current status of the World's Best Martial Arts Club
+extern RWS::CEventId g_EventBudokaiUpdateStateNfy;				///< World's Best Martial Arts Main State update
+extern RWS::CEventId g_EventBudokaiUpdateMatchStateNfy;			///< World's Best Martial Arts Match State Update
+extern RWS::CEventId g_EventBudokaiJoinIndividualRes;			///< Personal registration
+extern RWS::CEventId g_EventBudokaiLeaveIndividualRes;			///< Personal Cancellation
+extern RWS::CEventId g_EventBudokaiJoinTeamInfoRes;				///< Team Points
+extern RWS::CEventId g_EventBudokaiJoinTeamRes;					///< Team registration
+extern RWS::CEventId g_EventBudokaiJoinTeamNfy;					///< Team registration notification
+extern RWS::CEventId g_EventBudokaiLeaveTeamRes;				///< Cancel team registration
+extern RWS::CEventId g_EventBudokaiLeaveTeamNfy;				///< Team registration cancellation notice
+extern RWS::CEventId g_EventBudokaiLeaveTeamMemberRes;			///< Cancel team member
+extern RWS::CEventId g_EventBudokaiLeaveTeamMemberNfy;			///< Team member cancellation notice
+extern RWS::CEventId g_EventBudokaiJoinInfoRes;					///< Team registration information
+extern RWS::CEventId g_EventBudokaiMudosaInfoRes;				///< Martial Artist Teleport Information
+extern RWS::CEventId g_EventBudokaiJoinStateNfy;				///< Participation status in World's Best Martial Arts Club
+extern RWS::CEventId g_EventBudokaiJoinStateRes;				///< Participation status information result
 
-extern RWS::CEventId g_EventBudokaiProgressMessageNfy;			///< ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ ÁøÇà »óÅÂ ¸Þ½ÃÁö Ãâ·Â
+extern RWS::CEventId g_EventBudokaiProgressMessageNfy;			///< Output the World's Best Ballroom progress status message
 
 // Cinematic Command
-extern RWS::CEventId g_EventCinematicGuiCommand;					///< ½Ã³×¸¶Æ½ Ä¿¸Çµå
+extern RWS::CEventId g_EventCinematicGuiCommand;					///< Cinematic Command
 
 // Dialog Moveable Option
 extern RWS::CEventId g_EventDialogMove;
@@ -1081,14 +1081,14 @@ extern RWS::CEventId g_EventGameChatOption;
 // Naming
 extern RWS::CEventId g_EventChangeCharName;
 
-extern RWS::CEventId g_EventChangeNickName;				///< º°¸í ¹Ù²Ù±â
+extern RWS::CEventId g_EventChangeNickName;				///< Change nickname
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 // Change Class Authority Changed
-extern RWS::CEventId g_EventChangeClassAuthorityChangedNfy;	///< ¾Æ¹ÙÅ¸ »ý¼ºµÚ¿¡µµ ³¯¶ó¿Â´Ù. 
+extern RWS::CEventId g_EventChangeClassAuthorityChangedNfy;	///< It still flies after creating the avatar. 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// BattleAttribute refresh ( Å¸°ÙÆÃµÈ »ó´ëÀÇ ´ëÇÑ Á¤º¸ )
+// BattleAttribute refresh (information about targeted opponent)
 extern RWS::CEventId g_EventCharRefreshBattleAttributeModifier;
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -1096,12 +1096,12 @@ extern RWS::CEventId g_EventCharRefreshBattleAttributeModifier;
 extern RWS::CEventId g_EventCharRankPointResetNfy;
 
 //////////////////////////////////////////////////////////////////////////
-// QuickSlot °ü·Ã Option Event
-extern RWS::CEventId g_EventQuickSlotGuiMode;				///< Äü½½·Ô È®Àå ¿É¼Ç
-extern RWS::CEventId g_EventQuickSlotLockMode;				///< Äü½½·Ô ¶ô ¸ðµå
+// QuickSlot related Option Event
+extern RWS::CEventId g_EventQuickSlotGuiMode;				///< Quick slot expansion option
+extern RWS::CEventId g_EventQuickSlotLockMode;				///< Quick slot lock mode
 
 //////////////////////////////////////////////////////////////////////////
-// Mob °ü·Ã Event
+// Mob related events
 extern RWS::CEventId g_EventMobDie;				///< Mob Die
 
 extern RWS::CEventId g_EventSobCreateDropItemInfo;
@@ -1177,7 +1177,7 @@ struct SNtlEventCreateWorld
 
 //////////////////////////////////////////////
 /**
-* avatar/camera ÀÌµ¿ ¹× È¸Àü
+* avatar/camera ???�� ���� ?��??
 */
 
 struct SNtlEventCameraSmoothingMove
@@ -1198,7 +1198,7 @@ struct SNtlEventCameraDash					// camera dash event data structer.
 	RwV3d			vDest;		// dash dest
 };
 
-struct SNtlEventCameraNpc					// camera npc click ¿¬Ãâ event data structer.
+struct SNtlEventCameraNpc					// camera npc click directed event data structer.
 {
 	void			*pActor;
 };
@@ -1210,22 +1210,22 @@ struct SNtlEventCameraDB
 
 struct SNtlEventCameraTimeMachine
 {
-	void            *pObject;           ///< Å¸ÀÓ¸Ó½Å ¿ÀºêÁ§Æ®ÀÇ Æ÷ÀÎÅÍ
+	void            *pObject;           ///< Pointer to the time machine object
 };
 
 struct SNtlEventCameraExplosion
 {
-	void            *pObject;           ///< Æø¹ßµÇ´Â °´Ã¼ÀÇ Æ÷ÀÎÅÍ
-	unsigned int	uiExplosionId;		///< Æø¹ß ¾ÆÀÌµð "ENtlPLExplosionEventType" ¿¡ ÇØ´ç
+	void            *pObject;           ///< Pointer to the object being exploded
+	unsigned int	uiExplosionId;		///< Corresponds to explosion ID "ENtlPLExplosionEventType"
 };
 
 struct SNtlEventCameraTimeMachineArrive
 {
-	RwBool			bStart;				///< TRUE : ½ÃÀÛ, FALSE : Á¾·á
-	void            *pObject;           ///< Å¸ÀÌ¸Ó½Å ¿ÀºêÁ§Æ® °´Ã¼ÀÇ Æ÷ÀÎÅÍ
+	RwBool			bStart;				///< TRUE: Start, FALSE: End
+	void            *pObject;           ///< Pointer to the timer scene object object
 };
 
-struct SNtlEventCameraKnockDownMatrix	// camera knockdown matrix ¿¬Ãâ event data structer.
+struct SNtlEventCameraKnockDownMatrix	// Camera knockdown matrix directed event data structer.
 {
 	void			*pActor;
 	RwReal			fLifeTime;
@@ -1252,17 +1252,17 @@ struct SNtlEventCameraControlBus
 	CNtlSobActor*	pActor;
 };
 
-/// ¿ÉÀú¹ö Ä«¸Þ¶ó Å¸ÀÔ
+/// Observer camera type
 enum EObserverCameraType
 {
-    E_OBSERVER_TYPE_STATIC,     ///< Á¤Àû Ä«¸Þ¶ó À§Ä¡
-    E_OBSERVER_TYPE_NODE,       ///< DTEditor¿¡¼­ ¸¸µç µ¥ÀÌÅÍ
+    E_OBSERVER_TYPE_STATIC,     ///< Static camera position
+    E_OBSERVER_TYPE_NODE,       ///< Data created in DTEditor
 };
 
 struct SNtlEventCameraObserver
 {
-    EObserverCameraType eType;      ///< Å¸ÀÔ
-    RwInt32             nIndex;     ///< ÀÎµ¦½º
+    EObserverCameraType eType;      ///< type
+    RwInt32             nIndex;     ///< index
 };
 
 //////////////////////////////////////////////
@@ -1275,7 +1275,7 @@ struct SNtlEventCameraObserver
 *simulation object event
 */
 
-/// Sob¿¡ º¸³»´Â ÀÌº¥Æ®µéÀÇ »óÀ§ ±¸Á¶Ã¼
+/// High-level structure of events sent to Sob
 struct SNtlEventSob
 {
     SERIAL_HANDLE hSerialId;
@@ -1337,7 +1337,7 @@ struct SNtlEventAirAccelMove
 
 struct SNtlEventInputChangeHading			// avater heading hading
 {
-	RwBool			bSuccess;		// change headingÀ» Ã³¸®ÇÏ¿´´Â°¡?
+	RwBool			bSuccess;		// Have you processed the change heading?
 	RwBool			bSoothing;
     RwReal			fDeltaAngleY;		// left/right
 
@@ -1408,7 +1408,7 @@ struct SNtlEventSobPlayerCreate : public SNtlEventSobCharCreate	// simulation pl
 	RwV3d			vLoc;
 	RwV3d			vDir;
 	sPC_BRIEF		*pPcBrief;
-	RwBool          bIsClientCreate;     // ¼­¹ö°¡ ¾Æ´Ñ Å¬¶óÀÌ¾ðÆ® ÀÚÃ¼¿¡¼­ »ý¼ºÇß´ÂÁö À¯¹« (ex.½Ã³×¸¶Æ½)
+	RwBool          bIsClientCreate;     // Whether it was created by the client itself rather than the server (ex. cinematic)
 };
 
 struct SNtlEventSobMonsterCreate : public SNtlEventSobCharCreate	// simulation monster object create
@@ -1416,7 +1416,7 @@ struct SNtlEventSobMonsterCreate : public SNtlEventSobCharCreate	// simulation m
 	RwV3d			vLoc;
 	RwV3d			vDir;
 	sMOB_BRIEF		*pMobBrief;
-	RwBool          bIsClientCreate;    // ¼­¹ö°¡ ¾Æ´Ñ Å¬¶óÀÌ¾ðÆ® ÀÚÃ¼¿¡¼­ »ý¼ºÇß´ÂÁö À¯¹« (ex.½Ã³×¸¶Æ½)
+	RwBool          bIsClientCreate;    // Whether it was created by the client itself rather than the server (ex. cinematic)
 };
 
 struct SNtlEventSobNpcCreate : public SNtlEventSobCharCreate	// simulation npc object create
@@ -1425,7 +1425,7 @@ struct SNtlEventSobNpcCreate : public SNtlEventSobCharCreate	// simulation npc o
 	RwV3d			vDir;
 	sNPC_BRIEF		*pNpcBrief;
 	RwBool			bCreateName;
-	RwBool          bIsClientCreate;    // ¼­¹ö°¡ ¾Æ´Ñ Å¬¶óÀÌ¾ðÆ® ÀÚÃ¼¿¡¼­ »ý¼ºÇß´ÂÁö À¯¹« (ex.½Ã³×¸¶Æ½)
+	RwBool          bIsClientCreate;    // Whether it was created by the client itself rather than the server (ex. cinematic)
 };
 
 struct SNtlEventSobVehicleCreate : public SNtlEventSobCharCreate	// simulation vehicle object create
@@ -1433,8 +1433,8 @@ struct SNtlEventSobVehicleCreate : public SNtlEventSobCharCreate	// simulation v
 	RwV3d			vLoc;
 	RwV3d			vDir;
 	RwUInt32		uiVehicleTblIdx;
-	// g_EventSobCreate ÀÌº¥Æ®ÀÇ ±¸Á¶Ã¼ÀÎ °æ¿ì´Â Vehicle Å×ÀÌºí ÀÎµ¦½º
-	// g_EventSobVehicleEngine ÀÌº¥Æ®ÀÇ ±¸Á¶Ã¼ÀÎ °æ¿ì´Â Sob Item ÇÚµé
+	// g_EventSobCreate Vehicle table index for g_EventSobCreate event structure
+	// g_EventSobVehicleEngine If it is an event structure, Sob Item handle
 	RwBool			bForChild;
 	RwBool			bOwnerAvatar;
 };
@@ -1504,12 +1504,12 @@ struct SNtlEventSobQuestItemCreate : public SNtlEventSobBaseCreate
 
 enum eNtlEventSobWarehouseUpdateType
 {
-	NESWUT_RECIEVE_DATA,		///< ¼­¹ö·Î ºÎÅÍ Ã¢°í µ¥ÀÌÅÍ¸¦ ¹Þ¾Ò´Ù
-	NESWUT_WAREHOUSE_START,		///< Ã¢°í¸¦ ¿¬´Ù
-	NESWUT_BUY_SLOT,			///< Ã¢°í¸¦ ±¸ÀÔÇÑ´Ù
-	NESWUT_ADD_ZENNY,			///< Ã¢°í¿¡ Á¦´Ï¸¦ ³Ö´Â´Ù
-	NESWUT_SUB_ZENNY,			///< Ã¢°í¿¡¼­ Á¦´Ï¸¦ »«´Ù
-	NESWUT_CLOSE,				///< Ã¢°í¸¦ ´Ý´Â´Ù
+	NESWUT_RECIEVE_DATA,		///< Received warehouse data from server
+	NESWUT_WAREHOUSE_START,		///< Open the warehouse
+	NESWUT_BUY_SLOT,			///< Buy a warehouse
+	NESWUT_ADD_ZENNY,			///< Put Jenny in the warehouse
+	NESWUT_SUB_ZENNY,			///< Remove Jenny from the warehouse.
+	NESWUT_CLOSE,				///< Close the warehouse
 };
 
 struct SNtlEventSobWarehouseUpdate
@@ -1522,8 +1522,8 @@ struct SNtlEventSobWarehouseUpdate
 
 struct SNtlEventSobWarehouseItemCreate
 {
-	RwUInt8			byItemCount;	///< À¯È¿ ¾ÆÀÌÅÛ °¹¼ö
-	void*			pData;			///< ½ÇÁ¦ µ¥ÀÌÅÍ
+	RwUInt8			byItemCount;	///< Number of valid items
+	void*			pData;			///< Actual data
 };
 
 struct SNtlEventSobStatusCreate : public SNtlEventSobBaseCreate
@@ -1628,13 +1628,13 @@ struct SNtlEventSobMove : public SNtlEventSob
 	RwV3d			vLoc;
 	RwV3d			vDir;
 	RwUInt8			byMoveFlags;
-	RwUInt8			byFormFlag;		// °È±â, ¶Ù±â, ¼ö¿µ.
+	RwUInt8			byFormFlag;		// Walking, running, swimming.
 	RwUInt32		uiTimeStamp;
 	RwUInt8			byPathNodeNum;
 	RwV3d			*pPathNode;
 };
 
-/// ÀÌµ¿ ½ÌÅ© ÀÌº¥Æ® ±¸Á¶Ã¼
+/// Move sink event structure
 struct SNtlEventSobMoveSync : public SNtlEventSob
 {
     RwV3d vLoc;
@@ -1645,7 +1645,7 @@ struct SNtlEventSobMoveSync : public SNtlEventSob
 
 struct SNtlEventSobSecondDestMove : public SNtlEventSob
 {
-	RwUInt8			byFormFlag;		// °È±â, ¶Ù±â, ¼ö¿µ.
+	RwUInt8			byFormFlag;		// Walking, running, swimming.
 	RwV3d			vCurrLoc;
 	RwV3d			vLoc;
 	RwV3d			vSecondDest;
@@ -1850,7 +1850,7 @@ struct SNtlEventSobItemChangeBattleAttribute
 
 struct SNtlEventSobEquippedItemUpgradeAll
 {
-	RwUInt8			byCount;		// Equip Index¿Í µ¿ÀÏ
+	RwUInt8			byCount;		// Same as Equip Index
 	RwUInt8*		abyUpgradeValue;
 };
 
@@ -2041,16 +2041,16 @@ struct SNtlEventSobPrivateShop : public SNtlEventSob
 	RwUInt8			byShopState;
 };
 
-/// ÀüÁ÷ ÀÌº¥Æ® ±¸Á¶Ã¼
+/// former event structure
 struct SNtlEventSobConvertClass : public SNtlEventSob
 {
 	RwUInt8			byClass;
 };
 
-/// ¸ðµ¨ Ã¼ÀÎÁö ÀÌº¥Æ® ±¸Á¶Ã¼
+/// Model change event structure
 struct SNtlEventSobChangeAdult : public SNtlEventSob
 {
-    RwBool          bAdult;             /// True¸é ¼ºÀÎ, False¸é ¾î¸°ÀÌ·Î ¹Ù²Û´Ù.
+    RwBool          bAdult;             /// If True, it changes to Adult, if False, it changes to Child.
 };
 
 struct SDboEventCharTitleSelectNfy : public SNtlEventSob
@@ -2296,7 +2296,7 @@ struct SNtlEventSobFainting : public SNtlEventSob
 
 struct SNtlEventSobUpdateLPStatusNfy : public SNtlEventSob
 {
-    RwBool bEmergency;      // TRUE : ºó»ç »óÅÂ, FALSE : ÀÏ¹Ý »óÅÂ
+    RwBool bEmergency;      // TRUE: Dying state, FALSE: Normal state
 };
 
 struct SNtlEventNightEffect
@@ -2318,23 +2318,23 @@ enum EEventAvatarInfoUpdateType
 	EVENT_AIUT_ATTR_LEVELUP			= 0x0002,
 	EVENT_AIUT_ITEM					= 0x0004,
 	EVENT_AIUT_QUESTITEM			= 0x0008,
-	EVENT_AIUT_SKILL				= 0x0010,	/** avatar°¡ ÃÖÃÊ »ý¼º½Ã ½ºÅ³ÀÌ ¿ÕÃ¢ »õ·ÎÀÌ »ý¼ºµÈ´Ù */
-	EVENT_AIUT_SKILL_LEARN			= 0x0020,	/** ½ºÅ³ ¹è¿ì±â */
-	EVENT_AIUT_SKILL_LEVELUP		= 0x0040,	/** ½ºÅ³ level up*/
-	EVENT_AIUT_SKILL_SP				= 0x0080,	/** ½ºÅ³ SP */
-	EVENT_AIUT_SKILL_COOLING_START	= 0x0100,	/** ½ºÅ³ cooling start => uiParam1 : icon serial*/
-	EVENT_AIUT_SKILL_COOLING_END	= 0x0200,	/** ½ºÅ³ cooling end => uiParam1 : icon serial*/
+	EVENT_AIUT_SKILL				= 0x0010,	/** When an avatar is first created, many new skills are created. */
+	EVENT_AIUT_SKILL_LEARN			= 0x0020,	/** learn skills */
+	EVENT_AIUT_SKILL_LEVELUP		= 0x0040,	/** Skill level up*/
+	EVENT_AIUT_SKILL_SP				= 0x0080,	/** Skill SP */
+	EVENT_AIUT_SKILL_COOLING_START	= 0x0100,	/** Skill cooling start => uiParam1: icon serial*/
+	EVENT_AIUT_SKILL_COOLING_END	= 0x0200,	/** Skill cooling end => uiParam1: icon serial*/
 	EVENT_AIUT_BUFF					= 0x0400,
 	EVENT_AIUT_DIE					= 0x0800,
 	EVENT_AIUT_ZENNY				= 0x1000,
-	EVENT_AIUT_HTBSKILL_LEARN		= 0x2000,	/** HTB ¹è¿ì±â **/
-	EVENT_AIUT_WAREHOUSE			= 0x4000,	/** ¾ÆÀÌÅÛÀ» Á¦¿ÜÇÑ Ã¢°í ³»ºÎ¿¡¼­ÀÇ º¯È­ **/	
-	EVENT_AIUT_SKILL_RPBONUS		= 0x8000,	/** RPTypeº¯È­ **/
-	EVENT_AIUT_SKILL_UI_INIT		= 0x00010000, /** ½ºÅ³ UI ÃÊ±âÈ­(¼­¹öÀÌµ¿) **/
-	EVENT_AIUT_SKILL_INIT			= 0x00020000, /** ½ºÅ³ HTB ÃÊ±âÈ­(SP ¹ÝÈ¯) **/
-	EVENT_AIUT_POINT_HONOR			= 0x00040000, /** ¸í¿¹ Æ÷ÀÎÆ® */
-	EVENT_AIUT_POINT_MUDOSA			= 0x00080000, /** ¹«µµ»ç Æ÷ÀÎÆ® */
-    EVENT_AIUT_NETPY                = 0x00100000, ///< PC¹æ¿ë NetPy Æ÷ÀÎÆ®
+	EVENT_AIUT_HTBSKILL_LEARN		= 0x2000,	/** Learn HTB **/
+	EVENT_AIUT_WAREHOUSE			= 0x4000,	/** Changes inside the warehouse excluding items **/	
+	EVENT_AIUT_SKILL_RPBONUS		= 0x8000,	/** Rp type change **/
+	EVENT_AIUT_SKILL_UI_INIT		= 0x00010000, /** Reset skill UI (move server) **/
+	EVENT_AIUT_SKILL_INIT			= 0x00020000, /** Skill HTB reset (SP return) **/
+	EVENT_AIUT_POINT_HONOR			= 0x00040000, /** honor points */
+	EVENT_AIUT_POINT_MUDOSA			= 0x00080000, /** Martial Artist Points */
+    EVENT_AIUT_NETPY                = 0x00100000, ///< NetPy points for PC rooms
 };
 
 struct SNtlEventSobInfoUpdate : public SNtlEventSob
@@ -2390,55 +2390,55 @@ struct SNtlEventSobCastingDirect
 	RwBool bStartOrEnd;			// TRUE : start, FALSE : end
 };
 
-enum ePartyMesssageType			///< ÆÄÆ¼ ¸Þ¼¼Áö(SNtlEventPartyUpdate, SNtlEventPartyUpdateValueÀÌ °°Àº °ÍÀ» ¾´´Ù)
+enum ePartyMesssageType			///< Party message (SNtlEventPartyUpdate, SNtlEventPartyUpdateValue use the same thing)
 {
-	PMT_PARTY_CREATE,			///< ÆÄÆ¼ »ý¼º	
-	PMT_PARTY_LEAVE,			///< ÆÄÆ¼ Å»Åð
-	PMT_PARTY_MEMBER_ADD,		///< ÆÄÆ¼¿ø Ãß°¡
-	PMT_PARTY_MEMBER_DEL,		///< ÆÄÆ¼¿ø Å»Åð
-	PMT_PARTY_LEADER_CHANGE,	///< ÆÄÆ¼Àå º¯°æ
+	PMT_PARTY_CREATE,			///< Create party	
+	PMT_PARTY_LEAVE,			///< Leave the party
+	PMT_PARTY_MEMBER_ADD,		///< Add party member
+	PMT_PARTY_MEMBER_DEL,		///< Party member withdrawal
+	PMT_PARTY_LEADER_CHANGE,	///<Change party leader
 
-	PMT_ZENNY_DIVISION,			///< Á¦´Ï ºÐ¹è ¹æ½ÄÀÌ º¯°æ µÇ¾ú´Ù
-	PMT_ITEM_DIVISION,			///< ¾ÆÀÌÅÛ ºÐ¹è ¹æ½ÄÀÌ º¯°æ µÇ¾ú´Ù
+	PMT_ZENNY_DIVISION,			///< Zenny distribution method has changed
+	PMT_ITEM_DIVISION,			///< Item distribution method has changed
 
-	PMT_LP,						///< LP ¾÷µ¥ÀÌÆ®
-	PMT_EP,						///< EP ¾÷µ¥ÀÌÆ®
-	PMT_LEVEL,					///< Level ¾÷µ¥ÀÌÆ®
-	PMT_CLASS,					///< Å¬·¡½º º¯°æ
+	PMT_LP,						///< LP update
+	PMT_EP,						///< EP update
+	PMT_LEVEL,					///< Level update
+	PMT_CLASS,					///<Change class
 
-	PMT_MEMBER_LOCATION,		///< ¸É¹ö À§Ä¡
+	PMT_MEMBER_LOCATION,		///< Member location
 
-	PMT_PARTY_DUNGEON_STATE,	///< ÆÄÆ¼ ´øÀü »óÅÂ
-	PMT_PARTY_DUNGEON_INITIALIZE,///< ÆÄÆ¼ ÃÊ±âÈ­
+	PMT_PARTY_DUNGEON_STATE,	///< Party Dungeon Status
+	PMT_PARTY_DUNGEON_INITIALIZE,///< Party reset
 };
 
-struct SNtlEventPartyUpdate		///< ½Ã¹Ä·¹ÀÌ¼Ç¿ë ÆÄÆ¼ ¸Þ¼¼Áö
+struct SNtlEventPartyUpdate		///< Party message for simulation
 {
-	RwInt32			iMessage;		///< ÆÄÆ¼ ¸Þ¼¼Áö
-	SERIAL_HANDLE	hSerialId;		///< ÇØ´ç ¸É¹öÀÇ ½Ã¸®¾ó
-	RwUInt32		uiValue;		///< ¸Þ¼¼Áö¿¡ µû¸¥ ¼öÄ¡
-	RwInt32			iValue2;		///< ¸Þ¼¼Áö¿¡ µû¸¥ ¼öÄ¡
+	RwInt32			iMessage;		///< Party message
+	SERIAL_HANDLE	hSerialId;		///< The member's cereal
+	RwUInt32		uiValue;		///< Figures according to message
+	RwInt32			iValue2;		///< Figures according to message
 };
 
-struct SNtlEventPartyUpdateValue	///< Å¬¶óÀÌ¾ðÆ®¿ë ÆÄÆ¼ ¸Þ¼¼Áö
+struct SNtlEventPartyUpdateValue	///< Party message for clients
 {
 	RwInt32			iValueType;		///< PartyUpdateValue Type
-	SERIAL_HANDLE	hSerial;		///< ÇØ´ç ¸É¹öÀÇ ½Ã¸®¾ó
-	RwUInt32		uiValue;		///< ¸Þ¼¼Áö¿¡ µû¸¥ ¼öÄ¡
-	RwInt32			iValue2;		///< ¸Þ¼¼Áö¿¡ µû¸¥ ¼öÄ¡
+	SERIAL_HANDLE	hSerial;		///< The member's cereal
+	RwUInt32		uiValue;		///< Figures according to message
+	RwInt32			iValue2;		///< Figures according to message
 };
 
 struct SNtlEventPartyMemberLocation
 {
-	RwUInt32		uiSerial;		///< ¸É¹ö ½Ã¸®¾ó
-	RwUInt32		uiWorldID;		///< ¿ùµå ¾ÆÀÌµð
-	RwUInt32		uiWorldTbl;		///< ¿ùµå Å×ÀÌºí ¾ÆÀÌµð
-	RwV3d			vCurLoc;		///< À§Ä¡
+	RwUInt32		uiSerial;		///< Member Cereal
+	RwUInt32		uiWorldID;		///< World ID
+	RwUInt32		uiWorldTbl;		///< World Table ID
+	RwV3d			vCurLoc;		///< location
 };
 
 struct SNtlEventPartyCreate
 {
-	WCHAR*		pcName;			///< ÆÄÆ¼ ÀÌ¸§
+	WCHAR*		pcName;			///< Party name
 };
 
 struct SNtlEventPartyAdd
@@ -2459,38 +2459,38 @@ struct SNtlEventPartyAdd
 
 enum eSLGuildEvent
 {
-	SLGE_GUILD_INFO,				///< ±æµå Á¤º¸¸¦ ¹Þ´Â´Ù
+	SLGE_GUILD_INFO,				///< Receive guild information
 
-	SLGE_ADD_MEMBER,				///< ±æµå ¸É¹ö ÇÑ¸íÀÇ Á¤º¸¸¦ ¹Þ´Â´Ù
-	SLGE_DEL_MEMBER,				///< ±æµå ¸É¹ö ÇÑ¸íÀÇ Á¤º¸¸¦ Áö¿î´Ù
+	SLGE_ADD_MEMBER,				///< Receive information from one guild member
+	SLGE_DEL_MEMBER,				///< Delete the information of one guild member
 
-	SLGE_APPOINT_MASTER,			///< ±æµåÀå ÀÓ¸í
-	SLGE_APPOINT_SECOND_MASTER,		///< ºÎ±æµåÀå ÀÓ¸í
-	SLGE_DISMISS_SECOND_MASTER,		///< ºÎ±æµåÀå Á÷À§ ÇØÁ¦
-	SLGE_APPOINT_MEMBER,			///< ÀÏ¹Ý ±æµå¿øÀ¸·Î ÀÓ¸í
+	SLGE_APPOINT_MASTER,			///< Appointment of guild leader
+	SLGE_APPOINT_SECOND_MASTER,		///< Appointment of deputy guild leader
+	SLGE_DISMISS_SECOND_MASTER,		///< Deputy guild leader position removed
+	SLGE_APPOINT_MEMBER,			///< Appointed as a general guild member
 
-	SLGE_BEING_DISBAND,				///< ±æµå ÇØ»ê ´ë±â
-	SLGE_CANCLE_DISBAND,			///< ÇØ»ê Ãë¼Ò
-	SLGE_DISBAND,					///< ±æµå ÇØ»ê
+	SLGE_BEING_DISBAND,				///< Waiting for guild dissolution
+	SLGE_CANCLE_DISBAND,			///< Cancellation of dissolution
+	SLGE_DISBAND,					///< Guild disbanded
 
-	SLGE_MEM_POS,					///< ¸É¹ö À§Ä¡ º¯°æ
-	SLGE_MEM_CLASS,					///< ¸É¹ö Å¬·¡½º º¯°æ
-	SLGE_MEM_LEVEL,					///< ¸É¹ö ·¹º§ º¯°æ
-	SLGE_MEM_REPUTATION,			///< ¸É¹ö ÆòÆÇ º¯°æ
+	SLGE_MEM_POS,					///< Change member location
+	SLGE_MEM_CLASS,					///< Change member class
+	SLGE_MEM_LEVEL,					///< Change member level
+	SLGE_MEM_REPUTATION,			///< Change member reputation
 	SLGE_MEM_NAME,					///< 
 
-	SLGE_MEM_ONLINE,				///< ¸É¹ö °ÔÀÓ Á¢¼Ó
-	SLGE_MEM_OFFLINE,				///< ¸É¹ö °ÔÀÓ ³ª°¨
+	SLGE_MEM_ONLINE,				///< Member game access
+	SLGE_MEM_OFFLINE,				///< Member exits game
 
-	SLGE_CHANGE_GUILD_NAME,			///< ±æµåÀÇ ÀÌ¸§ÀÌ ¹Ù²î¾ú´Ù
-	SLGE_CHANGE_GUILD_EMBLEM,		///< ±æµåÀÇ ¹®ÀåÀÌ ¹Ù²î¾ú´Ù
-	SLGE_CHANGE_FUNCTION,			///< ±æµå ±â´É º¯°æ
-	SLGE_CHANGE_REPUTATION,			///< ±æµå ¸í¼º º¯°æ
-	SLGE_CHANGE_INVEST_ZENNY,		///< ±æµå¸¦ À§ÇØ Á¦´Ï¸¦ ÅõÀÚÇÏ¿´´Ù
+	SLGE_CHANGE_GUILD_NAME,			///< The name of the guild has changed
+	SLGE_CHANGE_GUILD_EMBLEM,		///< The guild��s emblem has changed
+	SLGE_CHANGE_FUNCTION,			///< Guild function changes
+	SLGE_CHANGE_REPUTATION,			///<Change guild reputation
+	SLGE_CHANGE_INVEST_ZENNY,		///< Invested Zenny for the guild
 
-	SLGE_NOTICE,					///< ±æµå °øÁö º¯°æ
-	SLGE_DOGI,						///< µµº¹ »ö»ó º¯°æ
-	SLGE_DOGI_NFY,					///< µµº¹ »ö»ó º¯°æµÈ µ¥ÀÌÅÍ
+	SLGE_NOTICE,					///<Change in guild notice
+	SLGE_DOGI,						///< Changing uniform color
+	SLGE_DOGI_NFY,					///< Uniform color changed data
 };
 
 struct SNtlEventGuild
@@ -2525,24 +2525,24 @@ struct SNtlEventChangleGuildEmblem
 
 enum eDojoEventType
 {
-	DOJO_EVENT_DOJO_INFO,							///< µµÀå ±âº» Á¤º¸¸¦ ¹Þ¾Ò´Ù
-	DOJO_EVENT_CHANGE_LEVEL,						///< µµÀåÀÇ ·¹º§ º¯°æ
-	DOJO_EVENT_CHANGE_TENKAI_SEED_PLAYER,			///< µµÀåÀ» ¼ÒÀ¯ÇÑ À¯ÆÄÀÇ ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ ½Ãµå ÃâÀüÀÚ º¯°æ
-	DOJO_EVENT_CHANGE_DOJO_NOTICE,					///< µµÀå °øÁö
-	DOJO_EVENT_NPC_GUI_INFO,						///< GUI Ç¥½Ã Á¤º¸
-	DOJO_EVENT_LOST_DOJO,							///< µµÀåÀÇ ¼ÒÀ¯±ÇÀ» ÀÒ¾ú´Ù
+	DOJO_EVENT_DOJO_INFO,							///< Received basic information about the dojo
+	DOJO_EVENT_CHANGE_LEVEL,						///<Change the level of the dojo
+	DOJO_EVENT_CHANGE_TENKAI_SEED_PLAYER,			///< Change of seeds for the world��s best martial arts school belonging to the school that owns the dojo
+	DOJO_EVENT_CHANGE_DOJO_NOTICE,					///< Dojo Notice
+	DOJO_EVENT_NPC_GUI_INFO,						///< GUI display information
+	DOJO_EVENT_LOST_DOJO,							///< I lost ownership of the seal.
 
-	DOJO_EVENT_SCRAMBLE_ACCEPT,						///< µµÀå ÀïÅ»Àü ¼ö¶ô
-	DOJO_EVENT_SCRAMBLE_TELEPORT_PROPOSAL,			///< µµÀå ÀïÅ»Àü ÅÚ·¹Æ÷Æ®¸¦ ÇÒ ¼ö ÀÖ´Ù´Â ¼­¹öÀÇ ¾Ë¸²
+	DOJO_EVENT_SCRAMBLE_ACCEPT,						///< Accept the Dojo Competition
+	DOJO_EVENT_SCRAMBLE_TELEPORT_PROPOSAL,			///< Notification from the server that you can teleport to Dojo Battle
 
-	DOJO_EVENT_SEAL_ATTACK_STATE,					///< µµÀå ÀïÅ»ÀüÁß ÀÎÀå À§Ä¡, »óÅÂ Á¤º¸
-	DOJO_EVENT_SEAL_ATTACK_BEGIN,					///< µµÀå ÀïÅ»ÀüÁß ÀÎÀåÀ» »¯±â À§ÇÑ Ä³½ºÆÃÀ» ½ÃÀÛÇÑ´Ù
-	DOJO_EVENT_SEAL_ATTACK_END,						///< µµÀå ÀïÅ»ÀüÁß ÀÎÀåÀ» »¯±â À§ÇÑ Ä³½ºÆÃÀ» Á¾·áÇÑ´Ù
-	DOJO_EVENT_SCRAMBLE_SCORE,						///< µµÀå ÀïÅ»Àü Á¡¼ö
-	DOJO_EVENT_SCRAMBLE_CHANGE_SEAL_OWNER,			///< µµÀå ÀÎÀå ¼ÒÀ¯ À¯ÆÄ º¯°æ
+	DOJO_EVENT_SEAL_ATTACK_STATE,					///< Seal location and status information during seal competition
+	DOJO_EVENT_SEAL_ATTACK_BEGIN,					///< During the battle for the seal, casting begins to steal the seal.
+	DOJO_EVENT_SEAL_ATTACK_END,						///< Casting to steal the seal during the seal competition ends.
+	DOJO_EVENT_SCRAMBLE_SCORE,						///< Dojo Competition Score
+	DOJO_EVENT_SCRAMBLE_CHANGE_SEAL_OWNER,			///< Changing the school that owns the seal
 
-	DOJO_EVENT_SCRAMBLE_RESULT,						///< µµÀå ÀïÅ»Àü °á°ú
-	DOJO_EVENT_SCRAMBLE_REWARD,						///< µµÀå ÀïÅ»Àü º¸»ó
+	DOJO_EVENT_SCRAMBLE_RESULT,						///< Result of dojo competition
+	DOJO_EVENT_SCRAMBLE_REWARD,						///< Dojo Battle Rewards
 };
 
 struct SNtlEventDojo
@@ -2636,12 +2636,12 @@ struct SNtlEventHelpHint
 
 enum eTMQEventType
 {
-	TBT_COUNTDOWN,					///< TMQ Play time °è»ê ÁøÇà ¿©ºÎ
-	TET_REWARD,						///< TMQ º¸»ó
-	TET_INFOMATION_NFY,				///< Á¤º¸ Å¸ÀÔ eTIMEQUEST_INFORMATION_TYPE
-	TET_COUPON_COUNT,				///< TMQ ÄíÆù Á¤º¸
-	TET_TMQ_POINT,					///< TMQ Æ÷ÀÎÆ®
-	TET_GAME_TIME,					///< TMQ °ÔÀÓ ½Ã°£
+	TBT_COUNTDOWN,					///< Whether TMQ Play time calculation is in progress
+	TET_REWARD,						///< TMQ Rewards
+	TET_INFOMATION_NFY,				///< Information Type eTIMEQUEST_INFORMATION_TYPE
+	TET_COUPON_COUNT,				///< TMQ coupon information
+	TET_TMQ_POINT,					///< TMQ Points
+	TET_GAME_TIME,					///< TMQ game time
 	TET_CLEAR_TIME,
 	TET_BONUS_TIME,
 	TET_DAY_RECORD,
@@ -2664,7 +2664,7 @@ struct SNtlEventTMQNotify
 };
 
 //////////////////////////////////////////////
-// Rank Battle °ü·Ã 
+// Rank Battle related 
 //struct SNtlEventRBBoardUpdate
 //{
 //	RwUInt32		tblidx;
@@ -2786,7 +2786,7 @@ struct SNtlEventRBTotalScoreUpdate
 
 //////////////////////////////////////////////
 /**
-* Á¤º¸ ¾ò¾î¿À±â.
+*Get information.
 */
 
 struct SNtlEventSobGetState : public SNtlEventSob
@@ -2817,64 +2817,64 @@ struct sNtlEventReloadTS
 
 struct SNtlEventRegQuest_Nfy
 {
-	sTS_KEY				sTSKey;					// TS Å°
+	sTS_KEY				sTSKey;					// TS key
 
-	bool				bNewRegister;			// Äù½ºÆ® µî·Ï½Ã New typeÀÇ µî·Ï ¿©ºÎ
-	bool				bQuestShare;			// Äù½ºÆ® °øÀ¯
-	RwUInt32			uiQuestAreaName;		// Äù½ºÆ® Áö¿ª ÀÌ¸§
-	RwUInt32			uiQuestState;			// Äù½ºÆ® »óÅÂ
-	RwUInt32			uiQuestTitle;			// Äù½ºÆ® Á¦¸ñ
-	RwUInt32			uiQuestGoal;			// Äù½ºÆ® ¸ñÀû
-	eQUEST_SORT_TYPE	eQuestSortType;			// Äù½ºÆ® Á¾·ùÀÇ Å¸ÀÔ
+	bool				bNewRegister;			// Whether or not to register a new type when registering a quest
+	bool				bQuestShare;			// Share Quest
+	RwUInt32			uiQuestAreaName;		// Quest area name
+	RwUInt32			uiQuestState;			// Quest Status
+	RwUInt32			uiQuestTitle;			// Quest Title
+	RwUInt32			uiQuestGoal;			// Quest Purpose
+	eQUEST_SORT_TYPE	eQuestSortType;			// Types of Quest Types
 };
 
 struct SNtlEventUnregQuest_Nfy
 {
-	sTS_KEY			sTSKey;						// TS Å°
+	sTS_KEY			sTSKey;						// TS key
 };
 
 struct SNtlEventShowQuestWindow
 {
-	sTS_KEY			sTSKey;						// TS Å°
+	sTS_KEY			sTSKey;						// TS key
 };
 
 struct SNtlEventShowQuestWindow_Nfy
 {
-	sTS_KEY				sTSKey;					// TS Å°
+	sTS_KEY				sTSKey;					// TS key
 
-	RwUInt32			uiQuestAreaName;		// Äù½ºÆ® Áö¿ª ÀÌ¸§
-	RwUInt32			uiQuestTitle;			// Äù½ºÆ® Á¦¸ñ
-	RwUInt32			uiQuestSort;			// Äù½ºÆ® Á¾·ù
-	RwUInt32			uiQuestGrade;			// Äù½ºÆ® ³­ÀÌµµ
-	eGRADE_TYPE			eGradeType;				// Äù½ºÆ® ³­ÀÌµµ Å¸ÀÔ
-	RwUInt32			uiQuestGoal;			// Äù½ºÆ® ¸ñÇ¥
-	RwUInt32			uiQuestContents;		// Äù½ºÆ® ³»¿ë
-	sREWARD_INFO		sDefaultReward[MAX_DEFAULT_REWARD];		// Äù½ºÆ® º¸»ó Á¤º¸ - ±âº» º¸»ó
-	sREWARD_INFO		sSelectReward[MAX_SELECTION_REWARD];		// Äù½ºÆ® º¸»ó Á¤º¸ - ¼±ÅÃ º¸»ó
+	RwUInt32			uiQuestAreaName;		// Quest area name
+	RwUInt32			uiQuestTitle;			// Quest Title
+	RwUInt32			uiQuestSort;			// Quest type
+	RwUInt32			uiQuestGrade;			// Quest Difficulty
+	eGRADE_TYPE			eGradeType;				// Quest Difficulty Type
+	RwUInt32			uiQuestGoal;			// Quest Objectives
+	RwUInt32			uiQuestContents;		// Quest contents
+	sREWARD_INFO		sDefaultReward[MAX_DEFAULT_REWARD];		// Quest Reward Information -Basic Reward
+	sREWARD_INFO		sSelectReward[MAX_SELECTION_REWARD];		// Quest Reward Information -Select Reward
 	unsigned int			uiRewardExp;
 	unsigned int			uiRewardZeni;
-	eSTOC_EVT_DATA_TYPE	eEvtInfoType;			// ¼­¹ö ÀÌº¥Æ® Á¤º¸ - µ¥ÀÌÅÍ Å¸ÀÔ
-	uSTOC_EVT_DATA		uEvtInfoData;			// ¼­¹ö ÀÌº¥Æ® Á¤º¸ - µ¥ÀÌÅÍ
-	RwUInt32			uiTimeLimit;			// Å¸ÀÓ Á¦ÇÑ Á¤º¸
-	RwUInt32			uiEventType;			// eEVENT_GEN_TYPE ( ÇöÀç´Â eEVENT_GEN_TYPE_CLICK_NPC ¸¸ »ç¿ëÇÔ )
-	RwUInt32			uiEventID;				// uiEventType ¿¡ µû¸¥ ÀÎµ¦½º eEVENT_GEN_TYPE_CLICK_NPC	: Mob table index
+	eSTOC_EVT_DATA_TYPE	eEvtInfoType;			// Server event information -data type
+	uSTOC_EVT_DATA		uEvtInfoData;			// Server event information -data
+	RwUInt32			uiTimeLimit;			// Time limit information
+	RwUInt32			uiEventType;			// eEVENT_GEN_TYPE (currently only uses eEVENT_GEN_TYPE_CLICK_NPC)
+	RwUInt32			uiEventID;				// Index according to uiEventType eEVENT_GEN_TYPE_CLICK_NPC: Mob table index
 	RwBool				bIsEventStarter;		// Event type [ True : Starter, False : Reward ]
 };
 
 struct SNtlEventUpdateQuestState_Nfy
 {
-	sTS_KEY				sTSKey;					// TS Å°
+	sTS_KEY				sTSKey;					// TS key
 
-	RwBool				bOutStateMsg;			// Äù½ºÆ® »óÅÂ ¸Þ½ÃÁö Ãâ·Â ¿©ºÎ
-	RwUInt32			uiUpdatedQuestFlag;		// °»½ÅµÈ Äù½ºÆ® »óÅÂ ÇÃ·¡±×
-	RwUInt32			uiQuestState;			// Äù½ºÆ® »óÅÂ
+	RwBool				bOutStateMsg;			// Whether to display quest status messages
+	RwUInt32			uiUpdatedQuestFlag;		// Updated quest status flag
+	RwUInt32			uiQuestState;			// Quest Status
 
-	RwUInt32			uiQuestTitle;			// Äù½ºÆ® Á¦¸ñ
-	eSTOC_EVT_DATA_TYPE	eEvtInfoType;			// ¼­¹ö ÀÌº¥Æ® Á¤º¸ - µ¥ÀÌÅÍ Å¸ÀÔ
-	uSTOC_EVT_DATA		uEvtInfoData;			// ¼­¹ö ÀÌº¥Æ® Á¤º¸ - µ¥ÀÌÅÍ
+	RwUInt32			uiQuestTitle;			// Quest Title
+	eSTOC_EVT_DATA_TYPE	eEvtInfoType;			// Server event information -data type
+	uSTOC_EVT_DATA		uEvtInfoData;			// Server event information -data
 
-	RwUInt32			uiEventType;			// eEVENT_GEN_TYPE ( ÇöÀç´Â eEVENT_GEN_TYPE_CLICK_NPC ¸¸ »ç¿ëÇÔ )
-	RwUInt32			uiEventID;				// uiEventType ¿¡ µû¸¥ ÀÎµ¦½º eEVENT_GEN_TYPE_CLICK_NPC	: Mob table index
+	RwUInt32			uiEventType;			// eEVENT_GEN_TYPE (currently only uses eEVENT_GEN_TYPE_CLICK_NPC)
+	RwUInt32			uiEventID;				// Index according to uiEventType eEVENT_GEN_TYPE_CLICK_NPC: Mob table index
 	RwBool				bIsEventStarter;		// Event type [ True : Starter, False : Reward ]
 	RwV3d 				indicatorTargetPos;
 	RwUInt32			indicatorTargetWorldID;
@@ -2883,39 +2883,39 @@ struct SNtlEventUpdateQuestState_Nfy
 
 struct SNtlEventUpdateQuestProgressInfo_Nfy
 {
-	sTS_KEY				sTSKey;				// TS Å°
+	sTS_KEY				sTSKey;				// TS key
 
-	eSTOC_EVT_DATA_TYPE	eEvtInfoType;		// ¼­¹ö ÀÌº¥Æ® Á¤º¸ - µ¥ÀÌÅÍ Å¸ÀÔ
-	uSTOC_EVT_DATA		uEvtInfoData;		// ¼­¹ö ÀÌº¥Æ® Á¤º¸ - µ¥ÀÌÅÍ
-	RwUInt32			uiTimeLimit;		// Å¸ÀÓ Á¦ÇÑ Á¤º¸
+	eSTOC_EVT_DATA_TYPE	eEvtInfoType;		// Server event information -data type
+	uSTOC_EVT_DATA		uEvtInfoData;		// Server event information -data
+	RwUInt32			uiTimeLimit;		// Time limit information
 };
 
 struct SNtlEventGiveUpQuest
 {
-	sTS_KEY sTSKey;							// TS Å°
+	sTS_KEY sTSKey;							// TS key
 };
 
 struct SNtlEventShowIndicator
 {
-	sTS_KEY			sTSKey;					// TS Å°	
+	sTS_KEY			sTSKey;					// TS key	
 	RwBool			bAuto;
 };
 
 struct SNtlEventHideIndicator
 {
-	sTS_KEY			sTSKey;					// UI¿¡¼­¸¸ »ç¿ë.
+	sTS_KEY			sTSKey;					// Used only in UI.
 };
 
 struct SNtlEventShowIndicator_Nfy
 {
-	sTS_KEY				sTSKey;				// TS Å°
+	sTS_KEY				sTSKey;				// TS key
 
-	RwUInt32			uiQState;			// Äù½ºÆ® »óÅÂ
-	RwUInt32			uiQuestTitle;		// Äù½ºÆ® Á¦¸ñ
-	RwUInt32			uiQuestGoal;		// Äù½ºÆ® ¸ñÀû
-	eSTOC_EVT_DATA_TYPE	eEvtInfoType;		// ¼­¹ö ÀÌº¥Æ® Á¤º¸ - µ¥ÀÌÅÍ Å¸ÀÔ
-	uSTOC_EVT_DATA		uEvtInfoData;		// ¼­¹ö ÀÌº¥Æ® Á¤º¸ - µ¥ÀÌÅÍ
-	RwUInt32			uiTimeLimit;		// Å¸ÀÓ Á¦ÇÑ Á¤º¸
+	RwUInt32			uiQState;			// Quest Status
+	RwUInt32			uiQuestTitle;		// Quest Title
+	RwUInt32			uiQuestGoal;		// Quest Purpose
+	eSTOC_EVT_DATA_TYPE	eEvtInfoType;		// Server event information -data type
+	uSTOC_EVT_DATA		uEvtInfoData;		// Server event information -data
+	RwUInt32			uiTimeLimit;		// Time limit information
 	RwBool				bAuto;
 	RwV3d 				indicatorTargetPos;
 	RwUInt32			indicatorTargetWorldID;
@@ -2925,78 +2925,78 @@ struct SNtlEventShowIndicator_Nfy
 
 struct SNtlEventDoQuest
 {
-	sQUEST_INFO			sQuestInfo;				// Quest Á¤º¸
-	eEVENT_GEN_TYPE		eEventGenType;			// Event Á¾·ù
+	sQUEST_INFO			sQuestInfo;				// About Quest
+	eEVENT_GEN_TYPE		eEventGenType;			// Event type
 	RwUInt32			uiOwnerID;				// Owner ID
-	RwBool				bTransCameraCtrlRight;	// Ä«¸Þ¶ó Á¦¾î±ÇÀ» ³Ñ±â´Â °æ¿ì TRUE
+	RwBool				bTransCameraCtrlRight;	// TRUE if handing over camera control
 };
 
 struct SNtlEventQuestProposalDialog_Req
 {
-	sTS_KEY			sTSKey;						// TS Å°
+	sTS_KEY			sTSKey;						// TS key
 
-	RwBool			bDisplaySummary;			// Äù½ºÆ® ¿ä¾à Á¤º¸ ¹Ì¸®º¸±â º¸¿©ÁÖ±â ¿©ºÎ
-	RwUInt32		uiQuestTitle;				// Äù½ºÆ® Á¦¸ñ
-	RwUInt32		uiQuestGoal;				// Äù½ºÆ® ¸ñÇ¥
-	RwUInt32		uiQuestGrade;				// Äù½ºÆ® ³­ÀÌµµ
-	eGRADE_TYPE		eGradeType;					// Äù½ºÆ® ³­ÀÌµµ Å¸ÀÔ
-	RwUInt32		uiQuestSort;				// Äù½ºÆ® Á¾·ù
-	RwUInt32		uiQuestContents;			// Äù½ºÆ® ³»¿ë
-	sREWARD_INFO	sDefaultReward[MAX_DEFAULT_REWARD];			// Äù½ºÆ® º¸»ó Á¤º¸ - ±âº» º¸»ó
-	sREWARD_INFO	sSelectReward[MAX_SELECTION_REWARD];			// Äù½ºÆ® º¸»ó Á¤º¸ - ¼±ÅÃ º¸»ó
+	RwBool			bDisplaySummary;			// Whether to show a preview of quest summary information
+	RwUInt32		uiQuestTitle;				// Quest Title
+	RwUInt32		uiQuestGoal;				// Quest Objectives
+	RwUInt32		uiQuestGrade;				// Quest Difficulty
+	eGRADE_TYPE		eGradeType;					// Quest Difficulty Type
+	RwUInt32		uiQuestSort;				// Quest type
+	RwUInt32		uiQuestContents;			// Quest contents
+	sREWARD_INFO	sDefaultReward[MAX_DEFAULT_REWARD];			// Quest Reward Information -Basic Reward
+	sREWARD_INFO	sSelectReward[MAX_SELECTION_REWARD];			// Quest Reward Information -Select Reward
 	unsigned int			uiRewardExp;
 	unsigned int			uiRewardZeni;
 };
 
 struct SNtlEventQuestProposalDialog_Res
 {
-	bool			bResult;					// Äù½ºÆ® ¼ö¶ô(true) ¶Ç´Â °ÅÀý(false)
+	bool			bResult;					// Accept (true) or reject (false) the quest.
 
-	sTS_KEY			sTSKey;						// TS Å°
+	sTS_KEY			sTSKey;						// TS key
 };
 
 struct SNtlEventQuestUserSelectDialog_Req
 {
-	sTS_KEY			sTSKey;						// TS Å°
+	sTS_KEY			sTSKey;						// TS key
 
-	RwUInt32		uiTargetType;				// Å¸°ÙÀÇ Á¾·ù ( eUSER_SEL_TARGET_TYPE -> eUSER_SEL_TARGET_TYPE_NPC, eUSER_SEL_TARGET_TYPE_OBJECT, eUSER_SEL_TARGET_TYPE_INVALID )
-	RwUInt32		uiTargetTblIdx;				// Å¸°ÙÀÇ Å×ÀÌºí ÀÎµ¦½º 
-	RwUInt32		uiQuestTitle;				// Äù½ºÆ® Á¦¸ñ
-	RwUInt32		uiConv;						// ´ëÈ­
-	RwInt32			nBranchCnt;					// ÇöÀç »ç¿ëÁßÀÎ BranchÀÇ °³¼ö
+	RwUInt32		uiTargetType;				// Target Type ( eUSER_SEL_TARGET_TYPE -> eUSER_SEL_TARGET_TYPE_NPC, eUSER_SEL_TARGET_TYPE_OBJECT, eUSER_SEL_TARGET_TYPE_INVALID )
+	RwUInt32		uiTargetTblIdx;				// table index of target 
+	RwUInt32		uiQuestTitle;				// Quest Title
+	RwUInt32		uiConv;						// conversation
+	RwInt32			nBranchCnt;					// Number of branches currently in use
 	sTS_BRANCH_INFO asBranchInfo[eBRANCH_INFO_MAX];	// Branch info
 };
 
 struct SNtlEventQuestUserSelectDialog_Res
 {
-	bool			bResult;					// Ok(true) ¶Ç´Â Cancel(false)
+	bool			bResult;					// Ok(true) or Cancel(false)
 
-	sTS_KEY			sTSKey;						// TS Å°
-	NTL_TS_TC_ID	tcSelID;					// ¼±ÅÃµÈ Äù½ºÆ® ¾ÆÀÌµð
+	sTS_KEY			sTSKey;						// TS key
+	NTL_TS_TC_ID	tcSelID;					// Selected quest ID
 };
 
 struct SNtlEventQuestNarrationUserSelectDialog_Req
 {
-	sTS_KEY						sTSKey;							// TS Å°
+	sTS_KEY						sTSKey;							// TS key
 
-	eUSER_SEL_PROGRESS_STATE	eProgState;						// Narration ÁøÇà »óÅÂ
-	RwUInt32					uiConv;							// ´ëÈ­
-	RwInt32						nBranchCnt;						// ÇöÀç »ç¿ëÁßÀÎ BranchÀÇ °³¼ö
+	eUSER_SEL_PROGRESS_STATE	eProgState;						// Narration progress status
+	RwUInt32					uiConv;							// conversation
+	RwInt32						nBranchCnt;						// Number of branches currently in use
 	sTS_BRANCH_INFO				asBranchInfo[eBRANCH_INFO_MAX];	// Branch info
 };
 
 struct SNtlEventQuestNarrationUserSelectDialog_Res
 {
-	bool			bResult;					// Ok(true) ¶Ç´Â Cancel(false)
+	bool			bResult;					// Ok(true) or Cancel(false)
 
-	sTS_KEY			sTSKey;						// TS Å°
-	NTL_TS_TC_ID	tcSelID;					// ¼±ÅÃµÈ Äù½ºÆ® ¾ÆÀÌµð
+	sTS_KEY			sTSKey;						// TS key
+	NTL_TS_TC_ID	tcSelID;					// Selected quest ID
 };
 
 struct SNtlEventTSFinished
 {
 	unsigned char	byTSType;					// Trigger type ( TS_TYPE_QUEST_CS, TS_TYPE_PC_TRIGGER_CS )
-	NTL_TS_T_ID		tID;						// Á¾·áµÇ´Â Æ®¸®°Å ¾ÆÀÌµð
+	NTL_TS_T_ID		tID;						// Trigger ID that ends
 };
 
 struct SNtlEventTSSkipContainer
@@ -3007,141 +3007,141 @@ struct SNtlEventTSSkipContainer
 
 struct SNtlEventQuestRewardDialog_Req
 {
-	sTS_KEY			sTSKey;						// TS Å°
+	sTS_KEY			sTSKey;						// TS key
 
-	eREWARD_CONTAINER_TYPE eRewardType;			// º¸»ó Å¸ÀÔ
-	RwUInt32		uiLimitTime;				// º¸»ó Á¦ÇÑ ½Ã°£
-	RwUInt32		uiQuestTitle;				// Äù½ºÆ® Á¦¸ñ
-	RwUInt32		uiQuestGoal;				// Äù½ºÆ® ¸ñÇ¥
-	RwUInt32		uiQuestGrade;				// Äù½ºÆ® ³­ÀÌµµ
-	eGRADE_TYPE		eGradeType;					// Äù½ºÆ® ³­ÀÌµµ Å¸ÀÔ
-	RwUInt32		uiQuestSort;				// Äù½ºÆ® Á¾·ù
-	RwUInt32		uiQuestContents;			// Äù½ºÆ® ¼³¸í
-	sREWARD_INFO	sDefaultReward[MAX_DEFAULT_REWARD];	// Äù½ºÆ® º¸»ó Á¤º¸ - ±âº» º¸»ó
-	sREWARD_INFO	sSelectReward[MAX_SELECTION_REWARD];// Äù½ºÆ® º¸»ó Á¤º¸ - ¼±ÅÃ º¸»ó
+	eREWARD_CONTAINER_TYPE eRewardType;			// Reward Type
+	RwUInt32		uiLimitTime;				// Reward time limit
+	RwUInt32		uiQuestTitle;				// Quest Title
+	RwUInt32		uiQuestGoal;				// Quest Objectives
+	RwUInt32		uiQuestGrade;				// Quest Difficulty
+	eGRADE_TYPE		eGradeType;					// Quest Difficulty Type
+	RwUInt32		uiQuestSort;				// Quest type
+	RwUInt32		uiQuestContents;			// Quest Description
+	sREWARD_INFO	sDefaultReward[MAX_DEFAULT_REWARD];	// Quest Reward Information -Basic Reward
+	sREWARD_INFO	sSelectReward[MAX_SELECTION_REWARD];// Quest Reward Information -Select Reward
 	unsigned int		uiRewardExp;
 	unsigned int		uiRewardZeni;
 };
 
 struct SNtlEventQuestRewardDialog_Res
 {
-	bool			bResult;					// Ok(true) ¶Ç´Â Cancel(false)
+	bool			bResult;					// Ok(true) or Cancel(false)
 
-	sTS_KEY			sTSKey;						// TS Å°
-	int				nSelRwdIdx;					// ¼±ÅÃ º¸»óÀÇ ¼±ÅÃµÈ ÀÎµ¦½º
+	sTS_KEY			sTSKey;						// TS key
+	int				nSelRwdIdx;					// Selected index of selected reward
 };
 
 struct SNtlEventQuestNarrationDialog_Req
 {
-	sTS_KEY						sTSKey;			// TS Å°
+	sTS_KEY						sTSKey;			// TS key
 
-	eNARRATION_PROGRESS_STATE	eProgState;		// Narration ÁøÇà »óÅÂ
-	eNARRATION_OWNER_TYPE		eOwnerType;		// OwnerÀÇ Á¾·ù
-	RwUInt32					uiOwnerIdx;		// OwnerÀÇ Å×ÀÌºí ÀÎµ¦½º
-	eNARRATION_OWNER_STATE		eOwnerState;	// OwnerÀÇ »óÅÂ
-	eNARRATION_DIALOG_DIR_TYPE	eDialogDirType;	// ´ëÈ­ ¿¬Ãâ Á¾·ù
-	RwUInt32					uiDialog;		// ´ëÈ­ ³»¿ë
-	eNARRATION_GUI_TYPE			eGUIType;		// GUI Á¾·ù
-	RwUInt32					uiMaxLifeTime;	// ÀÌ ½Ã°£ ÀÌ»ó ³ª·¹ÀÌ¼Ç Ã¢ÀÌ À¯Áö µÇ´Â °æ¿ì ÀÚµ¿À¸·Î Next·Î ³Ñ¾î°¡¾ß ÇÑ´Ù.
+	eNARRATION_PROGRESS_STATE	eProgState;		// Narration progress status
+	eNARRATION_OWNER_TYPE		eOwnerType;		// Type of Owner
+	RwUInt32					uiOwnerIdx;		// Owner's table index
+	eNARRATION_OWNER_STATE		eOwnerState;	// Owner's status
+	eNARRATION_DIALOG_DIR_TYPE	eDialogDirType;	// type of dialogue production
+	RwUInt32					uiDialog;		// conversation
+	eNARRATION_GUI_TYPE			eGUIType;		// GUI type
+	RwUInt32					uiMaxLifeTime;	// If the narration window remains longer than this time, it should automatically move to Next.
 };
 
 struct SNtlEventQuestNarrationDialog_Res
 {
-	bool			bResult;					// Ok(true) ¶Ç´Â Cancel(false)
+	bool			bResult;					// Ok(true) or Cancel(false)
 
-	sTS_KEY			sTSKey;						// TS Å°
+	sTS_KEY			sTSKey;						// TS key
 };
 
 struct SNtlEventQuestNPCDialog_Req
 {
-	sTS_KEY			sTSKey;						// TS Å°
+	sTS_KEY			sTSKey;						// TS key
 
-	eNPCCONV_TYPE	eNPCConvType;				// NPC ´ëÈ­ Å¸ÀÔ
+	eNPCCONV_TYPE	eNPCConvType;				// NPC conversation type
 	unsigned int	uiNPCIdx;					// NPC table index
-	RwUInt32		uiDesc;						// ´ëÈ­
+	RwUInt32		uiDesc;						// conversation
 };
 
 struct SNtlEventQuestNPCDialog_Res
 {
-	sTS_KEY			sTSKey;						// TS Å°
+	sTS_KEY			sTSKey;						// TS key
 };
 
 struct SNtlEventQuestShare_Nfy
 {
-	sTS_KEY			sTSKey;						// TS Å°
+	sTS_KEY			sTSKey;						// TS key
 };
 
 struct SNtlEventQuestAcceptProposal_Nfy
 {
-	sTS_KEY			sTSKey;						// TS Å°
+	sTS_KEY			sTSKey;						// TS key
 };
 
 struct SNtlEventQuestAcceptReward_Nfy
 {
-	sTS_KEY			sTSKey;						// TS Å°
-	unsigned int	uiQTitle;					// Quest Á¦¸ñ
-	RwBool			bOutStateMsg;				// Äù½ºÆ® »óÅÂ ¸Þ½ÃÁö Ãâ·Â ¿©ºÎ
+	sTS_KEY			sTSKey;						// TS key
+	unsigned int	uiQTitle;					// Quest title
+	RwBool			bOutStateMsg;				// Whether to display quest status messages
 };
 
 struct SNtlEventQuestAcceptGiveUp_Nfy
 {
-	sTS_KEY			sTSKey;						// TS Å°
-	unsigned int	uiQTitle;					// Quest Á¦¸ñ
+	sTS_KEY			sTSKey;						// TS key
+	unsigned int	uiQTitle;					// Quest title
 };
 
 struct SNtlEventQuestObjDialog_Req
 {
-	sTS_KEY			sTSKey;						// TS Å°
+	sTS_KEY			sTSKey;						// TS key
 
-	eOBJCONV_TYPE	eObjConvType;				// Object ´ëÈ­ Å¸ÀÔ
-	RwUInt32		uiWorldIdx;					// Object ¼Ò¼Ó ¿ùµå
+	eOBJCONV_TYPE	eObjConvType;				// Object conversation type
+	RwUInt32		uiWorldIdx;					// Object belonging world
 	RwUInt32		uiObjIdx;					// Object table index
-	RwUInt32		uiDesc;						// ´ëÈ­
+	RwUInt32		uiDesc;						// conversation
 };
 
 struct SNtlEventQuestObjDialog_Res
 {
-	sTS_KEY			sTSKey;						// TS Å°
+	sTS_KEY			sTSKey;						// TS key
 };
 
 struct SNtlEventShowTutorialHint_Nfy
 {
-	sTS_KEY			sTSKey;						// TS Å°
-	bool			bShow;						// Æ©Åä¸®¾ó ÈùÆ®Ã¢ ¿­°í ´Ý±â
+	sTS_KEY			sTSKey;						// TS key
+	bool			bShow;						// Open and close the tutorial hint window
 	TBLIDX			tblidx;						// Guide hint table index
 };
 
 struct SNtlEventShowHelp_Nfy
 {
-	sTS_KEY			sTSKey;						// TS Å°
-	bool			bShow;						// ÇïÇÁÃ¢ ¿­°í ´Ý±â
+	sTS_KEY			sTSKey;						// TS key
+	bool			bShow;						// Open and close the help window
 };
 
 struct SNtlEventShowInventory_Nfy
 {
-	sTS_KEY			sTSKey;						// TS Å°
-	bool			bShow;						// ÀÎº¥Åä¸®Ã¢ ¿­°í ´Ý±â
+	sTS_KEY			sTSKey;						// TS key
+	bool			bShow;						// Open and close the inventory window
 };
 
 struct SNtlEventShowSkill_Nfy
 {
-	sTS_KEY			sTSKey;						// TS Å°
-	bool			bShow;						// ½ºÅ³Ã¢ ¿­°í ´Ý±â
+	sTS_KEY			sTSKey;						// TS key
+	bool			bShow;						// Open and close the skill window
 };
 
 struct SNtlEventShowCharInfo_Nfy
 {
-	sTS_KEY			sTSKey;						// TS Å°
-	bool			bShow;						// Ä³¸¯ÅÍ Á¤º¸Ã¢ ¿­°í ´Ý±â
+	sTS_KEY			sTSKey;						// TS key
+	bool			bShow;						// Open and close the character information window
 };
 
 enum eTutorialNfyType
 {
-	TUTORIAL_HINT,								// Æ©Åä¸®¾ó ÈùÆ®
-	TUTORIAL_HELP_DIALOG_SWITCH,				// Æ©Åä¸®¾ó ÇïÇÁ ´ÙÀÌ¾ó·Î±× ¿­°í ´Ý±â
-	TUTORIAL_BAG_SWITCH,						// °¡¹æ ¿­°í ´Ý±â
-	TUTORIAL_SKILL_DIALOG_SWITCH,				// ½ºÅ³ ´ÙÀÌ¾ó·Î±× ¿­°í ´Ý±â
-	TUTORIAL_CHARINFO_DIALOG_SWITCH,			// Ä³¸¯ÅÍ Á¤º¸ ´ÙÀÌ¾ó·Î±× ¿­°í ´Ý±â
+	TUTORIAL_HINT,								// tutorial hints
+	TUTORIAL_HELP_DIALOG_SWITCH,				// Open and close the tutorial help dialog
+	TUTORIAL_BAG_SWITCH,						// Open and close bag
+	TUTORIAL_SKILL_DIALOG_SWITCH,				// Open and close skill dialog
+	TUTORIAL_CHARINFO_DIALOG_SWITCH,			// Open and close the character information dialog
 };
 
 struct SNtlEventTutorialNfy
@@ -3287,26 +3287,26 @@ struct SNtlEventTSDialogOpen
 
 //////////////////////////////////////////////
 /**
-* Äù½ºÆ® À§Ä¡ ¸¶Å©
+*Quest location mark
 */
 //////////////////////////////////////////////
 
 struct SNtlEventRegisterQuestPosMark
 {
-	QM_KEY				QMKey;						// Quest mark key - Key °ª Áßº¹ °¡´ÉÇÔ
+	QM_KEY				QMKey;						// Quest mark key -Key value can be duplicated
 
-	eQMI_TARGET_TYPE	eTargetType;				// Å¸°Ù ¸¶Å© Á¾·ù
-	unsigned int		uiTargetWorldTblIdx;		// Å¸°ÙÀÌ ¼Ò¼ÓµÈ ¿ùµå Å×ÀÌºí ÀÎµ¦½º
-	unsigned int		uiTargetTableIdx;			// Å¸°ÙÀÇ Å×ÀÌºí ÀÎµ¦½º
-	float				fTargetPosX;				// Å¸°ÙÀÇ À§Ä¡ ( x, y, z )
+	eQMI_TARGET_TYPE	eTargetType;				// Target mark type
+	unsigned int		uiTargetWorldTblIdx;		// World table index to which the target belongs
+	unsigned int		uiTargetTableIdx;			// table index of target
+	float				fTargetPosX;				// Location of target (x, y, z)
 	float				fTargetPosY;
 	float				fTargetPosZ;
-	unsigned int		uiTooltipTblIdx;			// ÅøÆÁ¿¡ Ãâ·ÂÇÒ Å×ÀÌºí ÀÎµ¦½º
+	unsigned int		uiTooltipTblIdx;			// Table index to display in tooltip
 };
 
 struct SNtlEventUnregisterQuestPosMark
 {
-	QM_KEY			QMKey;						// Quest mark key - Key °ª Áßº¹ °¡´ÉÇÏ¹Ç·Î ÇØ´ç Key °ª¿¡ ÇØ´çÇÏ´Â µ¥ÀÌÅÍ ´Ù Áö¿ö Áà¾ß ÇÔ
+	QM_KEY			QMKey;						// Quest mark key -Key values ??can be duplicated, so all data corresponding to that key value must be deleted.
 };
 
 struct SNtlEventShowQuestPosMark
@@ -3317,13 +3317,13 @@ struct SNtlEventShowQuestPosMark
 
 //////////////////////////////////////////////
 /**
-* dbo ¿¬Ãâ ½Ã½ºÅÛ(UI, Camera, Flash)¿¡ trigger event¸¦ forward ½ÃÅ²´Ù.
+* Forwards the trigger event to the dbo rendering system (UI, Camera, Flash).
 */
 
 struct SNtlEventQuestDirect_Forward
 {
-	CNtlTCUnit			*pTCUnit;				// ÀÌ º¯¼ö´Â º¸°£ÇÏ°í ÀÖ´Ù°¡ Echo ½ÃÄÑÁÖ¾î¾ß ÇÑ´Ù.
-	ETriggerDirectType	eTDType;			// ¿¬Ãâ type
+	CNtlTCUnit			*pTCUnit;				// This variable must be interpolated and then echoed.
+	ETriggerDirectType	eTDType;			// Directing type
 	union
 	{
 		char chData[512];
@@ -3337,8 +3337,8 @@ struct SNtlEventQuestDirect_Forward
 
 struct SNtlEventQuestDirect_Echo
 {
-	CNtlTCUnit			*pTCUnit;				// SNtlEventQuestDirect_Forward ±¸Á¶Ã¼ÀÇ pTCUnit °ªÀ» ±×´ë·Î echo ½ÃÄÑÁØ´Ù.
-	ETriggerDirectType	eTDType;			// ¿¬Ãâ type
+	CNtlTCUnit			*pTCUnit;				// The pTCUnit value of the SNtlEventQuestDirect_Forward structure is echoed as is.
+	ETriggerDirectType	eTDType;			// Directing type
 	union
 	{
 		char chData[512];
@@ -3373,7 +3373,7 @@ struct SNtlEventTObjectUpdateState : public SNtlEventSob
 
 //////////////////////////////////////////////
 /**
-* Æ®¸®°Å ¿ÀºêÁ§Æ® ½ºÄ«¿ìÅÍ ¿¬Ãâ °ü·Ã
+* Trigger object scouter production related
 */
 //////////////////////////////////////////////
 
@@ -3387,7 +3387,7 @@ struct SNtlEventTrigObjScouterDir_TakeOffScouterItem
 	SERIAL_HANDLE	hSerial;
 };
 
-// µå·¡°ïº¼ ÄÃ·º¼Ç °ü·Ã
+// Dragon Ball Collection Related
 struct SNtlEventDBCNarration
 {
 	enum State
@@ -3404,23 +3404,23 @@ struct SNtlEventDBCNarration
 	RwInt32			eNarrationState;
 };
 
-// ¼­¹ö·Î ¹ÞÀº ÀÀ´äÀ» ´ãÀ» ±¸Á¶Ã¼ (°ø¿ë)
+// Structure to contain the response received from the server (common)
 struct SNtlEventDBC_Res
 {
 	RwUInt32		uiAltarID;
 	WORD			wResultCode;
 };
 
-// µå·¡°ïº¼ ¼öÀÔ ½ºÄÉÁì ÆÐÅ¶ ±¸Á¶Ã¼
+// Dragon Ball import schedule packet structure
 struct SNtlEventDBCSchedule_Info
 {
-	bool						bIsAlive;			// ±â°£ À¯¹« false: ±â°£ÀÌ ¾Æ´Ï´Ù
-	BYTE						byEventType;		// eSCHEDULE_EVENT_TYPE
-	__int64						nStartTime;			// ÃÖÃÊ±â°£ ½ÃÀÛ
-	__int64						nEndTime;           // ¸¶Áö¸· ±â°£ ³¡³ª´Â ½Ã°£
-	DWORD						dwMainTerm;			// ±â°£ ´ÜÀ§ (´ÞÀº ½ÃÀÛÀÏ ³ª¸ÓÁö´Â ÃÊ) 
-	DWORD						dwSubTerm;			// ±â°£ ´ÜÀ§ (´ÞÀº ¸¸·áÀÏ ³ª¸ÓÁö´Â ÃÊ) 
-	BYTE						byTermType;			// 0: ´Þ 1: ÀÏ 2: ½Ã
+	bool						bIsAlive;			// Existence of period false: Not period
+	BYTE						byEventType;		// E schedule event type
+	__int64						nStartTime;			// Initial period begins
+	__int64						nEndTime;           // Last period end time
+	DWORD						dwMainTerm;			// Period unit (months are start date and rest are seconds) 
+	DWORD						dwSubTerm;			// Period units (months are expiration dates, others are seconds) 
+	BYTE						byTermType;			// 0: Month 1: Day 2: Hour
 };
 
 // SideIcon : HintIcon
@@ -3440,7 +3440,7 @@ struct SNtlEventRegSideHintIcon
 // Private Shop
 //////////////////////////////////////////////////////////////////////////////////
 
-// ÆÇ¸ÅÀÚ ÀÌº¥Æ® Å¸ÀÔ
+// Seller event type
 enum ePrivateShopStateEventType
 {
 	PRIVATESHOP_EVENT_CREATE,
@@ -3449,7 +3449,7 @@ enum ePrivateShopStateEventType
 	PRIVATESHOP_EVENT_CLOSE,
 };
 
-// ±¸¸ÅÀÚ ÀÌº¥Æ® Å¸ÀÔ
+// Buyer event type
 enum ePrivateShopStateVisitorEventType
 {
 	PRIVATESHOP_EVENT_ENTER,
@@ -3463,7 +3463,7 @@ enum ePrivateShopItemEventType
 	PRIVATESHOP_EVENT_ITEM_DELETE,
 };
 
-// °³ÀÎ»óÁ¡
+// private store
 struct SNtlEventPrivateShopState
 {
 	RwUInt32				uiEventType;		// ePrivateShopStateEventType
@@ -3660,13 +3660,13 @@ struct SNtlEventPrivateShopNameTag
 	//	WCHAR			awcPrivateShopName[NTL_MAX_PRIVATESHOP_NAME_IN_UNICODE + 1];
 };
 
-// Tool Tip UI¸¦ Ç¥½ÃÇÑ´Ù.
+// Displays the Tool Tip UI.
 struct SNtlEventToolTip
 {
-	RwBool          bShow;      ///< ÅøÆÁ Ç¥½Ã À¯¹«
-	RwInt32         nX;         ///< Ç¥½ÃÇÒ X ÁÂÇ¥
-	RwInt32         nY;         ///< Ç¥½ÃÇÒ Y ÁÂÇ¥
-	std::wstring    wstrText;    ///< Ç¥½ÃÇÒ ÅØ½ºÆ®
+	RwBool          bShow;      ///< Whether or not to display tooltips
+	RwInt32         nX;         ///< X coordinate to display
+	RwInt32         nY;         ///< Y coordinate to display
+	std::wstring    wstrText;    ///< Text to display
 };
 
 struct SNtlEventBind
@@ -3689,17 +3689,17 @@ struct SNtlEventActionMapUpdateRes
 };
 
 /**
-* \brief ¾×¼Ç¸Ê »óÅÂ º¯°æ ( Client ´Ü°úÀÇ Åë½Å )
+* \brief Action map status change (communication with client side)
 */
 struct SNtlEventActionMapClientNotify
 {
 	enum eTYPE 
 	{ 
-		ACTIONMAP_OK = 0,				///< ¾×¼Ç¸ÊÀÌ Á¤»óÀûÀ¸·Î ÁöÁ¤µÊ
-		ACTIONMAP_RELEASE,				///< Å°°¡ ÇØÁ¦µÈ ¾×¼ÇÀÌ ÀÖÀ½
-		ACTIONMAP_FIXEDKEY,				///< ÇöÀç Å°´Â À¯Àú°¡ ÀÓÀÇ·Î »ç¿ëÇÒ ¼ö ¾ø´Â Å°ÀÔ´Ï´Ù.
-		ACTIONMAP_NOTCOMBINE,			///< Á¶ÇÕÅ°·Î »ç¿ëÇÏÁö ¸øÇÏ´Â ¾×¼ÇÀÔ´Ï´Ù.
-		ACTIONMAP_SAMEKEY				///< Å°°¡ Áßº¹µÇ¾î ÀÖ½À´Ï´Ù.
+		ACTIONMAP_OK = 0,				///< Action map is specified correctly
+		ACTIONMAP_RELEASE,				///< There is an action with the key released
+		ACTIONMAP_FIXEDKEY,				///< The current key is a key that cannot be used arbitrarily by the user.
+		ACTIONMAP_NOTCOMBINE,			///< This action cannot be used with a combination key.
+		ACTIONMAP_SAMEKEY				///< There is a duplicate key.
 	};
 
 	RwUInt8		byType;
@@ -3709,8 +3709,8 @@ struct SNtlEventActionMapClientNotify
 
 struct SNtlEventPortalInfoRes
 {
-	BYTE           byCount;         ///< Æ÷Å»ÀÇ °³¼ö
-	BYTE*          paPortalID;      ///< Æ÷Å» ÀÎµ¦½ºÀÇ ¹è¿­
+	BYTE           byCount;         ///< Number of portals
+	BYTE*          paPortalID;      ///< Array of portal indexes
 };
 
 struct SNtlEventPortalAddReq
@@ -3725,16 +3725,16 @@ struct SNtlEventPortalAddRes
 
 struct SNtlEventPortalRes
 {
-	BYTE           byPoint;        ///< Æ÷Å»ÀÇ Æ÷ÀÎÆ® (Å×ÀÌºíÀÇ Æ÷ÀÎÆ® ¹øÈ£)
+	BYTE           byPoint;        ///< Points in portal (point number in table)
 };
 
 struct SNtlEventOperateObjectTimeBar
 {
-	bool			bShow;			// true : Å¸ÀÓ¹Ù º¸¿©ÁÖ±â, false : Å¸ÀÓ¹Ù ¼û±â±â
-	RwUInt32		uiPlayTime;		// Å¸ÀÓ¹Ù Ãâ·Â ½Ã°£
+	bool			bShow;			// true: Show time bar, false: Hide time bar
+	RwUInt32		uiPlayTime;		// Time bar output time
 };
 
-// ¹æ¼Û ´ë»ç¸¦ ¾î´À ÅØ½ºÆ® Å×ÀÌºí¿¡¼­ °¡Á®¿ÃÁö 
+// Which text table should the broadcast lines be taken from? 
 enum ETelecastTextTable
 {
 	E_TELECAST_TEXT_NPC_SPEECH,
@@ -3743,19 +3743,19 @@ enum ETelecastTextTable
 
 struct SNtlEventTeleCastBegNfy
 {
-	TBLIDX					npcTblidx;				// ¹æ¼ÛÀ» ÇÏ´Â NPC Å×ÀÌºí ÀÎµ¦½º
-	BYTE					byTelecastType;			// ¹æ¼Û Å¸ÀÔ eTELECAST_MESSAGE_TYPE
-	ETelecastTextTable      eTextTable;             // ´ë»ç¸¦ ´ã°í ÀÖ´Â ÅØ½ºÆ® Å×ÀÌºí Á¾·ù
-	TBLIDX					speechTblidx;			// ¹æ¼Û³»¿ëÀ» ´ãÀº Speech Å×ÀÌºí ÀÎµ¦½º
-	std::wstring            wstrNotifyMsg;           // ¼­¹ö¿¡¼­ ³»·Á¿À´Â ¾Ë¸² ¸Þ½ÃÁö (Notify Å¸ÀÔÀÏ¶§¸¸ À¯È¿)
-	DWORD					dwDisplayTime;			// ¹æ¼Û½Ã°£À» ³ªÅ¸³»´Â millisec ( INVALID_DWORD ÀÌ¸é telecast¸¦ °è¼Ó ¶ç¿ì°í, ¾Æ´Ï¸é ÀÌ ½Ã°£ÀÌ Áö³ª¸é ¾ø¾Ù °Í )    
+	TBLIDX					npcTblidx;				// Broadcasting NPC table index
+	BYTE					byTelecastType;			// Broadcast Type eTELECAST_MESSAGE_TYPE
+	ETelecastTextTable      eTextTable;             // Type of text table containing dialogue
+	TBLIDX					speechTblidx;			// Speech table index containing broadcast content
+	std::wstring            wstrNotifyMsg;           // Notification message sent from the server (valid only for Notify type)
+	DWORD					dwDisplayTime;			// millisec indicating the broadcast time (if INVALID_DWORD, keep the telecast running, otherwise it will be removed after this time)    
 };
 
-/// ¹æÇâ Áö½Ã¿ë ¿ÀºêÁ§Æ® »ý¼º ÀÌº¥Æ®
+/// Object creation event for direction indication
 struct SNtlEventDirectionNfy
 {
-	RwBool                  bCreate;                // TRUE : Ç¥½Ã »ý¼º, FALSE : Ç¥½Ã »èÁ¦
-	RwV3d			    	vLoc;					// ÁöÁ¤µÈ À§Ä¡ (¿ÀºêÁ§Æ®°¡ »ý¼ºµÇÁö ¾Ê¾ÒÀ» °æ¿ì ÂüÁ¶ÇÒ °Í)
+	RwBool                  bCreate;                // TRUE: Create display, FALSE: Delete display
+	RwV3d			    	vLoc;					// Specified location (refer to if object has not been created)
 };
 
 struct SNtlEventBroadMsgBegNfy
@@ -3772,18 +3772,18 @@ struct SNtlEventBroadMsgEndNfy
 // Skill RpBonus Setup Result
 struct SNtlEventRpBonusSetupRes
 {
-	TBLIDX			skillId;			// SkillÀÇ Å×ÀÌºí ID
-	BYTE			bySlotIndex;		// ¾Æ¹ÙÅ¸°¡ °¡Áö°í ÀÖ´Â °íÀ¯ÀÇ Skill ½½·Ô Index
-	BYTE			byRpBonusType;		// eDBO_RP_BONUS_TYPE
+	TBLIDX			skillId;			// Table ID of skill
+	BYTE			bySlotIndex;		// The avatar's unique skill slot index
+	BYTE			byRpBonusType;		// E dbo rp bonus type
 	RwBool			bRpBonusAutoMode;			
 };
 
 // Friend List
 struct SNtlEventFriendAddRes
 {
-	WORD            wResultCode;        ///< °á°ú ÄÚµå    
-	WCHAR           wchName[NTL_MAX_SIZE_CHAR_NAME + 1];    ///< Ä³¸¯ÅÍ ³×ÀÓ
-	RwUInt32        uiTargetID;         ///< Å¸°ÙID
+	WORD            wResultCode;        ///< Result code  
+	WCHAR           wchName[NTL_MAX_SIZE_CHAR_NAME + 1];    ///< Character name
+	RwUInt32        uiTargetID;         ///< Target ID
 };
 
 struct SNtlEventFriendDelRes
@@ -3796,8 +3796,8 @@ struct SNtlEventFriendMoveRes
 {
 	WORD            wResultCode;    
 	RwUInt32        uiTargetID;
-	WCHAR           wchName[NTL_MAX_SIZE_CHAR_NAME + 1];    ///< Ä³¸¯ÅÍ ³×ÀÓ 
-	// Å¬¶óÀÌ¾ðÆ® ±¸Á¶»ó ÇÊ¿äÇØ¼­, Å¬¶óÀÌ¾ðÆ® ±¸Á¶Ã¼¿¡¸¸ NameÀ» Ãß°¡ÇÑ´Ù.
+	WCHAR           wchName[NTL_MAX_SIZE_CHAR_NAME + 1];    ///< Character name 
+	// Because it is necessary for the client structure, Name is added only to the client structure.
 };
 
 struct SNtlEventFriendListInfo
@@ -3822,7 +3822,7 @@ struct SNtlEventBlackListDelRes
 struct SNtlEventFriendInfo
 {
 	sFRIEND_INFO	sInfo;  
-	bool			bIsFirst;		// true : Ã³À½ false : ³ªÁß 
+	bool			bIsFirst;		// true: first false: later 
 };
 
 struct SNtlEventFriendInfoChange
@@ -3832,10 +3832,10 @@ struct SNtlEventFriendInfoChange
 	DWORD						dwChangeValue;	// Online 1:On 2:Off , Class , Level , Channel, PositionMapTblidx
 };
 
-// Ä£±¸ ¸®½ºÆ® °ü·Ã Ãß°¡ ¸Þ½ÃÁö (¼­¹ö¿¡¼­ ³¯¶ó¿À´Â ¸Þ½ÃÁö ÀÌ¿ÜÀÇ Å¬¶óÀÌ¾ðÆ®¿¡¼­¸¸ ÇÊ¿ä¿¡ µû¶ó Ãß°¡ÇÏ´Â ¸Þ¼¼Áö)
+// Additional messages related to the friend list (messages added as needed only by the client other than messages sent from the server)
 enum eFriendExtraEvent
 {
-	SLFE_FRIEND_LOGIN,              ///< Ä£±¸°¡ ·Î±×ÀÎ½Ã¿¡ ¹Þ´Â ¸Þ½ÃÁö
+	SLFE_FRIEND_LOGIN,              ///< Message your friend receives when logging in
 };
 
 struct SNtlEventFriendInfoNotify
@@ -3856,7 +3856,7 @@ struct SNtlEventChargingNfy
 };
 
 
-// Ä¿¹Â´ÏÄÉÀÌ¼Ç Å¸°ÙÀ» ¼³Á¤ÇÏ´Â Å¸ÀÔ
+// Type of setting communication target
 enum ECommuTargetType
 {
 	COMMU_TARGET_FRIEND,
@@ -3866,8 +3866,8 @@ enum ECommuTargetType
 
 struct SNtlEventCommuTargetSelect
 {
-	CHARACTERID     uiCharID;               ///< Ä³¸¯ÅÍ ID (Ä¿¹Â´ÏÆ¼ ¼­¹ö·ÎºÎÅÍ ¹ÞÀº ID)
-	SERIAL_HANDLE   uiSerialID;             ///< ½Ã¸®¾ó ID
+	CHARACTERID     uiCharID;               ///< Character ID (ID received from community server)
+	SERIAL_HANDLE   uiSerialID;             ///< Serial ID
 	WCHAR           wchName[NTL_MAX_SIZE_CHAR_NAME + 1];
 	ECommuTargetType eTargetType;
 };
@@ -3878,32 +3878,32 @@ struct SNtlEventCommuTargetRelease
 };
 
 /**
-* \brief Æ÷Æ÷ ¾ÆÀÌÄÜ ¹®ÀÚ¿­ Notify
+* \brief Popo Icon String Notify
 */
 struct SNtlEventPopoNotify
 {
-	const WCHAR* pwcTitle;			///< NotifyÀÇ Á¦¸ñ ( ÃÖ´ë 32±ÛÀÚ ) ( ³ë¶õ»ö Ç¥½Ã )
-	const WCHAR* pwcBuffer;			///< NotifyÀÇ ³»¿ë ( ÃÖ´ë 64±ÛÀÚ )
-	RwBool		 bImmediate;		///< TRUE : Áï½Ã Ç¥½Ã , FALSE : Æ÷Æ÷¾ÆÀÌÄÜÀÇ ½ºÅÃ¿¡ ÀúÀå
-	RwReal		 fLifeTime;			///< Áï½Ã Ç¥½Ã¶ó¸é ¾ó¸¶ µ¿¾È Ãâ·ÂµÉ °ÍÀÎ°¡? ( 0.0f = ÀÚµ¿À¸·Î ´ÝÈ÷Áö ¾ÊÀ½ )
+	const WCHAR* pwcTitle;			///< Title of Notify (maximum 32 characters) (marked in yellow)
+	const WCHAR* pwcBuffer;			///< Contents of Notify (maximum 64 characters)
+	RwBool		 bImmediate;		///< TRUE: Display immediately, FALSE: Save to the stack of the popo icon.
+	RwReal		 fLifeTime;			///< If it is displayed immediately, how long will it be displayed? (0.0f = not automatically closed)
 };
 
-/// º¯½Å ÀÌº¥Æ®
+/// transformation event
 struct SNtlEventTransform : public SNtlEventSob
 {
-    sASPECTSTATE  sApsectState;           ///< º¯½Å Á¤º¸
+    sASPECTSTATE  sApsectState;           ///< Transformation information
 };
 
-/// ¸÷ º¯½Å ÀÌº¥Æ®
+/// Mob Transformation Event
 struct SNtlEventMobTransform : public SNtlEventSob
 {
-    TBLIDX          tblTransformMobID;  ///< º¯½Å ÈÄÀÇ ¸÷ Å×ÀÌºí ÀÎµ¦½º
+    TBLIDX          tblTransformMobID;  ///< Mob table index after transformation
 };
 
-/// Äµµð º¯½Å ÀÌº¥Æ®
+/// Candy Transformation Event
 struct SNtlEventTransformCandy : public SNtlEventSob
 {
-    RwBool  bTransform;                 ///< º¯½Å À¯¹«
+    RwBool  bTransform;                 ///< presence or absence of transformation
 };
 
 struct SNtlEventBotCaution_Nfy : public SNtlEventSob
@@ -3938,7 +3938,7 @@ enum eScouterEventType
 
 struct SDboEventScouter
 {
-	int			iType;			///< Scouter¿¡ Àü´ÞµÇ´Â µ¥ÀÌÅÍ Å¸ÀÔ
+	int			iType;			///< Data type passed to Scouter
 
 	RwUInt32	uiUserData;
 	int			iUserData2;
@@ -3950,13 +3950,13 @@ struct SDboEventScouter
 	int			iUserData8;
 };
 
-/// ÆÄÆ¼ °øÀ¯ Å¸°Ù¿¡ ´ëÇÑ ÀÀ´ä
+/// Response to party shared target
 struct SNtlEventPartyShareTargetRes
 {
 	WORD            wResultCode;
 };
 
-/// ÆÄÆ¼ °øÀ¯ Å¸°Ù¿¡ ´ëÇÑ ¾Ë¸²
+/// Notifications about party sharing targets
 struct SNtlEventPartyShareTargetNfy
 {
 	sSHARETARGET_INFO		sharetargetInfo[NTL_MAX_SHARETARGET_COUNT];    
@@ -3964,7 +3964,7 @@ struct SNtlEventPartyShareTargetNfy
 
 struct SNtlEventShareTargetSelect : public SNtlEventSob
 {
-	RwUInt8         bySlot;             ///< Å¸°ÙÀÌ ¸î¹ø °øÀ¯ Å¸°ÙÀÎÁöÀÇ ½½·Ô
+	RwUInt8         bySlot;             ///< Slot of how many times the target is a shared target
 };
 
 struct SNtlEventShareTargetRelease : public SNtlEventSob
@@ -3974,8 +3974,8 @@ struct SNtlEventShareTargetRelease : public SNtlEventSob
 // Passenger
 struct SNtlEventSobOnBus : public SNtlEventSob
 {
-	RwBool				bRideOn;            ///< ¹ö½º Å¾½Â½Ã¿¡´Â True, ÇÏÂ÷½Ã¿¡´Â False
-	SERIAL_HANDLE		hBusSerialId;       ///< ¹ö½ºÀÇ ½Ã¸®¾ó ID        
+	RwBool				bRideOn;            ///< True when boarding the bus, False when getting off the bus
+	SERIAL_HANDLE		hBusSerialId;       ///< Serial ID of bus        
 };
 
 struct SNtlEventSobOnVehicle : public SNtlEventSob
@@ -4164,26 +4164,26 @@ struct SNtlEventTLEnableSkip
 
 struct SNtlEventCondTerror
 {
-	RwBool                  bAffect;                    ///< Àû¿ë À¯¹«
-	RwUInt32                hSubject;                   ///< È¿°ú¸¦ ´çÇÑ ´ë»ó (¾Æ¹ÙÅ¸ or Æê)
-	RwUInt32                hAttackerSerialId;          ///< °ø°ÝÇÑ Å¸°ÙÀÇ ½Ã¸®¾ó ID    
+	RwBool                  bAffect;                    ///< Applicable or not
+	RwUInt32                hSubject;                   ///< Target affected (avatar or pet)
+	RwUInt32                hAttackerSerialId;          ///< Serial ID of the attacked target    
 };
 
 struct SNtlEventCondConfused
 {
-	RwBool                  bAffect;                    ///< Àû¿ë À¯¹«
-	RwUInt32                hSubject;                   ///< È¿°ú¸¦ ´çÇÑ ´ë»ó (¾Æ¹ÙÅ¸ or Æê)
-	RwUInt32                hTargetSerialId;            ///< °ø°ÝÇÒ Å¸°ÙÀÇ ½Ã¸®¾ó ID
+	RwBool                  bAffect;                    ///< Applicable or not
+	RwUInt32                hSubject;                   ///< Target affected (avatar or pet)
+	RwUInt32                hTargetSerialId;            ///< Serial ID of target to attack
 };
 
-/// ±â¼û±â±â ÀÌº¥Æ® ±¸Á¶Ã¼
+/// Hide event structure
 struct SNtlEventCondHidingKi
 {
     SERIAL_HANDLE           hSerialID;                  
-    RwBool                  bAffect;                    ///< Àû¿ë À¯¹«    
+    RwBool                  bAffect;                    ///< Applicable or not    
 };
 
-// ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ 
+// The best ballroom in the world 
 struct SNtlEventMinorMatchStateUpdate
 {
 	RwUInt8		byMatchState;
@@ -4333,7 +4333,7 @@ struct SNtlEventAwardInfo
 };
 
 /**
-* \brief ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ÀÇ ÇöÀç »óÅÂ
+* \brief Current status of World's Best Martial Arts Club
 */
 struct sNtlEventBudokaiStateInfoNfy
 {
@@ -4347,7 +4347,7 @@ struct sNtlEventBudokaiStateInfoNfy
 };
 
 /**
-* \brief ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ÀÇ Main State Update
+* \brief Main State Update of World's Best Martial Arts Club
 */
 struct sNtlEventBudokaiUpdateStateNfy
 {
@@ -4355,7 +4355,7 @@ struct sNtlEventBudokaiUpdateStateNfy
 };
 
 /**
-* \brief ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ÀÇ Match State update
+* \brief Match State update of World's Best Martial Arts Club
 */
 struct sNtlEventBudokaiUpdateMatchStateNfy
 {
@@ -4364,7 +4364,7 @@ struct sNtlEventBudokaiUpdateMatchStateNfy
 };
 
 /**
-* \brief ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ °³ÀÎÀü µî·Ï °á°ú
+* \brief World��s Best Martial Arts Individual Exhibition Registration Results
 */
 struct SNtlEventBudokaiJoinIndividualRes
 {
@@ -4374,7 +4374,7 @@ struct SNtlEventBudokaiJoinIndividualRes
 };
 
 /**
-* \brief ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ °³ÀÎÀü Ãë¼Ò °á°ú
+* \brief Result of Cancellation of World's Best Martial Arts Solo Exhibition
 */
 struct SNtlEventBudokaiLeaveIndividualRes
 {
@@ -4382,7 +4382,7 @@ struct SNtlEventBudokaiLeaveIndividualRes
 };
 
 /**
-* \brief ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ ÆÀ Á¤º¸ °á°ú
+* \brief World's Best Martial Arts Team Information Results
 */
 struct SNtlEventBudokaiJoinTeamInfoRes
 {
@@ -4393,7 +4393,7 @@ struct SNtlEventBudokaiJoinTeamInfoRes
 };
 
 /**
-* \brief ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ ÆÄÆ¼Àü µî·Ï °á°ú
+* \brief World's Best Masquerade Party Pre-registration Results
 */
 struct SNtlEventBudokaiJoinTeamRes
 {
@@ -4408,7 +4408,7 @@ struct SNtlEventBudokaiJoinTeamRes
 };
 
 /**
-* \brief ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ ÆÄÆ¼Àü µî·Ï ¾Ë¸²
+* \brief World's Best Masquerade Party Pre-registration Notice
 */
 struct SNtlEventBudokaiJoinTeamNfy
 {
@@ -4421,7 +4421,7 @@ struct SNtlEventBudokaiJoinTeamNfy
 };
 
 /**
-* \brief ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ ÆÄÆ¼Àü Ãë¼Ò °á°ú
+* \brief World's Best Masquerade Party Competition Cancellation Result
 */
 struct SNtlEventBudokaiLeaveTeamRes
 {
@@ -4429,7 +4429,7 @@ struct SNtlEventBudokaiLeaveTeamRes
 };
 
 /**
-* \brief ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ ÆÄÆ¼Àü ¸â¹ö Ãë¼Ò °á°ú
+* \brief World's Best Martial Arts Party Pre-Party Member Cancellation Result
 */
 struct SNtlEventBudokaiLeaveTeamMemberRes
 {
@@ -4437,7 +4437,7 @@ struct SNtlEventBudokaiLeaveTeamMemberRes
 };
 
 /**
-* \brief ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ ÆÄÆ¼Àü ¸â¹ö Ãë¼Ò ¾Ë¸²
+* \brief World's Best Martial Arts Pre-Party Member Cancellation Notice
 */
 struct SNtlEventBudokaiLeaveTeamMemberNfy
 {
@@ -4445,7 +4445,7 @@ struct SNtlEventBudokaiLeaveTeamMemberNfy
 };
 
 /**
-* \brief ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ µî·Ï Á¤º¸
+* \brief World's First Martial Arts Club registration information
 */
 struct SNtlEventBudokaiJoinInfoRes
 {
@@ -4461,7 +4461,7 @@ struct SNtlEventBudokaiJoinInfoRes
 };
 
 /**
-* \brief ¹«µµ»ç ÅÚ·¹Æ÷Æ® Á¤º¸
+* \brief Martial Artist Teleport Information
 */
 struct SNtlEventBudokaiMudosaInfoRes
 {
@@ -4470,10 +4470,10 @@ struct SNtlEventBudokaiMudosaInfoRes
 	sBUDOKAI_MUDOSA_INFO	aMudosaInfo[BUDOKAI_MAX_MUDOSA_INFO_COUNT];
 };
 
-/// ½ºÅ©¸°¼¦ ÂïÀºÈÄÀÇ ÀÌº¥Æ®
+/// Events after taking a screenshot
 struct SNtlEventScreenShot
 {
-	std::string             strFileName;            ///< ½ºÅ©¸°¼¦ ÂïÀº ÆÄÀÏÀÇ ÀÌ¸§ (È®ÀåÀÚ Á¦¿Ü)
+	std::string             strFileName;             ///< Name of the file where the screenshot was taken (excluding extension)
 };
 
 struct SNtlEventSkillSelectMode
@@ -4483,7 +4483,7 @@ struct SNtlEventSkillSelectMode
 };
 
 /**
-* \brief ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ Âü°¡ »óÅÂ
+* \brief World's Best Martial Arts Participation Status
 */
 struct SNtlEventBudokaiJoinStateNfy
 {
@@ -4497,11 +4497,11 @@ struct SNtlEventBudokaiJoinStateRes
 	RwUInt16			wResultCode;
 	RwUInt8				byMatchType;		// eBUDOKAI_MATCH_TYPE
 	RwUInt8				byJoinState;		// eBUDOKAI_JOIN_STATE
-	RwUInt8				byJoinResult;		// Âü°¡ °á°ú
+	RwUInt8				byJoinResult;		// Participation results
 };
 
 /**
-* \brief ÃµÇÏÁ¦ÀÏ ¹«µµÈ¸ »çÀÌµå ¾ÆÀÌÄÜ °øÁö ±¸Á¶Ã¼
+* \brief World's Best Martial Arts Side Icon Notice Structure
 */
 struct SNtlEventBudokaiNoticeNfy
 {
@@ -4511,7 +4511,7 @@ struct SNtlEventBudokaiNoticeNfy
 };
 
 /**
-* \brief ½Ã³×¸¶Æ½ Ä¿¸Çµå 
+* \brief Cinematic Commands 
 */
 
 struct SNtlEventCinematicGuiCommand
@@ -4522,9 +4522,9 @@ struct SNtlEventCinematicGuiCommand
 
 enum eDialogMoveType
 {
-	TRM_DIALOG_DIALOG_MOVABLE_DEFAULT_POSITION,	///< ´ÙÀÌ¾ó·Î±×°¡ ¿òÁ÷ÀÏ ¼ö ÀÖÀ» ¶§ ±âº» À§Ä¡ ¼¼ÆÃ
-	TRM_DIALOG_DIALOG_MOVABLE,			///< ´ÙÀÌ¾ó·Î±×¸¦ ¿òÁ÷ÀÏ ¼ö ÀÖ´Â ¸ðµå·Î ÀüÈ¯
-	TRM_DIALOG_DIALOG_DISMOVABLE,		///< ´ÙÀÌ¾ó·Î±×¸¦ ¿òÁ÷ÀÏ ¼ö ¾ø´Â ¸ðµå·Î ÀüÈ¯
+	TRM_DIALOG_DIALOG_MOVABLE_DEFAULT_POSITION,	///< Setting the default position when the dialog is movable
+	TRM_DIALOG_DIALOG_MOVABLE,			///< Switch to mode where the dialog can be moved
+	TRM_DIALOG_DIALOG_DISMOVABLE,		///< Convert the dialog to immovable mode
 };
 
 struct SNtlEventDialogMove
@@ -4559,7 +4559,7 @@ enum eEVENT_GAME_OPTION_TYPE
 //	OPTION_CHAT_RAID,
 	OPTION_CHAT_SYSTEM,
 	
-	// ¸ðµç ¿É¼Ç Àû¿ë ÈÄ ¸®ÇÁ·¹½¬
+	// Refresh after applying all options
 	OPTION_CHAT_REFRESH,
 
 	GAME_OPTION_MOVIE_VOLUME,
@@ -4574,7 +4574,7 @@ struct SNtlEventGameChatOption
 
 struct SNtlEventTenkaichiMarking : public SNtlEventSob
 {
-    BYTE            byType;                 // ¸¶Å· Å¸ÀÔ
+    BYTE            byType;                 // Marking type
 };
 
 struct SNtlEventTitleEffect : public SNtlEventSob
@@ -4589,7 +4589,7 @@ struct SNtlEventBudokaiProgressMessageNfy
 	RwUInt8			byMsgId;
 };
 
-/// È¸Àü °ø°ÝÀ» ¹Þ¾Æ¼­ ½½¶óÀÌµù µÇ´Â ÀÌº¥Æ®
+/// Sliding event due to rotational attack
 struct SNtlEventSobPushingNfy : public SNtlEventSob
 {
     BYTE                byAttackResult;
@@ -4725,13 +4725,13 @@ struct SNtlEventQuickSlotLockMode
 };
 
 //////////////////////////////////////////////////////////////////////////
-// Mob °ü·Ã Event
+// Mob related events
 struct SNtlEventMobDie
 {
 	SERIAL_HANDLE m_hSerialID;
 };
 
-/// ¾îÅÃ »óÅÂ Á¾·á¸¦ ¼­¹ö¿¡ ¾Ë·ÁÁÖ´Â ÀÌº¥Æ®
+/// An event that notifies the server that the attack state has ended
 struct SNtlEventSobSendAttackEnd : public SNtlEventSob
 {
     

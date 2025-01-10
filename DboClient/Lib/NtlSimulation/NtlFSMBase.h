@@ -2,7 +2,7 @@
  *
  * File			: NtlFSMBase.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2006. 2. 9	
  * Abstract		: Finite state machine class
  *****************************************************************************
@@ -20,8 +20,8 @@ class CNtlSobActor;
 
 /**
  * \ingroup NtlSimulation
- * DBO에서 FSM을 구동시키는 class이다.
- * state의 container 기능과 transition 기능을 한다.
+ *This is a class that runs FSM in DBO.
+ *Performs the container function and transition function of the state.
  * 
  */
 class CNtlFSMBase
@@ -35,12 +35,12 @@ protected:
 public:
 
 	virtual ~CNtlFSMBase() {}	
-	virtual RwBool Create(void);    ///< 이 클래스가 생성된 후 바로 호출하는 함수	
-	virtual void Destroy(void);     ///< 이 클래스가 소멸되기 전에 호출되는 함수
+	virtual RwBool Create(void);    ///< Function called immediately after this class is created	
+	virtual void Destroy(void);     ///< Function called before this class is destroyed
 
-	RwBool            Register(CNtlFSMStateBase *pState);                                                   ///< State Container에 State를 Add한다.	
-	CNtlFSMStateBase* CreateState(CNtlSobActor *pActor, RwUInt32 uiNewStateId);                             ///< 최초의 State를 생성하는 함수 	
-	virtual CNtlFSMStateBase* Transition(CNtlSobActor *pActor, CNtlFSMStateBase *pOldState, RwUInt32 uiNewStateId); ///< State를 변환한다
+	RwBool            Register(CNtlFSMStateBase *pState);                                                   ///< Add State to State Container.	
+	CNtlFSMStateBase* CreateState(CNtlSobActor *pActor, RwUInt32 uiNewStateId);                             ///< Function that creates the first State 	
+	virtual CNtlFSMStateBase* Transition(CNtlSobActor *pActor, CNtlFSMStateBase *pOldState, RwUInt32 uiNewStateId); ///< Convert State
 };
 
 #endif

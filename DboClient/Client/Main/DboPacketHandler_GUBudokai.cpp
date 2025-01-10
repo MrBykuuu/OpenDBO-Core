@@ -1,9 +1,9 @@
 /*****************************************************************************
 * File			: DboPackethandler_GUBudokai.cpp
 * Author		: Cho Haesung
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2008. 5. 20
-* Abstract		: 천하제일 무도회 관련 패킷 핸들
+* Abstract		: Packet handle related to Budokai Tenkaichi
 *****************************************************************************
 * Desc         : 
 *****************************************************************************/
@@ -167,7 +167,7 @@ void PacketHandler_GUAwardNfy(void* pPacket)
 }
 
 /**
-* \brief 천하제일 무도회의 현재 상태를 전송
+*\brief Transmits the current status of Budokai Tenkaichi
 */
 void PacketHandler_GUBudokaiStateInfo(void* pPacket)
 {
@@ -188,7 +188,7 @@ void PacketHandler_GUBudokaiStateInfo(void* pPacket)
 }
 
 /**
-* \brief 천하제일 무도회의 Main state update
+*\brief Main state update of Budokai Tenkaichi
 */
 void PacketHandler_GUBudokaiUpdateStateNfy(void* pPacket)
 {
@@ -204,7 +204,7 @@ void PacketHandler_GUBudokaiUpdateStateNfy(void* pPacket)
 }
 
 /**
-* \brief 천하제일 무도회의 Match state update
+*\brief Match state update of Budokai Tenkaichi
 */
 void PacketHandler_GUBudokaiUpdateMatchStateNfy(void* pPacket)
 {
@@ -214,7 +214,7 @@ void PacketHandler_GUBudokaiUpdateMatchStateNfy(void* pPacket)
 }
 
 /**
-* \brief 천하제일 무도회 개인 등록
+*\brief Personal registration for World's Best Martial Arts solo registration
 */
 void PacketHandler_GUBudokaiJoinIndividualRes(void* pPacket)
 {
@@ -231,7 +231,7 @@ void PacketHandler_GUBudokaiJoinIndividualRes(void* pPacket)
 }
 
 /**
-* \brief 천하제일 무도회 개인 등록 취소
+*\brief World's Best Martial Arts solo registration cancellation
 */
 void PacketHandler_GUBudokaiLeaveIndividualRes(void* pPacket)
 {
@@ -248,7 +248,7 @@ void PacketHandler_GUBudokaiLeaveIndividualRes(void* pPacket)
 }
 
 /**
-* \brief 천하제일 무도회 팀 등록정보 결과
+*\brief World's Best Martial Arts Team Registration Information Results
 */
 void PacketHandler_GUBudokaiJoinTeamInfoRes(void* pPacket)
 {
@@ -265,7 +265,7 @@ void PacketHandler_GUBudokaiJoinTeamInfoRes(void* pPacket)
 }
 
 /**
-* \brief 천하제일 무도회 팀 등록 결과
+*\brief World's Best Martial Arts Team Registration Results
 */
 void PacketHandler_GUBudokaiJoinTeamRes(void* pPacket)
 {
@@ -284,7 +284,7 @@ void PacketHandler_GUBudokaiJoinTeamRes(void* pPacket)
 }
 
 /**
-* \brief 천하제일 무도회 팀 등록 알림
+*\brief World's Best Martial Arts Team Registration Notice
 */
 void PacketHandler_GUBudokaiJoinTeamNfy(void* pPacket)
 {
@@ -294,7 +294,7 @@ void PacketHandler_GUBudokaiJoinTeamNfy(void* pPacket)
 }
 
 /**
-* \brief 천하제일 무도회 팀 등록 취소 결과
+*\brief Results of deregistration of World's Best Martial Arts Team
 */
 void PacketHandler_GUBudokaiLeaveTeamRes(void* pPacket)
 {
@@ -311,7 +311,7 @@ void PacketHandler_GUBudokaiLeaveTeamRes(void* pPacket)
 }
 
 /**
-* \brief 천하제일 무도회 팀 등록 취소 알림
+*\brief World's Best Martial Arts Team Registration Cancellation Notice
 */
 void PacketHandler_GUBudokaiLeaveTeamNfy(void* pPacket)
 {
@@ -319,7 +319,7 @@ void PacketHandler_GUBudokaiLeaveTeamNfy(void* pPacket)
 }
 
 /**
-* \brief 천하제일 무도회 팀 멤버 등록 취소 결과
+*\brief Results of deregistration of World's Best Martial Arts team member
 */
 void PacketHandler_GUBudokaiLeaveTeamMemberRes(void* pPacket)
 {
@@ -336,7 +336,7 @@ void PacketHandler_GUBudokaiLeaveTeamMemberRes(void* pPacket)
 }
 
 /**
-* \brief 천하제일 무도회 팀 멤버 등록 취소 알림
+* \brief Notification of cancellation of registration of World's Best Martial Arts Team member
 */
 void PacketHandler_GUBudokaiLeaveTeamMemberNfy(void* pPacket)
 {
@@ -346,7 +346,7 @@ void PacketHandler_GUBudokaiLeaveTeamMemberNfy(void* pPacket)
 }
 
 /**
-* \brief 천하제일 무도회 등록 정보
+*\brief World's Best Martial Arts Association registration information
 */
 void PacketHandler_GUBudokaiJoinInfoRes(void* pPacket)
 {

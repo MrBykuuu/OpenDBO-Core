@@ -1,19 +1,19 @@
 #include "precomp_dboclient.h"
 #include "InterfaceShakeGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlPLDef.h"
 
-// gui
+// Gui
 #include "gui_guimanager.h"
 #include "mouse.h"
 
-// simulation
+// Simulation
 #include "InputActionMap.h"
 #include "NtlSLEvent.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
@@ -22,7 +22,7 @@
 #include "DboGlobal.h"
  
 /**
-* \brief 생성자
+* \brief constructor
 */
 CInterfaceShakeGui::CInterfaceShakeGui( const RwChar* pName ) 
 : CNtlPLGui(pName)
@@ -49,7 +49,7 @@ CInterfaceShakeGui::CInterfaceShakeGui( const RwChar* pName )
 }
 
 /**
-* \brief 소멸자
+* \brief destructor
 */
 CInterfaceShakeGui::~CInterfaceShakeGui() 
 {
@@ -118,17 +118,17 @@ VOID CInterfaceShakeGui::HandleEvents( RWS::CMsg &msg )
 {
 	NTL_FUNCTION("CInterfaceShakeGui::HandleEvents");
 	
-	// 넉다운이 되었다는 Notify
+	// Notify that there has been a knockdown
 	if( msg.Id == g_EventKnockDownNfy )
 	{
-		// 인터페이스를 띄운다.
+		// Launches the interface.
 		GetDialogManager()->OpenDialog( DIALOG_INTERFACE_SHAKE );
 	}
-	// 넉다운이 풀렸다는 Notify ( 인터페이스 UI가 열려 있는 상황에서만 받아서 처리 )
+	// Notify that knockdown has been released (received and processed only when the interface UI is open)
 	else if ( msg.Id == g_EventKnockDownWakeUpNfy 
 		&& GetDialogManager()->IsOpenDialog( DIALOG_INTERFACE_SHAKE ) )
 	{
-		// 인터페이스를 닫는다.
+		// Close the interface.
 		GetDialogManager()->CloseDialog( DIALOG_INTERFACE_SHAKE );
 	}
 
@@ -137,9 +137,9 @@ VOID CInterfaceShakeGui::HandleEvents( RWS::CMsg &msg )
 
 /**
 * \brief SwitchDialog
-* DialogManager에서 OpenDialog나 CloseDialog를 해줬을 경우 실행 된다.
-* \param bOpen Open = TRUE / Close = FALSE
-* \return 성공여부
+*Executed when OpenDialog or CloseDialog is performed in DialogManager.
+* \param bOpen Open = TRUE /Close = FALSE
+* \return Success or not
 */
 RwInt32 CInterfaceShakeGui::SwitchDialog( bool bOpen ) 
 {
@@ -157,21 +157,21 @@ RwInt32 CInterfaceShakeGui::SwitchDialog( bool bOpen )
 */
 VOID CInterfaceShakeGui::Update( RwReal fElapsed ) 
 {
-	// 시간 증가
+	// time increase
 	m_fElapsedTime += fElapsed;
 	m_fShakeElapsedTime += fElapsed;
 	m_fKeyDownElapsedTime += fElapsed;
 	m_fElapsedShakeTime += fElapsed;
 
-	// 플래쉬 업데이트
+	// flash update
 	m_pFlashMouseBack->Update( fElapsed );
 
-	// 마우스 위치 갱신
-	m_nMouseX = CMouse::GetX();					// 현재 마우스
-	m_nOffsetX = (m_nMouseX - m_nOldMouseX);		// 이전 마우스에서 증가값 구하기
-	m_nOldMouseX = m_nMouseX;					// 이전 마우스는 현재의 마우스가 된다.
+	// Update mouse position
+	m_nMouseX = CMouse::GetX();					// current mouse
+	m_nOffsetX = (m_nMouseX - m_nOldMouseX);		// Get increment from previous mouse
+	m_nOldMouseX = m_nMouseX;					// The previous mouse becomes the current mouse.
 
-	// True 우측, False 좌측
+	// True right, False left
 	if( m_bMouseToggle )
 	{
 		if( m_nOffsetX > dSHAKE_MOVE_DISTANCE )
@@ -200,31 +200,31 @@ VOID CInterfaceShakeGui::Update( RwReal fElapsed )
 		GetDialogManager()->CloseDialog( DIALOG_INTERFACE_SHAKE );
 	}
 
-	// ProgressBar의 Max에 다다르면 성공
+	// Success when Max of ProgressBar is reached
 	if( m_nTrackValue >= m_nTrackMax && m_bComplete == FALSE )
 		m_bComplete = TRUE;
 
-	// 성공 하면 패킷을 날려주고 Dialog를 닫아야 한다.
+	// If successful, the packet should be sent and the dialog should be closed.
 	if( m_bComplete )
 	{
-		// 성공했더라도 최소 시간이 안되면 기다린다.
+		// Even if you succeed, if the minimum time is not reached, wait.
 		if( m_fElapsedTime < dSHAKE_MIN_WAKEUP )
 			return;
 		
-		// KnockDown의 회복 패킷
+		// KnockDown's Recovery Packet
 		GetDboGlobal()->GetGamePacketGenerator()->SendCharKnockDownReleaseNfy();
 		
-		// Dialog를 닫아준다.
+		// Closes the dialog.
 		GetDialogManager()->CloseDialog( DIALOG_INTERFACE_SHAKE );
 	}
 }
 
 /**
-* \brief 마우스로 인한 ProgressBar 증가
+* \brief ProgressBar increases due to mouse
 */
 VOID CInterfaceShakeGui::ProgressUpdateFromMouse() 
 {
-	// 이득
+	// gain
 	if( m_fShakeElapsedTime < dSHAKE_MOUSE_FIRSTTIME )
 	{
 		m_nTrackValue += dSHAKE_ADVANTAGE_FIRST;
@@ -236,21 +236,21 @@ VOID CInterfaceShakeGui::ProgressUpdateFromMouse()
 	else
 		m_nTrackValue += dSHAKE_ADVANTAGE_THIRD;
 
-	// 마우스 흔들기 경과시간 초기화 & 마우스 Offset 초기화
+	// Mouse shaking elapsed time reset & mouse offset reset
 	m_fShakeElapsedTime = 0.0f;
 	m_nOffsetX = 0;
 
-	// 제한
+	// limits
 	if( m_nTrackValue > m_nTrackMax )
 		m_nTrackValue = m_nTrackMax;
 }
 
 /**
-* \brief 키보드로 인한 ProgressBar 증가
+* \brief ProgressBar Update FromKey board
 */
 VOID CInterfaceShakeGui::ProgressUpdateFromKeyboard() 
 {
-	// 이득
+	// gain
 	if( m_fKeyDownElapsedTime < dSHAKE_KEYBOARD_FIRSTTIME )
 	{
 		m_nTrackValue += dSHAKE_ADVANTAGE_FIRST;
@@ -262,16 +262,16 @@ VOID CInterfaceShakeGui::ProgressUpdateFromKeyboard()
 	else
 		m_nTrackValue += dSHAKE_ADVANTAGE_THIRD;
 
-	// KeyDown 경과시간 초기화
+	// KeyDown Reset elapsed time
 	m_fKeyDownElapsedTime = 0.0f;
 
-	// Track 값 제한
+	// Track value limits
 	if( m_nTrackValue > m_nTrackMax )
 		m_nTrackValue = m_nTrackMax;
 }
 
 /**
-* \brief UI를 열고 필요한 정보를 초기화한다.
+* \brief Open the UI and initialize the necessary information.
 */
 VOID CInterfaceShakeGui::ShowInterface( VOID ) 
 {
@@ -296,7 +296,7 @@ VOID CInterfaceShakeGui::ShowInterface( VOID )
 }
 
 /**
-* \brief UI를 닫아주며 해제해줘야 하는 일들을 수행한다.
+* \brief Closes the UI and performs tasks that need to be released.
 */
 VOID CInterfaceShakeGui::CloseInterface( VOID ) 
 {
@@ -310,7 +310,7 @@ VOID CInterfaceShakeGui::CloseInterface( VOID )
 
 /**
 * \brief OnKeyDown
-* 콜백으로 다이얼로그 매니저의 SigCaptureKeyDown에 연결된 함수
+*Function connected to SigCaptureKeyDown of the dialog manager as a callback
 */
 VOID CInterfaceShakeGui::OnKeyDown( gui::CComponent* pComponent, CInputDevice* pDevice, const CKey& key ) 
 {
@@ -336,7 +336,7 @@ VOID CInterfaceShakeGui::OnKeyDown( gui::CComponent* pComponent, CInputDevice* p
 
 /**
 * \brief OnKeyUp
-* 콜백으로 다이얼로그 매니저의 SigCaptureKeyUp에 연결된 함수
+*Function connected to SigCaptureKeyUp of the dialog manager as a callback
 */
 VOID CInterfaceShakeGui::OnKeyUp( gui::CComponent* pComponent, CInputDevice* pDevice, const CKey& key ) 
 {

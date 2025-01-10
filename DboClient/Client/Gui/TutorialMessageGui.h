@@ -1,25 +1,25 @@
 /******************************************************************************
-* File			: TutorialMessageGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 4. 23
-* Abstract		: 
+*File			: TutorialMessageGui.h
+*Author		    : Hong SungBock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2008. 4. 23
+*Abstract		: 
 *****************************************************************************
-* Desc			: 튜토리얼 진행중의 메세지를 표시한다
+*Desc			: Displays a message while the tutorial is in progress.
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// dbo
+// Dbo
 #include "Windowby3.h"
 
 

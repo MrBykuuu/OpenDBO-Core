@@ -2,13 +2,13 @@
  *
  * File			: NtlSobEventObject.h
  * Author		: agebreak
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2007. 9. 4	
  * Abstract		: Simulation Event object
  *****************************************************************************
- * Desc         : Trigger Object 외의 특별한 Event를 가지는 오브젝트를 생성한다.
- *				  (예. 이정표 - 포커싱될때 UI를 표시)
- *				  서버와 동기화 되지 않고 클라이언트 표시에만 사용한다. 
+ * Desc         : Creates an object with a special event other than a Trigger Object.
+ * (e.g. milestone -displays UI when focused)
+ * It is not synchronized with the server and is only used for client display. 
  *****************************************************************************/
 
 #pragma once

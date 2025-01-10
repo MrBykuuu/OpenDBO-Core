@@ -150,8 +150,8 @@ RwBool CNtlResourceMeshSystem::Load(FILE* pFile)
 			fread(&m_EmitterTrail, sizeof(SNtlPrtStdEmitterTrail), 1, pFile);
 		}
         
-        // Trail의 Max Count가 디폴트가 1000이라서 메모리 부족 버그가 일어났었다. 
-        // 디폴트값을 변경하지만 기존의 이펙트를 위해서 변경 코드를 추가한다.
+        // Because Trail's Max Count defaulted to 1000, a memory shortage bug occurred. 
+        // Change the default value, but add change code for the existing effect.
         m_EmitterTrail.nMaxEdgeCount = m_EmitterTrail.nMaxEdgeCount == 1000 ? 100 : m_EmitterTrail.nMaxEdgeCount;
     }
 

@@ -1,13 +1,13 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobVehicle.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLCharacter.h"
 
-// simulation
+// Simulation
 #include "NtlSobManager.h"
 #include "NtlSobVehicleAttr.h"
 #include "NtlSobVehicleProxy.h"
@@ -30,7 +30,7 @@ CNtlSobVehicle::CNtlSobVehicle( void )
 
 	m_bAttachDriver = FALSE;
 
-	// Centimeter 단위로 계산함
+	// Calculated in centimeters
 	m_fRideOnOffAccel		= 200.f;
 	m_fRideOnOffMaxSpeed	= 200.f;
 	m_fRideOnOffCurSpeed	= 0.f;
@@ -175,7 +175,7 @@ void CNtlSobVehicle::UpdateRideOnHeight( RwReal fElapsed )
 			m_fTargetRideOnHeight = 0.f;
 		}*/
 
-		// 상승
+		// rising
 		if ( m_fTargetRideOnHeight > m_fCurRideOnHeight )
 		{
 			m_fRideOnOffCurSpeed += m_fRideOnOffAccel * fElapsed;
@@ -184,7 +184,7 @@ void CNtlSobVehicle::UpdateRideOnHeight( RwReal fElapsed )
 			m_fCurRideOnHeight += m_fRideOnOffCurSpeed * fElapsed;
 			m_fCurRideOnHeight = (m_fCurRideOnHeight >= m_fTargetRideOnHeight ? m_fTargetRideOnHeight : m_fCurRideOnHeight);
 		}
-		// 하강
+		// descent
 		else if ( m_fTargetRideOnHeight < m_fCurRideOnHeight )
 		{
 			m_fRideOnOffCurSpeed += m_fRideOnOffAccel * fElapsed;

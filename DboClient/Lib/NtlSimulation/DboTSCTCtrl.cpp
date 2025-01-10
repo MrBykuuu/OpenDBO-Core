@@ -27,22 +27,22 @@ CDboTSCTCtrl::~CDboTSCTCtrl( void )
 
 void CDboTSCTCtrl::Update( void )
 {
-	// 종료 상태인 경우
+	//In case of termination state
 	if ( IsExitState() ) return;
 
-	// 예외 타이머 업데이트
+	// Exception Timer Update
 	UpdateExceptionTimer();
 
-	// 대기 타이머 업데이트
+	// Wait timer update
 	UpdateTimeWait();
 
-	// 대기 타이머 동작
+	// Standby timer operation
 	if ( !IsTimeWait() )
 	{
-		// 동기화 큐가 동작 중이면 다음 단계로 진행하지 않는다
+		// If the synchronization queue is running, do not proceed to the next step.
 		if ( IsContSyncQueueEmpty() )
 		{
-			// 퀘스트를 진행한다
+			// Proceed with the quest
 			UpdateTSStep();
 		}
 	}
@@ -65,7 +65,7 @@ NTL_TSRESULT CDboTSCTCtrl::Cont_GCond( CNtlTSCont* pCont )
 	sParam.SetControl( this );
 	sParam.SetAgency( GetParent() );
 
-	// 일반적인 조건 컨테이너는 클라이언트에서 먼저 실행하고 문제 없으면 서버로 검증을 요구한다
+	// General conditions: Container runs on the client first and requests verification from the server if there are no problems.
 	NTL_TSRESULT tsResult = GetTrigger()->RunTarget( tgID, tcID, GetParent()->GetRecv(), &sParam );
 	if ( tsResult & NTL_TSRESULT_TYPE_ERROR )
 	{
@@ -73,7 +73,7 @@ NTL_TSRESULT CDboTSCTCtrl::Cont_GCond( CNtlTSCont* pCont )
 		return tsResult;
 	}
 
-	// 조건을 만족함
+	// Satisfies the conditions
 	if ( NTL_TSRESULT_TYPE_SUCCESS == tsResult )
 	{
 		CNtlTSCont* pNextCont = GetTrigger()->GetGroup( tgID )->GetChildCont( pContGCond->GetYesLinkID() );
@@ -83,20 +83,20 @@ NTL_TSRESULT CDboTSCTCtrl::Cont_GCond( CNtlTSCont* pCont )
 			return NTL_TSRESULT_TYPE_ERROR;
 		}
 
-		// 서버에게 다음 단계로 진행해도 되는지 물어본다
+		// Ask the server if you can proceed to the next step
 		unsigned int uiParam[QUEST_REWARD_SEL_MAX_CNT] = { 0xffffffff , 0xffffffff , 0xffffffff , 0xffffffff };
 
 		UG_Avatar_TS_Confirm_Step( tcID, pNextCont->GetID(), uiParam, GetEventType(), GetEventData() );
 	}
-	// 현재는 조건을 만족하지는 못하나 다음에는 조건을 만족할 수 있음
-	// 현재도 조건을 만족하지는 못하고 다음에도 절대 조건을 만족할 수 없는 경우
+	// The conditions are not satisfied now, but the conditions may be satisfied next time.
+	// If the conditions are not satisfied now and the conditions will never be satisfied in the future
 	else if ( (tsResult & NTL_TSRESULT_TYPE_COND_CAN_PROGRESS) || (tsResult & NTL_TSRESULT_TYPE_COND_CANT_PROGRESS) )
 	{
-		// 만약 No에 연결된 링크가 있다면 실행한다
+		// If there is a link connected to No, run it.
 		CNtlTSCont* pNextCont = GetTrigger()->GetGroup( tgID )->GetChildCont( pContGCond->GetNoLinkID() );
 		if ( pNextCont )
 		{
-			// 서버에게 다음 단계로 진행해도 되는지 물어본다
+			// Ask the server if you can proceed to the next step
 			unsigned int uiParam[QUEST_REWARD_SEL_MAX_CNT] = { 0xffffffff , 0xffffffff , 0xffffffff , 0xffffffff };
 
 			UG_Avatar_TS_Confirm_Step( tcID, pNextCont->GetID(), uiParam, GetEventType(), GetEventData() );
@@ -113,7 +113,7 @@ NTL_TSRESULT CDboTSCTCtrl::Cont_GAct( CNtlTSCont* pCont )
 	NTL_TS_TG_ID tgID = ((CNtlTSGroup*)pContGAct->GetParent())->GetID();
 	NTL_TS_TG_ID tcID = pContGAct->GetID();
 
-	// 일반적인 액션 컨테이너는 서버에게 실행을 요청하고 응답을 받은 시점에서 실행을 한다
+	// A typical action container requests execution from the server and executes when a response is received.
 	CNtlTSCont* pNextCont = GetTrigger()->GetGroup( tgID )->GetChildCont( pContGAct->GetNextLinkID() );
 	if ( 0 == pNextCont )
 	{
@@ -121,7 +121,7 @@ NTL_TSRESULT CDboTSCTCtrl::Cont_GAct( CNtlTSCont* pCont )
 		return NTL_TSRESULT_TYPE_ERROR;
 	}
 
-	// 서버에게 다음 단계로 진행해도 되는지 물어본다
+	// Ask the server if you can proceed to the next step
 	unsigned int uiParam[QUEST_REWARD_SEL_MAX_CNT] = { 0xffffffff , 0xffffffff , 0xffffffff , 0xffffffff };
 
 	UG_Avatar_TS_Confirm_Step( tcID, pNextCont->GetID(), uiParam, GetEventType(), GetEventData() );
@@ -136,7 +136,7 @@ NTL_TSRESULT CDboTSCTCtrl::Cont_UserSel( CNtlTSCont* pCont )
 	NTL_TS_TG_ID tgID = ((CNtlTSGroup*)pContUsr->GetParent())->GetID();
 	NTL_TS_TG_ID tcID = pContUsr->GetID();
 
-	// 유저에게 유저 선택창 출력
+	// Display a user selection window to the user
 	sTS_KEY sKey; sKey.Init();
 	sKey.tID = tID;
 	sKey.tgID = tgID;
@@ -158,7 +158,7 @@ NTL_TSRESULT CDboTSCTCtrl::Cont_Reward( CNtlTSCont* pCont )
 	sParam.SetControl( this );
 	sParam.SetAgency( GetParent() );
 
-	// 보상 컨테이너는 클라이언트에서 먼저 실행하고 문제 없으면 서버로 검증을 요구한다
+	// The compensation container runs first on the client and requests verification from the server if there are no problems.
 	NTL_TSRESULT tsResult = GetTrigger()->RunTarget( tgID, tcID, GetParent()->GetRecv(), &sParam );
 	if ( tsResult & NTL_TSRESULT_TYPE_ERROR )
 	{
@@ -166,11 +166,11 @@ NTL_TSRESULT CDboTSCTCtrl::Cont_Reward( CNtlTSCont* pCont )
 		return tsResult;
 	}
 
-	// 조건을 만족함
+	// Satisfies the conditions
 	if ( NTL_TSRESULT_TYPE_SUCCESS == tsResult )
 	{
-		// 유저에게 대화 출력.
-		// 그리고, 유저가 주어진 보상중 하나를 선택해서 알려줘야 함
+		// Output dialogue to the user.
+		// Additionally, the user must select one of the given rewards and notify the user.
 		sTS_KEY sKey; sKey.Init();
 		sKey.tID = tID;
 		sKey.tgID = tgID;
@@ -193,7 +193,7 @@ NTL_TSRESULT CDboTSCTCtrl::Cont_Start( CNtlTSCont* pCont )
 	sParam.SetControl( this );
 	sParam.SetAgency( GetParent() );
 
-	// 시작 컨테이너는 클라이언트에서 먼저 실행하고 문제 없으면 서버로 검증을 요구한다
+	// The starting container runs first on the client and requests verification from the server if there are no problems.
 	NTL_TSRESULT tsResult = GetTrigger()->RunTarget( tgID, tcID, GetParent()->GetRecv(), &sParam );
 	if ( tsResult & NTL_TSRESULT_TYPE_ERROR )
 	{
@@ -201,7 +201,7 @@ NTL_TSRESULT CDboTSCTCtrl::Cont_Start( CNtlTSCont* pCont )
 		return tsResult;
 	}
 
-	// 조건을 만족함
+	// Satisfies the conditions
 	if ( NTL_TSRESULT_TYPE_SUCCESS == tsResult )
 	{
 		CNtlTSCont* pNextCont = GetTrigger()->GetGroup( tgID )->GetChildCont( pContStart->GetYesLinkID() );
@@ -211,20 +211,20 @@ NTL_TSRESULT CDboTSCTCtrl::Cont_Start( CNtlTSCont* pCont )
 			return NTL_TSRESULT_TYPE_ERROR;
 		}
 
-		// 서버에게 다음 단계로 진행해도 되는지 물어본다
+		// Ask the server if you can proceed to the next step
 		unsigned int uiParam[QUEST_REWARD_SEL_MAX_CNT] = { 0xffffffff , 0xffffffff , 0xffffffff , 0xffffffff };
 
 		UG_Avatar_TS_Confirm_Step( tcID, pNextCont->GetID(), uiParam, GetEventType(), GetEventData() );
 	}
-	// 시작 컨테이너에서 시작을 다음으로 진행 할 수 없는 경우는 무조건 No를 실행한다
+	// If the startup container cannot proceed to the next step, execute No unconditionally.
 	else if ( (tsResult & NTL_TSRESULT_TYPE_COND_CAN_PROGRESS) || (tsResult & NTL_TSRESULT_TYPE_COND_CANT_PROGRESS) )
 	{
-		// 만약 No에 연결된 링크가 있다면 실행한다
+		// If there is a link connected to No, run it.
 		CNtlTSCont* pNextCont = GetTrigger()->GetGroup( tgID )->GetChildCont( pContStart->GetNoLinkID() );
 
 		if ( pNextCont )
 		{
-			// 서버에게 다음 단계로 진행해도 되는지 물어본다
+			// Ask the server if you can proceed to the next step
 			unsigned int uiParam[QUEST_REWARD_SEL_MAX_CNT] = { 0xffffffff , 0xffffffff , 0xffffffff , 0xffffffff };
 
 			UG_Avatar_TS_Confirm_Step( tcID, pNextCont->GetID(), uiParam, GetEventType(), GetEventData() );
@@ -241,7 +241,7 @@ NTL_TSRESULT CDboTSCTCtrl::Cont_End( CNtlTSCont* pCont )
 	NTL_TS_TG_ID tgID = ((CNtlTSGroup*)pContEnd->GetParent())->GetID();
 	NTL_TS_TG_ID tcID = pContEnd->GetID();
 
-	// 서버에게 다음 단계로 진행해도 되는지 물어본다
+	// Ask the server if you can proceed to the next step
 	unsigned int uiParam[QUEST_REWARD_SEL_MAX_CNT] = { 0xffffffff , 0xffffffff , 0xffffffff , 0xffffffff };
 
 	UG_Avatar_TS_Confirm_Step( tcID, NTL_TS_TC_ID_INVALID, uiParam, GetEventType(), GetEventData() );
@@ -258,7 +258,7 @@ NTL_TSRESULT CDboTSCTCtrl::Cont_Narration( CNtlTSCont* pCont )
 	sKey.tgID = ((CNtlTSGroup*)pContNarration->GetParent())->GetID();
 	sKey.tcID = pContNarration->GetID();
 
-	// 유저에게 나래이션 대화 출력.
+	// Output narration dialogue to the user.
 	TU_ShowNarrationDialog( sKey, pContNarration );
 
 	return NTL_TSRESULT_TYPE_SUCCESS;
@@ -292,7 +292,7 @@ NTL_TSRESULT CDboTSCTCtrl::Cont_Switch( CNtlTSCont* pCont )
 	CDboTSContSwitch* pContSwitch = (CDboTSContSwitch*)pCont;
 	NTL_TS_TG_ID tcID = pContSwitch->GetID();
 
-	// 서버에게 다음 단계로 진행해도 되는지 물어본다
+	// Ask the server if you can proceed to the next step
 	unsigned int uiParam[QUEST_REWARD_SEL_MAX_CNT] = { 0xffffffff , 0xffffffff , 0xffffffff , 0xffffffff };
 
 	UG_Avatar_TS_Confirm_Step( tcID, NTL_TS_TC_ID_INVALID, uiParam, GetEventType(), GetEventData() );
@@ -309,7 +309,7 @@ NTL_TSRESULT CDboTSCTCtrl::Cont_UnifiedNarration( CNtlTSCont* pCont )
 	sKey.tgID = ((CNtlTSGroup*)pContNarration->GetParent())->GetID();
 	sKey.tcID = pContNarration->GetID();
 
-	// 유저에게 나래이션 대화 출력.
+	// Output narration dialogue to the user.
 	TU_ShowUnifiedNarrationDialog( sKey, pContNarration );
 
 	return NTL_TSRESULT_TYPE_SUCCESS;
@@ -323,7 +323,7 @@ void CDboTSCTCtrl::UpdateTSStep( void )
 	if ( IsClientWait() ) return;
 	if ( IsSvrComAfterClientWait() ) return;
 
-	// 현재 진행 중인 컨테이너가 없다는 것은 시작을 의미함
+	// No containers currently in progress means starting
 	if ( 0 == m_pCurTSP )
 	{
 		m_pCurTSP = GetTrigger()->GetGroup( NTL_TS_MAIN_GROUP_ID )->GetChildCont( START_CONTAINER_ID );
@@ -446,10 +446,10 @@ void CDboTSCTCtrl::ChangeTSState( unsigned int uiChangFlag )
 	{
 		if ( IsFailed() )
 		{
-			// 서버에게 Failed 설정 상태를 전송한다
+			// Send failed setting status to server
 			UG_TS_Update_State( eTSSTATE_TYPE_ADD, eTS_SVR_STATE_FAILED );
 
-			// 에러 상태이면 PC 트리거의 경우 강제 종료 상태로 이동한다
+			// If it is in an error state, it moves to a forced shutdown state in the case of a PC trigger.
 			SetExitState();
 		}
 		else
@@ -461,15 +461,15 @@ void CDboTSCTCtrl::ChangeTSState( unsigned int uiChangFlag )
 	{
 		if ( IsError() )
 		{
-			// 서버에게 에러 설정 상태를 전송한다
+			// Send error setting status to server
 			UG_TS_Update_State( eTSSTATE_TYPE_ADD, eTS_SVR_STATE_ERROR );
 
-			// 에러 상태이면 PC 트리거의 경우 강제 종료 상태로 이동한다
+			// If it is in an error state, it moves to a forced shutdown state in the case of a PC trigger.
 			SetExitState();
 		}
 		else
 		{
-			// 서버에게 에러 설정 해재 상태를 전송한다
+			// Send error setting cancellation status to server
 			UG_TS_Update_State( eTSSTATE_TYPE_REMOVE, eTS_SVR_STATE_ERROR );
 		}
 	}
@@ -477,7 +477,7 @@ void CDboTSCTCtrl::ChangeTSState( unsigned int uiChangFlag )
 	{
 		if ( IsExitState() )
 		{
-			// 클라이언트에게 트리거 종료를 알림
+			// Notify client of trigger termination
 			((CDboTSCTAgency*)GetParent())->TU_FinishQuest( TS_TYPE_PC_TRIGGER_CS, GetTrigger()->GetID() );
 		}
 	}
@@ -551,7 +551,7 @@ void CDboTSCTCtrl::GU_Avatar_TS_Confirm_Step( WORD wResultCode, NTL_TS_TC_ID tcC
 		return;
 	}
 
-	// 현재 컨테이너 실행
+	// Currently running container
 	sCTRUN_PARAM sParam;
 	sParam.SetControl( this );
 	sParam.SetAgency( GetParent() );
@@ -562,12 +562,12 @@ void CDboTSCTCtrl::GU_Avatar_TS_Confirm_Step( WORD wResultCode, NTL_TS_TC_ID tcC
 	{
 	case DBO_CONT_TYPE_ID_CONT_GCOND:
 		{
-			// 선 검사를 하므로 이곳에서 트리거를 Run 할 필요 없음
+			// Since line inspection is performed, there is no need to run the trigger here.
 		}
 		break;
 	case DBO_CONT_TYPE_ID_CONT_GACT:
 		{
-			// 에러 상태로 분기시에는 액션을 실행하지 않는다
+			// When branching in an error state, no action is executed.
 			if ( pNextCont->GetID() != ((CDboTSContGAct*)pCurCont)->GetErrorLinkID() )
 			{
 				tsResult = GetTrigger()->RunTarget( NTL_TS_MAIN_GROUP_ID, pCurCont->GetID(), GetParent()->GetRecv(), &sParam );
@@ -576,47 +576,47 @@ void CDboTSCTCtrl::GU_Avatar_TS_Confirm_Step( WORD wResultCode, NTL_TS_TC_ID tcC
 		break;
 	case DBO_CONT_TYPE_ID_CONT_USERSEL:
 		{
-			// 실행 시킬 엔티티가 존재하지 않음
+			// There is no entity to execute
 		}
 		break;
 	case DBO_CONT_TYPE_ID_CONT_REWARD:
 		{
-			// 선 검사를 하므로 이곳에서 트리거를 Run 할 필요 없음
+			// Since line inspection is performed, there is no need to run the trigger here.
 		}
 		break;
 	case DBO_CONT_TYPE_ID_CONT_START:
 		{
-			// 선 검사를 하므로 이곳에서 트리거를 Run 할 필요 없음
+			// Since line inspection is performed, there is no need to run the trigger here.
 		}
 		break;
 	case DBO_CONT_TYPE_ID_CONT_END:
 		{
-			// 실행 시킬 엔티티가 존재하지 않음
+			// There is no entity to execute
 
-			// 종료 처리를 수행한다
+			// Perform termination processing
 			SetExitState();
 		}
 		break;
 	case DBO_CONT_TYPE_ID_CONT_NARRATION:
 		{
-			// 실행 시킬 엔티티가 존재하지 않음
+			// There is no entity to execute
 		}
 		break;
 	case DBO_CONT_TYPE_ID_CONT_PROPOSAL:
 		{
-			// 실행 시킬 엔티티가 존재하지 않음
+			// There is no entity to execute
 		}
 		break;
 
 	case DBO_CONT_TYPE_ID_CONT_SWITCH:
 		{
-			// 실행 시킬 엔티티가 존재하지 않음
+			// There is no entity to execute
 		}
 		break;
 
 	case DBO_CONT_TYPE_ID_CONT_UNIFIED_NARRATION:
 		{
-			// 실행 시킬 엔티티가 존재하지 않음
+			// There is no entity to execute
 		}
 		break;
 	}
@@ -628,7 +628,7 @@ void CDboTSCTCtrl::GU_Avatar_TS_Confirm_Step( WORD wResultCode, NTL_TS_TC_ID tcC
 		return;
 	}
 
-	// 다음 컨테이너로 TSP를 이동한다
+	// Move the TSP to the next container
 	MoveTSP( pCurCont, pNextCont, false );
 }
 
@@ -658,7 +658,7 @@ void CDboTSCTCtrl::GU_TS_Update_State( unsigned char byType, unsigned short wTSS
 		break;
 	}
 
-	// 실패나 에러 상태이면 PC 트리거의 경우 강제 종료 상태로 이동한다
+	// If it is in a failure or error state, it moves to a forced shutdown state in the case of a PC trigger.
 	if ( IsFailed() || IsError() )
 	{
 		SetExitState();

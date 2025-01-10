@@ -41,8 +41,8 @@ public:
 
 	CNtlEventQueueSlot(RWS::CMsg &Msg, void *pData, RwInt32 iDataLen, RwReal fDelayTime);
 	/**
-	*  memory pool을 사용하여 SEventData 메모리를 할당하는 함수.
-	*  renerware의 RwFreeList를 사용하고 있다.
+	*Function that allocates SEventData memory using the memory pool.
+	*I am using renerware's RwFreeList.
 	*/
 	static RwBool AllocFreeList(void);
 	static void FreeFreeList(void);
@@ -86,27 +86,27 @@ public:
 	~CNtlEventQueue();
 
 	/**
-	*  class의 멤버 접근은 이 함수를 사용한다.
+	*  To access members of a class, use this function.
     *
     */
 	static CNtlEventQueue* GetInstance(void);
 
 	/**
-    *  create 함수.
-	*  \return create에 성공하면 TRUE, 실패하면 FALSE
+    *  create function.
+	*  \return TRUE if create succeeds, FALSE if create fails.
     *  \see Destroy
     */
 	RwBool Create(void);
 
 	/**
-    *  destroy 함수.
+    *  destroy function.
 	*  \see Create
     */
 	void Destroy(void);
 
 	/**
-    *  event를 queue에 push하는 함수.
-	*  \return push에 성공하면 TRUE, 실패하면 FALSE
+    *  Function that pushes an event to the queue.
+	*  \return TRUE if push succeeds, FALSE if push fails.
 	*  \param &Msg event message data
 	*  \param *pData event data data
 	*  \param iDataLen event data length
@@ -115,19 +115,19 @@ public:
 	RwBool Push(RWS::CMsg &Msg, void *pData, RwInt32 iDataLen, RwReal fDelayTime);
 
 	/**
-    *  queue에 쌓인 event를 처리하는 함수.
+    * A function that processes events accumulated in the queue.
 	*  \param fElapsed delta time
     */
 	void Process(RwReal fElapsed);
 
 	/**
-    *  queue에 쌓인 event를 filtering 한다.
+    * Filters events accumulated in the queue.
 	*  \param fElapsed delta time
     */
 	void CurrentProcessFilterMsg(RWS::CEventId& id);
 
 	/**
-    *  queue에 쌓인 event를 filtering 한다.
+    * Filters events accumulated in the queue.
 	*  \param fElapsed delta time
     */
 	RwBool IsFilterMsg(RWS::CMsg& msg);

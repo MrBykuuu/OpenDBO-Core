@@ -15,26 +15,26 @@
 #include <rwcore.h>
 #include <rpworld.h>
 
-/**< !!!!!!!!!!!!!!!!!!!!!!Clump에 저장이 되므로 기존 값들을 절대 변경 하시면 안됩니다.!!!!!!!!!!!!!!!!!!!!!!! */
+/**< !!!!!!!!!!!!!!!!!!!!!!Because they are stored in Clump, you should never change the existing values.!!!!!!!!!!!!!!!!!!!!!!! */
 enum ENtlAtomicFlag
 {
 	NTL_ATOMIC_FLAG_INVALID	= 0x00000000,
 
-	NTL_TOON_NOT_EDGE		= 0x00000001, /**<Edge가 Rendering이 되지않음 */
-	NTL_TOON_DETAIL_EDGE	= 0x00000002, /**<Edge만 Vertex로 만든 Detail한 Edge가 찍힘*/
+	NTL_TOON_NOT_EDGE		= 0x00000001, /**<Edge is not rendered */
+	NTL_TOON_DETAIL_EDGE	= 0x00000002, /**<Only the edges are captured with detailed edges made of vertex.*/
 	
-	NTL_TWOSIDE             = 0x00000010, /**<TwoSide 공통 */
-	NTL_ALPHATEST			= 0x00000020, /**<AlphaTest 공통 */
-	NTL_ALPHA				= 0x00000040, /**<Alpha 공통 */
+	NTL_TWOSIDE             = 0x00000010, /**<TwoSide common */
+	NTL_ALPHATEST			= 0x00000020, /**<AlphaTest common */
+	NTL_ALPHA				= 0x00000040, /**<Alpha common */
 	
-	NTL_COLLISION			= 0x00001000, /**<Collision을 할건지 말건지 */
-	NTL_NOT_VISIBLE			= 0x00002000, /**<화면에 그릴지 안그릴지의 유무*/
-	NTL_DECAL_VISIBLE		= 0x00004000, /**<Decal을 표시할 건지 유무 */
-    NTL_CAMERA_COLLISION    = 0x00020000, /**<Not Visible 체크가 된것중에서 카메라 충돌을 할지의 유무 */
+	NTL_COLLISION			= 0x00001000, /**<Whether to do Collision or not? */
+	NTL_NOT_VISIBLE			= 0x00002000, /**<Whether to draw on the screen or not*/
+	NTL_DECAL_VISIBLE		= 0x00004000, /**<Whether to display decal or not */
+    NTL_CAMERA_COLLISION    = 0x00020000, /**<Whether or not there will be a camera collision among those checked for Not Visible */
 
-	NTL_SHADOW_MAP			= 0x00008000, /**<ShadowMap을 생성할 건지(ShadowMap이 있는지 유무) */
+	NTL_SHADOW_MAP			= 0x00008000, /**<Whether to create a ShadowMap (whether a ShadowMap exists or not) */
 	
-	NTL_RUNTIME_ALPHA		= 0x00010000, /**<RunTime에 Alpha가 적용이 되는 경우 */
+	NTL_RUNTIME_ALPHA		= 0x00010000, /**<If Alpha is applied to RunTime */
 	NTL_TOON_EDGE_OFF		= 0x00040000,
 	NTL_ENVMAP_TEX			= 0x00080000, /**<Enviroment map texture name */
 	NTL_EMBLEM_MARK			= 0x00100000,

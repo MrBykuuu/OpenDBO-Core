@@ -1,21 +1,21 @@
 #include "precomp_dboclient.h"
 #include "DboGlobal.h"
 
-// shared
+// Shared
 #include "NtlClientNet.h"
 #include "NtlXMLDoc.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// simulation
+// Simulation
 #include "NtlNetSender.h"
 #include "NtlSobAvatar.h"
 #include "NtlSobManager.h"
 #include "NtlSobStatusAnimSyncManager.h"
 #include "NtlNetSender.h"
 
-// dbo
+// Dbo
 #include "DboDef.h"
 #include "DboVirtualServer.h"
 #include "DumpCommand.h"
@@ -188,10 +188,10 @@ RwBool CDboGlobal::Create(HWND hWnd)
 
 #endif
 
-	// net sender callback  등록.
+	// Register net sender callback.
 	CNtlNetSender::LinkNotifySendPacketFunc(CallbackNetSendPacket);
 
-	// packet generator 생성.
+	// Create a packet generator.
 	m_pLoginPacketGenerator = NTL_NEW CLoginPacketGenerator(m_pLoginNetSender);	
 	m_pLobbyPacketGenerator = NTL_NEW CLobbyPacketGenerator(m_pLobbyNetSender);	
 	m_pGamePacketGenerator = NTL_NEW CGamePacketGenerator(m_pGameNetSender);	
@@ -287,7 +287,7 @@ RwBool CDboGlobal::LoadConfigOptions(const RwChar *pFileName)
 
     char chBuffer[1024] = {0,};
     
-	// config operation을 얻어온다.
+	// Retrieves config operation.
 	IXMLDOMNode* pNode = doc.SelectSingleNode((char*)"/config_options/op");
 	
 	if(!doc.GetTextWithAttributeName(pNode, "ver", chBuffer, 1024))
@@ -333,7 +333,7 @@ RwBool CDboGlobal::LoadConfigOptions(const RwChar *pFileName)
 
 	pNode->Release();
 
-	// localize
+	// Localize
 
 	pNode = doc.SelectSingleNode((char*)"/config_options/localize");
 

@@ -114,7 +114,7 @@ RwBool CFriendListGui::Create()
 
     CreateInfoStaticBox();
 
-    // 슬롯 설정        
+    // Slot Settings        
     m_slotMouseLeave    = m_pThis->SigMouseLeave().Connect(this, &CFriendListGui::OnMouseLeave);
     m_slotClose         = m_pBtnClose->SigClicked().Connect(this, &CFriendListGui::OnCloseBtnClicked);
     m_slotBtnTitleName  = m_pBtnTitleName->SigClicked().Connect(this, &CFriendListGui::OnTitleNameClicked);
@@ -135,24 +135,24 @@ RwBool CFriendListGui::Create()
 	m_slotCaptureMouseDown = GetNtlGuiManager()->GetGuiManager()->SigCaptureMouseDown().Connect(this, &CFriendListGui::OnCaptureMouseDown); // required to put friendlist above other UI's
     
     
-    // 상점 이름 위치 설정
+    // Set store name location
     m_pSttDialogTitle->SetPosition(DBOGUI_DIALOG_TITLE_X, DBOGUI_DIALOG_TITLE_Y);
     m_pSttDialogTitle->SetText(GetDisplayStringManager()->GetString("DST_FRIEND_TAB_FRIEND"));
 
-    // 탭 설정            
+    // Tab Settings            
     std::wstring wstrTabFriend = GetDisplayStringManager()->GetString("DST_FRIEND_TAB_FRIEND");
     std::wstring wstrTabBlack = GetDisplayStringManager()->GetString("DST_FRIEND_TAB_BLACKLIST");
     m_pTabMode->AddTab(wstrTabFriend);
     m_pTabMode->AddTab(wstrTabBlack);
     m_pTabMode->SelectTab(0);
 
-    // 텍스트 설정
+    // text settings
     m_pBtnTitleName->SetText(GetDisplayStringManager()->GetString("DST_FRIEND_SUBJECT_NAME"));
     m_pBtnTitleLevel->SetText(GetDisplayStringManager()->GetString("DST_FRIEND_SUBJECT_LEVEL"));
     m_pBtnTitleLoc->SetText(GetDisplayStringManager()->GetString("DST_FRIEND_SUBJECT_LOC"));
     m_pBtnTitleChannel->SetText(GetDisplayStringManager()->GetString("DST_FRIEND_SUBJECT_CHANNEL"));
 
-    // 리스트 설정
+    // List settings
     m_InfoList.Create(m_pThis, this, 
                       &CFriendListGui::OnCreateItem,
                       &CFriendListGui::OnDestroyItem,
@@ -163,7 +163,7 @@ RwBool CFriendListGui::Create()
 	for(int i = 0; i < FRIEND_LIST_MAX_VISIBLE; ++i)
 	{
 		CRectangle rectIcon;
-		// 아이콘 생성
+		// Create icon
 		rectIcon.left = FRIEND_ICON_X;
 		rectIcon.right = rectIcon.left + 19;
 		rectIcon.top = FRIEND_ICON_Y + i * (19 + FRIEND_LIST_MARGIN);
@@ -238,7 +238,7 @@ VOID CFriendListGui::HandleEvents( RWS::CMsg &pMsg )
             break;
         }
     }
-    else if(pMsg.Id == g_EventMsgBoxResult)     // 친구 삭제에서 확인 버튼 클릭시
+    else if(pMsg.Id == g_EventMsgBoxResult)     // When you click the OK button to delete a friend
     {
         SDboEventMsgBoxResult *pMsgBoxResult = reinterpret_cast<SDboEventMsgBoxResult*>( pMsg.pData );
         if( pMsgBoxResult->eResult == MBR_OK )
@@ -293,7 +293,7 @@ VOID CFriendListGui::HandleEvents( RWS::CMsg &pMsg )
 			}
         }        
     }
-    else if(pMsg.Id == g_EventIconPopupResult)          // 타겟의 메뉴창에서 친구추가 버튼을 클릭했을때
+    else if(pMsg.Id == g_EventIconPopupResult)          // When you click the Add Friend button in the target menu window
     {
         SDboEventIconPopupResult* pData = (SDboEventIconPopupResult*)pMsg.pData;
 		if (pData->nWorkId == PMW_FRIEND_ADD)
@@ -385,7 +385,7 @@ VOID CFriendListGui::OnBlackListAddRes(RwUInt32 uiTargetID)
     UpdateInfo(pMember->charID);
 }
 
-// 파티 초대 버튼을 클릭했을때
+// When you click the party invitation button
 VOID CFriendListGui::OnPartyBtnClicked( gui::CComponent* pComponent ) 
 {
     if(m_uiCurrentCharID == INVALID_SERIAL_ID)
@@ -433,11 +433,11 @@ VOID CFriendListGui::OnMailBtnClicked( gui::CComponent* pComponent )
     if(!pMember)
         return;
     
-    // 메일 전송 이벤트
+    // Mail sending event
     CDboEventGenerator::OpenSendMail(pMember->wszMemberName);
 }
 
-// 친구리스트에 있는 친구를 블랙리스트로 이동을 요청한다.
+// Request to move a friend from the friend list to the blacklist.
 VOID CFriendListGui::OnBlockClicked( gui::CComponent* pComponent ) 
 {
     if(m_uiCurrentCharID == INVALID_SERIAL_ID)
@@ -453,7 +453,7 @@ VOID CFriendListGui::OnFriendMoveRes(RwUInt32 uiTargetID)
 {
     if(uiTargetID == GetDboGlobal()->GetCommunityTarget())
     {
-        // UI 제거
+        // Remove UI
         CNtlSLEventGenerator::CommuTargetRelease(uiTargetID);
 
 		Logic_SobTarget(INVALID_HOBJECT, INVALID_BYTE);
@@ -462,7 +462,7 @@ VOID CFriendListGui::OnFriendMoveRes(RwUInt32 uiTargetID)
     RefreshList();       
 }
 
-/// 친구/블랙리스트 삭제 요청
+/// Request to remove friend/blacklist
 VOID CFriendListGui::OnDeleteClicked( gui::CComponent* pComponent ) 
 {
     if(m_uiCurrentCharID == INVALID_SERIAL_ID)
@@ -471,7 +471,7 @@ VOID CFriendListGui::OnDeleteClicked( gui::CComponent* pComponent )
         return;
     }
 
-    // 확인 UI 출력
+    // Confirm UI output
     if(m_eListMode == FRIEND_LIST)
     {
 		GetAlarmManager()->FormattedAlarmMessage( "DST_FRIEND_MSG_FRIEND_DEL", FALSE, 0.0f, NULL, GetNtlSLGlobal()->GetSobAvatar()->GetFriendList()->GetMemberbyKey(m_uiCurrentCharID)->wszMemberName );	
@@ -489,7 +489,7 @@ VOID CFriendListGui::OnFriendDelRes(RwUInt32 uiTargetID)
 
     if(uiTargetID == GetDboGlobal()->GetCommunityTarget())
     {
-        // UI 제거
+        // Remove UI
         CNtlSLEventGenerator::CommuTargetRelease(uiTargetID);
 
 		Logic_SobTarget(INVALID_HOBJECT, INVALID_BYTE);
@@ -509,11 +509,11 @@ VOID CFriendListGui::OnBlackListDelRes(RwUInt32 uiTargetID)
 // Receive friend list information when first connecting.
 VOID CFriendListGui::OnFriendListInfo()
 {
-    // UI를 갱신한다.
+    // Update the UI.
     OnTabChanged(m_eListMode, NULL);
 }
 
-// 친구리스트에 있는 친구중에 새로 접속한 친구가 있을때 날라온다.
+// It is sent when a new friend is connected among the friends in the friend list.
 VOID CFriendListGui::OnFriendInfo(RwUInt32 uiTargetID)
 {
     if(m_eListMode != FRIEND_LIST)
@@ -522,7 +522,7 @@ VOID CFriendListGui::OnFriendInfo(RwUInt32 uiTargetID)
     UpdateInfo(uiTargetID);
 }
 
-// 접속중인 친구의 정보가 변경되었을때 날라온다.
+// It is sent when the information of a friend who is online has changed.
 VOID CFriendListGui::OnFriendInfoChange(RwUInt32 uiTargetID)
 {
     if(m_eListMode != FRIEND_LIST)
@@ -531,10 +531,10 @@ VOID CFriendListGui::OnFriendInfoChange(RwUInt32 uiTargetID)
     UpdateInfo(uiTargetID);
 }
 
-// 처음 친구가 로그인했을때 알림 아이콘을 표시한다.
+// Display a notification icon when a friend logs in for the first time.
 VOID CFriendListGui::OnFriendLogin( RwUInt32 uiTargetID ) 
 {
-    // 메인 알림UI에 친구의 접속을 알린다.    
+    // Notifies a friend's connection in the main notification UI.    
 	CNtlSLFriendList* pFriendList = GetNtlSLGlobal()->GetSobAvatar()->GetFriendList();
 	sFriendMember* pMember = reinterpret_cast<sFriendMember*>( pFriendList->GetMemberbyKey(uiTargetID) );
     if(!pMember)
@@ -546,7 +546,7 @@ VOID CFriendListGui::OnFriendLogin( RwUInt32 uiTargetID )
 	swprintf_s( awcBuffer, 128, GetDisplayStringManager()->GetString( "DST_SIDEICON_HINT_FRIEND_TEXT") , pMember->wszMemberName );
 
 	CNtlSLEventGenerator::PopoNotify( GetDisplayStringManager()->GetString( "DST_SIDEICON_HINT_FRIEND_TITLE" ),
-		awcBuffer, TRUE, 5.0f ); // 5초 동안 보여줌
+		awcBuffer, TRUE, 5.0f ); // Show for 5 seconds
 
 }
 
@@ -562,7 +562,7 @@ VOID CFriendListGui::CreateInfoStaticBox()
     CRectangle rectLevel, rectLoc, rectChannel, rectJob, rectBackSpace, rectIcon;
     for(int i = 0; i < FRIEND_LIST_MAX_VISIBLE; ++i)
     {
-        // 버튼 배경 생성
+        // Create button background
         rectBackSpace.left  = FRIEND_LIST_X;
         rectBackSpace.right = rectBackSpace.left + FRIEND_ITEM_WITH;
         rectBackSpace.top   = FRIEND_LIST_Y + i * (FRIEND_ITEM_HEIGHT + FRIEND_LIST_MARGIN);
@@ -570,7 +570,7 @@ VOID CFriendListGui::CreateInfoStaticBox()
 
         m_pPnlBackSpace[i] = NTL_NEW gui::CPanel(rectBackSpace, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), GetNtlGuiManager()->GetSurfaceManager()->GetSurface("FriendList.srf", "srfBackSpace"));
 
-        //// 아이콘 생성
+        //// Create Icon
         //rectIcon.left = FRIEND_ICON_X;
         //rectIcon.right = rectIcon.left + 19;
         //rectIcon.top = FRIEND_ICON_Y + i * (19 + FRIEND_LIST_MARGIN);
@@ -578,7 +578,7 @@ VOID CFriendListGui::CreateInfoStaticBox()
 
         //m_pPnlIcon[i] = NTL_NEW gui::CPanel(rectIcon, m_pThis, GetNtlGuiManager()->GetSurfaceManager());
 
-        // Info 버튼및 객체 생성
+        // Info button and object creation
         rectLevel.left = FRIEND_LEVEL_X;
         rectLevel.right = FRIEND_LEVEL_X + FRIEND_LEVE_WIDTH;
         rectLoc.left = FRIEND_LOC_X;
@@ -639,18 +639,18 @@ void CFriendListGui::OnClickedItem( RwInt32 iIndex )
 
     if(m_eListMode == FRIEND_LIST)
     {
-        if(pMember->bOnline)      // 온라인이면
+        if(pMember->bOnline)      // If online
         {
             m_pBtnParty->Show(true);
             m_pBtnWhisper->Show(true);
         }
-        else                            // 오프라인이면
+        else                            // If offline
         {
             m_pBtnParty->Show(false);
             m_pBtnWhisper->Show(false);
         }
 
-        // 커뮤니티 타겟팅을 설정한다.
+        // Set up community targeting.
         OnTargeting(pMember);
     }
 
@@ -701,7 +701,7 @@ VOID CFriendListGui::OnTargeting( sFriendMember* pMember )
         // If your community is targeted -> Turn off community target UI
         if(GetDboGlobal()->GetCommunityTarget() != INVALID_SERIAL_ID)
         {
-            // UI 제거
+            // Remove UI
             CNtlSLEventGenerator::CommuTargetRelease(pMember->uiSerialID);
 			Logic_SobTarget(INVALID_HOBJECT, INVALID_BYTE);
         }
@@ -724,7 +724,7 @@ VOID CFriendListGui::OnTabChanged( RwInt32 nIndex, RwInt32 nOldIndex )
     {
     case FRIEND_LIST:
         {
-            // 컨트롤 활성화
+            // Activate Control
             m_pBtnParty->Show(true);
             m_pBtnMail->Show(true);
             m_pBtnWhisper->Show(true);
@@ -740,7 +740,7 @@ VOID CFriendListGui::OnTabChanged( RwInt32 nIndex, RwInt32 nOldIndex )
         break;
     case BLACK_LIST:
         {
-            // 컨트롤 비활성화
+            // Disable controls
             m_pBtnParty->Show(false);
             m_pBtnMail->Show(false);
             m_pBtnWhisper->Show(false);
@@ -771,7 +771,7 @@ VOID CFriendListGui::RefreshList()
     UpdateInfo(NULL);
 }
 
-// NULL이면 현재 화면에 보이는 리스트상의 모든 내용을 업데이트한다.
+// If NULL, all contents in the list currently visible on the screen are updated.
 VOID CFriendListGui::UpdateInfo( RwUInt32 uiCharID ) 
 {
     RwInt32 nCurValue = m_InfoList.GetValue();    
@@ -788,9 +788,9 @@ VOID CFriendListGui::UpdateInfo( RwUInt32 uiCharID )
 
             if(uiCharID == NULL || pMember->charID == uiCharID) 
             {
-                if(pMember->bOnline)  // 온라인
+                if(pMember->bOnline)  // online
                 {
-                    // 정보및 버튼
+                    // Information and Buttons
                     m_pSttLevel[i - nCurValue]->SetText(pMember->byLevel);                
                     m_pSttChannel[i - nCurValue]->SetText(pMember->byChannel);
                     m_pSttChannel[i - nCurValue]->SetTextColor(FRIEND_ITEM_COLOR_ONLINE, TRUE);                
@@ -814,11 +814,11 @@ VOID CFriendListGui::UpdateInfo( RwUInt32 uiCharID )
                         m_pBtnWhisper->Show(true);
                     }
 
-                    // 직업 아이콘 표시
+                    // Occupation icon sign
                     m_pPnlIcon[i - nCurValue]->AddSurface(Logic_GetPCClassIconSurface(pMember->byClass, FALSE));
 
                 }
-                else    // 오프라인
+                else    // offline
                 {
                     m_pSttLevel[i - nCurValue]->Clear();
                     m_pSttLoc[i - nCurValue]->Clear();
@@ -843,7 +843,7 @@ VOID CFriendListGui::UpdateInfo( RwUInt32 uiCharID )
 					m_pPnlIcon[i - nCurValue]->ClearSurface();
                 }    
 
-                // 한명에 대한 갱신이면 갱신이 끝난후 더돌지않고 끝낸다.
+                // If the renewal is for one person, it will be completed without further ado after the renewal is completed.
                 if(pMember->charID == uiCharID)
                     break;
             }
@@ -867,7 +867,7 @@ VOID CFriendListGui::UpdateInfo( RwUInt32 uiCharID )
         }   
     }
 
-    // 스크롤바 업데이트       
+    // Scrollbar update       
     RwInt32 nMax = m_InfoList.GetSize() - FRIEND_LIST_MAX_VISIBLE;
     m_pSbScroll->SetRange(0, max(0, nMax));    
     m_pSbScroll->SetValue(nCurValue);
@@ -919,7 +919,7 @@ VOID CFriendListGui::OnMouseMove( RwInt32 nFlags, RwInt32 nX, RwInt32 nY )
         CButtonList<CFriendListGui, sCommunityMember*>::SItem sItem = m_InfoList.GetItem(i);
         sFriendMember* pMember = reinterpret_cast<sFriendMember*>( sItem.TData );
 
-        // 오프라인은 표시하지 않는다.
+        // Offline is not displayed.
         if(!pMember->bOnline)
             continue;
 

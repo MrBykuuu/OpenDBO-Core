@@ -6,7 +6,7 @@
 
 class CTextTable;
 
-// 말풍선을 이루는 구조체
+// Structure that forms a speech bubble
 struct SDragonDialog
 {
 	gui::CPanel*		m_pPanel;
@@ -42,14 +42,14 @@ struct SDragonDialog
 
 /**
 * \ingroup Client
-* \brief 용신의 대화(말풍선)을 표시하는 GUI 클래스
+* \brief GUI class that displays the dragon god's dialogue (speech balloon)
 * \date 2007-07-6
 * \author agebreak
 */
 class CDBCDragonDialogGUI : public CNtlPLGui, public RWS::CEventHandler
 {
 public:
-	enum EDialogType			///< 다이얼로그의 타입
+	enum EDialogType			///< Type of dialog
 	{
 		E_DIALOG_NORMAL,
 		E_DIALOG_WARN,
@@ -70,21 +70,21 @@ public:
 	// Event
 	VOID		HandleEvents(RWS::CMsg &pMsg);
 
-	VOID		SetText(RwInt32 nTblIdx, EDialogType eDialogType = E_DIALOG_NORMAL);					///< 용신 대화 테이블 인덱스의 대화를 표시한다.
-	VOID		SetText(std::wstring& strWString, EDialogType eDialogType = E_DIALOG_NORMAL);		///< 텍스트를 표시한다.	
-	VOID		ShowNormalDialog(RwBool bShow);				///< 일반 대사창 표시 유무를 설정한다.
+	VOID		SetText(RwInt32 nTblIdx, EDialogType eDialogType = E_DIALOG_NORMAL);					///< Displays conversations in the Yongshin conversation table index.
+	VOID		SetText(std::wstring& strWString, EDialogType eDialogType = E_DIALOG_NORMAL);		///< Displays text.	
+	VOID		ShowNormalDialog(RwBool bShow);				///< Set whether to display the general dialogue window.
 
-	static		CDBCDragonDialogGUI* GetInstance();			///< 싱글톤 Instance를 반환한다.
-	static		void				 DeleteInstance();		///< 싱글톤 Instance를 삭제한다.
+	static		CDBCDragonDialogGUI* GetInstance();			///< Returns a singleton instance.
+	static		void				 DeleteInstance();		///< Delete the singleton instance.
 
 protected:	
-	void		AdjustDialog();								///< UI의 위치를 결정한다.    
+	void		AdjustDialog();								///< Determine the location of the UI.    
 
 protected:
-	static		CDBCDragonDialogGUI* m_pInstance;			///< 싱글톤 인스턴스
+	static		CDBCDragonDialogGUI* m_pInstance;			///< singleton instance
 
-	SDragonDialog	m_SDragonDialog[DIALOG_COUNT];			///< 용신의 대화를 표시할 말풍선 구조체
-	CTextTable*		m_pDragonTextTable;						///< 용신의 대화 테이블		
+	SDragonDialog	m_SDragonDialog[DIALOG_COUNT];			///< Speech bubble structure to display the dragon god’s conversation
+	CTextTable*		m_pDragonTextTable;						///< Dragon God's Dialogue Table		
 	RwBool			m_bDelete;
     
 };	

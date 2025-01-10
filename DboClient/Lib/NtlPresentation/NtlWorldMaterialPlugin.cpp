@@ -38,7 +38,7 @@ static void *rpNtlWorldSectorSplatDestructor(void *object, RwInt32 offset, RwInt
 	RwUInt32 i = 0;
 	//sRpNtlWorldSectorSplat *pNtlWorlSectorSplat = dGetNtlWorldSectorSplatInfo(object, offset);
 	//pNtlWorlSectorSplat->pNtlWorldSector = NULL;
-	// pNtlWorldSector 내부에서 아토믹이 파괴되면 이 파괴자가 불리므로 뻑남
+	// pNtlWorldSector When the atomic is destroyed from the inside, it breaks down and breaks.
 
 	NTL_RETURN(object);
 }

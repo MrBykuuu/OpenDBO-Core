@@ -2,7 +2,7 @@
 //	File		:	NtlInstanceBeamSystem.cpp
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -222,7 +222,7 @@ RwBool CNtlInstanceBeamSystem::Update(RwReal fElapsedTime)
 			m_bReady	= TRUE;
 			m_bUpdate	= TRUE;
 
-			// 스타트가 되면 라이프 타임을 초기화 한다.
+			//When starting, initialize the life time.
 			m_fLifeTime = fElapsedTime;
 		}
 		else
@@ -399,7 +399,7 @@ RwBool CNtlInstanceBeamSystem::UpdateFinish( RwReal fElapsedTime )
     }
     if(m_pResourceBeamSystem->m_EmitterPrtFinish.m_nFinishTypeFlag & FINISH_TYPE_FOLLOW)
     {
-        // Beam의 Follow는 FadeOut Action을 사용한다. (기존과의 호환성을 위해)
+        // Beam Follow uses FadeOut Action. (for compatibility with existing)
     }
 
     m_fFinishTime += fElapsedTime;

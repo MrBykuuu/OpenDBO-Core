@@ -94,7 +94,7 @@ RwBool CNtlSobActor::Create(void)
 	m_mapEventFunc[g_EventSobAttackSelect.Get_pEventId()]			= &CNtlSobActor::SobAttackSelectEventHandler;
 	m_mapEventFunc[g_EventSobTargetSelectRelease.Get_pEventId()]	= &CNtlSobActor::SobTargetSelectReleaseEventHandler;	
     
-    // Proxy에서 처리하는 이벤트를 
+    // Events handled by Proxy
     m_mapEventFunc[g_EventSobAttackMarkRelease.Get_pEventId()]		= &CNtlSobActor::SobProxyEventHandler;	
     m_mapEventFunc[g_EventSobGotFocus.Get_pEventId()]				= &CNtlSobActor::SobProxyEventHandler;
     m_mapEventFunc[g_EventSobLostFocus.Get_pEventId()]				= &CNtlSobActor::SobProxyEventHandler;    

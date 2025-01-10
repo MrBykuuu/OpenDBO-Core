@@ -4,7 +4,7 @@
 
 /**
  * \ingroup NtlSimulation
- * \brief NPC 와 대화할 때 이용
+ * \brief Used when talking to NPCs
  * \date 2007-07-18
  * \author avooo
  */

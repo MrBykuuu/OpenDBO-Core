@@ -2,7 +2,7 @@
  *
  * File			: NtlFSMCharActEventProc.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2006. 2. 9	
  * Abstract		: fsm character action event proc
  *****************************************************************************
@@ -57,7 +57,7 @@ void FSMEvent_CharActSobTargetSelect(CNtlSobActor *pActor, SNtlEventSobTargetSel
 void FSMEvent_CharActSobAttackSelect(CNtlSobActor *pActor, SNtlEventSobAttackSelect *pSobAttackSelect);
 void FSMEvent_CharActAttack(CNtlSobActor *pActor, SNtlEventSobAttack *pAttack);
 void FSMEvent_CharActHit(CNtlSobActor *pActor, SNtlEventSobHit *pHit);
-void FSMEvent_CharActHit(CNtlSobActor* pActor, BYTE byAttackResult, WORD wAttackResultValue);       ///< 회전 공격의 Push에서 공격 결과와 데미지만 계산하기 위한 함수
+void FSMEvent_CharActHit(CNtlSobActor* pActor, BYTE byAttackResult, WORD wAttackResultValue);       ///< Function to calculate only the attack result and damage in the push of a Spin attack
 void FSMEvent_CharActStanding(CNtlSobActor *pActor, SNtlEventSobStanding *pStanding);
 void FSMEvent_CharActJump(CNtlSobActor *pActor, SNtlEventSobJump *pJump);
 void FSMEvent_CharActAirJump(CNtlSobActor *pActor, SNtlEventSobAirJump *pJump);

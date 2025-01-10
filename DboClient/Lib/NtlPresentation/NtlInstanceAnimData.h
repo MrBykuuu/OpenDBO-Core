@@ -2,11 +2,11 @@
  *
  * File			: NtlInstanceAnimData.h
  * Author		: HongHoDong
- * Copyright	: (주)NTL
+ * Copyright	: (?)NTL
  * Date			: 2006. 4. 11	
  * Abstract		: NTL NtlInstanceAnimData
  *****************************************************************************
- * Desc         : 
+ *Desc         : 
  *
  *****************************************************************************/
 
@@ -19,8 +19,8 @@
 
 /*!
  * \Animation
- * SInstanceAnimData: 변하는 Data(Read, Write 가능)
- * 실제 Resource들(RtAnimAnimation)을 관리
+ * SInstanceAnimData: Changing data (read, write possible)
+ * Manage actual resources (RtAnimAnimation)
  */
 struct SInstanceAnimData
 {

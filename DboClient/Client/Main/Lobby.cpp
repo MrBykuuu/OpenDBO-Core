@@ -169,7 +169,7 @@ RwUInt8 CLobby::RemoveCharacter(CHARACTERID charID)
 	if( INVALID_BYTE == byDeletedIndex )
 		return INVALID_BYTE;
 
-	// 마직막 슬롯은 항상 비운다
+	// The last slot is always empty
 	atLobbyCharacter[NTL_MAX_COUNT_USER_CHAR_SLOT-1].tSummary.charId = INVALID_CHARACTERID;
 
 	return byDeletedIndex;	

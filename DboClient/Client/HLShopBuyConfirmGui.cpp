@@ -1,13 +1,13 @@
 #include "precomp_dboclient.h"
 #include "HLShopBuyConfirmGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// dbo
+// Dbo
 #include "DisplayStringManager.h"
 #include "DboEvent.h"
 #include "IconMoveManager.h"
@@ -18,7 +18,7 @@
 #include "DboEventGenerator.h"
 #include "DboGlobal.h"
 
-// table
+// Table
 #include "HLSItemTable.h"
 
 

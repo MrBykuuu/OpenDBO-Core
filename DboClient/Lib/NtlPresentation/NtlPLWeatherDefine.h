@@ -94,7 +94,7 @@ enum EPLWATHER_PARTICLE_EVENT_TYPE
 
 struct SPLWeatherEmitter
 {
-	std::string							strName;				// World Editor에서 표시되는 이름.
+	std::string							strName;				// Name displayed in the World Editor.
 
 	RwUInt32							eEmitterPlaceType;	// EPLWEATHER_EMITTER_PLACE_TYPE		
 	RwV3d								vEmitterPos;
@@ -145,7 +145,7 @@ struct SPLWeatherEmitter
 	RwUInt32							eParticleCreateEventType;
 
 	RwReal								fParticleFrustumLengthSquared;
-	RwReal								fParticleFrustumFast;		// 보이지 않는 파티클에 대한 업데이트 가중치
+	RwReal								fParticleFrustumFast;		// Update weights for invisible particles
 
 
 	RwUInt32							eParticleBillboardType; // EPLWEATHER_PARTICLE_BILLBOARD_TYPE
@@ -180,7 +180,7 @@ struct SPLWeatherParticle
 	RwReal		fTimeEnd;
 	RwReal		fTimeDelta;
 
-	RwReal		fTimeMoveCur; // TSnap 이나 Spline에서 사용할 임시 시간값.
+	RwReal		fTimeMoveCur; // Temporary time value to be used in TSnap or Spline.
 	RwReal		fTimeMoveEnd;
 
 	// Collision Data

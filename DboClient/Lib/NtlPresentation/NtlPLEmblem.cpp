@@ -39,7 +39,7 @@ RwBool CNtlPLEmblem::Create( const SPLEntityCreateParam * pParam )
 	
 	NTL_ASSERT( pParam != NULL, RWSTRING( "NULL Param" ) );
 
-	// font 생성
+	//create font
 	m_pFont = g_FontMgr.CreateGuiFont( DEFAULT_FONT, 100, DEFAULT_FONT_ATTR );
 	if(m_pFont == NULL)
 	{
@@ -51,7 +51,7 @@ RwBool CNtlPLEmblem::Create( const SPLEntityCreateParam * pParam )
 	m_fCullDist = pEmblem->fCullDist;
 
 	
-	// texture 생성(로직의 에러... 256으로 할려면.. 255가 최고다 버그를 잡자.)
+	//Texture creation (Logic error... If you want to use 256... 255 is the best. Let's fix the bug.)
 	m_pTexture = g_TextureMgr.CreateTexture(255, size.y);
 	if(m_pTexture == NULL)
 	{
@@ -175,7 +175,7 @@ void CNtlPLEmblem::VertexAssin(void)
 
 void CNtlPLEmblem::SetPosition(const RwV3d *pPos)
 {
-	// position을 update 안할 경우.
+	//If the position is not updated.
 	if(!IsVisible())
 		return;
 	

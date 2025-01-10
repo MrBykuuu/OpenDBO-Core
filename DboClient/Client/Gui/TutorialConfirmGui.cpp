@@ -1,18 +1,18 @@
 #include "precomp_dboclient.h"
 #include "TutorialConfirmGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 
-// dbo
+// Dbo
 #include "DboGlobal.h"
 #include "DialogManager.h"
 

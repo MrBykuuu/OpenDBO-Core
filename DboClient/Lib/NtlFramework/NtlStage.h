@@ -19,8 +19,8 @@
 
 /**
  * \ingroup Client
- * client 모든 객체를 게임 상태 단위 별로 그룹하여 정보를 가지고 있는 base class이다.
- * MMORPG에서는 Login Stage, Lobby Stage, Character Create Stage, Character Select Stage, Game Stage등등 존재할 수 있다.
+ *client is a base class that groups all objects by game state unit and contains information.
+ *In MMORPG, there may be Login Stage, Lobby Stage, Character Create Stage, Character Select Stage, Game Stage, etc.
  */
 
 class CNtlStage 
@@ -34,15 +34,18 @@ public:
 	CNtlStage(const char *pStageName);
 	virtual ~CNtlStage();
 
-	// stage 객체가 생성된 다음 곧바로 호출된다. 이는 하위 객체에서 상속받아 적절한 처리를 한다.
+	// It is called immediately after the stage object is created. This is inherited from the sub-object and processed appropriately.
+
 	virtual bool Create(void);
 
-	// stage 객체가 삭제되기 전에 호출된다. 이는 하위 객체에서 상속받아 적절한 처리를 한다.
+	// Called before the stage object is deleted. This is inherited from the sub-object and processed appropriately.
+
 	virtual void Destroy(void);
 
 	virtual void PostRender(void);
 
-	// stage name을 얻어온다.
+	// Get the stage name.
+
 	const char* GetName(void);
 };
 

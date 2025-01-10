@@ -2,7 +2,7 @@
  *
  * File			: DboEvent.h
  * Author		: Hong Sungbock
- * Copyright	: (주)NTL
+ * Copyright	: (?)NTL
  * Date			: 2007. 5. 29
  * Abstract		: Ntl sound event.
  *****************************************************************************
@@ -15,33 +15,33 @@
 #include "ceventhandler.h"
 #include "NtlSoundDefines.h"
 
-extern RWS::CEventId g_EventSoundReleaseSound;				// 한 개 채널의 사운드가 해제되었다
+extern RWS::CEventId g_EventSoundReleaseSound;				// The sound of one channel is turned off
 
-extern RWS::CEventId g_EventSoundFinishFade;				// 페이드 인/아웃이 끝났다
+extern RWS::CEventId g_EventSoundFinishFade;				// Fade in/out is finished
 
-extern RWS::CEventId g_EventSoundDSP;						// 효과음 관련 이벤트
+extern RWS::CEventId g_EventSoundDSP;						// Sound effect related events
 
-extern RWS::CEventId g_EventSoundEventMusic;				// 채널 이벤트
+extern RWS::CEventId g_EventSoundEventMusic;				// channel events
 
-extern RWS::CEventId g_EventSoundRestTime;					// 반복되는 음악의 다음 플레이까지 휴식 시간
+extern RWS::CEventId g_EventSoundRestTime;					// A break until the next play of repetitive music
 
-extern RWS::CEventId g_EventSoundKnockdown;					// 넉다운 될 때
+extern RWS::CEventId g_EventSoundKnockdown;					// When you get knocked down
 
-extern RWS::CEventId g_EventSoundMinMaxRate;				// 3D 사운드의 전체 Min, Max값을 바꾼다
+extern RWS::CEventId g_EventSoundMinMaxRate;				// Change the overall Min and Max values ??of 3D sound.
 
-extern RWS::CEventId g_EventSoundAddListRangeBGM;			// Range BGM을 리스트에 추가
+extern RWS::CEventId g_EventSoundAddListRangeBGM;			// Add Range BGM to the list
 
-extern RWS::CEventId g_EventSoundDelListRangeBGM;			// Range BGM을 리스트에서 삭제
+extern RWS::CEventId g_EventSoundDelListRangeBGM;			// Delete Range BGM from the list
 
-extern RWS::CEventId g_EventSoundChangeListRangeBGM;		// Range BGM의 값을 변경
+extern RWS::CEventId g_EventSoundChangeListRangeBGM;		// Change the value of Range BGM
 
-extern RWS::CEventId g_EventSoundAddListShareBGM;			// Shard BGM을 리스트에 추가
+extern RWS::CEventId g_EventSoundAddListShareBGM;			// Add Shard BGM to the list
 
-extern RWS::CEventId g_EventSoundDeleteAllListShareBGM;		// Shard BGM을 리스트에서 모두 삭제
+extern RWS::CEventId g_EventSoundDeleteAllListShareBGM;		// Delete all Shard BGM from the list
 
-extern RWS::CEventId g_EventSoundShareBGMPlayRate;			// Shard BGM을 플레이 할 수 있는 확률 조절
+extern RWS::CEventId g_EventSoundShareBGMPlayRate;			// Adjusting the probability of playing Shard BGM
 
-extern RWS::CEventId g_EventSoundReleaseObjectGroup;		// Object Group의 모든 사운드를 해제한다
+extern RWS::CEventId g_EventSoundReleaseObjectGroup;		// Disable all sounds in the Object Group
 
 //////////////////////////////////////////////////////////////////////////
 //	Structure
@@ -49,9 +49,9 @@ extern RWS::CEventId g_EventSoundReleaseObjectGroup;		// Object Group의 모든 사�
 
 enum eDSPEvent
 {
-	DSP_ADD_REVERV,							///< 특정 채널그룹에 reverv 효과를 적용한다
-	DSP_REMOVE_REVERV,						///< 특정 채널그룹에 reverv 효과를 해제힌다
-	DSP_REMOVE_ALL,							///< 특정 채널그룹에 모든 효과를 해제한다
+	DSP_ADD_REVERV,							///< Apply reverv effect to specific channel group
+	DSP_REMOVE_REVERV,						///< Disables the reverv effect for a specific channel group
+	DSP_REMOVE_ALL,							///< Disables all effects for a specific channel group
 };
 
 struct SNtlEventDSP
@@ -61,53 +61,53 @@ struct SNtlEventDSP
 
 enum eEventMusic
 {
-	EVENT_MUSIC_EVENT_MUSIC_HAD_PLAY,			///< Event 음악이 플레이를 시작했다
-	EVENT_MUSIC_ALL_EVENT_MUSIC_FINISH,			///< 모든 Event 음악이 플레이를 종료했다
+	EVENT_MUSIC_EVENT_MUSIC_HAD_PLAY,			///< Event music started playing
+	EVENT_MUSIC_ALL_EVENT_MUSIC_FINISH,			///< All Event music has stopped playing
 
-	EVENT_MUSIC_LEAVE_MAIN_WORLD_CONCEPT,		///< 메인월드 컨셉에서 다른 컨셉으로 변경이 되었다
+	EVENT_MUSIC_LEAVE_MAIN_WORLD_CONCEPT,		///< The main world concept has been changed to another concept.
 
-	EVENT_MUSIC_START_PVP_BGM,					///< PVP BGM 시작
-	EVENT_MUSIC_END_PVP_BGM,					///< PVP BGM 끝
+	EVENT_MUSIC_START_PVP_BGM,					///< PVP BGM starts
+	EVENT_MUSIC_END_PVP_BGM,					///< PVP BGM ends
 
 	EVENT_MUSIC_WAIT_PVP_BGM,
 	EVENT_MUSIC_END_WAIT,
 
-	EVENT_MUSIC_START_PRIVATE_RANKBATTLE_BGM,	///< 랭크배틀 개인전 BGM 시작
-	EVENT_MUSIC_END_PRIVATE_RANKBATTLE_BGM,		///< 랭크배틀 개인전 끝
+	EVENT_MUSIC_START_PRIVATE_RANKBATTLE_BGM,	///< Rank Battle solo BGM begins
+	EVENT_MUSIC_END_PRIVATE_RANKBATTLE_BGM,		///< End of individual ranked battle
 
-	EVENT_MUSIC_START_PARTY_RANKBATTLE_BGM,		///< 랭크배틀 파티전 BGM 시작
-	EVENT_MUSIC_END_PARTY_RANKBATTLE_BGM,		///< 랭크배틀 파티전 끝
+	EVENT_MUSIC_START_PARTY_RANKBATTLE_BGM,		///< Rank Battle Party BGM begins
+	EVENT_MUSIC_END_PARTY_RANKBATTLE_BGM,		///< Rank Battle Party Battle End
 
-	EVENT_MUSIC_END_CINEMATIC_BGM,				///< 시네마틱 BGM 끝
+	EVENT_MUSIC_END_CINEMATIC_BGM,				///< End of cinematic BGM
 
-	EVENT_MUSIC_START_MAIN_THEME,				///< 메인테마 BGM 시작
+	EVENT_MUSIC_START_MAIN_THEME,				///< Main theme BGM starts
 	EVENT_MUSIC_PROLOG_THMEM_BGM_PLAY,			///< Prolog BGM Play
-	EVENT_MUSIC_END_MAIN_THEME,					///< 메인테마 끝
-	EVENT_MUSIC_IMMEDIATELY_END_MAIN_THEME,		///< 메인테마 FadeOut 없이 바로 종료	
+	EVENT_MUSIC_END_MAIN_THEME,					///< End of main theme
+	EVENT_MUSIC_IMMEDIATELY_END_MAIN_THEME,		///< Immediately exits without main theme FadeOut	
 
-	EVENT_MUSIC_VOLUME_DOWN_BECAUSE_MOVIE_PLAY,	///< Movie를 플레이하기에 Master 볼륨을 줄인다
-	EVENT_MUSIC_VOLUME_UP_BECAUSE_MOVIE_PLAY,	///< Movie가 플레이 종료되어 Master 볼륨을 높인다
+	EVENT_MUSIC_VOLUME_DOWN_BECAUSE_MOVIE_PLAY,	///< Reduce the Master volume to play the movie
+	EVENT_MUSIC_VOLUME_UP_BECAUSE_MOVIE_PLAY,	///< The movie ends and the Master volume is turned up.
 
-	EVENT_MUSIC_FINISH_THEME_BGM,				///< THEME BGM이 플레이 중이면 종료하라	
+	EVENT_MUSIC_FINISH_THEME_BGM,				///< If THEME BGM is playing, quit	
 
-	EVENT_MUSIC_LOOP_THEME_BGM,					///< THEME BGM를 Loop 한다
-	EVENT_MUSIC_NOT_LOOP_THEME_BGM,				///< THEME BGM를 한 번만 플레이 한다
+	EVENT_MUSIC_LOOP_THEME_BGM,					///< Loop THEME BGM
+	EVENT_MUSIC_NOT_LOOP_THEME_BGM,				///< Play THEME BGM only once
 
-	EVENT_MUSIC_TEMP_FINISH_TMQ,				///< 임시 TMQ 종료
+	EVENT_MUSIC_TEMP_FINISH_TMQ,				///< Temporary TMQ ends
 
-	EVENT_MUSIC_TB_DIRECTION_BGM_PLAY,			///< 천하제일 무도회 연출 BGM Play
-	EVENT_MUSIC_TB_DIRECTION_BGM_STOP,			///< 천하제일 무도회 연출 BGM Stop
+	EVENT_MUSIC_TB_DIRECTION_BGM_PLAY,			///< The World's Best Ballroom Production BGM Play
+	EVENT_MUSIC_TB_DIRECTION_BGM_STOP,			///< World's Best Ballroom Production BGM Stop
 
-	EVENT_MUSIC_TB_PARTY_BGM_PLAY,				///< 천하제일 무도회 파티전 BGM Play
-	EVENT_MUSIC_TB_PARTY_BGM_STOP,				///< 천하제일 무도회 파티전 BGM Stop
+	EVENT_MUSIC_TB_PARTY_BGM_PLAY,				///< World’s Best Ballroom Party Exhibition BGM Play
+	EVENT_MUSIC_TB_PARTY_BGM_STOP,				///< World’s Best Ballroom Party Pre-BGM Stop
 
-	EVENT_MUSIC_TB_PRIVATE_BGM_PLAY,			///< 천하제일 무도회 개인전 BGM Play
-	EVENT_MUSIC_TB_PRIVATE_BGM_STOP,			///< 천하제일 무도회 개인전 BGM Stop
+	EVENT_MUSIC_TB_PRIVATE_BGM_PLAY,			///< World’s Best Martial Arts Solo Exhibition BGM Play
+	EVENT_MUSIC_TB_PRIVATE_BGM_STOP,			///< World’s Best Martial Arts Solo Exhibition BGM Stop
 
 	EVENT_MUSIC_RAGNE_STOP,						///< Range BGM Stop
-	EVENT_MUSIC_REMOVE_RAGNE_BGM,				///< BGM 그룹에서 Range BGM 리스트를 지웠다
+	EVENT_MUSIC_REMOVE_RAGNE_BGM,				///< The Range BGM list was deleted from the BGM group.
 
-	EVENT_MUSIC_START_SCRAMBLE_READY_BGM,		///< 도장 쟁탈전
+	EVENT_MUSIC_START_SCRAMBLE_READY_BGM,		///< Dojo competition
 	EVENT_MUSIC_STOP_SCRAMBLE_READY_BGM,
 	EVENT_MUSIC_START_SCRAMBLE_START_BGM,
 	EVENT_MUSIC_END_SCRAMBLE_START_BGM,
@@ -121,8 +121,8 @@ struct SNtlEeventMusic
 struct SNtlEventMusicRestTime
 {
 	RwUInt8			byChannelGroup;
-	RwReal			fRestTime;				///< 단위 : 초
-	RwUInt8			byBGMType;				///< BGM 채널 그룹일 때만 유효하다
+	RwReal			fRestTime;				///< Unit: seconds
+	RwUInt8			byBGMType;				///< Valid only for BGM channel groups
 };
 
 struct SNtlEventKnockdown

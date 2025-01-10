@@ -1,21 +1,21 @@
 /*****************************************************************************
-* File			: DboPackethandler_GUHoipoiMix.cpp
-* Author		: HaeSung, Cho
-* Copyright		: (ÁÖ)NTL
-* Date			: 2009. 1. 8
-* Abstract		: È£ÀÌÆ÷ÀÌ ¹Í½º Ä¸½¶ °ü·Ã ÇÚµé·¯
+*File			: DboPackethandler_GUHoipoiMix.cpp
+*Author		    : HaeSung, Cho
+*Copyright		: NTL Co., Ltd.
+*Date			: 2009. 1. 8
+*Abstract		: Hoipoi mix capsule related handler
 *****************************************************************************
-* Desc         : 
+*Desc           : 
 *****************************************************************************/
 
 #include "precomp_dboclient.h"
 #include "DboPacketHandler.h"
 
-// shared
+// Shared
 #include "ItemTable.h"
 #include "TextAllTable.h"
 
-// simulation
+// Simulation
 #include "NtlNetSender.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSLPacketGenerator.h"

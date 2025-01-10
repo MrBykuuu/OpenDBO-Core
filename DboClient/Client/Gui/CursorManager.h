@@ -9,10 +9,10 @@
 #ifndef __CURSOR_MANAGER_H__
 #define __CURSOR_MANAGER_H__
 
-// presentation
+// Presentation
 #include "NtlPLPicking.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
 #include "ceventhandler.h"
@@ -54,7 +54,7 @@ protected:
 
 public:
 
-	 ///< 일정한 시간마다 마우스 커서 조건을 검사, 변경한다
+	 ///< Checks and changes mouse cursor conditions at regular intervals
 	VOID Update(RwReal fElapsed, sWorldPickInfo_for_Cursor* pWorldPickInfo_for_Cursor);
 
 	VOID InitLobbyCursor();
@@ -67,7 +67,7 @@ public:
 	VOID SetRace( RwUInt8 eRace );	
 	VOID ShowMouseCursor( RwBool bShow = TRUE );	
 
-	VOID SetDesignatedCursor( STATE eCursorState );	// CS_INVALID_CURSOR 해제.
+	VOID SetDesignatedCursor( STATE eCursorState );	// CS_INVALID_CURSOR off.
 
 	RwUInt8 GetCursorState();
 	
@@ -98,7 +98,7 @@ private:
 	RwInt32 m_iOldXPos, m_iOldYPos;
 
 	RwUInt8	m_eCurCursor;
-	RwUInt8	m_eDesignatedCursor;		// 지정된 커서, INVALID이외의 값인 경우 항상 그 커서로 고정된다.
+	RwUInt8	m_eDesignatedCursor;		// If the specified cursor is a value other than INVALID, it is always fixed to that cursor.
 
 	bool	m_bSkillSelectMode;
 

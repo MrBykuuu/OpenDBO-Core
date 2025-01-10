@@ -1,22 +1,22 @@
 /*****************************************************************************
-* File			: GuildEmblemMakerGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 3. 3
-* Abstract		: 
+*File           : GuildEmblemMakerGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : March 3, 2008
+*Abstract		: 
 *****************************************************************************
-* Desc			: 길드 문장 만들기 창
+*Desc           : Guild emblem creation window
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// dbo
+// Dbo
 #include "SurfaceGui.h"
 
 #define dSTUFF_TEXTURE_ROW			3
@@ -25,7 +25,7 @@
 #define dPALETTE_ROW				4
 #define dPALETTE_COLUMN				8
 
-// presentation
+// Presentation
 #include "NtlPlEmblemStuffList.h"
 #include "NtlPLEmblemMaker.h"
 
@@ -36,19 +36,19 @@ class CGuildEmblemMakerGui : public CNtlPLGui, public RWS::CEventHandler
 public:
 	struct sMoustInfo
 	{
-		RwUInt8			bySlotType;					///< 마우스가 위치한 슬롯의 타입
-		RwUInt8			bySlotIndex;				///< 마우스가 위치한 슬롯의 인덱스
+		RwUInt8			bySlotType;					///< Type of slot where the mouse is located
+		RwUInt8			bySlotIndex;				///< Index of the slot where the mouse is located
 	};
 
 	struct sStuffSelect
 	{
-		RwUInt32		bySelectStuffIndex;			///< 선택된 재료 텍스처의 이름에 포함된 인덱스
+		RwUInt32		bySelectStuffIndex;			///< Index included in the name of the selected material texture
 	};
 
 	struct sStuffSlot
 	{
-		RwUInt8			byStuffTextureIndex;		///< 재료 텍스처의 이름에 포함된 인덱스
-		CSurfaceGui		srfStuff;					///< 재료 텍스처의 서페이스
+		RwUInt8			byStuffTextureIndex;		///< Index included in the name of the material texture
+		CSurfaceGui		srfStuff;					///< Surface of material texture
 
 		sStuffSlot()
 		:byStuffTextureIndex(dPLEMBLEM_INVALID_FACTOR)
@@ -137,8 +137,8 @@ protected:
 
 	sMoustInfo			m_MouseInfo;
 	sStuffSelect		m_StuffSelect[dSTUFF_TEXTURE_ROW];
-	sStuffSlot			m_StuffSlot[dSTUFF_TEXTURE_ROW][dSTUFF_TEXTURE_COLUMN];///< 엠블렘을 만들 재료 텍스처	
-	RwUInt8				m_byCurStuffRow;	///< 현재 수정하고 있는 재료 텍스처의 행
+	sStuffSlot			m_StuffSlot[dSTUFF_TEXTURE_ROW][dSTUFF_TEXTURE_COLUMN];///< Material texture to create the emblem	
+	RwUInt8				m_byCurStuffRow;	///< The row of the material texture currently being modified
 	RwUInt8				m_byPaletteFocus;
 	RwBool				m_bStuffFocus;
 
@@ -150,7 +150,7 @@ protected:
 	MAP_STUFF*			m_mapStuffTypeA;
 	MAP_STUFF*			m_mapStuffTypeB;
 	
-	CRectangle			m_rtPalette[dPALETTE_ROW * dPALETTE_COLUMN];		///< GUI 상의 칼라 팔레트의 영역
+	CRectangle			m_rtPalette[dPALETTE_ROW * dPALETTE_COLUMN];		///< Area of ??color palette on GUI
 
 	gui::CTexture		m_EmblemTexture;
 

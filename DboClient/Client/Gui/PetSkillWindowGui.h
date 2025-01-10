@@ -1,13 +1,13 @@
 /*****************************************************************************
 *
-* File			: PetSkillWindowGui.h
-* Author		: agebreak
-* Copyright	: (주)NTL
-* Date			: 2007. 8. 16	
-* Abstract		: DBO Pet Skill Window Gui
+*File			: PetSkillWindowGui.h
+*Author		    : agebreak
+*Copyright	    : NTL Co., Ltd.
+*Date			: 2007. 8. 16	
+*Abstract		: DBO Pet Skill Window Gui
 *****************************************************************************
-* Desc         : Summon Pet의 Skill Window GUI를 표시하는 클래스
-*              : 변신 취소 UI도 여기서 같이 표시한다.
+*Desc         :Class that displays Summon Pet's Skill Window GUI
+*             : The transformation cancellation UI is also displayed here.
 *****************************************************************************/
 
 #pragma once
@@ -23,7 +23,7 @@ class CNtlSobIcon;
 class CPetSkillWindowGui : public CNtlPLGui, public RWS::CEventHandler
 {
 public:
-    /// 소환한 펫의 타입을 구별하기 위한 열거형
+    /// Enumeration type to distinguish the type of summoned pet
     enum EPetType               
     {
         E_PET_TYPE_SUMMON   = 0x00000001,
@@ -46,19 +46,19 @@ public:
     static  CPetSkillWindowGui* GetInstance();
     static  void                DeleteInstance();
 
-    void    AdjustDialog();                                     ///< UI의 위치를 결정한다.
-    void    SetPetID(RwUInt32 uiSerialID, EPetType ePetType);   ///< 소환한 Pet의 Serial ID를 설정한다.
-    void    SetTransformCancel(RwBool bEnable);                 ///< 변신 취소 아이콘을 표시한다.
-    void    UpdatePetInfo();                                    ///< pet의 정보를 Update하고 표시한다.
+    void    AdjustDialog();                                     ///< Determine the location of the UI.
+    void    SetPetID(RwUInt32 uiSerialID, EPetType ePetType);   ///< Set the Serial ID of the summoned Pet.
+    void    SetTransformCancel(RwBool bEnable);                 ///< Displays the transformation cancellation icon.
+    void    UpdatePetInfo();                                    ///< Update and display pet information.
 
 	RwUInt32 GetInfoFlag();
 
-protected:    
+protected:
     VOID	OnPaint(VOID);
     VOID	OnClickSummonCloseBtn(gui::CComponent* pComponent);
     VOID    OnClickItemCloseBtn(gui::CComponent* pComponent);
-    VOID    OnClickSummonAttack(const CKey& key);               ///< 서먼펫의 어택버튼을 클릭한 경우
-    VOID    OnMouseDownSummonAttack(const CKey& key);           ///< 서먼펫의 어택버튼을 우쪽 버튼으로 누른경우 - 버튼의 이미지를 변경한다.
+    VOID    OnClickSummonAttack(const CKey& key);               ///< When you click the Summon Pet's attack button
+    VOID    OnMouseDownSummonAttack(const CKey& key);           ///< When pressing the Summon Pet's attack button with the right button -the image of the button changes.
     VOID    OnClickTransformCancel(gui::CComponent* pComponent);
     VOID    OnMouseEnter(gui::CComponent* pComponent);
 	VOID	OnMove( RwInt32 iOldX, RwInt32 iOldY );
@@ -66,8 +66,8 @@ protected:
     VOID	OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY);
     VOID	OnMouseDialogLeave(gui::CComponent* pComponent);
 
-    void    SetSkillIcon();                                     ///< 스킬 아이콘의 텍스쳐를 설정한다.
-    void    UpdateSkillIcon(RwReal fElapsedTime);               ///< 스킬 아이콘의 상태(쿨타임) 이펙트를 업데이트한다.
+    void    SetSkillIcon();                                     ///< Set the texture of the skill icon.
+    void    UpdateSkillIcon(RwReal fElapsedTime);               ///< Updates the status (cool time) effect of the skill icon.
 
 protected:
     static CPetSkillWindowGui*  m_pInstance;
@@ -92,21 +92,21 @@ protected:
     gui::CSlot      m_slotMouseMove;
     gui::CSlot      m_slotMouseDialogLeave;
 
-    CSurfaceGui     m_surFocus;                               ///< Attack 버튼이 포커스를 가졌을때의 표시용 서페이스
+    CSurfaceGui     m_surFocus;                               ///< Display surface when the Attack button has focus
     RwBool          m_bVisibeFocus;
 
-    CSurfaceGui     m_surSummonSkill[SUMMON_PET_MAX_SKILL];   ///< Summon Pet의 스킬 아이콘 서페이스
-    gui::CRadarEffect m_CoolTimeEffect[SUMMON_PET_MAX_SKILL]; ///< Summon Pet 스킬의 쿨타임 서페이스
-    CNtlSobIcon*    m_pSobSkillIcon[SUMMON_PET_MAX_SKILL];    ///< Summon Pet의 스킬 아이콘 객체
+    CSurfaceGui     m_surSummonSkill[SUMMON_PET_MAX_SKILL];   ///< Summon Pet's skill icon surface
+    gui::CRadarEffect m_CoolTimeEffect[SUMMON_PET_MAX_SKILL]; ///< Cooltime surface for Summon Pet skill
+    CNtlSobIcon*    m_pSobSkillIcon[SUMMON_PET_MAX_SKILL];    ///< Summon Pet's skill icon object
+ 
+    RwUInt32        m_uiSummonPetID;                          ///< Serial ID of Summon Pet
+    RwUInt32        m_uiItemPetID;                            ///< Serial ID of Item Pet
+    RwUInt32        m_uiInfoFlag;                             ///< Flag for what information to display
 
-    RwUInt32        m_uiSummonPetID;                          ///< Summon Pet의 Serial ID
-    RwUInt32        m_uiItemPetID;                            ///< Item Pet의 Serial ID
-    RwUInt32        m_uiInfoFlag;                             ///< 무슨 정보들을 표시할지의 플래그
-
-    gui::CSurface   m_surAttackBtnUp;                         ///< Attack 버튼의 원래 사이즈 서피스
-    gui::CSurface   m_surAttackBtnDown;                       ///< Attack 버튼의 다운 사이즈 서피스
-    gui::CSurface   m_surTransformNamek;                      ///< 나메크 변신 취소 아이콘
-    gui::CSurface   m_surTransformSaiya;                      ///< 사이야인 변신 취소 아이콘
-    gui::CSurface   m_surTransformMajin;                      ///< 마인 변신 취소 아이콘
+    gui::CSurface   m_surAttackBtnUp;                         ///< Original size surface of Attack button
+    gui::CSurface   m_surAttackBtnDown;                       ///< Downsized surface for Attack button
+    gui::CSurface   m_surTransformNamek;                      ///< Namek transformation cancel icon
+    gui::CSurface   m_surTransformSaiya;                      ///< Saiyan transformation cancel icon
+    gui::CSurface   m_surTransformMajin;                      ///< Mine transformation cancel icon
 
 };

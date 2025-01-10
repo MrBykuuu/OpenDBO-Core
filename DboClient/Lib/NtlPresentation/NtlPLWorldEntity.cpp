@@ -372,7 +372,7 @@ void CNtlPLWorldEntity::OnBtnDN(RwReal x, RwReal y)
 		break;
 	case ePM_TEXTURE:
 		{
-			// 현재 필드 다열로그를 채워야 한다.
+			//The current field multi-column log must be filled.
 		}
 		break;
 	case ePM_ORNAMENT:
@@ -511,7 +511,7 @@ RwBool CNtlPLWorldEntity::Update(RwReal fElapsed)
 			return TRUE;
 		}
 
-		// Camera는 World의 전체크기 밖으로만 나가지 않으면 되므로 AOI 영역을 제외하고 검사하지 않는다.
+		//Since the Camera must not go outside the total size of the World, it is not inspected except for the AOI area.
 		RwReal Max = static_cast<RwReal>(dGET_WORLD_PARAM()->WorldValueMax - 1);
 		RwReal Min = static_cast<RwReal>(dGET_WORLD_PARAM()->WorldValueMin + 1);
 		if(m_AvatarPos.x > Max || m_AvatarPos.x < Min || m_AvatarPos.z > Max || m_AvatarPos.z < Min)

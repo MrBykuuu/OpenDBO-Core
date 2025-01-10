@@ -1,14 +1,14 @@
 /******************************************************************************
-* File			: CWindowby3.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2006. 12. 8
-* Abstract		: 
-* Update		: 
+*File			: CWindowby3.h
+*Author		    : Hong SungBock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2006. 12. 8
+*Abstract		: 
+*Update		: 
 *****************************************************************************
-* Desc			: 큰 윈도우의 리소스를 수평 혹은 수직으로 3등분한 것을 표현한다
-*				  스크립트로 미리 사이즈를 지정하지 않았다면 SetRect, SetRectWH,
-*				  SetSize등을 호출한 뒤에 SetPositionfromParent함수를 호출하자
+*Desc			: Expresses the resources of a large window divided into three horizontally or vertically.
+*                If the size is not specified in advance with a script, use SetRect, SetRectWH,
+*                After calling SetSize, etc., call the SetPositionfromParent function.
 *****************************************************************************/
 
 #pragma once
@@ -40,8 +40,8 @@ public:
 	VOID			SetRectWH(RwInt32 iPosX, RwInt32 iPosY, RwInt32 iWidth, RwInt32 iHeight);
 	VOID			SetSize(RwUInt32 uiWidth, RwUInt32 uiHeight);
 	VOID			SetAlpha(RwUInt8 byAlpha);
-	VOID			SetSurface(RwInt8 byIndex, gui::CSurface& surface);	///< 서페이스 등록
-	VOID			SetPosition(RwInt32 iPosX, RwInt32 iPosY);			///< 윈도우의 형태를 유지한체 옮긴다
+	VOID			SetSurface(RwInt8 byIndex, gui::CSurface& surface);	///< Surface registration
+	VOID			SetPosition(RwInt32 iPosX, RwInt32 iPosY);			///< Move the window while maintaining its shape
 	VOID			SetPositionfromParent(RwInt32 iPosX, RwInt32 iPosY);
 	VOID			SetPositionbyParent(RwInt32 iParentPosX, RwInt32 iParentPosY);
 

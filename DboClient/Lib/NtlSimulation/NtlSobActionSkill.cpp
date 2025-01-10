@@ -35,7 +35,7 @@ RwBool CNtlSobActionSkill::Create(void)
 		NTL_RETURN(FALSE);
 	}
 
-	// class name ¼³Á¤.
+	//Set class name.
 	SetClassName(SLCLASS_NAME_ACTIONSKILL);
 
 	m_pIcon->Create(); 

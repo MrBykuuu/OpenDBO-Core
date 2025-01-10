@@ -1,19 +1,19 @@
 /*****************************************************************************
-* File			: DiceManager.h
-* Author		: Hong Sungbock
-* Copyright		: (주)NTL
-* Date			: 2008. 5. 26
-* Abstract		: Dbo dice manager
+*File			: DiceManager.h
+*Author		    : Hong Sungbock
+*Copyright		: (주)NTL
+*Date			: 2008. 5. 26
+*Abstract		: Dbo dice manager
 *****************************************************************************
-* Desc         : 
+*Desc           : 
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
 class CDiceGui;
@@ -52,7 +52,7 @@ public:
 	VOID			Cancel(RwUInt8 byWorkID);
 	VOID			CancelAll();
 
-	VOID			LineUpDice();			///< 현재 화면에 보이는 주사위의 위치를 정렬한다
+	VOID			LineUpDice();			///< Aligns the positions of the dice currently visible on the screen.
 
 	RwInt32			SwitchDialog(bool bOpen);
 

@@ -6,7 +6,7 @@
 * Update		: 2009. 7. 10
 * Abstract		: Simulation sound theme BGM
 *****************************************************************************
-* Desc         : 특정 NPC, MOB의 등장시 플레이 되는 BGM
+* Desc         : BGM played when a specific NPC or MOB appears
 *****************************************************************************/
 
 #ifndef __NTL_THEME_BGM_H__
@@ -91,7 +91,7 @@ protected:
 
 protected:
 	MAP_THEME_BGM_LIST		m_mapTHEME_BGM_List[NUM_WORLD_TYPE];
-	MAP_THEME_BGM_SUBJECT	m_mapSubjectBGMObejct;		///< 현재 아바타 근처에 THEME BGM을 가지고 있는 대상
+	MAP_THEME_BGM_SUBJECT	m_mapSubjectBGMObejct;		///< Target with THEME BGM near the current avatar
 	eWORLD_TYPE				m_eCurWorldType;
 	SERIAL_HANDLE			m_hPlayOjbectHandle;
 	SOUND_HANDLE			m_hSound;

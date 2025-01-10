@@ -1,12 +1,12 @@
 /*****************************************************************************
  *
- * File			: DBOTitle.h
- * Author		: Hong Sungbock
- * Copyright	: (주)NTL
- * Date			: 2009. 4. 2
- * Abstract		: 
+ *File			: DBOTitle.h
+ *Author	    : Hong Sungbock
+ *Copyright  	: (주)NTL
+ *Date			: 2009. 4. 2
+ *Abstract		: 
  *****************************************************************************
- * Desc         : DBO Title screen when starting game
+ *Desc          : DBO Title screen when starting game
  *
  *****************************************************************************/
 
@@ -30,7 +30,7 @@ protected:
 	CDBOTitleGui() {}
 	virtual VOID	HandleEvents( RWS::CMsg &msg );
 
-	VOID			SwitchEnableButtons(bool bEnable);	///< Exit 버튼을 제외한 버튼의 이용가능 설정
+	VOID			SwitchEnableButtons(bool bEnable);	///< Availability settings for buttons other than the Exit button
 
 	VOID			LocateComponent(RwInt32 iWidth, RwInt32 iHeight);
 
@@ -54,14 +54,14 @@ protected:
 	gui::CSlot			m_slotConnectGameServerButton;
 	gui::CSlot			m_slotExitButton;
 
-	gui::CButton*		m_pCinemaButton;			///< 동영상 재생 버튼
-	gui::CButton*		m_pContractButton;			///< 약관 보기 버튼
-	gui::CButton*		m_pConnectGameServerButton;	///< 게임 서버 접속 버튼
-	gui::CButton*		m_pExitButton;				///< 나가기 버튼
+	gui::CButton*		m_pCinemaButton;			///< Video play button
+	gui::CButton*		m_pContractButton;			///< View terms and conditions button
+	gui::CButton*		m_pConnectGameServerButton;	///< Game server connection button
+	gui::CButton*		m_pExitButton;				///< Exit button
 
-	gui::CStaticBox*	m_pVersion;					///< Dbo 버전 표시
+	gui::CStaticBox*	m_pVersion;					///< Display Dbo version
 
 	gui::CFlash*		m_pFlashBackground;
 
-	CSurfaceGui			m_srfTitle;					///< 제목 서페이스
+	CSurfaceGui			m_srfTitle;					///< Title Surface
 };

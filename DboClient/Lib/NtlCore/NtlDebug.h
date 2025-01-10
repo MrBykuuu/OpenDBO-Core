@@ -21,9 +21,9 @@
 *
 * \ingroup debugmacros
 *
-* debug 관련해서 renderware studio의 macro를 wrapping.
-* debugmacors.h/cpp를 참조해 주세요.
-* ASSERT 및 Function Profiler가 존재.
+*Wrapping renderware studio's macro in relation to debug.
+*Please refer to debugmacors.h/cpp.
+*ASSERT and Function Profiler exist.
 *
 */
 
@@ -106,9 +106,9 @@
 
 
 /*********************************************************************
-**	Assert와 trace를 로직을 검토하여 작업을 했는지 여부를
-**  판별하기 위해 다음 매크로를 이용하여 주십시요.
-**  작업이 완료되면 이름을 일괄적으로 바꾸도록 하겠습니다.
+**Check whether the work was done by reviewing the logic of Assert and trace.
+**Please use the following macro to determine.
+**Once the work is completed, we will change the names in batches.
 **********************************************************************/
 
 #define DBO_FAIL(msg)					NTL_ASSERTFAIL(msg)
@@ -155,26 +155,26 @@
 *
 * \ingroup MemHandler
 *
-* memory 관련해서 renderware studio의 macro를 wrapping.
-* 사용 방법은 memoryhandelr.h/cpp를 참조해 주세요.
-* RenderWare Studio에서는 new, delete operator 연산자를 재정의 하고 있으며, memory profiler 기능이 제공된다.
-* 내부적으로 malloc 함수를 사용한다.
-* 또한 macro NTL_OP_NEW, NTL_NEW, NTL_OP_NEW_TYPE, NTL_NEW_TYPE 은 new 연산자를 사용하고 있으며, 
-* __FILE__ , __LINE__ , Memory type등의 momery profiler에 부가적인 정보를 추가하도록 되어 있다.
-* memory type에는 RWS_MEMORY_TYPE_RW, RWS_MEMORY_TYPE_STD, RWS_MEMORY_TYPE_RWS, RWS_MEMORY_TYPE_USER 등이 
-* 제공되고 있는데, 디버깅 뿐만아니라 사용하는 함수도 다르다.
-* RWS_MEMORY_TYPE_RW => RenderWare allocations 인 RwMalloc, RwCalloc and RwRealloc functions를 사용한다.
-* RWS_MEMORY_TYPE_STD => standard memory allocations, via the global operator new 를 사용한다.
-* RWS_MEMORY_TYPE_RWS => standard memory allocations, via the global operator new 를 사용하고, 'RWS_NEW' and 'RWS_OP_NEW'
-*						 macro가 사용된다.	
-* RWS_MEMORY_TYPE_USER => standard memory allocations, via the global operator new 를 사용하고, 'NTL_NEW_TYPE' and 'NTL_OP_NEW_TYPE'
-*						 macro가 사용된다.	
+*Wrapping renderware studio's macro related to memory.
+*Please refer to memoryhandelr.h/cpp for usage instructions.
+*RenderWare Studio redefines the new and delete operators, and provides a memory profiler function.
+*The malloc function is used internally.
+*Also, macros NTL_OP_NEW, NTL_NEW, NTL_OP_NEW_TYPE, NTL_NEW_TYPE use the new operator, 
+*Additional information such as __FILE__, __LINE__, and Memory type is added to the momery profiler.
+*Memory types include RWS_MEMORY_TYPE_RW, RWS_MEMORY_TYPE_STD, RWS_MEMORY_TYPE_RWS, RWS_MEMORY_TYPE_USER, etc. 
+*It is provided, but not only debugging but also the functions used are different.
+*RWS_MEMORY_TYPE_RW => Use RwMalloc, RwCalloc and RwRealloc functions of RenderWare allocations.
+*RWS_MEMORY_TYPE_STD => Use standard memory allocations, via the global operator new.
+*RWS_MEMORY_TYPE_RWS => standard memory allocations, via the global operator new, using 'RWS_NEW' and 'RWS_OP_NEW'
+*						 Macro is used.	
+*RWS_MEMORY_TYPE_USER => standard memory allocations, via the global operator new, using 'NTL_NEW_TYPE' and 'NTL_OP_NEW_TYPE'
+*						 Macro is used.	
 *
 */
 
 
 /*
-// RWS_MEMORY_TYPE_RW 인자로 사용된다.
+// Used as an argument for RWS_MEMORY_TYPE_RW.
 void *RWSMalloc(size_t size, RwUInt32 hint);
 void RWSFree(void *pMem);
 void *RWSReAlloc(void *pMem, size_t newSize, RwUInt32 hint);
@@ -183,7 +183,7 @@ void *RWSCalloc(size_t num, size_t size, RwUInt32 hint);
 
 /**
 * \ingroup MemHandler
-* ============= 사용방법 =============
+* ============= Usage Method =============
 * int *pTemp = NTL_NEW int;
 * int *pTemp = NTL_NEW int[10];
 * ====================================
@@ -195,7 +195,7 @@ void *RWSCalloc(size_t num, size_t size, RwUInt32 hint);
 #define NTL_DELETE( p )					RWS_DELETE( p )
 #define NTL_ARRAY_DELETE( p )			RWS_ARRAY_DELETE( p )
 
-#define B2b(val) (val ? true : false)           ///< BOOL형을 bool형으로 변경한다.
+#define B2b(val) (val ? true : false)           ///< The macro B2b(val) takes a BOOL value and converts it to a C++ bool by using the ternary operator: (val ? true : false).
 
 
 #endif

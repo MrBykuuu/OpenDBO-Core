@@ -1,11 +1,11 @@
 /******************************************************************************
 * File			: BudokaiSideIconGui.h
 * Author		: Haesung, Cho
-* Copyright		: (주)NTL
+* Copyright		: (二�)NTL
 * Date			: 2008. 4. 24
 * Abstract		: 
 *****************************************************************************
-* Desc			: 천하제일무도회 공지 SideIcon
+* Desc			: World's First Martial Arts Association Notice SideIcon
 *****************************************************************************/
 
 #ifndef _BUDOKAI_SIDE_ICON_GUI_H_
@@ -17,8 +17,8 @@
 #include "Windowby3.h"
 
 // Time
-#define dBUDOKAI_NOTICE_SYSTEM_TIME		5.0f		// 시스템 공지 시간
-#define dBUDOKAI_NOTICE_GM_TIME			7.0f		// GM Time 공지 시간
+#define dBUDOKAI_NOTICE_SYSTEM_TIME		5.0f		// System notice time
+#define dBUDOKAI_NOTICE_GM_TIME			7.0f		// GM Time Notice Time
 
 #define dBUDOKAI_DEFAULT_HEIGHT			60
 

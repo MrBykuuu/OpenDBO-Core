@@ -44,7 +44,7 @@ CTeleportProposalManager::~CTeleportProposalManager()
 
 /**
 * \brief Create
-* TeleportProposalManager의 Event를 연결한다.
+*Connect the Event of TeleportProposalManager.
 */
 RwBool CTeleportProposalManager::Create()
 {
@@ -64,7 +64,7 @@ RwBool CTeleportProposalManager::Create()
 
 /**
 * \brief Destroy
-* Link된 event들을 해제한다.
+*Release linked events.
 */
 VOID CTeleportProposalManager::Destroy()
 {
@@ -86,8 +86,8 @@ VOID CTeleportProposalManager::Destroy()
 
 /**
 * \brief HandleEvents
-* \param msg			(RWS::CMsg&) Event message class
-* Link되어 있는 Events 를 알맞은 함수에 연결해준다.
+* \param msg (RWS::CMsg&) Event message class
+*Connects linked Events to the appropriate function.
 */
 void CTeleportProposalManager::HandleEvents( RWS::CMsg& msg )
 {
@@ -100,13 +100,13 @@ void CTeleportProposalManager::HandleEvents( RWS::CMsg& msg )
 
 /**
 * \brief Update
-* \param fElapsed		(RwReal) 이전 프레임에서 경과된 시간
+* \param fElapsed (RwReal) Time elapsed from previous frame
 */
 void CTeleportProposalManager::Update( RwReal fElapsed )
 {
 	m_fElapsedTime += fElapsed;
 
-	// 초당 한번 업데이트 한다.
+	// Updates once per second.
 	if( m_fElapsedTime > 1.0f )
 	{
 		m_fElapsedTime -= 1.0f;
@@ -118,7 +118,7 @@ void CTeleportProposalManager::Update( RwReal fElapsed )
 			if( pProposal->dataNotify.wWaitTime > 0 )
 				pProposal->dataNotify.wWaitTime--;
 
-			// Proposal 되지 않았었다면 Proposal 을 띄워준다.
+			// If a proposal has not been made, a proposal is raised.
 			if( !pProposal->bProposal )
 			{
 				if( IsGameStage() && IsAvatar() )
@@ -132,14 +132,14 @@ void CTeleportProposalManager::Update( RwReal fElapsed )
 }
 
 /**
-* \brief TeleportProposalNfy를 제어한다.
-* 서버에서 내려온 요청된 텔레포트 Proposal을 지금 현재 보여 줄것인지 보관하고 있을 것인지 처리한다.
+* \brief Controls TeleportProposalNfy.
+*Processes whether to show or keep the requested teleport proposal sent from the server.
 */
 void CTeleportProposalManager::HandleTeleportProposalNfy( RWS::CMsg& msg )
 {
 	SDboEventTeleportProposalNfy* pNotify = reinterpret_cast<SDboEventTeleportProposalNfy*>(msg.pData);
 
-	// Proposal 이 존재하지 않는다면 추가하고 현재 상태를 검사하여 Proposal을 보낸다.
+	// If the proposal does not exist, add it, check the current status, and send the proposal.
 	MapTeleportProposal::iterator it = m_mapTeleportProposal.find( pNotify->byInfoIndex );
 	if( it == m_mapTeleportProposal.end() )
 	{
@@ -147,13 +147,13 @@ void CTeleportProposalManager::HandleTeleportProposalNfy( RWS::CMsg& msg )
 		memcpy( &pProposal->dataNotify, pNotify, sizeof( SDboEventTeleportProposalNfy ) );
 		m_mapTeleportProposal.insert( std::make_pair( pNotify->byInfoIndex, pProposal ) );
 
-		// 게임 상태이고 아바타가 존대한다면 Proposal 한다.
+		// If it is in a game state and the avatar is respected, make a proposal.
 		if( IsGameStage() && IsAvatar() )
 			SendTeleportProposal( pProposal );
 	}
 	else
 	{
-		// 있다면 저장되어 있던 인덱스를 지우고 새로운 데이터로 채워넣는다.
+		// If so, delete the stored index and fill it with new data.
 		STeleportProposal* pProposal = (*it).second;
 		NTL_DELETE( pProposal );
 		m_mapTeleportProposal.erase( it );
@@ -162,37 +162,37 @@ void CTeleportProposalManager::HandleTeleportProposalNfy( RWS::CMsg& msg )
 		memcpy( &pProposal->dataNotify, pNotify, sizeof( SDboEventTeleportProposalNfy ) );
 		m_mapTeleportProposal.insert( std::make_pair( pNotify->byInfoIndex, pProposal ) );
 
-		// 게임 상태이고 아바타가 존대한다면 Proposal 한다.
+		// If it is in a game state and the avatar is respected, make a proposal.
 		if( IsGameStage() && IsAvatar() )
 			SendTeleportProposal( pProposal );
 	}
 }
 
 /**
-* \brief TeleportConfirmRes를 제어한다.
-* 사용자가 선택한 TeleportConfirmReq의 응답을 받아서 텔레포트 메시지를 다시 띄워준다거나 삭제하는 처리를 한다.
+* \brief Controls TeleportConfirmRes.
+*Receives a response to the TeleportConfirmReq selected by the user and processes the teleport message again or deletes it.
 */
 void CTeleportProposalManager::HandleTeleportConfirmRes( RWS::CMsg& msg )
 {
 	SDboEventTeleportConfirmRes* pResult = reinterpret_cast<SDboEventTeleportConfirmRes*>(msg.pData);
 
-	// 성공이 아니라면 ResultCode 출력 후
+	// If not successful, print ResultCode
 	if( pResult->wResultCode != GAME_SUCCESS )
 		GetAlarmManager()->AlarmMessage(Logic_GetResultCodeString(pResult->wResultCode, ""), TRUE );
 
-	// 현재 있는 Index를 찾는다.
+	// Find the current Index.
 	MapTeleportProposal::iterator it = m_mapTeleportProposal.find( pResult->byTeleportIndex );
 	if( it != m_mapTeleportProposal.end() )
 	{
 		STeleportProposal* pProposal = (*it).second;
 
-		// 제안을 한 Interface만 찾는다.
+		// Search only for the interface that has been proposed.
 		if( pProposal->bProposal )
 		{
-			// ResultCode에서 bClearInterface는 제안을 다시 할 것인지 아닌지를 결정한다.
+			// In ResultCode, bClearInterface decides whether to redo the proposal or not.
 			if( pResult->bClearInterface )
 			{
-				// 지워준다.
+				// Erase it.
 				NTL_DELETE( pProposal );
 				m_mapTeleportProposal.erase( it );
 			}
@@ -208,8 +208,8 @@ void CTeleportProposalManager::HandleTeleportConfirmRes( RWS::CMsg& msg )
 }
 
 /**
-* \brief MsgBoxResult를 처리한다.
-* MessageBox에서 오는 WorkID의 응답들을 처리한다.
+* \brief Processes MsgBoxResult.
+*Process WorkID responses coming from MessageBox.
 */
 void CTeleportProposalManager::HandleMsgBoxResult( RWS::CMsg& msg )
 {
@@ -271,7 +271,7 @@ void CTeleportProposalManager::SendTeleportProposal( STeleportProposal* pProposa
 	}
 	
 
-	// 유저에게 Proposal 한다
+	// Proposal to users
 	
 	std::string nMsgBoxID = "DST_TELEPORT_COMMON_CONFIRM_MSG";
 	if( bFinalConfirm )
@@ -297,7 +297,7 @@ void CTeleportProposalManager::SendTeleportProposal( STeleportProposal* pProposa
 				awcBuffer);
 		}
 		break;
-		case TELEPORT_TYPE_BUDOKAI:		// 천하제일 무도회 서버로 이동하시겠습니까?
+		case TELEPORT_TYPE_BUDOKAI:		// Would you like to go to the World's Best Martial Arts server?
 		{
 			sMsgBoxData data;
 			data.byIndex = pProposal->dataNotify.byInfoIndex;
@@ -308,9 +308,9 @@ void CTeleportProposalManager::SendTeleportProposal( STeleportProposal* pProposa
 				GetDisplayStringManager()->GetString( "DST_BUDOKAI_TELEPORT_MSG_TBSERVER" ) );
 		}
 		break;
-		case TELEPORT_TYPE_MINORMATCH:	// 천하제일 무도회 예선전 텔레포트
+		case TELEPORT_TYPE_MINORMATCH:	// World's Best Martial Arts Preliminary Teleportation
 		{
-			// make string '예선 경기장'
+			// make string 'preliminary stadium'
 			WCHAR awcBuffer[128];
 			swprintf_s( awcBuffer, 128, GetDisplayStringManager()->GetString( "DST_BUDOKAI_TELEPORT_MSG_MATCH" ),
 				GetDisplayStringManager()->GetString( "DST_BUDOKAI_REQUEST_MINOR" ) );
@@ -324,7 +324,7 @@ void CTeleportProposalManager::SendTeleportProposal( STeleportProposal* pProposa
 				awcBuffer );
 		}
 		break;
-		case TELEPORT_TYPE_MAJORMATCH:	// 천하제일 무도회 본선 텔레포트
+		case TELEPORT_TYPE_MAJORMATCH:	// World's Best Martial Arts Tournament Final Teleportation
 		{
 			RwUInt8 nDepth = pProposal->dataNotify.byBudokaiMatchDepth;
 			std::string nStringID = "DST_BUDOKAI_MAJORMATCH_INFO_TITLE_32";
@@ -350,7 +350,7 @@ void CTeleportProposalManager::SendTeleportProposal( STeleportProposal* pProposa
 				break;
 			}
 
-			// make string '본선 ?? 강 경기장'
+			// make string 'Main finals ?? 'Kang Stadium'
 			WCHAR awcBuffer1[32];
 			swprintf_s( awcBuffer1, 32, L"%s %s", 
 				GetDisplayStringManager()->GetString( "DST_BUDOKAI_REQUEST_MAJOR" ),
@@ -369,9 +369,9 @@ void CTeleportProposalManager::SendTeleportProposal( STeleportProposal* pProposa
 				awcBuffer2 );
 		}
 		break;
-		case TELEPORT_TYPE_FINALMATCH:	// 천하제일 무도회 결선 텔레포트
+		case TELEPORT_TYPE_FINALMATCH:	// World's Best Martial Arts Final Teleport
 		{
-			// make string '결선 경기장'
+			// make string 'final stadium'
 			WCHAR awcBuffer[64];
 			swprintf_s( awcBuffer, 64, GetDisplayStringManager()->GetString( "DST_BUDOKAI_TELEPORT_MSG_MATCH" ),
 				GetDisplayStringManager()->GetString( "DST_BUDOKAI_REQUEST_FINAL" ) );

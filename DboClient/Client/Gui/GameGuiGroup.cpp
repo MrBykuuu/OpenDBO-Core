@@ -1,21 +1,21 @@
 #include "precomp_dboclient.h"
 #include "GameGuiGroup.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLDef.h"
 #include "NtlSLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSobAvatar.h"
 #include "NtlSLTMQ.h"
 #include "NtlSLGlobal.h"
 #include "NtlSobItemAttr.h"
 
-// dbo
+// Dbo
 #include "DboGlobal.h"
 #include "DboEventGenerator.h"
 #include "DisplayStringManager.h"
@@ -338,7 +338,7 @@ RwBool CGameGuiGroup::Create(void)
 	// Dialog manager 
 	GetDialogManager()->CreateInstance( CNtlPLGuiManager::GetInstance()->GetGuiManager() );
 
-	// 종족별 리소스 폴더 지정
+	// Specify resource folder for each race
 	LoadCommonScript();	
 
 	// PLGuiGroup
@@ -389,10 +389,10 @@ RwBool CGameGuiGroup::Create(void)
 	}
 	CNtlPLGuiManager::GetInstance()->AddGui( m_pSubGauge );
 
-	// hp/mp/cp
+	// HP/MP/CP
 	AddDialog(m_pHp, CHpGui, "HpGui", DIALOG_HP);
 
-	// chatting 
+	// Chatting 
 	m_pChat = NTL_NEW CChatGui("ChatGui");
 	if(!m_pChat->Create())
 	{
@@ -414,7 +414,7 @@ RwBool CGameGuiGroup::Create(void)
 	CNtlPLGuiManager::GetInstance()->AddGui(m_pQuickSlot); 
 	GetDialogManager()->RegistDialog( DIALOG_QUICKSLOT, m_pQuickSlot, &CQuickSlotGui::SwitchDialog );
 
-	// exp
+	// Exp
 	m_pExp = NTL_NEW CExpGui("ExpGui");
 	if(!m_pExp->Create())
 	{
@@ -442,11 +442,11 @@ RwBool CGameGuiGroup::Create(void)
 	AddDialog(m_pTargetHp, CTargetHpGui, "TargetHp", DIALOG_TARGER_UI);
 
 
-	// StatusWindow
+	// Status window
 	AddDialog(m_pStatusWindow, CStatusWindowGui, "StatusWindowGui", DIALOG_STATUS);
 
 
-	// BagSlot
+	// Bag slot
 	m_pBagSlot = NTL_NEW CBagSlotGui( "BagSlot" );
 	if( !m_pBagSlot->Create() )
 	{
@@ -457,7 +457,7 @@ RwBool CGameGuiGroup::Create(void)
 	CNtlPLGuiManager::GetInstance()->AddGui(m_pBagSlot);
 	GetDialogManager()->RegistDialog(DIALOG_BAGSLOT, m_pBagSlot, &CBagSlotGui::SwitchDialog);
 
-	// SkillWindow
+	// Skill Window
 	//m_pSkillWindow = NTL_NEW CSkillWindowGui( "SkillWindow" );
 	//if( !m_pSkillWindow->Create() )
 	//{
@@ -505,7 +505,7 @@ RwBool CGameGuiGroup::Create(void)
 
 	AddDialog(m_pWarehouseBar, CWarehouseBarGui, "WarehouseBarGui", DIALOG_WAREHOUSEBAR);
 
-	// 창고 1
+	// warehouse 1
 	m_pWarehouse_1 = NTL_NEW CWarehouseGui("WarehouseGui_1");
 	m_pWarehouse_1->RegisterWarehouseIndex(0);
 	if(!m_pWarehouse_1->Create())
@@ -518,7 +518,7 @@ RwBool CGameGuiGroup::Create(void)
 	CNtlPLGuiManager::GetInstance()->AddGui(m_pWarehouse_1);
 	GetDialogManager()->RegistDialog(DIALOG_WAREHOUSE_1, m_pWarehouse_1, &CWarehouseGui::SwitchDialog);
 
-	// 창고 2
+	// warehouse 2
 	m_pWarehouse_2 = NTL_NEW CWarehouseGui("WarehouseGui_2");
 	m_pWarehouse_2->RegisterWarehouseIndex(1);
 	if(!m_pWarehouse_2->Create())
@@ -531,7 +531,7 @@ RwBool CGameGuiGroup::Create(void)
 	CNtlPLGuiManager::GetInstance()->AddGui(m_pWarehouse_2);
 	GetDialogManager()->RegistDialog(DIALOG_WAREHOUSE_2, m_pWarehouse_2, &CWarehouseGui::SwitchDialog);
 
-	// 창고 3
+	// warehouse 3
 	m_pWarehouse_3 = NTL_NEW CWarehouseGui("WarehouseGui_3");
 	m_pWarehouse_3->RegisterWarehouseIndex(2);
 	if(!m_pWarehouse_3->Create())
@@ -544,7 +544,7 @@ RwBool CGameGuiGroup::Create(void)
 	CNtlPLGuiManager::GetInstance()->AddGui(m_pWarehouse_3);
 	GetDialogManager()->RegistDialog(DIALOG_WAREHOUSE_3, m_pWarehouse_3, &CWarehouseGui::SwitchDialog);
 
-	// 공유창고
+	// Shared warehouse
 	m_pWarehouseCommon = NTL_NEW CWarehouseCommonGui("WarehouseCommonGui");
 	m_pWarehouseCommon->RegisterWarehouseIndex(3);
 	if(!m_pWarehouseCommon->Create())
@@ -653,7 +653,7 @@ RwBool CGameGuiGroup::Create(void)
 
 	AddDialog( m_pMailSystemReadGui, CMailSystemReadGui, "MailSystemReadGui", DIALOG_MAILSYSTEM_READ );
 
-	// CinematicGui
+	// Cinematic gui
 	m_pCinematicGui = NTL_NEW CCinematicGui();
 	if( !m_pCinematicGui->Create() )
 	{
@@ -691,10 +691,10 @@ RwBool CGameGuiGroup::Create(void)
 	// Mascot Gui
 	AddDialog(m_pMascotGui, CMascotGui, "MascotGui", DIALOG_MASCOT);
 
-	// party
+	// Party
 	AddDialog(m_pPartyMenu, CPartyMenu, "PartyMenuGui", DIALOG_PARTYMENU );	
 
-	// 사이드 다이얼로그 컨트롤
+	// Side dialog control
 	AddDialog(m_pSideDialogControl, CSideDialogControlGui, "SideDialogControlGui", DIALOG_SIDEDIALOG_CONTROLLER );
 
 	// BroadCast Gui
@@ -717,7 +717,7 @@ RwBool CGameGuiGroup::Create(void)
 		}
 	}	
 
-	// NetPyShop
+	// Net py shop
 	AddDialog(m_pNetPyShopGui, CNetPyShopGui, "NetPyShopGui", DIALOG_NETPYSHOP);
 	AddDialog(m_pNetPyShopCartGui, CNetPyShopCartGui, "NetPyShopCartGui", DIALOG_NETPYSHOP_TRADE);	
 
@@ -891,7 +891,7 @@ void CGameGuiGroup::Destroy(void)
 	RemoveDialog(m_pPrivateShopGui);
 	RemoveDialog(m_pPrivateShopCartGui);
     RemoveDialog(m_pRBBoardGui);
-    /*RemoveDialog(m_pRBChallengeGui);*/
+	/*RemoveDialog(m_pRBChallengeGui);*/
 	RemoveDialog(m_pTMQBoard);
 	RemoveDialog(m_pUDBoard);
 	RemoveDialog(m_pMailSystemGui);
@@ -906,7 +906,7 @@ void CGameGuiGroup::Destroy(void)
 	RemoveDialog(m_pMascotGui);
     RemoveDialog(m_pCommuTargetGui);
 	RemoveDialog(m_pTimeNotifyGui);
-    //RemoveDialog(m_pNetConnectBox);
+	//RemoveDialog(m_pNetConnectBox);
 	RemoveDialog(m_pSideDialogControl);
 	RemoveDialog(m_pTutorialDialogFocus);
 	RemoveDialog(m_pTutorialExample);
@@ -1010,7 +1010,7 @@ void CGameGuiGroup::HandleEvents(RWS::CMsg &pMsg)
 			Logic_ShowRegenBox();
 		}
 	}
-    else if(pMsg.Id == g_EventSummonPet)		// 소환수가 소환되면 소환수 UI들의 객체를 생성하고 표시한다.
+    else if(pMsg.Id == g_EventSummonPet)		// When a summon is summoned, objects for the summon UI are created and displayed.
     {
         SDboEventSummonPet* pData = reinterpret_cast<SDboEventSummonPet*>(pMsg.pData);
 
@@ -1129,7 +1129,7 @@ void CGameGuiGroup::HandleEvents(RWS::CMsg &pMsg)
 
 		if( pEvent->iMessage == PMT_PARTY_CREATE )
 		{
-			// 파티 생성시 파티 인벤이 TMQ 사이드 다이얼로그를 가리는 것을 막기 위해
+			// To prevent the party inventory from covering the TMQ side dialog when creating a party.
 			CSideDialogControlGui* pSideDialogControlGui = (CSideDialogControlGui*)GetDialogManager()->GetDialog(DIALOG_SIDEDIALOG_CONTROLLER);
 			if( pSideDialogControlGui )
 				pSideDialogControlGui->SelectButtonType(SDIALOG_TMQ_STATUS);
@@ -1142,12 +1142,12 @@ void CGameGuiGroup::HandleEvents(RWS::CMsg &pMsg)
 	}
 	else if( pMsg.Id == g_EventGameServerChangeOut )
 	{
-		// 길드 정보 삭제
+		// Delete guild information
 		GetDialogManager()->CloseDialog(DIALOG_GUILD_WAREHOUSEBAR);
 		GetDialogManager()->SwitchBag(FALSE);
 		CGuildWarehouseBar::DestroyInstance();
 
-		// 파티 정보 삭제
+		// Delete party information
 		m_pPartyMenu->ResetPartyMenu();
 	}	
 	else if( pMsg.Id == g_EventGuildWarehouseNotify )
@@ -1213,7 +1213,7 @@ void CGameGuiGroup::HandleEvents(RWS::CMsg &pMsg)
 
 				if( GetPetitionManager()->IsNeedSatisfation() )
 				{
-					// 유저 진정 만족도 조사
+					// User satisfaction survey
 					AddDialog_no_return(m_pPetitionSatisfaction, CPetitionSatisfaction, "PetitionSatisfaction", DIALOG_PETITION_SATISFACTION );
 					GetDialogManager()->LocationDialogs(GetDboGlobal()->GetScreenWidth(), GetDboGlobal()->GetScreenHeight());
 					GetDialogManager()->OpenDialog(DIALOG_PETITION_SATISFACTION);
@@ -1307,8 +1307,8 @@ void CGameGuiGroup::HandleEvents(RWS::CMsg &pMsg)
 
 		if( DIALOGEVENT_CREATE_DOJO_GUI == pEvent->iType )
 		{
-			// 게임중 이 GUI가 필요하지 않을 수도 빈번하게 호출할 수도 있기에
-			// 처음 호출시 생성하고 종료할 때까지 보존한다
+			// This GUI may not be needed or may be called frequently during the game.
+			// Created when first called and stored until terminated.
 			if( m_pDojoInfoGui == NULL )
 				AddDialog_no_return(m_pDojoInfoGui, CDojoInfoGui, "DojoInfo", DIALOG_DOJO_INFO);
 

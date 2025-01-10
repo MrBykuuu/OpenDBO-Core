@@ -71,12 +71,12 @@ eStoreResult CNtlMusicGroup::StoreSound(CNtlSound* pSound, sNtlSoundPlayParameta
 
 		if( m_fReplayElapsed > 0.f )
 		{
-			// replay 대기 상태면 바로 없앤다
+			// If it is waiting for replay, it is immediately removed.
 			Stop(it->second->m_hHandle);
 		}
 		else
 		{
-			// 현재 연주되는 음악은 PostMusic이 되어 Fade Out 된다.			
+			// The music currently playing becomes PostMusic and fades out.			
 			FMOD_MODE mode;
 			CNtlSound* pCurSound = it->second;
 
@@ -124,7 +124,7 @@ bool CNtlMusicGroup::Stop(SOUND_HANDLE hHandle)
 {
 	if( hHandle == m_hPostSound )
 	{
-		// 즉각 해제
+		// immediately released
 		CNtlChannelGroup::Stop(m_hPostSound);
 		m_hPostSound = INVALID_SOUND_HANDLE;
 
@@ -135,7 +135,7 @@ bool CNtlMusicGroup::Stop(SOUND_HANDLE hHandle)
 		SOUND_ITER it = m_mapGroup.find(hHandle);
 		if( it != m_mapGroup.end() )
 		{
-			// 음악은 Fade out후 해제된다
+			// The music is released after fading out.
 			FMOD_MODE mode;
 			CNtlSound* pSound = it->second;
 
@@ -167,10 +167,10 @@ void CNtlMusicGroup::ReleaseFinishedSound(float fElapsed)
 			pSound->m_pFMODChannel->getMode(&mode);
 
 			if( mode ^ FMOD_LOOP_NORMAL )
-			{	// 무한반복이 아닐 때
+			{	// When there is no infinite repetition
 				bool bPlaying;
 
-				// paused 된 사운드도 true 값이 리턴된다
+				// A true value is returned even for paused sounds.
 				pSound->m_pFMODChannel->isPlaying(&bPlaying);
 
 				if(!bPlaying)

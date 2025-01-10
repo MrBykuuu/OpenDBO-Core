@@ -151,9 +151,9 @@ protected:
 	DEF_ITEM_PARTS_MAP					m_mapParts;					///< Default Parts
 	DEF_ITEM_SCOUTER_ATTACH_INFO_MAP	m_mapScouterAttachInfo;		///< Scouter Attach Info
 
-    // 초사이어인용 데이터
-    DEF_ITEM_HEAD_KEY_NAME              m_mapSuperSaiyanHeadKeyName;    ///< 초사이어인용 Head
-    DEF_ITEM_FACE_MULTI_TEX_NAME_MAP    m_mapSuperSaiyanFaceMultiTexName;   ///< 초사이어인용 Face
+    //Super Saiyan data
+    DEF_ITEM_HEAD_KEY_NAME              m_mapSuperSaiyanHeadKeyName;    ///< Super Saiyan Head
+    DEF_ITEM_FACE_MULTI_TEX_NAME_MAP    m_mapSuperSaiyanFaceMultiTexName;   ///< Super Saiyan Face
 
 public:
 	void operator = (CNtlDefaultItemTable& _TmpTbl);

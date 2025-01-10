@@ -170,9 +170,10 @@ RwBool CQuestIndicatorGui::Create(CQuestGui* pQuestGui)
 	m_pbtnAllExtendOff->Show(false);
 	m_slotClickAllExtendOff = m_pbtnAllExtendOff->SigClicked().Connect(this, &CQuestIndicatorGui::OnClickAllExtendOff);
 
+// Task helper text
 	m_pstbTitle = (gui::CStaticBox*)GetComponent("stbTitle");
 	m_pstbTitle->SetText(GetDisplayStringManager()->GetString("DST_SIDEDLG_TITLE_QUESTINDICATOR"));
-
+	// clipping area 
 	m_ppnClippingArea = (gui::CPanel*)GetComponent("pnClippingArea");
 	m_ppnClippingArea->SetClippingMode(TRUE);
 
@@ -298,7 +299,7 @@ VOID CQuestIndicatorGui::Destroy(VOID)
 
 }
 
-RwInt32 CQuestIndicatorGui::SwitchDialog(bool bOpen)
+RwInt32 CQuestIndicatorGui::SwitchDialog(bool bOpen)  // The trigger function of the actual dialog
 {
 	if (bOpen)
 	{
@@ -436,7 +437,7 @@ VOID CQuestIndicatorGui::HandleEvents(RWS::CMsg& msg)
 		DeleteData(pData->tRmvTSId);
 		Refresh();
 	}
-	else if (msg.Id == g_EventResize)
+	else if (msg.Id == g_EventResize) // Change window position
 	{
 		CRectangle rect = GetNtlGuiManager()->GetGuiManager()->GetScreenRect();
 		m_pThis->SetPosition(rect.right - (QUEST_INDICATOR_FRAME_WIDTH + QUEST_INDICATOR_QUESTSTATE_WIDTH), m_pThis->GetPosition().top);
@@ -445,7 +446,7 @@ VOID CQuestIndicatorGui::HandleEvents(RWS::CMsg& msg)
 	CalculatePosition(m_nScrollPos);
 }
 
-VOID CQuestIndicatorGui::Refresh(VOID)
+VOID CQuestIndicatorGui::Refresh(VOID) // Refresh task list
 {
 	RwInt32 i;
 	LIST_DATA::iterator it;
@@ -484,7 +485,7 @@ VOID CQuestIndicatorGui::DrawData(RwInt32 nIdx, SNtlEventShowIndicator_Nfy* pInd
 		m_IndicatorItem[nIdx].m_pGoalResult[j]->Show(false);
 	}
 
-	// DataÀÔ·Â
+	// Enter Data
 	m_IndicatorItem[nIdx].m_TSKey = pIndicatorData->sTSKey;
 	m_IndicatorItem[nIdx].m_uiQuestTitle = pIndicatorData->uiQuestTitle;
 	m_IndicatorItem[nIdx].m_uiQuestGoal = pIndicatorData->uiQuestGoal;
@@ -513,7 +514,7 @@ VOID CQuestIndicatorGui::DrawData(RwInt32 nIdx, SNtlEventShowIndicator_Nfy* pInd
 	m_IndicatorItem[nIdx].m_eGrade->SetPosition(2, 7);
 
 
-	// Á¦¸ñ
+	// Title
 	CQuestTextDataTable* pTable = API_GetTableContainer()->GetQuestTextDataTable();
 	sQUEST_TEXT_DATA_TBLDAT* pData = reinterpret_cast<sQUEST_TEXT_DATA_TBLDAT*>(pTable->FindData(pIndicatorData->uiQuestTitle));
 	std::wstring wstrTitle;
@@ -657,7 +658,7 @@ VOID CQuestIndicatorGui::DrawData(RwInt32 nIdx, SNtlEventShowIndicator_Nfy* pInd
 		}
 	}
 
-	// ½Ã°£.
+	// Time.
 	if (pIndicatorData->uiTimeLimit != INVALID_DWORD)
 	{
 		RwUInt32 uiTime;

@@ -542,7 +542,7 @@ RwBool CNtlWorldMergeManager::OnExportMapObj(const char* _pPathNameOfProject, co
 {
 	/*
 	WorldFileFormat - Export
-	Export 처리를 위한 부분이다.
+	This is the part for export processing.
 	*/
 
 	sNtlWorldParam	sTmpPrjParam;
@@ -781,7 +781,7 @@ RwBool CNtlWorldMergeManager::OnExportHeightfield(const char* _pPathNameOfProjec
 {
 	/*
 	WorldFileFormat - Export
-	Export 처리를 위한 부분이다.
+	This is the part for export processing.
 	*/
 
 	sNtlWorldParam	sTmpPrjParam;
@@ -1147,7 +1147,7 @@ RwBool CNtlWorldMergeManager::OnExportMapPropPE(const char* _pPathNameOfProject,
 		// total count of path tile in a field
 		fwrite(&uiTemp, sizeof(RwUInt32), 1, pFile);
 
-		// 여기서 위에서 읽은 pBitProp을 fwrite 해준다. Chunk 크기에 따라 갯수를 늘려야 한다.
+		//Here, fwrite the pBitProp read above. The number must be increased depending on the chunk size.
 
 		for (int e = 0; e < (sTmpPrjParam.WorldSectorTileNum * 2); ++e)
 		{
@@ -2356,7 +2356,7 @@ RwBool CNtlWorldMergeManager::OnExportHeightfieldY(const char* _pPathNameOfProje
 {
 	/*
 	WorldFileFormat - Export
-	Export 처리를 위한 부분이다.
+	This is the part for export processing.
 	*/
 
 	sNtlWorldParam	sTmpPrjParam;
@@ -2464,7 +2464,7 @@ RwBool CNtlWorldMergeManager::OnExportPECollision(const char* _pPathNameOfProjec
 {
 	/*
 	WorldFileFormat - Export
-	Export 처리를 위한 부분이다.
+	This is the part for export processing.
 	*/
 
 	sNtlWorldParam	sTmpPrjParam;
@@ -3030,7 +3030,7 @@ RwBool CNtlWorldMergeManager::MergeInformation(sMERGE_PARAM &sParam, RwInt32 Idx
 		}
 
 		//////////////////////////////////////////////////////////////////////////
-		// Information Update : Shadow : Field Index가 다르면 안된다.
+		// Information Update : Shadow : Field Index should not be different.
 		//////////////////////////////////////////////////////////////////////////
 		if (sParam.bShadow && IdxFieldDst == IdxFieldSrc)
 		{
@@ -4517,7 +4517,7 @@ RwBool CNtlWorldMergeManager::OnExportMapObj(const char* _pPathNameOfProject, co
 {
 	/*
 	WorldFileFormat - Export
-	Export 처리를 위한 부분이다.
+	This is the part for export processing.
 	*/
 
 	sNtlWorldParam	sTmpPrjParam;
@@ -4755,7 +4755,7 @@ RwBool CNtlWorldMergeManager::OnExportHeightfield(const char* _pPathNameOfProjec
 {
 	/*
 	WorldFileFormat - Export
-	Export 처리를 위한 부분이다.
+	This is the part for export processing.
 	*/
 
 	sNtlWorldParam	sTmpPrjParam;
@@ -5115,7 +5115,7 @@ RwBool CNtlWorldMergeManager::OnExportMapPropPE(const char* _pPathNameOfProject,
 		// total count of path tile in a field
 		fwrite(&uiTemp, sizeof(RwUInt32), 1, pFile);
 
-		// 여기서 위에서 읽은 pBitProp을 fwrite 해준다. Chunk 크기에 따라 갯수를 늘려야 한다.
+		//Here, fwrite the pBitProp read above. The number must be increased depending on the chunk size.
 
 		for (int e = 0; e < (sTmpPrjParam.WorldSectorTileNum * 2); ++e)
 		{
@@ -6427,7 +6427,7 @@ RwBool CNtlWorldMergeManager::OnExportHeightfieldY(const char* _pPathNameOfProje
 {
 	/*
 	WorldFileFormat - Export
-	Export 처리를 위한 부분이다.
+	This is the part for export processing.
 	*/
 
 	sNtlWorldParam	sTmpPrjParam;
@@ -6536,7 +6536,7 @@ RwBool CNtlWorldMergeManager::OnExportPECollision(const char* _pPathNameOfProjec
 {
 	/*
 	WorldFileFormat - Export
-	Export 처리를 위한 부분이다.
+    This is the part for export processing.
 	*/
 
 	sNtlWorldParam	sTmpPrjParam;
@@ -7317,7 +7317,7 @@ RwBool CNtlWorldMergeManager::MergeInformation(sMERGE_PARAM &sParam, RwInt32 Idx
 		}
 
 		//////////////////////////////////////////////////////////////////////////
-		// Information Update : Shadow : Field Index가 다르면 안된다.
+		// Information Update : Shadow : Field Index should not be different.
 		//////////////////////////////////////////////////////////////////////////
 		if (sParam.bShadow && IdxFieldDst == IdxFieldSrc)
 		{

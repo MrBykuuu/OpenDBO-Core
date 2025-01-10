@@ -2,17 +2,17 @@
 #include "PartyMemberGui.h"
 
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "ItemTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLDef.h"
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSobManager.h"
 #include "NtlSobAvatar.h"
@@ -23,7 +23,7 @@
 #include "NtlSLApi.h"
 #include "NtlSLPacketGenerator.h"
 
-// dbo
+// Dbo
 #include "InfoWndManager.h"
 #include "IconMoveManager.h"
 #include "DboGlobal.h"
@@ -191,10 +191,10 @@ RwBool CPartyMemberGui::Create(SERIAL_HANDLE hSerial, WCHAR* pcText, RwUInt8 byC
 
 	CRectangle rect;
 
-	// 종족과 직업 그림
+	// Race and Occupation Illustration
 	m_pTributarySimbol = (gui::CPanel*)GetComponent( "TributaryPanel" );
 
-	// 파티 맴버 스태틱
+	// party member static
 	rect.SetRectWH(19, 4, 104, 20);
 	m_pNameStatic = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER );
 	m_pNameStatic->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -203,11 +203,11 @@ RwBool CPartyMemberGui::Create(SERIAL_HANDLE hSerial, WCHAR* pcText, RwUInt8 byC
 	m_pNameStatic->SetText(pcText);
 	m_pNameStatic->Enable(false);
 
-	// LP 게이지
+	// LP gauge
 	m_pLPGauge = (gui::CProgressBar*)GetComponent( "LPGauge" );	
 	m_pLPGauge->Enable(false);	
 /*
-	// LP 스태틱
+	// LP static
 	rect.SetRectWH(32, 25, 42, 13);
 	m_pLPStatic = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_RIGHT);
 	m_pLPStatic->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -215,7 +215,7 @@ RwBool CPartyMemberGui::Create(SERIAL_HANDLE hSerial, WCHAR* pcText, RwUInt8 byC
 	m_pLPStatic->SetEffectValue(DEFAULT_SHADOW_EFFECT_VALUE);
 	m_pLPStatic->Enable(false);
 
-	// 슬래쉬 스태틱
+	//slash static
 	rect.SetRectWH(74, 25, 4, 13);
 	m_pLPSlachStatic = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER);
 	m_pLPSlachStatic->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -224,7 +224,7 @@ RwBool CPartyMemberGui::Create(SERIAL_HANDLE hSerial, WCHAR* pcText, RwUInt8 byC
 	m_pLPSlachStatic->SetText("/");
 	m_pLPSlachStatic->Enable(false);
 
-	// MaxLP 스태틱
+	// MaxLP static
 	rect.SetRectWH(78, 25, 42, 13);
 	m_pMaxLPStatic = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pMaxLPStatic->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -232,12 +232,12 @@ RwBool CPartyMemberGui::Create(SERIAL_HANDLE hSerial, WCHAR* pcText, RwUInt8 byC
 	m_pMaxLPStatic->SetEffectValue(DEFAULT_SHADOW_EFFECT_VALUE);
 	m_pMaxLPStatic->Enable(false);
 */
-	// EP 게이지
+	// EP gauge
 	m_pEPGauge = (gui::CProgressBar*)GetComponent( "EPGauge" );	
 	m_pEPGauge->Enable(false);
 
 /*
-	// EP 스태틱
+	//EP static
 	rect.SetRectWH(32, 34, 42, 13);
 	m_pEPStatic = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_RIGHT);
 	m_pEPStatic->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -245,7 +245,7 @@ RwBool CPartyMemberGui::Create(SERIAL_HANDLE hSerial, WCHAR* pcText, RwUInt8 byC
 	m_pEPStatic->SetEffectValue(DEFAULT_SHADOW_EFFECT_VALUE);
 	m_pEPStatic->Enable(false);
 
-	// 슬래쉬 스태틱
+	//slash static
 	rect.SetRectWH(74, 34, 4, 13);
 	m_pEPSlachStatic = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER);
 	m_pEPSlachStatic->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -254,7 +254,7 @@ RwBool CPartyMemberGui::Create(SERIAL_HANDLE hSerial, WCHAR* pcText, RwUInt8 byC
 	m_pEPSlachStatic->SetText("/");
 	m_pEPSlachStatic->Enable(false);
 
-	// MaxLP 스태틱
+	//MaxLP static
 	rect.SetRectWH(78, 34, 42, 13);
 	m_pMaxEPStatic = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pMaxEPStatic->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -262,7 +262,7 @@ RwBool CPartyMemberGui::Create(SERIAL_HANDLE hSerial, WCHAR* pcText, RwUInt8 byC
 	m_pMaxEPStatic->SetEffectValue(DEFAULT_SHADOW_EFFECT_VALUE);
 	m_pMaxEPStatic->Enable(false);
 */
-	// 레벨
+	// level
 	rect.SetRectWH(5, 28, 22, 13);
 	m_pLevel = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER );
 	m_pLevel->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -271,25 +271,25 @@ RwBool CPartyMemberGui::Create(SERIAL_HANDLE hSerial, WCHAR* pcText, RwUInt8 byC
 	m_pLevel->Clear();
 	m_pLevel->Enable(false);
 
-	// 다른 월드에 있는 파티원의 패널
+	// Panel of party members in another world
 	m_srfOtherWorldPanel.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "PartyMember.srf", "srfAbsentee" ) );	
 
-	// 사망시 패널
+	// panel upon death
 	m_srfDeathPanel.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "PartyMember.srf", "srfDeathPanel" ) );	
 
-	// 리더 마크
+	// leader mark
 	m_srfLeaderMark.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "PartyMember.srf", "srfPartyLeaderMark_for_MemberGui" ) );
 	m_srfLeaderMark.SetPositionfromParent(12, 12);
 
-	// 사망 마크
+	// death mark
 	m_srfDeathMark.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "PartyMember.srf", "srfDeathMark_for_MemberGui" ) );
 	m_srfDeathMark.SetPositionfromParent(12, 12);
 
-	// 멀리 떨어진 파티원
+	// far away party member
 	m_srfTooFarMark.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "PartyMember.srf", "srfTooFarMark_for_MemberGui" ) );
 	m_srfTooFarMark.SetPositionfromParent(12, 12);
 
-	// LP 경고 표시등
+	// LP warning light
 	gui::CSurface surface = GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "PartyMember.srf", "srfWarning" );
 	m_feEmergency.SetSurface( surface );
 	m_feEmergency.SetTime( 1000.0f, 0.5f );
@@ -298,17 +298,17 @@ RwBool CPartyMemberGui::Create(SERIAL_HANDLE hSerial, WCHAR* pcText, RwUInt8 byC
 						   surface.m_Original.rtRect.GetHeight(), surface.m_Original.rtRect.GetHeight() + 5 );
 
 	
-	// 종족과 직업 그림	
+	// Race and Occupation Illustration	
 	SetClass(byClass);
 
-	// 버프 윈도우
+	// buff window
 	m_pBuff = NTL_NEW CPartyMemberBuffGui;
 	m_pBuff->Create(hSerial);
 
-	// 맴버 핸들 저장
+	// Save member handle
 	m_hSerial = hSerial;
 
-	// sig	
+	// Signals	
 	m_slotMouseDown		= m_pThis->SigMouseDown().Connect( this, &CPartyMemberGui::OnMouseDown );
 	m_slotMouseUp		= m_pThis->SigMouseUp().Connect( this, &CPartyMemberGui::OnMouseUp );
 	m_slotMove			= m_pThis->SigMove().Connect( this, &CPartyMemberGui::OnMove );
@@ -595,7 +595,7 @@ VOID CPartyMemberGui::OnMouseLeave(gui::CComponent* pComponent)
 
 VOID CPartyMemberGui::OnPostPaint()
 {	
-	// 마크
+	// mark
 	if( BIT_FLAG_TEST(m_byDisplayFlag, dFLAG_DEATH) )
 	{
 		m_srfDeathMark.Render();
@@ -607,7 +607,7 @@ VOID CPartyMemberGui::OnPostPaint()
 
 	m_feEmergency.Render();
 
-	// 패널
+	// panel
 	if( BIT_FLAG_TEST(m_byDisplayFlag, dFLAG_DEATH) )
 	{
 		m_srfDeathPanel.Render();
@@ -679,12 +679,12 @@ VOID CPartyMemberGui::HandleEvents( RWS::CMsg &msg )
 
 		if( pPacket->nWorkId == PMW_PARTY_LEADER_CHANGE )
 		{				
-			// 파티장 위임
+			// Party leader delegation
 			GetDboGlobal()->GetGamePacketGenerator()->SendPartyChangeLeader(m_hSerial);
 		}
 		else if(pPacket->nWorkId == PMW_PARTY_KICK_OUT)
 		{
-			// 파티 강퇴
+			// party withdrawal
 			GetDboGlobal()->GetGamePacketGenerator()->SendPartyKickOut(m_hSerial);
 		}
 	}

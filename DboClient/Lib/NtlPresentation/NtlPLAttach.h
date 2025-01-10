@@ -2,7 +2,7 @@
  *
  * File			: NtlPLAttach.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: (?)NTL
  * Date			: 2005. 8. 11	
  * Abstract		: Presentation layer attach entity class
  *****************************************************************************
@@ -23,13 +23,13 @@ class CNtlPLAttach;
 enum EPLAttachType
 {
 	PL_ATTACH_BONE,
-	PL_ATTACH_BONE_OFFSET_POS_ROOT_ROTATE_Y,//Character Bone에서 Offset위치와 Root의 Y축 회전값이 적용
+	PL_ATTACH_BONE_OFFSET_POS_ROOT_ROTATE_Y,//Offset position and root Y-axis rotation value are applied to the character bone.
 
 	PL_ATTACH_WORLD_POS,
-	PL_ATTACH_WORLD_POSANDROTATE,			//우선 임의로 넣은것임(By HoDong)
-    PL_ATTACH_WORLD_POS_HEIGHT,             ///< 위치에 Attach되나 높이는 World Height
+	PL_ATTACH_WORLD_POSANDROTATE,			//First of all, it was added arbitrarily (By HoDong)
+    PL_ATTACH_WORLD_POS_HEIGHT,             ///< Attaches to location but height is World Height
 
-    PL_ATTACH_NONE,                         ///< Bone이나 World에 Attach되지 않고, 순수 Attach List에만 들어가는 경우 (Trace Effect, Grade Effect)
+    PL_ATTACH_NONE,                         ///< When not attached to Bone or World, but only entered in pure Attach List (Trace Effect, Grade Effect)
 };
 
 #define MAX_ATTR_BONE_NAME	128
@@ -88,9 +88,9 @@ public:
 
 	RwBool AttachWorldPos(CNtlPLAttach *pPLAttachEntity, RwV3d vOffset);
 	RwBool AttachWorldPosAndRotate(CNtlPLAttach *pPLAttachEntity, RwV3d vOffset);
-    RwBool AttachWorldPosHeight(CNtlPLAttach* pPLAttachEntity); ///< 지형 높이에 Attach 한다.
+    RwBool AttachWorldPosHeight(CNtlPLAttach* pPLAttachEntity); ///< Attach to the terrain height.
 
-    RwBool Attach(CNtlPLAttach* pPLAttachEntity);               ///< Bone이나 World에 Attach 되지 않고, Attach List에만 들어간다
+    RwBool Attach(CNtlPLAttach* pPLAttachEntity);               ///< It is not attached to Bone or World, but only enters the Attach List.
     
 	void Detach(CNtlPLAttach *pPLAttachEntity);
 

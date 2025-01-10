@@ -1,11 +1,11 @@
 /******************************************************************************
-* File			: OptionBase.h
-* Author		: Cho Hae sung
-* Copyright		: (주)NTL
-* Date			: 2007. 10. 15 
-* Abstract		: 
+*File			: OptionBase.h
+*Author		    : Cho Hae sung
+*Copyright		: (주)NTL
+*Date			: 2007. 10. 15 
+*Abstract		: 
 *****************************************************************************
-* Desc			: Option Base
+*Desc			: Option Base
 *****************************************************************************/
 
 #ifndef _OPTIONBASE_H_
@@ -17,7 +17,7 @@ class COptionWindowGui;
 
 /**
 * \ingroup Client
-* OptionWindow 각 Tab들의 Base
+*OptionWindow Base of each Tab
 */
 class COptionBase
 {
@@ -60,10 +60,10 @@ public:
 	virtual void		Hide();
 	virtual void		Update();
 
-	virtual void		OnInit()	= 0; // 컨트롤 생성시 설정값
-	virtual void		OnReset()	= 0; // 컨트롤을 기본값으로 변경. 시스템 값은 변경 되지 않는다.
-	virtual void		OnOk()		= 0; // 컨트롤로 지정된 값으로 시스템 값 변경
-	virtual void		OnCancel()	= 0; // 현재의 시스템값으로  컨트롤 값 다시 설정
+	virtual void		OnInit()	= 0; // Setting values ??when creating a control
+	virtual void		OnReset()	= 0; // Change control to default. System values ??are not changed.
+	virtual void		OnOk()		= 0; // Change system value to value specified by control
+	virtual void		OnCancel()	= 0; // Reset control values ??to current system values
 	virtual void		OnHandleEvents(RWS::CMsg &pMsg)	= 0;
 
 	gui::CComponent*	GetComponent(const std::string& str);
@@ -84,7 +84,7 @@ public:
 #else
 
 /**
-* \brief 옵션에 콤보박스 항목
+* \brief Combo box item in option
 */
 struct sOptionCombo
 {
@@ -95,11 +95,11 @@ struct sOptionCombo
 		RwInt32 nSliderWidth = 13, RwInt32 nSliderHeight = 39, 
 		RwInt32 nFontHeight = 90)
 	{
-		// StaticBox
+		// Static Box
 		pSttTitle = NTL_NEW gui::CStaticBox( &rectTitle, pParentGui, GetNtlGuiManager()->GetSurfaceManager() );
 		pSttTitle->AddSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "OptionWnd.srf", "srfStaticBGMiddle" );
 		
-		// ComboBox
+		// Combo Box
 		pCbbOption = NTL_NEW gui::CComboBox( &rectCombo, pParentGui, GetNtlGuiManager()->GetSurfaceManager(),
 			nMarginX, nMarginY,
 			nButtonWidth, nButtonHeight,

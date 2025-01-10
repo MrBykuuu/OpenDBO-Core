@@ -20,7 +20,7 @@
 
 /**
  * \ingroup Toolkit
- * Renderware Camera Wrappler Class 이다.
+ * This is the Renderware Camera Wrappler Class.
  *
  *
  */
@@ -81,7 +81,7 @@ public:
 	inline void		SetFov(RwReal fFov)								{ m_fFov = fFov; m_fViewWindow = RwTan(NTL_DEG2RAD(fFov * 0.5f)); }		///< Camera의 Fov를 설정한다.
 	inline RwReal	GetFov()										{ return m_fFov; }				
 
-    void     SetProjection(RwCameraProjection rwCameraProjection);  ///< 카메라의 프로젝션을 설정한다.
+    void     SetProjection(RwCameraProjection rwCameraProjection);  ///< Set the camera projection.
 };
 
 RwFrustumTestResult RpNtlCameraFrustumTestSphere(const RwCamera* pCamera, const RwSphere* pSphere, RwReal* pfUserFarDist);

@@ -2,7 +2,7 @@
  *
  * File			: NtlSobAtt.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: (?)NTL
  * Date			: 2005. 11. 30	
  * Abstract		: Simulation object attribute base class
  *****************************************************************************
@@ -254,12 +254,12 @@ public:
 	WORD wBaseEng;
 	WORD wLastEng;
 
-	RwInt32		m_Str;		// 근력
-	RwInt32		m_Con;		// 건강
-	RwInt32		m_Foc;		// 종족과 클래스에 따른 생성시의 집중을 기입
-	RwInt32		m_Dex;		// 민첩
-	RwInt32		m_Sol;		// 종족과 클래스에 따른 생성시의 정신을 기입
-	RwInt32		m_Eng;		// 종족과 클래스에 따른 생성시의 원기를 기입
+	RwInt32		m_Str;		// muscular strength
+	RwInt32		m_Con;		// health
+	RwInt32		m_Foc;		// Enter the concentration upon creation according to race and class.
+	RwInt32		m_Dex;		// agility
+	RwInt32		m_Sol;		// Enter the spirit upon creation according to race and class.
+	RwInt32		m_Eng;		// Enter the energy upon creation according to race and class.
 
 	FLOAT fHonestOffense;
 	FLOAT fHonestDefense;
@@ -356,9 +356,9 @@ public:
 private:
 
 	RwReal			m_fAttackRange;
-	RwReal			m_fCastingTimeModifier;	// 캐스팅타임 Modifier (% value)
-	RwReal			m_fCoolingTimeModifier;	// 쿨타임 Modifier (% value)
-	RwReal			m_fKeepingTimeModifier; // 킵타임 Modifier (% value)
+	RwReal			m_fCastingTimeModifier;	// Casting Time Modifier (% value)
+	RwReal			m_fCoolingTimeModifier;	// Cool Time Modifier (% value)
+	RwReal			m_fKeepingTimeModifier; // Keep Time Modifier (% value)
 	RwReal			m_fDOTValueModifier;	// DOT Modifier (% value)
 	RwReal			m_fDOTTimeModifier;		// DOT Time Modifier (absloute value)
 	RwReal			m_fRequiredEPModifier;	// RequireEP Modifier(% value)
@@ -403,13 +403,13 @@ private:
 	RwUInt8		m_byClass;
 	RwUInt8		m_byGender;
     RwBool      m_bIsAdult;
-	// shape
+	// Shape
 	RwUInt8		m_byFace;
 	RwUInt8		m_byHair;
 	RwUInt8		m_byHairColor;
 	RwUInt8		m_bySkinColor;
 
-	RwUInt32	m_uiReputation;	// 명성 point
+	RwUInt32	m_uiReputation;	// reputation point
 
 
 protected:

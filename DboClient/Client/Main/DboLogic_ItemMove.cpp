@@ -1,34 +1,34 @@
 /*****************************************************************************
-* File			: DboLogic_String.h
-* Author		: Hong sungbock
-* Copyright		: (주)NTL
-* Date			: 2007. 1. 12
-* Abstract		: 아이템 이동 관련 로직을 모아둔다
+*File			: DboLogic_String.h
+*Author	    	: Hong sungbock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 1. 12
+*Abstract		: Gather logic related to item movement
 *****************************************************************************
-* Desc         : 
+*Desc           : 
 *****************************************************************************/
 
 #include "precomp_dboclient.h"
 #include "DboLogic.h"
 
 
-// shared
+// Shared
 #include "NtlResultCode.h"
 #include "ItemTable.h"
 #include "ItemOptionTable.h"
 #include "TextAllTable.h"
 #include "TableContainer.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// presention
+// Presention
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "NtlSLLogic.h"
 #include "NtlSLGlobal.h"
@@ -45,7 +45,7 @@
 #include "NtlSLLogic.h"
 #include "NtlSLApi.h"
 
-// dbo
+// Dbo
 #include "DialogManager.h"
 #include "ChatGui.h"
 #include "DboEventGenerator.h"
@@ -150,7 +150,7 @@ RwBool Logic_ItemMoveProc( SERIAL_HANDLE hSrcSerial, EPlace eSrcPlace, RwUInt8 u
 		else if( eDestPlace == PLACE_GUILD_WAREHOUSE )
 			uiResult = Logic_ItemMoveSubProcGuildWarehouseToGuildWarehouse( hSrcSerial, ucSrcSlotIdx, hDestParentSerial, ucDestSlotIdx, uiStackCount);
 	}
-	// Zenny 이동 관련 처리.
+	// Zenny movement related processing.
 	else if( eSrcPlace == PLACE_SUB_BAG_ZENNY )
 	{
 		if( eDestPlace == PLACE_SUB_WAREHOUSE_ZENNY )
@@ -195,15 +195,15 @@ RwBool Logic_ItemMoveProc( SERIAL_HANDLE hSrcSerial, EPlace eSrcPlace, RwUInt8 u
 std::string Logic_ItemMoveSubProcEquipToEquip( SERIAL_HANDLE hSrcSerial, RwUInt8 ucSrcSlotIdx, RwUInt8 ucDestSlotIdx, RwUInt32 uiStackCount )
 {
 	NTL_FUNCTION( "Logic_ItemMoveSubProcEquipToEquip" );
-	// 비교 조건 
-	// 1. 같은 슬롯인경우 취소 
+	// Comparison conditions 
+	// 1. Cancel if it is the same slot 
 	if( ucSrcSlotIdx == ucDestSlotIdx )
 	{
 		GetIconMoveManager()->IconMoveEnd();
 		NTL_RETURN( "" );
 	}
 
-	// 2. Pair(반지,귀걸이)끼리만 이동이 가능
+	// 2. Only pairs (rings, earrings) can be moved.
 	RwInt32 usSrcSlotFlag, usDestSlotFlag;
 	usSrcSlotFlag = Logic_ConvertEquipSlotIdxToFlag( ucSrcSlotIdx );
 	usDestSlotFlag= Logic_ConvertEquipSlotIdxToFlag( ucDestSlotIdx );
@@ -214,7 +214,7 @@ std::string Logic_ItemMoveSubProcEquipToEquip( SERIAL_HANDLE hSrcSerial, RwUInt8
 	srcType = (RwUInt8)Logic_ConvertEquipSlotIdxToType( ucSrcSlotIdx );
 	destType = (RwUInt8)Logic_ConvertEquipSlotIdxToType( ucDestSlotIdx );
 
-	// 3. 각각 사용기간 체크.
+	// 3. Check each usage period.
 	SERIAL_HANDLE hDestSerial = GetNtlSLGlobal()->GetSobAvatar()->GetInventory()->GetEquipItem( ucDestSlotIdx );
 
 	if( hSrcSerial != INVALID_SERIAL_ID )
@@ -258,26 +258,26 @@ std::string Logic_ItemMoveSubProcEquipToBagSlot( SERIAL_HANDLE hSrcSerial, RwUIn
 	CNtlInventory* pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
 	SERIAL_HANDLE hDestBagItem = pInventory->GetBagItem( ucDestSlotIdx ); 
 
-	// 비교 조건 
-	// 1. 스카우터의 경우 사용중인지, 파츠를 장착했는지를 비교.
+	// Comparison conditions 
+	// 1. Compare whether the scouter is in use or has parts installed.
 	CNtlSobItem* pSrcItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hSrcSerial ) );
 	DBO_ASSERT( pSrcItem, "Invalid Src Item" );
 
-	// 2. DestSlot이 비어있으면 취소
+	// 2. Cancel if DestSlot is empty
 	if( hDestBagItem == INVALID_SERIAL_ID )
 	{
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_TO_BAGSLOT_NOT_BAG" );
 	}
 
 	CNtlSobItem* pDestBagItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hDestBagItem ) ); 
-	// 3. 가방의 기간제한이 만료되었으면 취소
+	// 3. Cancel if the bag’s period limit has expired.
 	CNtlSobItemAttr* pDestBagItemAttr = reinterpret_cast<CNtlSobItemAttr*>( pDestBagItem->GetSobAttr() );
 	if( pDestBagItemAttr->IsExpired() )
 	{
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_BAG_EXPIRED_DURATION" );
 	}
 
-	// 4. 가방이 존재하나 빈칸이 없으면 취소.
+	// 4. If the bag exists but there are no empty spaces, cancel.
 	if( pDestBagItem->FullChild() )
 	{
 		NTL_RETURN( "DST_ITEM_BAG_FULL" );
@@ -292,17 +292,17 @@ std::string Logic_ItemMoveSubProcEquipToBagChild( SERIAL_HANDLE hSrcSerial, RwUI
 {
 	NTL_FUNCTION( "Logic_ItemMoveSubProcEquipToBagChild" );
 
-	// 비교 조건 
-	// 1. 스카우터의 경우 사용중인지, 파츠를 장착했는지를 비교.
+	// Comparison conditions 
+	// 1. Compare whether the scouter is in use or has parts installed.
 	CNtlSobItem* pSrcItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hSrcSerial ) );
 	DBO_ASSERT( pSrcItem, "Invalid Src Item" );
 
-	// 2. 넷창고인 경우 체크.
+	// 2. Check if it is a net warehouse.
 	CNtlInventory* pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
 	RwInt32 nBagSlotIdx = pInventory->FindBagSlot( hDestParentSerial );
 	DBO_ASSERT( ( nBagSlotIdx >= 0 ), "Bag is not found in BagSlot" );	
 
-	// 3. 가방의 사용기간이 만료되었으면 취소
+	// 3. Cancel if the bag’s usage period has expired.
 	CNtlSobItem* pBagItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hDestParentSerial ) );
 	DBO_ASSERT( pBagItem, "Invalid DestBagItem" );
 	CNtlSobItemAttr* pBagItemAttr = reinterpret_cast<CNtlSobItemAttr*>( pBagItem->GetSobAttr() );
@@ -312,7 +312,7 @@ std::string Logic_ItemMoveSubProcEquipToBagChild( SERIAL_HANDLE hSrcSerial, RwUI
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_BAG_EXPIRED_DURATION" );
 	}	
 
-	// 4. DestSlot이 비어있지 않다면 Equip으로 옮길수 있는 아이템인지 확인
+	// 4. If the DestSlot is not empty, check whether it is an item that can be moved to Equip.
 	if( pBagItem->IsValidChild( ucDestSlotIdx ) )
 	{
 		CNtlSobItem* pDestItem = pBagItem->GetChildItem( ucDestSlotIdx );
@@ -320,7 +320,7 @@ std::string Logic_ItemMoveSubProcEquipToBagChild( SERIAL_HANDLE hSrcSerial, RwUI
 		CNtlSobItemAttr* pDestItemAttr = reinterpret_cast<CNtlSobItemAttr*>( pDestItem->GetSobAttr() );
 		DBO_ASSERT( pDestItemAttr, "Inccorect GetSobAttr" );
 
-		// peessi : 장비할 수 없다면 메시지는 가방이 꽉차있는 것으로.
+		// peessi: If you can't equip it, the message will be that your bag is full.
 		if( !pDestItem->IsEquipItem() )
 			NTL_RETURN( "DST_ITEM_BAG_FULL" );
 
@@ -358,18 +358,18 @@ std::string Logic_ItemMoveSubProcEquipToWarehouse(SERIAL_HANDLE hSrcSerial, RwUI
 {
 	NTL_FUNCTION( "Logic_ItemMoveSubProcEquipToWarehouse" );
 
-	// 1. 스카우터의 경우 사용중인지, 파츠를 장착했는지를 비교.
+	// 1. Compare whether the scouter is in use or has parts installed.
 	CNtlSobItem* pSrcItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hSrcSerial ) );
 	DBO_ASSERT( pSrcItem, "Invalid Src Item" );
 
 	// src
-	//sITEM_TBLDAT* pITEM_TBLDAT = Logic_GetItemDataFromSob(hSrcSerial);
+	//sITEM_TBLDAT*pITEM_TBLDAT = Logic_GetItemDataFromSob(hSrcSerial);
 	CNtlSobItemAttr* pItemAttr = reinterpret_cast<CNtlSobItemAttr*>( pSrcItem->GetSobAttr() );
 	DBO_ASSERT( pItemAttr, "Invalid Src ItemAttr" );
 
 	if( Logic_IsCanSaveWarehouse( pItemAttr ) == FALSE )
 	{
-		// 창고에 저장할 수 없는 아이템
+		// Items that cannot be stored in the warehouse
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_TO_WAREHOUSE" );
 	}
 
@@ -378,14 +378,14 @@ std::string Logic_ItemMoveSubProcEquipToWarehouse(SERIAL_HANDLE hSrcSerial, RwUI
 	if( hDestParentSerial == hCommonWarehouse &&
 		Logic_IsCanSaveCommonWarehouse( pItemAttr ) == FALSE )
 	{
-		// 공유 창고에 저장할 수 없는 아이템		
+		// Items that cannot be stored in shared storage		
 		NTL_RETURN( "DST_ITEM_CAN_NOT_SAVE_COMMON_WAREHOUSE" );
 	}
 
-	// dest	
+	// Dest	
 	eCONTAINER_TYPE eDestContainerType = Logic_ConverWarehouseIdxToContainderType(pWarehouse->FindWarehouseSlot(hDestParentSerial));
 
-	// 창고 NPC Serial
+	// Warehouse NPC Serial
 	CWarehouseBarGui* pWarehouseBarGui = reinterpret_cast<CWarehouseBarGui*>(GetDialogManager()->GetDialog(DIALOG_WAREHOUSEBAR));
 	SERIAL_HANDLE hNPCHandle = pWarehouseBarGui->GetNPCSerial();
 
@@ -399,7 +399,7 @@ std::string Logic_ItemMoveSubProcEquipToGuildWarehouse( SERIAL_HANDLE hSrcSerial
 {
 	NTL_FUNCTION( "Logic_ItemMoveSubProcEquipToGuildWarehouse" );
 
-	// 1. 스카우터의 경우 사용중인지, 파츠를 장착했는지를 비교.
+	// 1. Compare whether the scouter is in use or has parts installed.
 	CNtlSobItem* pSrcItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hSrcSerial ) );
 	DBO_ASSERT( pSrcItem, "Invalid Src Item" );
 
@@ -409,13 +409,13 @@ std::string Logic_ItemMoveSubProcEquipToGuildWarehouse( SERIAL_HANDLE hSrcSerial
 
 	if( Logic_IsCanSaveWarehouse( pItemAttr ) == FALSE )
 	{
-		// 창고에 저장할 수 없는 아이템
+		// Items that cannot be stored in the warehouse
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_TO_WAREHOUSE" );
 	}
 
 	CNtlGuildWarehouse* pGuildWarehouse = GetNtlSLGlobal()->GetSobAvatar()->GetGuildWarehouse();
 
-	// hDestParentSerial : 핸들이 아니라 길드 창고의 인덱스를 받았다 
+	// hDestParentSerial: received the index of the guild warehouse, not the handle 
 	eCONTAINER_TYPE eDestContainerType = Logic_ConverGuildWarehouseIdxToContainderType((RwUInt8)hDestParentSerial);
 
 	if( GetDboGlobal()->GetGamePacketGenerator()->SendGuildWarehouseMoveReq(pGuildWarehouse->GetNPCHandle(),
@@ -428,15 +428,15 @@ std::string Logic_ItemMoveSubProcEquipToGuildWarehouse( SERIAL_HANDLE hSrcSerial
 std::string Logic_ItemMoveSubProcBagSlotToBagSlot( SERIAL_HANDLE hSrcSerial, RwUInt8 ucSrcSlotIdx, RwUInt8 ucDestSlotIdx, RwUInt32 uiStackCount )
 {
 	NTL_FUNCTION( "Logic_ItemMoveSubProcBagToBag" );
-	// 비교 조건 
-	// 1. 같은 자리이면 취소
+	// Comparison conditions 
+	// 1. Cancel if it is the same seat
 	if( ucSrcSlotIdx == ucDestSlotIdx )
 	{
 		GetIconMoveManager()->IconMoveEnd();
 		NTL_RETURN( "" );
 	}
 
-	// 2. 옮기려는 가방이 기본가방이면 취소, 목적지가 기본가방이면 취소.
+	// 2. If the bag you are trying to move is a basic bag, cancel. If the destination is a basic bag, cancel.
 	if( ucSrcSlotIdx == 0 || ucDestSlotIdx == 0 )
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_BASICBAG" );
 
@@ -445,11 +445,11 @@ std::string Logic_ItemMoveSubProcBagSlotToBagSlot( SERIAL_HANDLE hSrcSerial, RwU
 	CNtlSobItemAttr* pSrcBagItemAttr = reinterpret_cast<CNtlSobItemAttr*>( pSrcBagItem->GetSobAttr() );
 	DBO_ASSERT( pSrcBagItemAttr, "Invalid SrcSerialAttr" );
 
-	// 3. 옮기려는 가방의 사용기간이 만료되었으면 취소.
+	// 3. If the period of use of the bag you wish to move has expired, cancel.
 	if( pSrcBagItemAttr->IsExpired() )
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_BAG_EXPIRED_DURATION" );
 
-	// 4. 옮기려는 가방의 가방이 비어있지 않으면 취소.
+	// 4. Cancel if the bag you are trying to move is not empty.
 	if( !pSrcBagItem->EmptyChild() )
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_NOT_EMPTY_BAG" );	
 
@@ -463,11 +463,11 @@ std::string Logic_ItemMoveSubProcBagSlotToBagSlot( SERIAL_HANDLE hSrcSerial, RwU
 		CNtlSobItemAttr* pDestBagItemAttr = reinterpret_cast<CNtlSobItemAttr*>( pDestBagItem->GetSobAttr() );
 		DBO_ASSERT( pDestBagItemAttr, "Invalid DestBagAttr" );
 
-		// 5. 목적지의 가방의 사용기간이 만료되었으면 취소.
+		// 5. Cancellation if the usage period of the bag at the destination has expired.
 		if( pDestBagItemAttr->IsExpired() )
 			NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_BAG_EXPIRED_DURATION" );		
 
-		// 6. 목적지의 가방의 사용기간이 만료되었으면 취소.
+		// 6. Cancellation if the usage period of the bag at the destination has expired.
 		if( pDestBagItem->FullChild() )
 			NTL_RETURN( "DST_ITEM_BAG_FULL" );
 	}
@@ -481,19 +481,19 @@ std::string Logic_ItemMoveSubProcBagSlotToBagSlot( SERIAL_HANDLE hSrcSerial, RwU
 std::string Logic_ItemMoveSubProcBagSlotToBagChild( SERIAL_HANDLE hSrcSerial, RwUInt8 ucSrcSlotIdx, SERIAL_HANDLE hDestParentSerial, RwUInt8 ucDestSlotIdx, RwUInt32 uiStackCount )
 {
 	NTL_FUNCTION( "Logic_ItemMoveSubProcBagToBagChild" );
-	// 비교 조건 
-	// 1. 옮기려는 가방이 기본가방이면 취소
+	// Comparison conditions 
+	// 1. If the bag you want to move is a basic bag, cancel.
 	if( ucSrcSlotIdx == 0 )
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_BASICBAG" );
 
 	CNtlSobItem* pSrcBagItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hSrcSerial ) );
 	NTL_ASSERT( pSrcBagItem, "Invalid SrcSerial" );
 
-	// 2. 옮기려는 가방이 비어있지 않다면 취소
+	// 2. Cancel if the bag you are trying to move is not empty.
 	if( !pSrcBagItem->EmptyChild() )
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_NOT_EMPTY_BAG" );
 
-	// 3. 자기 자신으로 옮기려면 취소
+	// 3. Cancel to move to self
 	if( hDestParentSerial == hSrcSerial )
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_THERE" );
 
@@ -506,11 +506,11 @@ std::string Logic_ItemMoveSubProcBagSlotToBagChild( SERIAL_HANDLE hSrcSerial, Rw
 	CNtlSobItemAttr* pDestBagItemAttr = reinterpret_cast<CNtlSobItemAttr*>( pDestBagItem->GetSobAttr() );
 	DBO_ASSERT( pDestBagItemAttr, "Invalid DestBag ItemAttr" );
 
-	// 5. 옮기려는 가방의 사용기간이 만료되었다면 취소.
+	// 5. Cancel if the bag you wish to move has expired.
 	if( pDestBagItemAttr->IsExpired() )
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_BAG_EXPIRED_DURATION" );	
 
-	// 6. DestSlot이 비어있지 않은경우, 그곳의 아이템이 가방이 아니라면 취소.
+	// 6. If DestSlot is not empty and the item there is not a bag, cancel.
 	if( pDestBagItem->IsValidChild( ucDestSlotIdx ) )
 	{
 		CNtlSobItem* pDestItem = reinterpret_cast<CNtlSobItem*>( pDestBagItem->GetChildItem( ucDestSlotIdx ) );
@@ -533,15 +533,15 @@ std::string Logic_ItemMoveSubProcBagSlotToWarehouse( SERIAL_HANDLE hSrcSerial, R
 {
 	NTL_FUNCTION( "Logic_ItemMoveSubProcBagSlotToWarehouse" );
 
-	// src
+	// Src
 	CNtlSobItem* pSrcBagItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hSrcSerial ) );
 	DBO_ASSERT( pSrcBagItem, "Invalid SrcSerial" );
 
-	//sITEM_TBLDAT* pITEM_TBLDAT = Logic_GetItemDataFromSob(hSrcSerial);
+	//sITEM_TBLDAT*pITEM_TBLDAT = Logic_GetItemDataFromSob(hSrcSerial);
 	CNtlSobItemAttr* pItemAttr = reinterpret_cast<CNtlSobItemAttr*>( pSrcBagItem->GetSobAttr() );
 	if( Logic_IsCanSaveWarehouse( pItemAttr ) == FALSE )
 	{
-		// 창고에 저장할 수 없는 아이템
+		// Items that cannot be stored in the warehouse
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_TO_WAREHOUSE" );
 	}
 
@@ -550,18 +550,18 @@ std::string Logic_ItemMoveSubProcBagSlotToWarehouse( SERIAL_HANDLE hSrcSerial, R
 	if( hDestParentSerial == hCommonWarehouse &&
 		Logic_IsCanSaveCommonWarehouse( pItemAttr ) == FALSE )
 	{
-		// 공유 창고에 저장할 수 없는 아이템
+		// Items that cannot be stored in shared storage
 		NTL_RETURN( "DST_ITEM_CAN_NOT_SAVE_COMMON_WAREHOUSE" );
 	}	
 
-	// 가방이 비어있지 않으면 취소.
+	// Cancel if bag is not empty.
 	if( !pSrcBagItem->EmptyChild() )
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_NOT_EMPTY_BAG" );
 
-	// dest
+	// Dest
 	eCONTAINER_TYPE eDestContainerType = Logic_ConverWarehouseIdxToContainderType(pWarehouse->FindWarehouseSlot(hDestParentSerial));
 
-	// 창고 NPC Serial
+	// Warehouse NPC Serial
 	CWarehouseBarGui* pWarehouseBarGui = reinterpret_cast<CWarehouseBarGui*>(GetDialogManager()->GetDialog(DIALOG_WAREHOUSEBAR));
 	SERIAL_HANDLE hNPCHandle = pWarehouseBarGui->GetNPCSerial();
 
@@ -576,26 +576,26 @@ std::string Logic_ItemMoveSubProcBagSlotToGuildWarehouse( SERIAL_HANDLE hSrcSeri
 {
 	NTL_FUNCTION( "Logic_ItemMoveSubProcBagSlotToGuildWarehouse" );
 	
-	// src
+	// Src
 	CNtlSobItem* pSrcBagItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hSrcSerial ) );
 	DBO_ASSERT( pSrcBagItem, "Invalid SrcSerial" );
 
-	//sITEM_TBLDAT* pITEM_TBLDAT = Logic_GetItemDataFromSob(hSrcSerial);
+	//sITEM_TBLDAT*pITEM_TBLDAT = Logic_GetItemDataFromSob(hSrcSerial);
 	
 	CNtlSobItemAttr* pItemAttr = reinterpret_cast<CNtlSobItemAttr*>( pSrcBagItem->GetSobAttr() );
 	if( Logic_IsCanSaveWarehouse( pItemAttr ) == FALSE )
 	{
-		// 창고에 저장할 수 없는 아이템
+		// Items that cannot be stored in the warehouse
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_TO_WAREHOUSE" );
 	}
 
-	// 가방이 비어있지 않으면 취소.
+	// Cancel if bag is not empty.
 	if( !pSrcBagItem->EmptyChild() )
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_NOT_EMPTY_BAG" );
 
 	CNtlGuildWarehouse* pGuildWarehouse = GetNtlSLGlobal()->GetSobAvatar()->GetGuildWarehouse();
 
-	// hDestParentSerial : 핸들이 아니라 길드 창고의 인덱스를 받았다 
+	// hDestParentSerial: received the index of the guild warehouse, not the handle 
 	eCONTAINER_TYPE eDestContainerType = Logic_ConverGuildWarehouseIdxToContainderType((RwUInt8)hDestParentSerial);
 
 	if( GetDboGlobal()->GetGamePacketGenerator()->SendGuildWarehouseMoveReq(pGuildWarehouse->GetNPCHandle(),
@@ -608,19 +608,19 @@ std::string Logic_ItemMoveSubProcBagSlotToGuildWarehouse( SERIAL_HANDLE hSrcSeri
 std::string Logic_ItemMoveSubProcBagChildToEquip( SERIAL_HANDLE hSrcSerial, RwUInt8 ucSrcSlotIdx, RwUInt8 ucDestSlotIdx, RwUInt32 uiStackCount )
 {
 	NTL_FUNCTION( "Logic_ItemMoveSubProcBagChildToEquip" );
-	// 비교 조건 
-	// 1. DestSlot으로 갈수 있는 아이템인가 확인
-	// 2. DestSlot이 비어있지 않다면 교환
-	// 3. 사용기간이 만료되어 있는 아이템이면 Equip불가. 
-	// 4. DestItem 이 스카우터 일때, 스카우터의 사용기한 확인 및 체크.
-	// peessi 여기까지만 작업함. 일단은 서버에 맡기고, 실패시 메시지에 관해 다시한번 얘기해본다. 현재 내구도는 서버에 맡기고 있음.
+	// Comparison conditions 
+	// 1. Check whether the item can be accessed by DestSlot.
+	// 2. Exchange if DestSlot is not empty
+	// 3. If the item has expired, it cannot be equipped. 
+	// 4. When the DestItem is a scouter, check and check the expiration date of the scouter.
+	// peessi Worked only up to this point. Leave it to the server for now, and in case of failure, talk about the message again. Currently, durability is left to the server.
 	
 	CNtlSobItem* pSrcItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hSrcSerial ) );
 	NTL_ASSERT( pSrcItem, "Invalid hSrcSerial" );
 	CNtlSobItemAttr* pSrcItemAttr = reinterpret_cast<CNtlSobItemAttr*>( pSrcItem->GetSobAttr() );
 	NTL_ASSERT( pSrcItemAttr, "Have No Attr" );
 
-	// 1. 사용기간이 만료되어 있는 아이템이면 Equip불가. 
+	// 1. If the item has expired, it cannot be equipped. 
 	if( pSrcItemAttr->IsExpired() )
 		NTL_RETURN( "DST_ITEM_CAN_NOT_EQUIP_EXPIRED_DURATION" );
 
@@ -631,7 +631,7 @@ std::string Logic_ItemMoveSubProcBagChildToEquip( SERIAL_HANDLE hSrcSerial, RwUI
 	eCONTAINER_TYPE eSrcBagType = Logic_ConvertBagIdxToContainerType( (RwUInt8)pSrcItem->GetParentItemSlotIdx() );
 	SERIAL_HANDLE hDestSerial = GetNtlSLGlobal()->GetSobAvatar()->GetInventory()->GetEquipItem( ucDestSlotIdx );
 
-	// 2. Dest가 스카우터이고 이미 스카우터를 착용중인 경우, 3,4번 사항 확인.
+	// 2. If Dest is a scouter and is already wearing a scouter, check points 3 and 4.
 	if( ucDestSlotIdx == EQUIP_SLOT_TYPE_SCOUTER && hDestSerial != INVALID_SERIAL_ID )
 	{
 		CNtlSobItem* pDestItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hDestSerial ) );
@@ -642,7 +642,7 @@ std::string Logic_ItemMoveSubProcBagChildToEquip( SERIAL_HANDLE hSrcSerial, RwUI
 	}
 	else
 	{
-		// 5. 아이템 장착타입 검사.
+		// 5. Check item installation type.
 		if( !Logic_EquipSlotTypeFlagCheck( usDestSlotFlag, pSrcItemTable->dwEquip_Slot_Type_Bit_Flag ) )
 			NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_NOT_EQUIAL_EQUIPTYPE" );
 	}
@@ -690,13 +690,13 @@ std::string Logic_ItemMoveSubProcBagChildToBagSlot( SERIAL_HANDLE hSrcSerial, Rw
 	SERIAL_HANDLE hDestBagSerial = pInventory->GetBagItem( ucDestSlotIdx );
 	RwInt32 nEmptyBagChildSlot = -1;
 
-	// 1. DestSlot의 가방이 있을때와 없을때 체크. 
+	// 1. Check whether DestSlot bag is present or not. 
 	if( hDestBagSerial == INVALID_SERIAL_ID )
 	{
-		// 2. src아이템이 가방이라면.
+		// 2. If the src item is a bag.
 		if( pSrcItem->IsBagItem() )
 		{
-			// 3. src 가방의 사용기간 체크.
+			// 3. Check the expiration date of the src bag.
 			if( pSrcItemAttr->IsExpired() )
 				NTL_RETURN( "DST_ITEM_CAN_NOT_EQUIP_EXPIRED_DURATION" );
 
@@ -709,7 +709,7 @@ std::string Logic_ItemMoveSubProcBagChildToBagSlot( SERIAL_HANDLE hSrcSerial, Rw
 		}
 		else
 		{
-			// 4. 가방이 아니고, dest에 가방도 없다면 취소.
+			// 4. If it is not a bag and there is no bag at dest, cancel.
 			NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_TO_BAGSLOT_NOT_BAG" );
 		}
 	}
@@ -717,20 +717,20 @@ std::string Logic_ItemMoveSubProcBagChildToBagSlot( SERIAL_HANDLE hSrcSerial, Rw
 	{
 		SERIAL_HANDLE hSrcBagSerial = pSrcItem->GetParentItemSerial();
 
-		// 5. src의 가방과, dest가방이 같은 것일때. 같은 슬롯을 선택한것처럼.
+		// 5. When the src bag and dest bag are the same. As if the same slot was selected.
 		if( hSrcBagSerial == hDestBagSerial )
 			NTL_RETURN( "" );
 
 		CNtlSobItem* pDestBagItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hDestBagSerial ) );
 		NTL_ASSERT( pDestBagItem, "Invalid hDestBagSerial" );
 
-		// 6. dest의 가방이 꽉 찼을때 취소.
+		// 6. Cancellation when dest’s bag is full.
 		if( pDestBagItem->FullChild() )
 			NTL_RETURN( "DST_ITEM_BAG_FULL" );
 
 		nEmptyBagChildSlot = pDestBagItem->FindEmptyChildSlot();
 
-		// 7. 이 경우는 BagChildToBagChild서브로직으로. 
+		// 7. In this case, the BagChildToBagChild sublogic. 
 		NTL_RETURN( Logic_ItemMoveSubProcBagChildToBagChild( hSrcSerial, ucSrcSlotIdx, hDestBagSerial, (RwUInt8)nEmptyBagChildSlot, uiStackCount ) );	
 	}	
 }
@@ -746,7 +746,7 @@ std::string Logic_ItemMoveSubProcBagChildToBagChild( SERIAL_HANDLE hSrcSerial, R
 	RwUInt8 ucSrcBagIdx = (RwUInt8)pSrcItem->GetParentItemSlotIdx();
 	RwUInt8 ucDestBagIdx= (RwUInt8)pInventory->FindBagSlot( hDestParentSerial );
 
-	// 1. 같은 가방, 같은 자리일 경우 취소	
+	// 1. Cancellation if same bag and same seat	
 	if( ucSrcBagIdx == ucDestBagIdx && ucSrcSlotIdx == ucDestSlotIdx )
 	{
 		GetIconMoveManager()->IconMoveEnd();
@@ -762,7 +762,7 @@ std::string Logic_ItemMoveSubProcBagChildToBagChild( SERIAL_HANDLE hSrcSerial, R
 	DBO_ASSERT( pDestBagItemAttr, "Invalid DestBagItemAttr" );
 	SERIAL_HANDLE hDestSerial = pDestBagItem->GetChildSerial( ucDestSlotIdx );
 
-	// 3. dest 가방의 사용기간 검사
+	// 3. Inspection of expiration date of dest bag
 	if( pDestBagItemAttr->IsExpired() )
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_BAG_EXPIRED_DURATION" );
 
@@ -787,7 +787,7 @@ std::string Logic_ItemMoveSubProcBagChildToWarehouse(SERIAL_HANDLE hSrcSerial, R
 {
 	NTL_FUNCTION( "Logic_ItemMoveSubProcBagChildToWarehouse" );
 
-	// src
+	// Src
 	CNtlSobItem* pItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hSrcSerial ) );
 	NTL_ASSERT(pItem, "Logic_ItemMoveSubProcBagChildToWarehouse, Not exist item : " << hSrcSerial);
 	CNtlSobItemAttr* pSobItemAttr = reinterpret_cast<CNtlSobItemAttr*>(pItem->GetSobAttr());
@@ -795,7 +795,7 @@ std::string Logic_ItemMoveSubProcBagChildToWarehouse(SERIAL_HANDLE hSrcSerial, R
 
 	if( Logic_IsCanSaveWarehouse( pSobItemAttr ) == FALSE )
 	{
-		// 창고에 저장할 수 없는 아이템
+		// Items that cannot be stored in the warehouse
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_TO_WAREHOUSE" );
 	}
 
@@ -804,7 +804,7 @@ std::string Logic_ItemMoveSubProcBagChildToWarehouse(SERIAL_HANDLE hSrcSerial, R
 	if( hDestParentSerial == hCommonWarehouse && 
 		Logic_IsCanSaveCommonWarehouse( pSobItemAttr ) == FALSE )
 	{
-		// 공유 창고에 저장할 수 없는 아이템
+		// Items that cannot be stored in shared storage
 		NTL_RETURN( "DST_ITEM_CAN_NOT_SAVE_COMMON_WAREHOUSE" );
 	}
 
@@ -813,10 +813,10 @@ std::string Logic_ItemMoveSubProcBagChildToWarehouse(SERIAL_HANDLE hSrcSerial, R
 
 	eCONTAINER_TYPE eSrcBagType = Logic_ConvertBagIdxToContainerType( (RwUInt8)ucBagIdx );
 
-	// dest
+	// Dest
 	eCONTAINER_TYPE eDestContainerType = Logic_ConverWarehouseIdxToContainderType(pWarehouse->FindWarehouseSlot(hDestParentSerial));
 
-	// 창고 NPC serial	
+	// Warehouse NPC serial	
 	CWarehouseBarGui* pWarehouseBarGui = reinterpret_cast<CWarehouseBarGui*>(GetDialogManager()->GetDialog(DIALOG_WAREHOUSEBAR));
 	SERIAL_HANDLE hNPCHandle = pWarehouseBarGui->GetNPCSerial();
 
@@ -845,7 +845,7 @@ std::string Logic_ItemMoveSubProcBagChildToGuildWarehouse(SERIAL_HANDLE hSrcSeri
 {
 	NTL_FUNCTION( "Logic_ItemMoveSubProcBagChildToGuildWarehouse" );
 
-	// src
+	// Src
 	CNtlSobItem* pItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hSrcSerial ) );
 	NTL_ASSERT(pItem, "Logic_ItemMoveSubProcBagChildToGuildWarehouse, Not exist item : " << hSrcSerial);
 	CNtlSobItemAttr* pSobItemAttr = reinterpret_cast<CNtlSobItemAttr*>(pItem->GetSobAttr());
@@ -853,7 +853,7 @@ std::string Logic_ItemMoveSubProcBagChildToGuildWarehouse(SERIAL_HANDLE hSrcSeri
 
 	if( Logic_IsCanSaveWarehouse( pSobItemAttr ) == FALSE )
 	{
-		// 창고에 저장할 수 없는 아이템
+		// Items that cannot be stored in the warehouse
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_TO_WAREHOUSE" );
 	}
 
@@ -864,7 +864,7 @@ std::string Logic_ItemMoveSubProcBagChildToGuildWarehouse(SERIAL_HANDLE hSrcSeri
 
 	// Dest
 	CNtlGuildWarehouse* pGuildWarehouse = GetNtlSLGlobal()->GetSobAvatar()->GetGuildWarehouse();
-	// hDestParentSerial : 핸들이 아니라 길드 창고의 인덱스를 받았다 
+	// hDestParentSerial: received the index of the guild warehouse, not the handle 
 	eCONTAINER_TYPE eDestContainerType = Logic_ConverGuildWarehouseIdxToContainderType((RwUInt8)hDestParentSerial);
 	sGuildWarehouseSlot* pGuildWarehouseItem = pGuildWarehouse->GetItem((RwUInt8)hDestParentSerial, ucDestSlotIdx);
 
@@ -889,8 +889,8 @@ std::string Logic_ItemMoveSubProcBagChildToGuildWarehouse(SERIAL_HANDLE hSrcSeri
 std::string Logic_ItemMoveSubProcQuestToQuest( RwUInt8 ucSrcSlotIdx, RwUInt8 ucDestSlotIdx )
 {
 	NTL_FUNCTION( "Logic_ItemMoveSubProcQuestToQuest" );
-	// 비교조건
-	// 1. 같은자리는 제외.
+	// Comparison conditions
+	// 1. Excluding the same seats.
 	if( ucSrcSlotIdx == ucDestSlotIdx )
 	{
 		GetIconMoveManager()->IconMoveEnd();
@@ -909,7 +909,7 @@ std::string Logic_ItemMoveSubProcWarehouseToEquip( SERIAL_HANDLE hSrcSerial, RwU
 
 	CNtlWarehouse* pWarehouse = GetNtlSLGlobal()->GetSobAvatar()->GetWarehouse();	
 
-	// src
+	// Src
 	CNtlSobItem* pSrcItem = reinterpret_cast<CNtlSobItem*>(GetNtlSobManager()->GetSobObject(hSrcSerial));
 	DBO_ASSERT( pSrcItem, "Invalid SrcItem" );
 	CNtlSobItemAttr* pSrcItemAttr = reinterpret_cast<CNtlSobItemAttr*>( pSrcItem->GetSobAttr() );
@@ -923,9 +923,9 @@ std::string Logic_ItemMoveSubProcWarehouseToEquip( SERIAL_HANDLE hSrcSerial, RwU
 	SERIAL_HANDLE hDestSerial = GetNtlSLGlobal()->GetSobAvatar()->GetInventory()->GetEquipItem( ucDestSlotIdx );
 	RwUInt32 usDestSlotFlag = Logic_ConvertEquipSlotIdxToFlag( ucDestSlotIdx );
 
-	// 0. 현재는 창고에 보관가능한 아이템은 사용기간제한이 아님. 검사가 필요없다.
+	// 0. Currently, items that can be stored in the warehouse do not have a usage period limit. No need for testing.
 
-	// 1. Dest가 스카우터이고 이미 스카우터를 착용중인 경우, 2,3번 사항 확인.
+	// 1. If Dest is a scouter and is already wearing a scouter, check points 2 and 3.
 	if( ucDestSlotIdx == EQUIP_SLOT_TYPE_SCOUTER && hDestSerial != INVALID_SERIAL_ID )
 	{
 		CNtlSobItem* pDestItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hDestSerial ) );
@@ -936,12 +936,12 @@ std::string Logic_ItemMoveSubProcWarehouseToEquip( SERIAL_HANDLE hSrcSerial, RwU
 	}
 	else
 	{
-		// 5. 아이템 장착타입 검사.
+		// 5. Check item installation type.
 		if( !Logic_EquipSlotTypeFlagCheck( usDestSlotFlag, pSrcItemTable->dwEquip_Slot_Type_Bit_Flag ) )
 			NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_NOT_EQUIAL_EQUIPTYPE" );
 	}	
 
-	// 창고 NPC Serial
+	// Warehouse NPC Serial
 	CWarehouseBarGui* pWarehouseBarGui = reinterpret_cast<CWarehouseBarGui*>(GetDialogManager()->GetDialog(DIALOG_WAREHOUSEBAR));
 	SERIAL_HANDLE hNPCHandle = pWarehouseBarGui->GetNPCSerial();
 
@@ -974,7 +974,7 @@ std::string Logic_ItemMoveSubProcWarehouseToBagSlot( SERIAL_HANDLE hSrcSerial, R
 
 	CNtlWarehouse* pWarehouse = GetNtlSLGlobal()->GetSobAvatar()->GetWarehouse();	
 
-	// src
+	// Src
 	CNtlSobItem* pSrcItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hSrcSerial ) );
 	NTL_ASSERT( pSrcItem, "Invalid hSrcSerial" );
 	CNtlSobItemAttr* pSrcItemAttr = reinterpret_cast<CNtlSobItemAttr*>( pSrcItem->GetSobAttr() );
@@ -983,7 +983,7 @@ std::string Logic_ItemMoveSubProcWarehouseToBagSlot( SERIAL_HANDLE hSrcSerial, R
 	RwUInt8 bySrcSlot = pWarehouse->FindWarehouseSlot(pSrcItem->GetParentItem()->GetSerialID());
 	eCONTAINER_TYPE eSrcContainerType = Logic_ConverWarehouseIdxToContainderType(bySrcSlot);
 
-	// 창고 NPC Serial
+	// Warehouse NPC Serial
 	CWarehouseBarGui* pWarehouseBarGui = reinterpret_cast<CWarehouseBarGui*>(GetDialogManager()->GetDialog(DIALOG_WAREHOUSEBAR));
 	SERIAL_HANDLE hNPCHandle = pWarehouseBarGui->GetNPCSerial();
 
@@ -991,13 +991,13 @@ std::string Logic_ItemMoveSubProcWarehouseToBagSlot( SERIAL_HANDLE hSrcSerial, R
 	SERIAL_HANDLE hDestBagSerial = pInventory->GetBagItem( ucDestSlotIdx );
 	RwInt32 nEmptyBagChildSlot = -1;
 
-	// 1. DestSlot의 가방이 있을때와 없을때 체크. 
+	// 1. Check whether DestSlot bag is present or not. 
 	if( hDestBagSerial == INVALID_SERIAL_ID )
 	{
-		// 2. src아이템이 가방이라면.
+		// 2. If the src item is a bag.
 		if( pSrcItem->IsBagItem() )
 		{
-			// 3. src 가방의 사용기간 체크는 하지 않아도 된다. 창고에 저장하는 것들은 사용기간의 제한이 없다.
+			// 3. There is no need to check the expiration date of the src bag. There is no limit to the period of use of items stored in warehouses.
 			if( GetDboGlobal()->GetGamePacketGenerator()->SendBankMove( hNPCHandle, (RwUInt8)eSrcContainerType, ucSrcSlotIdx, CONTAINER_TYPE_BAGSLOT, ucDestSlotIdx ) )
 				NTL_RETURN( "" )	
 			else
@@ -1005,7 +1005,7 @@ std::string Logic_ItemMoveSubProcWarehouseToBagSlot( SERIAL_HANDLE hSrcSerial, R
 		}
 		else
 		{
-			// 4. 가방이 아니고, dest에 가방도 없다면 취소.
+			// 4. If it is not a bag and there is no bag at dest, cancel.
 			NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_TO_BAGSLOT_NOT_BAG" );
 		}
 	}
@@ -1014,13 +1014,13 @@ std::string Logic_ItemMoveSubProcWarehouseToBagSlot( SERIAL_HANDLE hSrcSerial, R
 		CNtlSobItem* pDestBagItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hDestBagSerial ) );
 		NTL_ASSERT( pDestBagItem, "Invalid hDestBagSerial" );
 
-		// 4. dest의 가방이 꽉 찼을때 취소.
+		// 4. Cancellation when dest’s bag is full.
 		if( pDestBagItem->FullChild() )
 			NTL_RETURN( "DST_ITEM_BAG_FULL" );
 
 		nEmptyBagChildSlot = pDestBagItem->FindEmptyChildSlot();
 
-		// 5. 이 경우는 WarehouseToBagChild서브로직으로. 
+		// 5. In this case, the WarehouseToBagChild sublogic. 
 		NTL_RETURN( Logic_ItemMoveSubProcWarehouseToBagChild( hSrcSerial, ucSrcSlotIdx, PLACE_BAG, hDestBagSerial, ucDestSlotIdx, uiStackCount ) );
 	}		
 }
@@ -1029,13 +1029,13 @@ std::string Logic_ItemMoveSubProcWarehouseToBagChild( SERIAL_HANDLE hSrcSerial, 
 {
 	NTL_FUNCTION( "Logic_ItemMoveSubProcWarehouseToBag" );
 
-	// src
+	// Src
 	CNtlWarehouse* pWarehouse = GetNtlSLGlobal()->GetSobAvatar()->GetWarehouse();	
 	CNtlSobItem* pSrcItem = reinterpret_cast<CNtlSobItem*>(GetNtlSobManager()->GetSobObject(hSrcSerial));
 	RwUInt8 bySrcSlot = pWarehouse->FindWarehouseSlot(pSrcItem->GetParentItem()->GetSerialID());
 	eCONTAINER_TYPE eSrcContainerType = Logic_ConverWarehouseIdxToContainderType(bySrcSlot);
 
-	// dest
+	// Dest
 	CNtlInventory* pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
 	RwUInt8 ucDestBagIdx = (RwUInt8)pInventory->FindBagSlot( hDestParentSerial );
 	eCONTAINER_TYPE eDestBagType = Logic_ConvertBagIdxToContainerType( ucDestBagIdx );
@@ -1046,11 +1046,11 @@ std::string Logic_ItemMoveSubProcWarehouseToBagChild( SERIAL_HANDLE hSrcSerial, 
 	DBO_ASSERT( pDestBagItemAttr, "Invalid DestBagItemAttr" );
 	SERIAL_HANDLE hDestSerial = pDestBagItem->GetChildSerial( ucDestSlotIdx );
 
-	// 3. dest 가방의 사용기간 검사
+	// 3. Inspection of expiration date of dest bag
 	if( pDestBagItemAttr->IsExpired() )
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_BAG_EXPIRED_DURATION" );
 
-	// 창고 NPC Serial
+	// Warehouse NPC Serial
 	CWarehouseBarGui* pWarehouseBarGui = reinterpret_cast<CWarehouseBarGui*>(GetDialogManager()->GetDialog(DIALOG_WAREHOUSEBAR));
 	SERIAL_HANDLE hNPCHandle = pWarehouseBarGui->GetNPCSerial();
 
@@ -1079,7 +1079,7 @@ std::string Logic_ItemMoveSubProcWarehouseToWarehouse( SERIAL_HANDLE hSrcSerial,
 
 	CNtlWarehouse* pWarehouse = GetNtlSLGlobal()->GetSobAvatar()->GetWarehouse();	
 
-	// src
+	// Src
 	CNtlSobItem* pSrcItem = reinterpret_cast<CNtlSobItem*>(GetNtlSobManager()->GetSobObject(hSrcSerial));	
 	NTL_ASSERT(pSrcItem, "Logic_ItemMoveSubProcWarehouseToWarehouse, Not exist item : " << hSrcSerial);
 	CNtlSobItemAttr* pSobItemAttr = reinterpret_cast<CNtlSobItemAttr*>(pSrcItem->GetSobAttr());
@@ -1087,7 +1087,7 @@ std::string Logic_ItemMoveSubProcWarehouseToWarehouse( SERIAL_HANDLE hSrcSerial,
 
 	if( Logic_IsCanSaveWarehouse( pSobItemAttr ) == FALSE )
 	{
-		// 창고에 저장할 수 없는 아이템
+		// Items that cannot be stored in the warehouse
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_TO_WAREHOUSE" );
 	}
 
@@ -1095,22 +1095,22 @@ std::string Logic_ItemMoveSubProcWarehouseToWarehouse( SERIAL_HANDLE hSrcSerial,
 	if( hDestParentSerial == hCommonWarehouse &&
 		Logic_IsCanSaveCommonWarehouse( pSobItemAttr ) == FALSE )
 	{
-		// 공유 창고에 저장할 수 없는 아이템		
+		// Items that cannot be stored in shared storage		
 		NTL_RETURN( "DST_ITEM_CAN_NOT_SAVE_COMMON_WAREHOUSE" );
 	}
 
 	RwUInt8 bySrcSlot = pWarehouse->FindWarehouseSlot(pSrcItem->GetParentItem()->GetSerialID());
 	eCONTAINER_TYPE eSrcContainerType = Logic_ConverWarehouseIdxToContainderType(bySrcSlot);
 
-	// dest
+	// Dest
 	eCONTAINER_TYPE eDestContainerType = Logic_ConverWarehouseIdxToContainderType(pWarehouse->FindWarehouseSlot(hDestParentSerial));
 
-	// 창고 NPC Serial
+	// Warehouse NPC Serial
 	CWarehouseBarGui* pWarehouseBarGui = reinterpret_cast<CWarehouseBarGui*>(GetDialogManager()->GetDialog(DIALOG_WAREHOUSEBAR));
 	SERIAL_HANDLE hNPCHandle = pWarehouseBarGui->GetNPCSerial();
 
-	// 비교조건
-	// 1. 같은자리는 제외.
+	// Comparison conditions
+	// 1. Excluding the same seats.
 	if( ucSrcSlotIdx == ucDestSlotIdx && eSrcContainerType == eDestContainerType)
 	{
 		GetIconMoveManager()->IconMoveEnd();
@@ -1173,8 +1173,8 @@ std::string Logic_ItemMoveSubProcGuildWarehouseToEquip(SERIAL_HANDLE hSrcSerial,
 	SERIAL_HANDLE hDestSerial = GetNtlSLGlobal()->GetSobAvatar()->GetInventory()->GetEquipItem( ucDestSlotIdx );
 	RwInt32 usDestSlotFlag = Logic_ConvertEquipSlotIdxToFlag( ucDestSlotIdx );
 
-	// 0. 현재는 창고에 보관가능한 아이템은 사용기간제한이 아님. 검사가 필요없다.
-	// 1. Dest가 스카우터이고 이미 스카우터를 착용중인 경우, 2,3번 사항 확인.
+	// 0. Currently, items that can be stored in the warehouse do not have a usage period limit. No need for testing.
+	// 1. If Dest is a scouter and is already wearing a scouter, check points 2 and 3.
 	if( ucDestSlotIdx == EQUIP_SLOT_TYPE_SCOUTER && hDestSerial != INVALID_SERIAL_ID )
 	{
 		CNtlSobItem* pDestItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hDestSerial ) );
@@ -1185,7 +1185,7 @@ std::string Logic_ItemMoveSubProcGuildWarehouseToEquip(SERIAL_HANDLE hSrcSerial,
 	}
 	else
 	{
-		// 5. 아이템 장착타입 검사.
+		// 5. Check item installation type.
 		if( !Logic_EquipSlotTypeFlagCheck( usDestSlotFlag, pSrcItemTable->dwEquip_Slot_Type_Bit_Flag ) )
 			NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_NOT_EQUIAL_EQUIPTYPE" );
 	}
@@ -1228,13 +1228,13 @@ std::string Logic_ItemMoveSubProcGuildWarehouseToBagSlot(SERIAL_HANDLE hSrcSeria
 	SERIAL_HANDLE hDestBagSerial = pInventory->GetBagItem( ucDestSlotIdx );
 	RwInt32 nEmptyBagChildSlot = -1;
 
-	// 1. DestSlot의 가방이 있을때와 없을때 체크. 
+	// 1. Check whether DestSlot bag is present or not. 
 	if( hDestBagSerial == INVALID_SERIAL_ID )
 	{
-		// 2. src아이템이 가방이라면.
+		// 2. If the src item is a bag.
 		if( pSrcItemTable->byItem_Type == ITEM_TYPE_BAG )
 		{
-			// 3. src 가방의 사용기간 체크는 하지 않아도 된다. 창고에 저장하는 것들은 사용기간의 제한이 없다.
+			// 3. There is no need to check the expiration date of the src bag. There is no limit to the period of use of items stored in warehouses.
 			if( GetDboGlobal()->GetGamePacketGenerator()->SendGuildWarehouseMoveReq(pGuildWarehouse->GetNPCHandle(),
 				pGuildWarehouseItem->byServerPlace, pGuildWarehouseItem->byPos, CONTAINER_TYPE_BAGSLOT, ucDestSlotIdx) )
 				NTL_RETURN( "" )	
@@ -1243,7 +1243,7 @@ std::string Logic_ItemMoveSubProcGuildWarehouseToBagSlot(SERIAL_HANDLE hSrcSeria
 		}
 		else
 		{
-			// 4. 가방이 아니고, dest에 가방도 없다면 취소.
+			// 4. If it is not a bag and there is no bag at dest, cancel.
 			NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_TO_BAGSLOT_NOT_BAG" );
 		}
 	}
@@ -1252,13 +1252,13 @@ std::string Logic_ItemMoveSubProcGuildWarehouseToBagSlot(SERIAL_HANDLE hSrcSeria
 		CNtlSobItem* pDestBagItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( hDestBagSerial ) );
 		NTL_ASSERT( pDestBagItem, "Invalid hDestBagSerial" );
 
-		// 4. dest의 가방이 꽉 찼을때 취소.
+		// 4. Cancellation when dest’s bag is full.
 		if( pDestBagItem->FullChild() )
 			NTL_RETURN( "DST_ITEM_BAG_FULL" );
 
 		nEmptyBagChildSlot = pDestBagItem->FindEmptyChildSlot();
 
-		// 5. 이 경우는 BagChildToBagChild서브로직으로. 
+		// 5. In this case, the BagChildToBagChild sublogic. 
 		NTL_RETURN( Logic_ItemMoveSubProcGuildWarehouseToBagChild( hSrcSerial, eDestPlace, ucSrcSlotIdx, eDestPlace, hDestParentSerial, ucDestSlotIdx, uiStackCount ) );		
 	}	
 }
@@ -1267,12 +1267,12 @@ std::string Logic_ItemMoveSubProcGuildWarehouseToBagChild(SERIAL_HANDLE hSrcSeri
 {
 	NTL_FUNCTION( "Logic_ItemMoveSubProcGuildWarehouseToBag" );
 
-	// src
+	// Src
 	CNtlGuildWarehouse* pGuildWarehouse = GetNtlSLGlobal()->GetSobAvatar()->GetGuildWarehouse();
 	sGuildWarehouseSlot* pGuildWarehouseItem = pGuildWarehouse->GetItem(hSrcSerial);
 	NTL_ASSERT(pGuildWarehouseItem, "Logic_ItemMoveSubProcGuildWarehouseToBagSlot, Not exist guild warehouse item of handle << " << hSrcSerial);
 
-	// dest
+	// Dest
 	CNtlInventory* pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
 	RwUInt8 ucDestBagIdx = (RwUInt8)pInventory->FindBagSlot( hDestParentSerial );
 	eCONTAINER_TYPE eDestBagType = Logic_ConvertBagIdxToContainerType( ucDestBagIdx );
@@ -1283,7 +1283,7 @@ std::string Logic_ItemMoveSubProcGuildWarehouseToBagChild(SERIAL_HANDLE hSrcSeri
 	DBO_ASSERT( pDestBagItemAttr, "Invalid DestBagItemAttr" );
 	SERIAL_HANDLE hDestSerial = pDestBagItem->GetChildSerial( ucDestSlotIdx );
 
-	// 3. dest 가방의 사용기간 검사
+	// 3. Inspection of expiration date of dest bag
 	if( pDestBagItemAttr->IsExpired() )
 		NTL_RETURN( "DST_ITEM_CAN_NOT_MOVE_BAG_EXPIRED_DURATION" );
 
@@ -1307,13 +1307,13 @@ std::string Logic_ItemMoveSubProcGuildWarehouseToBagChild(SERIAL_HANDLE hSrcSeri
 
 std::string Logic_ItemMoveSubProcGuildWarehouseToGuildWarehouse(SERIAL_HANDLE hSrcSerial, RwUInt8 ucSrcSlotIdx, SERIAL_HANDLE hDestParentSerial, RwUInt8 ucDestSlotIdx, RwUInt32 uiStackCount)
 {
-	// src
+	// Src
 	CNtlGuildWarehouse* pGuildWarehouse = GetNtlSLGlobal()->GetSobAvatar()->GetGuildWarehouse();
 	sGuildWarehouseSlot* pGuildWarehouseItem = pGuildWarehouse->GetItem(hSrcSerial);
 	RwUInt8 bySrcIndex = (RwUInt8)(pGuildWarehouseItem->byServerPlace - CONTAINER_TYPE_GUILD_FIRST);
 	NTL_ASSERT(pGuildWarehouseItem, "Logic_ItemMoveSubProcGuildWarehouseToBagSlot, Not exist guild warehouse item of handle << " << hSrcSerial);
 
-	// 같은 슬롯은 이동하지 않는다
+	// Same slots do not move
 	if( bySrcIndex == hDestParentSerial )
 	{
 		if( ucSrcSlotIdx == ucDestSlotIdx )
@@ -1324,7 +1324,7 @@ std::string Logic_ItemMoveSubProcGuildWarehouseToGuildWarehouse(SERIAL_HANDLE hS
 	}
 
 	// Dest
-	// hDestParentSerial : 핸들이 아니라 길드 창고의 인덱스를 받았다 
+	// hDestParentSerial: received the index of the guild warehouse, not the handle 
 	sGuildWarehouseSlot* pGuildWarehouseDestItem = pGuildWarehouse->GetItem((RwUInt8)hDestParentSerial, ucDestSlotIdx);
 	eCONTAINER_TYPE eDestContainerType = Logic_ConverGuildWarehouseIdxToContainderType((RwUInt8)hDestParentSerial);
 
@@ -1347,13 +1347,13 @@ std::string Logic_ItemMoveSubProcGuildWarehouseToGuildWarehouse(SERIAL_HANDLE hS
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Zenny 이동 관련
+// Zenny moving related
 
 std::string Logic_ItemMoveSubProcSubBagZennyToWarehouseZenny(SERIAL_HANDLE hNPCHandle, RwUInt32 uiZenny)
 {
 	NTL_FUNCTION( "Logic_ItemMoveSubProcSubBagMoneyToWarehouse" );
 
-	// 창고(은행)에 돈을 넣다
+	// Put money into a warehouse (bank)
 	if( GetDboGlobal()->GetGamePacketGenerator()->SendBankZenny(hNPCHandle, uiZenny, true) )
 		NTL_RETURN( "" )
 	else
@@ -1364,7 +1364,7 @@ std::string Logic_ItemMoveSubProcSubBagZennyToGuildWarehouseZenny(SERIAL_HANDLE 
 {
 	NTL_FUNCTION( "Logic_ItemMoveSubProcSubBagMoneyToGuildWarehouse" );
 
-	// 길드 창고(은행)에 돈을 넣다
+	// Put money into the guild warehouse (bank)
 	if( GetDboGlobal()->GetGamePacketGenerator()->SendGuildWarehouseZennyReq(hNPCHandle, uiZenny, true) )
 		NTL_RETURN( "" )
 	else
@@ -1399,7 +1399,7 @@ std::string Logic_ItemMoveSubProcWareHouseZennyToSubBagZenny(RwUInt32 uiZenny)
 
 	CWarehouseCommonGui* pWarehouseCommonGui = reinterpret_cast<CWarehouseCommonGui*>( GetDialogManager()->GetDialog(DIALOG_WAREHOUSE_COMMON) );
 
-	// 창고(은행)에서 돈을 뺀다
+	// Withdraw money from the warehouse (bank)
 	if( GetDboGlobal()->GetGamePacketGenerator()->SendBankZenny(pWarehouseCommonGui->GetNPCHandle(), uiZenny, false) )
 		NTL_RETURN( "" )
 	else
@@ -1412,7 +1412,7 @@ std::string Logic_ItemMoveSubProcGuildWareHouseZennyToSubBagZenny(RwUInt32 uiZen
 
 	CNtlGuildWarehouse* pGuildWarehouse = GetNtlSLGlobal()->GetSobAvatar()->GetGuildWarehouse();
 
-	// 길드 창고(은행)에 돈을 뺀다
+	// Deduct money from guild warehouse (bank)
 	if( GetDboGlobal()->GetGamePacketGenerator()->SendGuildWarehouseZennyReq(pGuildWarehouse->GetNPCHandle(), uiZenny, false) )
 		NTL_RETURN( "" )
 	else

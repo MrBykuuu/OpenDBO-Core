@@ -2,7 +2,7 @@
 //	File		:	NtlInstancePostEffectSystem.h
 //	Desc		:	
 //	Begin		:	2007. 1.17
-//	Copyright	:	ⓒ 2007 by agebreak CO., Ltd
+//	Copyright	:	? 2007 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -44,7 +44,7 @@ public:
     virtual void    SetWorldMatrix(const RwMatrix& matWorld);
 
             COMIC_STATE GetComicState() {return m_nComicState;}
-            void    SetCenterFixEnable(RwBool bEnable);                     ///< 중심점 고정 기능을 On/Off 한다.
+            void    SetCenterFixEnable(RwBool bEnable);                     ///< Turns the center point fixation function on/off.
 
 protected:
             void	BuildEmitterStandard(SNtlPostEffectEmitterStandard* pEmitterStandard);
@@ -57,14 +57,14 @@ protected:
 protected:
     CNtlResourcePostEffectSystem*			m_pResourcePostEffectSystem;    
     RwInt32                                 m_nVertexCount;    
-    RwInt32                                 m_nIndexCount;                  ///< Index의 개수
+    RwInt32                                 m_nIndexCount;                  ///< Number of Indexes
     RwInt32			                    	m_nCurLoopCount;        
     RwBool                  				m_bHalfIndexType;    
     COMIC_STATE			                    m_nComicState;
     RwReal				                    m_fComicAlpha;    
-    RwV2d                                   m_v2dCenterPos;                 ///< 중심점의 좌표
-    RwBool                                  m_bCenterFix;                   ///< 중심점 고정 기능 사용 플래그
-    RwBool                                  m_bUpdateCenter;                ///< 중심점 위치를 변경해야하는지 유무 플래그
+    RwV2d                                   m_v2dCenterPos;                 ///< Coordinates of the center point
+    RwBool                                  m_bCenterFix;                   ///< Center point fixation function use flag
+    RwBool                                  m_bUpdateCenter;                ///< Flag whether the position of the center point needs to be changed
 
     RwIm2DVertex*		                    m_pComicVertices;    
     RwImVertexIndex*	                    m_pComicHalfIndex;        

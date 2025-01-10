@@ -1,14 +1,14 @@
 #include "precomp_dboclient.h"
 #include "TBMinorDirectionGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEvent.h"
 #include "NtlSobAvatar.h"
@@ -16,13 +16,13 @@
 #include "NtlCameraManager.h"
 #include "NtlSLLuaGlue.h"
 
-// client
+// Client
 #include "DboGlobal.h"
 #include "DiceManager.h"
 #include "TBGui.h"
 
 #define BUDOKAI_MINOR_DICE_START_TIME	3
-#define BUDOKAI_MINOR_DICE_NOTIFY_TIME	5		// 관전자의 경우, Flash연출시간(현재1.2초)를 고려한 시간.
+#define BUDOKAI_MINOR_DICE_NOTIFY_TIME	5		// For spectators, the time takes into account the flash production time (currently 1.2 seconds).
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // stENDINFO
@@ -323,12 +323,12 @@ VOID CTBMinorDirectionGui::HandleEvents( RWS::CMsg& msg )
 	{
 		SNtlEventMinorMatchSelection* pData = reinterpret_cast<SNtlEventMinorMatchSelection*>( msg.pData );
 
-		// 데이터 준비
+		// Data preparation
 		m_WinnerTeam = pData->wWinnerTeam;
 		m_bySelectionCount = pData->byTeamCount;
 		memcpy( m_aSelectionData, pData->aSelection, sizeof( sMINORMATCH_SELECTION_DATA ) * pData->byTeamCount );
 
-		// 연출 준비
+		// Directing preparation
 		CNtlWorldConceptTB* pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 		NTL_ASSERT( pTBWorldConcept, "CTBMinorDirectionGui::HandleEvents : must World concept is valid" );	
 
@@ -378,7 +378,7 @@ VOID CTBMinorDirectionGui::OnStartDice(VOID)
 	CEventTimer::RemoveTimer( m_hDiceWinnerSelectTimer );
 	CTBGui::GetInstance()->HideCounterTime();
 
-	// 연출 준비
+	// Directing preparation
 	CNtlWorldConceptTB* pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 	NTL_ASSERT( pTBWorldConcept, "CTBMinorDirectionGui::HandleEvents : must World concept is valid" );	
 	SERIAL_HANDLE hAvatar = Logic_GetAvatarHandle();
@@ -404,7 +404,7 @@ VOID CTBMinorDirectionGui::OnShowDiceResult(VOID)
 {
 	CEventTimer::RemoveTimer( m_hDiceWinnerShowTimer );
 	
-	// 각 캐릭터의 주사위결과를 표현.
+	// Expresses the dice results of each character.
 	CNtlWorldConceptTB* pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 	NTL_ASSERT( pTBWorldConcept, "CTBMinorDirectionGui::HandleEvents : must World concept is valid" );	
 

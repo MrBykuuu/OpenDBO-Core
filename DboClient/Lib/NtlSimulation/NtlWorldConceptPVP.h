@@ -7,7 +7,7 @@ class CNtlPLEntity;
 
 /**
  * \ingroup NtlSimulation
- * \brief PVP를 할때의 제어 클래스 
+ * \brief Control class when playing PVP 
  * \date 2007-06-14
  * \author agebreak
  */
@@ -20,20 +20,20 @@ public:
 	virtual void	Update(RwReal fElapsedTime);	
 	virtual void	ChangeState(RwInt32 iState);
 
-	//---- PVP 관련 메소드
-	void				SetFreePvPTarget(SERIAL_HANDLE hTarget);					///< PVP 타겟을 설정한다.
-	SERIAL_HANDLE		GetFreePvPTarget(void) const;								///< 현재 설정된 PVP Target의 Serail ID를 반환한다.
+	//----PVP related methods
+	void				SetFreePvPTarget(SERIAL_HANDLE hTarget);					///< Set the PVP target.
+	SERIAL_HANDLE		GetFreePvPTarget(void) const;								///< Returns the Serail ID of the currently set PVP Target.
 
 	void				SetFreePvPReferPos(RwV3d vPos);
 	RwV3d				GetFreePvPReferPos(void) const;
 
-	void				CreateFreePvPMark(void);							///< PVP 마크(현재는 심판)을 생성한다.
-	void				DestroyFreePvPMark(void);							///< PVP 마크를 제거한다.
+	void				CreateFreePvPMark(void);							///< Create a PVP mark (currently a referee).
+	void				DestroyFreePvPMark(void);							///< Remove the PVP mark.
 
 	void				SetPvpName(SERIAL_HANDLE hTarget);
 
 protected:
-	/// PVP 관련 정보 구조체
+	/// PVP-related information structure
 	struct FreeBattleInfo
 	{
 		CNtlPLCharacter		*pCharacter;
@@ -43,11 +43,11 @@ protected:
 	};
 
 protected:
-	FreeBattleInfo		m_FreeBattleInfo;		///< PVP 관련 구조체
+	FreeBattleInfo		m_FreeBattleInfo;		///< PVP-related structures
 };
 
 
-// 인라인 함수들
+// inline functions
 
 inline void	CNtlWorldConceptPVP::SetFreePvPTarget(SERIAL_HANDLE hTarget)
 {

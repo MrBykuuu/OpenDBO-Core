@@ -1,15 +1,15 @@
 ﻿#include "precomp_dboclient.h"
 
-// shared
+// Shared
 #include "NtlItem.h"
 #include "NtlResultCode.h"
 #include "MobTable.h"
 
-// core
+// Core
 #include "ceventhandler.h"
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLDef.h"
 #include "NtlPLGui.h"
 #include "NtlPLGuiManager.h"
@@ -22,7 +22,7 @@
 #include "ItemMixExpTable.h"
 #include "CharTitleTable.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLDef.h"
 #include "NtlSobManager.h"
@@ -40,7 +40,7 @@
 #include "NtlStorageManager.h"
 #include "NtlStorageGroupScouter.h"
 
-// DBO
+// Dbo
 #include "DboGlobal.h"
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
@@ -245,7 +245,7 @@ VOID CStatusAvatarTab::UpdateBeforeCamera(RwReal fElapsed)
 
 VOID CStatusAvatarTab::HandleEvents(RWS::CMsg& msg)
 {
-	// Equip 정보
+	// Equip Information
 	if (msg.Id == g_EventSobInfoUpdate)
 	{
 		if (!IsShow())
@@ -264,13 +264,13 @@ VOID CStatusAvatarTab::HandleEvents(RWS::CMsg& msg)
 		{
 			UpdateStatData();
 
-			// 아바타의 Attribute ( Battle Attribute bonus ) 가 업데이트 되면 다시 계산해준다.
+			// When the avatar's Attribute (Battle Attribute bonus) is updated, it is recalculated.
 			CalcBattleAttribute();
 			OnBattleAttributeRefresh();
 		}
 	}
 	else if (msg.Id == g_EventSobConvertClass)
-	{// 클래스 변경은 이것밖에 안날라온다.
+	{// Class changes only result in this.
 		SNtlEventSobConvertClass* pData = reinterpret_cast<SNtlEventSobConvertClass*>(msg.pData);
 
 		if (pData->hSerialId == GetNtlSLGlobal()->GetSobAvatar()->GetSerialID())
@@ -345,7 +345,7 @@ VOID CStatusAvatarTab::UpdateEquipData(VOID)
 	CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
 
 	if (!pAvatar)
-		return;				// 초기 아바타 생성전에 들어오는 경우.
+		return;				// In case of entering before initial avatar creation.
 
 	CNtlInventory* pInventory = pAvatar->GetInventory();
 
@@ -419,8 +419,8 @@ VOID CStatusAvatarTab::UpdateStatData(VOID)
 	CNtlSobAvatarAttr* pAvatarAttr = reinterpret_cast<CNtlSobAvatarAttr*>(pAvatar->GetSobAttr());
 	RwUInt32 uiColor;
 
-	// BasicStat
-	uiColor = BASIC_STAT_COLOR;// GetGuiFuntor()->ColorDecision(pAvatarAttr->m_baseStr, pAvatarAttr->m_lastStr);
+	// Basic stat
+	uiColor = BASIC_STAT_COLOR;// gateuiphantor()->callDecision(pavatartr->m_basester, pavatartr->m_lastuster);
 	m_pstbBasicStat[STR]->SetTextColor(uiColor);
 	m_pstbBasicStat[STR]->SetText(pAvatarAttr->m_Str);
 	m_pstbBasicStat[DEX]->SetTextColor(uiColor);
@@ -565,7 +565,7 @@ RwBool CStatusAvatarTab::IsEnableEquipPutDown(RwInt32 nSlotIdx)
 	if (IsDisableSlot(nSlotIdx))
 		return FALSE;
 
-	// 나머지 비교는 Logic에 맡긴다. 
+	// The rest of the comparison is left to Logic. 
 
 	return TRUE;
 }
@@ -590,7 +590,7 @@ RwBool CStatusAvatarTab::IsEnableUnequipItem(RwInt32 nSlotIdx)
 //	if( nSlotIdx < 0 )
 //		return FALSE;
 //
-//	CNtlInventory* pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
+//	CNtlInventory*pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
 //	SERIAL_HANDLE hSlotSerial = pInventory->GetEquipItem( nSlotIdx );
 //
 //	if( hSlotSerial == INVALID_SERIAL_ID )
@@ -852,7 +852,7 @@ VOID CStatusAvatarTab::OnMouseDown(const CKey& key)
 
 	if (key.m_nID == UD_LEFT_BUTTON)
 	{
-		// 1. Src선택인가 Dest선택인가.
+		// 1. Is it Src selection or Dest selection?
 		if (GetIconMoveManager()->IsActive())
 		{
 			if (IsEnableEquipPutDown(nClickIdx))
@@ -870,7 +870,7 @@ VOID CStatusAvatarTab::OnMouseDown(const CKey& key)
 			{
 				m_nLSelectedSlotIdx = nClickIdx;
 			}
-			// 2. DragDrop이 가능한 상황인가.
+			// 2. Is DragDrop possible?
 			else if (IsEnableEquipPickUp(nClickIdx))
 			{
 				m_nLSelectedSlotIdx = nClickIdx;
@@ -890,8 +890,8 @@ VOID CStatusAvatarTab::OnMouseDown(const CKey& key)
 			}
 		}
 
-		// 1. 아이콘 유효성 검사
-		//if( IsEnableEquipPopup( nClickIdx ) )
+		// 1. Icon validation
+		//if(IsEnableEquipPopup(nClickIdx))
 		//{
 		//	m_nRSelectedSlotIdx = nClickIdx;
 		//}
@@ -910,8 +910,8 @@ VOID CStatusAvatarTab::OnMouseDown(const CKey& key)
 
 VOID CStatusAvatarTab::OnMouseUp(const CKey& key)
 {
-	// 1. Left버튼인가 Right버튼인가
-	// 2. Src선택인가 Dest선택인가.
+	// 1. Left button or Right button?
+	// 2. Src selection or Dest selection?
 
 	RwInt32 nSlotIdx = GetEquipSlotIdx((RwInt32)key.m_fX, (RwInt32)key.m_fY);
 	ClickEffect(FALSE);
@@ -1063,13 +1063,13 @@ VOID CStatusAvatarTab::OnCharTitleBtnClicked(gui::CComponent* pComponent)
 
 VOID CStatusAvatarTab::OnPaint(VOID)
 {
-	// Avatar출력
+	// Avatar output
 	m_surCharacter.Render();
 }
 
 VOID CStatusAvatarTab::OnSlotPaint(VOID)
 {
-	// Icon 출력
+	// Icon output
 	for (RwInt32 i = 0; i < NTL_MAX_EQUIP_ITEM_SLOT; ++i)
 	{
 		if (m_surIcon[i].GetTexture())
@@ -1211,7 +1211,7 @@ VOID CStatusAvatarTab::SetTargetAttr(RwUInt8 byTargetWeaponAttr, RwUInt8 byTarge
 
 VOID CStatusAvatarTab::OnBattleAttributeRefresh()
 {
-	// ���� ���콺�� ��ġ�� ���� ���� �Ӽ� �гο� �ִ��� �� ���� �Ӽ� �гο� �ִ��� �Ǵ�
+	// ... �� �Ǵ�
 	eTYPE_BATTLEATTR eType = TYPECOUNT;
 	for (RwInt32 i = 0; i < TYPECOUNT; ++i)
 	{
@@ -1219,7 +1219,7 @@ VOID CStatusAvatarTab::OnBattleAttributeRefresh()
 			eType = (eTYPE_BATTLEATTR)i;
 	}
 
-	// ���콺�� �� ���� �г��� �ƴ϶�� InfoWindow�� ������ �ʿ䰡 ����.
+	// ���Quang�� �� ���� �г��� �ƴ϶�� InfoWindow�� ������ �ʿ䰡 ����.
 	if (eType == TYPECOUNT)
 		return;
 	else if (eType == TYPE_WEAPON)
@@ -1335,8 +1335,8 @@ VOID CStatusAvatarTab::SetAttributeToolTip(VOID)
 //	}
 //	else
 //	{
-//		CRectangle rtStackNum( m_rtEquipSlot[nSlot].right - MAX_STACK_NUM_WIDTH,
-//							   m_rtEquipSlot[nSlot].bottom - MAX_STACK_NUM_HEIGHT,
+//		CRectangle rtStackNum( m_rtEquipSlot[nSlot].right -MAX_STACK_NUM_WIDTH,
+//							   m_rtEquipSlot[nSlot].bottom -MAX_STACK_NUM_HEIGHT,
 //							   MAX_STACK_NUM_WIDTH, MAX_STACK_NUM_HEIGHT );
 //		m_pGuiStackNum[nSlot] = NTL_NEW gui::CStaticBox( rtStackNum, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_RIGHT );
 //		m_pGuiStackNum[nSlot]->CreateFontStd( "Arial", 70, EZ_ATTR_BOLD );
@@ -1366,7 +1366,7 @@ VOID CStatusAvatarTab::SetAttributeToolTip(VOID)
 //
 //}
 //
-//RwBool CStatusHonorList::Create( CRectangle& rect, gui::CComponent* pParent, RwInt32 nLineHeight, RwInt32 nLineMargin, RwInt32 nChildXMargin, RwInt32 nScrollBarWidth )
+//RwBool CStatusHonorList::Create( CRectangle& rect, gui::CComponent*pParent, RwInt32 nLineHeight, RwInt32 nLineMargin, RwInt32 nChildXMargin, RwInt32 nScrollBarWidth )
 //{
 //	if( !CGuiLineTree::Create( rect, pParent, nLineHeight, nLineMargin, nChildXMargin, nScrollBarWidth ))
 //		return FALSE;
@@ -1388,8 +1388,8 @@ VOID CStatusAvatarTab::SetAttributeToolTip(VOID)
 //void CStatusHonorList::CreateTree()
 //{
 //
-//	// 명예 점수 카테고리
-//	CGuiLineTreeNode* pNode = NTL_NEW CStatusHonorCategoryNode(this,
+//	// honor score category
+//	CGuiLineTreeNode*pNode = NTL_NEW CStatusHonorCategoryNode(this,
 //		L"명예점수", -2 );
 //	CGuiLineTree::AddNode( pNode, GUILINETREE_ROOTNODE_ID );
 //	pNode->Expand( true );
@@ -1398,7 +1398,7 @@ VOID CStatusAvatarTab::SetAttributeToolTip(VOID)
 //	CGuiLineTree::AddNode( pNode, -2 );
 //
 //	pNode = NTL_NEW CStatusHonorCategoryNode( this,
-//		L"랭크배틀", -3 );
+//		L"랙크배트", -3 );
 //	CGuiLineTree::AddNode( pNode, GUILINETREE_ROOTNODE_ID );
 //	pNode->Expand( true );
 //
@@ -1409,7 +1409,7 @@ VOID CStatusAvatarTab::SetAttributeToolTip(VOID)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //// ! CStatusHonorCategoryNode
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//CStatusHonorCategoryNode::CStatusHonorCategoryNode( CGuiLineTree* pMgr, std::wstring strTitle, RwInt32 nID )
+//CStatusHonorCategoryNode::CStatusHonorCategoryNode( CGuiLineTree*pMgr, std::wstring strTitle, RwInt32 nID )
 //: CGuiLineTreeNode( pMgr, nID )
 //, m_pBtnExpand(NULL)
 //, m_pBtnReduce(NULL)
@@ -1469,12 +1469,12 @@ VOID CStatusAvatarTab::SetAttributeToolTip(VOID)
 //	m_pBtnReduce->Show(false);
 //}
 //
-//void CStatusHonorCategoryNode::OnClickBtnExpand( gui::CComponent* pComponent )
+//void CStatusHonorCategoryNode::OnClickBtnExpand( gui::CComponent*pComponent )
 //{
 //	Expand(TRUE);
 //}
 //
-//void CStatusHonorCategoryNode::OnClickBtnReduce( gui::CComponent* pComponent )
+//void CStatusHonorCategoryNode::OnClickBtnReduce( gui::CComponent*pComponent )
 //{
 //	Expand(FALSE);
 //}
@@ -1482,7 +1482,7 @@ VOID CStatusAvatarTab::SetAttributeToolTip(VOID)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //// ! CStatusHonorContent
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//CStatusHonorContent::CStatusHonorContent( CGuiLineTree* pMgr, const WCHAR* pwcContent, RwInt32 nID )
+//CStatusHonorContent::CStatusHonorContent( CGuiLineTree*pMgr, const WCHAR*pwcContent, RwInt32 nID )
 //: CGuiLineTreeNode( pMgr, nID )
 //, m_pHtmlContent(NULL)
 //{
@@ -2312,7 +2312,7 @@ RwBool CStatusWindowGui::Create(VOID)
 	// serialize setting
 	EnableSerialize(TRUE);
 
-	// Update 연결
+	// Update connection
 	GetNtlGuiManager()->AddUpdateBeforeFunc(this);
 
 	// Event Link
@@ -2361,7 +2361,7 @@ VOID CStatusWindowGui::Destroy(VOID)
 	CNtlPLGui::DestroyComponents();
 	CNtlPLGui::Destroy();
 
-	// Update 해제
+	// Update Off
 	GetNtlGuiManager()->RemoveUpdateBeforeFunc(this);
 
 	NTL_DELETE(m_pAvatarTab);
@@ -2470,7 +2470,7 @@ VOID CStatusWindowGui::SetBasicUISetting(VOID)
 	m_ptabStatus->AddTab(std::wstring(GetDisplayStringManager()->GetString("DST_STATUS_TAB_FAMILY")));
 	m_ptabStatus->AddTab(std::wstring(GetDisplayStringManager()->GetString("DST_STATUS_TECHNIC_TITLE")));
 
-	// temporary
+	// Temporary
 	std::wstring wstrStatsTitle = L"Stats";
 	m_ptabStatus->AddTab(wstrStatsTitle);
 

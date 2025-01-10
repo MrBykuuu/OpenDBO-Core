@@ -1,7 +1,7 @@
 #include "precomp_dboclient.h"
 #include "DboPacketGenerator.h"
 
-// shared
+// Shared
 #include "NtlClientNet.h"
 #include "NtlPacketUA.h"
 #include "NtlPacketUC.h"
@@ -9,7 +9,7 @@
 #include "NtlPacketUT.h"
 #include "NtlPacketTU.h"
 
-// simulation.h"
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlNetSender.h"
 #include "NtlPacketLockManager.h"
@@ -24,7 +24,7 @@
 
 #include "md5.h"
 
-// framework
+// Framework
 #include "NtlTimer.h"
 
 // Dbo
@@ -948,7 +948,7 @@ bool CGamePacketGenerator::SendNPCShopBuy(RwUInt32 uiNPCSerial, sSHOP_BUY_CART* 
 
 bool CGamePacketGenerator::SendNPCShopSell(RwInt32 uiNPCSerial, sSHOP_SELL_CART* pShopSellCart[NTL_MAX_SELL_SHOPPING_CART])
 {
-	// 서버로부터 먼저보낸 메세지가 있는데 아직 안왔다면 false 리턴
+	// If there is a message sent from the server first but has not yet arrived, return false.
 	if( API_GetSLPacketLockManager()->IsLock(GU_SHOP_SELL_RES) )
 		return true;
 
@@ -980,7 +980,7 @@ bool CGamePacketGenerator::SendNPCShopSell(RwInt32 uiNPCSerial, sSHOP_SELL_CART*
 	iLength = sizeof(sPacket.wOpCode) + sizeof(sPacket.handle) + sizeof(sPacket.bySellCount)
 		+ ( sizeof(sSHOP_SELL_CART) * sPacket.bySellCount );
 
-	// 서버로부터 응답을 기다리는 메세지 목록에 추가
+	// Add to the list of messages waiting for a response from the server
 	API_GetSLPacketLockManager()->Lock(GU_SHOP_SELL_RES);
 	return m_pNetSender->SendPacket(iLength, &sPacket);
 }
@@ -1072,7 +1072,7 @@ bool CGamePacketGenerator::SendEventItemShopEndReq()
 
 bool CGamePacketGenerator::SendItemRepair(RwInt32 uiNPCSerial, RwUInt8 iPlace, RwUInt8 iPos)
 {
-	// 서버로부터 먼저보낸 메세지가 있는데 아직 안왔다면 false 리턴
+	// If there is a message sent from the server first but has not yet arrived, return false.
 	if( API_GetSLPacketLockManager()->IsLock(GU_ITEM_REPAIR_RES) )
 		return true;
 	
@@ -1084,14 +1084,14 @@ bool CGamePacketGenerator::SendItemRepair(RwInt32 uiNPCSerial, RwUInt8 iPlace, R
 	sPacket.byPlace = iPlace;
 	sPacket.byPos = iPos;
 
-	// 서버로부터 응답을 기다리는 메세지 목록에 추가
+	// Add to the list of messages waiting for a response from the server
 	API_GetSLPacketLockManager()->Lock(GU_ITEM_REPAIR_RES);
 	return m_pNetSender->SendPacket(sizeof(sPacket), &sPacket);	
 }
 
 bool CGamePacketGenerator::SendItemIdentification(RwUInt8 byPlace, RwUInt8 byPos)
 {
-	// 서버로부터 먼저보낸 메세지가 있는데 아직 안왔다면 false 리턴
+	// If there is a message sent from the server first but has not yet arrived, return false.
 	if( API_GetSLPacketLockManager()->IsLock(GU_ITEM_IDENTIFY_RES) )
 		return true;
 
@@ -1102,7 +1102,7 @@ bool CGamePacketGenerator::SendItemIdentification(RwUInt8 byPlace, RwUInt8 byPos
 	sPacket.byPlace = byPlace;
 	sPacket.byPos = byPos;
 
-	// 서버로부터 응답을 기다리는 메세지 목록에 추가
+	// Add to the list of messages waiting for a response from the server
 	API_GetSLPacketLockManager()->Lock(GU_ITEM_IDENTIFY_RES);
 	
 	// Item Identify Effect
@@ -1124,7 +1124,7 @@ bool CGamePacketGenerator::SendPCInfoView(RwUInt32 uiSerial)
 
 bool CGamePacketGenerator::SendItemAllRepair(RwInt32 uiNPCSerial)
 {
-	// 서버로부터 먼저보낸 메세지가 있는데 아직 안왔다면 false 리턴
+	// If there is a message sent from the server first but has not yet arrived, return false.
 	if( API_GetSLPacketLockManager()->IsLock(GU_ITEM_EQUIP_REPAIR_RES) )
 		return true;
 
@@ -1134,7 +1134,7 @@ bool CGamePacketGenerator::SendItemAllRepair(RwInt32 uiNPCSerial)
 	sPacket.wOpCode = UG_ITEM_EQUIP_REPAIR_REQ;
 	sPacket.handle = uiNPCSerial;
 
-	// 서버로부터 응답을 기다리는 메세지 목록에 추가
+	// Add to the list of messages waiting for a response from the server
 	API_GetSLPacketLockManager()->Lock(GU_ITEM_EQUIP_REPAIR_RES);
 	return m_pNetSender->SendPacket(sizeof(sPacket), &sPacket);	
 }
@@ -1295,7 +1295,7 @@ bool CGamePacketGenerator::SendPartyInvite(RwUInt32 uiSerial)
 
 bool CGamePacketGenerator::SendPartyInvite_CharID( RwUInt32 uiCharID ) 
 {
-	// 이 패킷의 응답으로는 UG_PARTY_INVITE_REQ 의 응답과 같은 것이 온다
+	// The response of this packet is the same as the response of UG_PARTY_INVITE_REQ.
 	if( API_GetSLPacketLockManager()->IsLock(GU_PARTY_INVITE_RES) )
 		return true;
 
@@ -1311,7 +1311,7 @@ bool CGamePacketGenerator::SendPartyInvite_CharID( RwUInt32 uiCharID )
 
 bool CGamePacketGenerator::SendPartyInvite_Name(const WCHAR* pcName)
 {
-	// 이 패킷의 응답으로는 UG_PARTY_INVITE_REQ 의 응답과 같은 것이 온다
+	// The response of this packet is the same as the response of UG_PARTY_INVITE_REQ.
 	if( API_GetSLPacketLockManager()->IsLock(GU_PARTY_INVITE_RES) )
 		return true;
 
@@ -1464,7 +1464,7 @@ bool CGamePacketGenerator::SendBankMove(RwUInt32 uiNPCSerial, RwUInt8 bySrcPlace
 	sPacket.byDestPlace = byDestPlace;
 	sPacket.byDestPos = byDestPos;
 
-	// 서버로부터 응답을 기다리는 메세지 목록에 추가
+	// Add to the list of messages waiting for a response from the server
 	API_GetSLPacketLockManager()->Lock(GU_BANK_MOVE_RES);
 	return m_pNetSender->SendPacket(sizeof(sPacket), &sPacket);
 }
@@ -1485,7 +1485,7 @@ bool CGamePacketGenerator::SendBankMoveStack(RwUInt32 uiNPCSerial, RwUInt8 bySrc
 	sPacket.byDestPos = byDestPos;
 	sPacket.byStackCount = byStackCount;
 
-	// 서버로부터 응답을 기다리는 메세지 목록에 추가
+	// Add to the list of messages waiting for a response from the server
 	API_GetSLPacketLockManager()->Lock(GU_BANK_MOVE_STACK_RES);
 	return m_pNetSender->SendPacket(sizeof(sPacket), &sPacket);
 }
@@ -1517,7 +1517,7 @@ bool CGamePacketGenerator::SendBankZenny(RwUInt32 uiNPCSerial, RwUInt32 uiZenny,
 	sPacket.dwZenny = uiZenny;
 	sPacket.bIsSave = bIsSave;
 
-	// 서버로부터 응답을 기다리는 메세지 목록에 추가
+	// Add to the list of messages waiting for a response from the server
 	API_GetSLPacketLockManager()->Lock(GU_BANK_ZENNY_RES);
 	return m_pNetSender->SendPacket(sizeof(sPacket), &sPacket);
 }
@@ -1556,7 +1556,7 @@ bool CGamePacketGenerator::SendBankDeleteItem(RwUInt8 byPlace, RwUInt8 byPos, Rw
 	sPacket.byPlace = byPlace;
 	sPacket.byPos = byPos;
 
-	// 서버로부터 응답을 기다리는 메세지 목록에 추가
+	// Add to the list of messages waiting for a response from the server
 	API_GetSLPacketLockManager()->Lock(GU_BANK_ITEM_DELETE_RES);
 	return m_pNetSender->SendPacket(sizeof(sPacket), &sPacket);
 }
@@ -1637,7 +1637,7 @@ bool CGamePacketGenerator::SendTradeAddReq(RwUInt32 uiTarget, RwUInt32 uiItem, R
 
 bool CGamePacketGenerator::SendTradeDelReq(RwUInt32 uiTarget, RwUInt32 uiItem)
 {
-	// 서버로부터 먼저보낸 메세지가 있는데 아직 안왔다면 false 리턴
+	// If there is a message sent from the server first but has not yet arrived, return false.
 	if( API_GetSLPacketLockManager()->IsLock(GU_TRADE_DEL_RES) )
 		return true;
 
@@ -1648,7 +1648,7 @@ bool CGamePacketGenerator::SendTradeDelReq(RwUInt32 uiTarget, RwUInt32 uiItem)
 	sPacket.hTarget = uiTarget;
 	sPacket.hItem = uiItem;
 
-	// 서버로부터 응답을 기다리는 메세지 목록에 추가
+	// Add to the list of messages waiting for a response from the server
 	API_GetSLPacketLockManager()->Lock(GU_TRADE_DEL_RES);
 
 	return m_pNetSender->SendPacket(sizeof(sPacket), &sPacket);
@@ -1656,7 +1656,7 @@ bool CGamePacketGenerator::SendTradeDelReq(RwUInt32 uiTarget, RwUInt32 uiItem)
 
 bool CGamePacketGenerator::SendTradeUpdateItem(RwUInt32 uiTarget, RwUInt32 uiItem, RwUInt8 byCount)
 {
-	// 서버로부터 먼저보낸 메세지가 있는데 아직 안왔다면 false 리턴
+	// If there is a message sent from the server first but has not yet arrived, return false.
 	if( API_GetSLPacketLockManager()->IsLock(GU_TRADE_MODIFY_RES) )
 		return true;
 
@@ -1668,7 +1668,7 @@ bool CGamePacketGenerator::SendTradeUpdateItem(RwUInt32 uiTarget, RwUInt32 uiIte
 	sPacket.hItem = uiItem;
 	sPacket.byCount = byCount;
 
-	// 서버로부터 응답을 기다리는 메세지 목록에 추가
+	// Add to the list of messages waiting for a response from the server
 	API_GetSLPacketLockManager()->Lock(GU_TRADE_MODIFY_RES);
 
 	return m_pNetSender->SendPacket(sizeof(sPacket), &sPacket);
@@ -1676,7 +1676,7 @@ bool CGamePacketGenerator::SendTradeUpdateItem(RwUInt32 uiTarget, RwUInt32 uiIte
 
 bool CGamePacketGenerator::SendTradeZennyUpdateReq(RwUInt32 uiTarget, RwUInt32 uiZenny)
 {
-	// 서버로부터 먼저보낸 메세지가 있는데 아직 안왔다면 false 리턴
+	// If there is a message sent from the server first but has not yet arrived, return false.
 	if( API_GetSLPacketLockManager()->IsLock(GU_TRADE_ZENNY_UPDATE_RES) )
 		return true;
 
@@ -1687,7 +1687,7 @@ bool CGamePacketGenerator::SendTradeZennyUpdateReq(RwUInt32 uiTarget, RwUInt32 u
 	sPacket.hTarget = uiTarget;
 	sPacket.dwZenny = uiZenny;
 
-	// 서버로부터 응답을 기다리는 메세지 목록에 추가
+	// Add to the list of messages waiting for a response from the server
 	API_GetSLPacketLockManager()->Lock(GU_TRADE_ZENNY_UPDATE_RES);
 
 	return m_pNetSender->SendPacket(sizeof(sPacket), &sPacket);
@@ -1695,7 +1695,7 @@ bool CGamePacketGenerator::SendTradeZennyUpdateReq(RwUInt32 uiTarget, RwUInt32 u
 
 bool CGamePacketGenerator::SendTradeEndReq(RwUInt32 uiTarget, RwUInt32 uiPacketCount, bool bLock)
 {
-	// 서버로부터 먼저보낸 메세지가 있는데 아직 안왔다면 false 리턴
+	// If there is a message sent from the server first but has not yet arrived, return false.
 	if( API_GetSLPacketLockManager()->IsLock(GU_TRADE_END_RES) )
 		return true;
 
@@ -1707,7 +1707,7 @@ bool CGamePacketGenerator::SendTradeEndReq(RwUInt32 uiTarget, RwUInt32 uiPacketC
 	sPacket.dwPacketCount = uiPacketCount;
 	sPacket.bIsSet = bLock;
 
-	// 서버로부터 응답을 기다리는 메세지 목록에 추가
+	// Add to the list of messages waiting for a response from the server
 	API_GetSLPacketLockManager()->Lock(GU_TRADE_END_RES);
 
 	return m_pNetSender->SendPacket(sizeof(sPacket), &sPacket);
@@ -2520,7 +2520,7 @@ bool CGamePacketGenerator::SendDBCRewardReq( RwUInt32 uiAltarHandle, TBLIDX tblI
 	return m_pNetSender->SendPacket(sizeof(sPacket), &sPacket);
 }
 
-// MailSystem
+// Mail System
 bool CGamePacketGenerator::SendMailStartReq(RwUInt32 hSerialID)
 {
 	if(API_GetSLPacketLockManager()->IsLock(GU_MAIL_START_RES))

@@ -1,12 +1,12 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlBehaviorCharIdlePattern.h"
 
-//shared
+//Shared
 #include "NtlActionPattern.h"
 #include "MobMovePatternTable.h"
 #include "GraphicDataTable.h"
 
-// simulation 
+// Simulation 
 #include "NtlSobActor.h"
 #include "NtlSobCharProxy.h"
 #include "NtlSobMonsterAttr.h"
@@ -44,7 +44,7 @@ RwBool CNtlBehaviorCharIdlePattern::IsVaildIncrementPattern(void)
 
 void CNtlBehaviorCharIdlePattern::IncrementTablePatternId(void)
 {
-	// move pattern id를 증가시킨다.
+	// Increases the move pattern id.
 	CNtlSobMonsterAttr *pSobMobAttr = reinterpret_cast<CNtlSobMonsterAttr*>( m_pActor->GetSobAttr() );
 	RwUInt8 byPatternId = pSobMobAttr->GetMovePatternId();
 
@@ -71,7 +71,7 @@ RwUInt8	CNtlBehaviorCharIdlePattern::GetTablePatternId(void)
 
 RwUInt8 CNtlBehaviorCharIdlePattern::GetCurrentUnitId(void)
 {
-	// move pattern id를 증가시킨다.
+	// Increases the move pattern id.
 	CNtlSobMonsterAttr *pSobMobAttr = reinterpret_cast<CNtlSobMonsterAttr*>( m_pActor->GetSobAttr() );
 	return pSobMobAttr->GetMovePatternId();
 }

@@ -1,27 +1,27 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlFSMCharActAgent.h"
 
-// shared
+// Shared
 #include "NtlMovement.h"
 #include "NtlCharacterState.h"
 #include "NtlResultCode.h"
 #include "NtlCharacter.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// sound
+// Sound
 #include "WorldSoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLSceneManager.h"
 #include "NtlPLHelpers.h"
 #include "NtlPLEntity.h"
 #include "NtlPLCharacter.h"
 #include "NtlSoundManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 
@@ -124,7 +124,7 @@ CNtlFSMCharActAgent::~CNtlFSMCharActAgent()
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server state create 분석 함수.
+//  des: server state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -263,7 +263,7 @@ void CNtlFSMCharActAgent::ServerStateCreateAnalysis(sCHARSTATE *pCharState)
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server standing state create 분석 함수.
+//  des : server standing state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -275,7 +275,7 @@ void CNtlFSMCharActAgent::ServerStateCreateStanding(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server charging state create 분석 함수.
+//  des : server charging state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -287,7 +287,7 @@ void CNtlFSMCharActAgent::ServerStateCreateCharging(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server blocking state create 분석 함수.
+//  des : server blocking state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -300,10 +300,10 @@ void CNtlFSMCharActAgent::ServerStateCreateBlocking(sCHARSTATE *pServerState)
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server sit state create 분석 함수.
+//  des : server set state create analysis function.
 //  ------------------------------------------------------------------------
-//  paramater : 
-//  \param1 : server char state data structer
+//  parameter: 
+//  \param1: server char state data structer
 ////////////////////////////////////////////////////////////////////////////
 
 void CNtlFSMCharActAgent::ServerStateCreateSitting(sCHARSTATE *pServerState)
@@ -313,7 +313,7 @@ void CNtlFSMCharActAgent::ServerStateCreateSitting(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server move state create 분석 함수.
+//  des : server move state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -362,7 +362,7 @@ void CNtlFSMCharActAgent::ServerStateCreateMoving(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server destmove state create 분석 함수.
+//  des : server destmove state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -376,7 +376,7 @@ void CNtlFSMCharActAgent::ServerStateCreateDestMove(sCHARSTATE *pServerState)
 
 	sCHARSTATE_DESTMOVE *pDestMove = &pServerState->sCharStateDetail.sCharStateDestMove;
 
-	// Dest location counter는 반드시 1 이상이어야 한다
+	// Dest location counter must be 1 or more.
 	if ( 0 == pDestMove->byDestLocCount )
 	{
 		DBO_WARNING_MESSAGE( "A dest location counter must be one more. ClassID: " << m_pActor->GetClassID());
@@ -386,7 +386,7 @@ void CNtlFSMCharActAgent::ServerStateCreateDestMove(sCHARSTATE *pServerState)
 		return;
 	}
 
-	// Dest location counter는 반드시 DBO_MAX_NEXT_DEST_LOC_COUNT 보다 작거나 같아야 한다
+	// Dest location counter must be less than or equal to DBO_MAX_NEXT_DEST_LOC_COUNT
 	if ( pDestMove->byDestLocCount > DBO_MAX_NEXT_DEST_LOC_COUNT )
 	{
 		DBO_WARNING_MESSAGE( "A dest location counter must be less equal than DBO_MAX_NEXT_DEST_LOC_COUNT. ClassID: " << m_pActor->GetClassID() );
@@ -445,7 +445,7 @@ void CNtlFSMCharActAgent::ServerStateCreateDestMove(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server follow state create 분석 함수.
+//  des : server follow state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -494,7 +494,7 @@ void CNtlFSMCharActAgent::ServerStateCreateFollowing(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server falling state create 분석 함수.
+//  des : server falling state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -506,7 +506,7 @@ void CNtlFSMCharActAgent::ServerStateCreateFalling(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server follow state create 분석 함수.
+//  des : server follow state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -579,7 +579,7 @@ void CNtlFSMCharActAgent::ServerStateCreateDash(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server teleport state create 분석 함수.
+//  des : server teleport state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -607,7 +607,7 @@ void CNtlFSMCharActAgent::ServerStateCreateTeleporting(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server sliding state create 분석 함수.
+//  des : server sliding state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -619,7 +619,7 @@ void CNtlFSMCharActAgent::ServerStateCreateSliding(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server stun state create 분석 함수.
+//  des : server stun state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -634,7 +634,7 @@ void CNtlFSMCharActAgent::ServerStateCreateStun(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server sleep state create 분석 함수.
+//  des : server sleep state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -646,7 +646,7 @@ void CNtlFSMCharActAgent::ServerStateCreateSleep(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server paralyze state create 분석 함수.
+//  des : server paralyze state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -658,7 +658,7 @@ void CNtlFSMCharActAgent::ServerStateCreateParalyze(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server knockdown state create 분석 함수.
+//  des : server knockdown state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -677,7 +677,7 @@ void CNtlFSMCharActAgent::ServerStateCreateKnockDown(sCHARSTATE *pServerState)
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server focusing state create 분석 함수.
+//  des : server focusing state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -689,7 +689,7 @@ void CNtlFSMCharActAgent::ServerStateCreateFocusing(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server casting state create 분석 함수.
+//  des : server casting state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -719,7 +719,7 @@ void CNtlFSMCharActAgent::ServerStateCreateCasting(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server skill affecting state create 분석 함수.
+//  des : server skill affecting state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -731,7 +731,7 @@ void CNtlFSMCharActAgent::ServerStateCreateSkillAffecting(sCHARSTATE *pServerSta
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server HTB state create 분석 함수.
+//  des : server HTB state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -761,7 +761,7 @@ void CNtlFSMCharActAgent::ServerStateCreateHTB(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server HTB Sandbag state create 분석 함수.
+//  des : server HTB Sandbag state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -773,7 +773,7 @@ void CNtlFSMCharActAgent::ServerStateCreateHTBSandbag(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server Item casting state create 분석 함수.
+//  des : server Item casting state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -803,7 +803,7 @@ void CNtlFSMCharActAgent::ServerStateCreateItemCasting(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server fainting state create 분석 함수.
+//  des : server fainting state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -815,7 +815,7 @@ void CNtlFSMCharActAgent::ServerStateCreateFainting(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server private shop state create 분석 함수.
+//  des : server private shop state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -843,7 +843,7 @@ void CNtlFSMCharActAgent::ServerStateCreatePrivateShop(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server direction state create 분석 함수.
+//  des : server direction state create analytic function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -865,7 +865,7 @@ void CNtlFSMCharActAgent::ServerStateCreateDirection(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server direction state create 분석 함수.
+//  des : server direction state create analytic function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -886,7 +886,7 @@ void CNtlFSMCharActAgent::ServerStateCreateOperation(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server despawn state create 분석 함수.
+//  des : server despawn state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -897,7 +897,7 @@ void CNtlFSMCharActAgent::ServerStateCreateDespawn(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server camping state create 분석 함수.
+//  des : server camping state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -909,7 +909,7 @@ void CNtlFSMCharActAgent::ServerStateCreateCamping(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server leaving state create 분석 함수.
+//  des : server leaving state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -922,7 +922,7 @@ void CNtlFSMCharActAgent::ServerStateCreateLeaving(sCHARSTATE *pServerState)
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server RideOn state create 분석 함수.
+//  des : server RideOn state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -939,7 +939,7 @@ void CNtlFSMCharActAgent::ServerStateCreateRideOn( sCHARSTATE *pServerState )
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server Turning state create 분석 함수.
+//  des : server Turning state create analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server char state data structer
@@ -951,7 +951,7 @@ void CNtlFSMCharActAgent::ServerStateCreateTurning( sCHARSTATE *pServerState )
     vDestDir.y = pServerState->sCharStateDetail.sCharStateTurning.vDestDir.y;
     vDestDir.z = pServerState->sCharStateDetail.sCharStateTurning.vDestDir.z;
 
-    // 터닝 상태로 들어오면 방향을 끝난후의 방향으로 설정하고 Idle 상태로 보낸다.    
+    // When entering the turning state, the direction is set to the direction after completion and sent to the idle state.    
     m_pActor->SetDirection(&vDestDir);   
     SetNextStateId(NTL_FSMSID_IDLE);
 }
@@ -1052,7 +1052,7 @@ void CNtlFSMCharActAgent::ServerAspectStateVehicle(sASPECTSTATE *pServerAspectSt
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server state update 분석 함수.
+//  des : server state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1185,7 +1185,7 @@ void CNtlFSMCharActAgent::ServerStateUpdateAnalysis(SNtlEventSobServerUpdateStat
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server state update 분석 함수.
+//  des : server state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server condition update data structer
@@ -1215,7 +1215,7 @@ void CNtlFSMCharActAgent::ServerConditionUpdateAnalysis(RwUInt8 byServerState, R
 	else 
 		SetAttackDisallow(FALSE);
 
-    // 혼란이나 공포일때는 이미 DirectMode가 적용되어 있다.
+    // In times of confusion or fear, DirectMode is already applied.
     if(!(qwCondition & CHARCOND_FLAG_CONFUSED || qwCondition & CHARCOND_FLAG_TERROR))
     {    
 	    if(byServerState == CHARSTATE_DIRECT_PLAY)
@@ -1225,7 +1225,7 @@ void CNtlFSMCharActAgent::ServerConditionUpdateAnalysis(RwUInt8 byServerState, R
     }
 }
 
-// Server로부터 전송받은 Aspect 분석 처리 함수
+// Aspect analysis processing function sent from the server
 void CNtlFSMCharActAgent::ServerAspectUpdateAnalysis(sASPECTSTATE& sAspectState, RwBool bCreateUpdate)
 {
     if ( m_pActor->GetClassID() != SLCLASS_AVATAR &&
@@ -1255,7 +1255,7 @@ void CNtlFSMCharActAgent::ServerAspectUpdateAnalysis(sASPECTSTATE& sAspectState,
 		case ASPECTSTATE_GREAT_NAMEK:
 		case ASPECTSTATE_KAIOKEN:
 		{
-			// 아바타는 변신을 스스로 처리한다. (회전공격 예외)
+			// The avatar handles the transformation itself. (Exception to rotation attack)
 			if ( m_pActor->GetClassID() == SLCLASS_AVATAR )
 			{
 				return;
@@ -1303,7 +1303,7 @@ void CNtlFSMCharActAgent::ServerAspectUpdateAnalysis(sASPECTSTATE& sAspectState,
 			}
 			else
 			{
-				// Vehicle 해제
+				// Vehicle release
 				if ( sOldAspectState.sAspectStateBase.byAspectStateId == ASPECTSTATE_VEHICLE )
 				{
 					if ( bCreateUpdate )
@@ -1335,7 +1335,7 @@ void CNtlFSMCharActAgent::ServerAspectUpdateAnalysis(sASPECTSTATE& sAspectState,
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server spqwn state update 분석 함수.
+//  des : server spawn state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1365,7 +1365,7 @@ void CNtlFSMCharActAgent::ServerStateSpawn(sCHARSTATE *pServerState)
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server standing state update 분석 함수.
+//  des : server standing state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1437,7 +1437,7 @@ void CNtlFSMCharActAgent::ServerStateStanding(sCHARSTATE *pServerState)
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server charging state update 분석 함수.
+//  des : server charging state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1449,7 +1449,7 @@ void CNtlFSMCharActAgent::ServerStateCharging(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server blocking state update 분석 함수.
+//  des : server blocking state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1462,7 +1462,7 @@ void CNtlFSMCharActAgent::ServerStateBlocking(sCHARSTATE *pServerState)
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server sit state update 분석 함수.
+//  des: server set state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1476,7 +1476,7 @@ void CNtlFSMCharActAgent::ServerStateSitting(sCHARSTATE *pServerState)
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server move state update 분석 함수.
+//  des : server move state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1518,7 +1518,7 @@ void CNtlFSMCharActAgent::ServerStateMoving(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server dest move state update 분석 함수.
+//  des : server dest move state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1529,7 +1529,7 @@ void CNtlFSMCharActAgent::ServerStateDestMove(sCHARSTATE *pServerState)
 	sCHARSTATE_BASE *pBase = &pServerState->sCharStateBase;
 	sCHARSTATE_DESTMOVE *pDestMove = &pServerState->sCharStateDetail.sCharStateDestMove;
 
-	// Dest location counter는 반드시 1 이상이어야 한다
+	// Dest location counter must be 1 or more.
 	if ( 0 == pDestMove->byDestLocCount )
 	{
 		DBO_WARNING_MESSAGE( "A dest location counter must be one more." );
@@ -1539,7 +1539,7 @@ void CNtlFSMCharActAgent::ServerStateDestMove(sCHARSTATE *pServerState)
 		return;
 	}
 
-	// Dest location counter는 반드시 DBO_MAX_NEXT_DEST_LOC_COUNT 보다 작거나 같아야 한다
+	// Dest location counter must be less than or equal to DBO_MAX_NEXT_DEST_LOC_COUNT
 	if ( pDestMove->byDestLocCount > DBO_MAX_NEXT_DEST_LOC_COUNT )
 	{
 		DBO_WARNING_MESSAGE( "A dest location counter must be less equal than DBO_MAX_NEXT_DEST_LOC_COUNT." );
@@ -1598,7 +1598,7 @@ void CNtlFSMCharActAgent::ServerStateDestMove(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server follow state update 분석 함수.
+//  des : server follow state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1652,7 +1652,7 @@ void CNtlFSMCharActAgent::ServerStateFalling(sCHARSTATE* pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server dash state update 분석 함수.
+//  des : server dash state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1670,7 +1670,7 @@ void CNtlFSMCharActAgent::ServerStateDash(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server teleport state update 분석 함수.
+//  des : server teleport state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1692,7 +1692,7 @@ void CNtlFSMCharActAgent::ServerStateTeleporting(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server sliding state update 분석 함수.
+//  des : server sliding state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1710,7 +1710,7 @@ void CNtlFSMCharActAgent::ServerStateSliding(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server knockdown state update 분석 함수.
+//  des : server knockdown state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1739,7 +1739,7 @@ void CNtlFSMCharActAgent::ServerStateKnockDown(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server sutn state update 분석 함수.
+//  des : server stun state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1754,7 +1754,7 @@ void CNtlFSMCharActAgent::ServerStateStun(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server sleep state update 분석 함수.
+//  des : server sleep state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1767,7 +1767,7 @@ void CNtlFSMCharActAgent::ServerStateSleep(sCHARSTATE *pServerState)
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server paralyze state update 분석 함수.
+//  des : server paralyze state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1779,7 +1779,7 @@ void CNtlFSMCharActAgent::ServerStateParalyze(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server focus state update 분석 함수.
+//  des : server focus state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1791,7 +1791,7 @@ void CNtlFSMCharActAgent::ServerStateFocusing(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server casting state update 분석 함수.
+//  des : server casting state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1814,7 +1814,7 @@ void CNtlFSMCharActAgent::ServerStateCasting(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server HTB state update 분석 함수.
+//  des : server HTB state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1826,7 +1826,7 @@ void CNtlFSMCharActAgent::ServerStateHTB(sCHARSTATE *pServerState)
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server Sandbag state update 분석 함수.
+//  des : server Sandbag state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1837,7 +1837,7 @@ void CNtlFSMCharActAgent::ServerStateHTBSandbag(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server item casting state update 분석 함수.
+//  des : server item casting state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1860,7 +1860,7 @@ void CNtlFSMCharActAgent::ServerStateItemCasting(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server faint state update 분석 함수.
+//  des : server faint state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1885,7 +1885,7 @@ void CNtlFSMCharActAgent::ServerStateFainting(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server private shop state update 분석 함수.
+//  des : server private shop state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1908,7 +1908,7 @@ void CNtlFSMCharActAgent::ServerStatePrivateShop(sCHARSTATE *pServerState)
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server direction state update 분석 함수.
+//  des : server direction state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1929,7 +1929,7 @@ void CNtlFSMCharActAgent::ServerStateDirection(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server operation state update 분석 함수.
+//  des : server operation state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1953,7 +1953,7 @@ void CNtlFSMCharActAgent::ServerStateOperation(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server despawn state update 분석 함수.
+//  des : server despawn state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1972,7 +1972,7 @@ void CNtlFSMCharActAgent::ServerStateDespawn(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server camping state update 분석 함수.
+//  des : server camping state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1984,7 +1984,7 @@ void CNtlFSMCharActAgent::ServerStateCamping(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server leaving state update 분석 함수.
+//  des : server leaving state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -1996,7 +1996,7 @@ void CNtlFSMCharActAgent::ServerStateLeaving(sCHARSTATE *pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server RideOn state update 분석 함수.
+//  des : server RideOn state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -2012,7 +2012,7 @@ void CNtlFSMCharActAgent::ServerStateRideOn( sCHARSTATE *pServerState )
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : server Turning state update 분석 함수.
+//  des : server Turning state update analysis function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : server state update data structer
@@ -2064,7 +2064,7 @@ void CNtlFSMCharActAgent::ServerStateAirDashAccel(sCHARSTATE * pServerState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : update 함수.
+//  des: update function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : delta time.
@@ -2077,7 +2077,7 @@ void CNtlFSMCharActAgent::Update(RwReal fElapsed)
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : event 처리 함수.
+//  des: event processing function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
@@ -2155,8 +2155,8 @@ RwUInt32 CNtlFSMCharActAgent::HandleEvents(RWS::CMsg &pMsg)
 				}
 			}
 
-			// reflection damage를 출력한다.
-			// 여기는 중요한 부분.
+			// Prints reflection damage.
+			// Here is the important part.
 			if(bReflection)
 			{
 				SNtlEventSobHit *pHit		= reinterpret_cast<SNtlEventSobHit*>(pMsg.pData);
@@ -2228,7 +2228,7 @@ RwUInt32 CNtlFSMCharActAgent::HandleEvents(RWS::CMsg &pMsg)
 			pCtrlStuff->sVehicle.idxVehicleItem = pData->tblVehicleItem;
 			NTL_RETURN(NTL_FSM_EVENTRES_BLOCK);
 		}
-        else if(pMsg.Id == g_EventSobUpdateLPStatusNfy) // 빈사 상태 체크
+        else if(pMsg.Id == g_EventSobUpdateLPStatusNfy) // Moribund status check
         {
             SNtlEventSobUpdateLPStatusNfy* pNfy = (SNtlEventSobUpdateLPStatusNfy*)pMsg.pData;
             if(IsEmergency() != pNfy->bEmergency)
@@ -2281,7 +2281,7 @@ RwUInt32 CNtlFSMCharActAgent::HandleEvents(RWS::CMsg &pMsg)
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : 현재 상태가 끝났을 때 next 상태를 결정한다.
+//  des: Determines the next state when the current state ends.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : current state
@@ -2450,7 +2450,7 @@ RwUInt32 CNtlFSMCharActAgent::AcquireSkillActionProc(void)
 {
 	if( IsFightingMode() )
 	{
-		// move stuff 속성 setting
+		// move stuff property setting
 		CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
 
 		SCtrlStuff *pCtrlStuff = pBeData->GetCtrlStuff();
@@ -2472,14 +2472,14 @@ RwUInt32 CNtlFSMCharActAgent::AcquireSkillActionProc(void)
 		return NTL_FSMSID_FIGHTING_POSE;
 	}
 	else
-		return NTL_FSMSID_FIGHTING_POSE;        // 파이팅 모드가 아닐때도 파이팅포즈->보간을 한다.
+		return NTL_FSMSID_FIGHTING_POSE;        // Even when not in fighting mode, fighting pose->interpolation is performed.
 }
 
 RwUInt32 CNtlFSMCharActAgent::AcquireHTBProc(void)
 {
 	if( IsFightingMode() )
 	{
-		// move stuff 속성 setting
+		// move stuff property setting
 		CNtlBeCharData *pBeData = reinterpret_cast<CNtlBeCharData*>(m_pActor->GetBehaviorData()); 
 
 		SCtrlStuff *pCtrlStuff = pBeData->GetCtrlStuff();
@@ -2764,13 +2764,13 @@ void CNtlFSMCharActAgent::ConditionConfused(RwBool bAffect)
 {
     if(bAffect)
     {
-        // confused effect 생성
+        // Create confused effect
         if(!m_pConditionConfuse)
         {
             m_pConditionConfuse = CreateVisualSystemEffect(NTL_VID_STATE_CONFUSED);
             SetDirectMode(TRUE);
 
-            // 실제 처리는 이벤트를 받으면 처리
+            // Actual processing is done when an event is received.
         }
     }
     else
@@ -2791,7 +2791,7 @@ void CNtlFSMCharActAgent::ConditionTerror(RwBool bAffect)
 {
     if(bAffect)
     {
-        // terror effect 생성
+        // Create terror effect
         if(!m_pConditionTerror)
         {
             m_pConditionTerror = CreateVisualSystemEffect(NTL_VID_STATE_TERROR);
@@ -2816,7 +2816,7 @@ void CNtlFSMCharActAgent::ConditionTaunt( RwBool bAffect )
 {
     if(bAffect)
     {
-        // taunt effect 생성
+        // Create taunt effect
         if(!m_pConditionTaunt)
         {
             m_pConditionTaunt = CreateVisualSystemEffect(NTL_VID_STATE_TAUNT);
@@ -2838,7 +2838,7 @@ void CNtlFSMCharActAgent::ConditionTransparent( RwBool bAffect )
 
     if(bAffect)
     {
-        // 아바타는 보이지 않는게 아니라, 알파만 먹여준다.
+        // The avatar is not invisible, but only the alpha is fed.
         if(m_pActor->GetClassID() == SLCLASS_AVATAR)
         {
             m_pSystemGMAlpha = m_pActor->GetSobProxy()->AddVisualSystemEffectAlphaBlend(0.5f, 0.0f, TRUE);
@@ -2880,7 +2880,7 @@ void CNtlFSMCharActAgent::ConditionInvisible( RwBool bAffect )
 
 void CNtlFSMCharActAgent::ConditionHidingKi( RwBool bAffect ) 
 {
-    // 아바타만 기숨기기시에 Alpha를 처리한다.
+    // Alpha is processed when only the avatar is hidden.
     if(m_pActor->GetClassID() == SLCLASS_AVATAR)
     {
         if(IsHidingKi() == bAffect)
@@ -2953,7 +2953,7 @@ void CNtlFSMCharActAgent::SetTransformSequela(RwBool bSequela)
 {
     m_uActMode.bitSequela = bSequela;
 
-    // 아바타라면 변신 휴유증 이벤트를 보낸다.
+    // If it is an avatar, a transformation aftereffect event is sent.
     if(bSequela && m_pActor->GetClassID() == SLCLASS_AVATAR)
     {
         CNtlSLEventGenerator::SobTransformSequela(m_pActor->GetSerialID());        

@@ -1,8 +1,8 @@
 /******************************************************************************
-* File			: PartyMenu.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Abstract		: 2006. 10. 13
+*File			: PartyMenu.h
+*Author		    : Hong SungBock
+*Copyright		: (주)NTL
+*Abstract		: 2006. 10. 13
 *****************************************************************************
 *
 *****************************************************************************/
@@ -11,17 +11,17 @@
 
 #include <list>
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// shared
+// Shared
 #include "NtlParty.h"
 #include "NtlSkill.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "NtlSLParty.h"
 
@@ -51,9 +51,9 @@ public:
 	VOID		Destroy();
 	VOID		Update(RwReal fElapsed);
 
-	RwInt32		SwitchDialog(bool bOpen);			///< DialogManager에서의 Open/Close
+	RwInt32		SwitchDialog(bool bOpen);			///< Open/Close in DialogManager
 
-	VOID		ResetPartyMenu();					///< PartyMenu 를 초기화 한다
+	VOID		ResetPartyMenu();					///< Initialize PartyMenu
 
 protected:
 	CPartyMenu() {}
@@ -61,12 +61,12 @@ protected:
 
 	VOID		Clear();
 
-	VOID		AddMember(sPartyMember* pMember);				///< 맴버창을 하나 늘린다.
-	VOID		DelMember(SERIAL_HANDLE hSerial);				///< 맴버창을 하나 줄인다.
+	VOID		AddMember(sPartyMember* pMember);				///< Increase the member window by one.
+	VOID		DelMember(SERIAL_HANDLE hSerial);				///< Reduces the member window by one.
 
-	CPartyMemberGui* GetPartyMemberGui(SERIAL_HANDLE hSerial);	///< 맴버창을 반환한다.
+	CPartyMemberGui* GetPartyMemberGui(SERIAL_HANDLE hSerial);	///< Returns the member window.
 	
-	VOID		SetOtherWorld(); // 아바타가 존재하는 월드의 룰과 다른 룰의 월드에 존재하는 맴버의 GUI를 표시한다
+	VOID		SetOtherWorld(); // Displays the GUI of members who exist in a world whose rules are different from those of the world where the avatar exists.
 
 	VOID		NoPartyButtons();
 	VOID		SpreadButtons();
@@ -107,14 +107,14 @@ protected:
 
 	gui::CStaticBox*	m_pPartyName;
 
-	gui::CButton*		m_pSpreadMenuButton;		///< 메뉴 펼치기 버튼
-	gui::CButton*		m_pFoldMenuButton;			///< 메뉴 접기 버튼
+	gui::CButton*		m_pSpreadMenuButton;		///< Menu expansion button
+	gui::CButton*		m_pFoldMenuButton;			///< Menu Collapse Button
 
-	gui::CButton*		m_pMemberMenuButton;		///< 파티원 관리 버튼	
-	gui::CButton*		m_pDivideZennyButton;		///< 제니 분배 방식 버튼
-	gui::CButton*		m_pDivideItemButton;		///< 아이템 분배 방식 버튼
-	gui::CButton*		m_pDungeonButton;			///< 던전 버튼
-	gui::CButton*		m_pSwitchButton;			///< 파티 메뉴/맴버 창의 switch 버튼
+	gui::CButton*		m_pMemberMenuButton;		///< Party member management button	
+	gui::CButton*		m_pDivideZennyButton;		///< Zenny distribution method button
+	gui::CButton*		m_pDivideItemButton;		///< Item distribution method button
+	gui::CButton*		m_pDungeonButton;			///< Dungeon button
+	gui::CButton*		m_pSwitchButton;			///< switch button in party menu/member window
 
 	CSurfaceGui			m_srfPartyNameBackground;
 
@@ -122,5 +122,5 @@ protected:
 	
 	RwReal				m_fUpdateTimeAbsentee;
 
-	PARTYMEMBER_LIST	m_listPartyMember;			///< 파티 맴버창 리스트
+	PARTYMEMBER_LIST	m_listPartyMember;			///< Party member window list
 };

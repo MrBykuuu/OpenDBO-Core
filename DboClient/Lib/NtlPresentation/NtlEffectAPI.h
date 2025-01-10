@@ -14,14 +14,14 @@ void		API_SetAnimation(RpClump* pClump, RtAnimAnimation* pAnimation);
 
 RpAtomic*	API_MeshColorUpdate(RpAtomic *pAtomic, void *data __RWUNUSED__);
 
-/// Clump에서 UVAnim이 적용된 Material을 찾아서 List에 추가한다.
+/// Find the material with UVAnim applied in Clump and add it to the list.
 RwSList*	API_AddAnimatedMaterialsList(RwSList* pList, RpClump* pClump);
 
-/// UVAnim의 시간을 업데이트한다 (시간 추가)
+/// Update UVAnim's time (add time)
 void		API_MaterialsInterpolatorsAddAnimTime(RwSList *animatedMaterials, RwReal deltaTime);
-/// UVAnim의 시간을 업데이트 한다 (시간 설정)
+/// Update the time of UVAnim (time setting)
 void        API_MaterialsInterpolatorsSetCurrentTime(RwSList* animatedMaterials, RwReal fTime);
-/// UVAnim을 업데이트한다.
+/// Update UVAnim.
 void		API_MaterialsAnimApply(RwSList *animatedMaterials);
 
 #endif

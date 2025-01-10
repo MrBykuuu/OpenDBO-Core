@@ -26,10 +26,10 @@ CNtlPLRefractionEffect::~CNtlPLRefractionEffect(void)
 
 void CNtlPLRefractionEffect::Init(RwIm2DVertex* pVertices, RwInt32 nVertexCount)
 {
-    //파동원리스트의초기화    
+    //Initialization of wave source list    
     m_listWaveElement.clear();
 
-    //전역변수초기화    
+    //Initializing global variables    
     m_pVertices = pVertices;
     m_nVertexCnt = nVertexCount;    
 
@@ -70,12 +70,12 @@ void CNtlPLRefractionEffect::Update( RwReal fElapsedTime )
             v2PosVertex.x = m_pVertices[i].x;
             v2PosVertex.y = m_pVertices[i].y;            
             fDistance = CNtlMath::GetLength(pWave->v2Pos, v2PosVertex);                                
-            if(fDistance > pWave->fRound) // 파동원으로부터의 거리가 임계점을 넘는다면 Skip한다.
+            if(fDistance > pWave->fRound) // Skip if the distance from the wave source exceeds the critical point.
                 continue;
 
             fDistance *= 0.01f;
 
-            // 가우스 함수
+            // Gaussian function
             fHeight = max(exp(-(fDistance - pWave->fDelta) * (fDistance - pWave->fDelta)),
                           exp(-(fDistance + pWave->fDelta) * (fDistance + pWave->fDelta)));            
             fHeight *= pWave->fMaxHeight * (pWave->fDelta / pWave->fRound + 1);            
@@ -87,7 +87,7 @@ void CNtlPLRefractionEffect::Update( RwReal fElapsedTime )
             m_pVertices[i].v = v2UV.y;
         }
 
-        // 임계시간이 지난 파동은 삭제한다.
+        // Waves that have passed the critical time are deleted.
         if(pWave->fDelta > pWave->fRound)
         {
             it = m_listWaveElement.erase(it);

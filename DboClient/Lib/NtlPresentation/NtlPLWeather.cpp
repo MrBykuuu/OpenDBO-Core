@@ -37,8 +37,8 @@ RwBool CNtlPLWeather::Create(const SPLEntityCreateParam* pParam)
 		NTL_RETURN(FALSE);
 	}
 
-	// Texture가 없을 경우 Visual이 없는 것으로 판단
-	// 기본 Controller를 사용한다.
+	// If there is no texture, it is judged that there is no visual.
+	// Use the default Controller.
 
 	SPLWeatherEmitter& sPLWeatherEmitter = itEmitter->second;
 	if (sPLWeatherEmitter.strParticleTextureName.length())

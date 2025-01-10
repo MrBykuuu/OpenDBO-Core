@@ -52,10 +52,10 @@ void CNtlInstanceUpgradeEffectSystem::Delete()
 }
 
 /**
- * Grade Effect를 생성한다.
- * \param pItem Grade Effect가 붙을 Item
- * \param eBoneIndex Grade Effect가 붙을 Bone쌍 
- * return 
+ *Create a Grade Effect.
+ * \param pItem Item to which Grade Effect will be applied
+ * \param eBoneIndex Bone pair to which Grade Effect will be applied. 
+ *return 
  */
 RwBool CNtlInstanceUpgradeEffectSystem::Create(CNtlPLItem* pItem, EGradeBoneIndex eBoneIndex /* = GRADE_EFFECT_BONE1 */)
 {
@@ -65,7 +65,7 @@ RwBool CNtlInstanceUpgradeEffectSystem::Create(CNtlPLItem* pItem, EGradeBoneInde
     m_pItem = pItem;   
     m_eGradeBone = eBoneIndex;
 
-    // Vertex Buffer 생성
+    // Create Vertex Buffer
     m_pVertices = (RwIm3DVertex*)RwMalloc(6 * sizeof(RwIm3DVertex), rwID_NAOBJECT);
     if(!m_pVertices)
         return FALSE;
@@ -139,7 +139,7 @@ void CNtlInstanceUpgradeEffectSystem::SetTexture( RwChar* szTextureName )
 RwBool CNtlInstanceUpgradeEffectSystem::UpdateVertices( RwReal fElapsedTime ) 
 {
 
-    // 사각형을 생성하고 무기의 축에 따라 빌보드를 생성한다.
+    // Create a rectangle and create a billboard along the axis of the weapon.
 
     RwV3d vStartPos, vEndPos;
     RwMatrix *pMatStart, *pMatEnd;
@@ -181,7 +181,7 @@ RwBool CNtlInstanceUpgradeEffectSystem::UpdateVertices( RwReal fElapsedTime )
         RwMatrix matStartTemp = *pMatStart;
         RwMatrix matEndTemp = *pMatEnd;
 
-        // Matrix에서 회전값만 가져와서 Offset에 적용한후 Point에 더한다.
+        // Get only the rotation value from the Matrix, apply it to Offset, and add it to Point.
         matStartTemp.pos.x = matStartTemp.pos.y = matStartTemp.pos.z = 0.0f;
         matEndTemp.pos.x = matEndTemp.pos.y = matEndTemp.pos.z = 0.0f;
 
@@ -189,7 +189,7 @@ RwBool CNtlInstanceUpgradeEffectSystem::UpdateVertices( RwReal fElapsedTime )
         RwV3dTransformPoint(&v3dStartOffset, &(m_pItem->GetProperty()->GetUpgradeEffectProperty()->m_vStartBoneOffset), &matStartTemp);
         RwV3dTransformPoint(&v3dEndOffset, &(m_pItem->GetProperty()->GetUpgradeEffectProperty()->m_vEndBoneOffset), &matEndTemp);
 
-        // 두번째 본은 첫번째것하고 Offset에서 x가 반대 값이다. (양쪽 글러브)
+        // The second bone has the opposite x value in Offset as the first one. (both gloves)
         if(m_eGradeBone == GRADE_EFFECT_BONE1)
         {
             vStartPos += v3dStartOffset;

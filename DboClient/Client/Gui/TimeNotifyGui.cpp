@@ -1,20 +1,20 @@
 #include "precomp_dboclient.h"
 #include "TimeNotifyGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "DboTSCQCtrl.h"
 #include "DboTSCQAgency.h"
 #include "NtlSLApi.h"
 #include "NtlWorldConceptTB.h"
 
-// dbo
+// Dbo
 #include "DialogManager.h"
 #include "DboEventGenerator.h"
 #include "Dboglobal.h"
@@ -52,7 +52,7 @@ RwBool CTimeNotifyGui::Create()
 
 	CRectangle rect;
 
-	// 분
+	// Minutes
 	m_MinuteNumber[DISPLAY_TYPE_NORMAL].Create(ND_LEFT, NVD_TOP, 0, dNCFLAG_NONE, 2);
 	m_MinuteNumber[DISPLAY_TYPE_NORMAL].SetSurface(0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CommonNumber.srf", "srfTimeLimit_0" ));
 	m_MinuteNumber[DISPLAY_TYPE_NORMAL].SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CommonNumber.srf", "srfTimeLimit_1" ));
@@ -79,11 +79,11 @@ RwBool CTimeNotifyGui::Create()
 	m_MinuteNumber[DISPLAY_TYPE_WARNING].SetSurface(9, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CommonNumber.srf", "srfTimeLimitWarning_9" ));
 	m_MinuteNumber[DISPLAY_TYPE_WARNING].SetNumGap(-5);
 
-	// 처음에 이미지들이 배치되지 않은 상태로 화면에 그려지는 경우가 있어서 임의의 숫자로 초기화 해준다
+	// There are cases where images are initially drawn on the screen without being placed, so they are initialized to a random number.
 	m_MinuteNumber[DISPLAY_TYPE_NORMAL].SetNumber(0);
 	m_MinuteNumber[DISPLAY_TYPE_WARNING].SetNumber(0);
 
-	// 초
+	// Seconds
 	m_SecondNumber[DISPLAY_TYPE_NORMAL].Create(ND_RIGHT, NVD_TOP, 0, dNCFLAG_NONE, 2);
 	m_SecondNumber[DISPLAY_TYPE_NORMAL].SetSurface(0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CommonNumber.srf", "srfTimeLimit_0" ));
 	m_SecondNumber[DISPLAY_TYPE_NORMAL].SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CommonNumber.srf", "srfTimeLimit_1" ));
@@ -110,16 +110,16 @@ RwBool CTimeNotifyGui::Create()
 	m_SecondNumber[DISPLAY_TYPE_WARNING].SetSurface(9, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CommonNumber.srf", "srfTimeLimitWarning_9" ));
 	m_SecondNumber[DISPLAY_TYPE_WARNING].SetNumGap(-5);
 
-	// 처음에 이미지들이 배치되지 않은 상태로 화면에 그려지는 경우가 있어서 임의의 숫자로 초기화 해준다
+	// There are cases where images are initially drawn on the screen without being placed, so they are initialized to a random number.
 	m_SecondNumber[DISPLAY_TYPE_NORMAL].SetNumber(0);
 	m_SecondNumber[DISPLAY_TYPE_WARNING].SetNumber(0);
 
-	// 콜론
+	// colon
 	m_srfColon[DISPLAY_TYPE_NORMAL].SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CommonNumber.srf", "srfTimeLimit_colon" ) );
 
 	m_srfColon[DISPLAY_TYPE_WARNING].SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CommonNumber.srf", "srfTimeLimitWarning_colon" ) );
 
-	// default
+	// Default
 	m_TimeInfo.byType			= TIME_TYPE_INVALID;
 	m_TimeInfo.fElapsed			= 0.f;
 	m_TimeInfo.sTSKey.tID		= NTL_TS_T_ID_INVALID;
@@ -127,7 +127,7 @@ RwBool CTimeNotifyGui::Create()
 
 	GetNtlGuiManager()->AddUpdateFunc( this );
 
-	// sig	
+	// Signals	
 	m_slotPaint			= m_pThis->SigPaint().Connect( this, &CTimeNotifyGui::OnPaint );
 
 	Show(false);
@@ -463,7 +463,7 @@ VOID CTimeNotifyGui::HandleEvents( RWS::CMsg &msg )
 			m_TimeInfo.byType	= TIME_TYPE_BUDOKAI_LIMIT_TIME;
 			m_TimeInfo.fElapsed = (RwReal)( pData->dwRemainTime / 1000.f );
 
-			//// 관전자인지 참가자인지 판별
+			//// Determine whether you are a spectator or participant
 			//stTBudokaiMember* pMember = pTBWorldConcept->FindMember( Logic_GetAvatarHandle() );
 			//if( pMember )
 			//	m_TimeInfo.fElapsed = (RwReal)( pTBWorldConcept->GetMatchTbl()->dwStageReadyTime ) + 0.99f;
@@ -586,7 +586,7 @@ VOID CTimeNotifyGui::HandleEvents( RWS::CMsg &msg )
 		SNtlEventMajorMatchStageFinish* pData = reinterpret_cast<SNtlEventMajorMatchStageFinish*>( msg.pData );
 
 #ifndef BUDOKAI_TIME_DEBUG
-		// 옵저버 모드일 경우 경기 중간에도 나올 수 있다.
+		// If you are in observer mode, you can appear in the middle of the game.
 		if( !pData->bIsObserver )
 		{
 			if( m_TimeInfo.byType == TIME_TYPE_BUDOKAI_LIMIT_TIME )

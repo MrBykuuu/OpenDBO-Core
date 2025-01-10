@@ -1,13 +1,13 @@
 /*****************************************************************************
  *
- * File			: LobbyGuiGroup.h
- * Author		: Hong Sungbock
- * Copyright	: (аж)NTL
- * Date			: 2006. 12. 7	
- * Update		: 2007. 10. 10	
- * Abstract		: DBO lobby stage gui group.
+ *File			: LobbyGuiGroup.h
+ *Author		: Hong Sungbock
+ *Copyright	    : (аж)NTL
+ *Date			: 2006. 12. 7	
+ *Update		: 2007. 10. 10	
+ *Abstract		: DBO lobby stage gui group.
  *****************************************************************************
- * Desc         : 
+ *Desc          : 
  *
  *****************************************************************************/
 

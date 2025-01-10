@@ -2,7 +2,7 @@
 //	File		:	NtlEffectSplinePath.cpp
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -84,7 +84,7 @@ void CNtlEffectSplinePath::FrameAnimation(RwReal fAniFrame, RwMatrix& matWorld, 
 	{
 		RtQuat quat;
 
-		// 최대 키값을 넘으면 마지막 값을 넣어준다.
+		//If the maximum key value is exceeded, the last value is entered.
 		if(fAniFrame > m_pCurveData[m_nTotalCurveCount - 1].fTime)
 		{
 			quat = m_pCurveData[m_nTotalCurveCount - 1].quat;

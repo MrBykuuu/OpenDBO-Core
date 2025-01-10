@@ -700,13 +700,13 @@ void CNtlSobManager::Update(RwReal fElapsed)
 			++it;
 	}
 
-//  잠시 주석 처리
+//  Comment out for a moment
 //	UpdateOptionRangeOut(fElapsed);
 
 	// elapsed control update
 	GetNtlSobElapsedControlManager()->Update(fElapsed);
 
-	// remove queue 처리.
+	//Remove queue processing.
 	if(m_listRemoveQueue.size() == 0)
 		return;
 
@@ -1143,7 +1143,7 @@ RwUInt32 CNtlSobManager::GetSobObjectUpdateCount(void) const
 	return (RwUInt32)m_mapUpdate.size();
 }
 
-/// 가장 가까운 루팅 가능한 월드 아이템을 찾아서 반환한다.
+///Finds and returns the nearest lootable world item.
 CNtlSob* CNtlSobManager::GetSobNearWorldItem(const RwV3d& vLoc)
 {
 	CNtlSobGroup *pGroup = FindGroup(SLCLASS_WORLD_ITEM);
@@ -1318,7 +1318,7 @@ void CNtlSobManager::SobPlayerChangeGuildEmblemHandler(RWS::CMsg &pMsg)
 	{
 		CNtlSobCharProxy *pSobCharProxy = reinterpret_cast<CNtlSobCharProxy*>( pSobPlayer->GetSobProxy() );
 
-		// 게임중에 엠블렘이 변경되었다
+		//The emblem was changed during the game
 		pSobCharProxy->SetEmblemFactor(pEvent->byTypeA, pEvent->byTypeAColor,
 									   pEvent->byTypeB, pEvent->byTypeBColor,
 									   pEvent->byTypeC, pEvent->byTypeCColor);
@@ -1506,7 +1506,7 @@ void CNtlSobManager::EventObjectThreadLoadCompleteEventHandler(RWS::CMsg& pMsg)
 	}
 }
 
-// 현재 캐릭터가 TMQ 상태인지 확인하고, TMQ 상태라면 카메라한테 카메라 연출 이벤트를 보낸다.
+//Check whether the current character is in TMQ state, and if so, send a camera rendering event to the camera.
 void CNtlSobManager::TMQEventHandler( RWS::CMsg &pMsg ) 
 {
     if(pMsg.Id == g_EventAnimTMQ)
@@ -1538,8 +1538,8 @@ void CNtlSobManager::PostEffectEventHandler( RWS::CMsg& pMsg )
 {
     SNtlEventPostEffect* pData = (SNtlEventPostEffect*)pMsg.pData;    
 
-    // 아래 정의된 클래스의 이벤트만 연출한다.
-    // 다른 PC들의 이벤트는 연출하지 않는다.
+    //Only produces events of the classes defined below.
+    //Events of other PCs are not produced.
     CNtlSob* pSob = GetSobObject(pData->uiSerialID);
     if(pSob->GetClassID() == SLCLASS_AVATAR || 
        pSob->GetClassID() == SLCLASS_NPC || 
@@ -1554,12 +1554,12 @@ void CNtlSobManager::EventCreateWorldHandler( RWS::CMsg& pMsg )
 {
     SNtlEventCreateWorld* pData = (SNtlEventCreateWorld*)pMsg.pData;
     
-    if(pData->bCreate)      // 월드가 새로 생성될때
+    if(pData->bCreate)      //When a new world is created
     {
-        // 아바타만 추가한다.
+        //Add only the avatar.
         GetNtlSLGlobal()->GetSobAvatar()->GetSobProxy()->AddWorld();
     }
-    else    // 월드가 제거 될때
+    else    //When the world is removed
     {
         RemoveWorld();
     }
@@ -1583,7 +1583,7 @@ void CNtlSobManager::SobCondConfusedEventHandler( RWS::CMsg& pMsg )
     CNtlSob* pSob = GetSobObject(pData->hSubject);
     if(pSob)
     {
-        // 자기 자신이거나, 자신의 펫인 경우에만 처리한다.
+        //Process only if it is you or your pet.
         if(pSob->GetClassID() == SLCLASS_AVATAR || pSob->GetOwnerID() == GetNtlSLGlobal()->GetSobAvatar()->GetSerialID())
         {
             pSob->HandleEvents(pMsg);
@@ -1597,7 +1597,7 @@ void CNtlSobManager::SobCondTerrorEventHandler( RWS::CMsg& pMsg )
     CNtlSob* pSob = GetSobObject(pData->hSubject);
     if(pSob)
     {
-        // 자기 자신이거나, 자신의 펫인 경우에만 처리한다.
+        //Process only if it is you or your pet.
         if(pSob->GetClassID() == SLCLASS_AVATAR || pSob->GetOwnerID() == GetNtlSLGlobal()->GetSobAvatar()->GetSerialID())
         {
             pSob->HandleEvents(pMsg);

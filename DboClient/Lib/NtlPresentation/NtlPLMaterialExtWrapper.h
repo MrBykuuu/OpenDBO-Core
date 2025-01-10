@@ -2,7 +2,7 @@
  *
  * File			: NtlMatExt
  * Author		: HongHoDong
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2005. 11. 27	
  * Abstract		: NTl Mat Extension
  *****************************************************************************
@@ -18,11 +18,11 @@
 
 RwBool		NtlMatExtPluginAttach(void);
 
-RwBool		NtlMatExtSetMultiTexture(RpMaterial *pMaterial, RwTexture *pTexture);	/**<Set MultiTexture 현재 1장만 지원 */
-RwTexture  *NtlMatExtGetMultiTexture(RpMaterial *pMaterial);						/**<Get MultiTexture 현재 1장만 지원 */
+RwBool		NtlMatExtSetMultiTexture(RpMaterial *pMaterial, RwTexture *pTexture);	/**<Set MultiTexture Currently only supports 1 image */
+RwTexture  *NtlMatExtGetMultiTexture(RpMaterial *pMaterial);						/**<Get MultiTexture currently only supports 1 image */
 
-void		NtlMatExtSetFlag(RpMaterial *pMaterial, RwUInt32 bFlag);				/**<Set Material 속성 Flag Ntl_PluginToon의 NtlMaterialExt.h 참조 */
-RwUInt32	NtlMatExtGetFlag(RpMaterial *pMaterial);								/**<Get Material 속성 Flag Ntl_PluginToon의 NtlMaterialExt.h 참조 */
+void		NtlMatExtSetFlag(RpMaterial *pMaterial, RwUInt32 bFlag);				/**<Set Material property Flag Refer to NtlMaterialExt.h in Ntl_PluginToon */
+RwUInt32	NtlMatExtGetFlag(RpMaterial *pMaterial);								/**<Get Material property Flag Refer to NtlMaterialExt.h in Ntl_PluginToon */
 
 void		NtlMatExtSetPipeline(RpAtomic *pAtomic);
 

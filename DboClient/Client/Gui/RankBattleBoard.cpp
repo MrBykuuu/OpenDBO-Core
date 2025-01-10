@@ -1,18 +1,18 @@
 #include "precomp_dboclient.h"
 #include "RankBattleBoard.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlPLDef.h"
 
-// shared
+// Shared
 #include "NtlTimeQuest.h"
 #include "NtlRankBattle.h"
 
-// simulation
+// Simulation
 #include "DboEvent.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
@@ -34,7 +34,7 @@
 ////////////////////////////////////////////////////////////////////////////////////
 
 /**
-* \brief 생성자
+* \brief constructor
 */
 CRankBattleRowItem::CRankBattleRowItem() 
 : m_pStbRank(NULL)
@@ -54,7 +54,7 @@ CRankBattleRowItem::CRankBattleRowItem()
 }
 
 /**
-* \brief 소멸자
+* \brief destructor
 */
 CRankBattleRowItem::~CRankBattleRowItem() 
 {
@@ -63,64 +63,64 @@ CRankBattleRowItem::~CRankBattleRowItem()
 
 /**
 * \brief Create
-* \param pParentGui		(gui::CComponent*) 부모 GUI의 포인터
-* \param nTop			(RwInt32) 현재의 아이템이 시작될 Y 좌표
+* \param pParentGui		(gui::CComponent*) Pointer to the parent GUI.
+* \param nTop			(RwInt32) Y coordinate where the current item will start
 */
 VOID CRankBattleRowItem::Create( gui::CComponent* pParentGui , RwInt32 nTop ) 
 {
-	// 순위의 위치
+	// position in the rankings
 	CRectangle rect;
 
 	rect.SetRectWH( 0, nTop, 631, 25 );
 	m_pDlgItem = NTL_NEW gui::CDialog( &rect, pParentGui, GetNtlGuiManager()->GetSurfaceManager() );
 	
-	// 순위(숫자)
+	// Rank (number)
 	rect.SetRectWH( 6, 0, 43, 25 );
 	m_pStbRank = NTL_NEW gui::CStaticBox( &rect, m_pDlgItem, GetNtlGuiManager()->GetSurfaceManager(),
 		COMP_TEXT_VERTICAL_CENTER | COMP_TEXT_CENTER );
 	m_pStbRank->CreateFontStd( DETAIL_FONT , dRANKBOARD_RANKBATTLE_ROWITEM_FONT_HEIGHT, 0 );
 
-	// 이름(문자열)
+	// name (string)
 	rect.SetRectWH( 61, 0, 120, 25 );
 	m_pStbName = NTL_NEW gui::CStaticBox( &rect, m_pDlgItem, GetNtlGuiManager()->GetSurfaceManager(),
 		COMP_TEXT_VERTICAL_CENTER | COMP_TEXT_CENTER );
 	m_pStbName->CreateFontStd( DETAIL_FONT, dRANKBOARD_RANKBATTLE_ROWITEM_FONT_HEIGHT, 0 );
 	
-	// 레벨(숫자)
+	// level (number)
 	rect.SetRectWH( 199, 0, 30, 25 );
 	m_pStbLevel = NTL_NEW gui::CStaticBox( &rect, m_pDlgItem, GetNtlGuiManager()->GetSurfaceManager(),
 		COMP_TEXT_VERTICAL_CENTER | COMP_TEXT_CENTER );
 	m_pStbLevel->CreateFontStd( DETAIL_FONT, dRANKBOARD_RANKBATTLE_ROWITEM_FONT_HEIGHT, 0 );
 
-	// 직업(그림)
+	// Occupation (picture)
 	rect.SetRectWH( 252, 2, 19, 29 );
 	m_pPanClass = NTL_NEW gui::CPanel( &rect, m_pDlgItem, GetNtlGuiManager()->GetSurfaceManager() );
 	
-	// 길드이름(문자열)
+	// Guild name (string)
 	rect.SetRectWH( 293, 0, 136, 25 );
 	m_pStbGuildName = NTL_NEW gui::CStaticBox( &rect, m_pDlgItem, GetNtlGuiManager()->GetSurfaceManager(),
 		COMP_TEXT_VERTICAL_CENTER | COMP_TEXT_CENTER );
 	m_pStbGuildName->CreateFontStd( DETAIL_FONT, dRANKBOARD_RANKBATTLE_ROWITEM_FONT_HEIGHT, 0 );
 
-	// 점수(숫자)
+	// score (number)
 	rect.SetRectWH( 432, 0, 66, 25 );
 	m_pStbPoint = NTL_NEW gui::CStaticBox( &rect, m_pDlgItem, GetNtlGuiManager()->GetSurfaceManager(),
 		COMP_TEXT_VERTICAL_CENTER | COMP_TEXT_CENTER );
 	m_pStbPoint->CreateFontStd( DETAIL_FONT, dRANKBOARD_RANKBATTLE_ROWITEM_FONT_HEIGHT, 0 );
 	
-	// 연승(숫자)
+	// Streak (number)
 	rect.SetRectWH( 514, 0, 24, 25 );
 	m_pStbStraightWin = NTL_NEW gui::CStaticBox( &rect, m_pDlgItem, GetNtlGuiManager()->GetSurfaceManager(),
 		COMP_TEXT_VERTICAL_CENTER | COMP_TEXT_CENTER );
 	m_pStbStraightWin->CreateFontStd( DETAIL_FONT, dRANKBOARD_RANKBATTLE_ROWITEM_FONT_HEIGHT, 0 );
 
-	// 비교등수(숫자)
+	// Comparison number (number)
 	rect.SetRectWH( 518, 0, 72, 25 );
 	m_pStbCompare = NTL_NEW gui::CStaticBox( &rect, m_pDlgItem, GetNtlGuiManager()->GetSurfaceManager(),
 		COMP_TEXT_VERTICAL_CENTER | COMP_TEXT_RIGHT );
 	m_pStbCompare->CreateFontStd( DETAIL_FONT, dRANKBOARD_RANKBATTLE_ROWITEM_FONT_HEIGHT, 0 );
 
-	// 비교마크(그림)
+	// Comparison mark (picture)
 	rect.SetRectWH( 593, 8, 8, 7 );
 	m_pPanCompareMark = NTL_NEW gui::CPanel( &rect, m_pDlgItem, GetNtlGuiManager()->GetSurfaceManager() );
 
@@ -147,8 +147,8 @@ VOID CRankBattleRowItem::Destroy()
 }
 
 /**
-* \brief 현재의 아이템을 보여질지 안 보여질지 셋팅한다.
-* \param bShow		(RwBool) 보여지는 여부
+* \brief Sets whether the current item will be shown or not.
+* \param bShow (RwBool) Whether to show
 * 
 */
 VOID CRankBattleRowItem::Show( RwBool bShow /*= TRUE */ ) 
@@ -157,25 +157,25 @@ VOID CRankBattleRowItem::Show( RwBool bShow /*= TRUE */ )
 }
 
 /**
-* \brief 항목의 데이터를 세팅
-* \param nRank			순위	
-* \param pwcName		이름
-* \param nLevel			레벨
-* \param byClass		직업(NtlCharacter.h)
-* \param pwcGuildName	길드이름
-* \param nPoint			점수
-* \param nStraightWin	연승
-* \param nCompare		비교등수
-* \param bHighLight		강조( TRUE = 강조 FALSE = 강조하지 않음 )
+* \brief Setting data for items
+* \param nRank			rank
+* \param pwcName		name
+* \param nLevel			level
+* \param byClass		Occupation(NtlCharacter.h)
+* \param pwcGuildName	Guild name
+* \param nPoint			score
+* \param nStraightWin	Streak
+* \param nCompare		Comparison number
+* \param bHighLight		Highlight ( TRUE = Highlight FALSE = Not Highlight )
 */
 VOID CRankBattleRowItem::SetItem(  RwInt32 nRank, const WCHAR* pwcName, RwInt32 nLevel, 
 									RwUInt8 byClass, const WCHAR* pwcGuildName, RwInt32 nPoint, 
-									RwUInt16 nStraightWin, RwUInt32 nCompare , RwBool bHightLight/* FALSE  */) 
+									RwUInt16 nStraightWin, RwUInt32 nCompare , RwBool bHightLight/* False  */) 
 {	
-	// 서페이스를 초기화
+	// Initialize the surface
 	m_pDlgItem->GetSurface()->clear();
 	
-	// 검색 된 대상을 강조하여 표시한다.
+	// The searched object is highlighted and displayed.
 	if( bHightLight )
 	{
 		m_pDlgItem->AddSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "RankingGui.srf", "srfHighLightLeft" ) );
@@ -190,12 +190,12 @@ VOID CRankBattleRowItem::SetItem(  RwInt32 nRank, const WCHAR* pwcName, RwInt32 
 	m_pStbLevel->SetText( nLevel );
 	m_pPanClass->GetSurface()->clear();
 	m_pPanClass->AddSurface( Logic_GetPCClassIconSurface( byClass, FALSE ) );
-	m_byClass = byClass;							// 직업 정보 저장
+	m_byClass = byClass;							// Save job information
 	m_pStbGuildName->SetText( pwcGuildName );
 	m_pStbPoint->SetText( nPoint );
 	m_pStbStraightWin->SetText( nStraightWin );
 
-	// nCompare가 DWORD_INVALID 일 경우 ( 서버에 그 날짜의 기록된 등수가 없다는 것 )
+	// If nCompare is DWORD_INVALID (meaning there is no recorded rank for that date on the server)
 	if( nCompare == -1 )
 	{
 		m_pStbCompare->SetText( L"-" );
@@ -204,14 +204,14 @@ VOID CRankBattleRowItem::SetItem(  RwInt32 nRank, const WCHAR* pwcName, RwInt32 
 		return;
 	}
 
-	// 비교 등수( 이전 순위에서 현재 순위를 빼준다. )
+	// Comparison ranking (subtracts the current ranking from the previous ranking.)
 	RwInt32 nAbsComp = nCompare - nRank;
 
 	m_pStbCompare->SetText( abs(nAbsComp) );
 
 	m_pPanCompareMark->GetSurface()->clear();
 
-	// 비교 마크
+	// comparison mark
 	if( nAbsComp > 0 )
 		m_pPanCompareMark->AddSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "RankingGui.srf", "srfCompareUp" ) );
 	else if( nAbsComp < 0 )
@@ -221,8 +221,8 @@ VOID CRankBattleRowItem::SetItem(  RwInt32 nRank, const WCHAR* pwcName, RwInt32 
 }
 
 /**
-* \brief 비교등수만 세팅
-* \param nCompare 이전의 순위
+* \brief Set only comparison coefficients
+* \param nCompare Previous rank
 */
 VOID CRankBattleRowItem::SetCompareInfo( RwInt32 nCompare ) 
 {
@@ -234,13 +234,13 @@ VOID CRankBattleRowItem::SetCompareInfo( RwInt32 nCompare )
 		return;
 	}
 
-	// 비교 등수( 이전 순위에서 현재 순위를 빼준다. )
+	// Comparison ranking (subtracts the current ranking from the previous ranking.)
 	RwInt32 nAbsComp = nCompare - m_nRank;
 
 	m_pStbCompare->SetText( abs(nAbsComp) );
 
 
-	// 비교 마크
+	// comparison mark
 	m_pPanCompareMark->GetSurface()->clear();
 
 	if( nAbsComp > 0 )
@@ -250,7 +250,7 @@ VOID CRankBattleRowItem::SetCompareInfo( RwInt32 nCompare )
 }
 
 /**
-* \brief 아이템을 초기화한다.
+* \brief Initializes the item.
 */
 VOID CRankBattleRowItem::ClearItem()
 {
@@ -269,19 +269,19 @@ VOID CRankBattleRowItem::ClearItem()
 }
 
 /**
-* \brief 직업 마크에 툴팁을 단다.
-* \param pComponent	(gui::CComponent*) 마우스가 들어온 컴포넌트
+* \brief Adds a tooltip to the job mark.
+* \param pComponent (gui::CComponent*) The component that the mouse entered.
 */
 VOID CRankBattleRowItem::OnMouseEnterFromClass( gui::CComponent* pComponent ) 
 {
-	// InfoWindow를 버튼에 달아준다.
+	// Attach an InfoWindow to a button.
 	if( m_byClass == INVALID_BYTE )
 		return;
 
 	if( m_pPanClass )
 	{
 		CRectangle rtScreen = m_pPanClass->GetScreenRect();
-		// ToolTip을 infoWindow로 생성한다.
+		// Create ToolTip as infoWindow.
 		
 		GetInfoWndManager()->ShowInfoWindow( TRUE, CInfoWndManager::INFOWND_JUST_WTEXT,
 				rtScreen.left, rtScreen.top, 
@@ -291,8 +291,8 @@ VOID CRankBattleRowItem::OnMouseEnterFromClass( gui::CComponent* pComponent )
 }
 
 /**
-* \brief 직업 마크의 툴팁을 삭제한다.
-* \param pComponent (gui::CComponent*) 마우스 포인터가 나간 컴포넌트
+* \brief Deletes the tooltip of the job mark.
+* \param pComponent (gui::CComponent*) The component that the mouse pointer left.
 */
 VOID CRankBattleRowItem::OnMouseLeaveFromClass( gui::CComponent* pComponent ) 
 {
@@ -312,7 +312,7 @@ VOID CRankBattleRowItem::OnMouseLeaveFromClass( gui::CComponent* pComponent )
 ////////////////////////////////////////////////////////////////////////////////////
 
 /**
-* \brief 생성자
+* \brief constructor
 */
 CRankBattleBoard::CRankBattleBoard()
 : m_pRankBattleBoardDlg(NULL)
@@ -330,7 +330,7 @@ CRankBattleBoard::CRankBattleBoard()
 }
 
 /**
-* \brief 소멸자
+* \brief destructor
 */
 CRankBattleBoard::~CRankBattleBoard() 
 {
@@ -338,8 +338,8 @@ CRankBattleBoard::~CRankBattleBoard()
 
 /**
 * \brief Create
-* \param eType		보드의 타입(CBoard*)
-* \param pParentGui 부모 GUI의 포인터
+* \param eType Type of board (CBoard*)
+* \param pParentGui Pointer to the parent GUI.
 */
 void CRankBattleBoard::Create( eBoardType eType , CRankBoardGui* pParent ) 
 {
@@ -471,7 +471,7 @@ void CRankBattleBoard::Enable( RwBool bEnable /*= TRUE */ )
 	m_pBtnSearch->ClickEnable( bEnable );
 	m_pIpbSearch->Enable( B2b(bEnable) );
 
-	// 현재 페이지가 0 이라면 항상 ClickEnable( FALSE ) 상태가 되게 한다.
+	// If the current page is 0, it is always set to ClickEnable(FALSE).
 	if( m_nCurrentPage == 0 )
 		m_pBtnPrev->ClickEnable( FALSE );
 
@@ -480,7 +480,7 @@ void CRankBattleBoard::Enable( RwBool bEnable /*= TRUE */ )
 }
 
 /**
-* \brief 현재 페이지 요청
+* \brief Current page request
 */
 void CRankBattleBoard::CurrentPage() 
 {
@@ -490,22 +490,22 @@ void CRankBattleBoard::CurrentPage()
 }
 
 /**
-* \brief 랭크배틀의 순위게시판이 받을 Msg를 받아서 처리한다.
-* CRankBoardGui에서 현재 이 Board에 필요한 이벤트만 골라서 보내준다.
-* \param msg	Event의 메시지
+* \brief The ranking board of the ranked battle receives and processes the Msg to be received.
+*CRankBoardGui selects and sends only the events currently needed for this Board.
+* \param msg Message of Event
 */
 void CRankBattleBoard::MessageProc( RWS::CMsg& msg ) 
 {
-	// 페이지 리스트
+	// page list
 	if( msg.Id == g_EventRankBattleRankListRes )
 	{
 		SDboEventRankBattleRankListRes* pRes = 
 			reinterpret_cast<SDboEventRankBattleRankListRes*>(msg.pData);
 
-		// 랭크정보의 카운트가 0 이라면 없는 페이지를 요청한 것.
+		// If the rank information count is 0, a page that does not exist has been requested.
 		if( pRes->byRankInfoCount == 0 )
 		{
-			// 만약 0페이지의 카운트가 하나도 없다면 서버에 랭크배틀 데이터가 없는 것.
+			// If there is no page count of 0, there is no ranked battle data on the server.
 			if( pRes->dwPage == 0 )
 			{
 				/*GetAlarmManager()->AlarmMessage( DST_RANKBOARD_BOARD_MSGBOX_NODATA );*/
@@ -525,17 +525,17 @@ void CRankBattleBoard::MessageProc( RWS::CMsg& msg )
 		sRANKBATTLE_RANK_INFO* apRank = 
 			reinterpret_cast<sRANKBATTLE_RANK_INFO*>( pData->Read( pRes->wRankInfo ) );
 
-		// 페이지 정보 저장
+		// Save page information
 		m_nCurrentPage = pRes->dwPage;
 		m_nCurrentCompareDay = pRes->byCompareDay;
 
-		// 아이템 구성
+		// Item composition
 		m_nRankBattleItemCount = pRes->byRankInfoCount;
 		for( int i = 0; i< pRes->byRankInfoCount; ++i )
 		{
 			m_sRankBattleItem[i].nRank = (pRes->dwPage*10) + i + 1;
 			
-			// sVARIABLE_DATA에서 캐릭터 이름
+			// Character name from sVARIABLE_DATA
 			int nSize = pData->GetSize( apRank[i].wCharName );
 			::ZeroMemory( m_sRankBattleItem[i].awcName, sizeof(WCHAR) * NTL_MAX_SIZE_CHAR_NAME+1 );
 			::CopyMemory( m_sRankBattleItem[i].awcName, pData->Read( apRank[i].wCharName ), nSize);
@@ -544,7 +544,7 @@ void CRankBattleBoard::MessageProc( RWS::CMsg& msg )
 			m_sRankBattleItem[i].nLevel = apRank[i].byLevel;
 			m_sRankBattleItem[i].byClass = apRank[i].byClass;
 		
-			// sVARIABLE_DATA에서의 길드 이름
+			// Guild name in sVARIABLE_DATA
 			nSize = pData->GetSize( apRank[i].wGuildName );
 			::ZeroMemory( m_sRankBattleItem[i].awcGuildName, sizeof(WCHAR) * NTL_MAX_SIZE_GUILD_NAME+1 );
 			::CopyMemory( m_sRankBattleItem[i].awcGuildName, pData->Read( apRank[i].wGuildName ), nSize );
@@ -557,7 +557,7 @@ void CRankBattleBoard::MessageProc( RWS::CMsg& msg )
 
 		SetDataResult( eDATA_OK );
 	}
-	// 검색 결과 리스트
+	// Search result list
 	else if( msg.Id == g_EventRankBattleRankFindCharacterRes )
 	{
 		SDboEventRankBattleRankFindCharacterRes* pRes = reinterpret_cast<SDboEventRankBattleRankFindCharacterRes*>(msg.pData);
@@ -585,7 +585,7 @@ void CRankBattleBoard::MessageProc( RWS::CMsg& msg )
 		{
 			m_sRankBattleItem[i].nRank = (pRes->dwPage*10) + i + 1;
 
-			// sVARIABLE_DATA에서 캐릭터 이름
+			// Character name from sVARIABLE_DATA
 			int nSize = pData->GetSize( apRank[i].wCharName );
 			::ZeroMemory( m_sRankBattleItem[i].awcName, sizeof(WCHAR) * NTL_MAX_SIZE_CHAR_NAME+1 );
 			::CopyMemory( m_sRankBattleItem[i].awcName, pData->Read( apRank[i].wCharName ), nSize);
@@ -594,7 +594,7 @@ void CRankBattleBoard::MessageProc( RWS::CMsg& msg )
 			m_sRankBattleItem[i].nLevel = apRank[i].byLevel;
 			m_sRankBattleItem[i].byClass = apRank[i].byClass;
 
-			// sVARIABLE_DATA에서의 길드 이름
+			// Guild name in sVARIABLE_DATA
 			nSize = pData->GetSize( apRank[i].wGuildName );
 			::ZeroMemory( m_sRankBattleItem[i].awcGuildName, sizeof(WCHAR) * NTL_MAX_SIZE_GUILD_NAME+1 );
 			::CopyMemory( m_sRankBattleItem[i].awcGuildName, pData->Read( apRank[i].wGuildName ), nSize );
@@ -607,7 +607,7 @@ void CRankBattleBoard::MessageProc( RWS::CMsg& msg )
 
 		SetDataResult( eDATA_OK );
 	}
-	// 비교날짜 변경 리스트
+	// List of comparison date changes
 	else if( msg.Id == g_EventRankBattleRankCompareDayRes )
 	{
 		SDboEventRankBattleRankCompareDayRes* pRes = 
@@ -618,8 +618,8 @@ void CRankBattleBoard::MessageProc( RWS::CMsg& msg )
 		m_nCurrentPage = pRes->dwPage;
 		m_nCurrentCompareDay = pRes->byCompareDay;
 	
-		// bIsFullList == TRUE : 서버의 캐쉬에 저장된 데이타가 없어서 그 페이지의 전체 리스트가 내려온다
-		// bIsFullList == FALSE : 서버의 캐쉬에 저장된 데이타가 있어서 비교된 날짜만 내려온다.
+		// bIsFullList == TRUE: There is no data stored in the server's cache, so the entire list of the page comes down.
+		// bIsFullList == FALSE: There is data stored in the server's cache, so only the compared date is retrieved.
 		if( bIsFullList )
 		{
 			sRANKBATTLE_RANK_INFO* apRank = reinterpret_cast<sRANKBATTLE_RANK_INFO*>( pData->Read(pRes->wRankInfo) );
@@ -636,7 +636,7 @@ void CRankBattleBoard::MessageProc( RWS::CMsg& msg )
 			{
 				m_sRankBattleItem[i].nRank = (pRes->dwPage*10) + i + 1;
 
-				// sVARIABLE_DATA에서 캐릭터 이름
+				// Character name from sVARIABLE_DATA
 				int nSize = pData->GetSize( apRank[i].wCharName );
 				::ZeroMemory( m_sRankBattleItem[i].awcName, sizeof(WCHAR) * NTL_MAX_SIZE_CHAR_NAME+1 );
 				::CopyMemory( m_sRankBattleItem[i].awcName, pData->Read( apRank[i].wCharName ), nSize);
@@ -645,7 +645,7 @@ void CRankBattleBoard::MessageProc( RWS::CMsg& msg )
 				m_sRankBattleItem[i].nLevel = apRank[i].byLevel;
 				m_sRankBattleItem[i].byClass = apRank[i].byClass;
 
-				// sVARIABLE_DATA에서의 길드 이름
+				// Guild name in sVARIABLE_DATA
 				nSize = pData->GetSize( apRank[i].wGuildName );
 				::ZeroMemory( m_sRankBattleItem[i].awcGuildName, sizeof(WCHAR) * NTL_MAX_SIZE_GUILD_NAME+1 );
 				::CopyMemory( m_sRankBattleItem[i].awcGuildName, pData->Read( apRank[i].wGuildName ), nSize );
@@ -679,21 +679,21 @@ void CRankBattleBoard::MessageProc( RWS::CMsg& msg )
 }
 
 /**
-* \brief UI에서 가지고 있는 정보를 적용하고 데이타의 결과값에 따른 안내 메시지를 출력한다.
+* \brief Apply the information from the UI and output a guidance message according to the data results.
 */
 VOID CRankBattleBoard::ApplyData()
 {
 	switch( m_byDataResult )
 	{
-		// 데이타가 정상적으로 처리되었다.
+		// The data was processed normally.
 	case eDATA_OK:
 		{
-			// 순위 검색 모드였을 경우
+			// In case of ranking search mode
 			if( m_bSearchRank )
 			{
 				m_bSearchRank = FALSE;
 
-				// UI가 가지고 있는 정보를 정상적으로 아이템에 입력한다.
+				// Enter the information contained in the UI into the item normally.
 				for( RwInt32 i = 0; i< m_nRankBattleItemCount; ++i )
 				{
 					RwBool bHighLight = FALSE;
@@ -712,7 +712,7 @@ VOID CRankBattleBoard::ApplyData()
 
 				}
 
-				// 받지 못한 정보의 아이템은 보여주지 않는다.
+				// Items with information that has not been received are not displayed.
 				if( m_nRankBattleItemCount < dRANKBOARD_RANKBATTLE_ROWITEM_NUMS )
 				{
 					for(int i=m_nRankBattleItemCount; i< dRANKBOARD_RANKBATTLE_ROWITEM_NUMS; ++i )
@@ -723,7 +723,7 @@ VOID CRankBattleBoard::ApplyData()
 			}
 			else
 			{
-				// UI가 가지고 있는 정보를 정상적으로 아이템에 입력한다.
+				// Enter the information contained in the UI into the item normally.
 				for( RwInt32 i = 0; i< m_nRankBattleItemCount; ++i )
 				{
 					RwBool bHighLight = FALSE;
@@ -742,7 +742,7 @@ VOID CRankBattleBoard::ApplyData()
 
 				}
 
-				// 받지 못한 정보의 아이템은 보여주지 않는다.
+				// Items with information that has not been received are not displayed.
 				if( m_nRankBattleItemCount < dRANKBOARD_RANKBATTLE_ROWITEM_NUMS )
 				{
 					for(int i=m_nRankBattleItemCount; i< dRANKBOARD_RANKBATTLE_ROWITEM_NUMS; ++i )
@@ -753,7 +753,7 @@ VOID CRankBattleBoard::ApplyData()
 			}
 		}
 		break;
-		// 비교날짜만 내려왔을 경우
+		// If only the comparison date comes down
 	case eDATA_ONLYCOMPARE:
 		{
 			for( RwInt32 i = 0; i< m_nRankBattleItemCount; ++i )
@@ -762,14 +762,14 @@ VOID CRankBattleBoard::ApplyData()
 			}
 		}
 		break;
-		// 서버에 아무런 정보가 없다.
+		// There is no information on the server.
 	case eDATA_NONE:
 		{
 			if( m_pParentGui->IsShow() )
 				GetAlarmManager()->AlarmMessage( "DST_RANKBOARD_BOARD_MSGBOX_NODATA" );
 		}
 		break;
-		// 없는 페이지입니다.
+		// This page does not exist.
 	case eDATA_NOTPAGE:
 		{
 			if( m_bSearchRank )
@@ -787,7 +787,7 @@ VOID CRankBattleBoard::ApplyData()
 
 		}
 		break;
-		// 검색 결과가 없습니다.
+		// No search results.
 	case eDATA_NOTFIND:
 		{
 			if( m_pParentGui->IsShow() )
@@ -802,7 +802,7 @@ VOID CRankBattleBoard::ApplyData()
 }
 
 /**
-* \brief 아이템 초기화
+* \brief Item initialization
 */
 VOID CRankBattleBoard::RowItemClear()
 {
@@ -813,8 +813,8 @@ VOID CRankBattleBoard::RowItemClear()
 }
 
 /**
-* \brief 서버에서 받은 데이타의 유효성 결과를 세팅한다.
-* \param byDataResult	(RwUInt8) eDataResult
+* \brief Sets the validity result of data received from the server.
+* \param byDataResult (RwUInt8) eDataResult
 */
 VOID CRankBattleBoard::SetDataResult( RwUInt8 byDataResult )
 {
@@ -823,7 +823,7 @@ VOID CRankBattleBoard::SetDataResult( RwUInt8 byDataResult )
 
 
 /**
-* \brief '이전' 버튼을 클릭
+* \brief Click the 'Previous' button
 */
 VOID CRankBattleBoard::OnClickedBtnPrev( gui::CComponent* pComponent ) 
 {
@@ -837,12 +837,12 @@ VOID CRankBattleBoard::OnClickedBtnPrev( gui::CComponent* pComponent )
 		m_nCurrentPage - 1,
 		(RwInt8)m_nCurrentCompareDay );
 	
-	// 비활성화
+	// deactivate
 	m_pParentGui->DisableAllButton();
 }
 
 /**
-* \brief '다음' 버튼을 클릭
+* \brief Click 'Next' button
 */
 VOID CRankBattleBoard::OnClickedBtnNext( gui::CComponent* pComponent ) 
 {
@@ -850,12 +850,12 @@ VOID CRankBattleBoard::OnClickedBtnNext( gui::CComponent* pComponent )
 		m_nCurrentPage + 1, 
 		(RwInt8)m_nCurrentCompareDay );
 
-	// 비활성화
+	// deactivate
 	m_pParentGui->DisableAllButton();
 }
 
 /**
-* \brief 검색 창에서 엔터를 쳤을 경우
+* \brief When you hit enter in the search bar
 */
 VOID CRankBattleBoard::OnInputReturnSearch() 
 {
@@ -864,7 +864,7 @@ VOID CRankBattleBoard::OnInputReturnSearch()
 
 	const WCHAR* pwcText = m_pIpbSearch->GetText();
 
-	// 입력창에 한 글자 이상 입력되었을 경우 처리한다.
+	// Processed when more than one character is entered in the input window.
 	if( wcslen(pwcText) > 0 )
 	{
 		if( (eSearchMode)m_nSearchMode == eSEARCH_NAME )
@@ -884,13 +884,13 @@ VOID CRankBattleBoard::OnInputReturnSearch()
 
 			--nSearchRank;
 
-			// 페이지와 몇번째인지를 찾는다.
+			// Find the page and number.
 			m_nSearchRankPage = 0;
 			m_nSearchRankIndex = nSearchRank % 10;
 			if( nSearchRank > 10 )
 				m_nSearchRankPage = (RwInt32)((RwReal)nSearchRank * 0.1f);
 
-			// 페이지를 요청
+			// request page
 			m_bSearchRank = TRUE;
 			GetDboGlobal()->GetChatPacketGenerator()->SendRankBattle_Rank_List_Req( m_nSearchRankPage, (RwInt8)m_nCurrentCompareDay );
 
@@ -904,7 +904,7 @@ VOID CRankBattleBoard::OnInputReturnSearch()
 }
 
 /**
-* \brief 검색 버튼을 클릭하였을 경우
+* \brief When the search button is clicked
 */
 VOID CRankBattleBoard::OnClickedBtnSearch( gui::CComponent* pComponent ) 
 {
@@ -932,13 +932,13 @@ VOID CRankBattleBoard::OnClickedBtnSearch( gui::CComponent* pComponent )
 
 			--nSearchRank;
 			
-			// 페이지와 몇번째인지를 찾는다.
+			// Find the page and number.
 			m_nSearchRankPage = 0;
 			m_nSearchRankIndex = nSearchRank % 10;
 			if( nSearchRank > 10 )
 				m_nSearchRankPage = (RwInt32)((RwReal)nSearchRank * 0.1f);
 
-			// 페이지를 요청
+			// request page
 			m_bSearchRank = TRUE;
 			GetDboGlobal()->GetChatPacketGenerator()->SendRankBattle_Rank_List_Req( m_nSearchRankPage, (RwInt8)m_nCurrentCompareDay );
 			
@@ -953,8 +953,8 @@ VOID CRankBattleBoard::OnClickedBtnSearch( gui::CComponent* pComponent )
 
 
 /**
-* \brief 콤보박스의 아이템을 선택하였을 경우
-* \param nIndex		선택한 Index
+* \brief When an item in the combo box is selected
+* \param nIndex Selected Index
 */
 VOID CRankBattleBoard::OnItemSelect( INT nIndex ) 
 {
@@ -963,14 +963,14 @@ VOID CRankBattleBoard::OnItemSelect( INT nIndex )
 
 	GetDboGlobal()->GetChatPacketGenerator()->SendRankBattle_Rank_Compare_Day_Req( m_nCurrentPage, (RwInt8)(nIndex+1) );
 
-	// 랭크보드를 Disable 상태로 전환
+	// Switch the rank board to Disabled state
 	m_pParentGui->DisableAllButton();
 }
 
 /**
-* \brief 콤보박스의 리스트박스를 열었을 경우
-* \param bToggled	오픈여부
-* \param pComponent	오픈된 콤포넌트
+* \brief When the list box of the combo box is opened
+* \param bToggled Whether to open or not
+* \param pComponent Open component
 */
 VOID CRankBattleBoard::OnListToggled( RwBool bToggled, gui::CComponent* pComponent ) 
 {

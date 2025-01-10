@@ -2,7 +2,7 @@
 //	File		:	NtlInstanceParticleSystem.cpp
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -127,7 +127,7 @@ RwBool CNtlInstanceComponentSystem::Create( CNtlResourceEffect* pResourceEffect,
 {
 	m_pResourceComponentSystem = pResourceComponentSystem;
 
-	// Hurricane Action 이 없을때만 Spline Path 을 생성한다.
+	// Spline Path is created only when there is no Hurricane Action.
 	if (!pResourceComponentSystem->IsEmitterDataFlag(rpPRTSTDEMITTERDATAFLAGPRTHURRICANE) &&
 		pResourceComponentSystem->m_nPathEmitterDataFlag == rpPRTADVEMITTERDATAFLAGSPLINEPATH)
 	{
@@ -529,8 +529,8 @@ RwUInt8 CNtlInstanceComponentSystem::UpdateFinishAlpha( RwUInt8 uiOriginAlpha, R
     
     if(nDeltaAlpha < 1)
     {
-        // 값이 너무 작아서 1보다 작게 나와서 적용이 안되는 경우가 있다.
-        // 이런 경우엔 강제로 1을 제거한다.
+        // There are cases where the value is too small and is less than 1, so it cannot be applied.
+        // In this case, 1 is forcibly removed.
         return 1;
     }    
 

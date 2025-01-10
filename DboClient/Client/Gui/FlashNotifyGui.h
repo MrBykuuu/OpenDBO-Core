@@ -1,19 +1,19 @@
 /******************************************************************************
-* File			: FlashNotifyGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2007. 11. 21
-* Abstract		: 
+*File: FlashNotifyGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : November 21, 2007
+*Abstract		: 
 *****************************************************************************
-* Desc			: 알림 메세지에 따라 지정된 플래쉬 파일을 읽어들여 표시한다
+*Desc           : Reads and displays the flash file specified according to the notification message.
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
 class CFlashNotifyGui : public CNtlPLGui, public RWS::CEventHandler
@@ -43,6 +43,6 @@ protected:
 
 	gui::CFlash*		m_pFlashBackground;
 
-	std::string			m_strSecondFile;		///< 두 번째로 플레이 될 파일의 이름
+	std::string			m_strSecondFile;		///< Name of the file to be played second
 	RwBool				m_bFinishNotify;
 };

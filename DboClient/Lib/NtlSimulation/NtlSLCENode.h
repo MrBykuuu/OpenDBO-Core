@@ -2,15 +2,15 @@
 *
 * File			: NtlSLCENode.h
 * Author		: agebreak
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2008. 7. 16	
 *****************************************************************************
-* Desc          : 천하제일 무도회의 관중 연출을 위한 노드 
+* Desc          : Node for directing the audience of the world's best Martial Arts
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 #include "NtlCoreDescription.h"
 
@@ -18,23 +18,23 @@
 #define     CENODE_VER_1			(RwReal)1
 #define     CENODE_VER_1_1			(RwReal)1.1
 #define     CENODE_VER_1_2			(RwReal)1.2
-#define     CENODE_VER_1_2_1		(RwReal)1.21				///< 관중 이펙트 연출을 위한 데이터의 버전
-#define     CENODE_VER_LASTEST		(RwReal)1.3					///< 심판 나레이션 추가
+#define     CENODE_VER_1_2_1		(RwReal)1.21				///< Version of data for creating crowd effects
+#define     CENODE_VER_LASTEST		(RwReal)1.3					///<Added referee narration
 
 class CNtlSerializer;
 class CNtlInstanceEffect;
 class CNtlPLCharacter;
 
 
-/// 천하제일 무도회의 관중 연출을 위한 노드 베이스 클래스
+/// Node base class for audience production at the World's Best Martial Arts Festival
 class CNtlSLCENode
 {
 public:
-    enum ECENodeType            /// 노드 타입
+    enum ECENodeType            /// Node type
     {
         E_CE_EFFECT,        
         E_CE_SOUND,
-        //E_CE_BALLOON,
+        //And there's a balloon,
         E_CE_JUDGE,
 
 		 NUM_E_CE,
@@ -42,7 +42,7 @@ public:
 		 INVALID_E_CE
     };
 
-    static sVERSTION      m_Version;                     ///< 하위 호환성을 위한 버전 정보
+    static sVERSTION      m_Version;                     ///< Version information for backward compatibility
 
 public:
     CNtlSLCENode(void);
@@ -63,14 +63,14 @@ public:
 	virtual void		HandleEvents(RWS::CMsg &pMsg) {}
 
 protected:
-    RwInt32                     m_eType;                    ///< 노드 타입    
-    std::string                 m_strName;                  ///< 노드 이름
+    RwInt32                     m_eType;                    ///< Node type    
+    std::string                 m_strName;                  ///<node name
     
-    RwReal                      m_fTotalElapsedTime;        ///< 업데이트 타임 비교 변수
-    RwV3d                       m_vPos;                     ///< 해당 노드가 생성되는 위치
+    RwReal                      m_fTotalElapsedTime;        ///< Update time comparison variable
+    RwV3d                       m_vPos;                     ///< Location where the node is created
 };
 
-/// 관중 이펙트 노드
+/// Spectator Effect Node
 class CNtlSLCENodeEffect : public CNtlSLCENode
 {
 public:
@@ -90,12 +90,12 @@ public:
 protected:
 
 protected:    
-    std::string             m_strEffectName;                        ///< 사용하는 이펙트의 이름
+    std::string             m_strEffectName;                        ///< Name of the effect used
 
-    CNtlInstanceEffect*     m_pEffect;                              ///< 생성된 이펙트 객체
+    CNtlInstanceEffect*     m_pEffect;                              ///< Created effect object
 };
 
-/// 사운드 재생 노드
+/// sound playback node
 class CNtlSLCENodeSound : public CNtlSLCENode
 {
 public:
@@ -122,13 +122,13 @@ protected:
 protected:
     std::string         m_strSoundFileName;
 	RwUInt8				  m_byChannelGroup;
-    RwBool              m_bLoop;                                ///< 사운드 루프 여부
-	RwV3d           m_vOffsetPos;                                     ///< 컨트롤러에서 상대적인 오프셋 위치
+    RwBool              m_bLoop;                                ///< Whether sound loop or not
+	RwV3d           m_vOffsetPos;                                     ///< Offset position relative to the controller
 
     RwUInt32            m_hSoundHandle;
 };
 /*
-/// 말풍선 노드
+/// Speech Bubble Node
 class CNtlSLCENodeBalloon  : public CNtlSLCENode
 {
 public:
@@ -144,7 +144,7 @@ public:
     virtual RwBool  Save(CNtlSerializer& s);   
     virtual void    SetPosition(const RwV3d& vPos);
 
-    void            SetBallonRect(RwV3d& vStart, RwV3d& vEnd);                      ///< 말풍선의 영역을 설정한다.
+    void            SetBallonRect(RwV3d& vStart, RwV3d& vEnd);                      ///< Sets the area of ??the speech bubble.
     RwV3d           GetBallonRectStart() {return m_vStartRect;}
     RwV3d           GetBallonRectEnd()   {return m_vEndRect;}
 
@@ -161,10 +161,10 @@ protected:
     void            CreateBalloon();
 
 protected:        
-    RwV3d               m_vStartRect;                   ///< 말풍선 시작영역
-    RwV3d               m_vEndRect;                     ///< 말풍선 끝 영역
-    RwReal              m_fInstanceTime;                ///< 말풍선 생성 빈도 (초단위)
-    RwReal              m_fLifeTime;                    ///< 생성 시간
+    RwV3d               m_vStartRect;                   ///< speech bubble starting area
+    RwV3d               m_vEndRect;                     ///< end area of ??speech bubble
+    RwReal              m_fInstanceTime;                ///< Frequency of speech bubble creation (in seconds)
+    RwReal              m_fLifeTime;                    ///< creation time
     RwUInt32            m_uiTableIdx;
 
 };
@@ -174,7 +174,7 @@ class CNtlSobNpc;
 
 /**
  * \ingroup NtlSimulation
- * \brief   심판 연출 노드
+ * \brief Judgment rendering node
  *
  * \date 2008-07-28
  * \author agebreak
@@ -222,7 +222,7 @@ public:
 		EAnimPlayType					eAnimPlayType;		
 		RwBool							bAnimStart;
 		RwV3d							v3RefreePos;	
-		RwV3d							vTargetPos;                            ///< 이동할 타겟 위치
+		RwV3d							vTargetPos;                            ///< Target location to move to
 		RwV3d							vOrisinalPos;
 		RwReal							fDelayTime;
 		RwReal							fMoveSpeed;
@@ -291,5 +291,5 @@ protected:
 	sMoveInfo			m_MoveInfo;
 
 protected:    
-	CNtlSobNpc*         m_pRefreeActor;                                      ///< 심판 Actor 객체 포인터
+	CNtlSobNpc*         m_pRefreeActor;                                      ///< Judgment Actor object pointer
 };

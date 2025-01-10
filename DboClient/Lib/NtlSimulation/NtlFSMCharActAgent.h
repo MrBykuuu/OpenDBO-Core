@@ -2,7 +2,7 @@
  *
  * File			: NtlFSMCharActAgent.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2006. 2. 9	
  * Abstract		: character act agent class
  *****************************************************************************
@@ -13,10 +13,10 @@
 #ifndef __NTL_FSM_CHARACT_AGENT_H__
 #define __NTL_FSM_CHARACT_AGENT_H__
 
-// shared
+// Shared
 #include "NtlCharacter.h"
 
-// simulation
+// Simulation
 #include "NtlFSMAgent.h"
 #include "NtlSobActor.h"
 #include "NtlSobCharProxy.h"
@@ -32,19 +32,19 @@ union UCharActModeFlag
 {
 	struct 
 	{
-		RwUInt32 bitSitDown : 1;			// true면 앉기 , false면 일어서기.
-		RwUInt32 bitCharging : 1;			// true이면 charging
-		RwUInt32 bitFightingMode : 1;		// 공격 모드.
-		RwUInt32 bitClickDisable : 1;		// 클릭 금지.
+		RwUInt32 bitSitDown : 1;			//If true, sit down, if false, stand up.
+		RwUInt32 bitCharging : 1;			//If true, charging
+		RwUInt32 bitFightingMode : 1;		// Attack mode.
+		RwUInt32 bitClickDisable : 1;		// No clicking.
 		RwUInt32 bitClientUIDisable : 1;	// Prohibit client UI output.
-		RwUInt32 bitAttackDisallow : 1;		// 공격 불가 모드.
-		RwUInt32 bitDirectMode : 1;			// 연출 상태인가?
-		RwUInt32 bitAutoRun : 1;			// auto run인가?
-        RwUInt32 bitSequela : 1;            // 변신 휴유증 상태인가?
-        RwUInt32 bitTransparent : 1;        // 투명 상태인가? (GM용)
-        RwUInt32 bitInvisible : 1;          // 투명 상태인가? (몹 스킬)
-        RwUInt32 bitHidingKi : 1;           // 기 숨기기 상태인가?
-        RwUInt32 bitEmergency : 1;          // 빈사 상태 인가?
+		RwUInt32 bitAttackDisallow : 1;		// No attack mode.
+		RwUInt32 bitDirectMode : 1;			// Is it staged?
+		RwUInt32 bitAutoRun : 1;			// Is it auto run?
+        RwUInt32 bitSequela : 1;            // Is it a state of transformation aftereffects?
+        RwUInt32 bitTransparent : 1;        // Is it transparent? (for GM)
+        RwUInt32 bitInvisible : 1;          // Is it transparent? (mob skill)
+        RwUInt32 bitHidingKi : 1;           // Is it in hiding mode?
+        RwUInt32 bitEmergency : 1;          // Is he in a moribund state?
 		RwUInt32 bitAirState : 1;
 	};
 
@@ -71,9 +71,9 @@ protected:
 	CNtlSobProxySystemEffect		*m_pSystemEffectColor;
     CNtlSobProxySystemEffect*       m_pSystemInvisible;
     CNtlSobProxySystemEffect*       m_pSystemGMAlpha;
-    CNtlSobProxySystemEffect*       m_pSystemHidingKi;          ///< 기 숨기기용 알파 이펙트	
+    CNtlSobProxySystemEffect*       m_pSystemHidingKi;          ///< Alpha effect for hiding	
 
-    // 컨디션 관련 이펙트
+    // Condition-related effects
     CNtlPLEntity					*m_pConditionTaunt;
     CNtlPLEntity					*m_pConditionConfuse;
     CNtlPLEntity					*m_pConditionTerror;  
@@ -83,12 +83,12 @@ protected:
 
 protected:
 
-	// simulation 객체의 서버 상태가 변환때 이벤트로 변환.
+	// Converts to an event when the server state of the simulation object is converted.
 	virtual void ServerStateUpdateAnalysis(SNtlEventSobServerUpdateState *pServerState);
 	virtual void ServerConditionUpdateAnalysis(RwUInt8 byServerState, RwUInt64 uiCondition);
     virtual void ServerAspectUpdateAnalysis(sASPECTSTATE& sAspectState, RwBool bCreateUpdate);
 
-    // Simulation 객체가 Update 되면서 받는 상태 변환 함수들
+    // State conversion functions received when the Simulation object is updated
 	void ServerStateSpawn(sCHARSTATE *pServerState);
 	void ServerStateStanding(sCHARSTATE *pServerState);
 	void ServerStateCharging(sCHARSTATE *pServerState);
@@ -119,11 +119,11 @@ protected:
 	void ServerStateLeaving(sCHARSTATE *pServerState);
     void ServerStateRideOn(sCHARSTATE *pServerState);
     void ServerStateTurning(sCHARSTATE *pServerState);
-    void ServerStateKeepingEffect(sCHARSTATE* pServerState);                    ///< 스킬 Action LOOP
+    void ServerStateKeepingEffect(sCHARSTATE* pServerState);                    ///< Skill Action LOOP
 	void ServerStateAirJump(sCHARSTATE* pServerState);
 	void ServerStateAirDashAccel(sCHARSTATE* pServerState);
 
-	// simulation 객체가 처음 생길때 서버 상태에 따른 변환.
+	// Conversion according to server status when a simulation object is first created.
 	virtual void ServerStateCreateAnalysis(sCHARSTATE *pCharState);
 
 	void ServerStateCreateStanding(sCHARSTATE *pServerState);
@@ -159,11 +159,11 @@ protected:
 	void ServerStateCreateAirJump(sCHARSTATE *pServerState);
 	void ServerStateCreateAirAccel(sCHARSTATE *pServerState);
 
-	// simulation 객체의 Aspect 상태 변화에 따른 변환.
+	// Conversion according to the aspect state change of the simulation object.
 	void ServerAspectCreateStateVehicle(sASPECTSTATE *pServerAspectState);
 	void ServerAspectStateVehicle(sASPECTSTATE *pServerAspectState);
 
-	// simulation 객체의 다음 상태에 대한 처리 함수.
+	// Processing function for the next state of the simulation object.
 	RwUInt32 AcquireFightingProc(void);
 	RwUInt32 AcquireSkillActionProc(void);
 	RwUInt32 AcquireHTBProc(void);
@@ -177,7 +177,7 @@ public:
 	
 	virtual void			Update(RwReal fElapsed);
 	virtual RwUInt32		HandleEvents(RWS::CMsg &pMsg);	
-	virtual RwUInt32		AcquireNextState(RwUInt32 uiCurrStateId);      ///< Next State를 결정한다.
+	virtual RwUInt32		AcquireNextState(RwUInt32 uiCurrStateId);      ///< Decide on Next State.
 
 	virtual void			NotifyUpdateChangeState(RwUInt32 uiOldState, RwUInt32 uiNextState);
 	virtual void			NotifyEvents(RWS::CMsg &pMsg, RwUInt32 uiEventResult, RwUInt32 uiParam1, RwUInt32 uiParam2); ///< event notify function.
@@ -191,7 +191,7 @@ public:
 	void					SetActiveAdjustPosition(RwBool bActive);
 	RwBool					IsActiveAdjustPosition(void);
 
-    //-- 상태 State 설정/반환 함수들
+    //-- State setting/return functions
 	void					SetFightingMode(RwBool bFightingMode);
 	RwBool					IsFightingMode(void);
 
@@ -233,23 +233,23 @@ public:
     void                    SetHidingKi(RwBool bHidingKi);
     RwBool                  IsHidingKi();
 
-    void                    SetEmergency(RwBool bEmergency);            ///< 빈사 상태인지 설정한다
-    RwBool                  IsEmergency();                              ///< 빈사 상태인지 반환한다.
+    void                    SetEmergency(RwBool bEmergency);            ///< Set whether it is in a dying state or not
+    RwBool                  IsEmergency();                              ///< Returns whether it is in a dying state.
 
     CNtlPLEntity*			CreateVisualSystemEffect(const RwChar *pKey);
 
-	//-- condition 처리
+	//-- condition processing
 	
 	void					ConditionVisualColorFlickering(RwUInt64 uiServerCondition);
 	void					ConditionVisualColorFlickeringPop(void);
 	void					ConditionDiff(RwUInt64 uiServerCondition);
-    void                    ConditionTaunt(RwBool bAffect);                          ///< 도발    
-    void                    ConditionAfterEffect(RwBool bAffect);                    ///< 변신 휴유증 처리
-    void                    ConditionConfused(RwBool bAffect);                       ///< 혼란 처리
-    void                    ConditionTerror(RwBool bAffect);                         ///< 공포 처리
-    void                    ConditionTransparent(RwBool bAffect);                    ///< 캐릭터 투명 처리 (GM용)
-    void                    ConditionInvisible(RwBool bAffect);                      ///< 숨기 (몹용)
-    void                    ConditionHidingKi(RwBool bAffect);                       ///< 기 숨기기
+    void                    ConditionTaunt(RwBool bAffect);                          ///< provocation    
+    void                    ConditionAfterEffect(RwBool bAffect);                    ///< Treatment of transformation aftereffects
+    void                    ConditionConfused(RwBool bAffect);                       ///< Confusion handling
+    void                    ConditionTerror(RwBool bAffect);                         ///< Fear processing
+    void                    ConditionTransparent(RwBool bAffect);                    ///< Character transparency (for GM)
+    void                    ConditionInvisible(RwBool bAffect);                      ///< Hide (for mobs)
+    void                    ConditionHidingKi(RwBool bAffect);                       ///< Hide flag
 	void                    ConditionBleed(RwBool bAffect);
 	void                    ConditionPoison(RwBool bAffect);
 	void                    ConditionStomach(RwBool bAffect);

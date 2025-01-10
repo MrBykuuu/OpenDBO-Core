@@ -2,7 +2,7 @@
  *
  * File			: NtlFSMAgent.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2006. 2. 9	
  * Abstract		: FSM agent base class
  *****************************************************************************
@@ -46,15 +46,15 @@ public:
 	virtual void		NotifyUpdateChangeState(RwUInt32 uiOldState, RwUInt32 uiNextState);        ///< update notify function(state change).
 	virtual void		NotifyEvents(RWS::CMsg &pMsg, RwUInt32 uiEventResult, RwUInt32 uiParam1, RwUInt32 uiParam2); ///< event notify function.
 
-	virtual RwUInt32	AcquireNextState(RwUInt32 uiCurrStateId) = 0;      ///< Next State를 결정한다.	
-    void				SetController(const CNtlFSMController *pController);           ///< Agent에 Controller를 추가한다.
+	virtual RwUInt32	AcquireNextState(RwUInt32 uiCurrStateId) = 0;      ///< Decide on Next State.	
+    void				SetController(const CNtlFSMController *pController);           ///< Add Controller to Agent.
 
-    virtual void		AddEvent(RWS::CMsg &pMsg);                             ///< Agent에 Event를 Queuing 한다.
-	virtual void		RemoveAllEvents(void);                                 ///< Agent에 Queuing된 모든 Event를 삭제한다.
-	virtual void		EventProc(void);                                       ///< Agent에 Queuing된 Event를 처리한다.
+    virtual void		AddEvent(RWS::CMsg &pMsg);                             ///< Queuing the event to the agent.
+	virtual void		RemoveAllEvents(void);                                 ///< Delete all events queued in the Agent.
+	virtual void		EventProc(void);                                       ///< Processes events queued to the Agent.
 	RwBool				IsQueuingEventExist(void);
 
-    //-- 게임적인 속성값들을 얻어오는 함수들
+    //--Functions that obtain game property values
     virtual RwBool		IsFightingMode(void);
 	virtual RwBool		IsAirMode(void);
 	virtual RwBool		IsClickDisable(void);

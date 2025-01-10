@@ -1,7 +1,7 @@
 #include "precomp_dboclient.h"
 #include "Windowby3.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
 VOID CWindowby3::SetType(RwUInt8 byWinType)
@@ -34,7 +34,7 @@ VOID CWindowby3::SetSize(RwUInt32 uiWidth, RwUInt32 uiHeight)
 {
 	m_bSetSize = TRUE;
 
-	// 윈도우 위치 조정
+	// Adjust window position
 	CRectangle rect[WINDOWS_NUM];
 	m_Window[0].GetRect(rect[0]);
 	m_Window[1].GetRect(rect[1]);

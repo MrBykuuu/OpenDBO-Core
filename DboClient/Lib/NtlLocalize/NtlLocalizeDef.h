@@ -4,7 +4,7 @@
  * Author		: HyungSuk, Jang
  * Copyright	: (주)NTL
  * Date			: 2007. 3. 19	
- * Abstract		: Localizing에 따른 정의.
+ * Abstract		: Definition according to Localizing.
  *****************************************************************************
  * Desc         : 
  *
@@ -16,12 +16,12 @@
 
 
 //-------------------------------------------------------------------------
-// Localizing 인식자 정의 
+// Localizing recognizer definition
 //-------------------------------------------------------------------------
 
 // localize tupe.
-#define NTL_LOCALIZE_DEV			0x01		// 개발자
-#define NTL_LOCALIZE_GLOBAL			0x02		// 개발자
+#define NTL_LOCALIZE_DEV			0x01		//developer
+#define NTL_LOCALIZE_GLOBAL			0x02		//developer
 
 // localize config data
 #define MAX_LOCAL_ADDR				32

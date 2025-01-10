@@ -1,18 +1,18 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSLGuild.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "TextAllTable.h"
 #include "TableContainer.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 #include "NtlPLEmblemMaker.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSLGlobal.h"
@@ -203,14 +203,14 @@ VOID CNtlGuild::ChangeAllMemberDogiColor(RwUInt8 byGuildDogiColor, RwUInt8 byDoj
 		return;
 
 
-	// 아바타 도복 색상
+	// Avatar uniform color
 	pAvatar->SetGuildDogiColorIndex(m_byGuildDogiColorIndex);
 	pAvatar->SetDojoDogiColorIndex(m_byDojoDogiColorIndex);
 	Logic_SetDogiItemColor(pAvatar, pAvatar->GetRealDogiColorIndex());
 	Logic_SetDogiItemColor(pAvatar, pAvatar->GetRealDogiColorIndex(), TRUE);
 
 
-	// 유파원 도복 색상
+	// Yupawon uniform color
 	COMMUNITY_ITER it_list = m_listMember.begin();
 	for( ; it_list != m_listMember.end() ; ++it_list )
 	{
@@ -232,7 +232,7 @@ VOID CNtlGuild::ChangeMemberDogiColor(CHARACTERID charID, RwUInt8 byGuildDogiCol
 
 		if( pSobPlayer->GetCharID() == charID )
 		{
-			// 도복 색상
+			// Dobok color
 			pSobPlayer->SetGuildDogiColorIndex(byGuildDogiColor);
 			pSobPlayer->SetDojoDogiColorIndex(byDojoDogiColor);
 			Logic_SetDogiItemColor(pSobPlayer, pSobPlayer->GetRealDogiColorIndex());
@@ -351,8 +351,8 @@ RwBool CNtlGuild::EnableUIDojoFunction(eDBO_GUILD_FUNCTION eFunctionIndex)
 
 RwBool CNtlGuild::IsHaveGroup()
 {
-	// GuildInfo 패킷이 오기 전에 길드 ID만 가지고 있다.
-	// GuildInfo 패킷에 포함된 길드 이름 여부로 길드 가입 여부를 판단하자
+	// Before the GuildInfo packet arrives, it only has the guild ID.
+	// Let’s determine whether to join a guild based on the guild name included in the GuildInfo packet.
 	if( wcslen(m_wszGuildName) > 0 )
 		return TRUE;
 
@@ -370,7 +370,7 @@ VOID CNtlGuild::HandleEvents(RWS::CMsg &pMsg)
 		{
 			case SLGE_GUILD_INFO:
 			{
-				// 이 데이터는 월드에 완전히 진입하고 나서 늦게 올 수도 있다
+				// This data may come later, after you have fully entered the world.
 				sDBO_GUILD_INFO* pDBO_GUILD_INFO = reinterpret_cast<sDBO_GUILD_INFO*>( pEvent->pData );
 
 				m_guildID = pDBO_GUILD_INFO->guildId;
@@ -390,7 +390,7 @@ VOID CNtlGuild::HandleEvents(RWS::CMsg &pMsg)
 				m_timeToDisband			= pDBO_GUILD_INFO->timeToDisband;
 
 
-				// 아바타는 따로 패킷을 받지 않는다
+				// Avatars do not receive separate packets
 				CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
 				CNtlSobCharProxy* pSobCharProxy = reinterpret_cast<CNtlSobCharProxy*>( pAvatar->GetSobProxy() );
 				CNtlSobCharDecorationProxy* pSobCharDecorationProxy = pSobCharProxy->GetDecorationProxy();
@@ -428,7 +428,7 @@ VOID CNtlGuild::HandleEvents(RWS::CMsg &pMsg)
 						++m_iOnlineMember;
 
 
-					// 처음 길드에 들어가면 맴버 정보를 먼저 받고 이후 길드 조직에 관한 정보를 받는다
+					// When you first enter a guild, you first receive member information and then information about the guild organization.
 					if( IsHaveGroup() )
 					{
 						ChangeMemberDogiColor(pMember->charID, m_byGuildDogiColorIndex, m_byDojoDogiColorIndex);
@@ -452,10 +452,10 @@ VOID CNtlGuild::HandleEvents(RWS::CMsg &pMsg)
 				CHARACTERID avatarID = pAvatar->GetCharID();
 				if( avatarID == pEvent->uiParam )
 				{
-					// 내가 강퇴 당했다					
+					// I was kicked out.					
 					CNtlSLEventGenerator::NotifyGuildEvent(SLGE_DISBAND);
 
-					// 아바타 도복 색상
+					// Avatar uniform color
 					pAvatar->SetGuildDogiColorIndex(INVALID_BYTE);
 					pAvatar->SetDojoDogiColorIndex(INVALID_BYTE);
 					Logic_SetDogiItemColor(pAvatar, INVALID_BYTE);
@@ -463,7 +463,7 @@ VOID CNtlGuild::HandleEvents(RWS::CMsg &pMsg)
 					
 					Leave();
 
-					// 머리 위 이름
+					// name above head
 					CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
 					Logic_SetHeadNameColor(pAvatar);
 				}
@@ -483,7 +483,7 @@ VOID CNtlGuild::HandleEvents(RWS::CMsg &pMsg)
 					ChangeMemberDogiColor(pMember->charID, INVALID_BYTE, INVALID_BYTE);
 
 
-					// 부길드장이라면 부길드장 정보 초기화
+					// If you are a deputy guild leader, reset the deputy guild leader information.
 					DismissSecondMaster(pEvent->uiParam);
 					DelMember(pEvent->uiParam);					
 
@@ -494,7 +494,7 @@ VOID CNtlGuild::HandleEvents(RWS::CMsg &pMsg)
 			}
 		case SLGE_APPOINT_MASTER:
 			{
-				// 부길드장이라면 부길드장 정보 초기화
+				// If you are a deputy guild leader, reset the deputy guild leader information.
 				DismissSecondMaster(pEvent->uiParam);
 				m_masterID = pEvent->uiParam;
 				CNtlSLEventGenerator::NotifyGuildEvent(SLGE_APPOINT_MASTER, pEvent->uiParam);
@@ -532,8 +532,8 @@ VOID CNtlGuild::HandleEvents(RWS::CMsg &pMsg)
 
 				Leave();
 
-				// 머리 위 이름
-				// 다른 길드원의 이름은 서버로부터 별도의 패킷으로 업데이트 된다
+				// name above head
+				// The names of other guild members are updated in separate packets from the server.
 				CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
 				Logic_SetHeadNameColor(pAvatar);
 
@@ -677,7 +677,7 @@ VOID CNtlGuild::HandleEvents(RWS::CMsg &pMsg)
 			}
 		case SLGE_DOGI_NFY:
 			{
-				// 실제 도복의 색상을 바꾸는 것은 이벤트를 보내는 곳에서 한다
+				// Changing the color of the actual gi is done at the place where the event is sent.
 				sDBO_DOGI_DATA* pDBO_DOGI_DATA = (sDBO_DOGI_DATA*)pEvent->pData;
 
 				m_byGuildDogiColorIndex	= pDBO_DOGI_DATA->byGuildColor;
@@ -722,7 +722,7 @@ VOID CNtlGuild::HandleEvents(RWS::CMsg &pMsg)
 		if( IsHaveGroup() == FALSE )
 			NTL_RETURNVOID();
 
-		// 길드 정보중 아바타의 위치정보는 서버에서 보내주지 않는다
+		// Among guild information, avatar location information is not sent from the server.
 		sNTL_EVENT_MAPNAME* pEvent = reinterpret_cast<sNTL_EVENT_MAPNAME*>( pMsg.pData );
 		CMapNameTextTable* pMapNameTextTable = API_GetTableContainer()->GetTextAllTable()->GetMapNameTbl();
 		CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();

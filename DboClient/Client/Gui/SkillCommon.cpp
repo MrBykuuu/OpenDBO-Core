@@ -1,7 +1,7 @@
 #include "precomp_dboclient.h"
 #include "SkillCommon.h"
 
-// simulation
+// Simulation
 #include "InputActionMap.h"
 #include "NtlSobManager.h"
 #include "NtlSobAvatar.h"
@@ -83,7 +83,7 @@ namespace SkillCommonLogic
 			{
 				if( !pAvatarAttr->m_bCanChangeClass )
 					eResult |= SRQ_FLAG_NOT_LEARN_CHANGECLASSRIGHT;
-				// else 밑으로 내려가사 사용가능 검사.
+				// Go down else and check availability.
 			}
 			else 
 			{
@@ -162,9 +162,9 @@ namespace SkillCommonLogic
 
 	RwUInt32 ExmineRQByHTB( sTBLDAT* pItemTblData )		
 	{
-		//SRQ_FLAG_NOT_LEARN_LEVEL = 0x02,					// 레벨이 낮아 스킬을 배울 수 없다.
-		//SRQ_FLAG_CAN_LEARN_BY_SKILLMASTER = 0x04,			// 스킬마스터에게 스킬을 배울 수 있다.
-		//SRQ_FLAG_LEARNED	= 0x0100,						// 이미 배운 스킬이다. 	
+		//SRQ_FLAG_NOT_LEARN_LEVEL = 0x02,					//The skill cannot be learned because the level is low.
+		//SRQ_FLAG_CAN_LEARN_BY_SKILLMASTER = 0x04,			//You can learn skills from the skill master.
+		//SRQ_FLAG_LEARNED	= 0x0100,						//This skill has already been learned. 	
 
 		CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
 		CNtlSobAvatarAttr* pAvatarAttr = reinterpret_cast<CNtlSobAvatarAttr*>( pAvatar->GetSobAttr() );

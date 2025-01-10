@@ -1,18 +1,18 @@
 #include "precomp_dboclient.h"
 #include "WareHouseGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "NPCTable.h"
 #include "MerchantTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLDef.h"
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSobItem.h"
 #include "NtlSobItemAttr.h"
@@ -24,7 +24,7 @@
 #include "NtlSLEventFunc.h"
 #include "NtlCameraController.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DboGlobal.h"
@@ -49,7 +49,7 @@ namespace
 	#define dSLOT_VER_GAP		40
 	#define dSLOT_HORI_GAP		40
 
-	#define dHEIGHT_GAP			30		// 공유 창고와 일반 창고의 높이 차이
+	#define dHEIGHT_GAP			30		// Height difference between shared warehouse and regular warehouse
 };
 
 
@@ -119,7 +119,7 @@ VOID CWarehouseGui::Init()
 {
 	CRectangle rect;
 
-	// 다이얼로그 이름 스태틱
+	// Dialog name static
 	rect.SetRectWH(DBOGUI_DIALOG_TITLE_X, DBOGUI_DIALOG_TITLE_Y, 145, 14);
 	m_pDialogName = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_pDialogName->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -135,11 +135,11 @@ VOID CWarehouseGui::Init()
 		m_pDialogName->SetText(GetDisplayStringManager()->GetString("DST_WAREHOUSE_NAME_COMMON"));
 	
 
-	// 창닫기 버튼
+	// Close window button
 	m_pExitButton= (gui::CButton*)GetComponent("btnExit");
 	m_slotCloseButton = m_pExitButton->SigClicked().Connect(this, &CWarehouseGui::ClickedCloseButton);
 
-	// 아이템 슬롯
+	// item slot
 	for(RwInt32 i = 0 ; i < NTL_MAX_BANK_ITEM_SLOT ; ++i )
 	{
 		m_Slot[i].Create(m_pThis, (eDialogType)(DIALOG_WAREHOUSE_1 + m_byWarehouseIndex), REGULAR_SLOT_ITEM_SOB, SDS_COUNT | SDS_LOCK);
@@ -150,10 +150,10 @@ VOID CWarehouseGui::Init()
 			m_Slot[i].SetPosition_fromParent(dSLOT_START_X + dSLOT_VER_GAP*(i%dSLOT_ROW), dSLOT_START_Y + dSLOT_HORI_GAP*(i/dSLOT_COLUMN));
 	}
 
-	// 슬롯 포커스 이펙트
+	// slot focus effect
 	m_FocusEffect.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GameCommon.srf", "srfSlotFocusEffect") );
 
-	// 슬롯 셀렉트 이펙트
+	// Slot select effect
 	m_SelectEffect.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GameCommon.srf", "srfSlotGrayedEffect" ) );
 
 	LinkMsg(g_EventSobInfoUpdate);
@@ -162,7 +162,7 @@ VOID CWarehouseGui::Init()
 	LinkMsg(g_EventPickedUpHide);
 	LinkMsg(g_EventEnableItemIcon);
 
-	// sig
+	// Signals
 	m_slotMouseDown		= m_pThis->SigMouseDown().Connect( this, &CWarehouseGui::OnMouseDown );
 	m_slotMouseUp		= m_pThis->SigMouseUp().Connect( this, &CWarehouseGui::OnMouseUp );
 	m_slotMove			= m_pThis->SigMove().Connect( this, &CWarehouseGui::OnMove);
@@ -203,7 +203,7 @@ VOID CWarehouseGui::UpdateItems()
 				m_Slot[i].Clear();
 
 				if( pChildItemAttr->IsNeedToIdentify() )
-					// 미확인 아이템
+					// Unidentified item
 					m_Slot[i].SetSerialType(REGULAR_SLOT_ITEM_NOT_IDENTIFICATION);
 				else
 					m_Slot[i].SetSerialType(REGULAR_SLOT_ITEM_SOB);
@@ -308,7 +308,7 @@ VOID CWarehouseGui::OnMouseDown(const CKey& key)
 	{
 		m_iMouseDownSlot = iPtinSlot;
 
-		// 클릭 이벤트 시작
+		// Start click event
 		m_iClickEffectedSlot = iPtinSlot;	
 		m_Slot[m_iClickEffectedSlot].ClickEffect(TRUE);
 	}	
@@ -316,7 +316,7 @@ VOID CWarehouseGui::OnMouseDown(const CKey& key)
 
 VOID CWarehouseGui::OnMouseUp(const CKey& key)
 {
-	// 클릭 이벤트 종료	
+	// Click event ends	
 	if( m_iClickEffectedSlot != INVALID_INDEX )
 	{		
 		m_Slot[m_iClickEffectedSlot].ClickEffect(FALSE);
@@ -337,7 +337,7 @@ VOID CWarehouseGui::OnMouseUp(const CKey& key)
 			{
 				if( GetIconMoveManager()->IsActive() )
 				{
-					// 창고로 물건을 옮긴다			
+					// move goods to warehouse			
 					CNtlWarehouse* pWarehouses = GetNtlSLGlobal()->GetSobAvatar()->GetWarehouse();
 					GetIconMoveManager()->IconMovePutDown(PLACE_WAREHOUSE, pWarehouses->GetSlotSerailID(m_byWarehouseIndex), m_iMouseDownSlot);
 				}
@@ -347,13 +347,13 @@ VOID CWarehouseGui::OnMouseUp(const CKey& key)
 					{
 						if( key.m_dwVKey & UD_MK_CONTROL )
 						{
-							// 창고에서 아이템을 나누기 위해 계산기를 연다
+							// Open the calculator to divide the items in the warehouse
 							CRectangle rtScreen = m_pThis->GetScreenRect();
 							CDboEventGenerator::CalcPopupShow( TRUE, m_Slot[m_iMouseDownSlot].GetSerial(), PLACE_WAREHOUSE, rtScreen.left, rtScreen.top, m_Slot[m_iMouseDownSlot].GetCount() );
 						}
 						else
 						{
-							// 창고에서 물건을 집는다
+							// Picking up items from the warehouse
 							GetIconMoveManager()->IconMovePickUp(m_Slot[m_iMouseDownSlot].GetSerial(), PLACE_WAREHOUSE,
 								m_iMouseDownSlot, m_Slot[m_iMouseDownSlot].GetCount(), m_Slot[m_iMouseDownSlot].GetTexture(), 0, 0);	
 
@@ -374,7 +374,7 @@ VOID CWarehouseGui::OnMouseUp(const CKey& key)
 
 					if( uiBagIndex != INVALID_INDEX)
 					{
-						// 바로 가방으로 옮긴다
+						// Move it straight to the bag
 						Logic_ItemMoveProc(m_Slot[m_iMouseDownSlot].GetSerial(), PLACE_WAREHOUSE, (RwUInt8)m_iMouseDownSlot,
 							PLACE_BAG, hBagHandle, (RwUInt8)uiSlot_of_Bag, m_Slot[m_iMouseDownSlot].GetCount());
 
@@ -426,7 +426,7 @@ VOID CWarehouseGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 	{
 		FocusEffect(TRUE, iPtinSlot);
 
-		// 슬롯 클릭 이펙트
+		// slot click effect
 		if( m_iClickEffectedSlot != INVALID_INDEX )
 		{
 			if( m_iClickEffectedSlot == iPtinSlot )
@@ -533,7 +533,7 @@ VOID CWarehouseGui::HandleEvents( RWS::CMsg &msg )
 			NTL_RETURNVOID();
 
 
-		// 창고 정보를 업데이트 한다.
+		// Update warehouse information.
 		UpdateItems();
 	}
 	else if( msg.Id == g_EventCalcPopupResult )
@@ -544,7 +544,7 @@ VOID CWarehouseGui::HandleEvents( RWS::CMsg &msg )
 		{
 			CNtlSobItem* pItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( pData->uiSerial ) );
 
-			// 3개의 창고중에 해당 아이템을 가지고 있는 것을 찾는다
+			// Find one of the three warehouses that has the item.
 			if( m_Slot[pItem->GetItemSlotIdx()].GetSerial() != pItem->GetSerialID() )
 				return;
 		
@@ -559,7 +559,7 @@ VOID CWarehouseGui::HandleEvents( RWS::CMsg &msg )
 		if( pPacket->nSrcPlace != PLACE_WAREHOUSE )
 			return;
 
-		// 3개의 창고중에 해당 아이템을 가지고 있는 것을 찾는다
+		// Find one of the three warehouses that has the item.
 		if( m_Slot[pPacket->nSrcSlotIdx].GetSerial() != pPacket->uiSerial )
 			return;
 
@@ -630,11 +630,11 @@ RwBool CWarehouseCommonGui::Create()
 
 	Init();
 
-	// 제니 버튼
+	// Zenny button
 	m_pZennyButton = (gui::CButton*)GetComponent("btnZenny");
 	m_slotZennyButton = m_pZennyButton->SigClicked().Connect(this, &CWarehouseCommonGui::ClickedZennyButton);
 
-	// 제니 스태틱
+	// Zenny Static
 	rect.SetRectWH(56, 36, 82, 14);
 	m_pZenny = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_RIGHT );
 	m_pZenny->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);	
@@ -643,11 +643,11 @@ RwBool CWarehouseCommonGui::Create()
 
 	m_pMoneyIconTexture = Logic_CreateTexture( MONEYICON_NAME );
 
-	// 제니 슬롯 Destination 이미지
+	// Zenny Slot Destination Images
 	m_srfZennySlotDestination.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "BasicBag.srf", "srfMoneyBtnWayFocus" ) );
 	m_srfZennySlotDestination.SetPositionfromParent(31, 32);
 
-	// sig
+	// Signals
 	m_slotPostPaint		= m_pZennyButton->SigPaint().Connect( this, &CWarehouseCommonGui::OnPostPaint );
 
 	LinkMsg(g_EventIconMoveClick);
@@ -688,14 +688,14 @@ VOID CWarehouseCommonGui::ClickedZennyButton(gui::CComponent* pComponent)
 
 	if( GetIconMoveManager()->IsActive() )
 	{
-		// 제니 보관
+		// Zenny Archives
 		GetIconMoveManager()->IconMovePutDown(PLACE_SUB_WAREHOUSE_ZENNY, m_hNPCSerial, INVALID_INDEX);
 	}
 	else
 	{
 		if( m_uiZenny > 0 )
 		{
-			// 창고에 제니가 있다면...인출
+			// If there is Zenny in the warehouse...withdrawal
 			CRectangle rect = m_pZennyButton->GetScreenRect();
 			CDboEventGenerator::CalcPopupShow(TRUE, INVALID_SERIAL_ID, PLACE_SUB_WAREHOUSE_ZENNY, 
 				rect.right, rect.bottom, m_uiZenny);
@@ -731,14 +731,14 @@ VOID CWarehouseCommonGui::HandleEvents( RWS::CMsg &msg )
 
 		switch(pEvent->uiParam1)
 		{
-		case NESWUT_ADD_ZENNY:	// 창고에 제니가 늘었다
+		case NESWUT_ADD_ZENNY:	// There are more Zennys in the warehouse
 			{
 				m_uiZenny = GetNtlSLGlobal()->GetSobAvatar()->GetWarehouse()->GetZenny();
 				m_pZenny->SetText( m_uiZenny );
 
 				break;
 			}
-		case NESWUT_SUB_ZENNY:	// 창고에 제니가 줄었다
+		case NESWUT_SUB_ZENNY:	// Zenny has decreased in the warehouse.
 			{
 				m_uiZenny = GetNtlSLGlobal()->GetSobAvatar()->GetWarehouse()->GetZenny();
 				m_pZenny->SetText( m_uiZenny );
@@ -803,40 +803,40 @@ RwBool CWarehouseBarGui::Create()
 
 	m_pThis = (gui::CDialog*)GetComponent("dlgMain");
 
-	// 1번 창고 버튼
+	// Warehouse button 1
 	m_pWarehouseBtn[0] = (gui::CButton*)GetComponent("btn1");
 	m_pWarehouseBtn[0]->SetToolTip(GetDisplayStringManager()->GetString("DST_WAREHOUSE_NAME_1"));
 	m_pWarehouseBtn[0]->ClickEnable(false);
 	m_slotWarehouseBtn[0] = m_pWarehouseBtn[0]->SigClicked().Connect(this, &CWarehouseBarGui::Clicked_1_Button);
 
-	// 2번 창고 버튼
+	// Warehouse button 2
 	m_pWarehouseBtn[1] = (gui::CButton*)GetComponent("btn2");
 	m_pWarehouseBtn[1]->SetToolTip(GetDisplayStringManager()->GetString("DST_WAREHOUSE_NAME_2"));
 	m_pWarehouseBtn[1]->ClickEnable(false);
 	m_slotWarehouseBtn[1] = m_pWarehouseBtn[1]->SigClicked().Connect(this, &CWarehouseBarGui::Clicked_2_Button);
 
-	// 3번 창고 버튼
+	// Warehouse button 3
 	m_pWarehouseBtn[2] = (gui::CButton*)GetComponent("btn3");
 	m_pWarehouseBtn[2]->SetToolTip(GetDisplayStringManager()->GetString("DST_WAREHOUSE_NAME_3"));
 	m_pWarehouseBtn[2]->ClickEnable(false);
 	m_slotWarehouseBtn[2] = m_pWarehouseBtn[2]->SigClicked().Connect(this, &CWarehouseBarGui::Clicked_3_Button);
 
-	// 공유 창고 버튼
+	// Share warehouse button
 	m_pWarehouseBtn[3] = (gui::CButton*)GetComponent("btnCommon");
 	m_pWarehouseBtn[3]->SetToolTip(GetDisplayStringManager()->GetString("DST_WAREHOUSE_NAME_COMMON"));
 	m_pWarehouseBtn[3]->ClickEnable(false);
 	m_slotWarehouseBtn[3] = m_pWarehouseBtn[3]->SigClicked().Connect(this, &CWarehouseBarGui::Clicked_Common_Button);
 
-	// 모든 창고 버튼
+	// All warehouse buttons
 	m_p_All_Button = (gui::CButton*)GetComponent("btnAll");
 	m_p_All_Button->SetToolTip(GetDisplayStringManager()->GetString("DST_WAREHOUSE_ALL"));
 	m_slot_All_Button = m_p_All_Button->SigClicked().Connect(this, &CWarehouseBarGui::ClickedAllButton);
 
-	// 창닫기 버튼
+	// Close window button
 	m_pExitButton= (gui::CButton*)GetComponent("btnExit");
 	m_slotCloseButton = m_pExitButton->SigClicked().Connect(this, &CWarehouseBarGui::ClickedCloseButton);
 
-	// sig
+	// Signals
 	m_slotMove			= m_pThis->SigMove().Connect( this, &CWarehouseBarGui::OnMove );	
 	m_slotCaptureMouseDown = GetNtlGuiManager()->GetGuiManager()->SigCaptureMouseDown().Connect( this, &CWarehouseBarGui::OnCaptureMouseDown );
 
@@ -877,7 +877,7 @@ SERIAL_HANDLE CWarehouseBarGui::GetNPCSerial()
 
 VOID CWarehouseBarGui::Clicked_1_Button(gui::CComponent* pComponent)
 {
-	// 기본 창고
+	// basic warehouse
 	GetDialogManager()->SwitchDialog(DIALOG_WAREHOUSE_1);
 }
 
@@ -904,7 +904,7 @@ VOID CWarehouseBarGui::Clicked_Common_Button(gui::CComponent* pComponent)
 
 VOID CWarehouseBarGui::ClickedAllButton(gui::CComponent* pComponent)
 {
-	// 창고가 하나라도 열려있다면 전부 닫는다
+	// If even one warehouse is open, close it all.
 	RwBool bOpen = FALSE;
 
 	CNtlWarehouse* pWarehouse = GetNtlSLGlobal()->GetSobAvatar()->GetWarehouse();
@@ -944,7 +944,7 @@ VOID CWarehouseBarGui::ClickedAllButton(gui::CComponent* pComponent)
 
 VOID CWarehouseBarGui::ClickedCloseButton(gui::CComponent* pComponent)
 {
-	// 서버에 창고 이용이 끝났음을 알린다
+	// Notifies the server that the warehouse has been used
 	GetDboGlobal()->GetGamePacketGenerator()->SendBankEnd();
 }
 
@@ -990,7 +990,7 @@ RwInt32 CWarehouseBarGui::SwitchDialog(bool bOpen)
 			Show(false);
 			Logic_CancelNpcFacing();
 
-			// 창고 아이템을 버리려고 띄운 메세지 박스를 닫는다
+			// Close the message box that appears to discard the warehouse item.
 			CMsgBoxManager::LIST_MSGBOX listMSGBOX;
 			GetMsgBoxManager()->GetMsgBox("DST_ITEM_CONFIRM_DROP", &listMSGBOX);
 
@@ -1036,7 +1036,7 @@ VOID CWarehouseBarGui::HandleEvents( RWS::CMsg &msg )
 
 		m_hNPCSerial = pData->hSerialId;
 
-		// 창고 열기를 서버에 요청한다
+		// Request the server to open the warehouse
 		RwBool	bPacketLock		= FALSE;
 		bool	bSendSuccess	= GetDboGlobal()->GetGamePacketGenerator()->SendBankStart(m_hNPCSerial, &bPacketLock);
 
@@ -1059,10 +1059,10 @@ VOID CWarehouseBarGui::HandleEvents( RWS::CMsg &msg )
 		{
 		case NESWUT_WAREHOUSE_START:
 			{
-				// 창고 컨트롤 바 열기
+				// Open warehouse control bar
 				GetDialogManager()->OpenDialog(DIALOG_WAREHOUSEBAR, pEvent->hSerialId, FALSE);
 
-				// 창고 열기					
+				// Open warehouse					
 				CNtlWarehouse* pWarehouse = GetNtlSLGlobal()->GetSobAvatar()->GetWarehouse();
 				for(RwUInt8 i = 0 ; i < NTL_MAX_BANKSLOT_COUNT ; ++i)
 				{
@@ -1071,10 +1071,10 @@ VOID CWarehouseBarGui::HandleEvents( RWS::CMsg &msg )
 				}
 				NTL_ASSERT(pWarehouse->GetSlotSerailID(0) != INVALID_SERIAL_ID, "CWarehouseBarGui::HandleEvents, Not exist bagic warehouse");
 
-				// 가방 열기
+				// open bag
 				GetDialogManager()->SwitchBag( TRUE );
 
-				// NPC 번호
+				// NPC number
 				m_hNPCSerial = pEvent->hSerialId;
 				((CWarehouseCommonGui*)m_pWareHouseGui[NTL_COMMON_WAREHOUSE])->SetNPCHandle(m_hNPCSerial);
 
@@ -1132,12 +1132,12 @@ VOID CWarehouseBarGui::HandleEvents( RWS::CMsg &msg )
 	}	
 	else if( msg.Id == g_EventCharObjDelete )
 	{
-		// 갑자기 캐릭터가 사라졋다
+		// The character suddenly disappeared
 		SERIAL_HANDLE* pDeleteSerial = reinterpret_cast<SERIAL_HANDLE*>( msg.pData );
 
 		if( m_hNPCSerial == *pDeleteSerial )
 		{
-			// 서버에 창고 이용이 끝났음을 알린다
+			// Notifies the server that the warehouse has been used
 			GetDboGlobal()->GetGamePacketGenerator()->SendBankEnd();
 		}
 	}
@@ -1149,7 +1149,7 @@ VOID CWarehouseBarGui::HandleEvents( RWS::CMsg &msg )
 		{
 			if( pEvent->iType == DIALOGEVENT_NPC_BYEBYE )
 			{
-				// 서버에 창고 이용이 끝났음을 알린다
+				// Notifies the server that the warehouse has been used
 				GetDboGlobal()->GetGamePacketGenerator()->SendBankEnd();
 			}
 			else if( pEvent->iType == DIALOGEVENT_OPEN_FAIL_NPC_DIALOG )

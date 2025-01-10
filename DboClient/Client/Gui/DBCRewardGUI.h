@@ -16,20 +16,20 @@ class CNtlWorldConceptDBC;
 
 #define REWARD_LIST_MAX_VISIBLE		4
 
-/// 보상 GUI 상태
+/// Reward GUI status
 enum ERewardUIStatus
 {
-	E_REWARD_STATUS_SELECT,			///< 보상 선택 단계
-	E_REWARD_STATUS_CONFIRM,		///< 보상 확인 단계
+	E_REWARD_STATUS_SELECT,			///< Reward selection step
+	E_REWARD_STATUS_CONFIRM,		///< Reward confirmation step
 };
 
 
-/// 보상 항목들의 트리 구조를 구성하는 노드
+/// Nodes that make up the tree structure of reward items
 struct SRewardItem
 {
 	sDRAGONBALL_REWARD_TBLDAT* pData;			///< Reward Table Data
 	SRewardItem* pParent;
-	std::vector<SRewardItem*> itemChild;	///< 자식 아이템들
+	std::vector<SRewardItem*> itemChild;	///< Child Items
 
 	SRewardItem()
 	{
@@ -48,7 +48,7 @@ struct SRewardItem
 
 /**
  * \ingroup Client
- * \brief 용신 소환후 소원보상 GUI
+*  \brief Wish reward GUI after summoning the Dragon God
  * \date 2007-06-24
  * \author agebreak
  */
@@ -68,11 +68,11 @@ public:
 	// Event
 	VOID		HandleEvents(RWS::CMsg &pMsg);
 
-	// 싱글톤 생성/제거 
+	 // create/remove singleton
 	static	void	CreateInstance();
 	static	void	DeleteInstance();
 
-	VOID			AdjustDialog();							///< 다이얼로그 위치를 정렬
+	VOID			AdjustDialog();							///< Align dialog position
 
 protected:
 	// CallBack
@@ -88,41 +88,40 @@ protected:
     VOID	OnCaptureWheelMove( RwInt32 nFlag, RwInt16 sDelta, CPos& pos );
 
 	
-	// 항목 선택 CallBack
+	// Select Item CallBack
 	gui::CButton*	OnCreateItem();
 	void			OnDestroyItem(gui::CButton* pButton);
 	void			OnClickedItem(RwInt32 iIndex);
 
 
-	VOID			SetStatus(ERewardUIStatus eStatus);		///< 보상창 UI의 현재 상태를 설정한다.
+	VOID			SetStatus(ERewardUIStatus eStatus);		///< Set the current state of the reward window UI.
 	
 	void			ShowList(SRewardItem* pItem, RwInt32 nPos);
-	void			CreateRewardTree(SRewardItem* pParent, RwInt32 nDepth);						///< 보상 데이터들을 트리로 구축한다.
-	void			ShowItemInfo(SRewardItem* pItem);		///< 보상 아이템 정보를 표시한다.
-	void			UnLockDragonBall();						///< Lock을건 드래곤볼들을 모두 UnLock한다.	
-	RwBool			IsExistSkill(RwUInt32 nTblIdx);			///< 이미 가지고 있는 스킬인지 확인한다.	
+	void			CreateRewardTree(SRewardItem* pParent, RwInt32 nDepth);						///< Build reward data into a tree.
+	void			ShowItemInfo(SRewardItem* pItem);		//< Displays reward item information.
+	void			UnLockDragonBall();						///< Unlocks all locked dragon balls.
+	RwBool			IsExistSkill(RwUInt32 nTblIdx);			///< Check if the skill is already available.
 
 protected:
-	static	CDBCRewardGUI*	m_pInstance;			///< 싱글톤 인스턴스 객체
+	static	CDBCRewardGUI*	m_pInstance;			///< Singleton instance object
 
 	WCHAR					m_pBuf[20];
-	RwBool					m_bDisplayHurryUp;		///< 시간이 없다라는 메시지를 표시했는지 유무 플래그
-	RwBool					m_bDelete;				///< 삭제할지 여부 플래그
-	DWORD					m_nDepthIdx;			///< 선택 항목 깊이의 인덱스 값	
-	DWORD					m_nPrevDepthIdx;		///< 이전 항목 깊이의 인덱스 값
-    RwInt32                 m_nBtnCount;            ///< 버튼 생성 갯수
+	RwBool					m_bDisplayHurryUp;		///< Flag to display the message that there is no time
+	RwBool					m_bDelete;				///< Flag to delete
+	DWORD					m_nDepthIdx;			///< Index value of the depth of the selected item
+	DWORD					m_nPrevDepthIdx;		///< Previous item Depth index value
+    RwInt32                 m_nBtnCount;            ///< number of buttons created	
 	
-	CTextTable*				m_pDBRewardTextTable;	///< 보상 관련 텍스트 테이블	
-	CDragonBallTable*		m_pDragonBallTable;		///< 드래곤볼 테이블
-	CDragonBallRewardTable* m_pDragonBallRewardTable; ///< 보상 테이블
+	CTextTable*				m_pDBRewardTextTable;	///< Reward related text table
+	CDragonBallTable*		m_pDragonBallTable;		///< Dragon Ball table
+	CDragonBallRewardTable* m_pDragonBallRewardTable; ///< Reward table
+	
+	SRewardItem				m_RewardItemRoot;		///< Root node of the reward item tree
+	SRewardItem*			m_pPrevItem;			///< One step up tree node
+	SRewardItem*			m_pRewardItem;			///< Final reward item
+	sTBLDAT*				m_pRewardItemTblData;	///< Table data of reward item
 
-	SRewardItem				m_RewardItemRoot;		///< 보상 아이템 트리의 루트 노드
-	SRewardItem*			m_pPrevItem;			///< 한단계전의 트리 노드
-	SRewardItem*			m_pRewardItem;			///< 최종 보상 아이템
-	sTBLDAT*				m_pRewardItemTblData;	///< 보상 아이템의 테이블 데이터		
-
-	CNtlWorldConceptDBC*	m_pWorldConceptDBC;		///< DBC Concept 컨트롤러
-
+	CNtlWorldConceptDBC*	m_pWorldConceptDBC;		///< DBC Concept controller
 
 	// gui
     gui::CPanel*            m_pPnlSelectMenu;
@@ -134,9 +133,9 @@ protected:
 	gui::CStaticBox*		m_pSttItemName;
 	gui::CStaticBox*		m_pSttItemText;	
 	gui::CScrollBar*		m_pScrollBar;
-	CSurfaceGui				m_sufItem;				///< 아이템의 Icon을 표시할 Surface
+	CSurfaceGui				m_sufItem;				/// < Surface to display the item's Icon
 
-	CButtonList<CDBCRewardGUI, SRewardItem*>	m_ButtonList;	///< 항목 버튼 리슽
+	CButtonList<CDBCRewardGUI, SRewardItem*>	m_ButtonList;	///< Item Button List
 
 	// slot
 	gui::CSlot				m_slotClickExitBtn;

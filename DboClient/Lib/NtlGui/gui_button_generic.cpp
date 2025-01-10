@@ -198,7 +198,7 @@ VOID CButton_Generic::OnMouseMove( INT nKey, INT nX, INT nY )
 	{
 		if( !m_bMouseEnter )
 		{
-			SetMouseEnter( TRUE );					// RenderSerface 보다 MouseEnter가 먼저 와야 한다. 
+			SetMouseEnter( TRUE );					//MouseEnter must come before RenderSerface.
 
 			if( !( m_bToggleMode && m_bToggled ) )
 				SetRenderSurface();		

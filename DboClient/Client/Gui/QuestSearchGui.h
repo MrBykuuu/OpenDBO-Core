@@ -1,20 +1,20 @@
 /******************************************************************************
-* File			: QuestSearchGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 5. 6
-* Abstract		: 
+*File			: QuestSearchGui.h
+*Author		    : Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2008. 5. 6
+*Abstract		: 
 *****************************************************************************
-* Desc			: 스카우터 메뉴에서 메뉴를 선택하여 존맵을 열고 퀘스트
-*				  서치를 한다
+*Desc			: Select the menu in the Scouter menu to open the zone map and do the quest.
+*                Do a search
 *****************************************************************************/
 
 #pragma once
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// dbo
+// Dbo
 #include "SurfaceGui.h"
 
 class CQuestSearchGui : public CNtlPLGui
@@ -59,7 +59,7 @@ protected:
 
 	gui::CFlash*		m_pFlashSearch;
 
-	RwV2d				m_v2MapPos;				///< 기준점이 되는 맵의 좌상단 위치
+	RwV2d				m_v2MapPos;				///< Location of the upper left corner of the map as the reference point
 	RwInt32				m_iAvatarXPos, m_iAvatarYPos;
 	MAP_QUEST_INFO		m_mapQuestInfo;
 };

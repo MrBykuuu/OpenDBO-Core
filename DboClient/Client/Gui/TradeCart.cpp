@@ -1,21 +1,21 @@
 #include "precomp_dboclient.h"
 #include "TradeCart.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "ItemTable.h"
 #include "NPCTable.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLDef.h"
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLGlobal.h"
 #include "NtlSobAvatar.h"
@@ -23,7 +23,7 @@
 #include "NtlSobItemAttr.h"
 #include "NtlSobManager.h"
 
-// dbo
+// Dbo
 #include "IconMoveManager.h"
 #include "DisplayStringManager.h"
 #include "DboLogic.h"
@@ -89,7 +89,7 @@ RwBool CTradeCart::Create()
 	char acSurfaceName[64];
 
 
-	// 천하제일 무도회의 상점카트인지 아닌지에 따라서 텍스처가 변한다
+	// The texture changes depending on whether it is the World's Best Martial Arts shopping cart or not.
 	switch(m_eTextureType)
 	{
 	case TRADECART_TEXTURE_NORMAL:
@@ -125,7 +125,7 @@ RwBool CTradeCart::Create()
 
 	m_pMoneyIconTexture = Logic_CreateTexture( MONEYICON_NAME );
 
-	// 다이얼로그 이름 스태틱
+	// Dialog name static
 	rect.SetRectWH(DBOGUI_DIALOG_TITLE_X, DBOGUI_DIALOG_TITLE_Y, 130, 14);
 	m_pDialogName = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_pDialogName->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -135,19 +135,19 @@ RwBool CTradeCart::Create()
 	m_pExitButton = (gui::CButton*)GetComponent( "ExitButton" );
 	m_slotCloseButton = m_pExitButton->SigClicked().Connect(this, &CTradeCart::ClickedCloseButton);
 
-	// 제니 버튼(유저 트레이드용 오른쪽 제니 버튼)
+	// Zenny Button (Right Zenny Button for User Trade)
 	m_pZennyButton = (gui::CButton*)GetComponent( "BtnZenny" );	
 	m_slotBtnZenny = m_pZennyButton->SigClicked().Connect(this, &CTradeCart::ClickedZennyButton);
 
-	// 구입 버튼
+	// purchase button
 	m_pBuyButton = (gui::CButton*)GetComponent( "BuyButton" );	
 	m_slotClickedBuy = m_pBuyButton->SigClicked().Connect(this, &CTradeCart::ClickedBuyButton);	
 
-	// 판매 버튼
+	// sale button
 	m_pSellButton = (gui::CButton*)GetComponent( "SellButton" );	
 	m_slotClickedSell = m_pSellButton->SigClicked().Connect(this, &CTradeCart::ClickedSellButton);
 
-	// 아이템 갯수 더하기/빼기 버튼
+	// Item count plus/minus buttons
 	RwInt32 iButtonX = 16;
 	for( RwInt32 i = 0 ; i < SLOTKIND_NUM ; ++i )
 	{		
@@ -164,7 +164,7 @@ RwBool CTradeCart::Create()
 				iButtonX += dGUI_BUY_SELL_SLOT_GAP;
 
 
-			// 아이템 갯수 더하기 버튼
+			// Item count plus button
 			rect.SetRectWH(iButtonX, iButtonY, 18, 15);
 			m_pUpButton[i][j] = NTL_NEW gui::CButton(rect, "",
 								GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "srfUpButtonUp" ),
@@ -176,7 +176,7 @@ RwBool CTradeCart::Create()
 			m_slotUpButton[i][j] = m_pUpButton[i][j]->SigClicked().Connect(this, &CTradeCart::ClickUpButton);
 
 
-			// 아이템 갯수 빼기 버튼
+			// Item count minus button
 			rect.SetRectWH(iButtonX + dGUI_BUTTON_HORI_GAP, iButtonY, 18, 15);
 			m_pDownButton[i][j] = NTL_NEW gui::CButton(rect, "",
 								GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "srfDownButtonUp" ),
@@ -220,40 +220,40 @@ RwBool CTradeCart::Create()
 			iSlotY += dGUI_SLOT_VERT_GAP;
 	}
 
-	// 총 구입 금액
+	// total purchase amount
 	rect.SetRectWH( 16, 406, 61, 16);
 	m_pTotalBuyMoney = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_RIGHT );
 	m_pTotalBuyMoney->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pTotalBuyMoney->SetText( "0");
 	m_pTotalBuyMoney->Enable(false);
 
-	// 총 판매 금액
+	// total sales amount
 	rect.SetRectWH( 114, 406, 61, 16);
 	m_pTotalSellMoney = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_RIGHT );
 	m_pTotalSellMoney->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pTotalSellMoney->SetText("1,234,567,890");
 	m_pTotalSellMoney->Enable(false);
 
-	// 슬롯 포커스 이펙트
+	// slot focus effect
 	m_FocusEffect.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GameCommon.srf", "srfSlotFocusEffect" ) );
 
-	// 사기 서페이스
+	// fraud surface
 	m_BuyBar.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "srfBuybar" ) );
 	m_BuyBar.SetPositionfromParent(16, 28);
 
-	// 팔기 서페이스
+	// selling surface
 	m_SellBar.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "srfSellbar" ) );
 	m_SellBar.SetPositionfromParent(133, 28);
 
-	// 받기 서페이스
+	// get surface
 	m_GiveBar.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "srfGivebar" ) );
 	m_GiveBar.SetPositionfromParent(16, 28);
 
-	// 주기 서페이스
+	// periodic surface
 	m_TakeBar.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "srfTakebar" ) );
 	m_TakeBar.SetPositionfromParent(133, 28);
 
-	// 왼쪽 잠김 서페이스
+	// Left locked surface
 	m_LeftLockSurface.SetType(CWindowby3::WT_HORIZONTAL);
 	m_LeftLockSurface.SetSurface( 0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "LockSurfaceUp" ) );
 	m_LeftLockSurface.SetSurface( 1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "LockSurfaceCenter" ) );
@@ -261,7 +261,7 @@ RwBool CTradeCart::Create()
 	m_LeftLockSurface.SetSize(m_LeftLockSurface.GetWidth(), 415);
 	m_LeftLockSurface.SetPositionfromParent(10, 46);
 	
-	// 오른쪽 잠김 서페이스
+	// Right locked surface
 	m_RightLockSurface.SetType(CWindowby3::WT_HORIZONTAL);
 	m_RightLockSurface.SetSurface( 0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "LockSurfaceUp" ) );
 	m_RightLockSurface.SetSurface( 1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( acSurfaceName, "LockSurfaceCenter" ) );
@@ -269,11 +269,11 @@ RwBool CTradeCart::Create()
 	m_RightLockSurface.SetSize(m_RightLockSurface.GetWidth(), 415);
 	m_RightLockSurface.SetPositionfromParent(108, 46);		
 
-	// 제니 슬롯 Destination 이미지
+	// Zenny Slot Destination Images
 	m_srfZennySlotDestination.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "TradeCart.srf", "srfBtnZennyFoc" ) );
 	m_srfZennySlotDestination.SetPositionfromParent(111, 404);
 
-	// Sig
+	// Signals
 	m_slotMouseDown		= m_pThis->SigMouseDown().Connect( this, &CTradeCart::OnMouseDown );
 	m_slotMouseUp		= m_pThis->SigMouseUp().Connect(this, &CTradeCart::OnMouseUp);
 	m_slotMove			= m_pThis->SigMove().Connect( this, &CTradeCart::OnMove );
@@ -354,7 +354,7 @@ VOID CTradeCart::ClearSlot(RwInt32 iSlotKind, RwInt32 iSlot)
 	}
 	else if( iSlotKind == SELL_SLOT )
 	{
-		// 가방으로 이벤트 보내기
+		// Send event to bag
 		if( m_SellSlotInfo[iSlot].NPCShopSellInfo.byPlace >= CONTAINER_TYPE_BAG_FIRST && 
 			m_SellSlotInfo[iSlot].NPCShopSellInfo.byPlace <= CONTAINER_TYPE_BAG_LAST )
 		{
@@ -453,13 +453,13 @@ VOID CTradeCart::ClickedZennyButton(gui::CComponent* pComponent)
 		if( GetIconMoveManager()->GetSrcPlace() != PLACE_SUB_BAG_ZENNY )
 			return;
 
-		// 제니 등록
+		// Zenny registration
 		GetIconMoveManager()->IconMovePutDown(PLACE_SUB_TRADECART_ZENNY, m_uiSubjectSerial, INVALID_INDEX);
 		m_uiTotalSellPrice = -1 * GetNtlSLGlobal()->GetAdjustZennyInfo()->GetAdjustZenny(SAdjustZennyInfo::USER_TRADE);
 	}
 	else
 	{
-		// 제니가 0 올려졌을 때에는 아무런 동작도 하지 않는다
+		// When Zenny is raised to 0, no action is taken.
 		if( m_uiTotalSellPrice == 0 )
 			return;
 
@@ -756,24 +756,24 @@ VOID CTradeCart::OnMouseUp(const CKey& key)
 	
 	for(RwInt32 i = 0 ; i < MAX_SLOT ; ++i )
 	{
-		// 구입 슬롯
+		// purchase slot
 		if( m_BuySlotInfo[i].slot.PtInRect((RwInt32)key.m_fX, (RwInt32)key.m_fY) )
 		{				
 			if( m_eDialogType == DIALOG_SHOPING_CART )
 			{
-				if( key.m_nID == UD_LEFT_BUTTON )	// 좌버튼
+				if( key.m_nID == UD_LEFT_BUTTON )	// Left button
 				{
 					if( !GetIconMoveManager()->IsActive() )
 						break;
 
-					// NPC 상점에서 메세지를 보낸 경우
+					// When a message is sent from an NPC store
 					if( GetIconMoveManager()->GetSrcPlace() == PLACE_NPCSHOP )
 					{
 						RegBuyItemByDrag(i);
 						GetIconMoveManager()->IconMoveEnd();
 					}					
 				}
-				else if( key.m_nID == UD_RIGHT_BUTTON )	// 우버튼
+				else if( key.m_nID == UD_RIGHT_BUTTON )	// Right button
 				{
 					if( GetIconMoveManager()->IsActive() )
 						break;
@@ -787,13 +787,13 @@ VOID CTradeCart::OnMouseUp(const CKey& key)
 				}	
 			}			
 
-			// 해당슬롯의 아무런 처리도 하지 않았을 때
+			// When no processing is done for the slot
 			break;
 		}
-		// 판매 슬롯
+		// sell slots
 		else if( m_SellSlotInfo[i].slot.PtInRect((RwInt32)key.m_fX, (RwInt32)key.m_fY) )
 		{	
-			if( key.m_nID == UD_LEFT_BUTTON )	// 좌버튼
+			if( key.m_nID == UD_LEFT_BUTTON )	// Left button
 			{
 				if( !GetIconMoveManager()->IsActive() )
 					break;
@@ -802,7 +802,7 @@ VOID CTradeCart::OnMouseUp(const CKey& key)
 				{
 					if( m_eDialogType == DIALOG_SHOPING_CART )
 					{
-						// 캐릭터 가방에서 메세지를 보낸 경우
+						// When a message is sent from a character bag
 						RegSellItemByDrag(i);
 						GetIconMoveManager()->IconMoveEnd();
 					}
@@ -813,7 +813,7 @@ VOID CTradeCart::OnMouseUp(const CKey& key)
 
 						if( m_SellSlotInfo[i].slot.GetSerial() == INVALID_SERIAL_ID )
 						{
-							// 아이템을 가방에서 옮겨왔다.
+							// The item was moved from the bag.
 							GetDboGlobal()->GetGamePacketGenerator()->SendTradeAddReq(m_uiSubjectSerial,
 								GetIconMoveManager()->GetSrcSerial(),
 								(RwUInt8)GetIconMoveManager()->GetStackCount() );
@@ -821,7 +821,7 @@ VOID CTradeCart::OnMouseUp(const CKey& key)
 					}
 				}		
 			}
-			else if( key.m_nID == UD_RIGHT_BUTTON ) // 우버튼
+			else if( key.m_nID == UD_RIGHT_BUTTON ) // Right button
 			{
 				if( GetIconMoveManager()->IsActive() )
 					break;
@@ -848,7 +848,7 @@ VOID CTradeCart::OnMouseUp(const CKey& key)
 				}
 			}
 
-			// 해당 슬롯의 아무런 처리도 하지 않았을 때
+			// When no processing is done for the slot
 			break;
 		}
 	}
@@ -885,12 +885,12 @@ VOID CTradeCart::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 {
 	FocusEffect(FALSE);	
 
-	// 아이템 정보를 표시하고 포커스 이펙트를 보여준다
+	// Display item information and show focus effects
 	for( RwInt8 i = 0 ; i < MAX_SLOT ; ++i )
 	{		
 		if( m_BuySlotInfo[i].slot.PtInRect(nX, nY) )
 		{
-			// 셀렉트 포커스
+			// select focus
 			FocusEffect(TRUE, BUY_SLOT, i);
 
 			if( GetIconMoveManager()->IsActive() )
@@ -900,7 +900,7 @@ VOID CTradeCart::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 			{
 				if( m_byInfoWindowIndex != i )
 				{
-					// 미확인 아이템
+					// Unidentified item
 					CRectangle rtScreen = m_pThis->GetScreenRect();
 					GetInfoWndManager()->ShowInfoWindow(TRUE, CInfoWndManager::INFOWND_UNIDENTIFIED_ITEM,
 														rtScreen.left + m_BuySlotInfo[i].slot.GetX_fromParent(),
@@ -926,7 +926,7 @@ VOID CTradeCart::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 				{
 					if( m_byInfoWindowIndex != i )
 					{
-						// 아이템의 업그레이드 효과를 표시하도록 수정
+						// Modified to display item upgrade effects
 						// 2008-01-09 by Kell
 						CRectangle rtScreen = m_pThis->GetScreenRect();
 						GetInfoWndManager()->ShowInfoWindow(TRUE, CInfoWndManager::INFOWND_ITEM_DATA,
@@ -941,7 +941,7 @@ VOID CTradeCart::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 			{
 				if( m_byInfoWindowIndex != i )
 				{
-					// 당신의 가방에 빈 공간이 모자랍니다
+					// There's not enough space in your bag
 					CRectangle rtScreen = m_pThis->GetScreenRect();
 					const WCHAR* pwcText = GetDisplayStringManager()->GetString("DST_TRADE_YOUR_BAG_NOT_ENOUGH");
 					GetInfoWndManager()->ShowInfoWindow(TRUE, CInfoWndManager::INFOWND_JUST_WTEXT,
@@ -956,7 +956,7 @@ VOID CTradeCart::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 		}
 		else if( m_SellSlotInfo[i].slot.PtInRect(nX, nY) )
 		{
-			// 셀렉트 포커스
+			// select focus
 			FocusEffect(TRUE, SELL_SLOT, i);
 
 			if( GetIconMoveManager()->IsActive() )
@@ -984,7 +984,7 @@ VOID CTradeCart::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 				{
 					if( m_byInfoWindowIndex != i )
 					{
-						// 상대의 가방에 빈 공간이 모자랍니다
+						// There is not enough space in the other person's bag.
 						CRectangle rtScreen = m_pThis->GetScreenRect();
 						const WCHAR* pwcText = GetDisplayStringManager()->GetString("DST_TRADE_THE_OTHERS_BAG_NOT_ENOUGH");
 						GetInfoWndManager()->ShowInfoWindow(TRUE, CInfoWndManager::INFOWND_JUST_WTEXT,
@@ -998,7 +998,7 @@ VOID CTradeCart::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 				{
 					if( m_byInfoWindowIndex != i )
 					{
-						// 미확인 아이템
+						// Unidentified item
 						CRectangle rtScreen = m_pThis->GetScreenRect();
 						GetInfoWndManager()->ShowInfoWindow(TRUE, CInfoWndManager::INFOWND_UNIDENTIFIED_ITEM,
 															rtScreen.left + m_SellSlotInfo[i].slot.GetX_fromParent(),
@@ -1061,7 +1061,7 @@ VOID CTradeCart::FocusEffect( RwBool bPush, RwInt32 iSlotKind /* =0 */, RwInt32 
 
 VOID CTradeCart::OpenCart(eDialogType eType, RwUInt32 uiSerial)
 {
-	// 트레이드 카트를 연 주체의 시리얼 번호
+	// Serial number of the entity that opened the trade cart
 	m_uiSubjectSerial = uiSerial;
 	
 	if( eType == DIALOG_SHOPING_CART )
@@ -1069,7 +1069,7 @@ VOID CTradeCart::OpenCart(eDialogType eType, RwUInt32 uiSerial)
 	else
 		GetDialogManager()->OpenDialog(eType);
 
-	// 가방을 연다
+	// open the bag
 	GetDialogManager()->SwitchBag( TRUE );
 }
 
@@ -1128,7 +1128,7 @@ VOID CTradeCart::AddItem(RwInt32 iSlotKind, RwInt32 iSlotY, RwInt32 iCount, RwUI
 				RwInt32 iNewCount = iCount + m_SellSlotInfo[iSlotY].slot.GetCount();
 				CNtlSobItemAttr* pSobItemAttr = m_SellSlotInfo[iSlotY].slot.GetSobItemAttr();
 
-				// 새로운 갯수가 자신이 가지고 있는 실제 아이템 갯수보다 많다면 리턴
+				// Return if the new number is greater than the actual number of items you have
 				if( iNewCount > pSobItemAttr->GetStackNum() )
 					return;
 
@@ -1143,7 +1143,7 @@ VOID CTradeCart::AddItem(RwInt32 iSlotKind, RwInt32 iSlotY, RwInt32 iCount, RwUI
 				if( !pSobItemAttr )
 					return;
 
-				// 새로운 갯수가 자신이 가지고 있는 실제 아이템 갯수보다 많다면 리턴
+				// Return if the new number is greater than the actual number of items you have
 				if( iNewCount > pSobItemAttr->GetStackNum() )
 					return;
 
@@ -1212,7 +1212,7 @@ VOID CTradeCart::RegBuyItemByDrag(RwInt32 iSlot)
 	RwUInt8 byMerchantTab	= (BYTE)GetIconMoveManager()->GetEXData1();
 	RwUInt8 byItemPos		= (BYTE)GetIconMoveManager()->GetSrcSlotIdx();
 
-	// 기간제 아이템
+	// Limited time item
 	if( eDURATIONTYPE_FLATSUM		== pITEM_DATA->byDurationType ||
 		eDURATIONTYPE_METERRATE		== pITEM_DATA->byDurationType )
 	{
@@ -1229,7 +1229,7 @@ VOID CTradeCart::RegBuyItemByDrag(RwInt32 iSlot)
 
 	if( m_BuySlotInfo[iSlot].slot.GetCount() <= 0 )
 	{
-		// 빈 슬롯이면 등록
+		// Register if slot is empty
 		RwInt32 iCount = GetIconMoveManager()->GetStackCount();	
 		RwInt32 iPrice = GetIconMoveManager()->GetEXData2();
 
@@ -1258,7 +1258,7 @@ VOID CTradeCart::RegBuyItemByDrag(RwInt32 iSlot)
 
 VOID CTradeCart::RegSellItemByDrag(RwInt32 iSlot)
 {
-	// 클라이언트와 서버의 Bag 인덱스가 다르기에 컨버트한다.			
+	// Convert because the bag index of the client and server are different.			
 	RwUInt32 uiSerial = GetIconMoveManager()->GetSrcSerial();	
 	CNtlSobItem* pSobItem =  reinterpret_cast<CNtlSobItem*>(GetNtlSobManager()->GetSobObject(uiSerial));
 	NTL_ASSERT(pSobItem, "CTradeCart::RegSellItemByDrag, Can not found sob item of the handle : " << uiSerial );
@@ -1267,7 +1267,7 @@ VOID CTradeCart::RegSellItemByDrag(RwInt32 iSlot)
 
 	if( pSobItemAttr->IsNeedToIdentify() )
 	{
-		// 팔 수 없는 아이템입니다
+		// This item cannot be sold
 		GetAlarmManager()->AlarmMessage("DST_TRADECART_CANNOT_SELL_ITEM");
 
 		return;
@@ -1290,7 +1290,7 @@ VOID CTradeCart::RegSellItemByDrag(RwInt32 iSlot)
 		return;
 	}
 			
-	// 이미 판매 슬롯에 등록된 아이템은 다른 슬롯에 등록할 수 없다.
+	// Items already registered in a sales slot cannot be registered in another slot.
 	for( RwInt32 i = 0 ; i < MAX_SLOT ; ++i )
 	{
 		if( i != iSlot )
@@ -1302,7 +1302,7 @@ VOID CTradeCart::RegSellItemByDrag(RwInt32 iSlot)
 
 	if( m_SellSlotInfo[iSlot].slot.GetCount() <= 0 )
 	{
-		// 빈 슬롯이면 등록
+		// Register if slot is empty
 		CRectangle rect = m_pThis->GetScreenRect();				
 		RwInt32 iCount = GetIconMoveManager()->GetStackCount();
 		RwUInt32 uiPrice = pITEM_TBLDAT->dwSell_Price;
@@ -1311,19 +1311,19 @@ VOID CTradeCart::RegSellItemByDrag(RwInt32 iSlot)
 		m_SellSlotInfo[iSlot].slot.SetIcon(uiSerial, iCount);
 		m_SellSlotInfo[iSlot].slot.SetPrice(uiPrice);
 
-		// 가방 번호
+		// bag number
 		m_SellSlotInfo[iSlot].NPCShopSellInfo.byPlace = (BYTE)Logic_WhichBagHasItem(uiSerial);
 
-		// 가방 안의 슬롯 인덱스
+		// Slot index in bag
 		m_SellSlotInfo[iSlot].NPCShopSellInfo.byPos = (BYTE)GetIconMoveManager()->GetSrcSlotIdx();		
 
-		// 갯수
+		// number
 		AddItemCount(SELL_SLOT, iSlot, iCount, pITEM_TBLDAT->tblidx);
 
-		// 가격
+		// price
 		CalcTotalSellPrice();
 
-		// 가방으로 이벤트 보내기
+		// Send event to bag
 		RwInt8 iBagIndex = Logic_ConvertContainerTypeToBagIdx(m_SellSlotInfo[iSlot].NPCShopSellInfo.byPlace);
 		CDboEventGenerator::DialogEvent(DIALOGEVENT_BEGIN_TRADING_ITEM_IN_BAG, PLACE_TRADECART, PLACE_BAG, 
 			iBagIndex, m_SellSlotInfo[iSlot].NPCShopSellInfo.byPos, uiSerial);
@@ -1344,7 +1344,7 @@ VOID CTradeCart::RegBuyItemByEvent(RwInt32 iSlot, SDboEventShop& TradeInfo)
 	}
 
 
-	// 기간제 아이템
+	// Limited time item
 	if( eDURATIONTYPE_FLATSUM		== pITEM_DATA->byDurationType ||
 		eDURATIONTYPE_METERRATE		== pITEM_DATA->byDurationType )
 	{
@@ -1383,7 +1383,7 @@ VOID CTradeCart::RegSellItemByEvent(RwInt32 iSlot, SDboEventShop& TradeInfo)
 
 	if( pSobItemAttr->IsNeedToIdentify() )
 	{
-		// 팔 수 없는 아이템
+		// Items that cannot be sold
 		GetAlarmManager()->AlarmMessage("DST_ITEM_CAN_NOT_SELL");
 		return;
 	}
@@ -1393,7 +1393,7 @@ VOID CTradeCart::RegSellItemByEvent(RwInt32 iSlot, SDboEventShop& TradeInfo)
 
 	if( Logic_IsCanSellItem( pSobItemAttr ) == FALSE )
 	{
-		// 팔 수 없는 아이템
+		// Items that cannot be sold
 		GetAlarmManager()->AlarmMessage("DST_ITEM_CAN_NOT_SELL");
 		return;
 	}
@@ -1409,25 +1409,25 @@ VOID CTradeCart::RegSellItemByEvent(RwInt32 iSlot, SDboEventShop& TradeInfo)
 	m_SellSlotInfo[iSlot].slot.SetIcon(TradeInfo.uiSerial, TradeInfo.iOverlapCount);
 	m_SellSlotInfo[iSlot].slot.SetPrice(pITEM_TBLDAT->dwSell_Price);
 
-	// 가방 번호
+	// bag number
 	m_SellSlotInfo[iSlot].NPCShopSellInfo.byPlace = (BYTE)Logic_WhichBagHasItem(TradeInfo.uiSerial);
 
-	// 가방 안의 슬롯 인덱스
+	// Slot index in bag
 	m_SellSlotInfo[iSlot].NPCShopSellInfo.byPos = (BYTE)TradeInfo.iPosition;		
 
-	// 갯수
-	// 이벤트로 판매 아이템을 등록한 경우는 AddItemCount(..)함수를 써서 갯수를 더하지 않고
-	// TradeInfo.iOverlapCount 갯수 그대로 세팅한다.
+	// number
+	// If you register a sale item as an event, use the AddItemCount(..) function to add the number.
+	// Set TradeInfo.iOverlapCount as is.
 	if( TradeInfo.iOverlapCount > m_SellSlotInfo[iSlot].slot.GetItemTable()->byMax_Stack)
 		TradeInfo.iOverlapCount = m_SellSlotInfo[iSlot].slot.GetItemTable()->byMax_Stack;
 
 	m_SellSlotInfo[iSlot].NPCShopSellInfo.byStack = (BYTE)TradeInfo.iOverlapCount;
 	m_SellSlotInfo[iSlot].slot.SetCount(TradeInfo.iOverlapCount);
 
-	// 가격
+	// price
 	CalcTotalSellPrice();
 
-	// 가방으로 이벤트 보내기
+	// Send event to bag
 	RwInt8 iBagIndex = Logic_ConvertContainerTypeToBagIdx(m_SellSlotInfo[iSlot].NPCShopSellInfo.byPlace);
 	CDboEventGenerator::DialogEvent(DIALOGEVENT_BEGIN_TRADING_ITEM_IN_BAG, PLACE_TRADECART, PLACE_BAG, 
 									iBagIndex, m_SellSlotInfo[iSlot].NPCShopSellInfo.byPos, m_SellSlotInfo[iSlot].slot.GetSerial() );
@@ -1445,7 +1445,7 @@ VOID CTradeCart::RegTakeItemByPacket(RwInt32 iSlot, SERIAL_HANDLE hGiveHandle, s
 	}
 	else
 	{
-		//미확인 아이템
+		//Unidentified item
 		m_BuySlotInfo[iSlot].slot.SetSerialType(REGULAR_SLOT_ITEM_NOT_IDENTIFICATION);
 		m_BuySlotInfo[iSlot].slot.SetParentPosition(rect.left, rect.top);						
 		m_BuySlotInfo[iSlot].slot.SetIcon(hGiveHandle);
@@ -1470,7 +1470,7 @@ VOID CTradeCart::RegGiveItemByPacket(RwInt32 iSlot, RwUInt32 uiSerial, RwUInt8 b
 	{
 		if( Logic_IsCanUserTradeItem( pSobItemAttr ) == FALSE )
 		{
-			// 유저간 거래할 수 없는 아이템
+			// Items that cannot be traded between users
 			GetAlarmManager()->AlarmMessage("DST_ITEM_CAN_NOT_TRADE");
 			return;
 		}
@@ -1489,22 +1489,22 @@ VOID CTradeCart::RegGiveItemByPacket(RwInt32 iSlot, RwUInt32 uiSerial, RwUInt8 b
 		if( m_SellSlotInfo[iSlot].slot.GetSerial() != INVALID_SERIAL_ID )
 			return;
 
-		// 미확인 아이템
+		// Unidentified item
 		m_SellSlotInfo[iSlot].slot.SetSerialType(REGULAR_SLOT_ITEM_SOB_NOT_IDENTIFICATION);
 		m_SellSlotInfo[iSlot].slot.SetParentPosition(rect.left, rect.top);
 		m_SellSlotInfo[iSlot].slot.SetIcon(uiSerial);
 	}
 
-	// 가방 번호
+	// bag number
 	m_SellSlotInfo[iSlot].NPCShopSellInfo.byPlace = (BYTE)Logic_WhichBagHasItem(uiSerial);
 
-	// 가방 안의 슬롯 인덱스
+	// Slot index in bag
 	CNtlSobItem* pItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject( uiSerial ) );
 	m_SellSlotInfo[iSlot].NPCShopSellInfo.byPos = (BYTE)pItem->GetItemSlotIdx();
 	
 	GetIconMoveManager()->IconMoveEnd();
 
-	// 가방으로 이벤트 보내기
+	// Send event to bag
 	RwInt8 iBagIndex = Logic_ConvertContainerTypeToBagIdx(m_SellSlotInfo[iSlot].NPCShopSellInfo.byPlace);
 	CDboEventGenerator::DialogEvent(DIALOGEVENT_BEGIN_TRADING_ITEM_IN_BAG, PLACE_TRADECART, PLACE_BAG, 
 		iBagIndex, m_SellSlotInfo[iSlot].NPCShopSellInfo.byPos, m_SellSlotInfo[iSlot].slot.GetSerial() );
@@ -1672,14 +1672,14 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 					NTL_RETURNVOID();
 				}
 
-				// 상점의 종류에 따라 텍스처가 달라진다
+				// Textures vary depending on the type of store.
 				if( pNPC_TBLDAT->byJob == NPC_JOB_BUDOHSI_MERCHANT || pNPC_TBLDAT->byJob == NPC_JOB_BUDOHSI_MERCHANT2 || pNPC_TBLDAT->byJob == NPC_JOB_BUDOHSI_MERCHANT3)
 					ResetCartTexture(TRADECART_TEXTURE_TENKAICHI);
 				else
 					ResetCartTexture(TRADECART_TEXTURE_NORMAL);
 
 
-				//  NPC 상점을 위한 카트
+				//  Cart for NPC stores
 				m_eDialogType = DIALOG_SHOPING_CART;
 
 				m_pDialogName->SetText(GetDisplayStringManager()->GetString("DST_NPCSHOP_SHOPINGCART"));
@@ -1739,7 +1739,7 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 						RegBuyItemByEvent(iSlot, *pPacket);
 					else
 					{
-						// 카트에 슬롯이 부족합니다
+						// There are not enough slots in your cart
 						GetAlarmManager()->AlarmMessage("DST_TRADECART_NO_MORE_SLOT");
 					}
 				}				
@@ -1753,7 +1753,7 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 				RwInt8 iSlot = (RwInt8)FindEmptySlot(BUY_SLOT);
 				if( iSlot >= 0 )
 				{
-					// 빈 슬롯을 찾아서 20개를 등록한다
+					// Find empty slots and register 20
 					RegBuyItemByEvent(iSlot, *pPacket);
 					NTL_RETURNVOID();
 				}
@@ -1763,10 +1763,10 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 					{
 						if( m_BuySlotInfo[i].slot.GetSerial() == pPacket->uiSerial )
 						{
-							// 최대 스택갯수를 초과하지 않았다면
+							// If the maximum number of stacks is not exceeded
 							if(m_BuySlotInfo[i].slot.GetItemTable()->byMax_Stack > m_BuySlotInfo[i].slot.GetCount())
 							{
-								// 마저 더해서 20개를 채운다
+								// Add more to make 20.
 								AddItem(BUY_SLOT, i, m_BuySlotInfo[i].slot.GetItemTable()->byMax_Stack - m_BuySlotInfo[i].slot.GetCount(), m_BuySlotInfo[i].slot.GetItemTable()->tblidx);
 								NTL_RETURNVOID();
 							}							
@@ -1784,13 +1784,13 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 
 				RwInt32 iSlot = INVALID_INDEX;
 
-				// 기존에 등록된 아이템이면 다시 등록한다.
+				// If the item was previously registered, register it again.
 				for( RwInt32 i = 0 ; i < MAX_SLOT ; ++i )
 				{
 					if( m_SellSlotInfo[i].slot.GetSerial() == pPacket->uiSerial )
 					{
-						// 가방에서 이벤트로 팔 아이템을 넘겨주었다.
-						// 이 뜻은 그 슬롯에 있는 모든 아이템을 판다는 뜻이다.
+						// From the bag, I handed over the items to be sold at the event.
+						// This means selling all items in that slot.
 						RegSellItemByEvent(i, *pPacket);
 						iSlot = i;
 
@@ -1798,7 +1798,7 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 					}
 				}
 
-				// 빈 슬롯이면 등록				
+				// Register if slot is empty				
 				if( iSlot == INVALID_INDEX )
 				{					
 					iSlot = FindEmptySlot(SELL_SLOT);
@@ -1807,7 +1807,7 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 						RegSellItemByEvent(iSlot, *pPacket);
 					else
 					{
-						// 카트에 슬롯이 부족합니다
+						// There are not enough slots in your cart
 						GetAlarmManager()->AlarmMessage("DST_TRADECART_NO_MORE_SLOT");
 					}
 				}			
@@ -1883,8 +1883,8 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 					m_pDownButton[BUY_SLOT][i]->Show(false);
 				}				
 
-				// 내가 상대에게 아이템을 줄 수 있는 활성화된 슬롯 갯수
-				// 상대의 가방에 빈 슬롯 갯수이다
+				// Number of activated slots where I can give items to my opponent
+				// This is the number of empty slots in the opponent's bag.
 				if(pPacket->byCount < MAX_SLOT)
 				{
 					m_byOthersEmptySlot = pPacket->byCount;
@@ -1897,8 +1897,8 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 					}
 				}
 
-				// 나의 가방의 빈 슬롯 갯수
-				// 상대가 나에게 줄 수 있는 아이템의 갯수이다
+				// Number of empty slots in my bag
+				// This is the number of items the opponent can give me.
 				RwInt32 iEmptySlot = Logic_GetCountEmptySlotofBag();
 
 				if(iEmptySlot < MAX_SLOT)
@@ -1922,7 +1922,7 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 			}
 		case USERTRADE_ADD_ITEM:
 			{
-				// 서버락이 풀렸다
+				// Server lock has been unlocked
 				m_bLeftLock		= FALSE;
 				m_bRightLock	= FALSE;
 
@@ -1934,10 +1934,10 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 			}
 		case USERTRADE_ADD_ITEM_NOTIFY:
 			{
-				// 서버와의 동기화를 위해 업데이트 된 상대방의 패킷의 갯수를 센다
+				// Count the number of updated packets from the other party for synchronization with the server.
 				++m_uiUserTradePacketCount;
 
-				// 서버락이 풀렸다
+				// Server lock has been unlocked
 				m_bLeftLock		= FALSE;
 				m_bRightLock	= FALSE;
 
@@ -1949,7 +1949,7 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 			}
 		case USERTRADE_DEL_ITEM:
 			{
-				// 서버락이 풀렸다
+				// Server lock has been unlocked
 				m_bLeftLock		= FALSE;
 				m_bRightLock	= FALSE;
 
@@ -1962,10 +1962,10 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 			}
 		case USERTRADE_DEL_ITEM_NOTIFY:
 			{
-				// 서버와의 동기화를 위해 업데이트 된 패킷의 갯수를 센다
+				// Counts the number of updated packets for synchronization with the server
 				++m_uiUserTradePacketCount;
 
-				// 서버락이 풀렸다
+				// Server lock has been unlocked
 				m_bLeftLock		= FALSE;
 				m_bRightLock	= FALSE;
 
@@ -1978,7 +1978,7 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 			}
 		case USERTRADE_UPDATE_ITEM:
 			{
-				// 서버락이 풀렸다
+				// Server lock has been unlocked
 				m_bLeftLock		= FALSE;
 				m_bRightLock	= FALSE;
 
@@ -1990,10 +1990,10 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 			}
 		case USERTRADE_UPDATE_ITEM_NOTIFY:
 			{
-				// 서버와의 동기화를 위해 업데이트 된 상대방의 패킷의 갯수를 센다
+				// Count the number of updated packets from the other party for synchronization with the server.
 				++m_uiUserTradePacketCount;
 
-				// 서버락이 풀렸다
+				// Server lock has been unlocked
 				m_bLeftLock		= FALSE;
 				m_bRightLock	= FALSE;
 
@@ -2005,7 +2005,7 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 			}
 		case USERTRADE_UPDATE_ZENNY:
 			{
-				// 서버락이 풀렸다
+				// Server lock has been unlocked
 				m_bLeftLock		= FALSE;
 				m_bRightLock	= FALSE;
 
@@ -2017,10 +2017,10 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 			}
 		case USERTRADE_UPDATE_ZENNY_NOTIFY:
 			{
-				// 서버와의 동기화를 위해 업데이트 된 상대방의 패킷의 갯수를 센다
+				// Count the number of updated packets from the other party for synchronization with the server.
 				++m_uiUserTradePacketCount;
 
-				// 서버락이 풀렸다
+				// Server lock has been unlocked
 				m_bLeftLock		= FALSE;
 				m_bRightLock	= FALSE;
 
@@ -2038,7 +2038,7 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 					m_RightLockSurface.SetPositionbyParent(rect.left, rect.top);
 				}
 
-				// 거래가 성립되어 카트를 닫는다
+				// The transaction is completed and the cart is closed.
 				if( m_bLeftLock && m_bRightLock )
 				{
 					GetNtlWorldConcept()->RemoveWorldPlayConcept(WORLD_PLAY_TRADE);
@@ -2057,7 +2057,7 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 					m_LeftLockSurface.SetPositionbyParent(rect.left, rect.top);
 				}
 
-				// 거래가 성립되어 카트를 닫는다
+				// The transaction is completed and the cart is closed.
 				if( m_bLeftLock && m_bRightLock )
 				{
 					GetNtlWorldConcept()->RemoveWorldPlayConcept(WORLD_PLAY_TRADE);
@@ -2091,7 +2091,7 @@ VOID CTradeCart::HandleEvents( RWS::CMsg &msg )
 
 		if( m_uiSubjectSerial == *pDeleteSerial )
 		{
-			// 갑자기 상대 캐릭터가 사라지는 경우
+			// When the opposing character suddenly disappears
 			if( GetDialogManager()->IsOpenDialog(DIALOG_SHOPING_CART) )
 				CloseCart(DIALOG_SHOPING_CART);
 			else

@@ -4,9 +4,9 @@
 //
 // 2006.08.22 Peessi@hitel.net   
 // 2007.08.28 Peessi@hitel.net 
-//    - 오브젝트에 레이어가 서로 다른 복수개의 풍선도움말이 달릴 수 있다. 
-//	  - 타입에 따라 랜더되는 우선순위를 정하고 랜더 여부를 정할 수 있다. 
-//	  - 복수개의 풍선도움말의 위치지정이 매우 하드하게 코딩되어있다. -_-
+//    -Multiple balloon tips with different layers can be attached to an object. 
+//	  -Depending on the type, you can set the rendering priority and decide whether or not to render. 
+//	  -The positioning of multiple balloon tips is coded very hard. -_-
 ////////////////////////////////////////////////////////////////////////////////
 
 #ifndef __CHAT_BALLOON_MANAGER_H__
@@ -42,8 +42,8 @@ public:
 
 	enum STATE { FADE_IN, SHOW, FADE_OUT, HIDE };
 
-	enum PRIORITY { MORE_PRIORITY, EQUAL_PRIORITY, LESS_PRIORITY,	// 같은 레이어인 경우
-		UPPER_LAYER, LOWER_LAYER };						// 다른 레이어인 경우
+	enum PRIORITY { MORE_PRIORITY, EQUAL_PRIORITY, LESS_PRIORITY,	// In case of same layer
+		UPPER_LAYER, LOWER_LAYER };						// If it's a different layer
 
 	CBalloonGui( CNtlSob* pOwnerObject, RwReal fLifeTime, CPos& posOffsetDelta, RwInt32 eType ) 
 		:m_fCurrentTime( 0.0f ), m_pOwnerSobObject( pOwnerObject ), m_hSerialID( pOwnerObject->GetSerialID() ), m_fLifeTime( fLifeTime ), 
@@ -71,7 +71,7 @@ public:
 	CPos&		GetOffset(VOID) { return m_posOffset; }
 	CPos&		GetOffsetDelta(VOID) { return m_posOffsetDelta; }
 
-	RwInt32		PriorityCheck( RwUInt32 eType );	// return value : PRIORITY  객체가 매개변수의 타입에 비해 어떠한가.
+	RwInt32		PriorityCheck( RwUInt32 eType );	// return value: How does the PRIORITY object compare to the type of the parameter?
 
 	VOID		Show3DName( RwBool bShow );
 
@@ -132,7 +132,7 @@ protected:
 	RwUInt8				m_byBalloonType;
 	RwBool				m_bStandardSize;
 
-	std::wstring		m_wstrString;	// 원본 메세지 저장.
+	std::wstring		m_wstrString;	// Save the original message.
 };
 
 class CPrivateShopBalloonGui : public CBalloonGui
@@ -330,7 +330,7 @@ private:
 	//! Event
 	VOID HandleEvents( RWS::CMsg& msg );
 
-	//! CallBack
+	//! Call back
 	VOID OnPaint(VOID);
 
 	gui::CSlot m_slotPaint;

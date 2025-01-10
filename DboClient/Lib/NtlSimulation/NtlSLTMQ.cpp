@@ -221,11 +221,11 @@ VOID CNtlTMQ::HandleEvents(RWS::CMsg &pMsg)
 			m_RunningInfo.pTMQTable			= reinterpret_cast<sTIMEQUEST_TBLDAT*>( API_GetTableContainer()->GetTimeQuestTable()->FindData(rTimeQuestRuleInfo.timeQuestTblidx) );
 			m_RunningInfo.eTimeQuestMode	= (eTIMEQUEST_MODE)rTimeQuestRuleInfo.byTimeQuestMode;
 			m_RunningInfo.byDifficultyFlag	= (eTIMEQUEST_DIFFICULTY)rTimeQuestRuleInfo.byDifficulty;
-			m_RunningInfo.fLastDayRecord	= 0.f;// (RwReal)rTimeQuestRuleInfo.dwDayRecord / 1000.f;//밀리세컨드 단위로 온다 //by daneos
+			m_RunningInfo.fLastDayRecord	= 0.f;// (RwReal)rTimeQuestRuleInfo.dwDayRecord / 1000.f;//Comes in milliseconds //by daneos
 			m_RunningInfo.fLimitedTime		= 0.f;// (RwReal)rTimeQuestRuleInfo.dwLimitTime; //by daneos
 			m_RunningInfo.bUpdateTime		= rTimeQuestRuleInfo.bCountDown;
 
-			// 서버쪽에서 기록이 매일 갱신된다
+			//Records are updated daily on the server side
 			//by daneos
 			//if( rTimeQuestRuleInfo.dwDayRecord == INVALID_SERIAL_ID )
 			//	m_RunningInfo.fLastDayRecord = 0.f;

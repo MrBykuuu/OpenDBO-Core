@@ -2,25 +2,25 @@
 
 #include "DboGlobal.h"
 
-/// DBO 관련 컨피그및 스크립트 파일들을 암호화/복호화 하는 클래스
+/// Class that encrypts/decrypts DBO-related config and script files.
 class CDBOEncrypter
 {
 public:
     CDBOEncrypter();
     ~CDBOEncrypter();    
 
-    // ConfigOptions.Xml 
-    RwBool  EncryptConfig(const RwChar* szFilePath);                 ///< Config 파일을 Encrypt한다.
-    RwBool  DecryptConfig(OUT SConfigData* pConfigData, const RwChar* szFilePath);                 ///< Config 파일을 Decrypt한다.
+    // Config options.xml 
+    RwBool  EncryptConfig(const RwChar* szFilePath);                 ///< Encrypt the Config file.
+    RwBool  DecryptConfig(OUT SConfigData* pConfigData, const RwChar* szFilePath);                 ///< Decrypt the Config file.
 
-    // Lua 컴파일 
-    RwBool  CompileLuaFiles();                                      ///< Script 폴더안에 있는 모든 Lua 파일들을 컴파일한다.
+    // Lua compilation 
+    RwBool  CompileLuaFiles();                                      ///< Compile all Lua files in the Script folder.
 
 protected:    
     
 
-    // ConfigOptions.Xml 
-    RwBool LoadConfigOptions(OUT SConfigData* pConfigData, const RwChar* szFilePath);             ///< Config 파일을 Load 한다.
+    // Config options.xml 
+    RwBool LoadConfigOptions(OUT SConfigData* pConfigData, const RwChar* szFilePath);             ///< Load the Config file.
     RwBool SaveConfigOptions(SConfigData* pConfigData, const RwChar* szDestPath, const RwChar* szCryptPassword);
 
 protected:

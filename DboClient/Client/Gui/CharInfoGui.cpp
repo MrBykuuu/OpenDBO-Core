@@ -1,22 +1,22 @@
 #include "precomp_dboclient.h"
 #include "CharInfoGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// share
+// Share
 #include "WorldMapTable.h"
 #include "TextAllTable.h"
 #include "TableContainer.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "NtlSLAPI.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DboGlobal.h"
@@ -48,14 +48,14 @@ RwBool CCharacterInfoGui::Create()
 
 	CRectangle rect;
 
-	// 배경
+	// background
 	m_Background.SetType(CWindowby3::WT_HORIZONTAL);
 	m_Background.SetSurface(0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("CharSelect_CharInfo.srf", "srfBackgroundUp"));
 	m_Background.SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("CharSelect_CharInfo.srf", "srfBackgroundCenter"));
 	m_Background.SetSurface(2, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("CharSelect_CharInfo.srf", "srfBackgroundBottom"));
 	m_Background.SetSize(233, 298);
 
-	// 캐릭터 정보 배경
+	// Character information background
 	m_srtInfoBack.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("CharSelect_CharInfo.srf", "srfBar"));
 
 	// 'title box'
@@ -65,42 +65,42 @@ RwBool CCharacterInfoGui::Create()
 	m_pTitleStatic->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_CARACTER_INFO"));
 	m_pTitleStatic->Enable(false);
 
-	// '이름'
+	// 'name'
 	rect.SetRect(30, 88, 130, 102);
 	m_pNameStatic = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pNameStatic->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pNameStatic->SetText(GetDisplayStringManager()->GetString("DST_STATUS_NAME"));
 	m_pNameStatic->Enable(false);
 
-	// '레벨'
+	// 'level'
 	rect.SetRect(30, 110, 130, 124);
 	m_pLevelStatic = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pLevelStatic->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pLevelStatic->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_CHAR_LEVEL"));
 	m_pLevelStatic->Enable(false);
 
-	// '클래스'
+	// 'class'
 	rect.SetRect(30, 132, 130, 146);
 	m_pClassStatic = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pClassStatic->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pClassStatic->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_CHAR_CLASS"));
 	m_pClassStatic->Enable(false);
 
-	// '소유제니'
+	// ‘SoZennyenny’
 	rect.SetRect(30, 154, 130, 168);
 	m_pZennyStatic = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pZennyStatic->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pZennyStatic->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_ZENNY"));
 	m_pZennyStatic->Enable(false);
 
-	// '최종위치'
+	// 'Final location'
 	rect.SetRect(30, 178, 130, 192);
 	m_pLastLocationStatic = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pLastLocationStatic->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pLastLocationStatic->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_POSITION"));
 	m_pLastLocationStatic->Enable(false);
 
-	// '삭제 예정일'
+	// ‘Expected deletion date’
 	rect.SetRect(30, 212, 130, 226);
 	m_pDeleteDayStatic = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pDeleteDayStatic->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -108,49 +108,49 @@ RwBool CCharacterInfoGui::Create()
 	m_pDeleteDayStatic->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_DEL_DAT"));
 	m_pDeleteDayStatic->Enable(false);
 
-	// 캐릭터 이름
+	// character name
 	rect.SetRect(110, 88, 210, 102);
 	m_pName = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pName->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pName->SetTextColor(RGB(255, 192, 0));
 	m_pName->Enable(false);
 
-	// 캐릭터 레벨
+	// character level
 	rect.SetRect(110, 110, 210, 124);
 	m_pLevel = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pLevel->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pLevel->SetTextColor(RGB(255, 192, 0));
 	m_pLevel->Enable(false);
 
-	// 캐릭터 클래스
+	// character class
 	rect.SetRect(110, 132, 210, 146);
 	m_pClass = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pClass->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pClass->SetTextColor(RGB(255, 192, 0));
 	m_pClass->Enable(false);
 
-	// 캐릭터 소유 제니
+	// Character Owned by Zenny
 	rect.SetRect(110, 154, 210, 168);
 	m_pZenny = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pZenny->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pZenny->SetTextColor(RGB(255, 192, 0));
 	m_pZenny->Enable(false);
 
-	// 캐릭터 최종 위치
+	// character final location
 	rect.SetRect(110, 178, 215, 192);
 	m_pLastLocation = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pLastLocation->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pLastLocation->SetTextColor(RGB(255, 192, 0));
 	m_pLastLocation->Enable(false);
 
-	// 캐릭터 삭제 예정일
+	// Character deletion date
 	rect.SetRect(110, 212, 215, 226);
 	m_pDeleteDay = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pDeleteDay->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pDeleteDay->SetTextColor(RGB(255, 219, 71));
 	m_pDeleteDay->Enable(false);
 
-	// 캐릭터 삭제 예정일 상세 설명
+	// Detailed description of character deletion date
 	rect.SetRect(30, 236, 215, 296);
 	m_pDeleteDayExplain = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT | COMP_TEXT_UP);
 	m_pDeleteDayExplain->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -161,7 +161,7 @@ RwBool CCharacterInfoGui::Create()
 
 	LinkMsg(g_EventLobbyMessage);
 
-	// sig
+	//Signals
 	m_slotPaint = m_pThis->SigPaint().Connect(this, &CCharacterInfoGui::OnPaint);
 
 	NTL_RETURN(TRUE);
@@ -328,15 +328,15 @@ VOID CCharacterInfoGui::HandleEvents(RWS::CMsg &msg)
 				}
 
 
-				// 아바타가 마지막으로 플레이한 장소의 이름
+				// Name of the last place your avatar played
 				if (FALSE == pMapNameTable->GetAreaName(uiMapNameIndex, &wstrText))
 				{
 					if (FALSE == pMapNameTable->GetSectorName(uiMapNameIndex, &wstrText))
 					{
 						if (FALSE == pMapNameTable->GetZoneName(uiMapNameIndex, &wstrText))
 						{
-							// avooo's comment : 아래 코드를 DST_LOBBY_DEFAULT_POSITION_HUMAN + race 형식으로 간단히 스트링을 얻어올 수
-							//					 있겠으나 종족에 변화가 있을 때 스트링을 추가하는 것을 잊지 않기 위해 이대로 둔다
+							// avooo's comment: You can simply obtain a string using the code below in DST_LOBBY_DEFAULT_POSITION_HUMAN + race format.
+							//					 There may be a change, but I leave it as is so I don't forget to add the string when there is a change in the species.
 							switch (pLOBBY_CHARACTER->tSummary.byRace)
 							{
 							case RACE_HUMAN:

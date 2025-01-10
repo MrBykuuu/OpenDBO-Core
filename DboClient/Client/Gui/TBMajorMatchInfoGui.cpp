@@ -7,7 +7,7 @@
 // Presentation
 #include "NtlPLGuiManager.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
 // Simulation
@@ -25,7 +25,7 @@
 #include "DisplayStringManager.h"
 #include "DboEventGenerator.h"
 
-#define TB_MAJOR_ENEMY_PARTYINFO_CLASSICON_X	-24		// 각 파티인포아이템 기준 좌표.
+#define TB_MAJOR_ENEMY_PARTYINFO_CLASSICON_X	-24		// The coordinates of each party info item.
 #define TB_MAJOR_ENEMY_PARTYINFO_CLASSICON_Y	0	
 
 #define TB_MAJOR_BATTLEINFO_BLUESCORE_X		127
@@ -150,7 +150,7 @@ RwBool CTBMajorMatchInfoGui::Create(VOID)
 
 	m_pThis = (gui::CDialog*)GetComponent( "dlgMain" );
 
-	// RBEnemyInfo
+    // RB Enemy Info
 	gui::CStaticBox* pName = NULL;
 	gui::CPanel* pNameBack = NULL;
 	
@@ -179,7 +179,7 @@ RwBool CTBMajorMatchInfoGui::Create(VOID)
 	m_EnemyInfoArray[4].SetUI( pName );
 	m_EnemyInfoArray[4].Show( FALSE );
 
-	// TBMajorMatchInfo
+	// TB Major Match Info
 	CRectangle rtScreen = m_pThis->GetScreenRect();
 	m_pstbBlueTeamName = (gui::CStaticBox*)GetComponent( "stbBlueTeamName" );
 	m_pstbRedTeamName = (gui::CStaticBox*)GetComponent( "stbRedTeamName" );
@@ -255,7 +255,7 @@ RwInt32 CTBMajorMatchInfoGui::SwitchDialog( bool bOpen )
 		CNtlWorldConceptTB* pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 		NTL_ASSERT( pTBWorldConcept, "CNtlTBudokai::HandleEvents : must World concept is valid" );	
 
-		// 참가자가 아니라면
+		// Unless you are a participant
 		if( !pTBWorldConcept->GetMyTeam() )
 			return -1;
 
@@ -290,7 +290,7 @@ VOID CTBMajorMatchInfoGui::HandleEvents( RWS::CMsg& msg )
 
 		if( pData->bEnterState )
 		{
-			// 참가자가 아니라면
+			// Unless you are a participant
 			if( !pTBWorldConcept->GetMyTeam() )
 				return;
 

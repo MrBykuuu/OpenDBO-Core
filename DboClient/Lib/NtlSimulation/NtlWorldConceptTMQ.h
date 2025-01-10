@@ -1,14 +1,14 @@
 #pragma once
 
-// share
+// Share
 #include "NtlTimeQuest.h"
 
-// simulation
+// Simulation
 #include "NtlWorldConceptController.h"
 
 /**
  * \ingroup NtlSimulation
- * \brief Time machine quest 시의 제어 클래스
+ * \brief Time machine quest Time's Control Class
  * \date 2007-07-20
  * \author avooo
  */
@@ -28,8 +28,8 @@ public:
 	RwBool				IsAfterLoadingDirect(void);
 
 	
-	void					SetTMQState(eTIMEQUEST_GAME_STATE eState);	// 서버로 부터 상태가 내려온다	
-	void					SetTMQState_from_Cleint(RwUInt8 byState);	// 클라이언트 자체적으로 상태를 변경한다
+	void					SetTMQState(eTIMEQUEST_GAME_STATE eState);	// Status comes down from the server	
+	void					SetTMQState_from_Cleint(RwUInt8 byState);	// The client changes the state on its own
 
 	void					NotifyTMQStateUpdate();
 	RwUInt8					GetTMQState();

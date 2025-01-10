@@ -1,19 +1,19 @@
 /******************************************************************************
-* File			: SideDialogMiniGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 2. 19
-* Abstract		: 
+*File			: SideDialogMiniGui.h
+*Author		    : Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2008. 2. 19
+*Abstract		: 
 *****************************************************************************
-* Desc			: 사이드 다이얼로그가 최소화됬을 때의 공통 GUI
+*Desc			: Common GUI when side dialog is minimized
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
 

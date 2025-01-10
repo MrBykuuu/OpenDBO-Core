@@ -2,7 +2,7 @@
  *
  * File			: NtlPLEquipItem
  * Author		: HongHoDong
- * Copyright	: (주)NTL
+ * Copyright	: (?)NTL
  * Date			: 2006. 11. 6.
  * Abstract		: NTL PLEquipItem
  *****************************************************************************
@@ -46,24 +46,24 @@ public:
 	~CNtlPLEquipItem();
 
 private:
-	EQUIP_ITEM_LIST			m_listItem;											// 현재 장착된 Item의 list 
+	EQUIP_ITEM_LIST			m_listItem;											// List of currently equipped items 
 	DEFAULT_ITEM_MAP		m_mapDefaultItem;									// Default Body Item
 	
-	CNtlPLCharacter			*m_pOwner;											// 소유자								
-	SEquipItemScheduleResInfo	m_sScheduleResInfo;								// ResLoad가 될 때 적용 
+	CNtlPLCharacter			*m_pOwner;											// owner								
+	SEquipItemScheduleResInfo	m_sScheduleResInfo;								// Applied when ResLoad 
 	
 	RwReal					m_fFaceTexAniDefaultChangeTime;						// Face Texture Change Delay Time Default
 	RwReal					m_fFaceTexAniChangeTime;							// Face Texture Change Delay Time
 	RwReal					m_fFaceTexAniDisplayTime;							// Face Texture Display Delay Time
 	
-	RwReal					m_fFaceTexAniCounter;								// Face Time 용 counter
+	RwReal					m_fFaceTexAniCounter;								// Counter for Face Time
 	RwInt32					m_iFaceTexAniNum;									// Current Face Texture
 
 	RwTexture				*m_pFaceTexture[2];									// Face Texture;
 	RwTexture				*m_pBaseFaceTexture;								// Base Face
 	RwTexture				*m_pHeadTexture;									// Head Texture(Namek)
 
-    RwBool                  m_bFaceChange;                                      // 얼굴 텍스쳐 변화 유무 플래그
+    RwBool                  m_bFaceChange;                                      // Face texture change flag
 
 private:
 	void	SetDefItem(CNtlPLItem *pItem, RwUInt32 uiEquip);
@@ -105,7 +105,7 @@ public:
 	RwBool	Create( RwUInt32 uiClass, RwUInt32 uiRace, RwUInt32 uiGender, RwUInt32 uiHeadType, RwUInt32 uiFaceType, RwUInt32 uiSkinColorType, RwUInt32 uiHeadColorType, RwBool bIsAdult);
 
     void	SetApplyFaceData(CNtlPLItem *pItem);
-    void    SetChangeFaceEnable(RwBool bEnable);          ///< 얼굴 텍스쳐 변경 유무를 설정한다.
+    void    SetChangeFaceEnable(RwBool bEnable);          ///< Set whether or not to change the face texture.
 	VOID	SetToonEdgeVisibility4CurEquipItem(RwBool _Visibility);
 	void	SetSimpleMaterial(RwBool _SimpleMaterial);
 	VOID	SetPetrifyMaterial(RwBool _PetrifyFlag);

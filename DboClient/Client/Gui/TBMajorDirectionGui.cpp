@@ -1,15 +1,15 @@
 #include "precomp_dboclient.h"
 #include "TBMajorDirectionGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlLuaState.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEvent.h"
 #include "NtlSobAvatar.h"
@@ -17,7 +17,7 @@
 #include "NtlCameraManager.h"
 #include "NtlSLLuaGlue.h"
 
-// client
+// Client
 #include "DboGlobal.h"
 
 CTBMajorDirectionGui::CTBMajorDirectionGui( const RwChar* pName )
@@ -61,7 +61,7 @@ RwBool CTBMajorDirectionGui::Create(VOID)
 	ReCalcPosition( GetDboGlobal()->GetScreenWidth(), GetDboGlobal()->GetScreenHeight() );
 	Show( true );
 
-	// InitSetting
+	// Init setting
 	m_stScore.LoadFlash( GetTBFlashName()->GetNormalCounter() );
 
 	NTL_RETURN( TRUE );
@@ -139,7 +139,7 @@ VOID CTBMajorDirectionGui::HandleEvents( RWS::CMsg& msg )
 				CNtlLuaState* pLuaState = GetLuaState();
 				pLuaState->RunString( GetTBFlashName()->GetLuaPreFinal() );
 
-				// 이름 입력
+				// Enter a name
 				CNtlWorldConceptTB* pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 				NTL_ASSERT( pTBWorldConcept, "CNtlTBudokai::HandleEvents : must World concept is valid" );		
 
@@ -238,7 +238,7 @@ VOID CTBMajorDirectionGui::HandleEvents( RWS::CMsg& msg )
 	}
 	else if( msg.Id == g_EventMajorMatchTeamInfo )
 	{
-		// 팀 정보를 구축
+		// Build team information
 		CNtlWorldConceptTB* pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 		NTL_ASSERT( pTBWorldConcept, "CNtlTBudokai::HandleEvents : must World concept is valid" );				
 

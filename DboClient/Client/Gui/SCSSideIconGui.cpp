@@ -1,26 +1,26 @@
 #include "precomp_dboclient.h"
 
-//core
+//Core
 #include "NtlDebug.h"
 #include "ceventhandler.h"
 
-//gui
+//Gui
 #include "gui_define.h"
 
-//presentation
+//Presentation
 #include "NtlPLGui.h"
 #include "NtlPLGuiManager.h"
 
-// framework
+// Framework
 #include "NtlApplication.h"
 
 
-// table
+// Table
 #include "HelpTable.h"
 #include "TextAllTable.h"
 #include "TableContainer.h"
 
-// dbo
+// Dbo
 #include "DboGlobal.h"
 #include "DboDef.h"
 #include "DboEvent.h"
@@ -75,7 +75,7 @@ VOID CSCSSideIconGui::OnSideViewClosed( )
 
 VOID CSCSSideIconGui::OnIconButtonClicked(gui::CComponent* pComponent)
 {
-	// ¿­°í ´Ý±â
+	// open and close
 	if( GetDialogManager()->GetDialog(DIALOG_GM_QUICKSLOT) )
 	{
 		GetDialogManager()->CloseGMDialog();

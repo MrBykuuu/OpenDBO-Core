@@ -1,13 +1,13 @@
 #include "precomp_dboclient.h"
 #include "GuildNoticeGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// dbo
+// Dbo
 #include "DisplayStringManager.h"
 #include "DialogManager.h"
 #include "DboGlobal.h"
@@ -37,7 +37,7 @@ RwBool CGuildNoticeGui::Create(eNOTICE_TYPE eNoticeType)
 
 	m_pThis = (gui::CDialog*)GetComponent("dlgMain");
 
-	// 뒷 배경
+	// background
 	m_srfBackboard.SetSurface(0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GuildNotice.srf", "srfBackboardLeft" ) );
 	m_srfBackboard.SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GuildNotice.srf", "srfBackboardCenter" ) );
 	m_srfBackboard.SetSurface(2, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GuildNotice.srf", "srfBackboardRight" ) );
@@ -66,7 +66,7 @@ RwBool CGuildNoticeGui::Create(eNOTICE_TYPE eNoticeType)
 	m_slotOKButton		= m_pOKButton->SigClicked().Connect(this, &CGuildNoticeGui::OnClicked_OKButton);
 	m_slotCancelButton	= m_pCancelButton->SigClicked().Connect(this, &CGuildNoticeGui::OnClicked_CancelButton);
 
-	// 공지 입력란
+	// Notice field
 	m_pNoticeInput		= (gui::CInputBox*)GetComponent("NoticeInput");	
 	m_pNoticeInput->SetMultilineMode(TRUE);
 	m_pNoticeInput->SetMaxLength(NTL_MAX_LENGTH_OF_GUILD_NOTICE);

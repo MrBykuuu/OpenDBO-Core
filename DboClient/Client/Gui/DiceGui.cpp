@@ -1,14 +1,14 @@
 #include "precomp_dboclient.h"
 #include "DiceGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// dbo
+// Dbo
 #include "InfoWndManager.h"
 #include "DiceManager.h"
 #include "DialogManager.h"
@@ -19,7 +19,7 @@
 
 #define dDICE_FLASH_NAME		"Dice_play.swf"
 #define dDICE_LIMIT_TIME		((RwReal)(DBO_MAX_TIME_PARTY_DICE_ITEM/1000))
-#define dDICE_WAIT_FOR_DISAPPEAR	3.f		///< 주사위 숫자가 표시되고 나서 사라지기 까지의 시간
+#define dDICE_WAIT_FOR_DISAPPEAR	3.f		///< Time from when the dice number is displayed until it disappears
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -42,23 +42,23 @@ RwBool CActionDiceGui::Create(RwUInt8 byFunctionFlag)
 
 	m_pThis = (gui::CDialog*)GetComponent("dlgMain");
 
-	// 창닫기 버튼
+	// Close window button
 	m_pExitButton = (gui::CButton*)GetComponent( "btnExit" );
 	m_slotCloseButton = m_pExitButton->SigClicked().Connect(this, &CActionDiceGui::OnClicked_CloseButton);
 
-	// 주사위 플래쉬
+	// dice flash
 	m_pflashDice = (gui::CFlash*)GetComponent("flaDice");
 	m_slotMovieEnd = m_pflashDice->SigMovieEnd().Connect( this, &CActionDiceGui::OnMovieEnd );
 	m_slotFSCallback = m_pflashDice->SigFSCallBack().Connect( this, &CActionDiceGui::OnFSCallback );
 
-	// 액션 주사위 설명
+	// Action Dice Description
 	m_pActionDiceExplain = (gui::CStaticBox*)GetComponent("stbActionDiceExplain");	
 
-	// 액션 주사위 설명2
+	// Action Dice Description 2
 	m_pActionDiceExplain2 = (gui::CStaticBox*)GetComponent("stbActionDiceExplain2");
 	m_pActionDiceExplain2->SetTextColor( RGB(255, 192, 0) );
 
-	// 주사위를 굴린 숫자
+	// Number rolled on the dice
 	m_pResultNum = (gui::CStaticBox*)GetComponent("stbResultNum");
 	m_pResultNum->CreateFontStd(DEFAULT_FONT, 300, DEFAULT_FONT_ATTR);
 
@@ -155,10 +155,10 @@ VOID CActionDiceGui::OnClicked_CloseButton(gui::CComponent* pComponent)
 
 VOID CActionDiceGui::OnMovieEnd(gui::CComponent* pComponent)
 {
-	// 주사위가 돌아가다가 멈추었을 때
+	// When the dice stop rolling
 	m_pResultNum->SetText(m_byResultNum);
 
-	// 다시 주사위를 돌리기 위한 초기화
+	// Reset to roll the dice again
 	ReadyDice();
 
 	if( false == BIT_FLAG_TEST(m_byFunctionFlag, dDICE_FUNCTION_DISABLE_CLICK_DICE) )
@@ -176,7 +176,7 @@ VOID CActionDiceGui::OnFSCallback(const char* pcString, const char* pcString2)
 	if( !pcString )
 		return;
 
-	// 주사위를 클릭했을 때
+	// When you click on the dice
 	CDboEventGenerator::DiceRequestResulttoServer(m_byWorkID);	
 
 	m_pResultNum->Clear();
@@ -195,8 +195,8 @@ VOID CActionDiceGui::Switch(bool bOpen)
 	{
 		if( m_bGenerateResultEvent )
 		{
-			// 주사위 플래쉬 애니메이션이 끝나 결과를 보여주기 전에 주사위 GUI를 닫았다
-			// 주사위 GUI 외에 주사위 결과를 보여주는 곳(채팅, 말풍선 등)을 위해 이벤트를 보낸다
+			// The dice flash animation ended and the dice GUI was closed before showing the results.
+			// In addition to the dice GUI, events are sent to places that display dice results (chat, speech bubbles, etc.)
 			CDboEventGenerator::DiceResultShow(Logic_GetAvatarHandle(), m_byWorkID, m_byResultNum);
 		}
 
@@ -242,34 +242,34 @@ RwBool CItemDiceGui::Create(RwUInt8 byFunctionFlag)
 
 	m_pThis = (gui::CDialog*)GetComponent("dlgMain");
 
-	// 창닫기 버튼
+	// Close window button
 	m_pExitButton = (gui::CButton*)GetComponent( "btnExit" );
 	m_slotCloseButton = m_pExitButton->SigClicked().Connect(this, &CItemDiceGui::OnClicked_CloseButton);
 
-	// 주사위 플래쉬
+	// dice flash
 	m_pflashDice = (gui::CFlash*)GetComponent("flaDice");
 	m_slotMovieEnd = m_pflashDice->SigMovieEnd().Connect( this, &CItemDiceGui::OnMovieEnd );
 	m_slotFSCallback = m_pflashDice->SigFSCallBack().Connect( this, &CItemDiceGui::OnFSCallback );
 
-	// 자동 주사위 설명
+	// Auto Dice Description
 	m_pAutoDiceExplain = (gui::CStaticBox*)GetComponent("stbAutoDiceExplain");
 	
-	// 주사위를 굴린 숫자
+	// Number rolled on the dice
 	m_pResultNum = (gui::CStaticBox*)GetComponent("stbResultNum");
 	m_pResultNum->CreateFontStd(DEFAULT_FONT, 300, DEFAULT_FONT_ATTR);
 
-	// 아이템 슬롯 배경
+	// Item Slot Background
 	m_srfItemSlot.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Dice.srf", "srfItemSlot" ) );
 	m_srfItemSlot.SetPositionfromParent(228, 18);
 
-	// 주사위 굴리기 시간 제한 배경
+	// Dice rolling time limit background
 	m_srfTimeGaugeBack.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Dice.srf", "srfTimeGaugeBack" ) );
 	m_srfTimeGaugeBack.SetPositionfromParent(21, 73);
 
 	m_slot.Create(m_pThis, DIALOG_DICE_MANAGER, REGULAR_SLOT_ITEM_TABLE);
 	m_slot.SetPosition_fromParent(230, 34);
 
-	// 주사위 굴리기 시간 제한
+	// Dice roll time limit
 	m_pTimeGauge = (gui::CProgressBar*)GetComponent("TimeGauge");	
 
 	// default value
@@ -281,7 +281,7 @@ RwBool CItemDiceGui::Create(RwUInt8 byFunctionFlag)
 	if( BIT_FLAG_TEST(m_byFunctionFlag, dDICE_FUNCTION_DISABLE_CLICK_DICE) )
 		m_pflashDice->Enable(false);
 
-	// sig
+	// Signals
 	m_slotMove			= m_pThis->SigMove().Connect( this, &CItemDiceGui::OnMove );
 	m_slotMouseMove		= m_pThis->SigMouseMove().Connect( this, &CItemDiceGui::OnMouseMove );
 	m_slotMouseLeave	= m_pThis->SigMouseLeave().Connect( this, &CItemDiceGui::OnMouseLeave );
@@ -345,7 +345,7 @@ VOID CItemDiceGui::Update(RwReal fElapsed)
 
 	RwInt32 iMaxRange, iPos;
 
-	m_pTimeGauge->GetRange(iPos, iMaxRange); // iPos는 여기서는 더미로 쓰인다
+	m_pTimeGauge->GetRange(iPos, iMaxRange); // iPos is used as a dummy here
 
 	iPos = (RwInt32)CNtlMath::Interpolation((RwReal)iMaxRange, 0.f, m_fElapsed/dDICE_LIMIT_TIME);
 	m_pTimeGauge->SetPos(iPos);
@@ -431,7 +431,7 @@ VOID CItemDiceGui::OnClicked_CloseButton(gui::CComponent* pComponent)
 
 VOID CItemDiceGui::OnMovieEnd(gui::CComponent* pComponent)
 {
-	// 주사위가 돌아가다가 멈추었을 때
+	// When the dice stop rolling
 	m_pResultNum->SetText(m_byResultNum);
 
 	if( false == BIT_FLAG_TEST(m_byFunctionFlag, dDICE_FUNCTION_DISABLE_CLICK_DICE) )
@@ -531,8 +531,8 @@ VOID CItemDiceGui::Switch(bool bOpen)
 	{
 		if( m_bGenerateResultEvent )
 		{
-			// 주사위 플래쉬 애니메이션이 끝나 결과를 보여주기 전에 주사위 GUI를 닫았다
-			// 주사위 GUI 외에 주사위 결과를 보여주는 곳(채팅, 말풍선 등)을 위해 이벤트를 보낸다
+			// The dice flash animation ended and the dice GUI was closed before showing the results.
+			// In addition to the dice GUI, events are sent to places that display dice results (chat, speech bubbles, etc.)
 			CDboEventGenerator::DiceResultShow(Logic_GetAvatarHandle(), m_byWorkID, m_byResultNum);
 		}
 

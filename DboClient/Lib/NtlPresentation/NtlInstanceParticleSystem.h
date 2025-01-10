@@ -2,7 +2,7 @@
 //	File		:	NtlInstanceParticleSystem.h
 //	Desc		:	
 //	Begin		:	2006. 7.28
-//	Copyright	:	ⓒ 2006 by NTL CO., Ltd
+//	Copyright	:	? 2006 by NTL CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -16,7 +16,7 @@
 #include "NtlInstanceTrailSystem.h"
 /**
  * \ingroup NtlPresentation
- * \brief Particle Instance를 구성하는 클래스
+ * \brief Class that constitutes Particle Instance
  * \date 2006-08-28
  * \author agebreak
  */
@@ -37,7 +37,7 @@ public:
 	RwTexture*					m_pStandardTexture;
 
 	RwInt32						m_nVelocityOffset;
-	// hurricane
+	// Hurricane
 	RwReal						m_fHurricaneLifeTime;
 	RwReal						m_fHurricaneDeltaTime;
     
@@ -45,14 +45,14 @@ public:
     CNtlInstanceTrailSystem*    m_pTrailSystem;
 
 protected:
-    // Matrix Action이 적용되었을때 Rotation 관련
+    // Rotation related when Matrix Action is applied
     RpPrtStdEmitterPrtMatrix*   m_pEmitterPrtMatrix;
-    RwV3d                       m_vOrgAt;           ///< 원래 설정된 At값
-    RwV3d                       m_vOrgUp;           ///< 원래 설정된 Up값    
+    RwV3d                       m_vOrgAt;           ///< Originally set At value
+    RwV3d                       m_vOrgUp;           ///<Originally set Up value    
 
-    // Follow Particle 관련 (파티클 생성객체를 따라다니는 파티클)
-    RwV3d                       m_vPosPrev;         ///< 생성 객체의 이전 위치
-    RwV3d                       m_vPosDelta;        ///< 이전 위치로 부터 변경된 위치    
+    // Related to Follow Particle (particles that follow particle creation objects)
+    RwV3d                       m_vPosPrev;         ///< Previous location of created object
+    RwV3d                       m_vPosDelta;        ///< Location changed from previous location    
 
 public:
 	CNtlInstanceParticleSystem(void);
@@ -74,13 +74,13 @@ public:
 	virtual RwBool	Render();
 
 	virtual void	SetWorldMatrix(const RwMatrix& matWorld);
-	virtual void	SetScale(RwReal fScale);					///< 파티클의 Scale을 설정한다.
-    virtual void    SetAlpha(RwUInt8 byValue);                  ///< 파티클의 Alpha를 설정한다.
+	virtual void	SetScale(RwReal fScale);					///< Set the scale of the particles.
+    virtual void    SetAlpha(RwUInt8 byValue);                  ///< Set the Alpha of the particle.
 
 			void	BuildHurricanePoint(RwV3d& vPosition, RwReal fLifeTime);
 
 protected:
-            void    UpdateFollow();                             ///< Follow 파티클의 위치를 업데이트한다.    
-            void    UpdateBillboard();                          ///< 빌보드가 설정된경우 빌보드를 적용한다.
-            void    UpdateRotate();                             ///< Emitter의 Rotate값을 적용한다.
+            void    UpdateFollow();                             ///< Updates the position of the Follow particle.    
+            void    UpdateBillboard();                          ///< If a billboard is set, the billboard is applied.
+            void    UpdateRotate();                             ///< Apply the Emitter’s Rotate value.
 };

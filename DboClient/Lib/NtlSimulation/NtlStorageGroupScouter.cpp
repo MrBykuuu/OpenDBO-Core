@@ -16,7 +16,7 @@ CNtlStorageGroupScouter::~CNtlStorageGroupScouter(void)
 
 bool CNtlStorageGroupScouter::Load( CNtlStorageSerializer* pS )
 {
-	// Binary 버퍼가 아니면 모드가 아니면 읽지 못한다.
+	// It cannot be read unless it is a binary buffer or mode.
 	if( pS->GetStorageSerializerType() != eNTL_STORAGE_SERIALIZER_BINARY )
 		return false;
 
@@ -27,7 +27,7 @@ bool CNtlStorageGroupScouter::Load( CNtlStorageSerializer* pS )
 	int nCount = 0;
 	for(;;)
 	{
-		// 무한루프 방지
+		// Infinite loop prevention
 		if( ++nCount > 1000000 )
 			return false;
 
@@ -56,7 +56,7 @@ bool CNtlStorageGroupScouter::Save( CNtlStorageSerializer* pS )
 	RwUInt32 uiSize;
 	MapMemoryScouter::iterator it;
 
-	// monster scouter information
+	// monster scout information
 	(*pS) << (RwUInt32)dSTORAGE_SCOUTER_MONSTER_SCOUTER_MEMORY_INFO;
 	uiSize = m_mapMobScouter.size();
 
@@ -69,7 +69,7 @@ bool CNtlStorageGroupScouter::Save( CNtlStorageSerializer* pS )
 		(*pS) << (RwUInt32)(*it).second.uiPower;
 	}
 
-	// player scouter information
+	// player scout information
 	(*pS) << (RwUInt32)dSTORAGE_SCOUTER_PLAYER_SCOUTER_MEMORY_INFO;
 	uiSize = m_mapPlayerScouter.size();
 	(*pS) << uiSize;

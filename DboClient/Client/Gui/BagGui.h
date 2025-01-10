@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: BagGui.h
-// Desc: Bag Slot 및 Bag 
+// Desc: Bag Slot ? Bag 
 //
 // 2006.04.25 Peessi@hitel.net   
 //
@@ -36,7 +36,7 @@ public:
 	virtual VOID UpdateData(VOID);
 	RwInt32	SwitchDialog( bool bOpen );
 
-	VOID SetBagEnable( RwBool bEnable ); // 가방이 클라이언트Disable 유무. 
+	VOID SetBagEnable( RwBool bEnable );//Whether the bag is client disabled.
 
 //! Event
 	virtual VOID HandleEvents( RWS::CMsg& msg );
@@ -67,7 +67,7 @@ protected:
 
 	VOID		SetBagName(VOID);
 
-	/*VOID		GambleEffectProcStart( RwUInt32 hSerial );
+/*VOID		GambleEffectProcStart( RwUInt32 hSerial );
 	VOID		GambleEffectProcEnd( RwInt32 nSlotIdx );*/
 	VOID		BoomEffectProc( RwUInt32 hCreateSerial, RwChar* pcEffectFile );
 	VOID		OnMovieEnd(gui::CComponent* pComponent);
@@ -104,7 +104,7 @@ protected:
 	gui::CButton*	  m_pCloseButton;
 	RwInt32			  m_nNumSlot;
 	RwInt32			  m_nLSelectedSlotIdx;		
-	RwInt32			  m_nRSelectedSlotIdx;	// 
+	RwInt32			  m_nRSelectedSlotIdx;  //
 	RwInt32			  m_nPushDownIndex;
 	RwInt32			  m_nCapsuleLockSlotIdx;
 
@@ -116,17 +116,17 @@ protected:
 
 	gui::CRadarEffect* m_pCoolTimeEffect;
 
-	// Gamble Effect
-	gui::CFlash**			m_ppGambleBoomEffect;		///< 플래쉬 이펙트 ( Boom! )
-	gui::CSlot*				m_pSlotBoomEffectEnd;		///< 플래쉬 이펙트가 종료되었을 경우
-	RwBool*					m_pbIsGambleEffect;			///< 플래쉬 이펙트가 사용되고 있는지의 여부(아이템이 처리되어선 안된다)
+// Gamble Effect
+	gui::CFlash**			m_ppGambleBoomEffect;      ///< Flash effect (Boom!)
+	gui::CSlot*				m_pSlotBoomEffectEnd;      ///< When the flash effect has ended
+	RwBool*					m_pbIsGambleEffect;        ///< Whether the flash effect is being used (the item should not be processed)
 
-	// Item Identify Effect
-	gui::CParticleBox*		m_pPBox;					///< 파티클 박스
+// Item Identify Effect
+	gui::CParticleBox*		m_pPBox;                   ///< particle box
 	
 	RwInt32			  m_nMouseOnIndex;	
 
-	RwBool			  m_bCEnable;			// 클라이언트상황 Enable여부. 가방이 열리지 않고, 열려있던 것이 닫히게 된다. 
+	RwBool			  m_bCEnable;               //Client status Enable or not. The bag does not open, and what was open becomes closed.
 };
 
 class CBasicBagGui : public CBagBaseGui
@@ -137,7 +137,7 @@ public:
 	CBasicBagGui( const RwChar* pName );
 	~CBasicBagGui(VOID);
 
-//! Operation	
+//! Operation
 	RwBool	Create(VOID);
 	VOID	Destroy(VOID);
 
@@ -266,20 +266,20 @@ private:
 class CBag16SpaceGui : public CBagBaseGui
 {
 public:
-	//! Constructor & Destructor
+//! Constructor & Destructor
 	CBag16SpaceGui(VOID);
 	CBag16SpaceGui( const RwChar* pName );
 	virtual ~CBag16SpaceGui(VOID);
 
-	//! Operation
+//! Operation
 	virtual	RwBool	Create(VOID);
 	virtual VOID	Destroy(VOID);
 
 protected:
-	//! Implementation
+//! Implementation
 	VOID	SetSlotRectHardCode(VOID);
 
-	//! CallBack
+//! CallBack
 	VOID OnMouseDown( const CKey& key );
 	VOID OnMouseUp( const CKey& key );
 	VOID OnMouseMove( RwInt32 nKey, RwInt32 nXPos, RwInt32 nYPos );
@@ -288,26 +288,26 @@ protected:
 	VOID OnMove( RwInt32 nX, RwInt32 nY );
 	VOID OnExitButtonClick( gui::CComponent* pComponent );
 
-	//! Variable
+//! Variable
 };
 
 class CBag20SpaceGui : public CBagBaseGui
 {
 public:
-	//! Constructor & Destructor
+//! Constructor & Destructor
 	CBag20SpaceGui(VOID);
 	CBag20SpaceGui(const RwChar* pName);
 	virtual ~CBag20SpaceGui(VOID);
 
-	//! Operation
+//! Operation
 	virtual	RwBool	Create(VOID);
 	virtual VOID	Destroy(VOID);
 
 protected:
-	//! Implementation
+//! Implementation
 	VOID	SetSlotRectHardCode(VOID);
 
-	//! CallBack
+//! CallBack
 	VOID OnMouseDown(const CKey& key);
 	VOID OnMouseUp(const CKey& key);
 	VOID OnMouseMove(RwInt32 nKey, RwInt32 nXPos, RwInt32 nYPos);
@@ -316,26 +316,26 @@ protected:
 	VOID OnMove(RwInt32 nX, RwInt32 nY);
 	VOID OnExitButtonClick(gui::CComponent* pComponent);
 
-	//! Variable
+//! Variable
 };
 
 class CBag24SpaceGui : public CBagBaseGui
 {
 public:
-	//! Constructor & Destructor
+//! Constructor & Destructor
 	CBag24SpaceGui(VOID);
 	CBag24SpaceGui(const RwChar* pName);
 	virtual ~CBag24SpaceGui(VOID);
 
-	//! Operation
+//! Operation
 	virtual	RwBool	Create(VOID);
 	virtual VOID	Destroy(VOID);
 
 protected:
-	//! Implementation
+//! Implementation
 	VOID	SetSlotRectHardCode(VOID);
 
-	//! CallBack
+//! CallBack
 	VOID OnMouseDown(const CKey& key);
 	VOID OnMouseUp(const CKey& key);
 	VOID OnMouseMove(RwInt32 nKey, RwInt32 nXPos, RwInt32 nYPos);
@@ -344,26 +344,26 @@ protected:
 	VOID OnMove(RwInt32 nX, RwInt32 nY);
 	VOID OnExitButtonClick(gui::CComponent* pComponent);
 
-	//! Variable
+//! Variable
 };
 
 class CBag28SpaceGui : public CBagBaseGui
 {
 public:
-	//! Constructor & Destructor
+//! Constructor & Destructor
 	CBag28SpaceGui(VOID);
 	CBag28SpaceGui(const RwChar* pName);
 	virtual ~CBag28SpaceGui(VOID);
 
-	//! Operation
+//! Operation
 	virtual	RwBool	Create(VOID);
 	virtual VOID	Destroy(VOID);
 
 protected:
-	//! Implementation
+//! Implementation
 	VOID	SetSlotRectHardCode(VOID);
 
-	//! CallBack
+//! CallBack
 	VOID OnMouseDown(const CKey& key);
 	VOID OnMouseUp(const CKey& key);
 	VOID OnMouseMove(RwInt32 nKey, RwInt32 nXPos, RwInt32 nYPos);
@@ -372,26 +372,26 @@ protected:
 	VOID OnMove(RwInt32 nX, RwInt32 nY);
 	VOID OnExitButtonClick(gui::CComponent* pComponent);
 
-	//! Variable
+//! Variable
 };
 
 class CBag32SpaceGui : public CBagBaseGui
 {
 public:
-	//! Constructor & Destructor
+//! Constructor & Destructor
 	CBag32SpaceGui(VOID);
 	CBag32SpaceGui(const RwChar* pName);
 	virtual ~CBag32SpaceGui(VOID);
 
-	//! Operation
+//! Operation
 	virtual	RwBool	Create(VOID);
 	virtual VOID	Destroy(VOID);
 
 protected:
-	//! Implementation
+//! Implementation
 	VOID	SetSlotRectHardCode(VOID);
 
-	//! CallBack
+//! CallBack
 	VOID OnMouseDown(const CKey& key);
 	VOID OnMouseUp(const CKey& key);
 	VOID OnMouseMove(RwInt32 nKey, RwInt32 nXPos, RwInt32 nYPos);
@@ -400,7 +400,7 @@ protected:
 	VOID OnMove(RwInt32 nX, RwInt32 nY);
 	VOID OnExitButtonClick(gui::CComponent* pComponent);
 
-	//! Variable
+//! Variable
 };
 
 class CGetItemEffect
@@ -418,7 +418,7 @@ public:
 	RwBool	Update( RwReal fElapsed );	
 	VOID	Render(VOID);
 
-	VOID	SetInitXPos( RwInt32 nScreenXPos );	// DestPos도 같이 수정됨.
+	VOID	SetInitXPos( RwInt32 nScreenXPos ); // DestPos has also been modified.
 	VOID	SetInitYPos( RwInt32 nScreenYPos );
 
 	RwBool	IsEffectShow(VOID) { return m_bShowEffect; }
@@ -465,7 +465,7 @@ public:
 private:
 //! Event
 	VOID HandleEvents( RWS::CMsg& msg );
-	//RwInt32	ActionMapBagSlot(VOID);
+//RwInt32	ActionMapBagSlot(VOID);
 
 //! Implementation
 	VOID		ClearBag(VOID);
@@ -478,7 +478,7 @@ private:
 	RwBool		IsEnableBagPickUp( RwInt32 nSlotIdx );
 	RwBool		IsEnableBagPutDown( RwInt32 nSlotIdx );
 	RwBool		IsEnableBagOpenClose( RwInt32 nSlotIdx );
-	//RwBool	IsEnableBagPopup( RwInt32 nSlotIdx );
+//RwBool	IsEnableBagPopup( RwInt32 nSlotIdx );
 	
 	VOID		ShowIconDestination(VOID);
 
@@ -516,7 +516,7 @@ private:
 
 	CSurfaceGui	 m_surDisableSlot[VISIBLE_BAGSLOT_COUNT];
 	CSurfaceGui	 m_surFocusSlot[VISIBLE_BAGSLOT_COUNT];
-	CSurfaceGui	 m_surFritzSlot[VISIBLE_BAGSLOT_COUNT];	// 내구도가 다한녀석들 표시.
+	CSurfaceGui	 m_surFritzSlot[VISIBLE_BAGSLOT_COUNT]; // Display those whose durability is exhausted.
 	RwInt32		 m_arrFocusEffect[VISIBLE_BAGSLOT_COUNT];
 	gui::CStaticBox* m_apstbStackNum[VISIBLE_BAGSLOT_COUNT];
 

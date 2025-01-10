@@ -1,14 +1,14 @@
 #include "precomp_dboclient.h"
 #include "GroupChatManager.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presetation
+// Presetation
 #include "NtlPLEvent.h"
 #include "NtlPLGuiManager.h"
 
-// cleint
+// Client
 #include "DboLogic.h"
 #include "ChatDefine.h"
 

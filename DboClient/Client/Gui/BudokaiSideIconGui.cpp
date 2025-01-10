@@ -1,10 +1,10 @@
 #include "precomp_dboclient.h"
 #include "BudokaiSideIconGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
 // Shared
@@ -35,7 +35,7 @@
  
 /******************************************************************************
 * Class			: CBudokaiSideViewUnit
-* Desc			: 천하제일 무도회 사이드 뷰의 공지 유닛
+* Desc			: Notice unit in World's Best Martial Arts side view
 ******************************************************************************/
 CBudokaiSideViewUnit::CBudokaiSideViewUnit( gui::CComponent *pParentGui, const WCHAR* pwcString, RwReal fLimitTime )
 : m_pStbSideViewUnit(NULL)
@@ -73,7 +73,7 @@ void CBudokaiSideViewUnit::SetPositionFromParent( RwInt32 nPosX, RwInt32 nPosY )
 
 /******************************************************************************
 * Class			: CBudokaiSideIconGui
-* Desc			: 천하제일 무도회 사이드 아이콘의 클래스
+* Desc			: Class of the World's Best Martial Arts side icon
 ******************************************************************************/
 
 /**
@@ -95,8 +95,8 @@ CBudokaiSideIconGui::~CBudokaiSideIconGui( VOID )
 }
 
 /**
-* \brief 천하제일무도회 아이콘의 리소스를 생성하고 정보들을 초기화해준다.
-* \return 성공여부
+* \brief Creates resources for the World's First Martial Arts Association icon and initializes information.
+* \return Success or not
 */
 RwBool CBudokaiSideIconGui::Create( VOID )
 {
@@ -114,7 +114,7 @@ RwBool CBudokaiSideIconGui::Create( VOID )
 	m_slotPaint = m_pBtnIcon->SigPaint().Connect( this, &CBudokaiSideIconGui::OnPaint );
 	m_slotMove = m_pThis->SigMove().Connect( this, &CBudokaiSideIconGui::OnMove );
 
-	// FlickEffect
+	// Flick effect
 	gui::CSurface surface = GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "BudokaiSideIcon.srf", "srfBudokaiPulse" );
 	m_feEffect.SetSurface( surface );
 	m_feEffect.SetTime( 0.0f, 0.5f );
@@ -133,7 +133,7 @@ RwBool CBudokaiSideIconGui::Create( VOID )
 }
 
 /**
-* \brief 천하제일무도회 리소스 및 관련된 데이터를 해제한다.
+* \brief Releases World's First Martial Arts Association resources and related data.
 */
 VOID CBudokaiSideIconGui::Destroy( VOID )
 {
@@ -150,7 +150,7 @@ VOID CBudokaiSideIconGui::Destroy( VOID )
 
 /**
 * \brief Update
-* \param fElapsedTime	(RwReal) 이전 업데이트에서 경과된 시간
+* \param fElapsedTime (RwReal) Time elapsed from previous update.
 */
 VOID CBudokaiSideIconGui::Update( RwReal fElapsedTime )
 {
@@ -158,7 +158,7 @@ VOID CBudokaiSideIconGui::Update( RwReal fElapsedTime )
 }
 
 /**
-* \brief SideView가 닫힐 때 호출된다.
+* \brief Called when SideView is closed.
 */
 VOID CBudokaiSideIconGui::OnSideViewClosed( VOID )
 {
@@ -166,7 +166,7 @@ VOID CBudokaiSideIconGui::OnSideViewClosed( VOID )
 }
 
 /**
-* \brief 링크된 이벤트를 핸들링한다.
+* \brief Handles linked events.
 */
 VOID CBudokaiSideIconGui::HandleEvents( RWS::CMsg& msg )
 {
@@ -174,7 +174,7 @@ VOID CBudokaiSideIconGui::HandleEvents( RWS::CMsg& msg )
 	{
 		CSideIconGui::GetInstance()->OpenSideView( this, SIDEVIEW_BUDOKAI, msg.pData );
 
-		// 소식지가 열려져 있지 않은 상태라면 깜빡 거린다.
+		// It blinks if the newsletter is not open.
 		if( !GetDialogManager()->IsOpenDialog( DIALOG_BUDOKAI_NEWS ) )
 		{
 			m_feEffect.StartProc( TRUE );
@@ -189,7 +189,7 @@ VOID CBudokaiSideIconGui::HandleEvents( RWS::CMsg& msg )
 			pNotify->sStateInfo.byState == BUDOKAI_STATE_JUNIOR_OPEN_NOTICE )
 		{
 			WCHAR awcBuffer[256];
-			// 천하제일 무도회 소년부, 성인부 구분해서 출력
+			// World's First Martial Arts Association printed separately for boys and adults
 			swprintf_s( awcBuffer, 256, GetDisplayStringManager()->GetString( "DST_BUDOKAI_NOTICE_OPEN_NOTICE" ), Logic_GetTBTypeString( pNotify->sStateInfo.byState ) );
 
 			CNtlSLEventGenerator::BudokaiNoticeNfy( BUDOKAI_NOTICE_ONLY_CLIENT, 0, 
@@ -201,7 +201,7 @@ VOID CBudokaiSideIconGui::HandleEvents( RWS::CMsg& msg )
 			if( Logic_I_am_GuildLeader() )
 			{
 				WCHAR awcBuffer[256];
-				// 천하제일 무도회 소년부, 성인부 구분 메시지 출력 -by Kell
+				// World's First Martial Arts Boys' and Adults' Classification Message Output -by Kell
 				swprintf_s( awcBuffer, 256, GetDisplayStringManager()->GetString( "DST_BUDOKAI_NOTICE_DOJO_RECOMMEND" ), Logic_GetTBTypeString( pNotify->sStateInfo.byState ) );
 			
 				CNtlSLEventGenerator::BudokaiNoticeNfy( BUDOKAI_NOTICE_ONLY_CLIENT, 0, 
@@ -307,7 +307,7 @@ VOID CBudokaiSideIconGui::HandleEvents( RWS::CMsg& msg )
 }
 
 /**
-* \brief 사이드 아이콘을 클릭하였을 때 나오는 행동
+* \brief Action that occurs when you click the side icon
 */
 VOID CBudokaiSideIconGui::OnIconButtonClicked( gui::CComponent* pComponent )
 {
@@ -319,16 +319,16 @@ VOID CBudokaiSideIconGui::OnIconButtonClicked( gui::CComponent* pComponent )
 }
 
 /**
-* \brief 사이드 아이콘이 Paint될때 호출된다.
+* \brief Called when the side icon is painted.
 */
 VOID CBudokaiSideIconGui::OnPaint( VOID )
 {
-	// FlickEffect 또한 Paint해준다.
+	// This will also paint the FlickEffect.
 	m_feEffect.Render();
 }
 
 /**
-* \brief PLGui가 리사이즈되거나 이동 될때 호출된다.
+* \brief Called when PLGui is resized or moved.
 */
 VOID CBudokaiSideIconGui::OnMove( RwInt32 nOldX, RwInt32 nOldY )
 {
@@ -344,7 +344,7 @@ VOID CBudokaiSideIconGui::OnMove( RwInt32 nOldX, RwInt32 nOldY )
 
 /******************************************************************************
 * Class			: CBudokaiSideViewGui
-* Desc			: 천하제일 무도회 사이드 뷰의 클래스
+* Desc			: World's Best Martial Arts Side View Class
 ******************************************************************************/
 
 /**
@@ -367,7 +367,7 @@ CBudokaiSideViewGui::~CBudokaiSideViewGui( VOID )
 }
 
 /**
-* \brief 천하제일 무도회 사이드뷰의 리소스 및 정보를 할당하고 초기화한다.
+* \brief Allocates and initializes resources and information of the World's Best Martial Arts side view.
 */
 RwBool CBudokaiSideViewGui::Create( VOID )
 {
@@ -405,7 +405,7 @@ RwBool CBudokaiSideViewGui::Create( VOID )
 }
 
 /**
-* \brief 천하제일 무도회 사이드뷰의 리소스 및 정보를 해제한다.
+* \brief Unlocks the resources and information of the World's Best Martial Arts side view.
 */
 VOID CBudokaiSideViewGui::Destroy( VOID )
 {
@@ -456,7 +456,7 @@ VOID CBudokaiSideViewGui::Update( RwReal fElapsedTime )
 }
 
 /**
-* \brief ESC Key의 행동
+* \brief ESC Key Behavior
 */
 VOID CBudokaiSideViewGui::OnPressESC( VOID )
 {
@@ -464,7 +464,7 @@ VOID CBudokaiSideViewGui::OnPressESC( VOID )
 }
 
 /**
-* \brief CSideIconGui에서 현재의 Budokai SideView를 Open 하라고 명령을 내린다.
+* \brief Command CSideIconGui to open the current Budokai SideView.
 */
 VOID CBudokaiSideViewGui::OnSideViewOpen( const VOID* pData )
 {
@@ -495,7 +495,7 @@ VOID CBudokaiSideViewGui::OnSideViewOpen( const VOID* pData )
 }
 
 /**
-* \brief Open과 반대
+* \brief Opposite of Open
 */
 VOID CBudokaiSideViewGui::OnSideViewClose(VOID)
 {
@@ -503,8 +503,8 @@ VOID CBudokaiSideViewGui::OnSideViewClose(VOID)
 }
 
 /**
-* \brief 현재의 SideView의 위치를 조절한다.
-* \para rtSideIcon		(const CRectangle*) 사이드 아이콘의 Rect 영역
+* \brief Adjusts the position of the current SideView.
+*\para rtSideIcon (const CRectangle*) Rect area of ??the side icon
 */
 VOID CBudokaiSideViewGui::OnSideViewLocate( const CRectangle& rtSideIcon )
 {
@@ -529,7 +529,7 @@ VOID CBudokaiSideViewGui::OnSideViewLocate( const CRectangle& rtSideIcon )
 }
 
 /**
-* \brief Dialog가 그려질 때 같이 그려준다.
+* \brief Drawn together when the dialog is drawn.
 */
 VOID CBudokaiSideViewGui::OnPaint()
 {
@@ -537,7 +537,7 @@ VOID CBudokaiSideViewGui::OnPaint()
 }
 
 /**
-* \brief Dialog가 이동될 때 같이 이동한다.
+* \brief Moves together when the dialog is moved.
 */
 VOID CBudokaiSideViewGui::OnMove( RwInt32 nOldX, RwInt32 nOldY )
 {
@@ -545,8 +545,8 @@ VOID CBudokaiSideViewGui::OnMove( RwInt32 nOldX, RwInt32 nOldY )
 }
 
 /**
-* \brief Close 버튼을 클릭하였을 때
-* \param pComponent	(gui::CComponent*) Close 버튼
+* \brief When the Close button is clicked
+* \param pComponent (gui::CComponent*) Close button
 */
 VOID CBudokaiSideViewGui::OnClickClose( gui::CComponent* pComponent )
 {
@@ -554,8 +554,8 @@ VOID CBudokaiSideViewGui::OnClickClose( gui::CComponent* pComponent )
 }
 
 /**
-* \brief 테이블 인덱스에서 데이터를 가져와서 출력한다.
-* \param tblidx	(RwUInt32) 테이블 인덱스
+* \brief Retrieves data from the table index and outputs it.
+* \param tblidx (RwUInt32) table index
 */
 VOID CBudokaiSideViewGui::ShowNotice( RwUInt32 tblidx )
 {
@@ -563,8 +563,8 @@ VOID CBudokaiSideViewGui::ShowNotice( RwUInt32 tblidx )
 }
 
 /**
-* \brief 스트링을 직접 출력한다.
-* \param pwcString		(const WCHAR*) 스트링 출력
+* \brief Prints the string directly.
+* \param pwcString (const WCHAR*) String output
 */
 VOID CBudokaiSideViewGui::ShowNotice( const WCHAR* pwcString )
 {

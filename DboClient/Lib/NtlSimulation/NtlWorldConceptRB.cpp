@@ -1,13 +1,13 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlWorldConceptRB.h"
 
-// shared
+// Shared
 #include "NtlRankBattle.h"
 #include "WorldTable.h"
 #include "TableContainer.h"
 #include "NtlResultCode.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"

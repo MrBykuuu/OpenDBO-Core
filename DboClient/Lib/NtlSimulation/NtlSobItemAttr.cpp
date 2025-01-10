@@ -16,8 +16,8 @@
 #include "NtlSLApi.h"
 
 
-#define ITEM_TIMELIMIT_NOTIFY_BEGINTIME		3600.0f	//	1시간.
-#define ITEM_TIMELIMIT_NOTIFY_INTERVALTIME  600.0f	//	10분.
+#define ITEM_TIMELIMIT_NOTIFY_BEGINTIME		3600.0f	//	1 hour.
+#define ITEM_TIMELIMIT_NOTIFY_INTERVALTIME  600.0f	//	10 minutes.
 
 DEFINITION_MEMORY_POOL(CNtlSobItemAttr)
 
@@ -188,18 +188,18 @@ void CNtlSobItemAttr::Update(RwReal fElapsedTime)
 				m_fRemainTimeBelowPeriod -= nRemainTimeAbovePeriod;
 			}			
 
-			// 사용기간 만료
+			// Expiration of usage period
 			if( m_RemainTime < 0 )
 			{
 				m_RemainTime = 0;
 				m_fRemainTimeBelowPeriod = 0.0f;
 				m_fNotifyTime = 0.0f;
 
-				// 패킷에서 처리.
+				//Processing in packet.
 				//CTextTable* pItemTextTable = API_GetTableContainer()->GetTextAllTable()->GetItemTbl();
 				//CNtlSLEventGenerator::FormatSysMsg( INVALID_SERIAL_ID, DST_COMMERCIAL_MB_UPDATE_TERM_LIMETED_ITEM_MSG, FALSE, pItemTextTable->GetText( m_pItemTbl->Name ).c_str() );
 			}
-			// 사용기간 만료 알림
+			//Notification of expiration of usage period
 			else if( m_RemainTime < ITEM_TIMELIMIT_NOTIFY_BEGINTIME )
 			{
 				if( m_fNotifyTime > 0.0f )

@@ -86,13 +86,13 @@ protected:
 	gui::CSlot			m_slotToggledFilter4;
 
 	typedef std::vector< CRecipeDlgItem* > RECIPE_VEC;
-	RECIPE_VEC			m_vecAvatarRecipe;					///< 아바타가 가지고 있는 레시피 리스트
+	RECIPE_VEC			m_vecAvatarRecipe;					///< List of recipes owned by the avatar
 
 	RECIPE_VEC			m_vecShowListRecipe;
 
 	gui::CSlot			m_slotAbsoluteMouseWheel;
 
-	RwUInt8				m_byDiscountRate;					///< 호이포이 믹스 머신의 가격 할인률 ( 0 ~ 100% )
+	RwUInt8				m_byDiscountRate;					///< Price discount rate of hoipoi mix machine (0 ~ 100%)
 
 	CRecipeDlgItem*		m_pSelectDlgItem;
 

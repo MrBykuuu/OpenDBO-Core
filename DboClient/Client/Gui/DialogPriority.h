@@ -1,16 +1,16 @@
 /******************************************************************************
-* File			: DialogPriority.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 2. 12
-* Abstract		: 
+*File           : DialogPriority.h
+*Author         : Hong SungBock
+*Copyright      : NTL Co., Ltd.
+*Date           : February 12, 2008
+*Abstract		: 
 *****************************************************************************
-* Desc			: 다이얼로그의 랜더링 우선순위를 정의한다
-*				  큰 순자의 것이 위에 온다
-*				  범위 : 0 ~ 65534
+*Desc           : Defines the rendering priority of a dialog
+*                 Larger permutations come first
+*                 Range: 0 ~ 65534
 *
-*				  우선순위의 간격을 넓직히 벌려두어 차후 우순순위간 추가를
-*				  용이하도록 한다
+*Leave the priorities wide apart so that additional priorities can be added in the future.
+*Make it easy
 *****************************************************************************/
 
 #pragma once
@@ -43,21 +43,21 @@
 #define dDIALOGPRIORITY_RESULT_NARRATION								46300
 #define dDIALOGPRIORITY_RESULT											46200
 
-#define dDIALOGPRIORITY_CALC_POPUP										46000	// 계산기
+#define dDIALOGPRIORITY_CALC_POPUP										46000	// calculating machine
 
-#define dDIALOGPRIORITY_PRIVATE_BUSINESS_PRICE							45100	// 흥정 가격 조정 창
+#define dDIALOGPRIORITY_PRIVATE_BUSINESS_PRICE							45100	// Negotiated price adjustment window
 
 #define dDIALOGPRIORITY_EFDIALOG										45000	// Entire Focusing Dialog
 #define dDIALOGPRIORITY_EFDIALOG_BACKGROUND								44999	// Entire Focusing Dialog backgound
 
-#define dDIALOGPRIORITY_TBGAMBLERESULT									40000	// 천하제일 무도회 겜블 결과창
+#define dDIALOGPRIORITY_TBGAMBLERESULT									40000	// World’s Best Martial Arts Gambling Result Window
 
-#define dDIALOGPRIORITY_PRIVATE_BUSINESS								35000	// 흥정 창
+#define dDIALOGPRIORITY_PRIVATE_BUSINESS								35000	// bargaining window
 
 #define dDIALOGPRIORITY_RPBONUS											34000
-#define dDIALOGPRIORITY_SKILLABILITY_SET								33500	///< 스킬 어빌리티 지정 창
+#define dDIALOGPRIORITY_SKILLABILITY_SET								33500	///<Skill ability designation window
 
-#define dDIALOGPRIORITY_MANIA_TIME_SET									33250	///< 게임 매니아 타임 재설정 창
+#define dDIALOGPRIORITY_MANIA_TIME_SET									33250	///< Game Mania Time Reset Window
 
 #define dDIALOGPRIORITY_CHATTING_OPTION									33155
 

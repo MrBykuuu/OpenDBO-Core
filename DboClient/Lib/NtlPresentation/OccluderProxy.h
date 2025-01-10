@@ -4,7 +4,7 @@ class CNtlPLOccluder_Base;
 class CNtlOccluderManager;
 
 /*
-	OccluderProxy 는 Mananger와 Object 간의 연결 고리 역활만 해 준다.
+	Occluder Proxy only acts as a link between Manager and Object.
 */
 
 class COccluderProxy

@@ -4,7 +4,7 @@
 #include "NtlEventQueue.h"
 #include "NtlPLEvent.h"
 
-// 이벤트 Send를 간편히 사용하기 위한 매크로 (by agebrak 2007.10.29)
+// Macro for easy use of event send (by agebrak 2007.10.29)
 #define SEND_MSG(event, data)   \
     RWS::CMsg msg; \
     msg.Id = event;\

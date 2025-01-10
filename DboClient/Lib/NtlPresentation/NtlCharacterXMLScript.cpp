@@ -229,7 +229,7 @@ RwBool CNtlCharacterXMLScript::SaveBoneData(CNtlPLCharacterProperty* pProperty)
     swprintf(buf, L"%.2f", pProperty->GetBoneScaleData()->vBaseScale.x);
     pElemBaseScale->put_text(buf);    
 
-	// Bone Scale¿Ã »∞º∫»≠ µ«æÓ¿÷¿ª∂ß∏∏ ¿˙¿Â«—¥Ÿ.
+	// Save only when Bone Scale is activated.
 	if(pProperty->GetBoneScaleData()->bBoneScale)
 	{
 		for(int i = 0; i < pProperty->GetBoneScaleData()->nBoneCount; ++i)
@@ -322,7 +322,7 @@ RwBool CNtlCharacterXMLScript::SaveAnimTable(CNtlPLCharacterProperty* pProperty)
 
 			if(!pstrAnimKey)
 			{
-				// PC ≈◊¿Ã∫Ìø° æ¯¿∏∏È NPC ≈◊¿Ã∫Ìø°º≠ √£æ∆∫ª¥Ÿ.			
+				//If it is not in the PC table, look for it in the NPC table.	
 				pstrAnimKey = CNtlPLCharacterParser::GetInstance().GetNPCMatchTable()->GetString(pAnimData->uiAnimKey);
                 if(!pstrAnimKey)
                 {
@@ -384,7 +384,7 @@ RwBool CNtlCharacterXMLScript::SaveAnimTable(CNtlPLCharacterProperty* pProperty)
                 case EVENT_ANIM_POST_EFFECT:
 					SavePostEffectEvent(pElemEvent, (SEventPostEffect*)pAnimData->vecAnimEvent[i]);
                     break;
-                case EVENT_ANIM_SUMMON_PET: // Summon Pet¿∫ Timeø‹ø° ¿˙¿Â ∞™¿Ã æ¯¥Ÿ.
+                case EVENT_ANIM_SUMMON_PET: // Summon Pet has no stored values ??other than Time.
                     break;
                 case EVENT_ANIM_ALPHA:                    
                     m_XMLScriptHelper.SaveAlphaEvent(pElemEvent, (SEventAlpha*)pAnimData->vecAnimEvent[i]);
@@ -477,7 +477,7 @@ RwBool CNtlCharacterXMLScript::LoadHeader(CNtlPLCharacterProperty* pProperty)
     pProperty->SetAlphaDistance((RwReal)atof(szAlphaDist));
     
 
-    // Anim BBox ("0.1;0.1;0.1" «¸Ωƒ¿Ã¥Ÿ)   
+    // Anim BBox (The format is ‚Äù0.1;0.1;0.1‚Äù)   
     char szAnimBBoxX[8] = {0,};
     char szAnimBBoxY[8] = {0,};
     char szAnimBBoxZ[8] = {0,};
@@ -669,8 +669,8 @@ RwBool CNtlCharacterXMLScript::LoadAnimTable(CNtlPLCharacterProperty* pProperty)
 
                 m_XMLScriptHelper.LoadAnimData(pAnimData, pTypeAnimData);
 
-				//by HongHoDong (2006. 5. 19) Key∞™¿Ã ∫Ø∞Ê¿Ã µ«∞≈≥™ «ﬂ¿ª ∞ÊøÏ πÆ¡¶∞° ª˝±‚π«∑Œ MatchTableø°º≠ KeyID∏¶ ∞°¡Æø¿µµ∑œ «—¥Ÿ.
-				//¿˙¿Âµ» KeyID¥¬ ServerøÎø°º≠ ªÁøÎ¿ª «—¥Ÿ.
+				//by HongHoDong (2006. 5. 19) Problems arise when the Key value is changed, so make sure to retrieve the KeyID from MatchTable.
+				//The saved KeyID is used for the server.
                 char szKey[128] = {0,};
                 GetTextWithAttributeName(pAnimData, "KEY", szKey, sizeof(szKey));
                 
@@ -684,7 +684,7 @@ RwBool CNtlCharacterXMLScript::LoadAnimTable(CNtlPLCharacterProperty* pProperty)
                     }
 				}
 
-                // ¿Ã∫•∆Æ
+                //event
                 IXMLDOMNodeList* pEventList = NULL;
                 pAnimData->selectNodes(L"ANIM_EVENT", &pEventList);
                 if(pEventList)
@@ -1101,7 +1101,7 @@ void CNtlCharacterXMLScript::SaveHitEvent(IXMLDOMElement* pElemEvent, const SEve
     m_XMLScriptHelper.SaveAttribute(pElemEvent, L"WORD_EFFECT", pEventHit->chWordEffect);
     m_XMLScriptHelper.SaveAttribute(pElemEvent, L"SHAKE", pEventHit->bCameraShake);
 
-    // √ﬂ∞° µ•¿Ã≈Õ ¿˙¿Â
+    //save additional data
     if(pEventHit->eAttackType == ATTACK_TYPE_ENERGY)
     {
         switch(pEventHit->uiProjectileEffectType)
@@ -1116,7 +1116,7 @@ void CNtlCharacterXMLScript::SaveHitEvent(IXMLDOMElement* pElemEvent, const SEve
 			m_XMLScriptHelper.SaveAttribute(pElemEvent, L"HOIDAN_SPEED", pEventHit->uEffectTypeExtraData.hellZoneData.fTargetEffectSpeed);
 			break;
         case BEID_PROJ_MULTI_HISSIDAN:
-            // Hissidan¿« ∞≥ºˆ∏∏≈≠ ¿˙¿Â«—¥Ÿ. (count¥¬ ¿˙¿Â«œ¡ˆ æ æ∆µµ µ»¥Ÿ. ∑ŒµÂ«“∂ß ¿–¿∫∏∏≈≠ count∏¶ º≥¡§«—¥Ÿ)
+            //Store as many Hissidans. (The count does not need to be saved. When loading, set the count as much as read.)
             for(int cnt = 0; cnt < pEventHit->uEffectTypeExtraData.multiHissidanData.nCount; ++cnt)
             {
                 IXMLDOMElement* pElemMultiHissidanDir = NULL;
@@ -1129,7 +1129,7 @@ void CNtlCharacterXMLScript::SaveHitEvent(IXMLDOMElement* pElemEvent, const SEve
         }
     }
 
-    // ƒ´∏ﬁ∂Û ºŒ¿Ã≈©
+    //camera shake
     if(pEventHit->bCameraShake)
     {
         m_XMLScriptHelper.SaveAttribute(pElemEvent, L"SHAKE_FACTOR", pEventHit->fCameraShakeFactor);
@@ -1224,7 +1224,7 @@ void CNtlCharacterXMLScript::LoadHitEvent(IXMLDOMNode* pNodeEvent, SEventAnimHit
     sprintf(pEventHit->chWordEffect, "%s", szWordEffect);
     pEventHit->bCameraShake = (RwBool)atoi(szCameraShake);
 
-    // √ﬂ∞° µ•¿Ã≈Õ∏¶ ¿–æÓµÈ¿Œ¥Ÿ.
+    //Read additional data.
     if(pEventHit->eAttackType == ATTACK_TYPE_ENERGY)
     {
         switch(pEventHit->uiProjectileEffectType)
@@ -1243,7 +1243,7 @@ void CNtlCharacterXMLScript::LoadHitEvent(IXMLDOMNode* pNodeEvent, SEventAnimHit
 
                 pMultiHissidanList->get_length(&lDirCount);
                 pEventHit->uEffectTypeExtraData.multiHissidanData.nCount = lDirCount;           // count
-                pEventHit->uEffectTypeExtraData.multiHissidanData.pArrayAngle = NTL_NEW RwV2d[lDirCount];   // µø¿˚ «“¥Á«—¥Ÿ.
+                pEventHit->uEffectTypeExtraData.multiHissidanData.pArrayAngle = NTL_NEW RwV2d[lDirCount];   // Dynamically allocate.
 
                 for(int k = 0; k < lDirCount; ++k)
                 {
@@ -1269,7 +1269,7 @@ void CNtlCharacterXMLScript::LoadHitEvent(IXMLDOMNode* pNodeEvent, SEventAnimHit
         }
     }
 
-    // ƒ´∏ﬁ∂Û ºŒ¿Ã≈©
+   // camera shake
     if(pEventHit->bCameraShake)
     {
         if(GetTextWithAttributeName(pNodeEvent, "SHAKE_FACTOR", szShakeFactor, sizeof(szShakeFactor)))

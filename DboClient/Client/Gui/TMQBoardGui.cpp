@@ -1,10 +1,10 @@
 #include "precomp_dboclient.h"
 #include "TMQBoardGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// share
+// Share
 #include "TextAllTable.h"
 #include "TimeQuestTable.h"
 #include "NPCTable.h"
@@ -12,10 +12,10 @@
 #include "QuestTextDataTable.h"
 
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSLApi.h"
@@ -24,7 +24,7 @@
 #include "NtlSobAvatar.h"
 #include "NtlSLGlobal.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DialogManager.h"
@@ -111,7 +111,7 @@ RwBool CTMQBoardGui::Create()
 
 
 
-	// sig	
+	// Signals	
 	m_slotPaint = m_pThis->SigPaint().Connect( this, &CTMQBoardGui::OnPaint );
 	m_slotMove = m_pThis->SigMove().Connect( this, &CTMQBoardGui::OnMove );
 	m_slotMouseMove = m_pThis->SigMouseMove().Connect( this, &CTMQBoardGui::OnMouseMove );

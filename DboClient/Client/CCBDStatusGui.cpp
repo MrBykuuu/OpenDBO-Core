@@ -1,13 +1,13 @@
 #include "precomp_dboclient.h"
 #include "CCBDStatusGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// dbo
+// Dbo
 #include "DisplayStringManager.h"
 #include "DboEvent.h"
 #include "IconMoveManager.h"
@@ -19,7 +19,7 @@
 #include "DboGlobal.h"
 #include "SideDialogManager.h"
 
-// simul
+// Simulation
 #include "NtlWorldConceptCCBD.h"
 
 

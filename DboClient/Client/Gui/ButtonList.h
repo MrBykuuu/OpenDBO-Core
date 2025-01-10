@@ -1,7 +1,7 @@
 #pragma once
 
-// 버튼리스트의 플래그들
-#define BL_MULTI_SELECT       0x00000001                    ///< 토글버튼을 이용한 멀티 선택 가능
+// Button list flags
+#define BL_MULTI_SELECT       0x00000001                    ///< Multi-selection possible using toggle button
 
 template <typename _TClass, typename _TData = void*>
 class CButtonList
@@ -17,7 +17,7 @@ public:
 	{
 		gui::CButton*	pButton;
 		gui::CSlot		slotClicked;
-        gui::CSlot      slotToggled;        ///< 토글이 눌러질때로 클릭으로 인식한다 (by agebreak)
+        gui::CSlot      slotToggled;        ///< When the toggle is pressed, it is recognized as a click (by agebreak)
 		SItem*			pItem;
 	};
 
@@ -74,7 +74,7 @@ public:
 	void	ClearItem();
 	SItem	GetItem(RwInt32 iValue)	{ return *m_vecItem.at(iValue); }
 
-    RwInt32 GetSelect();                            ///< 현재 선택된 버튼의 인덱스를 반환한다. 선택된게 없으면 -1을 반환. Select 상태에서 사용한다.
+    RwInt32 GetSelect();                            ///< Returns the index of the currently selected button. If nothing is selected, -1 is returned. Used in Select state.
 
 	void	LocateItem();
 	void	UpdateItem();
@@ -215,7 +215,7 @@ void CButtonList<_TClass, _TData>::OnButtonToggled(gui::CComponent* pComponent, 
     if(!bToggle)
         return;
 
-    if(!(m_nFlag & BL_MULTI_SELECT))    ///< 멀티 셀렉트가 아니면 하나만 선택 가능
+    if(!(m_nFlag & BL_MULTI_SELECT))    ///< If not multi-select, only one can be selected
     {
         for (int i = 0; i < (int)m_vecButtonItem.size(); ++i)
         {        
@@ -254,7 +254,7 @@ void CButtonList<_TClass, _TData>::ClearItem()
     {
         if (m_vecButtonItem.at(i)->pButton->IsToggleButton())
         {
-            // 토글된 버튼이 있으면 모두 해제한다.
+            // If any buttons are toggled, turn them off.
             m_vecButtonItem[i]->pButton->SetDown(false);
         }
     }

@@ -2,11 +2,11 @@
  *
  * File			: NtlSobInfluence.h
  * Author		: HyungSuk, Jang
- * Copyright	: (¡÷)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2006. 3. 14	
  * Abstract		: Simulation Influence object(buff, status, skill)
  *****************************************************************************
- * Desc         : buff, sync status, skill µÓ¿« container ∞¥√º.
+ * Desc         : Container objects such as buff, sync status, skill, etc.
  *
  *****************************************************************************/
 

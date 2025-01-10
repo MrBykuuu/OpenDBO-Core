@@ -64,17 +64,17 @@ private:
 	gui::CSlot	m_slotCaptureEndMouseDown;
 
 //! Variable
-	RwBool m_bActive;			// DragDrop상태
+	RwBool m_bActive;			// Drag drop status
 	
 	RwUInt32 m_hSrcSerial;
 	RwUInt32 m_eSrcPlace;
 	RwUInt32 m_uiSrcSlotIdx;
 
-	RwUInt32 m_uiStackCount;	// 나눈갯수 0 이면 전체.
+	RwUInt32 m_uiStackCount;	// If the number of divisions is 0, it is total.
 
 	CSurfaceGui m_surIcon;	
 
-	RwUInt32	m_ExData1;			// 확장데이터.
+	RwUInt32	m_ExData1;			// Extended data.
 	RwUInt32	m_ExData2;
 	RwUInt32	m_ExData3;
 	RwUInt32	m_ExData4;

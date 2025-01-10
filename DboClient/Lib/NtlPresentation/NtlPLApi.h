@@ -2,7 +2,7 @@
  *
  * File			: NtlPLApi.h
  * Author		: All Author
- * Copyright	: (주)NTL
+ * Copyright	: (?)NTL
  * Date			: 2005. 8. 11	
  * Abstract		: Presentation layer api function.
  *****************************************************************************
@@ -23,7 +23,7 @@ void API_PLTerminate(void);
 
 #define API_PL_CLAMP(x, min, max) (x = (x < min ? min : x < max ? x : max))
 
-#define E2I(val) *((int*)&val)					///< Enum형을 Int형으로 변경한다.
+#define E2I(val) *((int*)&val)					///< Change Enum type to Int type.
 
 
 RpAtomic*	API_PL_LoadAtomic(const RwChar*	filename, const RwChar* pTexturePath);
@@ -50,22 +50,22 @@ void		API_PL_8BColorClamp(RwUInt8* pDst, RwInt32 Value);	// 8bits color clamping
 void		API_PL_1BColorClamp(RwReal* pDst, RwReal Value);	// 1.0f based color clamping from the value
 
 
-void		API_PL_RasterSaveImage(const RwRaster *pRaster, const RwChar *pszFileName);    ///< Raster를 Image로 저장(.png, .bmp)
-void		API_PL_RasterSaveImage(const RwRaster *pRaster, const RwChar *pszFileName, RwInt32 _Width, RwInt32 _Height);    ///< Raster를 Image로 저장(.png, .bmp)
+void		API_PL_RasterSaveImage(const RwRaster *pRaster, const RwChar *pszFileName);    ///< Save Raster as Image (.png, .bmp)
+void		API_PL_RasterSaveImage(const RwRaster *pRaster, const RwChar *pszFileName, RwInt32 _Width, RwInt32 _Height);    ///< Save Raster as Image (.png, .bmp)
 
 void		API_PL_CameraLookAt( RwCamera* pCamera, 
 								 const RwV3d* pSetCameraPos, 
 								 const RwV3d* pTarget, 
 								 const RwV3d* pSentInUp = NULL,
-								 RwReal fAtAxisRot = 0.0f);   ///< LookAt으로 Camra Matrix를 변환
+								 RwReal fAtAxisRot = 0.0f);   ///< Convert Camra Matrix with LookAt
 
 void		API_PL_CameraMatrixLookAt( RwMatrix *pMat, 
 									   const RwV3d* pSetCameraPos, 
 									   const RwV3d* pTarget);  
 
-RwV2d       API_PL_Calc3DPosTo2D( RwV3d* v3DPos, RwInt32 nWidth, RwInt32 nHeight, RwBool bOutSideReturn = FALSE); ///< 3D좌표를 2D좌표로 변환한다
+RwV2d       API_PL_Calc3DPosTo2D( RwV3d* v3DPos, RwInt32 nWidth, RwInt32 nHeight, RwBool bOutSideReturn = FALSE); ///< Convert 3D coordinates to 2D coordinates
 
-RpAtomic*	API_PL_RenderWireMesh(RpAtomic* atomic, void* data);				   ///< Atomic을 Wireframe으로 표시한다.
+RpAtomic*	API_PL_RenderWireMesh(RpAtomic* atomic, void* data);				   ///< Display Atomic as Wireframe.
 
 
 #endif

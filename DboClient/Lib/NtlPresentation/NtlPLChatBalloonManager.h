@@ -31,8 +31,8 @@ public:
 
 	enum STATE { FADE_IN, SHOW, FADE_OUT, HIDE };
 
-	enum PRIORITY { MORE_PRIORITY, EQUAL_PRIORITY, LESS_PRIORITY,	// 같은 레이어인 경우
-					UPPER_LAYER, LOWER_LAYER };						// 다른 레이어인 경우
+	enum PRIORITY { MORE_PRIORITY, EQUAL_PRIORITY, LESS_PRIORITY,	// In case of same layer
+					UPPER_LAYER, LOWER_LAYER };						// If it's a different layer
 
 	CNtlPLBalloonGui( RwReal fLifeTime, RwInt32 eType ) 
 		:m_fCurrentTime( 0.0f ), m_fLifeTime( fLifeTime ), m_eType( eType ), m_eState( FADE_IN ) {}
@@ -49,7 +49,7 @@ public:
 	RwInt32		GetType(VOID) { return m_eType; }
 	RwInt32		GetState(VOID) { return m_eState; }
 
-	RwInt32		PriorityCheck( RwUInt32 eType );	// return value : PRIORITY  객체가 매개변수의 타입에 비해 어떠한가.	
+	RwInt32		PriorityCheck( RwUInt32 eType );	// return value: How does the PRIORITY object compare to the type of the parameter?	
 
 protected:
 
@@ -82,7 +82,7 @@ protected:
 	RwUInt8				m_byBalloonType;
 	RwBool				m_bStandardSize;
 
-	std::wstring		m_wstrString;	// 원본 메세지 저장.
+	std::wstring		m_wstrString;	// Save the original message.
 	RwReal				m_fFadeInTime;
 };
 

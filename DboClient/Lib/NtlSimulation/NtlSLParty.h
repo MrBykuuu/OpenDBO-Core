@@ -13,14 +13,14 @@
 #ifndef __NTL_PARTY_INFO_H__
 #define __NTL_PARTY_INFO_H__
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// share
+// Share
 #include "NtlParty.h"
 #include "NtlPartyDungeon.h"
 
-// simulation
+// Simulation
 #include "NtlSharedDef.h"
 #include "NtlSLDef.h"
 #include "NtlSLCommunityGroup.h"
@@ -33,18 +33,18 @@ struct sCHARM_TBLDAT;
 
 struct sPartyMember : public sCommunityMember
 {
-	SERIAL_HANDLE	hSerial;		///< 맴버 핸들
-	RwUInt8			byRace;			///< 종족
-	RwUInt8			byClass;		///< 직업
-	RwUInt8			byLevel;		///< 레벨
-	RwUInt16		wCurLP;			///< 현재 LP
-	RwUInt16		wMaxLP;			///< 최대 LP
-	RwUInt16		wCurEP;			///< 현재 EP
-	RwUInt16		wMaxEP;			///< 최대 EP
-	RwUInt32		uiWorldID;		///< 월드 ID
-	RwUInt32		uiWorldTbl;		///< 월드 테이블 Index
-	RwV3d			vPos;			///< 위치(가시거리 밖에 있을 때는 패킷을 받는다)
-	SERIAL_HANDLE	hBusSerial;		///< 타고 있는 버스의 핸들
+	SERIAL_HANDLE	hSerial;		///< member handle
+	RwUInt8			byRace;			///< Race
+	RwUInt8			byClass;		///< Occupation
+	RwUInt8			byLevel;		///< level
+	RwUInt16		wCurLP;			///< Current LP
+	RwUInt16		wMaxLP;			///< Max LP
+	RwUInt16		wCurEP;			///< Current EP
+	RwUInt16		wMaxEP;			///< Max EP
+	RwUInt32		uiWorldID;		///< World ID
+	RwUInt32		uiWorldTbl;		///< World Table Index
+	RwV3d			vPos;			///< Location (receives packets when out of line of sight)
+	SERIAL_HANDLE	hBusSerial;		///< Steering wheel of the bus you are riding
 
 	CNtlFakeBuffContainer*	pFakeBuffContainer;		///< Save buff information of members except yourself
 };
@@ -71,13 +71,13 @@ public:
 
 	virtual	void	HandleEvents(RWS::CMsg &pMsg);
 
-	VOID			SetPartyName(WCHAR* pcName);			///< 파티 이름 설정
+	VOID			SetPartyName(WCHAR* pcName);			///< Party name setting
 
-	const WCHAR*	GetPartyName();							///< 파티 이름을 반환한다
-	SERIAL_HANDLE	GetLeaderHandle();						///< 리더 핸들을 반환한다
+	const WCHAR*	GetPartyName();							///< Returns the party name
+	SERIAL_HANDLE	GetLeaderHandle();						///< returns the leader handle
 	RwInt32			GetAvatarIndex();
 
-	// 분배 방식 반환
+	// Distribution method return
 	RwUInt8				 GetZennyLootingMethod();
 	RwUInt8				 GetItemLootingMethod();
 
@@ -88,23 +88,23 @@ public:
 
 	virtual RwBool	IsHaveGroup();
 
-    sSHARETARGET_INFO*  GetShareTargetInfos() {return m_aShareTargetInfo;}      ///< 파티 공유타겟 정보를 반환한다
+    sSHARETARGET_INFO*  GetShareTargetInfos() {return m_aShareTargetInfo;}      ///< Returns party shared target information
 
 protected:
-    void            PartyShareTargetResHandler(RWS::CMsg& pMsg);         ///< 파티 공유 타겟 응답 처리
-    void            PartyShareTargetNfyHandler(RWS::CMsg& pMsg);         ///< 파티 공유 타겟 알림 처리 
+    void            PartyShareTargetResHandler(RWS::CMsg& pMsg);         ///< Party sharing target response processing
+    void            PartyShareTargetNfyHandler(RWS::CMsg& pMsg);         ///< Party sharing target notification processing 
 
 protected:
-	WCHAR					m_pwPartyName[NTL_MAX_SIZE_PARTY_NAME+1];	///< 파티 이름
+	WCHAR					m_pwPartyName[NTL_MAX_SIZE_PARTY_NAME+1];	///< Party name
 
-	SERIAL_HANDLE			m_hLeaderHandle;			///< 파티 리더 핸들
+	SERIAL_HANDLE			m_hLeaderHandle;			///< Party leader handle
 
-	sSHARETARGET_INFO       m_aShareTargetInfo[NTL_MAX_SHARETARGET_COUNT];        // 파티 공유 타겟 정보, 배열의 인덱스가 공유 타겟 번호이다
+	sSHARETARGET_INFO       m_aShareTargetInfo[NTL_MAX_SHARETARGET_COUNT];        // Party shared target information, the index of the array is the shared target number
 
-	RwUInt8					m_byZennyLootingMethod;		///< 제니 분배 방식
-	RwUInt8					m_byItemLootingMethod;		///< 아이템 분배 방식
+	RwUInt8					m_byZennyLootingMethod;		///< Zenny distribution method
+	RwUInt8					m_byItemLootingMethod;		///< Item distribution method
 
-	ePARTY_DUNGEON_STATE	m_eDungeonState;			///< 파티 인스턴스 던전의 상태
+	ePARTY_DUNGEON_STATE	m_eDungeonState;			///< Status of party instance dungeon
 };
 
 inline RwUInt8 CNtlParty::GetZennyLootingMethod()

@@ -1,22 +1,22 @@
 /******************************************************************************
 * File			: ChatSender.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: (二�)NTL
 * Date			: 2008. 7. 2
 * Abstract		: 
 *****************************************************************************
-* Desc			: 채팅 GUI를 통해서 입력받은 문자열의 파싱과 채팅 서버로 전송
+* Desc			: Parsing of string entered through chat GUI and sending to chat server
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// dbo
+// Dbo
 #include "ChatDefine.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
 class CChatGui;
@@ -34,8 +34,8 @@ public:
 		sCHAT_COMMAND_TBLDAT*		pCHAT_COMMAND_TBLDAT;
 	};
 
-	// 실제로 명령어를 통해서 소셜 액션을 쓰는 일은 드물 것이라 생각이 되어
-	// 소셜 명령어를 키로 하는 멀티맵을 사용하여 자료구조를 정의하지 않았다
+	// In reality, I think it is rare to use social actions through commands.
+	// The data structure was not defined using a multimap with social commands as keys.
 	typedef std::map<SERIAL_HANDLE, sSOCIAL_ACTION*>		MAP_SOCIAL_ACTION;
 
 public:	
@@ -65,6 +65,6 @@ protected:
 
 protected:
 	CChatGui*			m_pChatGui;
-	std::wstring		m_wstrLastUserName;				// 최근 귓속말을 받은 유저네임.
+	std::wstring		m_wstrLastUserName;				// Username that recently received whispers.
 	MAP_SOCIAL_ACTION	m_mapSocialAction;
 };

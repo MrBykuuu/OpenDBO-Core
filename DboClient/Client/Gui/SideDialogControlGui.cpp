@@ -1,13 +1,13 @@
 #include "precomp_dboclient.h"
 #include "SideDialogControlGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// dbo
+// Dbo
 #include "DboEventGenerator.h"
 #include "DialogManager.h"
 #include "SideDialogManager.h"
@@ -57,11 +57,11 @@ RwBool CSideDialogControlGui::Create()
 	m_pThis = (gui::CDialog*)GetComponent("dlgMain");
 	m_pThis->SetPriority(dDIALOGPRIORITY_SIDE_DIALOG);
 
-	// 왼쪽 버튼
+	// left button
 	m_pLeftButton = (gui::CButton*)GetComponent( "btnLeft" );
 	m_slotLeftButton = m_pLeftButton->SigClicked().Connect(this, &CSideDialogControlGui::OnClick_LeftButton);
 
-	// 오른쪽 버튼
+	// right button
 	m_pRightButton = (gui::CButton*)GetComponent( "btnRight" );
 	m_slotRightButton = m_pRightButton->SigClicked().Connect(this, &CSideDialogControlGui::OnClick_RightButton);
 
@@ -150,7 +150,7 @@ VOID CSideDialogControlGui::ArrangeButtons(RwBool bOpenStartIndex /* = FALSE */)
 		{
 			++byCount;
 			
-			// 화면에 보이는 버튼중 첫 번째에 해당하는 다이얼로그를 연다
+			// Open the dialog corresponding to the first button shown on the screen.
 			if( m_byVisibleStart == byCount )
 			{
 				if( bOpenStartIndex )
@@ -177,7 +177,7 @@ VOID CSideDialogControlGui::ArrangeButtons(RwBool bOpenStartIndex /* = FALSE */)
 			sButtonType* pButtonType = *it;
 			if( m_byVisibleStart <= byCount && byCount <= dMAX_BUTTON_VISILE )
 			{
-				// 화면에 보이는 버튼중 첫 번째에 해당하는 다이얼로그를 연다
+				// Open the dialog corresponding to the first button shown on the screen.
 				if( m_byVisibleStart == byCount )
 				{
 					if( bOpenStartIndex )
@@ -212,7 +212,7 @@ VOID CSideDialogControlGui::ArrangeButtons(RwBool bOpenStartIndex /* = FALSE */)
 
 VOID CSideDialogControlGui::AddButton(RwUInt32 uiSideDialogType)
 {
-	// 이미 등록이 되어 있으면 리턴
+	// Return if already registered
 	LIST_BUTTON_ITER it = m_listEnableButton.begin();
 	for( ; it != m_listEnableButton.end() ; ++it )
 	{
@@ -227,7 +227,7 @@ VOID CSideDialogControlGui::AddButton(RwUInt32 uiSideDialogType)
 		{
 			m_listEnableButton.push_back(&m_aButtonType[i]);
 
-			// 현재 Add되는 것이 표시되니 기존의 최소화된 다이얼로그는 표시할 필요가 없다
+			// Since what is currently being added is displayed, there is no need to display the existing minimized dialog.
 			m_pSideDialogMiniGui->Inactive();
 			break;
 		}
@@ -347,7 +347,7 @@ VOID CSideDialogControlGui::HandleEvents( RWS::CMsg &msg )
 				{
 					if( m_aButtonType[i].uiSideDialogType == pEvent->uiSrcSDialog )
 					{
-						// 사이드 다이얼로그 공통 최소화 GUI를 보여준다
+						// Side dialog shows common minimized GUI
 						m_pSideDialogMiniGui->Active(m_aButtonType[i].uiSideDialogType,
 													 m_aButtonType[i].pButton->GetToolTip().c_str());
 						break;

@@ -50,7 +50,7 @@ public:
 	bool					Apply( unsigned int uiFlags );
 	
 public:
-	// 검증된 Key만 사용할 수 있음
+	//Only verified keys can be used
 	bool				GetBoolData(unsigned int uiKey);
 	int					GetIntData(unsigned int uiKey);
 	float				GetFloatData(unsigned int uiKey);

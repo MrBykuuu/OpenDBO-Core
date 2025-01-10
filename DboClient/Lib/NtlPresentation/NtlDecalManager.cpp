@@ -260,7 +260,7 @@ void CNtlDecalManager::RwRender(RpWorld *pWorld, RwCamera *pCamera, RwV3d *pPos,
 			return;
 	}
 	
-	// decal 구하기
+	//get decal
 	m_nIm3DBufferCnt = 0;
 	DecalCallbackParam param;
 
@@ -313,7 +313,7 @@ void CNtlDecalManager::TerrainRender(RpWorld *pWorld, RwCamera *pCamara, const R
 	if(!GetSceneManager()->IsWorldReady())
 		return;
 
-	// 카메라 컬링.
+	// Camera culling.
 	RwSphere sphere;
 	sphere.center = pPos;
 	sphere.radius = 1.f;
@@ -354,7 +354,7 @@ void CNtlDecalManager::TerrainRender(RpWorld *pWorld, RwCamera *pCamara, const R
 
 
 
-	//// decal 구하기
+	//// Get decal
 	//m_nIm3DBufferCnt = 0;
 	//DecalCallbackParam param;
 

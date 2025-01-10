@@ -13,7 +13,7 @@
 
 enum EPLWorldLightType
 {
-	EPLWORLDLIGHT_BASE,			// CNtlPLWorldLight_Base // 사용하지 않는다.
+	EPLWORLDLIGHT_BASE,			// CNtlPLWorldLight_Base //Not used.
 	EPLWORLDLIGHT_SPHERE,		// CNtlPLWorldLight_Sphere
 	EPLWORLDLIGHT_BOX			// CNtlPLWorldLight_Box
 };
@@ -49,7 +49,7 @@ public:
 	virtual void				SetPosition(const RwV3d* pvPos);
 	virtual RwV3d				GetPosition();
 
-	// Radius 기준으로 Light를 검색한다.
+	// Search for light based on radius.
 	virtual void				SetRadius(RwReal fRadius);
 	virtual RwReal				GetRadius();
 
@@ -65,9 +65,9 @@ public:
 	
 protected:
 	/*
-	IsIn :	기본적인 검색 방법은 Shpere를 사용하자.
-			그러므로 m_Sphere의 Radius 값이 필요하다. Create시 값을 입력하자.
-			만약 사용하지 않는다면 IsIn 함수를 Overriding 한다.
+	IsIn: Use Shpere for the basic search method.
+			Therefore, the Radius value of m_Sphere is needed. Enter the value when creating.
+			If not used, overriding the IsIn function.
 	*/
 	virtual RwBool				IsIn(const RwV3d* pvPos, RwReal* pfOutDistance = NULL);
 	virtual RwBool				IsInSphere(const RwV3d* pvPos, RwReal* pfOutDistance = NULL);

@@ -2,7 +2,7 @@
  *
  * File			: NtlFSMVehicleActState.h
  * Author		: JeongHo, Rho
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2006. 2. 13	
  * Abstract		: Finite state machine vehicle action base class
  *****************************************************************************
@@ -39,7 +39,7 @@ public:
 	CNtlFSMVehicleRideOnOff( void );
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter( void );
 	virtual void Exit( void );
@@ -62,7 +62,7 @@ public:
 	CNtlFSMVehicleActIdleState( void );
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter( void );
 	virtual void Exit( void );
@@ -88,7 +88,7 @@ public:
 	CNtlFSMVehicleMoveState( void );
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter( void );
 	virtual void Exit( void );
@@ -111,7 +111,7 @@ public:
 	CNtlFSMVehicleFollowState( void );
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter( void );
 	virtual void Exit( void );
@@ -134,7 +134,7 @@ public:
 	CNtlFSMVehicleAdjustMoveState( void );
 
 	/**
-	*  state의 update/event 처리 함수.
+	*  State update/event processing function.
 	*/
 	virtual void Enter( void );
 	virtual void Exit( void );
@@ -157,7 +157,7 @@ public:
 	CNtlFSMVehicleActFallingState( void );
 
 	/**
-	*  state의 update/event 처리 함수.
+	*State update/event processing function.
 	*/
 	virtual void Enter( void );
 	virtual void Exit( void );

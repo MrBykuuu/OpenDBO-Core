@@ -1,17 +1,17 @@
 #include "precomp_dboclient.h"
 #include "SkillCustomizeItem.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// table
+// Table
 #include "SkillTable.h"
 #include "PCTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLApi.h"
 #include "NtlSLGlobal.h"
 #include "NtlSkillContainer.h"
@@ -20,7 +20,7 @@
 #include "NtlSobIcon.h"
 #include "NtlSobSkillAttr.h"
 
-// dbo
+// Dbo
 #include "DboGlobal.h"
 #include "DboPacketGenerator.h"
 #include "DboPacketGenerator.h"
@@ -44,7 +44,7 @@
 CSkillCustomizeItem::CSkillCustomizeItem( CSkillCustomizeSkillItem* pParsedItem )
 : m_pItem( pParsedItem ), m_pSobIcon( NULL ), m_bUpgradable( FALSE ), m_eLClickIcon( STATE_NONE ), m_eRClickIcon( STATE_NONE ), m_bPushDownIcon( FALSE ), m_fRightClickTime( 0.0f )
 {
-	// RPType
+	// Rp Type
 	m_surRPType.Show( FALSE );
 
 	// Effect
@@ -167,26 +167,26 @@ VOID CSkillCustomizeItem::SetInitSkill(VOID)
 
 VOID CSkillCustomizeItem::SetSobIcon( CNtlSobIcon* pSobIcon, sTBLDAT* pData )
 {
-	// 아이템 아이콘 세팅, 테이블 세팅.
+	// Item icon setting, table setting.
 	m_pSobIcon = pSobIcon;
 	m_pItem->SetSkillData( pData );
 
-	// 기존 아이콘 텍스쳐 해제 및 아이콘의 텍스쳐로 교체.
+	// Remove the existing icon texture and replace it with the icon's texture.
 	m_pItem->SetIconTexture( reinterpret_cast<gui::CTexture*>( pSobIcon->GetImage() ) );
 
-	// 쿨타임 체크.
+	// Cooltime check.
 	if( m_pSobIcon->GetIconState() == CNtlSobIcon::ICON_STATE_COOLING )
 		CoolTimeEffect( TRUE );	
 
-	// 이미지 
+	// image 
 	SetActive( TRUE );
 	m_pItem->SetLineActive( TRUE, LINE_TYPE_OPTION );	
 
-	// RPButton 활성화
+	// Activate RPButton
 	if( m_pItem->GetRPButton() )
 		m_pItem->GetRPButton()->ClickEnable( TRUE );	
 
-	// RPMode 갱신
+	// RPMode Update
 	if( m_pItem->GetSkillType() == CSkillCustomizeSkillItem::SKILL )
 	{
 		CNtlSobSkillAttr* pSobAttr = reinterpret_cast<CNtlSobSkillAttr*>( m_pSobIcon->GetSobObj()->GetSobAttr() );
@@ -195,21 +195,21 @@ VOID CSkillCustomizeItem::SetSobIcon( CNtlSobIcon* pSobIcon, sTBLDAT* pData )
 
 	SetColor( SKILLWND_ITEM_LEARN_COLOR_RED, SKILLWND_ITEM_LEARN_COLOR_GREEN, SKILLWND_ITEM_LEARN_COLOR_BLUE );
 
-	// SP 버튼 체크, 업그레이드 스킬 라인표시는 다른 함수에서 일괄적으로 호출되게 된다.
+	// SP button check and upgrade skill line display are collectively called from other functions.
 
-	// 기존 인포윈도우 체크
+	// Check existing infowindow
 	if( GetInfoWndManager()->GetRequestGui() == DIALOG_SKILL )
 	{
 		if( GetInfoWndManager()->GetInfoWndState() == CInfoWndManager::INFOWND_SKILL_SPUPGRADE )
 		{
-			CheckSkillUpgrade();	// 나중에 한번 더 불려지겠지만 ShowSPInfownd 되기전에 수행되어야 한다. 
+			CheckSkillUpgrade();	// It will be called once more later, but it must be performed before ShowSPInfoundd. 
 			ShowSPInfownd( TRUE );		
 		}
 		else
 			ShowSkillInfownd( TRUE );
 	}
 
-	// 안보이던 스킬의 경우 보여야함
+	// In case of skills that were not visible, they must be visible.
 	Show( true );
 }
 
@@ -233,18 +233,18 @@ VOID CSkillCustomizeItem::CheckSkillUpgrade(VOID)
 	if( m_pItem->GetSkillType() != CSkillCustomizeSkillItem::SKILL )
 		return;
 
-	// 업그레이드 가능하거나, 셀프 트레인이 아닌 경우 리턴.
+	// Upgradable or return if not self-train.
 	if( !m_pItem->GetSPButton() )
 		return;
 
-	// 데이터 초기화
+	// Data reset
 	m_stSkillUpgradeInfo.Init();
 
-	// SP 버튼 활성화 여부.
-	// 0. 마스터 했는가.
-	// 1. SP가 충분한가.
-	// 2. 배워야할 스킬을 배우고 있는가.
-	// 3. 배웠는가.
+	// Whether SP button is activated or not.
+	// 0. Did you master it?
+	// 1. Is there enough SP?
+	// 2. Are you learning the skills you need to learn?
+	// 3. Did you learn it?
 	// 4. 	
 
 	RwBool bActivateSPBtn = TRUE;
@@ -264,7 +264,7 @@ VOID CSkillCustomizeItem::CheckSkillUpgrade(VOID)
 		{
 			m_stSkillUpgradeInfo.bMaster = TRUE;		
 
-			// 결과 적용.
+			// Apply results.
 			m_pItem->GetSPButton()->ClickEnable( FALSE );	
 
 			return;
@@ -293,7 +293,7 @@ VOID CSkillCustomizeItem::CheckSkillUpgrade(VOID)
 		pTestTblData = pSkillData;
 	}
 
-	// SP 검사.
+	// SP inspection.
 	if( pTestTblData->wRequireSP > Logic_GetSp() )
 	{
 		bActivateSPBtn = FALSE;
@@ -302,7 +302,7 @@ VOID CSkillCustomizeItem::CheckSkillUpgrade(VOID)
 	else
 		m_stSkillUpgradeInfo.bSPOK = TRUE;
 
-	// 스킬 검사
+	// Skill Check
 	CNtlSkillContainer* pSkillContainer = GetNtlSLGlobal()->GetSobAvatar()->GetSkillContainer();
 
 	if (pTestTblData->uiRequire_Skill_Tblidx_Min_1 == INVALID_TBLIDX ||
@@ -337,7 +337,7 @@ VOID CSkillCustomizeItem::CheckSkillUpgrade(VOID)
 		}			
 	}
 
-	// 레벨 검사.
+	// Level check.
 	if( pTestTblData->byRequire_Train_Level > Logic_GetLevel( GetNtlSLGlobal()->GetSobAvatar() ) )
 	{
 		//m_stSkillUpgradeInfo.bAvatarLevelOK = FALSE;
@@ -348,7 +348,7 @@ VOID CSkillCustomizeItem::CheckSkillUpgrade(VOID)
 		m_stSkillUpgradeInfo.bAvatarLevelOK = TRUE;
 	}
 
-	// 클래스 검사
+	// class inspection
 	CNtlSobAvatarAttr* pAttr = reinterpret_cast<CNtlSobAvatarAttr*>( GetNtlSLGlobal()->GetSobAvatar()->GetSobAttr() );
 
 	if( !( pAttr->GetRaceFlag() & pTestTblData->dwPC_Class_Bit_Flag ) )
@@ -357,7 +357,7 @@ VOID CSkillCustomizeItem::CheckSkillUpgrade(VOID)
 		bActivateSPBtn = FALSE;
 	}
 
-	// 마스터리 검사
+	// Mastery Test
 	if( pTestTblData->byPC_Class_Change != INVALID_BYTE ) 
 	{
 		if( Logic_IsFirstClass( GetNtlSLGlobal()->GetSobAvatar() ) )
@@ -380,7 +380,7 @@ VOID CSkillCustomizeItem::CheckSkillUpgrade(VOID)
 		}
 	}	
 
-	// 결과 적용.
+	// Apply results.
 	if( bActivateSPBtn )
 	{
 		m_pItem->GetSPButton()->ClickEnable( TRUE );	
@@ -390,7 +390,7 @@ VOID CSkillCustomizeItem::CheckSkillUpgrade(VOID)
 		{
 			SetLearnAbleSkillBack(true);
 		}
-		else // else - learned
+		else // else -learned
 		{
 			SetLearnAbleSkillBack(false);
 		}
@@ -475,7 +475,7 @@ void CSkillCustomizeItem::SelectEffect(bool bStart)
 
 VOID CSkillCustomizeItem::ClickEffect( RwBool bPush, RwBool bStillPush /* = TRUE  */ )
 {
-	// Icon Surface는 하나뿐.
+	// There is only one Icon Surface.
 	CRectangle rtScreen = m_pItem->GetSkillIcon()->GetScreenRect();
 	gui::CSurface* pSurface = &(m_pItem->GetSkillIcon()->GetSurface()->front());
 	CRectangle* rtSnapShot = &pSurface->m_SnapShot.rtRect;
@@ -525,7 +525,7 @@ RwBool CSkillCustomizeItem::IsTrainableSkill()
 	{
 		sTBLDAT* pItemTblData = m_pItem->GetSkillData();
 
-		if( false == ((sSKILL_TBLDAT*)pItemTblData)->bSelfTrain )	/// Master에게 배우는 스킬만 검사
+		if( false == ((sSKILL_TBLDAT*)pItemTblData)->bSelfTrain )	/// Only skills learned from the Master are tested
 			if( SkillCommonLogic::IsLearnable( (CSkillGuiItem::TYPE) m_pItem->GetSkillType(), pItemTblData ) )
 			{
 				return TRUE;
@@ -541,7 +541,7 @@ RwBool CSkillCustomizeItem::IsSelfTrainableSkill()
 	{
 		sTBLDAT* pItemTblData = m_pItem->GetSkillData();
 
-		if( true == ((sSKILL_TBLDAT*)pItemTblData)->bSelfTrain )	/// Self Trainning 스킬만 검사
+		if( true == ((sSKILL_TBLDAT*)pItemTblData)->bSelfTrain )	/// Self Training skills only tested
 			if( SkillCommonLogic::IsLearnable( (CSkillGuiItem::TYPE) m_pItem->GetSkillType(), m_pItem->GetSkillData() ) )
 			{
 				return TRUE;
@@ -611,7 +611,7 @@ VOID CSkillCustomizeItem::ShowSkillInfownd( RwBool bShow )
 	else
 	{
 		GetInfoWndManager()->ShowInfoWindow( FALSE );
-		//	m_pItem->GetSkillIcon()->ReleaseMouse();		
+		//	m_pItem->GetSkillIcon()->ReleaseMouse();			
 	}
 }
 
@@ -731,7 +731,7 @@ VOID CSkillCustomizeItem::OnIconMouseEnter( gui::CComponent* pComponent )
 {
 	ShowSkillInfownd( TRUE );
 
-	// 왜 들어가는지 테스트.
+	// Test why you are entering.
 	if( m_bPushDownIcon )
 		ClickEffect( TRUE );
 
@@ -802,7 +802,7 @@ VOID CSkillCustomizeItem::OnSPButtonLeave( gui::CComponent* pComponent )
 VOID CSkillCustomizeItem::OnSPButtonClick( gui::CComponent* pComponent )
 {
 	if( m_pSobIcon )
-	{// 스킬 업그레이드 하는 경우.
+	{// When upgrading skills.
 		CNtlSkillContainer* pSkillContainer = GetNtlSLGlobal()->GetSobAvatar()->GetSkillContainer();
 		RwInt32 nSlotIdx = pSkillContainer->GetSkillSlotIdx( m_pSobIcon->GetSobObj()->GetSerialID() );
 		NTL_ASSERT( nSlotIdx >= 0, "CSkillWindowItemDlg::OnUpgradeButtonClick : Invalid Skill Object" );
@@ -810,7 +810,7 @@ VOID CSkillCustomizeItem::OnSPButtonClick( gui::CComponent* pComponent )
 		GetDboGlobal()->GetGamePacketGenerator()->SendSkillUpgradeReq( (RwUInt8)nSlotIdx );	
 	}	
 	else
-	{// SelfTrain 스킬을 배우는 경우.
+	{// When learning the SelfTrain skill.
 		GetDboGlobal()->GetGamePacketGenerator()->SendSkillLearnReq( m_pItem->GetSkillData()->tblidx );
 	}
 }
@@ -950,7 +950,7 @@ VOID CSkillCustomizeItemGroup::CheckUpgradebleSkill(VOID)
 		pItem->CheckSkillUpgrade();
 	}
 
-	// 조건 만족시 보여져야 하는 녀석이 있다면 이 밑에 주석을 푼다.
+	// If there is something that needs to be shown when the conditions are met, leave a comment below.
 	// CheckSkillGroupShowAndSize();
 }
 

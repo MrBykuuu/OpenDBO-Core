@@ -2,10 +2,10 @@
 #include "PortalGui.h"
 #include "NtlDebug.h"
 
-// PL
+// Pl
 #include "NtlPLGuiManager.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
 
@@ -25,7 +25,7 @@
 #include "NtlSobProxy.h"
 
 
-// DBO
+// Dbo
 #include "DboGlobal.h"
 #include "DboEvent.h"
 #include "DboEventHandler.h"
@@ -552,8 +552,8 @@ RwBool CPortalGui::IsConnect(RwUInt32 nPortalID, DWORD& nZenny)
     return FALSE;
 }
 
-// 현재 포탈 테이블에서 타겟 포탈 포인트의 인덱스를 찾아서 반환한다.
-// Return : 0 ~ 7 사이의 인덱스 번호, 찾지 못한 경우에는 -1을 리턴
+// Finds and returns the index of the target portal point in the current portal table.
+// Return: Index number between 0 and 7, returns -1 if not found.
 RwInt32 CPortalGui::FindPointIndex( RwUInt32 nCurrPortalID, RwUInt32 nTargetPortalID ) 
 {
     sPORTAL_TBLDAT* pPortalData = (sPORTAL_TBLDAT*)API_GetTableContainer()->GetPortalTable()->FindData(nCurrPortalID);
@@ -690,7 +690,7 @@ void CPortalGui::UpdatePortalIcon()
 				}
 				else
 				{
-					// rip
+					// Rip
 				}
 			}
 

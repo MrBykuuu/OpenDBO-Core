@@ -33,7 +33,7 @@ CNtlStorageUnit::~CNtlStorageUnit()
 }
 
 /**
-* \brief Storage Unit을 생성한다. Type과 Serializer를 받아서 알맞게 생성한다.
+* \brief Create a Storage Unit. Receive the Type and Serializer and create them appropriately.
 */
 bool CNtlStorageUnit::Create( eNTL_STORAGE_TYPE eType )
 {
@@ -161,7 +161,7 @@ bool CNtlStorageUnit::GetData( unsigned int uiKey, std::string& strOut )
 	DATAMAP::iterator it = m_mapStorageData.find( uiKey );
 	if( it == m_mapStorageData.end() )
 	{
-		// Key를 찾지 못했다.
+		// I couldn't find the key.
 		return false;
 	}
 
@@ -174,20 +174,20 @@ bool CNtlStorageUnit::SetData( unsigned int uiKey, std::string strData )
 	DATAMAP::iterator it = m_mapStorageData.find( uiKey );
 	if( it == m_mapStorageData.end() )
 	{
-		// Key를 찾지 못했다면 매핑 테이블 컨테이너에 Key가 존재하는지 확인
+		// If the key is not found, check whether the key exists in the mapping table container.
 		eNTL_STORAGE_TYPE eType = GetNtlStorageMTContainer()->GetStorageType( uiKey );
 		if( eType == eNTL_STORAGE_INVALID )
 		{
 			return false;
 		}
 
-		// 현재 Unit의 Type이 key가 가지고 있는 Type가 일치하는지 확인한다.
+		// Check whether the type of the current unit matches the type held by the key.
 		if( eType != m_eStorageType )
 		{
 			return false;
 		}
 
-		// 일치 한다면 Key값에 알맞은 데이타를 만들어서 넣어준다.
+		// If they match, data appropriate to the Key value is created and entered.
 		m_mapStorageData[uiKey] = strData;
 		return true;
 	}
@@ -241,7 +241,7 @@ bool CNtlStorageUnit::GetBoolData( unsigned int uiKey )
 	DATAMAP::iterator it = m_mapStorageData.find( uiKey );
 	if( it == m_mapStorageData.end() )
 	{
-		// Key를 찾지 못했다.
+		// I couldn't find the key.
 		return false;
 	}
 
@@ -256,7 +256,7 @@ int CNtlStorageUnit::GetIntData( unsigned int uiKey )
 	DATAMAP::iterator it = m_mapStorageData.find( uiKey );
 	if( it == m_mapStorageData.end() )
 	{
-		// Key를 찾지 못했다.
+		// I couldn't find the key.
 		return 0;
 	}
 
@@ -268,7 +268,7 @@ float CNtlStorageUnit::GetFloatData( unsigned int uiKey )
 	DATAMAP::iterator it = m_mapStorageData.find( uiKey );
 	if( it == m_mapStorageData.end() )
 	{
-		// Key를 찾지 못했다.
+		// I couldn't find the key.
 		return 0.0f;
 	}
 
@@ -280,7 +280,7 @@ std::string CNtlStorageUnit::GetStringData( unsigned int uiKey )
 	DATAMAP::iterator it = m_mapStorageData.find( uiKey );
 	if( it == m_mapStorageData.end() )
 	{
-		// Key를 찾지 못했다.
+		// I couldn't find the key.
 		return std::string("");
 	}
 

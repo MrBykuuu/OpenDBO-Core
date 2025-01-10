@@ -26,7 +26,7 @@
 
 #include "DBCDragonDialogGUI.h"
 
-#define TIME_HURRYUP	60 * 1000				// 1분
+#define TIME_HURRYUP	60 * 1000				// 1 minute
 
 #define REWARD_LIST_X		26
 #define REWARD_LIST_Y		48
@@ -134,7 +134,7 @@ RwBool CDBCRewardGUI::Create()
 
 	m_pWorldConceptDBC = (CNtlWorldConceptDBC*)GetNtlWorldConcept()->GetWorldConceptController(WORLD_PLAY_DRAGONBALL_COLLECT);
 
-	// 관련 테이블
+	// related table
 	m_pDBRewardTextTable = API_GetTableContainer()->GetTextAllTable()->GetDBRewardTbl();
 	m_pDragonBallTable	 = API_GetTableContainer()->GetDragonBallTable();
 	m_pDragonBallRewardTable = API_GetTableContainer()->GetDragonBallRewardTable();
@@ -196,7 +196,7 @@ VOID CDBCRewardGUI::Update( RwReal fElapsed )
 		return;
     }
 
-	// 제한 시간을 표시한다.
+	// Displays time limit.
 	RwInt32 nMinute = (RwInt32)(uiRemainTime / (60 * 1000));
 	RwInt32 nSecond = (RwInt32)((uiRemainTime - nMinute * 60 * 1000) / 1000);
 	
@@ -205,7 +205,7 @@ VOID CDBCRewardGUI::Update( RwReal fElapsed )
 
 	if(!m_bDisplayHurryUp && uiRemainTime <= TIME_HURRYUP)
 	{
-		//드래곤의 대사 (시간이 없다. 빨리 선택해라)		
+		//Dragon's dialogue (There's no time. Choose quickly)		
 		sDRAGONBALL_TBLDAT* pData = (sDRAGONBALL_TBLDAT*)m_pDragonBallTable->GetDBTbldat((BYTE)m_pWorldConceptDBC->GetDBKind());
 		if(pData)
 		{
@@ -237,16 +237,16 @@ VOID CDBCRewardGUI::HandleEvents( RWS::CMsg &pMsg )
 {
 	if(pMsg.Id == g_EventDBCNarrationEnd)
 	{
-		// 나레이션이 끝난후 보상 UI 등장
+		// Reward UI appears after the narration ends
         RwInt32 nDBCState = GetNtlWorldConcept()->GetWorldConceptController(WORLD_PLAY_DRAGONBALL_COLLECT)->GetState();
 
 		if(nDBCState == WORLD_DBC_REWARD_UI ||
-           nDBCState == WORLD_DBC_NARRATION_START)                  /// ESC로 캔슬했을때
+           nDBCState == WORLD_DBC_NARRATION_START)                  /// When canceling with ESC
 		{
 			GetDialogManager()->OpenDialog(DIALOG_DBC_REWARD);
 		}
 	}
-	else if(pMsg.Id == g_EventDBCReward_Res)	// 보상 선택
+	else if(pMsg.Id == g_EventDBCReward_Res)	// Choose your reward
 	{
 		SNtlEventDBC_Res* pData = (SNtlEventDBC_Res*)pMsg.pData;
 		if(pData)
@@ -271,7 +271,7 @@ VOID CDBCRewardGUI::HandleEvents( RWS::CMsg &pMsg )
 				break;
 			case GAME_ITEM_INVEN_FULL:
 				{
-					// 용신 대사 "인벤이 가득찼다 인벤을 비워라"					
+					// Yongshin Ambassador: “The inventory is full. Empty the inventory.”					
 					sDRAGONBALL_TBLDAT* pDBData = (sDRAGONBALL_TBLDAT*)m_pDragonBallTable->GetDBTbldat((BYTE)m_pWorldConceptDBC->GetDBKind());
 					CDBCDragonDialogGUI::GetInstance()->SetText(pDBData->inventoryFullDialog, CDBCDragonDialogGUI::E_DIALOG_WARN);					
 				}
@@ -303,10 +303,10 @@ VOID CDBCRewardGUI::HandleEvents( RWS::CMsg &pMsg )
 			}
 		}
 	}
-	else if(pMsg.Id == g_EventDBCCollect_Nfy)	// 제한 시간 초과
+	else if(pMsg.Id == g_EventDBCCollect_Nfy)	// timeout exceeded
 	{
-		// 시간이 경과하면 보상 UI를 없애고, 대사 표시후 용신 소멸 상태로 전이한다.
-		// 드래곤의 대사 (시간이 너무 걸리는군. 그냥 가겠다)
+		// As time passes, the reward UI is removed, and after displaying the dialogue, the state transitions to the disappearance of the Dragon God.
+		// Dragon's dialogue (It's taking too much time. I'll just go)
 		sDRAGONBALL_TBLDAT* pData = (sDRAGONBALL_TBLDAT*)m_pDragonBallTable->GetDBTbldat((BYTE)m_pWorldConceptDBC->GetDBKind());
 		CDBCDragonDialogGUI::GetInstance()->SetText(pData->timeoverDialog, CDBCDragonDialogGUI::E_DIALOG_WARN);
 		CDBCDragonDialogGUI::GetInstance()->ShowNormalDialog(FALSE);
@@ -319,7 +319,7 @@ VOID CDBCRewardGUI::HandleEvents( RWS::CMsg &pMsg )
 
 void CDBCRewardGUI::CreateInstance() 
 {
-	// 싱글톤 생성과 함께 다이얼로그 매니저에 등록한다.
+	// When creating a singleton, register it in the dialog manager.
 	if(!m_pInstance)
 	{
 		m_pInstance = NTL_NEW CDBCRewardGUI("DBCRewardGUI");
@@ -329,7 +329,7 @@ void CDBCRewardGUI::CreateInstance()
 			NTL_DELETE(m_pInstance);
 		}
 
-		// Gui Manager에 추가한다.
+		// Add to Gui Manager.
 		GetNtlGuiManager()->AddGui(m_pInstance);
 		GetDialogManager()->RegistDialog(DIALOG_DBC_REWARD, m_pInstance, &CDBCRewardGUI::SwitchDialog);
 
@@ -350,7 +350,7 @@ void CDBCRewardGUI::DeleteInstance()
 
 VOID CDBCRewardGUI::OnClickBackBtn( gui::CComponent* pComponent ) 
 {
-	// 상위 단계로 돌아간다.
+	// Go back to the upper level.
 	if(m_pPrevItem)
 	{
 		ShowList(m_pPrevItem, 0);
@@ -360,11 +360,11 @@ VOID CDBCRewardGUI::OnClickBackBtn( gui::CComponent* pComponent )
 
 VOID CDBCRewardGUI::OnClickOkBtn( gui::CComponent* pComponent ) 
 {
-	// 보상을 선택했다
+	// chose a reward
 	if(!m_pRewardItem)
 		return;
 
-	// 일반 대화창을 없앤다
+	// Remove general chat window
 	CDBCDragonDialogGUI::GetInstance()->ShowNormalDialog(FALSE);
 
     if(!m_pDragonBallRewardTable->FindData(m_pRewardItem->pData->tblidx))
@@ -373,7 +373,7 @@ VOID CDBCRewardGUI::OnClickOkBtn( gui::CComponent* pComponent )
         return;
     }
 
-	// 서버에 보상 패킷을 보낸다.
+	// Send a reward packet to the server.
 	GetDboGlobal()->GetGamePacketGenerator()->SendDBCRewardReq(m_pWorldConceptDBC->GetAltarSerialID(), m_pRewardItem->pData->tblidx);
 }
 
@@ -430,17 +430,17 @@ void CDBCRewardGUI::OnClickedItem( RwInt32 iIndex )
 	
 	if(pRewardItem->itemChild.size() == 0)
 	{
-		if(pRewardItem->pData->byRewardType == DRAGONBALL_REWARD_TYPE_SKILL) // 이미 가지고 있는 스킬이면 선택하지 못 한다.
+		if(pRewardItem->pData->byRewardType == DRAGONBALL_REWARD_TYPE_SKILL) // If you already have a skill, you cannot select it.
 		{
 			if(IsExistSkill(pRewardItem->pData->rewardLinkTblidx))
 				return;
 		}
 
 		m_pPrevItem = pRewardItem->pParent;
-		// 자식 노드가 없으면 마지막 노드, 즉 보상 항목이다.
+		// If there are no child nodes, it is the last node, that is, the reward item.
 		SetStatus(E_REWARD_STATUS_CONFIRM);
 
-		// 아이템 아이콘과 Name을 표시한다.
+		// Displays the item icon and name.
 		ShowItemInfo(pRewardItem);
 	}
 	else
@@ -455,17 +455,17 @@ void CDBCRewardGUI::ShowList(SRewardItem* pItem, RwInt32 nPos)
 {
 	m_ButtonList.ClearItem();
 
-	//  용신의 코멘트 표시 (말풍선)
+	//  Show Dragon God's comment (speech bubble)
 	std::wstring strComment = L"";
 	if(pItem->pData && m_pDBRewardTextTable->GetText(pItem->pData->rewardCategoryDialog, &strComment))
 	{
 		CDBCDragonDialogGUI::GetInstance()->SetText(strComment);
 	}	
 
-	// 항목 표시
+	// Show items
 	for each(SRewardItem* pItemChild in pItem->itemChild)
 	{
-		// 보상이 스킬인 경우에는 자신의 클래스에 해당하는 스킬만 보상 리스트에 표시한다.
+		// If the reward is a skill, only the skills corresponding to your class are displayed in the reward list.
 		if(pItemChild->pData->byRewardType == DRAGONBALL_REWARD_TYPE_SKILL)
 		{
 			sSKILL_TBLDAT* pData = (sSKILL_TBLDAT*)API_GetTableContainer()->GetSkillTable()->FindData(pItemChild->pData->rewardLinkTblidx);
@@ -586,7 +586,7 @@ void CDBCRewardGUI::ShowItemInfo( SRewardItem* pItem )
 
 	if(pItem->pData->byRewardType == DRAGONBALL_REWARD_TYPE_ITEM)
 	{
-		// 아이템 아이콘
+		// item icon
 		m_pRewardItemTblData = API_GetTableContainer()->GetItemTable()->FindData(pItem->pData->rewardLinkTblidx);
 		if(m_pRewardItemTblData)
 		{
@@ -597,7 +597,7 @@ void CDBCRewardGUI::ShowItemInfo( SRewardItem* pItem )
 	else if(pItem->pData->byRewardType == DRAGONBALL_REWARD_TYPE_SKILL ||
             pItem->pData->byRewardType == DRAGONBALL_REWARD_TYPE_HTB)
 	{
-		// 스킬 아이콘
+		// skill icon
 		m_pRewardItemTblData = API_GetTableContainer()->GetSkillTable()->FindData(pItem->pData->rewardLinkTblidx);
 		if(m_pRewardItemTblData)
 		{
@@ -607,7 +607,7 @@ void CDBCRewardGUI::ShowItemInfo( SRewardItem* pItem )
 	}
 	else if(pItem->pData->byRewardType == DRAGONBALL_REWARD_TYPE_ZENNY)
 	{
-		// 제니 아이콘 (보상 제니는 테이블 액수 * 레벨)
+		// Zenny icon (reward Zenny is table amount *level)
 		m_sufItem.SetTexture(Logic_CreateTexture("money.PNG"));
         DWORD dwRewardZenny = pItem->pData->dwRewardZenny * Logic_GetLevel(GetNtlSLGlobal()->GetSobAvatar());
         WCHAR szZenny[64] = {0,};
@@ -619,10 +619,10 @@ void CDBCRewardGUI::ShowItemInfo( SRewardItem* pItem )
 		NTL_ASSERTFAIL("Not Define Reward Type");
 	}
 
-	// 텍스트
+	// text
 	m_pSttItemName->SetText(strRewardName.c_str());
 
-	// 용신 대화
+	// dragon god conversation
 	CDBCDragonDialogGUI::GetInstance()->SetText(m_pDBRewardTextTable->GetText(pItem->pData->rewardCategoryDialog));
 
 	m_pRewardItem = pItem;
@@ -665,7 +665,7 @@ VOID CDBCRewardGUI::OnMouseMove( RwInt32 nFlags, RwInt32 nX, RwInt32 nY )
 
 VOID CDBCRewardGUI::OnMouseLeave( gui::CComponent* pComponent ) 
 {
-	// 커서가 UI밖으로 나가면 툴팁을 지운다.
+	// When the cursor goes outside the UI, the tooltip is cleared.
 	if(GetInfoWndManager()->GetRequestGui() == DIALOG_DBC_REWARD)
 	{
 		GetInfoWndManager()->ShowInfoWindow(FALSE);
@@ -690,7 +690,7 @@ RwBool CDBCRewardGUI::IsExistSkill( RwUInt32 nTblIdx )
 {
 	if(GetNtlSLGlobal()->GetSobAvatar()->GetSkillContainer()->GetSkillFromTableId(nTblIdx))
 	{
-		// 용신의 대사 출력 (그 스킬은 이미 가지고 있어서 선택할 수 없다)
+		// Dragon God's dialogue output (cannot be selected because you already have that skill)
 		sDRAGONBALL_TBLDAT* pData = (sDRAGONBALL_TBLDAT*)m_pDragonBallTable->GetDBTbldat((BYTE)m_pWorldConceptDBC->GetDBKind());
 		CDBCDragonDialogGUI::GetInstance()->SetText(pData->noRepeatDialog);
 		return TRUE;

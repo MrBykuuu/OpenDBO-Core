@@ -1,22 +1,22 @@
 /******************************************************************************
-* File			: PetitionSideIconGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 10. 27
-* Abstract		: 
+*File			: PetitionSideIconGui.h
+*Author		    : Hong SungBock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2008. 10. 27
+*Abstract		: 
 *****************************************************************************
-* Desc			: 유저 진정(Petition) 사이드 아이콘
+*Desc			: User Petition side icon
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// dbo
+// Dbo
 #include "Windowby3.h"
 #include "SideIconGui.h"
 
@@ -68,8 +68,8 @@ protected:
 	gui::CSlot			m_slotCancelButton;
 	gui::CSlot			m_slotPaint;
 
-	CWindowby3			m_BackPanel;		///< 배경
-	gui::CStaticBox*	m_pMessage;			///< 메세지
-	gui::CButton*		m_pExitButton;		///< 닫기 버튼
-	gui::CButton*		m_pCancelButton;	///< 취소 버튼
+	CWindowby3			m_BackPanel;		///< background
+	gui::CStaticBox*	m_pMessage;			///< message
+	gui::CButton*		m_pExitButton;		///< Close button
+	gui::CButton*		m_pCancelButton;	///< Cancel button
 };

@@ -1,22 +1,22 @@
 #include "precomp_dboclient.h"
 #include "TutorialMessageGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "QuestTextDataTable.h"
 #include "TableContainer.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEventFunc.h"
 #include "NtlSLApi.h"
 #include "NtlWorldConceptTutorial.h"
 
-// dbo
+// Dbo
 #include "DisplayStringManager.h"
 #include "DialogManager.h"
 #include "DboGlobal.h"
@@ -70,7 +70,7 @@ RwBool CTutorialMessageGui::Create()
 
 	GetNtlGuiManager()->AddUpdateFunc( this );
 
-	// sig
+	// Signals
 	m_slotMove			= m_pThis->SigMove().Connect( this, &CTutorialMessageGui::OnMove );
 
 	LinkMsg(g_EventTLDefaultSkin);
@@ -106,7 +106,7 @@ VOID CTutorialMessageGui::Update(RwReal fElapsed)
 	m_pflashBackground->Update(fElapsed);
 
 
-	// 메세지 알파 변경
+	// Change message alpha
 	if( m_ShowHideMessage.fRemainTime > 0.f )
 	{
 		RwUInt8 byAlpha;
@@ -138,7 +138,7 @@ VOID CTutorialMessageGui::Update(RwReal fElapsed)
 		}
 	}	
 
-	// 색상 변경
+	// change color
 	if( m_ChangeColor.fRemainTime > 0.f )
 	{
 		m_ChangeColor.fElapsedTime += fElapsed;
@@ -164,7 +164,7 @@ VOID CTutorialMessageGui::OnClick_SkipButton(gui::CComponent* pComponent)
 
 VOID CTutorialMessageGui::OnMove(RwInt32 iOldX, RwInt32 iOldY)
 {
-	// 기획의 변경으로 화면 중앙 정렬에서 화면 상단 정렬로 변경
+	// Due to changes in planning, the screen was aligned from the center of the screen to the top of the screen.
 	CRectangle rtFlashBackground = m_pflashBackground->GetFrameResolution();
 	
 	CRectangle rtRect, rtButton;
@@ -236,7 +236,7 @@ VOID CTutorialMessageGui::HandleEvents( RWS::CMsg &msg )
 		}
 
 
-		// 기존에 텍스트가 보여지고 있지 않았다면 배경 플래쉬를 로딩한다
+		// If the text was not already showing, load the background flash.
 		if( pEvent->bShow )
 		{
 			if( !m_ShowHideMessage.bShow )

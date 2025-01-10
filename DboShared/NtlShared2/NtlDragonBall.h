@@ -81,7 +81,7 @@ const unsigned int	DBO_MAX_TIMER_DRAGON_OUT = 6000;			// 10Second
 
 const unsigned int	DBO_MAX_TIMER_DRAGON_DESPAWN = 6000;		// 5Second
 
-const unsigned int	DBO_MAX_DRAGONBALL_BASIC_MOB_LEVEL = 20;	// 20 레벨 미만만 
+const unsigned int	DBO_MAX_DRAGONBALL_BASIC_MOB_LEVEL = 20;	// Less than level 20 only
 
 const unsigned int	DBO_DRAGONBALL_SCRAMBLE_JOIN_LEVEL = 45;
 const unsigned int	DBO_DRAGONBALL_SCRAMBLE_JOIN_BONUS = 15;

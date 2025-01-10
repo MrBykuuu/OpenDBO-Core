@@ -1,31 +1,31 @@
 /******************************************************************************
-* File			: CCommunityGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2006. 9. 13
-* Abstract		: 
+*File           : CCommunityGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : September 13, 2006
+*Abstract		: 
 *****************************************************************************
-* Desc			: 커뮤니티 관련 다이얼로그 형틀
-*				  각각의 페이지 내용은 PageType에 따라 세팅되고
-*				  메세지와 이벤트도 활성화된 Page에 전달된다.
+*Desc           : Community-related dialog template
+*                 The content of each page is set according to PageType
+*                 Messages and events are also delivered to the activated Page.
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// gui
+// Gui
 #include "gui_staticbox.h"
 #include "gui_inputbox.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// client
+// Client
 #include "SlotGui.h"
 #include "Windowby3.h"
 
@@ -51,10 +51,10 @@ public:
 	RwBool		Create();
 	VOID		Destroy();
 
-	RwInt32		SwitchDialog(bool bOpen);			///< DialogManager에서의 Open/Close
+	RwInt32		SwitchDialog(bool bOpen);			///< Open/Close in DialogManager
 
-	VOID		SetPageType(RwInt32 iPageType);			///< 해당 페이지를 활성화 시킨다.
-	RwInt32		GetPageType();							///< 활성화된 페이지 인덱스 반환
+	VOID		SetPageType(RwInt32 iPageType);			///< Activates the page.
+	RwInt32		GetPageType();							///< Returns the active page index
 
 	CHARACTERID	GetGuildSelectedID();
 
@@ -64,8 +64,8 @@ protected:
 
 	VOID			SetupPage(RwInt32 iPage);
 
-	VOID			CloseButtonClicked(gui::CComponent* pComponent);	///< 닫기 버튼을 눌렀다.
-	VOID			OnTabChanged(RwInt32 nIndex, RwInt32 nOldIndex);	///< 탭 버튼을 눌렀다.
+	VOID			CloseButtonClicked(gui::CComponent* pComponent);	///<Pressed the close button.
+	VOID			OnTabChanged(RwInt32 nIndex, RwInt32 nOldIndex);	///< Pressed the tab button.
 
 	VOID			OnPaint();
 
@@ -88,19 +88,19 @@ protected:
 	gui::CSlot			m_slotCaptureMouseDown;
 	gui::CSlot			m_slotCloseButton;
 
-	gui::CStaticBox*	m_pDialogName;				///< 다이얼로그의 이름 스태틱
-	gui::CButton*		m_pExitButton;				///< 창닫기 버튼
-	CWindowby3			m_BackLineSurface;			///< 백라인
+	gui::CStaticBox*	m_pDialogName;				///< Dialog name static
+	gui::CButton*		m_pExitButton;				///< Close window button
+	CWindowby3			m_BackLineSurface;			///< Backline
 
-	gui::CPanel*		m_pDumyPanel;				///< 더미
+	gui::CPanel*		m_pDumyPanel;				///< dummy
 
-	gui::CTabButton*	m_pTabButton;				///< 탭 버튼
+	gui::CTabButton*	m_pTabButton;				///< Tab button
 
 	gui::CButton*		m_pBtnHelp;
 	gui::CSlot			m_slotClickedBtnHelp;
 
-	RwInt32				m_iPageType;				///< 현재의 페이지 타입
+	RwInt32				m_iPageType;				///< Current page type
 
-	///< 각 탭별 페이지
-	CCommunityBase*		m_pTabPage[NUM_PAGE];		///< 각 탭의 GUI
+	///< Pages for each tab
+	CCommunityBase*		m_pTabPage[NUM_PAGE];		///< GUI of each tab
 };

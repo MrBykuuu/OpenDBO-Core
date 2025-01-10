@@ -1,19 +1,19 @@
 #include "precomp_dboclient.h"
 #include "GMPopupGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlWorldConceptTB.h"
 #include "NtlWorldConcept.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSLLogic.h"
 
-// dbo
+// Dbo
 #include "DialogPriority.h"
 #include "DboEventGenerator.h"
 #include "DisplayStringManager.h"
@@ -58,7 +58,7 @@ RwBool CGMPopupGui::Create()
 
 	m_pScrollbar = (gui::CScrollBar*)GetComponent("scbScroll");
 
-	// sig
+	// Signals
 	m_slotServerScrollChanged		= m_pScrollbar->SigValueChanged().Connect( this, &CGMPopupGui::OnScrollChanged );
 	m_slotServerScrollSliderMoved	= m_pScrollbar->SigSliderMoved().Connect( this, &CGMPopupGui::OnScrollChanged );
 	m_slotCaptureWheelMove			= GetNtlGuiManager()->GetGuiManager()->SigCaptureWheelMove().Connect( this, &CGMPopupGui::OnCaptureWheelMove );
@@ -122,7 +122,7 @@ gui::CButton* CGMPopupGui::AddButton(sPopButton* pPopButton, const WCHAR* pwcTex
 	pPopButton->pButton->SetText(pwcText);
 	pPopButton->slotButton = pPopButton->pButton->SigClicked().Connect(this, &CGMPopupGui::OnClicked_Buttons);
 
-	// 반환하지 않아도 되지만 그냥 ;;
+	// You don't have to return it, just ;;
 	return pPopButton->pButton;
 }
 
@@ -130,7 +130,7 @@ VOID CGMPopupGui::AddCancelButton()
 {
 	sPopButton* pPopButton = NTL_NEW sPopButton;
 	pPopButton->pButton			= AddButton(pPopButton, GetDisplayStringManager()->GetString("DST_LOBBY_CANCLE2") );
-	pPopButton->uiCount			= 100;			// 의미 없다
+	pPopButton->uiCount			= 100;			// meaningless
 	pPopButton->bCancelButton	= TRUE;
 	m_listButtons.push_back(pPopButton);
 }
@@ -192,7 +192,7 @@ VOID CGMPopupGui::SetMenu_Portal()
 	sWORLD_INFO* pWORLD_INFO = Logic_GetActiveWorldInfo();
 	RwUInt32 uiCount = 0;
 
-	// 천하제일 무도회장 혹은 본래의 월드로....
+	// To the TEINKAICHI BUDOKAI or to the original world...
 	if( pWORLD_INFO->sRuleInfo.byRuleType == GAMERULE_MINORMATCH ||
 		pWORLD_INFO->sRuleInfo.byRuleType == GAMERULE_MAJORMATCH ||
 		pWORLD_INFO->sRuleInfo.byRuleType == GAMERULE_FINALMATCH ||
@@ -212,7 +212,7 @@ VOID CGMPopupGui::SetMenu_Portal()
 
 	++uiCount;
 
-	// 기타 지역
+	// Other regions
 	for( RwUInt8 i = 0 ; i < dADDITIONAL_LOCATION ; ++i )
 	{
 		sPopButton* pPopButtonNew = NTL_NEW sPopButton;

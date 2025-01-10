@@ -2,7 +2,7 @@
 *
 * File			: NtlSLCommunityAgent.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2008. 3. 24
 * Abstract		: Simulation community agent class
 *****************************************************************************
@@ -51,7 +51,7 @@ public:
 	COMMUNITY_ITER	Begin();
 	COMMUNITY_ITER	End();
 
-	// Sort를 실행하고 나서는 이전에 GetMemberbyIndex()로 받은 맴버 구조체와 다를 수 있다
+	//After executing Sort, the member structure may be different from the member structure previously received with GetMemberbyIndex().
 	virtual VOID	Sort(RwUInt8 byDataType, RwBool bAscent);
 
 	RwBool			IsHaveGroup();

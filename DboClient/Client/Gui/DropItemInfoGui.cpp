@@ -1,17 +1,17 @@
 ﻿#include "precomp_dboclient.h"
 #include "DropItemInfoGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlPLDef.h"
 
-// shared
+// Shared
 #include "ItemTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLApi.h"
 #include "NtlSLEvent.h"
 #include "NtlSLGlobal.h"
@@ -20,7 +20,7 @@
 #include "NtlSobWorldItemProxy.h"
 #include "NtlSobManager.h"
 
-// dbo
+// Dbo
 #include "DboDef.h"
 #include "DboGlobal.h"
 #include "DboEvent.h"

@@ -1,20 +1,20 @@
 #include "precomp_dboclient.h"
-// core
+// Core
 #include "NtlDebug.h"
 #include "CEventHandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 #include "NtlPLGuiManager.h"
 
-// framework
+// Framework
 #include "NtlApplication.h"
 
-// simulation
+// Simulation
 #include "InputActionMap.h"
 #include "NtlSLEvent.h"
 
-// dbo
+// Dbo
 #include "DialogManager.h"
 #include "DisplayStringManager.h"
 
@@ -23,7 +23,7 @@
 #include "OptionBase.h"
 #include "OptionControlTab.h"
 
-// logic
+// Logic
 #include "DboLogic.h"
 
 
@@ -31,9 +31,9 @@
 // class : COptionControlCategoryNode
 
 /**
-* \brief COptionControlCategoryNode의 생성자
+* \brief Constructor for COptionControlCategoryNode
 *
-* 생성자에 표시될 텍스트와 Action의 Group을 만드는 ID를 지정한다.
+*Specify the ID that creates the text and Action Group to be displayed in the constructor.
 */
 COptionControlCategoryNode::COptionControlCategoryNode(CGuiLineTree* pMgr, std::wstring strTitle, RwInt32 nID)
 : CGuiLineTreeNode( pMgr, nID )
@@ -41,7 +41,7 @@ COptionControlCategoryNode::COptionControlCategoryNode(CGuiLineTree* pMgr, std::
 , m_pBtnExpand( NULL )
 , m_pBtnReduce( NULL )
 {
-	// CategoryNode StaticBox의 Size와 Text, Color를 설정한다.
+	// Set the size, text, and color of the CategoryNode StaticBox.
 	CRectangle rect;
 	rect.SetRectWH( dOPTIONCONTROL_CATEGORY_TITLE_X, dOPTIONCONTROL_CATEGORY_TITLE_Y, 
 		dOPTIONCONTROL_CATEGORY_TITLE_WIDTH, dOPTIONCONTROL_CATEGORY_TITLE_HEIGHT );
@@ -50,26 +50,26 @@ COptionControlCategoryNode::COptionControlCategoryNode(CGuiLineTree* pMgr, std::
 	m_pStbTitle->SetTextColor( dOPTIONCONTROL_CATEGORY_TITLE_COLOR );
 	m_pStbTitle->Enable( false );
 
-	// +버튼
+	// +button
 	rect.SetRectWH(dOPTIONCONTROL_CATEGORY_BUTTON_X, dOPTIONCONTROL_CATEGORY_BUTTON_Y, dOPTIONCONTROL_CATEGORY_BUTTON_WIDTH, dOPTIONCONTROL_CATEGORY_BUTTON_HEIGHT);
 	m_pBtnExpand = NTL_NEW gui::CButton( rect, std::string(),pMgr->GetParentGui(), GetNtlGuiManager()->GetSurfaceManager());
 	m_pBtnExpand->AddSurfaceUp(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("QuestList.srf", "srfExpandBtnUp"));
 	m_pBtnExpand->AddSurfaceFocus(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("QuestList.srf", "srfExpandBtnFoc"));
 	m_pBtnExpand->AddSurfaceDown(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("QuestList.srf", "srfExpandBtnDown"));
 
-	// -버튼
+	// -button
 	m_pBtnReduce = NTL_NEW gui::CButton(rect, std::string(),pMgr->GetParentGui(), GetNtlGuiManager()->GetSurfaceManager());
 	m_pBtnReduce->AddSurfaceUp(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("QuestList.srf", "srfReduceBtnUp"));
 	m_pBtnReduce->AddSurfaceFocus(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("QuestList.srf", "srfReduceBtnFoc"));
 	m_pBtnReduce->AddSurfaceDown(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("QuestList.srf", "srfReduceBtnDown"));
 
-	// Button의 Signal 연결
+	// Button's signal connection
 	m_slotClickedBtnExpand = m_pBtnExpand->SigClicked().Connect(this, &COptionControlCategoryNode::OnClickBtnExpand);
 	m_slotClickedBtnReduce = m_pBtnReduce->SigClicked().Connect(this, &COptionControlCategoryNode::OnClickBtnReduce);
 }
 
 /**
-* \biref COptionControlCategoryNode의 소멸자
+*Destructor of \biref COptionControlCategoryNode
 */
 COptionControlCategoryNode::~COptionControlCategoryNode()
 {
@@ -79,10 +79,10 @@ COptionControlCategoryNode::~COptionControlCategoryNode()
 }
 
 /**
-* \brief CategoryNode를 표시
+* \brief Display CategoryNode
 *
-* CGuiLineTreeNode의 ShowProc()을 오버라이드 하여 노드들이 확장됨에 따라 자식 노드들과의 관계를 재 계산하여
-* 배치해주고 현재 버튼의 상태가 + 인지 - 인지 구분해서 출력해준다.
+*Override ShowProc() of CGuiLineTreeNode to recalculate relationships with child nodes as nodes expand.
+*Arranges and outputs the current button status as + or -.
 */
 void COptionControlCategoryNode::ShowProc()
 {
@@ -102,14 +102,14 @@ void COptionControlCategoryNode::ShowProc()
 		m_pStbTitle->SetTextColor( dOPTIONCONTROL_CATEGORY_TITLE_COLOR, TRUE );
 	}
 
-	// 카테고리 노드들의 위치를 재 계산
+	// Recalculate the positions of category nodes
 	m_pBtnExpand->SetPosition(m_nPosX + dOPTIONCONTROL_CATEGORY_BUTTON_X, m_nPosY + dOPTIONCONTROL_CATEGORY_BUTTON_Y);
 	m_pBtnReduce->SetPosition(m_nPosX + dOPTIONCONTROL_CATEGORY_BUTTON_X, m_nPosY + dOPTIONCONTROL_CATEGORY_BUTTON_Y);
 	m_pStbTitle->SetPosition(m_nPosX + dOPTIONCONTROL_CATEGORY_TITLE_X, m_nPosY + dOPTIONCONTROL_CATEGORY_TITLE_Y);
 }
 
 /**
-* \brief CategoryNode를 숨김
+* \brief Hide CategoryNode
 */
 void COptionControlCategoryNode::HideProc()
 {
@@ -121,7 +121,7 @@ void COptionControlCategoryNode::HideProc()
 }
 
 /**
-* \brief +버튼을 눌렀을 때의 행동
+* \brief Action when +button is pressed
 */
 void COptionControlCategoryNode::OnClickBtnExpand(gui::CComponent* pComponent)
 {
@@ -129,7 +129,7 @@ void COptionControlCategoryNode::OnClickBtnExpand(gui::CComponent* pComponent)
 }
 
 /**
-* \brief -버튼을 눌렀을 때의 행동
+* \brief -Action when button is pressed
 */
 void COptionControlCategoryNode::OnClickBtnReduce(gui::CComponent* pComponent)
 {
@@ -141,20 +141,20 @@ void COptionControlCategoryNode::OnClickBtnReduce(gui::CComponent* pComponent)
 // class : COptionControlActionNode
 
 /**
-* \brief COptionControlActionNode의 생성자
+* \brief Constructor for COptionControlActionNode
 *
-* COptionControlCategoryNode의 자식들로 들어가게 될 Node, 행동의 str과 Action의 ID를 받아서 생성한다.
+*Creates the Node that will be included as a child of COptionControlCategoryNode, receiving the str of the action and the ID of the Action.
 */
 COptionControlActionNode::COptionControlActionNode(CGuiLineTree* pMgr, std::wstring wstrTitle, RwUInt32 nAction, RwBool bFixed)
 : CGuiLineTreeNode( pMgr, nAction )
 , m_pStbTitle( NULL )
 , m_pBtnSetKey( NULL )
 {
-	// 초기화값 저장
+	// Save initialization value
 	m_nAction = nAction;
 	m_bFixed = bFixed;
 
-	// ActionNode StaticBox의 Size와 Text, Color를 설정한다.
+	// Set the Size, Text, and Color of the ActionNode StaticBox.
 	CRectangle rect;
 	rect.SetRectWH( dOPTIONCONTROL_ACTIONNODE_TITLE_X, dOPTIONCONTROL_ACTIONNODE_TITLE_Y, 
 		dOPTIONCONTROL_ACTIONNODE_TITLE_WIDTH, dOPTIONCONTROL_CATEGORY_TITLE_HEIGHT );
@@ -166,8 +166,8 @@ COptionControlActionNode::COptionControlActionNode(CGuiLineTree* pMgr, std::wstr
 	m_pStbTitle->SetTextStyle(COMP_TEXT_CENTER);
 	m_pStbTitle->SetText( wstrTitle.c_str() );
 	
-	// 키 지정 버튼(Action Id에 따른 표기를 해줘야 한다.)
-	// 임시로 크기가 똑같은 리소스 사용
+	// Key designation button (must be marked according to Action Id)
+	// Temporarily use resources of the same size
 	rect.SetRectWH( dOPTIONCONTROL_ACTIONNODE_BUTTON_X, dOPTIONCONTROL_ACTIONNODE_BUTTON_Y,
 		dOPTIONCONTROL_ACTIONNODE_BUTTON_WIDTH, dOPTIONCONTROL_ACTIONNODE_BUTTON_HEIGHT );
 	m_pBtnSetKey = NTL_NEW gui::CButton(rect, std::string(),pMgr->GetParentGui(), GetNtlGuiManager()->GetSurfaceManager());
@@ -178,21 +178,21 @@ COptionControlActionNode::COptionControlActionNode(CGuiLineTree* pMgr, std::wstr
 	m_pBtnSetKey->SetTextStyle(COMP_TEXT_CENTER);
 	m_pBtnSetKey->SetTextFont( DETAIL_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR );
 
-	// 액션 ID에 따른 문자열을 출력해준다.
+	// It outputs a string according to the action ID.
 	std::wstring wstrKeyName = GetInputActionMap()->GetKeyName( nAction );
 
-	// 비어 있다면 "지정안됨" 출력, 아니라면 키의 이름을 그대로 출력한다.
+	// If it is empty, “Not Specified” is output. Otherwise, the name of the key is output as is.
 	if( wstrKeyName.empty() )
 		m_pBtnSetKey->SetText( GetDisplayStringManager()->GetString( "DST_OPTION_CONTROL_TEXT_EMPTYKEY" ) );
 	else
 		m_pBtnSetKey->SetText( wstrKeyName.c_str() );
 
-	// Button의 Signal 연결
+	// Button's signal connection
 	m_slotClickedBtnSetKey = m_pBtnSetKey->SigClicked().Connect(this, &COptionControlActionNode::OnClickBtnSetKey);
 }
 
 /**
-* \biref COptionControlActionNode의 소멸자
+*Destructor of \biref COptionControlActionNode
 */
 COptionControlActionNode::~COptionControlActionNode()
 {
@@ -201,7 +201,7 @@ COptionControlActionNode::~COptionControlActionNode()
 }
 
 /**
-* \brief COptionControlActionNode를 표시
+* \brief Show COptionControlActionNode
 */
 void COptionControlActionNode::ShowProc()
 {
@@ -215,7 +215,7 @@ void COptionControlActionNode::ShowProc()
 }
 
 /**
-* \brief COptionControlActionNode를 숨김
+* \brief Hide COptionControlActionNode
 */
 void COptionControlActionNode::HideProc()
 {
@@ -235,31 +235,31 @@ void COptionControlActionNode::HideProc()
 }
 
 /**
-* \brief 키 지정 버튼을 눌렀을 때 발생되는 것
+* \brief What happens when you press the key assignment button
 */
 void COptionControlActionNode::OnClickBtnSetKey(gui::CComponent* pComponent)
 {
 	COptionControlList* pMgr = static_cast<COptionControlList *>(m_pMgr);
 
-	// InputActionMap 이 변경 불가능한 mdoe일 때
+	// When InputActionMap is an immutable mdoe
 	if( GetInputActionMap()->GetActionMapMode() == ACTIONMAP_MODE_DEFAULT )
 	{
 		pMgr->GetParentTab()->SetGuideNegativeMode();
 		return;
 	}
 
-	// 변경 불가면 변경불가라고 알려줘야함.
+	// If change is not possible, you must inform them that change is not possible.
 	if( m_bFixed )
 	{
 		pMgr->GetParentTab()->SetGuideFixed( m_nID );
 	}
 	else
 	{
-		pMgr->GetParentTab()->SetGuideText(dOPTIONCONTROL_STATICBOX_COLOR, L"DST_OPTION_CONTROL_TEXT_READYGUIDE" );
+		pMgr->GetParentTab()->SetGuideText(dOPTIONCONTROL_STATICBOX_COLOR, GetDisplayStringManager()->GetString("DST_OPTION_CONTROL_TEXT_READYGUIDE") );
 		pMgr->UpdateNode();
 		GetInputActionMap()->SetInputMode( m_nAction );
 	
-		// 버튼을 비활성화한다.
+		// Disable the button.
 		m_pBtnSetKey->Enable(false);
 	}
 }
@@ -273,10 +273,10 @@ void COptionControlActionNode::Update()
 {
 	m_pBtnSetKey->Enable( true );
 
-	// 액션 ID에 따른 문자열을 출력해준다.
+	// It outputs a string according to the action ID.
 	std::wstring wstrKeyName = GetInputActionMap()->GetKeyName( m_nID );
 
-	// 비어 있다면 "지정안됨" 출력, 아니라면 키의 이름을 그대로 출력한다.
+	// If it is empty, “Not Specified” is output. Otherwise, the name of the key is output as is.
 	if( wstrKeyName.empty() )
 		m_pBtnSetKey->SetText( GetDisplayStringManager()->GetString( "DST_OPTION_CONTROL_TEXT_EMPTYKEY" ) );
 	else
@@ -288,23 +288,23 @@ void COptionControlActionNode::Update()
 // class : COptionControlCategoryNode
 
 /**
-* \brief COptionControlList의 생성자
+* \brief Constructor for COptionControlList
 */
 COptionControlList::COptionControlList()
 {
 }
 
 /**
-* \brief COptionControlList의 소멸자
+* \brief Destructor of COptionControlList
 */
 COptionControlList::~COptionControlList()
 {
 }
 
 /**
-* \brief COptionControlList에 CGuiLineTree를 만드는 함수
+* \brief Function to create CGuiLineTree in COptionControlList
 *
-* LineTree를 만들고 스크롤바의 속성을 설정한다.
+*Create a LineTree and set the scrollbar properties.
 *
 * \param rect (CRectangle&)
 */
@@ -332,29 +332,29 @@ RwBool COptionControlList::Create(CRectangle& rect, gui::CComponent* pParent, Rw
 }
 
 /**
-* \brief OptionControl의 항목들을 생성
+* \brief Create items in OptionControl
 */
 void COptionControlList::CreateTree() 
 {
 	//////////////////////////////////////////////////////////////////////////////
-	// 아바타 관련 카테고리
+	// Avatar related categories
 	CGuiLineTreeNode* pNode = NTL_NEW COptionControlCategoryNode(this, 
-		GetDisplayStringManager()->GetString( "DST_OPTION_CONTROL_CATEGORY_AVATAR" ) ,	// 카테고리 제목
-		dOPTIONCONTROL_CATEGORY_AVATAR );												// 카테고리 ID
-	CGuiLineTree::AddNode( pNode, GUILINETREE_ROOTNODE_ID );							// CGuiLineTree 루트를 부모로 가진다
+		GetDisplayStringManager()->GetString( "DST_OPTION_CONTROL_CATEGORY_AVATAR" ) ,	// Category Title
+		dOPTIONCONTROL_CATEGORY_AVATAR );												// Category ID
+	CGuiLineTree::AddNode( pNode, GUILINETREE_ROOTNODE_ID );							// CGuiLineTree has root as parent
 	pNode->Expand( true );
 
-	// 열거형들의 순서는 확실히 지켜줘야 한다. 순서대로 있지 않으면 꼬이게 된다.
+	// The order of enumerations must be maintained. If things aren't in order, things get messed up.
 	for(RwUInt32 nActionID = ACTION_AVATAR_FORWARD; nActionID <= ACTION_AVATAR_RIGHTSIDE; ++nActionID)
 	{
 		pNode = NTL_NEW COptionControlActionNode(this,
-			GetActionDisplayStringNum(nActionID),								// Action 제목
+			GetActionDisplayStringNum(nActionID),								// Action title
 			nActionID );															// Action ID
-		CGuiLineTree::AddNode( pNode, dOPTIONCONTROL_CATEGORY_AVATAR );							// 카테고리를 부모로 가진다.
+		CGuiLineTree::AddNode( pNode, dOPTIONCONTROL_CATEGORY_AVATAR );							// It has a category as its parent.
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////
-	// 타겟 관련 카테고리
+	// Target related categories
 	pNode = NTL_NEW COptionControlCategoryNode(this, 
 		GetDisplayStringManager()->GetString( "DST_OPTION_CONTROL_CATEGORY_TARGET") , 
 		dOPTIONCONTROL_CATEGORY_TARGET );
@@ -383,7 +383,7 @@ void COptionControlList::CreateTree()
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	// 퀵슬롯 관련 카테고리
+	// Quick Slot Related Categories
 	pNode = NTL_NEW COptionControlCategoryNode(this, 
 		GetDisplayStringManager()->GetString( "DST_OPTION_CONTROL_CATEGORY_QUICKSLOT") , 
 		dOPTIONCONTROL_CATEGORY_QUICKSLOT );
@@ -399,8 +399,8 @@ void COptionControlList::CreateTree()
 	}
 
 	//////////////////////////////////////////////////////////////////////////
-	// 확장
-	// 80 ~ 159 까지 빈자리 예약
+	// expansion
+	// Reserve empty seats from 80 to 159
 	for(RwUInt32 nActionID = ACTION_QUICK_1_EX; nActionID <= ACTION_QUICK_PLUS_EX2; ++nActionID )
 	{
 		pNode = NTL_NEW COptionControlActionNode(this,
@@ -409,7 +409,7 @@ void COptionControlList::CreateTree()
 		CGuiLineTree::AddNode( pNode, dOPTIONCONTROL_CATEGORY_QUICKSLOT );
 	}
 
-	// 퀵슬롯 조작 관련
+	// Quick slot operation related
 	for(RwUInt32 nActionID = ACTION_QUICK_PREV; nActionID <= ACTION_QUICK_5THCAP; ++nActionID )
 	{
 		pNode = NTL_NEW COptionControlActionNode(this,
@@ -419,14 +419,14 @@ void COptionControlList::CreateTree()
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	// 윈도우 관련 카테고리
+	// Windows related categories
 	pNode = NTL_NEW COptionControlCategoryNode(this, 
 		GetDisplayStringManager()->GetString( "DST_OPTION_CONTROL_CATEGORY_WINDOW") , 
 		dOPTIONCONTROL_CATEGORY_WINDOW );
 	CGuiLineTree::AddNode( pNode, GUILINETREE_ROOTNODE_ID );
 	pNode->Expand( true );
 
-	for(RwUInt32 nActionID = ACTION_WINDOW_PROFILE; nActionID <= ACTION_WINDOW_RANKBOARD; ++nActionID)
+		for(RwUInt32 nActionID = ACTION_WINDOW_PROFILE; nActionID <= ACTION_WINDOW_RANKBOARD; ++nActionID)
 	{
 		pNode = NTL_NEW COptionControlActionNode(this,
 			GetActionDisplayStringNum( nActionID ),
@@ -435,63 +435,63 @@ void COptionControlList::CreateTree()
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	// 고정 카테고리
+	// Fixed Category
 	pNode = NTL_NEW COptionControlCategoryNode(this, 
 		GetDisplayStringManager()->GetString( "DST_OPTION_CONTROL_CATEGORY_FIXED") , 
 		dOPTIONCONTROL_CATEGORY_FIXED );
 	CGuiLineTree::AddNode( pNode, GUILINETREE_ROOTNODE_ID );
 	pNode->Expand( true );
 
-	// 미니맵 축소
+	// Zoom out minimap
 	pNode = NTL_NEW COptionControlActionNode(this,
 		GetDisplayStringManager()->GetString( "DST_OPTION_CONTROL_ACTION_MINIMAP_ZOOMOUT" ),
 		ACTION_MINIMAP_ZOOMOUT , true);
 	CGuiLineTree::AddNode( pNode, dOPTIONCONTROL_CATEGORY_FIXED );
 
-	// 미니맵 확대
+	// Zoom in on the minimap
 	pNode = NTL_NEW COptionControlActionNode(this,
 		GetDisplayStringManager()->GetString( "DST_OPTION_CONTROL_ACTION_MINIMAP_ZOOMIN" ),
 		ACTION_MINIMAP_ZOOMIN , true);
 	CGuiLineTree::AddNode( pNode, dOPTIONCONTROL_CATEGORY_FIXED );
 
-	// 채팅창 이전 페이지
+	// Chat window previous page
 	pNode = NTL_NEW COptionControlActionNode(this,
 		GetDisplayStringManager()->GetString( "DST_OPTION_CONTROL_ACTION_CHAT_PGUP" ),
 		ACTION_CHAT_PGUP , true);
 	CGuiLineTree::AddNode( pNode, dOPTIONCONTROL_CATEGORY_FIXED );
 
-	// 채팅창 다음 페이지
+	// Chat window next page
 	pNode = NTL_NEW COptionControlActionNode(this,
 		GetDisplayStringManager()->GetString( "DST_OPTION_CONTROL_ACTION_CHAT_PGDN" ),
 		ACTION_CHAT_PGDN , true);
 	CGuiLineTree::AddNode( pNode, dOPTIONCONTROL_CATEGORY_FIXED );
 
-	// 취소
+	// cancellation
 	pNode = NTL_NEW COptionControlActionNode(this,
 		GetDisplayStringManager()->GetString( "DST_OPTION_CONTROL_ACTION_GLOBAL_CANCLE" ),
 		ACTION_GLOBAL_CANCLE , true);
 	CGuiLineTree::AddNode( pNode, dOPTIONCONTROL_CATEGORY_FIXED );
 
-	// 스크린샷
+	// screenshot
 	pNode = NTL_NEW COptionControlActionNode(this,
 		GetDisplayStringManager()->GetString( "DST_OPTION_CONTROL_ACTION_GLOBAL_SNAPSHOT" ),
 		ACTION_GLOBAL_SNAPSHOT , true);
 	CGuiLineTree::AddNode( pNode, dOPTIONCONTROL_CATEGORY_FIXED );
 
-	// 채팅입력
+	// Chat input
 	pNode = NTL_NEW COptionControlActionNode(this,
 		GetDisplayStringManager()->GetString( "DST_OPTION_CONTROL_ACTION_GLOBAL_CHAT" ),
 		ACTION_GLOBAL_CHAT , true);
 	CGuiLineTree::AddNode( pNode, dOPTIONCONTROL_CATEGORY_FIXED );
 
 
-//		ACTION_DEVUSER_ONLYRENDERGUI = 200,	///< 개발용모드 (GUI만 그린다. 임시)
+//		ACTION_DEVUSER_ONLYRENDERGUI = 200, ///< Development mode (only draws GUI. Temporary)
 }
 
 /**
-* \brief 각각의 노드를 업데이트 해준다.
+* \brief Updates each node.
 *
-* COptionControlActionNode들의 Update() 함수를 호출한다.
+*Calls the Update() function of COptionControlActionNodes.
 */
 void COptionControlList::UpdateNode() 
 {
@@ -554,31 +554,31 @@ RwBool COptionControl::Create(COptionWindowGui* pOptionWindow)
 	NTL_FUNCTION("COptionControl::Create");
 	COptionBase::Create(pOptionWindow);
 
-	// 조작컨트롤 타이틀
+	// Operation control title
 	m_pStbControlTitle = (gui::CStaticBox*)GetComponent("stbControlTitle");
 	m_pStbControlTitle->SetText( GetDisplayStringManager()->GetString( "DST_OPTION_CONTROL_TEXT_TITLE" ) );
 
-	// GUI LineTree를 사용하기 위한 가상 Dialog
+	// Virtual Dialog for using GUI LineTree
 	m_pDlgControlList = (gui::CDialog*)GetComponent("dlgControlList");
 
-	// Gui Line Tree의 크기를 rect로 설정한다.
+	// Set the size of the Gui Line Tree to rect.
 	CRectangle rect;
 	rect.SetRectWH(dOPTIONCONTROL_LIST_X, dOPTIONCONTROL_LIST_Y, 
 		dOPTIONCONTROL_LIST_WIDTH, dOPTIONCONTROL_LIST_HEIGHT);
 
-	// GuiLineTree를 생성한다.
+	// Create a GuiLineTree.
 	m_pOptionControlList = NTL_NEW COptionControlList;
 	if (!m_pOptionControlList->Create(rect, m_pDlgControlList, 
-		dOPTIONCONTROL_LINE_HEIGHT,			// 각 라인의 높이
-		dOPTIONCONTROL_LINE_MARGIN,			// 각 라인의 간격
-		dOPTIONCONTROL_CHILD_MARGIN_WIDTH,	// 자식들의 간격
-		dOPTIONCONTROL_LIST_SLIDER_WIDTH, this))	// 슬라이더의 넓이
+		dOPTIONCONTROL_LINE_HEIGHT,			// height of each line
+		dOPTIONCONTROL_LINE_MARGIN,			// spacing of each line
+		dOPTIONCONTROL_CHILD_MARGIN_WIDTH,	// spacing between children
+		dOPTIONCONTROL_LIST_SLIDER_WIDTH, this))	// width of the slider
 		return FALSE;
 
-	// 조작키를 지정할 수 있는 아이템들을 생성
+	// Create items that can be assigned operation keys
 	m_pOptionControlList->CreateTree();
 
-	// TextBox를 생성
+	// Create TextBox
 	m_pStbControlBack = (gui::CStaticBox*)GetComponent("stbControlBack");
 	m_pStbControlText = (gui::CStaticBox*)GetComponent("stbControlText");
 
@@ -600,14 +600,14 @@ void COptionControl::Destroy()
 
 void COptionControl::Show()
 {
-	// COptionBase의 ScrollBar를 사용하지 않는다.
+	// Do not use ScrollBar of COptionBase.
 	m_pScrollBar->Show(false);
 
 	m_pStbControlTitle->Show(true);
 	m_pDlgControlList->Show(true);
 	m_pStbControlBack->Show(true);
 	
-	// 기본 안내 메시지 셋팅
+	// Basic guidance message settings
 	SetGuideDefault(); 
 	m_pStbControlText->Show(true);
 
@@ -616,7 +616,7 @@ void COptionControl::Show()
 
 void COptionControl::Hide()
 {	
-	// COptionBase의 ScrollBar 사용
+	// Using ScrollBar from COptionBase
 	m_pScrollBar->Show(true);
 
 	m_pDlgControlList->Show(false);
@@ -624,10 +624,10 @@ void COptionControl::Hide()
 	m_pStbControlBack->Show(false);
 	m_pStbControlText->Show(false);
 
-	GetInputActionMap()->InitInputMode();	   ///< 액션맵 입력 모드의 해제
-	//GetInputActionMap()->CancleActionMap();	   ///< 액션맵의 임시 저장된것을 로드
+	GetInputActionMap()->InitInputMode();	   ///< Disable action map input mode
+	//GetInputActionMap()->CancleActionMap();	   ///< Load temporarily saved action map
 	
-	// 노드의 업데이트
+	// update of node
 	m_pOptionControlList->UpdateNode();
 		
 	COptionBase::Hide();
@@ -639,7 +639,7 @@ void COptionControl::OnInit()
 
 void COptionControl::OnReset()
 {
-	// 이전에 변경되었던 액션을 해제시켜준다.
+	// Cancels previously changed actions.
 	GetInputActionMap()->InitInputMode();
 	GetInputActionMap()->InitDefaultActionMap();
 
@@ -651,7 +651,7 @@ void COptionControl::OnOk()
 {
 	GetInputActionMap()->InitInputMode();
 	
-	// 만약 변경점이 있고 적용이 되었다면 Node를 업데이트한다.
+	// If there are changes and they are applied, update the Node.
 	if( GetInputActionMap()->ApplyActionMap() )
 	{
 		m_pOptionControlList->UpdateNode();
@@ -667,11 +667,11 @@ void COptionControl::OnCancel()
 }
 
 /**
-* \breif OnHandleEvents
+*\letter OnHandleEvents
 */
 void COptionControl::OnHandleEvents( RWS::CMsg &pMsg ) 
 {
-	// 액션맵에서 정보를 보낸 것을 처리한다.
+	// Processes information sent from Action Map.
 	if( pMsg.Id == g_EventActionMapClientNotify )
 	{
 		SNtlEventActionMapClientNotify* pData = reinterpret_cast<SNtlEventActionMapClientNotify*>( pMsg.pData );
@@ -680,16 +680,16 @@ void COptionControl::OnHandleEvents( RWS::CMsg &pMsg )
 
 		switch( pData->byType )
 		{
-		case SNtlEventActionMapClientNotify::ACTIONMAP_OK:							// 서버에 적용됐다고 알림
+		case SNtlEventActionMapClientNotify::ACTIONMAP_OK:							// Notification that it has been applied to the server
 			SetGuideDefault();
 			break;
-		case SNtlEventActionMapClientNotify::ACTIONMAP_RELEASE:							// 키가 변경됐다고 알림
+		case SNtlEventActionMapClientNotify::ACTIONMAP_RELEASE:							// Notification that the key has changed
 			SetGuideChange( pData->wParam1 );
 			break;
-		case SNtlEventActionMapClientNotify::ACTIONMAP_FIXEDKEY:						// 키가 고정된 키라고 알림
+		case SNtlEventActionMapClientNotify::ACTIONMAP_FIXEDKEY:						// Notify that the key is a fixed key
 			SetGuideText( dOPTIONCONTROL_STATICBOX_GUIDE_COLOR, L"DST_OPTION_CONTROL_TEXT_FIXEDKEYGUIDE" );
 			break;
-		case SNtlEventActionMapClientNotify::ACTIONMAP_NOTCOMBINE:						// 조합키로는 지정못한다고 알림
+		case SNtlEventActionMapClientNotify::ACTIONMAP_NOTCOMBINE:						// Notice that it cannot be specified using a combination key.
 			SetGuideText( dOPTIONCONTROL_STATICBOX_GUIDE_COLOR, L"DST_OPTION_CONTROL_TEXT_NOTCOMBINEGUIDE" );
 			break;
 		case SNtlEventActionMapClientNotify::ACTIONMAP_SAMEKEY:
@@ -708,7 +708,7 @@ void COptionControl::SetGuideText( RwUInt32 uiColor, const WCHAR* pString )
 }
 
 /**
-* \brief 기본적인 단축키 변경의 안내
+* \brief Guide to changing basic shortcut keys
 */
 void COptionControl::SetGuideDefault() 
 {
@@ -720,7 +720,7 @@ void COptionControl::SetGuideDefault()
 }
 
 /**
-* \brief 키가 중복되어 지정안됨으로 해제된 키를 안내
+* \brief Information on keys that have been released due to duplicate keys not being specified.
 */
 void COptionControl::SetGuideChange(RwUInt32 nAction) 
 {
@@ -735,7 +735,7 @@ void COptionControl::SetGuideChange(RwUInt32 nAction)
 }
 
 /**
-* \brief 변경 불가능한 키라는 것을 안내
+* \brief Notice that this is an immutable key.
 */
 void COptionControl::SetGuideFixed( RwUInt32 nAction ) 
 {
@@ -747,7 +747,7 @@ void COptionControl::SetGuideFixed( RwUInt32 nAction )
 }
 
 /**
-* \brief 현재 모드에서는 변경이 불가능합니다 라는 것을 안내
+* \brief Notice that changes are not possible in the current mode.
 */
 void COptionControl::SetGuideNegativeMode()
 {

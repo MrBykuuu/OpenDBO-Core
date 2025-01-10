@@ -105,7 +105,7 @@ RwBool CDboExtraErrorReport::SetIndent()
 
 void CDboExtraErrorReport::SetDXDiagLog() 
 {
-    // Dx에서 PC관련 정보를 가져와서 txt파일을 만든다.
+    // Import PC-related information from Dx and create a txt file.
     SHELLEXECUTEINFO execInfo;
     ZeroMemory(&execInfo, sizeof(SHELLEXECUTEINFO));
     execInfo.cbSize = sizeof(SHELLEXECUTEINFO);

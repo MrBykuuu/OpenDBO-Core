@@ -1,16 +1,16 @@
 #include "precomp_dboclient.h"
 #include "PetitionSideIconGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// Cleint
+// Client
 #include "DisplayStringManager.h"
 #include "PetitionManager.h"
 #include "DboGlobal.h"
@@ -40,7 +40,7 @@ RwBool CPetitionSideIconGui::Create()
 
 	m_pThis = (gui::CDialog*)GetComponent("dlgMain");
 
-	// 일반 아이콘 버튼
+	// General icon button
 	m_pIconButton = (gui::CButton*)GetComponent("btnIcon");
 	m_slotIconButton = m_pIconButton->SigClicked().Connect(this, &CPetitionSideIconGui::OnIconButtonClicked);
 
@@ -109,27 +109,27 @@ RwBool CPetitionSideViewGui::Create()
 
 	m_pThis = (gui::CDialog*)GetComponent("dlgMain");
 
-	// 닫기 버튼
+	// close button
 	m_pExitButton = (gui::CButton*)GetComponent("btnExit");
 	m_slotExitButton = m_pExitButton->SigClicked().Connect(this, &CPetitionSideViewGui::OnExitClicked);
 
 	m_pMessage = (gui::CStaticBox*)GetComponent("stbMessage");
 	m_pMessage->SetText( GetDisplayStringManager()->GetString("DST_PETITION_SIDEVIEW_MESSAGE") );
 
-	// 배경
+	// background
 	m_BackPanel.SetType(CWindowby3::WT_HORIZONTAL);
 	m_BackPanel.SetSurface(0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("PetitionSideView.srf", "srfBackUp"));
 	m_BackPanel.SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("PetitionSideView.srf", "srfBackCenter"));
 	m_BackPanel.SetSurface(2, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("PetitionSideView.srf", "srfBackDown"));
 	m_BackPanel.SetSize( m_pThis->GetWidth(), m_pThis->GetHeight() );
 
-	// 취소 버튼
+	// Cancel button
 	m_pCancelButton = (gui::CButton*)GetComponent("btnCancel");
 	m_pCancelButton->SetTextUpColor(RGB(0, 255, 255));
 	m_pCancelButton->SetText( GetDisplayStringManager()->GetString("DST_PETITION_CANCEL_PETITION") );
 	m_slotCancelButton = m_pCancelButton->SigClicked().Connect(this, &CPetitionSideViewGui::OnCancelClicked);
 
-	// sig	
+	// Signals	
 	m_slotPaint			= m_pThis->SigPaint().Connect( this, &CPetitionSideViewGui::OnPaint );
 
 	Show(false);

@@ -1,21 +1,21 @@
 #include "precomp_dboclient.h"
 #include "TBCommonDirectionGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEvent.h"
 #include "NtlSobAvatar.h"
 #include "NtlWorldConceptTB.h"
 #include "NtlCameraManager.h"
 
-// client
+// Client
 #include "DboGlobal.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,7 +134,7 @@ VOID stSCROLLINFO::OnScrollFSCallBack( const RwChar* szCommand, const RwChar* sz
 
 VOID stSCROLLINFO::OnScrollPageDone( RwInt32 nPage )
 {
-	// 마지막 페이지가 끝났을 때
+	// When the last page is finished
 	if( nPage + 1 >= phtmlText->GetIntervalPageNums() )
 		pflaScroll->Invoke( "CloseScroll", "" );
 	else
@@ -259,7 +259,7 @@ VOID stTWOLINE::LoadFlash( const RwChar* szFirst, const RwChar* szSecond, RwUInt
 		byObjectID = byID;
 		bAutoFoward = autoFoward;		
 
-		// 초기화 
+		// reset 
 		EndMovie();
 	}	
 }
@@ -564,7 +564,7 @@ VOID stPARTYMEMBERITEM::SetData( stTBudokaiMember* pMember )
 	ppnlClass->AddSurface( Logic_GetPCClassIconSurface( pMember->byClass, FALSE ) );
 	ppnlClass->SetToolTip( Logic_GetClassName( pMember->byClass ) );
 
-	// 서버데이터 필요
+	// Server data required
 	pstbLevel->Format( GetDisplayStringManager()->GetString( "DST_BUDOKAI_TEAMINFO_LEVEL_VALUE" ), pMember->byLevel );	
 }
 

@@ -133,7 +133,7 @@ SGET_QUEST_INFO* CDboTSCTAgency::GetQuestInfoList( eEVENT_GEN_TYPE eEvtGenType, 
 
 	//////////////////////////////////////////////////////////////////////////
 	//
-	// 현재 Object trigger에서는 바인드 및 포탈 가능 여부만 검사 함
+	// Currently, Object trigger only checks whether bind and portal are possible.
 	//
 	//////////////////////////////////////////////////////////////////////////
 
@@ -145,7 +145,7 @@ SGET_QUEST_INFO* CDboTSCTAgency::GetQuestInfoList( eEVENT_GEN_TYPE eEvtGenType, 
 			CObjectTable* pObjTable = API_GetTableContainer()->GetObjectTable( GetNtlSLGlobal()->GetAvatarInfo()->sWorldInfo.tblidx );
 			if ( pObjTable )
 			{
-				sOBJECT_TBLDAT* pTblData = (sOBJECT_TBLDAT*)pObjTable->FindData( uiOwnerId /* 이벤트 타입이 오브젝트 관련 이므로 uiOwnerId는 오브젝트 테이블 인덱스가 된다*/ );
+				sOBJECT_TBLDAT* pTblData = (sOBJECT_TBLDAT*)pObjTable->FindData( uiOwnerId /* Since the event type is object-related, uiOwnerId becomes the object table index.*/ );
 
 				if ( pTblData )
 				{
@@ -158,7 +158,7 @@ SGET_QUEST_INFO* CDboTSCTAgency::GetQuestInfoList( eEVENT_GEN_TYPE eEvtGenType, 
 
 	sQUEST_INFO sTriggerInfo;
 
-	// 1. 현재 진행 중인 트리거가 해당 오브젝트 아이디를 진행 이벤트로 사용할 수 있는지 검사한다
+	// 1. Check whether the trigger currently in progress can use the object ID as a progress event.
 	mapdef_TRIGGER_LIST::iterator itCPT = m_defCurTList.begin();
 	for ( ; itCPT != m_defCurTList.end(); ++itCPT )
 	{
@@ -208,13 +208,13 @@ SGET_QUEST_INFO* CDboTSCTAgency::GetQuestInfoList( eEVENT_GEN_TYPE eEvtGenType, 
 			sTriggerInfo.sKey.tcID = pTCtrl->GetCurTSP()->GetID();
 			sTriggerInfo.dwQuestTitle = pTCtrl->GetTrigger()->GetTitle();
 			sTriggerInfo.dwQuestStartDialog = 0xffffffff;
-			sTriggerInfo.eProgType = eQUEST_PROGRESS_TYPE_PROGRESS;	// PC Trigger인 경우 무조건 진행 상태로 표현한다
+			sTriggerInfo.eProgType = eQUEST_PROGRESS_TYPE_PROGRESS;	// In the case of a PC trigger, it is always expressed as progress.
 
 			m_TriggerInfo.QuestInfoList.push_back( sTriggerInfo );
 		}
 	}
 
-	// 2. 해당 오브젝트 아이디로 시작 할 수 있는 트러거가 존재하면 시작한다
+	// 2. If a trigger that can be started with the corresponding object ID exists, it starts.
 	CNtlTSEvtMapper* pEvtMapper = 0;
 
 	if ( eEVENT_GEN_TYPE_CLICK_NPC == eEvtGenType )
@@ -338,7 +338,7 @@ SGET_QUEST_INFO* CDboTSCTAgency::GetQuestInfoList( eEVENT_GEN_TYPE eEvtGenType, 
 
 	for ( itSQ = pSTrigList->begin(); itSQ != pSTrigList->end(); ++itSQ )
 	{
-		// 현재 진행중인 퀘스트이면 더 이상 진행 할 수 없다
+		// If you are currently on a quest, you cannot proceed any further.
 		if ( m_defCurTList.find( *itSQ ) != m_defCurTList.end() ) continue;
 
 		CNtlTSTrigger* pTrig = ((CDboTSCMain*)m_pParent)->FindTriggerFromTS( *itSQ );
@@ -346,7 +346,7 @@ SGET_QUEST_INFO* CDboTSCTAgency::GetQuestInfoList( eEVENT_GEN_TYPE eEvtGenType, 
 
 		CDboTSCTCtrl* pTCtrl = (CDboTSCTCtrl*)MakeTriggerController( pTrig );
 
-		// Main group의 start container(시작 컨테이너)를 만족하면 퀘스트 진행
+		// If the main group's start container is satisfied, proceed with the quest.
 
 		sRunParam.SetControl( pTCtrl );
 
@@ -836,7 +836,7 @@ void CDboTSCTAgency::HandleEvents( RWS::CMsg& Msg )
 
 CDboTSTCtrl* CDboTSCTAgency::MakeTriggerController( CNtlTSTrigger* pTrig )
 {
-	// Trigger controller 를 생성한다
+	// Create a trigger controller
 	CNtlTSControlObject* pCtrlObj = GetParent()->GetControlFactory()->CreateObj( "CDboTSCTCtrl" );
 	if ( !pCtrlObj->IsDerivedClass( "CDboTSCTCtrl" ) )
 	{
@@ -845,7 +845,7 @@ CDboTSTCtrl* CDboTSCTAgency::MakeTriggerController( CNtlTSTrigger* pTrig )
 		return 0;
 	}
 
-	// TS trigger 와 Trigger를 연결 및 저장한다
+	// Connect and save TS trigger and trigger
 	((CDboTSCTCtrl*)pCtrlObj)->SetTrigger( pTrig );
 	((CDboTSCTCtrl*)pCtrlObj)->SetParent( this );
 
@@ -876,7 +876,7 @@ void CDboTSCTAgency::UG_Avatar_TS_Confirm_Step( NTL_TS_T_ID tId, NTL_TS_TC_ID tc
 {
 	OUT_QMSG_6( "[Trigger] User -> GameServer : Confirm 처리중 [%d,%d,%d,%d,%d,%d]", tId, tcCurId, tcNextId, uiParam, byEventType, uiEventData );
 
-	// 서버에게 메시지를 보낸다
+	// send message to server
 	API_GetSLPacketGenerator()->SendTSConfirmStepReq( TS_TYPE_PC_TRIGGER_CS, tId, tcCurId, tcNextId, uiParam, byEventType, uiEventData );
 }
 
@@ -907,7 +907,7 @@ void CDboTSCTAgency::UG_TS_Update_State( NTL_TS_T_ID tId, unsigned char byType, 
 {
 	OUT_QMSG_4( "[Trigger] User -> GameServer : Update TS state message 처리중 [%d, %d, %d, %d]", tId, byType, wTSState, uiParam );
 
-	// 서버에게 상태 업데이트 메시지를 전송한다
+	// Send status update message to server
 	API_GetSLPacketGenerator()->SendTSUpdateState( tId, TS_TYPE_PC_TRIGGER_CS, byType, wTSState, uiParam );
 }
 
@@ -932,12 +932,12 @@ void CDboTSCTAgency::UT_UpdateAvatarPos( unsigned int uiWorldIdx, float fPosX, f
 		return;
 	}
 
-	// World 가 교체된 경우
+	// When World is replaced
 	if ( m_sAvatarCurPos.uiWorldIx != uiWorldIdx )
 	{
 		sCOL_RGN_DATA sColRgnData;
 
-		// Leave 처리
+		// Leave processing
 		if ( 0xffffffff != m_sAvatarCurPos.uiWorldIx )
 		{
 			sColRgnData.eWorldChangeType = sCOL_RGN_DATA::eWORLD_CHANGE_TYPE_LEAVE;
@@ -955,8 +955,8 @@ void CDboTSCTAgency::UT_UpdateAvatarPos( unsigned int uiWorldIdx, float fPosX, f
 				UT_EventDoTrigger( sQuestInfo, eEVENT_GEN_TYPE_COL_REGION, 0, &sColRgnData );
 			}
 
-			// 바로 Enter 처리가 이뤄지는 것을 막고
-			// 다음 프레임에 처리되도록 한다
+			// Prevents Enter processing from taking place immediately.
+			// Let it be processed in the next frame
 			m_sAvatarCurPos.uiWorldIx = 0xffffffff;
 		}
 		else
@@ -981,10 +981,10 @@ void CDboTSCTAgency::UT_UpdateAvatarPos( unsigned int uiWorldIdx, float fPosX, f
 			m_sAvatarCurPos.fPosZ = fPosZ;
 		}
 	}
-	// World 가 교체되지 않은 경우
+	// If World is not replaced
 	else
 	{
-		// 같은 월드에서 이동을 한 경우
+		// When moving in the same world
 		if ( abs( fPosX - m_sAvatarCurPos.fPosX ) > 0.0001f ||
 			 abs( fPosZ - m_sAvatarCurPos.fPosZ ) > 0.0001f )
 		{
@@ -1028,7 +1028,7 @@ void CDboTSCTAgency::UT_EventDoTrigger( sQUEST_INFO& sQuestInfo, eEVENT_GEN_TYPE
 			return;
 		}
 
-		// 진행 중에 있는 트리거는 새로이 진행할 수 없다
+		// Triggers that are in progress cannot be re-processed.
 		CDboTSCTCtrl* pProgress = (CDboTSCTCtrl*)FindProgressTrigger( sQuestInfo.sKey.tID );
 		if ( pProgress ) return;
 
@@ -1041,7 +1041,7 @@ void CDboTSCTAgency::UT_EventDoTrigger( sQUEST_INFO& sQuestInfo, eEVENT_GEN_TYPE
 		sRunParam.SetControl( pTCtrl );
 		sRunParam.SetAgency( this );
 
-		// Main group의 start container(시작 컨테이너)를 만족하면 퀘스트 진행
+		// If the main group's start container is satisfied, proceed with the quest.
 
 		pTCtrl->SetEventGenType( eEvtGenType );
 		pTCtrl->SetEventGenId( uiOwnerId );

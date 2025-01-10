@@ -61,7 +61,7 @@ int CNtlWeatherGroup::CanPlay(const char* pcName)
 		{
 			if( strcmp(pSound->m_strName.c_str(), pcName) == 0 )
 			{
-				// Fade out되어 사라지는 중이면 다시 Fade in 시킨다
+				// If it is fading out and disappearing, fade it in again.
 				if( pSound->m_eState == SPS_PLAY_FADE_OUT )
 				{
 					GetFadeInOut()->StopImmediately(pSound->m_pFMODChannel, dFADE_STOP_FLAG_NOT_NOTIFY);

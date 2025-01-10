@@ -8,8 +8,8 @@
  *****************************************************************************
  * Desc         : 
  * Adjust		: HuunSuk, Jang(2005. 7 29)
- *			        - renderware texture reseouce 추가. 
- *				    - resorce에 dictory type 추가(texture를 group별로 관리하기 위한 interface) 
+ *			        - Added renderware texture reseouce. 
+ *			        - Addition of dictionary type to resource (interface for managing texture by group) 
  *
  *****************************************************************************/
 
@@ -29,10 +29,10 @@ class CNtlResourceScheduleManager;
 
 /**
 * \ingroup NtlPresentation
-* RenderWare resource manager class이다.
-* world, clump, atomic, texture가 제공되고 있으며, uva file은 추후 제공 유무를 검토한다.
-* Note : module은 아직 검증되지 않았으므로 사용자는 주의해야 한다.
-*        또한 resource container를 clump 와 atomic을 따로 생성할 것인지 검토해야 한다.
+* RenderWare resource manager class.
+* World, clump, atomic, and texture are provided, and uva file will be reviewed for future provision.
+* Note: The module has not yet been verified, so users should be careful.
+* You should also consider whether to create clump and atomic resource containers separately.
 * 
 */
 class CNtlPLResourceManager
@@ -89,72 +89,72 @@ private:
 private:
 	
 	/**
-    *  RenderWare data를 읽는 함수.
+    *Function that reads RenderWare data.
     *
 	*  \param pStrName file name
 	*  \param pResourcePath resource path
 	*  \param uiType RednerWare resource type
-	*  \param bClone container에 file name과 같은 resource가 존재한다면? clone으로 생성할 것인가?
+	*  \param What if a resource such as file name exists in the bClone container? Should I create it as a clone?
 	*  \return resource class pointer
 	*/
 	CNtlPLResource* LoadDefault(const char *pStrName, const char * pResourcePath, unsigned int uiType);
 
 	/**
-    *  CNtlPLResource 객체를 생성하는 함수.
+    *Function that creates a CNtlPLResource object.
     *
-    *  \param pName resource name을 CNtlPLResource에 담는다.
-	*  \param uiType renderware data의 type.
-	*  \param bClone renderware data의 clone flag.
-	*  \param pData renderware data의 pointer.
+    *  \param pName Resource name is stored in CNtlPLResource.
+	*  \param uiType Type of renderware data.
+	*  \param bClone clone flag of renderware data.
+	*  \param pData Pointer to renderware data.
 	*  \return resource class pointer
     */
 	CNtlPLResource* CreateResource(const char *pName, unsigned int uiType, bool bClone,	void *pData);
 
 	/**
-    *  CNtlPLResource 객체를 container에 등록하는 함수.
+    *Function to register a CNtlPLResource object in a container.
     *
-    *  \param pResource container 등록할 resource pointer
+    *  \param pResource container Resource pointer to register
 	*  \see UnRegisterResource
     */
 	void RegisterResource(const CNtlPLResource *pResource);
 
 	/**
-    *  CNtlPLResource 객체를 container에서 해제하는 함수.
+    *Function that releases the CNtlPLResource object from the container.
     *
-    *  \param pResource container 해제할 resource pointer
+    *  \param pResource container Resource pointer to release
 	*  \see RegisterResource
     */
 	void UnRegisterResource(const CNtlPLResource *pResource);
 
 	/**
-    *  renderware data type에 해당하는 data를 생성하는 함수.
+    *A function that creates data corresponding to the renderware data type.
     *
-    *  \param pSteam stream 객체 pointer.
+    *  \param pSteam stream object pointer.
 	*  \param iType renderware data type.
     */
 	void* CreateRwData(RwStream *pSteam, unsigned int iType);
 
 	/**
-    *  renderware data에 해당하는 clone data를 생성한다.
-	*  type을 비교하여 적절한 renderware clone 함수를 적용한다.
+    *Create clone data corresponding to renderware data.
+	*Compare types and apply appropriate renderware clone function.
     *
     *  \param iType renderware data type.
-	*  \param pData clone할 renderware data.
+	*  \param pData renderware data to clone.
 	*  \return renderware data pointer
 	*  \see DestroyRwData
     */
 	void* CreateCloneRwData(unsigned int iType, void *pData); 
 
 	/**
-    *  renderware data에 해당하는 type에 적절하게 삭제한다.
+    *Delete appropriately for the type corresponding to the renderware data.
     *
     *  \param iType renderware data type.
-	*  \param pData 삭제할 renderware data.
+	*  \param pData renderware data to delete.
     */
 	void  DestroyRwData(unsigned int iType, void *pData);
 
 	/**
-    *  renderware world를 생성하는 함수.
+    *Function that creates a renderware world.
     *
 	*  \param pStream world stream data
 	*  \return RenderWare world pointer
@@ -164,7 +164,7 @@ private:
 	RpWorld* WorldStreamRead (RwStream *pStream);
 	
 	/**
-    *  renderware clump를 생성하는 함수.
+  *Function that creates a renderware clump.
     *
 	*  \param pStream clump stream data
 	*  \return RenderWare clump pointer
@@ -174,7 +174,7 @@ private:
 	RpClump* ClumpStreamRead (RwStream *pStream);
 
 	/**
-    *  renderware atomic를 생성하는 함수.
+    *A function that creates a renderware atomic.
     *
 	*  \param pStream atomic stream data
 	*  \return RenderWare atomic pointer
@@ -184,18 +184,18 @@ private:
 	RpAtomic* AtomicStreamRead (RwStream *pStream);
 
 	/**
-    *  container에서 name으로 CNtlPLResource를 찾는다.
+    *Find CNtlPLResource by name in container.
     *
 	*  \param pName name string
 	*  \param uiType the resource type
-	*  \param uiType the resource dictory type
-	*  \return pName에 해당하는 resource class pointer
+	*  \param uiType the resource dictionary type
+	*  \return the resource class pointer corresponding to pName
     */
 	CNtlPLResource* Find(const char *pName, unsigned int uiType, EResDictType eDictType = RES_TEX_DEFAULT_DICT);
 
     /**
-    *  application이 종료 되었을 때 해지되지 않은 resource를 debugging을 위한 함수.
-	*  debugging 내용을 file or output window로 display 할 수 있도록 한다.
+    *Function for debugging resources that have not been released when the application is terminated.
+	*Enables debugging contents to be displayed as a file or output window.
     *
 	*/
 	void DebugResource(void);
@@ -211,20 +211,20 @@ public:
 	static CNtlPLResourceManager* GetInstance(void);
 
 	/**
-    * Initial 함수.
-	*  \return resource manager의 초기화가 성공했으면 true, 실패하면 false
+    * Initial function.
+	*  \return true if initialization of the resource manager was successful, false if it failed.
     *
 	*/
 	bool Crate(void);
 
 	/**
-    *  Terminate 함수.
+    *  Terminate function.
     *
 	*/
 	void Destroy(void);
 
 	/**
-    *  Update 함수.
+    *  Update function.
     *
 	*/
 	void Update(RwReal fElapsed);
@@ -243,11 +243,11 @@ public:
 	CNtlPLResource* LoadWorld(const char *pStrName, const char * pResourcePath);
 
 	/**
-    *  RenderWare clump data를 읽는 함수.
+    *Function to read RenderWare clump data.
     *
 	*  \param pStrName file name
 	*  \param pResourcePath resource path
-	*  \param bClone clump를 clone으로 생성할 것인지를 결정하는 변수.
+	*  \param bClone Variable that determines whether to create a clump as a clone.
 	*  \return Pointer resource class
 	*  \see LoadWorld
 	*  \see LoadAtomic
@@ -258,11 +258,11 @@ public:
 
 
 	/**
-    *  RenderWare clump data를 읽는 함수. 일정한 시간마다 scheduling 하면서 loading 한다(thread loading 대체용)
+    *Function to read RenderWare clump data. Loading while scheduling at certain times (for replacement of thread loading)
     *
 	*  \param pStrName file name
 	*  \param pResourcePath resource path
-	*  \param bClone clump를 clone으로 생성할 것인지를 결정하는 변수.
+	*  \param bClone Variable that determines whether to create a clump as a clone.
 	*  \return Pointer resource class
 	*  \see LoadWorld
 	*  \see LoadAtomic
@@ -272,11 +272,11 @@ public:
 	void LoadSchedulingClump(const char *pStrName, const char * pResourcePath, CNtlPLEntity *pEntity);
 
 	/**
-    *  RenderWare atomic data를 읽는 함수.
+    *Function to read RenderWare atomic data.
     *
 	*  \param pStrName file name
 	*  \param pResourcePath resource path
-	*  \param bClone atomic를 clone으로 생성할 것인지를 결정하는 변수.
+	*  \param bClone Variable that determines whether to create an atomic as a clone.
 	*  \return Pointer resource class
 	*  \see LoadWorld
 	*  \see LoadClump
@@ -287,7 +287,7 @@ public:
 
 	
 	/**
-    *  RenderWare animation data를 읽는 함수.
+    *Function that reads RenderWare animation data.
     *
 	*  \param pStrName file name
 	*  \return Pointer resource class
@@ -300,29 +300,29 @@ public:
 	CNtlPLResource* LoadAnimation(const char *pStrName);
 
 	/**
-    *  RenderWare texture data를 읽는 함수.
+    *Function that reads RenderWare texture data.
     *
 	*  \param pStrName file name
 	*  \param pResourcePath resource path
-	*  \param eFilterMode texture의 filtering mode. renderware RwTextureFilterMode를 참조.
-	*  \param EResDictType texture를 group으로 나누어 관리할 경우에 group의 id가 된다.
-	*         group으로 관리하는 이유는 검색 속도를 빠르게 할 수 있다.     
-	*         일반적으로 object, character, terrain, texture, ui등의 group을 생각해 볼 수 있다.
+	*  \param eFilterMode The filtering mode of the texture. See renderware RwTextureFilterMode.
+	*  \param EResDictType When managing texture by dividing it into groups, becomes the group ID.
+	*The reason for managing by group is to speed up search.     
+	*In general, you can think of groups such as object, character, terrain, texture, and UI.
 	*  \return Pointer resource class
 	*  \see UnLoadTexture
 	*/
 	RwTexture* LoadTexture(const char *pStrName, const char * pResourcePath, EResDictType eType = RES_TEX_DEFAULT_DICT, const char *pStrMaskName = NULL);
 
 	/**
-    *  RenderWare texture를 강제적으로 생성하는 함수.
+    *A function that forcibly creates a RenderWare texture.
     *
 	*  \param pStrName file name.
 	*  \param iWidth texture width.
 	*  \param iHeight texture height.
-	*  \param iDepth pixel 깊이.
+	*  \param iDepth pixel depth.
 	*  \param eFilterMode texture filter mode.
 	*  \param eFormat raster format.
-	*  \param eType texture dictionary type.(CNtlPLResourceManager 의 EResDictType 사용).
+	*  \param eType texture dictionary type. (using EResDictType of CNtlPLResourceManager).
 	*  \return Pointer renderware texture pointer
 	*  \see LoadTexture
 	*  \see UnLoadTexture
@@ -336,7 +336,7 @@ public:
 							EResDictType eType = RES_TEX_DEFAULT_DICT);
 
 	/**
-    *  resource를 unload 한다.
+    * Unload resources.
     *
 	*  \param pResource unload할 resource pointer
 	*  \see LoadWorld	
@@ -348,15 +348,15 @@ public:
 
 	
 	/**
-    *  scheduling상에 등록되어 있는 entity에 해당하는 scheduling node를 삭제한다.
+    *Delete the scheduling node corresponding to the entity registered in scheduling.
     *
 	*/
 	void UnLoadScheduling(CNtlPLEntity *pPLEntity, CNtlPLResource *pResource);
 
 	/**
-    *  texture를 unload 한다.
+    *Unload the texture.
     *
-	*  \param pResource unload할 resource pointer
+	*  \param pResource resource pointer to unload
 	*  \see LoadTexture	
 	*/
 	void UnLoadTexture(RwTexture *pTexture);

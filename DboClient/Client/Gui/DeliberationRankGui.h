@@ -1,11 +1,11 @@
 /*****************************************************************************
-* File			: DeliberationRankGui.h
-* Author		: Hong Sungbock
-* Copyright		: (аж)NTL
-* Date			: 2009. 8. 18
-* Abstract		: DBO contract gui.
+*File			: DeliberationRankGui.h
+*Author		    : Hong Sungbock
+*Copyright		: (аж)NTL
+*Date			: 2009. 8. 18
+*Abstract		: DBO contract gui.
 *****************************************************************************
-* Desc          : GUI class for displaying the degree of deliberation
+*Desc           : GUI class for displaying the degree of deliberation
 *
 *				  1. Display on title screen
 *				  2. Displayed for a short period of time during the game
@@ -13,10 +13,10 @@
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presentation
 #include "NtlPLGui.h"
 
 

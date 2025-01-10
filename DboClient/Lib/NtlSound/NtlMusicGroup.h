@@ -2,15 +2,15 @@
 *
 * File			: NtlMusicGroup.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: (二�)NTL
 * Date			: 2006. 7. 11	
 * Abstract		: Background Music Channel Group
 *****************************************************************************
-* Desc			: 다른 음악으로 전환될시 이전 음악(PostMusic)은
-*				  Fade Out 이 되며 map의 처음에 위치하고 새로운 음악은
-*				  map의 두번째에 위치한다
+* Desc			: When switching to another music, the previous music (PostMusic) is
+*				  Fade Out and is located at the beginning of the map, and new music
+*				  Located in the second part of the map
 *
-*				  일단 Fade Out이 시작된 PostMusic은 사라져야만 한다
+*				  Once PostMusic has started Fade Out, it must disappear.
 *****************************************************************************/
 
 #pragma once
@@ -38,8 +38,8 @@ protected:
 	virtual void	ReleaseFinishedSound(float fElapsed);
 
 protected:
-	float			m_fDelayReplayTime;						///< 반복되는 음악의 다음 재생까지 휴식 시간(단위 : 초)
-	float			m_fReplayElapsed;						///< 현재 음악의 다음 재생까지 남은 시간
+	float			m_fDelayReplayTime;						///< Rest time until next play of repeated music (unit: seconds)
+	float			m_fReplayElapsed;						///< Time remaining until next playback of current music
 
-	SOUND_HANDLE	m_hPostSound;							///< Fade out 후 삭제될 사운드 핸들
+	SOUND_HANDLE	m_hPostSound;							///< Sound handle to be deleted after fade out
 };

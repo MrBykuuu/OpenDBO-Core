@@ -18,8 +18,8 @@ struct SPLLightObjectCreateParam : public SPLEntityCreateParam
 	RwReal			fAngle;
 	RwBool			bRealLight;
 
-	RwBool			bDecal;			// Decal을 출력 할지
-	RwBool			bWorldLight;	// WorldLightColor 연산에 포함 시킬지
+	RwBool			bDecal;			// Whether to print decals
+	RwBool			bWorldLight;	// Whether to include it in the WorldLightColor calculation
 };
 
 class CNtlPLLightObject : public CNtlPLAttach, public CNtlWorldRpLightProxy

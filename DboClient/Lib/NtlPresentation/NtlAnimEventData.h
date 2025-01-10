@@ -8,24 +8,24 @@
 
 
 
-// Projectile Type에 따른 추가 파라미터들을 정의하기 위한 Union
-struct SHissidanData        /// Hissidan 타입을 위한 추가 데이터
+// Union to define additional parameters according to Projectile Type
+struct SHissidanData        /// Additional data for Hissidan type
 {
-	RwBool      bApplyAngle;                              ///< 각도 적용/비적용 유무 (비적용을 하면 Hand Type에 따라서 방향이 휜다)
-	RwV2d       v2dAngle;                                   ///< 발사 각도 (X축, Y축)
+	RwBool      bApplyAngle;                              ///< Whether to apply/not apply an angle (if not applied, the direction will bend depending on the Hand Type)
+	RwV2d       v2dAngle;                                   ///< Launch angle (X-axis, Y-axis)
 };
 
-struct SMultiHissidanData   /// Multi Hissidan 타입을 위한 추가 데이터
+struct SMultiHissidanData   /// Additional data for Multi Hissidan type
 {
-	RwInt32     nCount;                                   ///< Hissidan 개수
-	RwV2d*      pArrayAngle;                              ///< 발사 각도들의 배열 (동적 할당한다)
+	RwInt32     nCount;                                   ///< Hissidan count
+	RwV2d*      pArrayAngle;                              ///< Array of launch angles (dynamically allocated)
 };
 
-struct SHellZoneData        /// 마공 포위탄형 타입을 위한 추가 데이터
+struct SHellZoneData        /// Additional data for the magic attack siege type
 {
-	RwV3d				vTargetEffectOffset;						///< Target에서의 Offset 거리
-	RwReal				fTargetEffectStartWaitTime;					///< Target에 날아가기 전에 기다리는 시간
-	RwReal				fTargetEffectSpeed;							///< Target에 날아가는 속도
+	RwV3d				vTargetEffectOffset;						///< Offset distance from target
+	RwReal				fTargetEffectStartWaitTime;					///< Waiting time before flying to Target
+	RwReal				fTargetEffectSpeed;							///< Speed ??of flying to target
 };
 
 union UEffectTypeExtraData
@@ -41,31 +41,31 @@ struct SEventAnimHit : public SEventAnim
 	RwBool				bPowerEffect;
 	EAttackType			eAttackType;								///< Attack Type
 	ETargetBehavior		eTargetBehavior;
-	RwBool              bKB2Push;                                   ///< 넉다운을 하지 않으면 Push로 처리할지 유무 플래그
+	RwBool              bKB2Push;                                   ///< Flag for whether or not to process with Push if knockdown is not performed
 	EHandType			eHandType;									///< HandType
 	EProjectileEffectType uiProjectileEffectType;					///< Ball, Beam, Hissidan, hell zone, Multi Hissidan
 
-	EBoneType			eProjectileShotType;						///< 어느 Bone에서 Projectile이 날라가는지 설정
-	RwInt32             nSubWeaponFlag;                             ///< SubWeapon의 어느 Bone에서 나갈지 체크한 플래그
+	EBoneType			eProjectileShotType;						///< Set which bone the projectile is sent from
+	RwInt32             nSubWeaponFlag;                             ///< Flag to check which Bone of SubWeapon to exit from
 
 	RwChar				chBoneName[MAX_DEFAULT_NAME];				///< Character Bone Name	
-	RwChar              chProjectileEffectName[MAX_DEFAULT_NAME];	///< 날라가는 Effect Name
+	RwChar              chProjectileEffectName[MAX_DEFAULT_NAME];	///< Flying Effect Name
 	RwReal				fProjectileSpeed;							///< projectile speed
-	RwBool              bTargetAttach;								///< Effect를 Target에 Attach를 할지의 유무
-	RwReal              fTargetHeight;								///< Target Effect가 나올 위치 (1이 기본 100%)
+	RwBool              bTargetAttach;								///< Whether or not to attach the effect to the target
+	RwReal              fTargetHeight;								///< Location where Target Effect will appear (1 is default 100%)
 
-	RwChar              chTargetEffectName[MAX_DEFAULT_NAME];		///< Target에 표시될 Effect Name
-	ETargetEffectType	eTargetEffectType;							///< Target Effct의 진행 방향 타입
-	RwChar              chSubTargetEffect[MAX_DEFAULT_NAME];        ///< 범위 공격시 주위 타겟에게 표시될 이펙트
-	RwChar              chTargetSoundName[MAX_DEFAULT_NAME];		///< Target에 맞았을 경우 나오는 Sound File Name
+	RwChar              chTargetEffectName[MAX_DEFAULT_NAME];		///< Effect Name to be displayed in Target
+	ETargetEffectType	eTargetEffectType;							///< Direction type of Target Effect
+	RwChar              chSubTargetEffect[MAX_DEFAULT_NAME];        ///< Effect displayed to nearby targets when attacking in range
+	RwChar              chTargetSoundName[MAX_DEFAULT_NAME];		///< Sound File Name that appears when hitting the target
 	eChannelGroupType	eSoundType;									///< Sound type(CHANNEL_GROUP_VOICE_SOUND or CHANNEL_GROUP_EFFECT_SOUND)    
-	RwBool              bHitSoundEcho;                              ///< Hit시 사운드가 Echo 적용될지 유무
-	RwBool              bCameraShake;                               ///< Target Hit시 Camera Shake유무
-	RwReal              fCameraShakeFactor;                         ///< 카메라 셰이크 팩터
-	RwReal              fCameraShakeMaxHeight;                      ///< 카메라 셰이크 최대값 팩터
-	RwChar              chWordEffect[MAX_DEFAULT_NAME];             ///< Target Hit시 나타날 Word Effect (ex. 파팍)
+	RwBool              bHitSoundEcho;                              ///< Whether the sound will be echoed when hit
+	RwBool              bCameraShake;                               ///< Availability of Camera Shake when Target Hits
+	RwReal              fCameraShakeFactor;                         ///< Camera shake factor
+	RwReal              fCameraShakeMaxHeight;                      ///< Camera shake maximum factor
+	RwChar              chWordEffect[MAX_DEFAULT_NAME];             ///< Word Effect that appears when Target Hits (ex. Papak)
 
-	UEffectTypeExtraData uEffectTypeExtraData;                      ///< Effect Type에 따른 추가 데이터 Union
+	UEffectTypeExtraData uEffectTypeExtraData;                      ///< Additional data union according to Effect Type
 
 
 	SEventAnimHit() : eAttackType(ATTACK_TYPE_PHYSICAL),
@@ -101,7 +101,7 @@ struct SEventAnimHit : public SEventAnim
 	{
 		if (uiProjectileEffectType == BEID_PROJ_MULTI_HISSIDAN)
 		{
-			NTL_ARRAY_DELETE(uEffectTypeExtraData.multiHissidanData.pArrayAngle); // 동적으로 할당한것이라 Delete해줘야 한다.
+			NTL_ARRAY_DELETE(uEffectTypeExtraData.multiHissidanData.pArrayAngle); // Since it is dynamically allocated, it must be deleted.
 		}
 	}
 
@@ -120,13 +120,13 @@ struct SEventAnimEnd : public SEventAnim
 struct SEventVisualEffect : public SEventAnim
 {
 	RwChar  chEffectName[MAX_DEFAULT_NAME];     ///< Effect Name;
-	EBoneType eBoneType;                        ///< Effect가 붙을 Bone Type
-	RwChar  chBoneName[MAX_DEFAULT_NAME];       ///< Attach가 될 Bone Name
+	EBoneType eBoneType;                        ///< Bone Type to which Effect will be attached
+	RwChar  chBoneName[MAX_DEFAULT_NAME];       ///< Bone name to be attached
 	RwV3d   vOffSetPos;                         //<  Offset;    
-	RwBool  bAttach;                            ///< 모델에 Attach 할지 유무
-	RwBool  bAttachBone;                        ///< Bone에 Attach 할지 유무 (TRUE = Bone Attach, FALSE = Pos Attach)
-	RwBool  bApplyScale;                        ///< 부모 Entity의 Scale을 적용할지 유무
-	RwBool  bProjectileType;                    ///< 발사체타입인지 유무
+	RwBool  bAttach;                            ///< Whether to attach to model or not
+	RwBool  bAttachBone;                        ///< Whether to attach to bone (TRUE = Bone Attach, FALSE = Pos Attach)
+	RwBool  bApplyScale;                        ///< Whether to apply the scale of the parent entity
+	RwBool  bProjectileType;                    ///< Is it a projectile type?
 
 	unsigned int uiUnknown;
 
@@ -149,17 +149,17 @@ struct SEventVisualEffect : public SEventAnim
 
 struct SEventSound : public SEventAnim
 {
-	RwChar	chSoundName[MAX_DEFAULT_NAME * 2]; ///< Sound 파일명 (Sound 폴더및 경로명 포함)
-	RwChar	chSoundName2[MAX_DEFAULT_NAME * 2]; ///< Sound 파일명 (Sound 폴더및 경로명 포함)
-	RwChar	chSoundName3[MAX_DEFAULT_NAME * 2]; ///< Sound 파일명 (Sound 폴더및 경로명 포함)
-	RwChar	chSoundName4[MAX_DEFAULT_NAME * 2]; ///< Sound 파일명 (Sound 폴더및 경로명 포함)
+	RwChar	chSoundName[MAX_DEFAULT_NAME * 2]; ///< Sound file name (including Sound folder and path name)
+	RwChar	chSoundName2[MAX_DEFAULT_NAME * 2]; ///< Sound file name (including Sound folder and path name)
+	RwChar	chSoundName3[MAX_DEFAULT_NAME * 2]; ///< Sound file name (including Sound folder and path name)
+	RwChar	chSoundName4[MAX_DEFAULT_NAME * 2]; ///< Sound file name (including Sound folder and path name)
 	eChannelGroupType eSoundType;				///< Sound Type (CHANNEL_GROUP_VOICE_SOUND or CHANNEL_GROUP_EFFECT_SOUND)    
-	RwBool  bLoop;                              ///< Sound Loop 유무
+	RwBool  bLoop;                              ///< Presence of Sound Loop
 	RwReal  fSoundVolume;                       ///< Sound Volume
-	RwReal  fSoundDist;                         ///< 유효 거리
-	RwReal  fSoundDecayDist;                    ///< 사운드 감쇠 거리
-	RwReal  fSoundPitchMin;                     ///< 사운드 피치 최소값
-	RwReal  fSoundPitchMax;                     ///< 사운드 피치 최대값
+	RwReal  fSoundDist;                         ///< Effective distance
+	RwReal  fSoundDecayDist;                    ///< Sound attenuation distance
+	RwReal  fSoundPitchMin;                     ///< Minimum sound pitch
+	RwReal  fSoundPitchMax;                     ///< Maximum sound pitch
 
 	SEventSound()
 	{
@@ -213,8 +213,8 @@ struct SEventLinkEffect : public SEventAnim
 //////////////////////////////////////////////////////////////////////////
 struct SEventWeightTime : public SEventAnim
 {
-	RwReal fLifeTime;       ///< Slow 효과가 발휘될 시간
-	RwReal fWeightValue;    ///< 얼마나 느려질지에 대한 Weight값
+	RwReal fLifeTime;       ///< Time for the Slow effect to take effect
+	RwReal fWeightValue;    ///< Weight value for how much it will slow down
 
 	SEventWeightTime()
 	{
@@ -227,38 +227,38 @@ struct SEventWeightTime : public SEventAnim
 
 struct SEventTrace : public SEventAnim
 {
-	/// Trace가 어디에 붙을지의 타입
+	/// Type of where the trace will be attached
 	enum EAttachType
 	{
-		CHARACTER_BONE,     ///< 캐릭터 본에 붙는다.
-		WEAPONE_BONE,       ///< 무기 본에 붙는다.
-		SUB_WEAPON_BONE,    ///< 보조무기 본에 붙는다.
+		CHARACTER_BONE,     ///< Attached to the character bone.
+		WEAPONE_BONE,       ///< Attaches to the weapon pattern.
+		SUB_WEAPON_BONE,    ///< Attaches to secondary weapon model.
 	};
 
-	/// 궤적 설정이 이벤트 설정값을 따를지, Weapon 설정값을 따를지 결겅
+	/// Determine whether trajectory settings follow event settings or weapon settings.
 	enum ETraceKind
 	{
-		EVENT_TRACE,        ///< Event의 설정값을 따른다.
-		ITEM_TRACE,         ///< Item의 설정값을 따른다.
+		EVENT_TRACE,        ///< Follows Event settings.
+		ITEM_TRACE,         ///< Follows the item settings.
 	};
 
-	RwReal  fLifeTime;           ///< 궤적의 표시 시간
+	RwReal  fLifeTime;           ///< Display time of trajectory
 	RwReal  fEdgeLifeTime;       ///< Edge의 Life Time    
-	EAttachType eAttachType;     ///< 궤적이 어디에 붙을지 
-	ETraceKind  eTraceKind;      ///< 궤적이 Item 설정을 따를지
-	RwChar  strStartBoneName[MAX_DEFAULT_NAME];    ///< 첫번째 Bone의 이름
-	RwChar  strEndBoneName[MAX_DEFAULT_NAME];      ///< 두번째 Bone의 이름
+	EAttachType eAttachType;     ///< Where will the trajectory end up? 
+	ETraceKind  eTraceKind;      ///< Whether the trajectory will follow the Item settings
+	RwChar  strStartBoneName[MAX_DEFAULT_NAME];    ///< Name of the first bone
+	RwChar  strEndBoneName[MAX_DEFAULT_NAME];      ///< Name of the second bone
 	RwChar  strTexture[MAX_DEFAULT_NAME];          ///< Texture File Name
-	RwV3d   v3dStartBoneOffset;  ///< 첫번째 Bone의 Offset
-	RwV3d   v3dEndBoneOffset;    ///< 두번째 Bone의 Offset
-	RwReal  fEdgeGap;             ///< 몇초마다 Edge을 생성할지의 값
-	RwInt32 nSplinePointCount;   ///< Spline으로 생성하는 버텍스의 갯수 (두개의 Edge사이에 생성되는 버텍스의 개수이다)
-	RwInt32 nMaxEdgeCount;       ///< 최대 Edge Count
-	RwReal  fMaxLength;          ///< 궤적의 최대 길이
+	RwV3d   v3dStartBoneOffset;  ///< Offset of the first bone
+	RwV3d   v3dEndBoneOffset;    ///< Offset of the second bone
+	RwReal  fEdgeGap;             ///< Value of how many seconds to create an edge
+	RwInt32 nSplinePointCount;   ///< Number of vertices created with spline (number of vertices created between two edges)
+	RwInt32 nMaxEdgeCount;       ///< Maximum Edge Count
+	RwReal  fMaxLength;          ///< maximum length of trajectory
 	RwBlendFunction eSrcBlend;  ///< Src Blend State
 	RwBlendFunction eDestBlend; ///< Dest Blend State
-	RwRGBA  colStartColor;       ///< 시작 Color값
-	RwRGBA  colEndColor;         ///< 끝 Color값   
+	RwRGBA  colStartColor;       ///< Starting color value
+	RwRGBA  colEndColor;         ///< End color value   
 
 	SEventTrace() : fLifeTime(1.0f),
 		fEdgeLifeTime(0.3f),
@@ -285,7 +285,7 @@ struct SEventTrace : public SEventAnim
 
 };
 
-/// Sub Weapon 활성화 이벤트
+/// Sub Weapon Activation Event
 struct SEventSubWeapon : SEventAnim
 {
 	ESubWeaponActiveFlag    eSubWeaponActiveFlag;
@@ -297,15 +297,15 @@ struct SEventSubWeapon : SEventAnim
 
 };
 
-/// Post Effect 이벤트 (화면위에 중심선 표시 이벤트)
+/// Post Effect event (center line display event on screen)
 struct SEventPostEffect : SEventAnim
 {
-	RwChar                   szPostEffectName[MAX_DEFAULT_NAME];          ///< 사용될 PostEffect의 이름
-	EPostEffectTypeFlag      eTarget;                                     ///< PostEffect의 Target 종류
-	RwV3d                    v3dOffset;                                   ///< PostEffect가 붙을 위치의 Offset값
-	RwBool                   bCenterFixEnable;                            ///< 중심점 고정 기능
-	RwReal                   fTargetHeight;                               ///< 대상을 타겟으로 설정한경우 높이값(바운딩박스 상대값)
-	RwChar                   szPCBoneName[MAX_DEFAULT_NAME];              ///< 대상을 PC로 설정한경우 Attach할 Bone의 이름
+	RwChar                   szPostEffectName[MAX_DEFAULT_NAME];          ///< Name of PostEffect to be used
+	EPostEffectTypeFlag      eTarget;                                     ///< Target type of PostEffect
+	RwV3d                    v3dOffset;                                   ///< Offset value of the location where the PostEffect will be attached
+	RwBool                   bCenterFixEnable;                            ///< Center point fixation function
+	RwReal                   fTargetHeight;                               ///< If the object is set as a target, the height value (bounding box relative value)
+	RwChar                   szPCBoneName[MAX_DEFAULT_NAME];              ///< If the target is set to PC, the name of the bone to attach
 
 	SEventPostEffect()
 	{
@@ -352,12 +352,12 @@ struct SEventAlpha : SEventAnim
 	};
 	//////////////////////////////////////////////////////////////////////////
 
-	RwInt32       nStartAlpha;              ///< Fade 시작 알파값 (0~255)
-	RwInt32       nDestAlpha;               ///< Fade Dest 알파값 (0~255)    
-	RwReal        fFadeTime;                ///< Fade 되는 시간
-	RwReal        fLifeTime;                ///< 이벤트가 유지되는 Life Time
-	EAlphaEventType eAlphaEventType;        ///< 알파 이벤트 적용 타입
-	BITFLAG       bfAtomicList;             ///< 알파가 적용될 아토믹들의 Index 플래그
+	RwInt32       nStartAlpha;              ///< Fade start alpha value (0~255)
+	RwInt32       nDestAlpha;               ///< Fade Dest alpha value (0~255)    
+	RwReal        fFadeTime;                ///< Fade time
+	RwReal        fLifeTime;                ///< Life Time for which events are maintained
+	EAlphaEventType eAlphaEventType;        ///< Alpha event application type
+	BITFLAG       bfAtomicList;             ///< Index flag of the atomics to which alpha will be applied
 
 
 	SEventAlpha()
@@ -372,7 +372,7 @@ struct SEventAlpha : SEventAnim
 	}
 };
 
-// 폭발 이벤트
+// explosion event
 struct SEventExplosion : SEventAnim
 {
 	ENtlPLExplosionEventType  eType;
@@ -384,7 +384,7 @@ struct SEventExplosion : SEventAnim
 	}
 };
 
-// 연출 이벤트
+// Directed event
 struct SEventDirect : SEventAnim
 {
 	ENtlPLDirectEventType eType;
@@ -396,7 +396,7 @@ struct SEventDirect : SEventAnim
 	}
 };
 
-// 칼라 체인지 이벤트
+// Color change event
 struct SEventColorChange : SEventAnim
 {
 	EColorChangeType eType;
@@ -415,7 +415,7 @@ struct SEventColorChange : SEventAnim
 	}
 };
 
-/// 늘어날 BONE에 대한 정보
+/// Information about increasing BONE
 struct StretchBoneInfo
 {
 	RwChar szBoneName[MAX_DEFAULT_NAME];
@@ -430,7 +430,7 @@ struct StretchBoneInfo
 	}
 };
 
-/// BONE을 늘리는 이벤트
+/// Event to increase BONE
 struct SEventStretch : SEventAnim
 {
 	EStretchEventType eType;
@@ -459,7 +459,7 @@ struct SEventStretch : SEventAnim
 	}
 };
 
-/// 스킬등에서 사용되는 트리거 이벤트
+/// Trigger events used in skills, etc.
 struct SEventTrigger : SEventAnim
 {
 	SEventTrigger()
@@ -468,7 +468,7 @@ struct SEventTrigger : SEventAnim
 	}
 };
 
-/// 스킬 캔슬에 사용되는 이벤트
+/// Event used for skill cancellation
 struct SEventSkillCancel : SEventAnim
 {
 	SEventSkillCancel()
@@ -477,7 +477,7 @@ struct SEventSkillCancel : SEventAnim
 	}
 };
 
-/// 각 이벤트 구조체의 사이즈를 반환한하는 함수
+/// A function that returns the size of each event structure.
 static RwUInt32 GetAnimEventSize(EAnimEventType eType)
 {
     switch(eType)

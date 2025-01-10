@@ -1,27 +1,27 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlDTCinematicNode.h"
 
-// shared
+// Shared
 #include "NtlSharedType.h"
 #include "NtlMovement.h"
 #include "NtlDirection.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// sound
+// Sound
 #include "NtlSoundManager.h"
 #include "NtlSoundEventGenerator.h"
 
-// presentation
+// Presentation
 #include "NtlPLDef.h"
 #include "NtlPLGlobal.h"
 #include "NtlPLSceneManager.h"
 #include "NtlPLEvent.h"
 #include "NtlPLEventGenerator.h"
 
-// simulation
+// Simulation
 #include "NtlSLLogic.h"
 #include "NtlSLEventFunc.h"
 #include "NtlDTCinematicManager.h"
@@ -95,9 +95,9 @@ CNtlDTCinematicViewNode::CNtlDTCinematicViewNode()
 
 CNtlDTCinematicViewNode::~CNtlDTCinematicViewNode()
 {
-	// <형석>
-	// cinematic view를 close를 하지 않았을 경우...
-	// 방어 코드를 작성했다.
+	// <Fluorite>
+	// If you do not close the cinematic view...
+	// Wrote defense code.
 
 	if(!m_bShow && !m_bViewClose)
 	{
@@ -109,7 +109,7 @@ void CNtlDTCinematicViewNode::Enter(void)
 {
 	if(m_fDelayTime <= 0.0f)
 	{
-		// event 발생.
+		// event occurs.
 		CNtlPLEventGenerator::CinematicViewShow(m_bShow);
 	}
 }
@@ -126,7 +126,7 @@ void CNtlDTCinematicViewNode::Update(RwReal fElapsed)
 	m_fCurrTime += fElapsed;
 	if(m_fCurrTime >= m_fDelayTime)
 	{
-		// event 발생.
+		// event occurs.
 		CNtlPLEventGenerator::CinematicViewShow(m_bShow);
 		Finish();
 	}
@@ -159,7 +159,7 @@ void CNtlDTCinematicBalloon::Enter(void)
 {
 	if(m_fDelayTime <= 0.0f)
 	{
-		// ballon 생성 event 발생.
+		// Ballon creation event occurs.
 
 		RwUInt8 byBalloonPlayType = GetBallonPlayType();
 
@@ -216,7 +216,7 @@ void CNtlDTCinematicBalloon::Update(RwReal fElapsed)
 	{
 		if(m_fCurrTime >= 1.0f)
 		{
-			// 소멸 delay
+			// extinction delay
 			Finish();
 		}
 	}
@@ -315,7 +315,7 @@ void CNtlDTCinematicFlash::Enter(void)
 {
 	if(m_fDelayTime <= 0.0f)
 	{
-		// flash 생성 event 발생.
+		// Flash creation event occurs.
 		PlayFlash();
 		m_byState = DTCI_FLASH_IDLE;
 	}
@@ -336,7 +336,7 @@ void CNtlDTCinematicFlash::Update(RwReal fElapsed)
 	{
 		if(m_fCurrTime >= m_fDelayTime)
 		{
-			// flash 생성 event 발생.
+			// Flash creation event occurs.
 			PlayFlash();
 
 			m_fCurrTime = 0.0f;
@@ -1508,7 +1508,7 @@ void CNtlDTCinematicSoundNode::PlaySound(void)
 	tSoundParam.fYPos			= m_vPos.y;
 	tSoundParam.fZPos			= m_vPos.z;
 
-	// Loop 기능은 막아둔다. Loop 기능을 쓰려면 Stop도 할 수 있어야 한다.
+	// The Loop function is blocked. To use the Loop function, you must also be able to Stop.
 	//tSoundParam.bLoop			= B2b(m_bLoop);
 
 	if( tSoundParam.iChannelGroup == CHANNEL_GROUP_BGM )
@@ -1814,7 +1814,7 @@ void CNtlDTCinematicNodeChain::Enter(void)
 			pChainNode->Enter();
 		}
 
-		// sibling 실행.
+		// Sibling execution.
 		if(!m_listSibling.empty())
 		{
 			ListChild::iterator itsibling;
@@ -1849,7 +1849,7 @@ void CNtlDTCinematicNodeChain::Update(RwReal fElapsed)
 
 	CNtlDTCinematicNodeChain *pChainNode;
 
-	// child 실행.
+	// child run.
 	if(!m_listChild.empty())
 	{
 		ListChild::iterator itchild = m_listChild.begin();
@@ -1872,7 +1872,7 @@ void CNtlDTCinematicNodeChain::Update(RwReal fElapsed)
 		}
 	}
 
-	// sibling 실행.
+	// Sibling execution.
 	if(!m_listSibling.empty())
 	{
 		ListChild::iterator itsibling;

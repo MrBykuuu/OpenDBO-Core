@@ -1,13 +1,13 @@
 #include "precomp_dboclient.h"
-// core
+// Core
 #include "NtlDebug.h"
 #include "CEventHandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 #include "NtlPLGuiManager.h"
 
-// framework
+// Framework
 #include "NtlApplication.h"
 
 // Simulation
@@ -16,7 +16,7 @@
 #include "NtlStorageManager.h"
 #include "NtlStorageMTContainer.h"
 
-// dbo
+// Dbo
 #include "DialogManager.h"
 #include "DisplayStringManager.h"
 
@@ -30,13 +30,13 @@
 /////////////////////////////////////////////////////////////////////////////
 // class : COptionChattingCategoryNode
 
-// Option Chatting List 의 카테고리의 +, - 버튼 이즈
+// The + and -buttons in the Option Chatting List category are
 #define dOPTIONCHATTING_CATEGORY_BUTTON_X		0
 #define dOPTIONCHATTING_CATEGORY_BUTTON_Y		0
 #define dOPTIONCHATTING_CATEGORY_BUTTON_WIDTH	140
 #define dOPTIONCHATTING_CATEGORY_BUTTON_HEIGHT	20
 
-// Option Chatting List 의 카테고리 속성
+// Category properties of Option Chatting List
 #define dOPTIONCHATTING_CATEGORY_TITLE_X 30
 #define dOPTIONCHATTING_CATEGORY_TITLE_Y 0
 #define dOPTIONCHATTING_CATEGORY_TITLE_WIDTH		100
@@ -46,17 +46,17 @@
 #define dOPTIONCHATTING_CATEGORY_TITLE_COLOR_DOWN	RGB(255, 219, 71)
 
 /**
-* \brief Contruction
-* \param pMgr		(CGuiLineTree*) CGuiLineTree의 포인터
-* \param strTitle	(std::wstring) 카테고리의 텍스트
-* \param nID		(RwInt32) 현재 노드의 ID
+* \briefConstruction
+* \param pMgr (CGuiLineTree*) Pointer to CGuiLineTree
+* \param strTitle (std::wstring) Text of the category
+* \param nID (RwInt32) ID of current node
 */
 COptionChattingCategoryNode::COptionChattingCategoryNode( CGuiLineTree* pMgr, std::wstring strTitle, RwInt32 nID )
 : CGuiLineTreeNode( pMgr, nID )
 , m_pBtnExpand( NULL )
 , m_pBtnReduce( NULL )
 {
-	// +버튼
+	// +button
 	CRectangle rect;
 	rect.SetRectWH(dOPTIONCHATTING_CATEGORY_BUTTON_X, dOPTIONCHATTING_CATEGORY_BUTTON_Y, dOPTIONCHATTING_CATEGORY_BUTTON_WIDTH, dOPTIONCHATTING_CATEGORY_BUTTON_HEIGHT);
 	m_pBtnExpand = NTL_NEW gui::CButton( rect, std::string(),pMgr->GetParentGui(), GetNtlGuiManager()->GetSurfaceManager());
@@ -70,7 +70,7 @@ COptionChattingCategoryNode::COptionChattingCategoryNode( CGuiLineTree* pMgr, st
 	m_pBtnExpand->SetTextDownColor( dOPTIONCHATTING_CATEGORY_TITLE_COLOR_DOWN );
 	m_pBtnExpand->SetText( strTitle.c_str() );
 
-	// -버튼
+	// button
 	m_pBtnReduce = NTL_NEW gui::CButton(rect, std::string(),pMgr->GetParentGui(), GetNtlGuiManager()->GetSurfaceManager());
 	m_pBtnReduce->AddSurfaceUp(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("QuestList.srf", "srfReduceBtnUp"));
 	m_pBtnReduce->AddSurfaceFocus(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("QuestList.srf", "srfReduceBtnFoc"));
@@ -82,7 +82,7 @@ COptionChattingCategoryNode::COptionChattingCategoryNode( CGuiLineTree* pMgr, st
 	m_pBtnReduce->SetTextDownColor( dOPTIONCHATTING_CATEGORY_TITLE_COLOR_DOWN );
 	m_pBtnReduce->SetText( strTitle.c_str() );
 
-	// Button의 Signal 연결
+	// Button's signal connection
 	m_slotClickedBtnExpand = m_pBtnExpand->SigClicked().Connect(this, &COptionChattingCategoryNode::OnClickBtnExpand);
 	m_slotClickedBtnReduce = m_pBtnReduce->SigClicked().Connect(this, &COptionChattingCategoryNode::OnClickBtnReduce);
 }
@@ -97,7 +97,7 @@ COptionChattingCategoryNode::~COptionChattingCategoryNode()
 }
 
 /**
-* \brief GuiLineTree의 ShowProc을 오버라이드
+* \brief Override GuiLineTree's ShowProc
 */
 void COptionChattingCategoryNode::ShowProc()
 {
@@ -114,13 +114,13 @@ void COptionChattingCategoryNode::ShowProc()
 		m_pBtnReduce->Show(false);
 	}
 
-	// 카테고리 노드들의 위치를 재 계산
+	// Recalculate the positions of category nodes
 	m_pBtnExpand->SetPosition(m_nPosX + dOPTIONCHATTING_CATEGORY_BUTTON_X, m_nPosY + dOPTIONCHATTING_CATEGORY_BUTTON_Y);
 	m_pBtnReduce->SetPosition(m_nPosX + dOPTIONCHATTING_CATEGORY_BUTTON_X, m_nPosY + dOPTIONCHATTING_CATEGORY_BUTTON_Y);
 }
 
 /**
-* \brief GuiLineTree의 HideProc을 오버라이드
+* \brief Override GuiLineTree's HideProc
 */
 void COptionChattingCategoryNode::HideProc()
 {
@@ -131,8 +131,8 @@ void COptionChattingCategoryNode::HideProc()
 }
 
 /**
-* \brief 확장 버튼을 클릭하였을 때
-* \param pComponent (gui::CComponent*) singal을 보낸 Component
+* \brief When the expand button is clicked
+* \param pComponent (gui::CComponent*) Component that sent singal
 */
 void COptionChattingCategoryNode::OnClickBtnExpand( gui::CComponent* pComponent )
 {
@@ -140,8 +140,8 @@ void COptionChattingCategoryNode::OnClickBtnExpand( gui::CComponent* pComponent 
 }
 
 /**
-* \brief 감소 버튼을 클릭하였을 때
-* \param pComponent (gui::CComponent*) singal을 보낸 Component
+* \brief When the decrease button is clicked
+* \param pComponent (gui::CComponent*) Component that sent singal
 */
 void COptionChattingCategoryNode::OnClickBtnReduce( gui::CComponent* pComponent )
 {
@@ -151,13 +151,13 @@ void COptionChattingCategoryNode::OnClickBtnReduce( gui::CComponent* pComponent 
 /////////////////////////////////////////////////////////////////////////////
 // class : CCheckBoxNode
 
-// CheckBox의 체크박스 크기
+// Checkbox size of CheckBox
 #define dOPTIONCHATTING_CHECKNODE_CHECKBOX_X		5
 #define dOPTIONCHATTING_CHECKNODE_CHECKBOX_Y		5
 #define dOPTIONCHATTING_CHECKNODE_CHECKBOX_WIDTH	16
 #define dOPTIONCHATTING_CHECKNODE_CHECKBOX_HEIGHT	16
 
-// CheckBox의 타이틀 크기
+// Title size of CheckBox
 #define dOPTIONCHATTING_CHECKNODE_TITLE_X			30
 #define dOPTIONCHATTING_CHECKNODE_TITLE_Y			0
 #define dOPTIONCHATTING_CHECKNODE_TITLE_WIDTH		200
@@ -347,7 +347,7 @@ COptionChattingList::~COptionChattingList()
 }
 
 /**
-* \brief 상속받은 CGuiLineTree의 Create를 호출하고 스크롤 바 세팅, 생성에 필요한 작업들을 한다.
+* \brief Call Create of the inherited CGuiLineTree and perform the necessary tasks for setting and creating the scroll bar.
 */
 RwBool COptionChattingList::Create( CRectangle& rect, gui::CComponent* pParent, RwInt32 nLineHeight, RwInt32 nLineMargin, RwInt32 nChildXMargin, RwInt32 nScrollBarWidth, COptionChatting* pOptionChatting /*= NULL*/ )
 {
@@ -376,14 +376,14 @@ void COptionChattingList::CreateTree()
 {
 #define OCLGDS(stringid) GetDisplayStringManager()->GetString(stringid)
 
-	// 공통 옵션의 카테고리
+	// Categories of common options
 	CGuiLineTreeNode* pNode = NTL_NEW COptionChattingCategoryNode( this,
 		OCLGDS("DST_OPTION_CHATTING_TITLE_COMMON"),
 		dOPTIONCHATTING_CATEGORY_COMMON );
 	CGuiLineTree::AddNode( pNode, GUILINETREE_ROOTNODE_ID );
 	pNode->Expand( true );
 
-	// 공통 옵션의 세부 옵션들
+	// Detailed options of common options
 	pNode = NTL_NEW CCheckBoxNode( this, eCHAT_INPUTMODE, OCLGDS("DST_OPTION_CHATTING_COMMON_INPUTMODE")
 		, OCLGDS("DST_OPTION_TOOLTIP_CHAT_INPUTMODE"));
 	CGuiLineTree::AddNode( pNode, dOPTIONCHATTING_CATEGORY_COMMON );
@@ -415,7 +415,7 @@ void COptionChattingList::CreateTree()
 	CGuiLineTree::AddNode( pNode, GUILINETREE_ROOTNODE_ID );
 	pNode->Expand( true );
 
-	// 기본 채팅창 옵션의 세부 옵션들
+	// Detailed options for basic chat window options
 	pNode = NTL_NEW CCheckBoxNode( this, eCHAT_BASIC_NORMAL, OCLGDS("DST_OPTION_CHATTING_BASIC_NORMAL"),
 		OCLGDS("DST_OPTION_TOOLTIP_CHAT_NORMAL"));
 	CGuiLineTree::AddNode( pNode, dOPTIONCHATTING_CATEGORY_BASIC );
@@ -455,7 +455,7 @@ void COptionChattingList::CreateTree()
 	CGuiLineTree::AddNode( pNode, GUILINETREE_ROOTNODE_ID );
 	pNode->Expand( true );
 
-	// 추가 채팅창 옵션의 세부 옵션들
+	// Detailed options for additional chat window options
 	pNode = NTL_NEW CCheckBoxNode( this, eCHAT_ADDED_NORMAL, OCLGDS("DST_OPTION_CHATTING_ADDED_NORMAL"),
 		OCLGDS("DST_OPTION_TOOLTIP_CHAT_NORMAL"));
 	CGuiLineTree::AddNode( pNode, dOPTIONCHATTING_CATEGORY_ADDED );
@@ -579,13 +579,13 @@ RwBool COptionChatting::Create( COptionWindowGui* pOptionWindow )
 
 	m_pOptionChattingList = NTL_NEW COptionChattingList;
 	if( !m_pOptionChattingList->Create( rect, m_pDlgChattingList,
-		dOPTIONCHATTING_LINE_HEIGHT,			// 각 라인의 높이
-		dOPTIONCHATTING_LINE_MARGIN,			// 각 라인의 간격
-		dOPTIONCHATTING_CHILD_MARGIN_WIDTH,	// 자식들의 간격
-		dOPTIONCHATTING_LIST_SLIDER_WIDTH, this))	// 슬라이더의 넓이
+		dOPTIONCHATTING_LINE_HEIGHT,			// height of each line
+		dOPTIONCHATTING_LINE_MARGIN,			// spacing of each line
+		dOPTIONCHATTING_CHILD_MARGIN_WIDTH,	// spacing between children
+		dOPTIONCHATTING_LIST_SLIDER_WIDTH, this))	// width of the slider
 		return FALSE;
 
-	// 조작키를 지정할 수 있는 아이템들을 생성
+	// Create items that can be assigned operation keys
 	m_pOptionChattingList->CreateTree();
 
 	NTL_RETURN(TRUE);
@@ -635,7 +635,7 @@ void COptionChatting::OnReset()
 void COptionChatting::OnOk()
 {
 	SaveSerializer();
-	// 적용
+	// apply
 	GetNtlStorageManager()->ApplyStorageType( eNTL_STORAGE_CHAT, eNTL_STORAGE_APPLY_ALL );
 }
 

@@ -1,17 +1,17 @@
 #include "precomp_dboclient.h"
 #include "QuestMessageGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "QuestTextDataTable.h"
 #include "TimeQuestTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSobAvatar.h"
@@ -23,7 +23,7 @@
 
 #include "DisplayStringManager.h"
 
-// client
+// Client
 #include "DialogManager.h"
 #include "DboEvent.h"
 #include "QuestGui.h"
@@ -31,7 +31,7 @@
 
 
 #define QUEST_MESSAGE_FONT_INTERVAL		(0.025f)
-#define QUEST_MESSAGE_FONT_PRESENT_NUM	(1)			// 추가 -by Kell(09. 07. 15)
+#define QUEST_MESSAGE_FONT_PRESENT_NUM	(1)			// Added -by Kell(09. 07. 15)
 #define QUEST_MESSAGE_BTN_PUSLE			(1.0f)
 
 //RwBool stMESSAGEBUTTONITEM::m_bSyncState = TRUE;
@@ -107,7 +107,7 @@ RwBool CQuestMessageGui::Create( CQuestGui* pQuestGui )
 	m_slotHtmlPageDone = m_phbxMessage->SigPageDone().Connect( this, &CQuestMessageGui::OnHtmlPageDone );
 	m_slotCaptureMouseDown = GetNtlGuiManager()->GetGuiManager()->SigCaptureMouseDown().Connect( this, &CQuestMessageGui::OnCaptureMouseDown );
 
-	// PresentNum 의 갯수를 Define으로 수정합니다. -by Kell(09. 07. 15)
+	// Modify the number of PresentNum to Define. -by Kell(09. 07. 15)
 	m_phbxMessage->SetIntervalTextEnable( QUEST_MESSAGE_FONT_INTERVAL );
 	m_phbxMessage->SetPresentNum( QUEST_MESSAGE_FONT_PRESENT_NUM );
 	m_phbxMessage->SetLineSpace( 11 );
@@ -194,7 +194,7 @@ VOID CQuestMessageGui::HandleEvents( RWS::CMsg& msg )
 	{
 		SNtlEventQuestDirect_Forward* pData = reinterpret_cast<SNtlEventQuestDirect_Forward*>( msg.pData );
 
-		// 중복해서 Proposal이 날라오면 새로들어온 녀석은 무시. 응답은 Proposal에서 보낸다. 
+		// If duplicate proposals are sent, the new person is ignored. The response is sent from Proposal. 
 		if( IsShow() )
 			return;
 		
@@ -231,11 +231,11 @@ VOID CQuestMessageGui::HandleEvents( RWS::CMsg& msg )
 			m_nReadPage = -1;
 			m_eType = QUEST_MESSAGE_QUEST_TEXT_TABLE;
 
-			// Visit 퀘스트 관련 데이터 초기화
+			// Initialize data related to Visit quest
 			m_uiEventGenType = (RwUInt32)eEVENT_GEN_TYPE_INVALID;
 			m_uiID = 0;
 
-			// 열려 있는 경우도 생각해야함. 위에서 열려있지 않은 경우에만 들어오므로 이것만 검사
+			// You should also consider the case where it is open. It only comes in if it is not open from above, so only this is checked.
 			if( !GetDialogManager()->OpenDialog( DIALOG_QUESTMESSAGE, GetNtlSLGlobal()->GetSobAvatar()->GetSerialID() ) )
 				m_pQuestGui->GetQuestProposalGui()->SendEchoEvent( false );
 		}		
@@ -248,7 +248,7 @@ VOID CQuestMessageGui::HandleEvents( RWS::CMsg& msg )
 		SDboEventQuestMessage* pData = reinterpret_cast<SDboEventQuestMessage*>( msg.pData );
 		CQuestTextDataTable* pQuestTextTable = API_GetTableContainer()->GetQuestTextDataTable();
 
-		// 제목
+		// title
 		CNtlTMQ* pTMQ = GetNtlSLGlobal()->GetSobAvatar()->GetTMQ();
 		sTIMEQUEST_TBLDAT* pTIMEQUEST_TBLDAT = pTMQ->GetTMQTable();
 		sTIMEQUEST_DATASET* pTIMEQUEST_DATASET = &pTIMEQUEST_TBLDAT->sTimeQuestDataset[pTMQ->GetDifficult()];
@@ -287,11 +287,11 @@ VOID CQuestMessageGui::HandleEvents( RWS::CMsg& msg )
 		m_nReadPage = -1;
 		m_eType = QUEST_MESSAGE_TMQ_SCRIPT;
 
-		// Visit 퀘스트 관련 데이터 초기화
+		// Initialize data related to Visit quest
 		m_uiEventGenType = (RwUInt32)eEVENT_GEN_TYPE_INVALID;
 		m_uiID = 0;
 
-		// DirectForward는 QuestGui에서 다이얼로그를 오픈하지만 여기선 직접해야함.
+		// DirectForward opens a dialog in QuestGui, but here you have to do it yourself.
 		GetDialogManager()->OpenDialog( DIALOG_QUESTMESSAGE );	
 	}
 	else if( msg.Id == g_EventQuestMessage2 )
@@ -339,7 +339,7 @@ VOID CQuestMessageGui::HandleEvents( RWS::CMsg& msg )
 		m_uiEventGenType	= pData->uiEventGenType;
 		m_uiID				= pData->uiID;
 
-		// DirectForward는 QuestGui에서 다이얼로그를 오픈하지만 여기선 직접해야함.
+		// DirectForward opens a dialog in QuestGui, but here you have to do it yourself.
 		GetDialogManager()->OpenDialog( DIALOG_QUESTMESSAGE );
 	}
 	else if( msg.Id == g_EventChangeWorldConceptState )
@@ -396,7 +396,7 @@ VOID CQuestMessageGui::OnPaint(VOID)
 
 VOID CQuestMessageGui::OnClickNextButton( gui::CComponent* pComponent )
 {
-	// 마지막 페이지
+	// last page
 	if( m_phbxMessage->GetCurrentPage() + 1 >= m_phbxMessage->GetIntervalPageNums() )
 	{
 		LastPageProc();

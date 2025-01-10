@@ -1,22 +1,22 @@
 /******************************************************************************
-* File			: GMChatGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 10. 21
-* Abstract		: 
+*File           : GMChatGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : October 21, 2008
+*Abstract		: 
 *****************************************************************************
-* Desc			: GM과의 채팅 다이얼로그
+*Desc           : Chat dialog with GM
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// cleint
+// Client
 #include "Windowby3.h"
 #include "SurfaceGui.h"
 
@@ -31,9 +31,9 @@ public:
 
 	RwInt32		SwitchDialog(bool bOpen);
 
-	// avooo's comment : GM 채팅은 게임의 내용이 아니며 이미 다른 다이얼로그가
-	//					 꽉 들어찬 상태에서 고정적으로 GM 채팅을 위해 자리를 만들 수도 없다.
-	//					 GM 채팅은 언제나 유저가 위치를 변경할 수 있도록 한다.
+	// avooo's comment: GM chat is not what the game is about and there are already other dialogs.
+	//					 In a crowded situation, it is impossible to make a permanent spot for GM chat.
+	//					 GM chat allows users to change their location at any time.
 	virtual void	SetMovable(RwBool bMovable) {}
 
 	VOID		SetGMText(const WCHAR* pwcText);
@@ -60,11 +60,11 @@ protected:
 	gui::CSlot			m_slotMove;
 	gui::CSlot			m_slotPaint;
 
-	gui::COutputBox*	m_pOutDisplay;			// 대화내용
-	gui::CStaticBox*	m_pDialogName;			// 다이얼로그 제목
-	gui::CStaticBox*	m_pIME;					// IME 상태
-	gui::CInputBox*		m_pInput;				// 유저 인풋창
+	gui::COutputBox*	m_pOutDisplay;			// Content of conversation
+	gui::CStaticBox*	m_pDialogName;			// Dialog title
+	gui::CStaticBox*	m_pIME;					// IME status
+	gui::CInputBox*		m_pInput;				// User input window
 
-	CWindowby3			m_BackPanel;			// 배경
-	CSurfaceGui			m_InputBack;			// 인풋 배경
+	CWindowby3			m_BackPanel;			// background
+	CSurfaceGui			m_InputBack;			// input background
 };

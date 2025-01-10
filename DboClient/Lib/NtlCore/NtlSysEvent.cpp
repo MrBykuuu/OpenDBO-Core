@@ -16,5 +16,5 @@ RWS::CEventId	g_EventDeleteStage;
 
 RWS::CEventId	g_EventQueueProcessFilter;
 
-// 시스템이 전체모드 <-> 윈도우모드
+// System is in fullscreen mode <-> window mode
 RWS::CEventId	g_EventToggleFullScreen;

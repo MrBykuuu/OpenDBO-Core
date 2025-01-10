@@ -1,20 +1,20 @@
 #include "precomp_dboclient.h"
 #include "FlashNotifyGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presetation
+// Presetation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLTMQ.h"
 #include "NtlSobAvatar.h"
 #include "NtlSLGlobal.h"
 #include "NtlWorldConceptRB.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DialogManager.h"
 #include "DboGlobal.h"
@@ -53,10 +53,10 @@ RwBool CFlashNotifyGui::Create()
 	m_pThis = (gui::CDialog*)GetComponent("dlgMain");
 	m_pThis->SetPriority(dDIALOGPRIORITY_NOTIFY);
 
-	// 측정시의 배경
+	// Background during measurement
 	m_pFlashBackground = (gui::CFlash*)GetComponent("flaBackground");
 	
-	// sig	
+	// Signals	
 	m_slotMovieEnd		= m_pFlashBackground->SigMovieEnd().Connect( this, &CFlashNotifyGui::OnMovieEnd );
 
 	GetNtlGuiManager()->AddUpdateFunc( this );
@@ -405,7 +405,7 @@ VOID CFlashNotifyGui::HandleEvents( RWS::CMsg &msg )
 		}
 		else if( pEvent->uiState == WORLD_STATE_TMQ_ARRIVE )
 		{
-			// please wait 플래쉬를 끈다
+			// please wait turn off the flash
 			CDboEventGenerator::FlashNotifyString(NULL);
 		}
 		else if( pEvent->uiState == WORLD_STATE_TMQ_FAIL )
@@ -414,9 +414,9 @@ VOID CFlashNotifyGui::HandleEvents( RWS::CMsg &msg )
 			CDboEventGenerator::FlashNotify(0, 0, 3);
 		}
 	}
-    else if(msg.Id == g_EventSobConvertClass)       // 직업 체인지시의 플래시 연출
+    else if(msg.Id == g_EventSobConvertClass)       // Flash production of job change
     {
-        // 자신의 이벤트일 경우에만 플래시를 재생한다.
+        // Play flash only when it is your event.
         SNtlEventSobConvertClass* pData = (SNtlEventSobConvertClass*)msg.pData;
         if(pData->hSerialId == GetNtlSLGlobal()->GetSobAvatar()->GetSerialID())
         {
@@ -425,7 +425,7 @@ VOID CFlashNotifyGui::HandleEvents( RWS::CMsg &msg )
     }
     else if(msg.Id == g_EventSobInfoUpdate)
     {
-        // 레벨업 플래시 연출
+        // Level up flash production
         SNtlEventSobInfoUpdate* pData = (SNtlEventSobInfoUpdate*)msg.pData;
         if(pData->hSerialId == GetNtlSLGlobal()->GetSobAvatar()->GetSerialID() &&
            pData->uiUpdateType == (EVENT_AIUT_ATTR | EVENT_AIUT_ATTR_LEVELUP))

@@ -1,18 +1,18 @@
 ﻿#include "precomp_ntlsimulation.h"
 #include "NtlBehaviorCharMove.h"
 
-// shared 
+// Shared 
 #include "NtlMovement.h"
 
-// sound
+// Sound
 #include "NtlSoundDefines.h"
 #include "NtlSoundManager.h"
 
-// presentation
+// Presentation
 #include "NtlPLCharacter.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLApi.h"
 #include "NtlSobActor.h"
 #include "NtlSLLogic.h"
@@ -273,7 +273,7 @@ void CNtlBehaviorCharFalling::Enter(void)
 		ChangeFallingState(FALLINGSTATE_FALLING);
 	}
 
-    // 나중에 base class enter를 호출한다.
+    // Later, base class enter is called.
     CNtlBehaviorBase::Enter(); 
 }
 
@@ -851,7 +851,7 @@ RwUInt32 CNtlBehaviorBusMove::HandleEvents(RWS::CMsg &pMsg)
 
 void CNtlBehaviorBusMove::BuildData( void )
 {
-    // 이동 속도 계산
+    // Movement speed calculation
     m_bWalkMode = Logic_IsActorWalkMove( m_pActor, m_sInputData.byFormFlag );
     if ( m_bWalkMode )
     {
@@ -910,13 +910,13 @@ void CNtlBehaviorBusMove::UpdateActorDirPos( RwReal fElapsed, RwV3d& vResultDir,
     RwReal fSrcDirY;
     RwV3d vBusCurPos, vBusCurDir;
 
-    // 위치
+    // location
     RwV3d vDestPos = *(RwV3d*)&m_vRNSCurPos;
     RwV3d vSrcPos = m_pActor->GetPosition(); vSrcPos.y = 0.f;
 
     vBusCurPos = vDestPos;
 
-    // 방향
+    // direction
     RwV3d vSrcDir = m_pActor->GetDirection();
     fSrcDirY = vSrcDir.y;
     vSrcDir.y = 0.f;

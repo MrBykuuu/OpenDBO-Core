@@ -1,11 +1,11 @@
 /******************************************************************************
 * File			: NtlDojo.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2009. 4. 16
 * Abstract		: 
 *****************************************************************************
-* Desc			: 도장 정보
+* Desc			: Dojo information
 *****************************************************************************/
 
 #pragma once
@@ -15,13 +15,13 @@
 #include "NtlSharedDef.h"
 #include "NtlDojo.h"
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLEmblemMaker.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
 struct sDBO_DOJO_BRIEF;
@@ -61,15 +61,15 @@ struct sSCRAMBLE_INFO
 {
 	eDBO_DOJO_STATUS	eDojoState;
 	eSCRAMBLE_TEAM		eAvatarTeam;
-	RwUInt32			uiScrambleDojoTableIndex;			///< 도장 쟁탈전 대상인 도장의 테이블 인덱스
+	RwUInt32			uiScrambleDojoTableIndex;			///< Table index of the dojo that is the subject of the dojo competition
 	RwUInt8				byTeleportProposalIndex;
 	MAP_SCRAMBLE_SEAL	mapScrambleSeal;
-	RwReal				fLeftTime;							///< 현재 상태에서 다음 상태까지 남은 시간
+	RwReal				fLeftTime;							///< Time remaining from current state to next state
 };
 
 struct sDOJO_INFO
 {
-	// 기본 정보(서버와 항상 동기화 되어 있다)
+	// Basic information (always synchronized with the server)
 	RwUInt32			uiDojoTableIndex;
 	GUILDID				guildID;
 	RwUInt8				byLevel;

@@ -1,35 +1,35 @@
 /******************************************************************************
-* File			: TMQRewardGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2007. 7. 30
-* Last update	: 2008. 11. 24 by hong sungbock
-* Abstract		: 
+*File			: TMQRewardGui.h
+*Author		    : Hong SungBock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 7. 30
+*Last update	: 2008. 11. 24 by hong sungbock
+*Abstract		: 
 *****************************************************************************
-* Desc			: TMQ 보상창
+*Desc			: TMQ reward window
 *****************************************************************************/
 
 #pragma once
 
 #include <list>
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// share
+// Share
 #include "NtlTimeQuest.h"
 
-// ts
+// Ts
 #include "DboTSCoreDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "NtlSLEvent.h"
 
-// dbo
+// Dbo
 #include "SurfaceGui.h"
 #include "SlotGui.h"
 #include "NumberGui.h"

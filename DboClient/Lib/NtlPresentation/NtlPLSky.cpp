@@ -113,7 +113,7 @@ RwBool CNtlPLSky::Create(const SPLEntityCreateParam* pParam)
 	API_PL_AtomicSetGeoFlags(m_pBlendedSkyLayer[1]->_pAtom, rpGEOMETRYPOSITIONS | rpGEOMETRYPRELIT | rpGEOMETRYMODULATEMATERIALCOLOR | rpGEOMETRYTEXTURED);
 	strcpy_s(API_PL_AtomicGetTexture(m_pBlendedSkyLayer[1]->_pAtom)->name, rwTEXTUREBASENAMELENGTH, "null");
 
-	// ³õÊ¼»¯Ìì¿ÕµÄ±³¾°ÑÕÉ«
+	// Let go and take it away.??
 	RwRGBA	RGBATmp[3];
 	RGBATmp[0].red = 255;
 	RGBATmp[0].green = 255;
@@ -881,7 +881,7 @@ RwBool CNtlPLSky::Render(void)
 
 		SkyLayerRender(m_pBaseSkyLayer[1], TFactor);
 
-		// ±¸¸§°ú SkyBox »çÀÌ¿¡ ÇØ/´ÞÀ» ·»´õ¸µÇÑ´Ù. (2007.08.06 by agebreak)
+		// Render the sun/moon between the clouds and the SkyBox. (2007.08.06 by agebreak)
 		CNtlPLVisualManager* pVisualManager = (CNtlPLVisualManager*)GetSceneManager();
 		CNtlPLRenderGroup* pSunGroup = pVisualManager->FindInstanceGroup(PLENTITY_SUN);
 		if(pSunGroup)
@@ -1940,7 +1940,7 @@ void CNtlPLSky::RunableLightning(RwReal fTimeFadeIn, RwReal fTimeFadeOut)
 // 
 // 			SkyLayerRender(m_pBaseSkyLayer[1], TFactor);
 // 
-// 			// ±¸¸§°ú SkyBox »çÀÌ¿¡ ÇØ/´ÞÀ» ·»´õ¸µÇÑ´Ù. (2007.08.06 by agebreak)
+// 			// Render the sun/moon between the clouds and the SkyBox.  (2007.08.06 by agebreak)
 // 			CNtlPLVisualManager* pVisualManager = (CNtlPLVisualManager*)GetSceneManager();
 // 			CNtlPLRenderGroup* pSunGroup = pVisualManager->FindInstanceGroup(PLENTITY_SUN);
 // 			if(pSunGroup)

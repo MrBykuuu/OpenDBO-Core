@@ -1,16 +1,16 @@
 #include "precomp_dboclient.h"
 #include "TutorialDialogFocusGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEventFunc.h"
 
-// dbo
+// Dbo
 #include "DboGlobal.h"
 #include "DialogManager.h"
 #include "DialogPriority.h"

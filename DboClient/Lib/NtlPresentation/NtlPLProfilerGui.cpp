@@ -1,15 +1,15 @@
 #include "precomp_ntlpresentation.h"
 #include "NtlPLProfilerGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlProfiler.h"
 
-// gui
+// Gui
 #include "gui_renderer.h"
 #include "gui_define.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 #include "NtlPLApi.h"
@@ -42,15 +42,15 @@ CNtlPLProfilerItem::~CNtlPLProfilerItem()
 
 /**
 * \brief Create
-* \param pParentComp	(gui::CComponent*) 부모의 Component
-* \param rect			(CRectangle&) Item이 생성될 영역
+* \param pParentComp (gui::CComponent*) Parent Component
+* \param rect (CRectangle&) Area where item will be created
 */
 VOID CNtlPLProfilerItem::Create( gui::CComponent* pParentComp, CRectangle& rect )
 {
-	// Dialog 생성
+	// Create Dialog
 	m_pThis = NTL_NEW gui::CDialog( &rect, pParentComp, GetNtlGuiManager()->GetSurfaceManager() );
 
-	// Dialog의 자식으로 등록될 Component들 생성
+	// Create components to be registered as children of Dialog
 	CRectangle rectChild;
 	rectChild.SetRectWH( 0, 0, 270, 20 );
 	m_pStbItemName = NTL_NEW gui::CStaticBox( &rectChild, m_pThis, GetNtlGuiManager()->GetSurfaceManager(),
@@ -77,7 +77,7 @@ VOID CNtlPLProfilerItem::Create( gui::CComponent* pParentComp, CRectangle& rect 
 		COMP_TEXT_VERTICAL_CENTER | COMP_TEXT_CENTER );
 	m_pStbCallPerFrame->CreateFontStd( DETAIL_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR );
 
-	// 현재 Dialog는 입력을 받지 않는다. 입력은 CNtlPLProfilerGui 클래스에서 처리한다.
+	// Currently, the dialog does not receive input. Input is processed by the CNtlPLProfilerGui class.
 	m_pThis->Enable( false );
 }
 
@@ -95,7 +95,7 @@ VOID CNtlPLProfilerItem::Destroy()
 }
 
 /**
-* \brief 현재 아이템을 강조한다.
+* \brief Highlights the current item.
 */
 VOID CNtlPLProfilerItem::FocusItem( RwBool bFocus /*= TRUE */ )
 {
@@ -115,8 +115,8 @@ VOID CNtlPLProfilerItem::FocusItem( RwBool bFocus /*= TRUE */ )
 }
 
 /**
-* \brief Data를 구조체로 채워넣는다.
-* \param bLogged	(RwBool) 부모에게서 % 와 Total에서 % 이외의 값들의 유효 여부
+* \brief Fill the data with a structure.
+* \param bLogged (RwBool) Whether values ??other than % in Parent and % in Total are valid.
 */
 VOID CNtlPLProfilerItem::SetProfileData( SNtlProfileNode& sNode, RwBool bLogged /*= TRUE */ )
 {
@@ -225,7 +225,7 @@ RwBool CNtlPLProfilerGui::Create()
 	m_pThis->SetFrameSize( &rect );
 	m_pThis->SetMovable( TRUE );
 
-	// 현재 Dialog를 어떠한 상황에서도 입력을 받을 수 있게 우선순위를 가장 높게 설정한다.
+	// Set the current dialog to the highest priority so that it can receive input under any circumstances.
 	m_pThis->SetPriority( 65534 );
 
 	// Title
@@ -265,7 +265,7 @@ RwBool CNtlPLProfilerGui::Create()
 	m_pBtnClose->SetTextFocusColor( RGB(255, 210, 70) );
 	m_pBtnClose->SetTextDisableColor( RGB(128, 128, 128) );
 
-	// NodeName
+	// Node name
 	rect.SetRectWH( 5, 28, 270, 20 );
 	m_pStbNodeName = NTL_NEW gui::CStaticBox( &rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(),
 		COMP_TEXT_VERTICAL_CENTER | COMP_TEXT_CENTER );
@@ -279,21 +279,21 @@ RwBool CNtlPLProfilerGui::Create()
 	m_pStbParent->CreateFontStd( DETAIL_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR );
 	m_pStbParent->SetText("%parent");
 
-	// ms/f
+	// Ms/f
 	rect.SetRectWH( 365, 28, 75, 20 );
 	m_pStbMSecPerFrame = NTL_NEW gui::CStaticBox( &rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(),
 		COMP_TEXT_VERTICAL_CENTER | COMP_TEXT_CENTER );
 	m_pStbMSecPerFrame->CreateFontStd( DETAIL_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR );
 	m_pStbMSecPerFrame->SetText("ms/f");
 
-	// ms/call
+	// Ms/call
 	rect.SetRectWH( 435, 28, 75, 20 );
 	m_pStbMSecPerCall = NTL_NEW gui::CStaticBox( &rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(),
 		COMP_TEXT_VERTICAL_CENTER | COMP_TEXT_CENTER );
 	m_pStbMSecPerCall->CreateFontStd( DETAIL_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR );
 	m_pStbMSecPerCall->SetText("ms/call");
 
-	// calls/f
+	// Calls/f
 	rect.SetRectWH( 560, 28, 75, 20 );
 	m_pStbCallPerFrame = NTL_NEW gui::CStaticBox( &rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(),
 		COMP_TEXT_VERTICAL_CENTER | COMP_TEXT_CENTER );
@@ -305,7 +305,7 @@ RwBool CNtlPLProfilerGui::Create()
 	m_pDlgDataField = NTL_NEW gui::CDialog( &rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager() );
 
 	// Create Scroll Bar
-	// Todo : 스크롤 바 작업해야함 ( 2008. 6. 23 )
+	// Todo: Need to work on scroll bar (2008. 6. 23)
 	rect.SetRectWH( m_pDlgDataField->GetWidth() - 5, 0, 5, m_pDlgDataField->GetHeight() );
 	m_pScrollBar = NTL_NEW gui::CScrollBar( rect, 0, 10, false, m_pDlgDataField, GetNtlGuiManager()->GetSurfaceManager() );
 	SetSurface( m_surBar, 5, 175, 0x66, 0x33, 0x00, 128);
@@ -355,8 +355,8 @@ RwBool CNtlPLProfilerGui::Create()
 }
 
 /**
-* \brief 업데이트를 한다. dPROFILER_GUI_UPDATE_TIME 마다 Data를 가져오고 GUI를 업데이트한다.
-* \param fElapsed		(RwReal) 이전 프레임에서의 경과시간
+* \brief Update. dPROFILER_GUI_UPDATE_TIME Retrieve data and update the GUI every time.
+* \param fElapsed (RwReal) Elapsed time in previous frame
 */
 VOID CNtlPLProfilerGui::Update( RwReal fElapsed )
 {
@@ -396,7 +396,7 @@ VOID CNtlPLProfilerGui::Destroy()
 
 /**
 * \brief HandleEvents
-* \param msg	(RWS::CMsg&) 이벤트 메시지 구조체
+* \param msg (RWS::CMsg&) event message structure
 */
 VOID CNtlPLProfilerGui::HandleEvents( RWS::CMsg& msg )
 {
@@ -409,7 +409,7 @@ VOID CNtlPLProfilerGui::HandleEvents( RWS::CMsg& msg )
 }
 
 /**
-* \brief Open/Close 할 때 해줘야 할 것들을 처리한다.
+* \brief Processes things that need to be done when opening/closing.
 */
 VOID CNtlPLProfilerGui::ShowDialog( RwBool bShow /*= TRUE*/ )
 {
@@ -433,8 +433,8 @@ VOID CNtlPLProfilerGui::ShowDialog( RwBool bShow /*= TRUE*/ )
 }
 
 /**
-* \brief 현재 노드의 반복자를 자식 노드로 이동하고 데이타를 업데이트한다.
-* \param nIdx	(RwInt32) 자식 노드의 Index
+* \brief Moves the iterator of the current node to the child node and updates the data.
+* \param nIdx (RwInt32) Index of child node
 */
 RwBool CNtlPLProfilerGui::EnterChild( RwInt32 nIdx )
 {
@@ -446,7 +446,7 @@ RwBool CNtlPLProfilerGui::EnterChild( RwInt32 nIdx )
 }
 
 /**
-* \brief 현재 노드의 반복자를 부모 노드로 이동하고 데이타를 업데이트한다.
+* \brief Moves the iterator of the current node to the parent node and updates the data.
 */
 RwBool CNtlPLProfilerGui::EnterParent()
 {
@@ -458,8 +458,8 @@ RwBool CNtlPLProfilerGui::EnterParent()
 }
 
 /**
-* \brief 마우스의 좌표값으로 현재 위치한 아이템을 강조한다.
-* \param nFlags		(RwInt32) 마우스의 상태
+* \brief Highlights the currently located item using the mouse coordinates.
+* \param nFlags		(RwInt32) Mouse state
 * \param nX			(RwInt32) X Pos
 * \param nY			(RwInt32) Y Pos
 */
@@ -477,12 +477,12 @@ VOID CNtlPLProfilerGui::OnMouseMove( RwInt32 nFlags, RwInt32 nX, RwInt32 nY )
 
 /**
 * \brief OnMouseDown
-* \param key	(const CKey&) 마우스의 정보 구조체
+* \param key (const CKey&) Mouse information structure
 */
 VOID CNtlPLProfilerGui::OnMouseDown( const CKey& key )
 {
-	// 마우스의 왼쪽 버튼이 Down 되었을 때 현재 Down된 곳에 위치한 Item이 있다면 그 아이템의
-	// Index를 기억한다.
+	// When the left button of the mouse is down, if there is an item currently located in the down position, the item
+	// Remember the Index.
 	if( key.m_nID == UD_LEFT_BUTTON )
 	{
 		CRectangle rect = m_pDlgDataField->GetScreenRect();
@@ -502,12 +502,12 @@ VOID CNtlPLProfilerGui::OnMouseDown( const CKey& key )
 
 /**
 * \brief OnMouseUp
-* \param key	(const CKey&) 마우스의 정보 구조체
+* \param key (const CKey&) Mouse information structure
 */
 VOID CNtlPLProfilerGui::OnMouseUp( const CKey& key )
 {
-	// 마우스가 Up 처리되었을 때 현재 위치한 곳이 아이템이 있는 곳이고 Down 되었을 때의 Index와 일치한다면
-	// 현재 위치한 Item의 노드로 반복자를 이동하고 데이타를 업데이트 시킨다.
+	// If the current location when the mouse is up is where the item is and matches the index when the mouse is down
+	// Moves the iterator to the node of the currently located Item and updates the data.
 	if( key.m_nID == UD_LEFT_BUTTON )
 	{
 		for( RwUInt32 i = 0; i < m_uiSibblingCount - m_pScrollBar->GetValue() ; ++i )
@@ -529,7 +529,7 @@ VOID CNtlPLProfilerGui::OnMouseUp( const CKey& key )
 }
 
 /**
-* \brief m_pBtnUpperExplore를 클릭했을 때
+* When clicking \brief m_pBtnUpperExplore
 */
 VOID CNtlPLProfilerGui::OnClickedBtnUpperExplore( gui::CComponent* pComponent )
 {
@@ -537,7 +537,7 @@ VOID CNtlPLProfilerGui::OnClickedBtnUpperExplore( gui::CComponent* pComponent )
 }
 
 /**
-* \brief m_pBtnReset을 클릭했을 때
+* \brief When m_pBtnReset is clicked
 */
 VOID CNtlPLProfilerGui::OnClickedBtnReset( gui::CComponent* pComponent )
 {
@@ -545,7 +545,7 @@ VOID CNtlPLProfilerGui::OnClickedBtnReset( gui::CComponent* pComponent )
 }
 
 /**
-* \brief m_pBtnClose를 클릭했을 때
+* When clicking \brief m_pBtnClose
 */
 VOID CNtlPLProfilerGui::OnClickedBtnClose( gui::CComponent* pComponent )
 {
@@ -553,7 +553,7 @@ VOID CNtlPLProfilerGui::OnClickedBtnClose( gui::CComponent* pComponent )
 }
 
 /**
-* \brief 현재 반복자가 위치한 곳에서 정보를 가져온다.
+* \brief Gets information from where the current iterator is located.
 */
 VOID CNtlPLProfilerGui::GetCurrentProfileData()
 {
@@ -565,7 +565,7 @@ VOID CNtlPLProfilerGui::GetCurrentProfileData()
 	m_pCurrentIter->First();
 	sprintf_s( m_acParentName, dPROFILER_GUI_PARENT_NAME_BUFFER, "%s", m_pCurrentIter->Get_Current_Parent_Name() );
 	
-	// 현재 반복자의 Sibbling 노드의 갯수를 센다.
+	// Counts the number of Sibling nodes in the current iterator.
 	m_uiSibblingCount = 0;
 	while( !m_pCurrentIter->Is_Done() )
 	{
@@ -573,22 +573,22 @@ VOID CNtlPLProfilerGui::GetCurrentProfileData()
 		m_pCurrentIter->Next();
 	}
 
-	// Count에 맞춰서 GUI 항목과 구조체를 생성
+	// Create GUI items and structures according to Count
 	CreateProfilerItems( m_uiSibblingCount );
 
-	// UI의 Scroll Bar 속성을 조정한다.
+	// Adjust the Scroll Bar properties of the UI.
 	AdjustPanelToItems();
 
-	// NtlProfiler에게 Data를 가져온다.
+	// Bring data to NtlProfiler.
 	UpdateData();
 
-	// GUI 에 Data들을 업데이트 한다.
+	// Update data in the GUI.
 	UpdatePanel();
 }
 
 /**
-* \brief 노드의 정보를 저장할 구조체와 GUI Item을 생성한다.
-* \param uiItemsCount	(RwUInt32) 아이템의 갯수(현재 반복자의 자식 노드들의 갯수)
+* \brief Creates a structure and GUI Item to store node information.
+* \param uiItemsCount (RwUInt32) Number of items (number of child nodes of the current iterator)
 */
 VOID CNtlPLProfilerGui::CreateProfilerItems(RwUInt32 uiItemsCount)
 {
@@ -603,7 +603,7 @@ VOID CNtlPLProfilerGui::CreateProfilerItems(RwUInt32 uiItemsCount)
 }
 
 /**
-* \brief 동적으로 생성된 정보 구조체와 GUi Item들을 해제한다.
+* \brief Releases dynamically created information structures and GUi Items.
 */
 VOID CNtlPLProfilerGui::DestroyProfilerItems()
 {
@@ -621,7 +621,7 @@ VOID CNtlPLProfilerGui::DestroyProfilerItems()
 }
 
 /**
-* \brief 현재 반복자가 위치한 Node들의 정보를 가져온다.
+* \brief Retrieves information on Nodes where the current iterator is located.
 */
 VOID CNtlPLProfilerGui::UpdateData()
 {
@@ -681,7 +681,7 @@ VOID CNtlPLProfilerGui::UpdateData()
 	sprintf_s( m_pProfileNode[uiIndex].acNodeName, dPROFILER_GUI_NAME_BUFFER, "%s", "UnLogged" );
 	m_pProfileNode[uiIndex].uiIndex = uiIndex;
 
-	// Todo : Unlogged 된 것들의 수행시간을 넣어야 한다.
+	// Todo: The execution time of unlogged items must be entered.
 	if( MSecPerCall4Parent )
 		m_pProfileNode[uiIndex].fPercentByParent = 100.0f - fPerFromParent;
 	else
@@ -689,7 +689,7 @@ VOID CNtlPLProfilerGui::UpdateData()
 }
 
 /**
-* \brief GUI 를 갱신
+* \brief Update GUI
 */
 VOID CNtlPLProfilerGui::UpdatePanel()
 {

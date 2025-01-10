@@ -95,7 +95,7 @@ VOID CTBGambleResultGui::Destroy()
 
 /**
 * \brief HandleEvents
-* \param msg		(RWS::CMsg&) 이벤트 메시지 구조체
+* \param msg		(RWS::CMsg&) event message structure
 */
 VOID CTBGambleResultGui::HandleEvents( RWS::CMsg &msg )
 {
@@ -117,7 +117,7 @@ VOID CTBGambleResultGui::HandleEvents( RWS::CMsg &msg )
 }
 
 /**
-* \brief Dialog manager에서 Show/Hide 해주는 interface
+* \brief Interface for Show/Hide in Dialog Manager
 */
 RwInt32 CTBGambleResultGui::SwitchDialog( bool bOpen )
 {
@@ -127,7 +127,7 @@ RwInt32 CTBGambleResultGui::SwitchDialog( bool bOpen )
 }
 
 /**
-* \brief Gui의 Slot에 겜블된 아이템의 아이콘을 정의한다.
+* \brief Defines the icon of the item gambled in the Gui's Slot.
 */
 VOID CTBGambleResultGui::SetGambleItem( RwInt32 hItemHandle )
 {
@@ -143,7 +143,7 @@ VOID CTBGambleResultGui::SetGambleItem( RwInt32 hItemHandle )
 }
 
 /**
-* \brief 현재의 부모 Dialog가 Move될때 호출
+* \brief Called when the current parent dialog is moved.
 */
 VOID CTBGambleResultGui::OnMove( RwInt32 iOldX, RwInt32 iOldY )
 {
@@ -152,7 +152,7 @@ VOID CTBGambleResultGui::OnMove( RwInt32 iOldX, RwInt32 iOldY )
 }
 
 /**
-* \brief 현재의 부모 Dialog가 Paint 될때 호출
+* \brief Called when the current parent dialog is painted.
 */
 VOID CTBGambleResultGui::OnPaint()
 {
@@ -160,7 +160,7 @@ VOID CTBGambleResultGui::OnPaint()
 }
 
 /**
-* \brief 닫기 버튼을 클릭 했을 때
+* \brief When the close button is clicked
 */
 VOID CTBGambleResultGui::OnClickedBtnClose( gui::CComponent* pComponent )
 {

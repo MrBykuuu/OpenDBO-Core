@@ -43,11 +43,11 @@ void CNtlStorageGroup::Destroy()
 }
 
 /**
-* \brief NtlStorageGroup의 개념적인 Base load 함수
-* 특정한 로딩을 해야 하는 Group이 생길 경우는 이 Class를 상속받는
-* 자식 클래스에서 오버라이딩해서 사용을 한다.
-* \param pS		(CNtlStorageSerializer*) Load에 사용될 Serializer buffer
-* \return 성공여부
+* \brief Conceptual Base load function of NtlStorageGroup
+*If there is a Group that requires specific loading, inherit this Class
+*Use by overriding in a child class.
+* \param pS (CNtlStorageSerializer*) Serializer buffer to be used for Load.
+* \return Success or not
 */
 bool CNtlStorageGroup::Load(CNtlStorageSerializer* pS)
 {
@@ -59,9 +59,8 @@ bool CNtlStorageGroup::Load(CNtlStorageSerializer* pS)
 
 		// Text Parser
 
-		// [카테고리]
+		// [Category]
 		// [KEY] = [VALUE];
-		
 		eNTL_STORAGE_TYPE eCurrentType = eNTL_STORAGE_INVALID;
 		
 		enum eTextState
@@ -78,7 +77,7 @@ bool CNtlStorageGroup::Load(CNtlStorageSerializer* pS)
 		{
 			std::string& token = lexer.PeekNextToken();
 
-			// 현재 토큰이 카테고리인지 확인하고 카테고리이면 다음 값은 키 -> = -> 값 -> ; 으로 데이터를 확인한다.
+			// Check if the current token is a category and if it is a category then the next value is key -> = -> value -> ; Check the data with
 			for( int i=0; i < eNTL_STORAGE_NUMS; ++i )
 			{
 				if( token.compare( g_acNtlStorageTypeString[i] ) == 0 )
@@ -143,16 +142,16 @@ bool CNtlStorageGroup::Load(CNtlStorageSerializer* pS)
 					}
 					else
 					{
-						// eTEXT_SEMICOLON 이 확인되면 저장하고 있는 Key와 Value를 현재의 Current Type에 맞는
-						// Unit에 넣어준다. 만약 eCurrentType의 현재의 Group에 포함되지 않은 Unit이라면
-						// 오류를 발생하고 return 한다. 그렇게 되면 현재까지 저장한 Key Value를 제외하고 이외의
-						// 항목들은 다 Default로 남아 있게 된다.
+						// If eTEXT_SEMICOLON is confirmed, change the stored Key and Value according to the current Current Type.
+						// Put it in the unit. If the Unit is not included in the current Group of eCurrentType
+						// An error occurs and return. In that case, except for the Key Value saved so far,
+						// All items remain as default.
 						UNITMAP::iterator it = m_mapStorageUnit.find( eCurrentType );
 						if( it == m_mapStorageUnit.end() )
 							return false;
 
-						// 현재 들어온 KEY값이 MappingTable에 존재하지 않는 경우, 현재의 라인을날려버린다. 그렇게 되면 잘못된
-						// KEY값의 항목만 저장이 되지 않고 나머지는 정상적으로 처리한다.
+						// If the currently entered KEY value does not exist in the MappingTable, the current line is discarded. That would be wrong
+						// Only the KEY value items are not saved; the rest is processed normally.
 						unsigned int uiKey = 0;
 						if( !GetNtlStorageMTContainer()->GetKeyFromString( strKey, uiKey ) )
 						{
@@ -177,9 +176,8 @@ bool CNtlStorageGroup::Load(CNtlStorageSerializer* pS)
 	}
 	else if( eNTL_STORAGE_SERIALIZER_BINARY == pS->GetStorageSerializerType() )
 	{
-		// Binary는 각각의 알맞은 키를 가져와야함.
-		/*CNtlStorageBinarySerializer* pBianrySerializer = (CNtlStorageBinarySerializer*)pS;*/
-
+		// Binary must obtain the appropriate key for each.
+		/*CNtlStorageBinarySerializer*pBianrySerializer = (CNtlStorageBinarySerializer*)pS;*/
 		unsigned int uiKey;
 		eNTL_STORAGE_TYPE eCurrentType = eNTL_STORAGE_INVALID;
 
@@ -187,7 +185,7 @@ bool CNtlStorageGroup::Load(CNtlStorageSerializer* pS)
 		RwBool bLoaded = FALSE;
 		while(!bLoaded)
 		{
-			// 무한루프 방지
+			// Infinite loop prevention
 			if( ++nCount > 1000000 )
 				break;
 
@@ -200,11 +198,11 @@ bool CNtlStorageGroup::Load(CNtlStorageSerializer* pS)
 				// Case By Case
 			case dSTORAGE_CATEGORY:
 				{
-					// 카테고리에 알맞은 유닛을 만든다.
+					// Create a unit appropriate for the category.
 					std::string strCategory;
 					(*pS) >> strCategory;
 
-					// 어떠한 카테고리인지 확인
+					// Check what category it is
 					eNTL_STORAGE_TYPE eType = eNTL_STORAGE_INVALID;;
 					for( int i=0; i < (int)eNTL_STORAGE_NUMS; ++i )
 					{
@@ -218,7 +216,7 @@ bool CNtlStorageGroup::Load(CNtlStorageSerializer* pS)
 
 					if( eType == eNTL_STORAGE_INVALID )
 					{
-						// 정의되어 있는 카테고리를 찾지 못했으면 데이타가 잘못된 것이다.
+						// If you cannot find a defined category, the data is incorrect.
 						return false;
 					}
 
@@ -238,14 +236,14 @@ bool CNtlStorageGroup::Load(CNtlStorageSerializer* pS)
 				break;
 			case dSTORAGE_EOF:
 				{
-					// 정상적으로 로딩이 완료
+					// Loading completed normally
 					bLoaded = TRUE;
 				}
 				break;
 			default:
 				{
-					// 카테고리가 아닌 것은 모두 다 uiKey에 따른 데이타이다.
-					// 현재 커렌트 타입을 가져와서
+					// Everything that is not a category is data based on uiKey.
+					// Get the current current type
 					UNITMAP::iterator it = m_mapStorageUnit.find( eCurrentType );
 					if( it == m_mapStorageUnit.end() )
 					{
@@ -261,8 +259,8 @@ bool CNtlStorageGroup::Load(CNtlStorageSerializer* pS)
 			}
 		}
 
-		// ByNarySerializer에 다시 Data를 넣어줄 필요가 없다.
-		/*for each( std::pair< eNTL_STORAGE_TYPE, CNtlStorageUnit* > pair in m_mapStorageUnit )
+		// There is no need to input data again into ByNarySerializer.
+		/*for each( std::pair< eNTL_STORAGE_TYPE, CNtlStorageUnit*> pair in m_mapStorageUnit )
 		{
 			if( pair.second )
 			{
@@ -285,11 +283,11 @@ bool CNtlStorageGroup::Load(CNtlStorageSerializer* pS)
 }
 
 /**
-* \brief NtlStorageGroup의 개념적인 Base save 함수
-* 특별한 저장을 해야 하는 Group이 생길 경우는 이 Class를 상속받는
-* 자식 클래스에서 오버라이딩해서 사용을 한다.
-* \param pS		(CNtlStorageSerializer*) save에 사용될 Serializer buffer
-* \return 성공여부
+* \brief Conceptual Base save function of NtlStorageGroup
+*If there is a Group that needs to be specially saved, inherit this Class.
+*Use by overriding in a child class.
+* \param pS (CNtlStorageSerializer*) Serializer buffer to be used for save.
+* \return Success or not
 */
 bool CNtlStorageGroup::Save(CNtlStorageSerializer* pS)
 {

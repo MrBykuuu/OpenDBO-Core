@@ -14,14 +14,14 @@
 
 /**
  * \ingroup Client
- * \brief 친구 리스트/블랙 리스트 UI를 구현하는 클래스 
+ * \brief Class that implements friend list/black list UI 
  * \date 2007-12-07
  * \author agebreak
  */
 class CFriendListGui : public CNtlPLGui, public RWS::CEventHandler
 {
 public:
-    enum EFriendListMode                ///< UI 리스트 모드
+    enum EFriendListMode                ///< UI list mode
     {
         FRIEND_LIST,
         BLACK_LIST,
@@ -41,7 +41,7 @@ public:
 	VOID		        HandleEvents(RWS::CMsg &pMsg);
 
 protected:
-	// CallBack
+    // CallBack
     VOID	OnCloseBtnClicked(gui::CComponent* pComponent);
     VOID    OnTitleNameClicked(gui::CComponent* pComponent);
     VOID    OnTitleLevelClicked(gui::CComponent* pComponent);
@@ -68,7 +68,7 @@ protected:
     void			OnDestroyItem(gui::CButton* pButton);
     void			OnClickedItem(RwInt32 iIndex);
 
-    // 수신 패킷 처리 함수
+    // Received packet processing function
     VOID    OnFriendAddRes(RwUInt32 uiTargetID);
     VOID    OnFriendDelRes(RwUInt32 uiTargetID);
     VOID    OnFriendMoveRes(RwUInt32 uiTargetID);
@@ -79,14 +79,14 @@ protected:
     VOID    OnFriendInfoChange(RwUInt32 uiTargetID);
     VOID    OnFriendLogin(RwUInt32 uiTargetID);
 
-    VOID    CreateInfoStaticBox();                                  ///< 정보를 표시하기위한 스태틱박스들을 생성한다.
-    VOID    RefreshList();                                          ///< 현재 보이는 정보들을 갱신한다.    
-    VOID    UpdateInfo(RwUInt32 uiCharID = NULL);                   ///< 정보를 업데이트한다.
-    RwBool  IsEnableAdd(const WCHAR* pwszName, EFriendListMode eMode);    ///< 친구 or 블랙리스트에 추가가 가능한지 확인한다.
-    VOID    OnTargeting(sFriendMember* pMember);                       ///< 커뮤니티 타겟팅을 설정한다.
+    VOID    CreateInfoStaticBox();                                  ///< Creates static boxes to display information.
+    VOID    RefreshList();                                          ///< Updates the currently visible information.    
+    VOID    UpdateInfo(RwUInt32 uiCharID = NULL);                   ///< Update information.
+    RwBool  IsEnableAdd(const WCHAR* pwszName, EFriendListMode eMode);    ///< Check if you can add to friends or blacklist.
+    VOID    OnTargeting(sFriendMember* pMember);                       ///< Set community targeting.
 
 protected:
-    // 컨트롤
+    // control
     gui::CStaticBox*    m_pSttDialogTitle;            
     gui::CTabButton*    m_pTabMode;
     gui::CButton*       m_pBtnClose;
@@ -108,7 +108,7 @@ protected:
     gui::CPanel*        m_pPnlBackSpace[FRIEND_LIST_MAX_VISIBLE];
     gui::CPanel*        m_pPnlIcon[FRIEND_LIST_MAX_VISIBLE];
 
-    // 슬롯
+    // slot
     gui::CSlot          m_slotClose;
     gui::CSlot          m_slotTab;
     gui::CSlot          m_slotBtnAdd;
@@ -133,7 +133,7 @@ protected:
 
     EFriendListMode     m_eListMode;
     RwUInt32            m_uiCurrentCharID;
-    RwInt32             m_nButtonIndex;                     ///< 버튼에 이벤트 슬롯을 달기위한 변수
+    RwInt32             m_nButtonIndex;                     ///< Variable for attaching event slots to buttons
 
 	// Help Button
 	gui::CButton*		m_pBtnHelp;

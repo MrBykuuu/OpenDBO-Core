@@ -1,16 +1,16 @@
 #include "precomp_dboclient.h"
 #include "CharAccountGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DboGlobal.h"
@@ -43,14 +43,14 @@ RwBool CAccountGui::Create()
 
 	CRectangle rect;
 
-	// 배경
+	// background
 	m_Background.SetType(CWindowby3::WT_HORIZONTAL);
 	m_Background.SetSurface(0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("CharSelect_Account.srf", "srfBackgroundUp"));
 	m_Background.SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("CharSelect_Account.srf", "srfBackgroundCenter"));
 	m_Background.SetSurface(2, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("CharSelect_Account.srf", "srfBackgroundBottom"));
 	m_Background.SetSize(233, 172);
 
-	// 계정 정보 배경
+	// Account Information Background
 	m_srtAccountBack.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("CharSelect_Account.srf", "srfBar"));
 
 	// 'title box'
@@ -60,40 +60,40 @@ RwBool CAccountGui::Create()
 	m_pTitleStatic->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_SERVER_INFO"));
 	m_pTitleStatic->Enable(false);
 
-	// '서버 이름'
+	// 'server name'
 	rect.SetRect(30, 70, 130, 84);
 	m_pServerNameStatic = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pServerNameStatic->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pServerNameStatic->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_SERVER_NAME"));
 	m_pServerNameStatic->Enable(false);
 
-	// '서버 상태'
+	// 'Server Status'
 	rect.SetRect(30, 90, 130, 104);
 	m_pServerStateStatic = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pServerStateStatic->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pServerStateStatic->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_SERVER_STATE"));
 	m_pServerStateStatic->Enable(false);
 
-	// 서버 이름
+	// server name
 	rect.SetRect(90, 70, 210, 84);
 	m_pServerName = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pServerName->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pServerName->Enable(false);
 
-	// 서버 상태
+	// server status
 	rect.SetRect(90, 90, 210, 104);
 	m_pServerState = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT);
 	m_pServerState->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pServerState->Enable(false);
 
-	// 서버 선택 버튼
+	// Server selection button
 	m_pServerSelectButton = (gui::CButton*)GetComponent("btnServerSelect");
 	m_pServerSelectButton->SetTextFocusColor(INFOCOLOR_LOBBY_FOC);
 	m_pServerSelectButton->SetTextDownColor(INFOCOLOR_LOBBY_DOWN);
 	m_pServerSelectButton->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_CHOICE_SERVER"));
 	m_slotSelectServer = m_pServerSelectButton->SigClicked().Connect(this, &CAccountGui::OnClicked_ServerSelectButton);
 
-	// sig
+	// Signals
 	m_slotPaint = m_pThis->SigPaint().Connect(this, &CAccountGui::OnPaint);
 
 	LinkMsg(g_EventCharStageStateEnter);
@@ -203,12 +203,12 @@ VOID CAccountGui::OnClicked_ServerSelectButton(gui::CComponent* pComponent)
 
 	if (GetLobbyManager()->IsWaitingServerListInfo())
 	{
-		// 아직 서버 리스트를 받지 않았다면
+		// If you haven't received the server list yet
 		GetDboGlobal()->GetLobbyPacketGenerator()->SendCharServerListReq();
 	}
 	else
 	{
-		// 서버 셀렉트 화면으로 전환
+		// Switch to server selection screen
 		GetCharStageState()->ReservateState(CHAR_STATE_SERVER_ENTER);
 		GetCharStageState()->ChangeState(CHAR_STATE_SELECT_EXIT);
 	}

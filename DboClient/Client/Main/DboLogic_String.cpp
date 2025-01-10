@@ -1,18 +1,18 @@
 /*****************************************************************************
-* File			: DboLogic_String.h
-* Author		: Hong sungbock
-* Copyright		: (주)NTL
-* Date			: 2007. 1. 12
-* Abstract		: 스트링 관련 로직을 모아둔다
+*File			: DboLogic_String.h
+*Author	    	: Hong sungbock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 1. 12
+*Abstract		: Gather string-related logic
 *****************************************************************************
-* Desc         : 찾으려는 스트링이 없을 시에는 반드시 알 수 있도록
-*				 Assert를 걸던지 스트링이 없다는 메세지를 돌려주도록 하자
+*Desc          :Be sure to know if the string you are looking for is not found.
+*               Let's assert or return a message that there is no string.
 *****************************************************************************/
 
 #include "precomp_dboclient.h"
 #include "DboLogic.h"
 
-// shared
+// Shared
 #include "NtlCharacter.h"
 #include "SkillTable.h"
 #include "HTBSetTable.h"
@@ -25,14 +25,14 @@
 #include "NtlService.h"
 
 
-// simulation
+// Simulation
 #include "NtlSLApi.h"
 #include "NtlSobAvatar.h"
 #include "NtlSLLogic.h"
 #include "NtlActionMapDef.h"
 
 
-// dbo
+// Dbo
 #include "DisplayStringManager.h"
 #include "DboEventGenerator.h"
 #include "ChatGui.h"
@@ -97,7 +97,7 @@ const WCHAR* Logic_GetHoipoiMixSkillName(RwUInt8 byType)
 const WCHAR* Logic_GetNPCJobName(RwUInt8 byJob)
 {
 	// It examines the indexes individually so that when there is a change in the index number
-	// 또한 스트링 테이블의 순서에 영향이 없도록...
+	//Also, so that the order of the string table is not affected...
 	switch( byJob )
 	{
 	case NPC_JOB_WEAPON_MERCHANT:			return GetDisplayStringManager()->GetString( "DST_JOB_WEAPON_MERCHANT" );
@@ -191,8 +191,8 @@ const WCHAR* Logic_GetNPCRaceName(RwUInt8 byRace)
 
 const WCHAR* Logic_GetMobRaceName(RwUInt8 byRace)
 {
-	// 인덱스를 일일이 검사하여 인덱스의 숫자에 변경이 있을 시 Assert를 발생시켜 바로 알 수 있도록 한다
-	// 또한 스트링 테이블의 순서에 영향이 없도록...
+	//Checks the index one by one and generates an Assert when there is a change in the number of the index so that you can be notified immediately
+	//Also, so that the order of the string table is not affected...
 	switch( byRace )
 	{
 	case MOB_TYPE_ANIMAL:					return GetDisplayStringManager()->GetString( "DST_MOB_TYPE_ANIMAL" );
@@ -314,7 +314,7 @@ RwBool	Logic_GetSystemEffectText( RwUInt32 uiSystemEffectIdx, RwReal fValue, std
 		return FALSE;
 	}
 
-	// Buff의 경우 Direct계열은 출력안함
+	// In the case of Buff, Direct series are not output.
 	if( pBuffShow )
 	{
 		if( pSystemEffectData->byActive_Effect_Type == SKILL_ACTIVE_TYPE_DD ||
@@ -334,7 +334,7 @@ RwBool	Logic_GetSystemEffectText( RwUInt32 uiSystemEffectIdx, RwReal fValue, std
 
 	WCHAR buf[256];
 
-	// Excpetion : 스킬 타입 표기 예외
+	// Exception: Skill type display exception
 	if( pSkillData )
 	{
 		if( pSystemEffectData->effectCode == ACTIVE_DIRECT_DAMAGE ||
@@ -411,7 +411,7 @@ RwBool	Logic_GetSystemEffectText( RwUInt32 uiSystemEffectIdx, RwReal fValue, std
 		bINTValue = FALSE;
 	}	
 
-	// Exception : 단위 관련 표기 예외
+	// Exception: Unit-related notation exception
 	if( byPercentType && pSystemEffectData->byActive_Effect_Type != SKILL_ACTIVE_TYPE_DOT)
 	{
 		if( nInsertPosition >= 0 )
@@ -702,8 +702,8 @@ void Logic_WarnningWorldConceptActionMessage(RwUInt32 uiGrade)
 		GetAlarmManager()->AlarmMessage(string);
 }
 
-// 테이블 인덱스로 지역의 이름을 가져온다.
-// return FALSE면 테이블에 없음
+// Get the name of the region using the table index.
+// If return FALSE, it is not in the table
 RwBool Logic_GetAreaNameFromTblIDX( TBLIDX tblIdx, std::wstring* pstrString ) 
 {
 	CMapNameTextTable* pTable = API_GetTableContainer()->GetTextAllTable()->GetMapNameTbl();
@@ -713,7 +713,7 @@ RwBool Logic_GetAreaNameFromTblIDX( TBLIDX tblIdx, std::wstring* pstrString )
 		{
 			if(!pTable->GetZoneName(tblIdx, pstrString))
 			{
-				// 텍스트 테이블이 존재하지 않는다
+				// Text table does not exist
 				static WCHAR awcBuffer[] = L"Not exist terrain name";
 				*pstrString = awcBuffer;
 				return FALSE;
@@ -783,7 +783,7 @@ WCHAR* Logic_GetTimeString(RwReal fSecond)
 	memset(awcBuffer, 0, 64);
 
 
-	// 시간 계산
+	// time calculation
 	uiDay = (RwUInt32)(fLeftSecond / 86400.f);
 
 	fLeftSecond -= (RwReal)uiDay * 86400.f;
@@ -796,7 +796,7 @@ WCHAR* Logic_GetTimeString(RwReal fSecond)
 	uiSecond = (RwUInt32)fLeftSecond;
 	
 
-	// 시간 스트링 조합
+	// Time string combination
 	if( uiDay > 0 )
 	{
 		const WCHAR* pwcText = GetDisplayStringManager()->GetString("DST_TIME_DAY");
@@ -808,7 +808,7 @@ WCHAR* Logic_GetTimeString(RwReal fSecond)
 		const WCHAR* pwcText = GetDisplayStringManager()->GetString("DST_TIME_AN_HOUR");
 		RwUInt32 uiBufferStart = wcslen(awcBuffer);
 
-		// 이미 스트링이 있다. 빈칸을 확보하자
+		// There is already a string. Let's secure the blank space
 		if( uiBufferStart > 0 )
 		{
 			swprintf_s(awcBuffer + uiBufferStart, 64 - uiBufferStart, L" ");
@@ -823,7 +823,7 @@ WCHAR* Logic_GetTimeString(RwReal fSecond)
 		const WCHAR* pwcText	= GetDisplayStringManager()->GetString("DST_TIME_MINUTE");
 		RwUInt32 uiBufferStart = wcslen(awcBuffer);
 
-		// 이미 스트링이 있다. 빈칸을 확보하자
+		// There is already a string. Let's secure the blank space
 		if( uiBufferStart > 0 )
 		{
 			swprintf_s(awcBuffer + uiBufferStart, 64 - uiBufferStart, L" ");
@@ -839,7 +839,7 @@ WCHAR* Logic_GetTimeString(RwReal fSecond)
 		const WCHAR* pwcText	= GetDisplayStringManager()->GetString("DST_TIME_SECOND");
 		RwUInt32 uiBufferStart = wcslen(awcBuffer);
 
-		// 이미 스트링이 있다. 빈칸을 확보하자
+		// There is already a string. Let's secure the blank space
 		if( uiBufferStart > 0 )
 		{
 			swprintf_s(awcBuffer + uiBufferStart, 64 - uiBufferStart, L" ");
@@ -863,7 +863,7 @@ WCHAR * Logic_GetTimeStringWithMillisecond(RwReal fSecond)
 	memset(awcBuffer, 0, 64);
 
 
-	// 시간 계산
+	// time calculation
 	uiDay = (RwUInt32)(fLeftSecond / 86400.f);
 
 	fLeftSecond -= (RwReal)uiDay * 86400.f;
@@ -876,7 +876,7 @@ WCHAR * Logic_GetTimeStringWithMillisecond(RwReal fSecond)
 	fSecondWithMs = fLeftSecond;
 
 
-	// 시간 스트링 조합
+	// Time string combination
 	if (uiDay > 0)
 	{
 		const WCHAR* pwcText = GetDisplayStringManager()->GetString("DST_TIME_DAY");
@@ -888,7 +888,7 @@ WCHAR * Logic_GetTimeStringWithMillisecond(RwReal fSecond)
 		const WCHAR* pwcText = GetDisplayStringManager()->GetString("DST_TIME_AN_HOUR");
 		RwUInt32 uiBufferStart = wcslen(awcBuffer);
 
-		// 이미 스트링이 있다. 빈칸을 확보하자
+		// There is already a string. Let's secure the blank space
 		if (uiBufferStart > 0)
 		{
 			swprintf_s(awcBuffer + uiBufferStart, 64 - uiBufferStart, L" ");
@@ -903,7 +903,7 @@ WCHAR * Logic_GetTimeStringWithMillisecond(RwReal fSecond)
 		const WCHAR* pwcText = GetDisplayStringManager()->GetString("DST_TIME_MINUTE");
 		RwUInt32 uiBufferStart = wcslen(awcBuffer);
 
-		// 이미 스트링이 있다. 빈칸을 확보하자
+		// There is already a string. Let's secure the blank space
 		if (uiBufferStart > 0)
 		{
 			swprintf_s(awcBuffer + uiBufferStart, 64 - uiBufferStart, L" ");
@@ -919,7 +919,7 @@ WCHAR * Logic_GetTimeStringWithMillisecond(RwReal fSecond)
 		const WCHAR* pwcText = GetDisplayStringManager()->GetString("DST_TIME_SECOND");
 		RwUInt32 uiBufferStart = wcslen(awcBuffer);
 
-		// 이미 스트링이 있다. 빈칸을 확보하자
+		// There is already a string. Let's secure the blank space
 		if (uiBufferStart > 0)
 		{
 			swprintf_s(awcBuffer + uiBufferStart, 64 - uiBufferStart, L" ");
@@ -1056,7 +1056,7 @@ WCHAR* Logic_GetCoolTimeString(RwReal fSecond)
 }
 
 /**
-* \brief 천하제일 무도회의 매치 스테이트를 스트링으로 반환한다.
+* \brief Returns the match state of the world's best martial arts club as a string.
 */
 const WCHAR* Logic_GetStringTBMatchType( RwUInt8 byTBMatchType )
 {
@@ -1078,10 +1078,10 @@ const WCHAR* Logic_GetStringTBMatchState( RwUInt8 byTBMatchState )
 	switch( byTBMatchState )
 	{
 	case BUDOKAI_MATCHSTATE_REGISTER:
-		return GetDisplayStringManager()->GetString( "DST_BUDOKAI_REGISTER_INFO_TITLE" ); 				// 등록 기간
-	case BUDOKAI_MATCHSTATE_WAIT_MINOR_MATCH:		// 예선전 대기
+		return GetDisplayStringManager()->GetString( "DST_BUDOKAI_REGISTER_INFO_TITLE" ); 				// Registration period
+	case BUDOKAI_MATCHSTATE_WAIT_MINOR_MATCH:		// Waiting for preliminaries
 		return GetDisplayStringManager()->GetString( "DST_BUDOKAI_MINORMATCH_INFO_TITLE_WAIT" );
-	case BUDOKAI_MATCHSTATE_MINOR_MATCH:				// 예선전 
+	case BUDOKAI_MATCHSTATE_MINOR_MATCH:				// preliminaries 
 		return GetDisplayStringManager()->GetString( "DST_BUDOKAI_MINORMATCH_INFO_TITLE_BATTLE" );
 	case BUDOKAI_MATCHSTATE_WAIT_MAJORMATCH_32:
 		return GetDisplayStringManager()->GetString( "DST_BUDOKAI_MAJORMATCH_INFO_TITLE_32_WAIT" );
@@ -1095,7 +1095,7 @@ const WCHAR* Logic_GetStringTBMatchState( RwUInt8 byTBMatchState )
 		return GetDisplayStringManager()->GetString( "DST_BUDOKAI_MAJORMATCH_INFO_TITLE_8_WAIT" );
 	case BUDOKAI_MATCHSTATE_MAJORMATCH_08:
 		return GetDisplayStringManager()->GetString( "DST_BUDOKAI_MAJORMATCH_INFO_TITLE_8" );
-	case BUDOKAI_MATCHSTATE_WAIT_SEMIFINAL_MATCH:	// 준결승 대기
+	case BUDOKAI_MATCHSTATE_WAIT_SEMIFINAL_MATCH:	// waiting for semifinals
 		return GetDisplayStringManager()->GetString( "DST_BUDOKAI_MAJORMATCH_INFO_TITLE_SEMIFINAL_WAIT" );
 	case BUDOKAI_MATCHSTATE_SEMIFINAL_MATCH:
 		return GetDisplayStringManager()->GetString( "DST_BUDOKAI_MAJORMATCH_INFO_TITLE_SEMIFINAL" );
@@ -1112,7 +1112,7 @@ const WCHAR* Logic_GetStringTBMatchState( RwUInt8 byTBMatchState )
 }
 
 /**
-* \brief 현재 아바타의 참가 상태를 스트링으로 가져온다. ( 예선 진출자, 16강 진출자, 탈락자 등등 )
+* \brief Retrieves the current avatar's participation status as a string. (Preliminary finalists, round of 16 finalists, eliminated, etc.)
 */
 const WCHAR* Logic_GetAvatarTBJoinState()
 {
@@ -1120,8 +1120,8 @@ const WCHAR* Logic_GetAvatarTBJoinState()
 
 	sBUDOKAI_JOIN_INFO* pJoinInfo;
 
-	// NULL 일 때는 아바타 생성 전에 정보가 들어왔을 경우
-	// NULL이 아닐 때는 정상적으로 데이터가 셋팅 되었을 경우
+	// If NULL, the information was received before avatar creation.
+	// If it is not NULL, the data is set normally.
 	if( pSobAvatar == NULL )
 		pJoinInfo = &GetNtlSLGlobal()->GetTBudokaiStateInfo()->sJoinInfo;
 	else
@@ -1201,7 +1201,7 @@ const WCHAR* Logic_GetAvatarTBJoinState()
 }
 
 /**
-* \brief 천하제일 무도회 64 비트 정수 시간에 관련된 스트링 ( 단위에 따라서 다르게 리턴된다. )
+* \brief World's Best Martial Arts 64-bit integer String related to time (returned differently depending on the unit.)
 */
 const WCHAR* Logic_GetTBRemainTimeString( BUDOKAITIME tmTime )
 {
@@ -1243,8 +1243,8 @@ const WCHAR* Logic_GetTBDateToDateString( tm tmAtTime, tm tmToTime )
 
 	static WCHAR awcBufferResult[512];
 
-	// 도장 추천 기간
-	// 예선전 기간
+	// Dojo recommendation period
+	// Preliminary period
 	swprintf_s( awcBuffer, 128, GetDisplayStringManager()->GetString( "DST_BUDOKAI_NEWS_NOTICE_GUIDE_TIME"),
 		tmAtTime.tm_mon+1, tmAtTime.tm_mday, 
 		(tmAtTime.tm_hour >= 12 ? GetDisplayStringManager()->GetString( "DST_BUDOKAI_NEWS_NOTICE_GUIDE_TIME_PM" ) : GetDisplayStringManager()->GetString( "DST_BUDOKAI_NEWS_NOTICE_GUIDE_TIME_AM" ) ),
@@ -1325,7 +1325,7 @@ const WCHAR* Logic_GetMailRemainTimeString( DBOTIME tmTime )
 
 	if( tmRemainTime.tm_yday > 0 )
 	{
-		// 남은 일수
+		// days remaining
 		swprintf_s( awcBuffer, 256, GetDisplayStringManager()->GetString( "DST_BUDOKAI_TIME_DAY" ), tmRemainTime.tm_yday );
 
 		return awcBuffer;
@@ -1333,7 +1333,7 @@ const WCHAR* Logic_GetMailRemainTimeString( DBOTIME tmTime )
 
 	if( tmRemainTime.tm_hour > 0 )
 	{
-		// 남은 시간
+		// time remaining
 		swprintf_s( awcBuffer, 256, GetDisplayStringManager()->GetString( "DST_BUDOKAI_TIME_HOUR" ), tmRemainTime.tm_hour );
 
 		return awcBuffer;
@@ -1341,7 +1341,7 @@ const WCHAR* Logic_GetMailRemainTimeString( DBOTIME tmTime )
 
 	if( tmRemainTime.tm_min > 0 )
 	{
-		// 남은 분
+		// Who's left
 		swprintf_s( awcBuffer, 256, GetDisplayStringManager()->GetString( "DST_BUDOKAI_TIME_MINUTE" ), tmRemainTime.tm_min );
 
 		return awcBuffer;
@@ -1954,7 +1954,7 @@ WCHAR * Logic_FormatZeni(DWORD dwZeni)
 
 	_itow_s(dwZeni, awcZeni, 128, 10); // convert zeni dword to wchar
 
-	int Length = wcslen(awcZeni); // zeni length
+	int Length = wcslen(awcZeni); // what length
 	int CommaOffset = Length % 3; // Get the comma offset
 	int n = 0;
 

@@ -2,11 +2,11 @@
 *
 * File			: NtlSobCharDecorationProxy.h
 * Author		: agebreak
-* Copyright	: (주)NTL
+* Copyright	: (?)NTL
 * Date			: 2005. 11. 30	
 * Abstract		: Simulation object attribute base class
 *****************************************************************************
-* Desc         : 캐릭터의 이펙트, 그림자등의 데코레이션 관련 클래스
+* Desc         : Class related to decoration of characters, such as effects and shadows.
 *
 *****************************************************************************/
 
@@ -26,12 +26,12 @@ class CNtlShareTargetMark;
 
 struct sEmblemFactor;
 
-/// 캐릭터의 이펙트, 그림자등의 데코레이션 관련 클래스
+/// Classes related to decoration of characters, such as effects and shadows.
 class CNtlSobCharDecorationProxy
 {
 public:
 
-	static RwBool				m_bShadowCreate;			/** shadow을 생성 on/off flag 특정 character shadow 생성을 제어*/
+	static RwBool				m_bShadowCreate;			/** Shadow creation on/off flag Controls the creation of a specific character shadow*/
     static RwBool				m_bShadowRender;			/** shadow rendering on/off flag */
 
 private:
@@ -39,31 +39,31 @@ private:
     CNtlSob						*m_pSobObj;
     CNtlPLCharacter				*m_pPLCharacter;			/** character resource */
 
-    /*RwBool						m_bNameVisible;*/
+    /*Rw bool m b name visible;*/
 	RwReal						m_fNameHeightOffset;		/** name height offset */
 	RwV3d						m_vNamePos;					/** name position */
     RwReal						m_fDefShadowScale;			/** shadow scale */
     RwReal						m_fTransShadowScale;		/** shadow scale */
     RwBool						m_bResLoaded;
     RwBool						m_bResLoadComplete;
-    RwInt32                     m_nPrevSectorIdx;           // 이전의 월드 섹터 인덱스 (그림자 판별에 사용)    
+    RwInt32                     m_nPrevSectorIdx;           // Previous world sector index (used for shadow discrimination)    
 
     CNtlPLDecal					*m_pShadowDecal;			/** shadow decal */
     CNtlPLPlayerName			*m_pPlayerName;				/** presentation player name entity */
     CNtlPLEntity				*m_pTargetMark;				/** character target mark */
-    CNtlPLEntity                *m_pTargetMark02;           // 데칼 타겟 마크
+    CNtlPLEntity                *m_pTargetMark02;           // decal target mark
     CNtlPLEntity				*m_pAttackMark;				/** character attack mark */
-    CNtlPLEntity                *m_pAttackMark02;           // 데칼 어택 마크
+    CNtlPLEntity                *m_pAttackMark02;           // decal attack mark
     CNtlPLEntity				*m_pQuestMark;				/**	character quest mark */        
-    CNtlPLEntity                *m_pTenkaichiMark;          ///< 천하제일 무도회 칭호 마킹 이펙트
-    CNtlPLEntity                *m_pTargetMarkingMark;      /// 타겟 마킹 마크 (메가 도동파)
-    CDBODirectorIndicate        *m_pDBODirectorIndicate;    /** TMQ/Quest Directore Indicate */    
-	sEmblemFactor				*m_pEmblemFactor;			/** Emblem 구성 요소 */
-    CNtlShareTargetMark         *m_pShareTargetMark;        ///< 공유 타겟 마크 관리 객체
+    CNtlPLEntity                *m_pTenkaichiMark;          ///< World’s Best Martial Arts Club Title Marking Effect
+    CNtlPLEntity                *m_pTargetMarkingMark;      /// Target marking mark (Mega Dodongpa)
+    CDBODirectorIndicate        *m_pDBODirectorIndicate;    /** TMQ/Quest Director Indicate */    
+	sEmblemFactor				*m_pEmblemFactor;			/** Emblem component */
+    CNtlShareTargetMark         *m_pShareTargetMark;        ///< Shared target mark management object
 
-    std::vector<CNtlInstanceEffect*> m_vecRPBonusEffect;    ///< 생성된 RPBonus용 이펙트를 저장하기 위한 벡터
+    std::vector<CNtlInstanceEffect*> m_vecRPBonusEffect;    ///< Vector to store the created effect for RPBonus
 
-    CNtlSobCharProxyTransform   *m_pProxyTransform;         ///< 변신 관련 프록시 객체    
+    CNtlSobCharProxyTransform   *m_pProxyTransform;         ///< Proxy object related to transformation    
 
 	CNtlPLEntity*				m_pTitleEffect;
 	CNtlPLEntity*				m_pGuardEffect;
@@ -72,26 +72,26 @@ private:
 protected:
 
     /** 
-    * shadow decal 생성
+    *Create shadow decal
     */
     void CreatePLShadowDecal(void);
     void DeletePLShadowDecal(void);
-    void ChangePLShadowDecal();             // 그림자 색상을 변경한다.
+    void ChangePLShadowDecal();             // Change the shadow color.
 
 	/** 
-	* Player Name
+	*Player Name
 	*/
     void CreatePLPlayerName(void);
     void DeletePLPlayerName(void);
 
 	/**
-	* player title effect
+	*player title effect
 	*/
 	void CreatePLPlayerTitle(const char *pEffectKey, const char *pBoneKey);
 	void DeletePLPlayerTitle();
 
     /** 
-    * character attack mark
+    *character attack mark
     */ 
     void CreatePLAttackMark(void);
     void DeletePLAttackMark(void);
@@ -100,23 +100,23 @@ protected:
     // character target mark
     void CreatePLTargetMark(void);
     void DeletePLTargetMark(void);
-    RwBool IsNotCreateDecalMark();                                          ///< 타겟 마크중 바닥 데칼을 표시하지 않는 객첵인지 확인
+    RwBool IsNotCreateDecalMark();                                          ///< Check whether the target mark is an object that does not display a floor decal.
 
     /** 
-    * character quest mark
+    *character quest mark
     */ 
     void CreatePLQuestMark(const RwChar *pKey);
     void DeletePLQuestMark(void);
 
-    /// 공유 타겟 마크
+    /// Share target mark
     void CreateShareTargetMark(RwUInt8 bySlot, RwUInt32 type);
     void DeleteShareTargetMark();
 
-    // 천하제일 무도회 칭호 이벤트
+    // World's Best Martial Arts Club Title Event
     void CreateTenkaichiMark(BYTE byType);
     void DeleteTenkaichiMark();
 
-    // 타겟 마킹 이벤트 (메가 도동파)
+    // Target Marking Event (Mega Dodongpa)
     void CreateTargetMarkingMark();
     void DeleteTargetMarkingMark();
     
@@ -142,9 +142,9 @@ public:
     void	SobAttackMarkReleaseEventHandler(RWS::CMsg &pMsg);
     void	SobQuestMark(RWS::CMsg &pMsg);
     void    SobDirectionNfy(RWS::CMsg &pMsg);    
-    void    SobShareTargetSelectHandler(RWS::CMsg& pMsg);                   ///< 공유 타겟 마크 설정 이벤트 처리
-    void    SobShareTargetReleaseHandler(RWS::CMsg& pMsg);                  ///< 공유 타겟 마크 해제 이벤트 처리        
-    void    SobTenkaichiMarkingHandler(RWS::CMsg& pMsg);                    ///< 천하제일 무도회 칭호 이벤트 처리    
+    void    SobShareTargetSelectHandler(RWS::CMsg& pMsg);                   ///< Share target mark setting event processing
+    void    SobShareTargetReleaseHandler(RWS::CMsg& pMsg);                  ///< Processing of shared target mark release event        
+    void    SobTenkaichiMarkingHandler(RWS::CMsg& pMsg);                    ///< World’s Best Martial Arts Club title event processing    
 
 	void    SobTitleEffectHandler(RWS::CMsg& pMsg);
 
@@ -185,8 +185,8 @@ public:
     void DeleteDirectorIndicate();
 
     // Rp Bonus Skill
-    RwBool AttachRPBonusEffect();             ///< RP Bonus Effect를 생성한다.
-    RwBool DetachRPBonusEffect();             ///< RP Bonus Effect를 제거한다.
+    RwBool AttachRPBonusEffect();             ///< Creates an RP Bonus Effect.
+    RwBool DetachRPBonusEffect();             ///< Removes the RP Bonus Effect.
 
 	 // Guard Skill
 	void CreateGuardEffect(RwChar *pKey);
@@ -197,6 +197,6 @@ public:
 	void DeleteRpChargeEffect();
 
     // Transform
-    void						SobChangeAdult(CNtlPLCharacter* pPLCharacter);                    ///< UI Model이 체인지 되었을때
+    void						SobChangeAdult(CNtlPLCharacter* pPLCharacter);                    ///< When the UI Model is changed
     CNtlSobCharProxyTransform*  GetProxyTransform() {return m_pProxyTransform;}    
 };

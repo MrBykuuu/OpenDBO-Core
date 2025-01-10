@@ -1,15 +1,15 @@
 ﻿#include "precomp_dboclient.h"
 #include "HpGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlPLDef.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLApi.h"
 #include "NtlSLEvent.h"
 #include "NtlSLGlobal.h"
@@ -26,13 +26,13 @@
 #include "NtlStorageManager.h"
 #include "NtlStorageGroupScouter.h"
 
-// GameTable
+// Game table
 #include "ItemTable.h"
 #include "MobTable.h"
 #include "FormulaTable.h"
 #include "WorldTable.h"
 
-// dbo
+// Dbo
 #include "DboDef.h"
 #include "DboGlobal.h"
 #include "DboEvent.h"
@@ -121,7 +121,7 @@ RwBool CHpGui::Create(void)
 	m_ppnlBattleCombatingToolTip = (gui::CPanel*)GetComponent("pnlBattleCombatingToolTip");
 	m_ppnlBattleCombatingToolTip->SetToolTip(GetDisplayStringManager()->GetString("DST_TIPS_BATTLECOMBATING"));
 
-	// flight
+	// Flight
 	m_ppnlAirPoint = (gui::CPanel*)GetComponent("pnlAirPoint");
 	m_ppnlAirPoint->SetToolTip(GetDisplayStringManager()->GetString("DST_AIR_CAN_NOT_FLY"));
 	m_psttAirHeight = (gui::CStaticBox*)GetComponent("sttAirHeight");
@@ -143,12 +143,12 @@ RwBool CHpGui::Create(void)
 	m_slotAvatarFocused = m_pbtnAvatar->SigFocused().Connect(this, &CHpGui::OnAvatarFocused);
 	m_slotAvatarClick = m_pbtnAvatar->SigClicked().Connect(this, &CHpGui::OnAvatarClick);
 
-		// AvatarBtn은 버튼이 아닌것처럼. 사운드 없애기
+		// As if AvatarBtn is not a button. silence sound
 	m_pbtnAvatar->SetClickSound( NULL );
 	m_pbtnAvatar->SetDisableSound( NULL );
 	m_pbtnAvatar->SetFocusSound( NULL );
 
-	// RP는 0으로 세팅
+	// RP set to 0
 	m_ppgbRp->SetRange( 0, 100 );
 	m_ppgbRp->SetPos( 0 );
 
@@ -394,14 +394,14 @@ void CHpGui::HandleEvents(RWS::CMsg &pMsg)
 			m_pBuff->SetBuffAll(pSobAvatar->GetSerialID() );
 		}				
 
-		// Avatar가 초기 생성된 후 GUI에 데이터 입력하라는 최초 단일의 시그널이 EVENT_AIUT_SKILL.
+		// After the Avatar is initially created, the first single signal to input data into the GUI is EVENT_AIUT_SKILL.
 		if( pUpdate->uiUpdateType & EVENT_AIUT_SKILL )
 		{
 			SAvatarInfo* pAvatarInfo = GetNtlSLGlobal()->GetAvatarInfo();
 			SetMaxRPBall(pAvatarInfo->byMaxRpStock);
 		}
 
-		// 실신 상태 일때는 모든 RP, RPBall은 수동으로 리셋한다.
+		// When in syncope, all RPs and RPBalls are reset manually.
 		if( pUpdate->uiUpdateType & EVENT_AIUT_DIE )
 		{
 			SetRPValue( 0, m_nMaxValue );
@@ -563,7 +563,7 @@ void CHpGui::HandleEvents(RWS::CMsg &pMsg)
 
 		if( pData->nRpStock < uiMaxRpStock)
 		{
-			// RP Gauge이미지 변경
+			// RP Gauge image change
 			RwChar buf[256];
 			sprintf_s( buf, 256, "srfNewRPGauge%d", pData->nRpStock );
 			m_ppgbRp->ClearSurface();
@@ -573,7 +573,7 @@ void CHpGui::HandleEvents(RWS::CMsg &pMsg)
 
 		m_ppgbRpBall->SetPos( pData->nRpStock );
 
-		// RpBall Max 갯수가 바뀌면 적용.
+		// Applies when the RpBall Max number changes.
 		if( pData->nMaxRpStock != uiMaxRpStock)
 		{
 			SetMaxRPBall( pData->nMaxRpStock );				
@@ -854,7 +854,7 @@ void CHpGui::SetAP(int nAP, int nMaxAP)
 {
 	int nPercent = nAP * 100 / nMaxAP;
 	CRectangle rec = m_psttAirPoint->GetScreenRect();;
-	if (nPercent >= 0 && nPercent < 33) // RED
+	if (nPercent >= 0 && nPercent < 33) // Red
 	{
 		if (m_eAirColor != TYPE_RED)
 		{
@@ -865,7 +865,7 @@ void CHpGui::SetAP(int nAP, int nMaxAP)
 			m_eAirColor = TYPE_RED;
 		}
 	}
-	else if (nPercent > 33 && nPercent < 66) // YELLOW
+	else if (nPercent > 33 && nPercent < 66) // Yellow
 	{
 		if (m_eAirColor != TYPE_YELLOW)
 		{
@@ -876,7 +876,7 @@ void CHpGui::SetAP(int nAP, int nMaxAP)
 			m_eAirColor = TYPE_YELLOW;
 		}
 	}
-	else if (nPercent > 66) // BLUE
+	else if (nPercent > 66) // Blue
 	{
 		if (m_eAirColor != TYPE_BLUE)
 		{

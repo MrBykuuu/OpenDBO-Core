@@ -1,27 +1,27 @@
 /*****************************************************************************
-* File			: DboPackethandler_GUBank.cpp
-* Author		: Hong sungbock
-* Copyright		: (주)NTL
-* Date			: 2007. 1. 16
-* Abstract		: 은행 관련 패킷 핸들
+*File			: DboPackethandler_GUBank.cpp
+*Author		    : Hong sungbock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 1. 16
+*Abstract		: Bank related packet handle
 *****************************************************************************
-* Desc         : 
+*Desc           : 
 *****************************************************************************/
 
 #include "precomp_dboclient.h"
 #include "DboPacketHandler.h"
 
-// shared
+// Shared
 #include "ItemTable.h"
 #include "TextAllTable.h"
 
-// simulation
+// Simulation
 #include "NtlNetSender.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSLPacketGenerator.h"
 #include "NtlWorldConceptNPCCommu.h"
 
-// dbo
+// Dbo
 #include "IconMoveManager.h"
 
 void PacketHandler_GSBankLoadReq(void *pPacket)
@@ -43,7 +43,7 @@ void PacketHandler_GSBankStartRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_BANK_START_RES );
 
-	// 창고를 처음 여는 동작의 결과
+	// Result of the action of opening the warehouse for the first time
 	sGU_BANK_START_RES *pResult = (sGU_BANK_START_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -63,7 +63,7 @@ void PacketHandler_GSBankMoveRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_BANK_MOVE_RES );
 
-	// 창고에 아이템을 넣거나 꺼냈다
+	// Items were placed or removed from the warehouse.
 	sGU_BANK_MOVE_RES *pResult = (sGU_BANK_MOVE_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -83,7 +83,7 @@ void PacketHandler_GSBankStackRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_BANK_MOVE_STACK_RES );
 
-	// 창고에 아이템을 1개보다 많이 넣거나 꺼냈다
+	// More than 1 item was placed in or removed from the warehouse.
 	sGU_BANK_MOVE_STACK_RES *pResult = (sGU_BANK_MOVE_STACK_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -103,7 +103,7 @@ void PacketHandler_GSBankEndRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_BANK_END_RES );
 
-	// 창고를 닫았다. 메세지만 뿌린다
+	// The warehouse was closed. Just send out a message
 	sGU_BANK_END_RES *pResult = (sGU_BANK_END_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -117,7 +117,7 @@ void PacketHandler_GSBankEndRes(void *pPacket)
 
 void PacketHandler_GSBankItemInfo(void *pPacket)
 {
-	// 처음으로 창고를 열어서 패킷을 받았다
+	// I opened the warehouse for the first time and received a packet.
 	sGU_BANK_ITEM_INFO* pResult = (sGU_BANK_ITEM_INFO*)pPacket;
 
 	CNtlSLEventGenerator::SobWarehouseItemCreate(pResult->byItemCount, pResult->aBankProfile);	
@@ -127,7 +127,7 @@ void PacketHandler_GSBankZennyInfo(void* pPacket)
 {
 	sGU_BANK_ZENNY_INFO* pResult = (sGU_BANK_ZENNY_INFO*)pPacket;
 
-	// 제니
+	// Zenny
 	CNtlSLEventGenerator::SobWarehouseUpdate(NESWUT_ADD_ZENNY, INVALID_SERIAL_ID, pResult->dwZenny);
 }
 
@@ -135,7 +135,7 @@ void PacketHandler_GSBankZennyRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_BANK_ZENNY_RES );
 
-	// 창고의 제니에 변화
+	// Zenny's transformation in the warehouse
 	sGU_BANK_ZENNY_RES *pResult = (sGU_BANK_ZENNY_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -147,10 +147,10 @@ void PacketHandler_GSBankZennyRes(void *pPacket)
 	GetIconMoveManager()->IconMoveEnd();
 
 	if(pResult->bIsSave)
-		// 저금
+		// Saving
 		CNtlSLEventGenerator::SobWarehouseUpdate(NESWUT_ADD_ZENNY, pResult->handle, pResult->dwZenny);
 	else
-		// 인출
+		// withdrawal
 		CNtlSLEventGenerator::SobWarehouseUpdate(NESWUT_SUB_ZENNY, pResult->handle, pResult->dwZenny);
 }
 
@@ -158,7 +158,7 @@ void PacketHandler_GSBankBuyRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_BANK_BUY_RES );
 
-	// 창고 슬롯을 늘렸다
+	// Increased warehouse slots
 	sGU_BANK_BUY_RES *pResult = (sGU_BANK_BUY_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -182,7 +182,7 @@ void PacketHandler_GSBankBuyRes(void *pPacket)
 
 	CNtlSLEventGenerator::SobWarehouseItemCreate(1, &itemProfile);
 
-	// 창고를 구입하였습니다
+	// A warehouse has been purchased
 	GetAlarmManager()->AlarmMessage("DST_WAREHOUSE_SUCCESS_BUY");
 }
 
@@ -190,8 +190,8 @@ void PacketHandler_GSBankItemDeleteRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_BANK_ITEM_DELETE_RES );
 
-	// 창고 안의 아이템을 지운 결과를 알려준다
-	// 실제로 지우는 것은 GU_ITEM_DELETE
+	// This will tell you the result of deleting an item in the warehouse.
+	// Actually deleting the item is done using GU_ITEM_DELETE
 	sGU_BANK_ITEM_DELETE_RES* pResult = (sGU_BANK_ITEM_DELETE_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )

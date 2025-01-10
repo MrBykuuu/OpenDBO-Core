@@ -18,7 +18,7 @@
 
 /**
 * \brief Construction
-* \param pName	(const RwChar*) GUI 이름
+* \param pName	(const RwChar*) GUI name
 */
 CTBMatchObserverVersusGui::CTBMatchObserverVersusGui( const RwChar* pName )
 : CNtlPLGui( pName )
@@ -38,7 +38,7 @@ CTBMatchObserverVersusGui::~CTBMatchObserverVersusGui()
 
 /**
 * \brief Create
-* 천하제일 무도회 개인전 또는 팀전의 관전자 Versus를 구성한다.
+*Forms Versus, a spectator for the World's Best Martial Arts individual or team match.
 */
 RwBool CTBMatchObserverVersusGui::Create()
 {
@@ -78,7 +78,7 @@ RwBool CTBMatchObserverVersusGui::Create()
 }
 
 /**
-* \brief 레드팀의 점수에 쓰일 숫자를 생성한다.
+* \brief Generates a number to be used in the red team's score.
 */
 VOID CTBMatchObserverVersusGui::CreateRedScoreNumber()
 {
@@ -100,7 +100,7 @@ VOID CTBMatchObserverVersusGui::CreateRedScoreNumber()
 }
 
 /**
-* \brief 블루팀의 점수에 쓰일 숫자를 생성한다.
+* \brief Generates a number to be used in the blue team's score.
 */
 VOID CTBMatchObserverVersusGui::CreateBlueScoreNumber()
 {
@@ -122,7 +122,7 @@ VOID CTBMatchObserverVersusGui::CreateBlueScoreNumber()
 }
 
 /**
-* \brief TIME에 쓰일 숫자를 생성한다.
+* \brief Generates numbers to be used in TIME.
 */
 VOID CTBMatchObserverVersusGui::CreateLeftTimeNumber()
 {
@@ -167,7 +167,7 @@ VOID CTBMatchObserverVersusGui::Destroy()
 
 /**
 * \brief Update
-* \param fElapsed	(RwReal) 이전 프레임에서 경과된 시간
+* \param fElapsed (RwReal) Time elapsed from previous frame
 */
 VOID CTBMatchObserverVersusGui::Update( RwReal fElapsed )
 {
@@ -189,7 +189,7 @@ VOID CTBMatchObserverVersusGui::Update( RwReal fElapsed )
 
 /**
 * \brief HandleEvents
-* \param msg		(RWS::CMsg&) Event 메시지 구조체
+* \param msg		(RWS::CMsg&) Event message structure
 */
 VOID CTBMatchObserverVersusGui::HandleEvents( RWS::CMsg& msg )
 {
@@ -199,21 +199,21 @@ VOID CTBMatchObserverVersusGui::HandleEvents( RWS::CMsg& msg )
 
 		if( pData->bEnterState )
 		{
-			// Match Ready 상태라면 점수를 초기화시켜준다.
+			// If it is Match Ready, the score is reset.
 			if( pData->byMatchState == BUDOKAI_MAJORMATCH_STATE_MATCH_READY )
 			{
 				SetScore( 0, 0 );
 				return;
 			}
 
-			// READY, RUN, FINISH 상태가 아니라면 해제한다.
+			// Release it if it is not in READY, RUN, or FINISH status.
 			if( pData->byMatchState == BUDOKAI_MAJORMATCH_STATE_STAGE_READY ||
 				pData->byMatchState == BUDOKAI_MAJORMATCH_STATE_STAGE_RUN	||
 				pData->byMatchState == BUDOKAI_MAJORMATCH_STATE_STAGE_FINISH )
 			{
 				if( !IsShow() )
 				{
-					// 참가자라면 리턴
+					// Return if you are a participant
 					CNtlWorldConceptTB*	pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 					stTBudokaiMember* pMember = pTBWorldConcept->FindMember( Logic_GetAvatarHandle() );
 					if( pMember )
@@ -245,7 +245,7 @@ VOID CTBMatchObserverVersusGui::HandleEvents( RWS::CMsg& msg )
 
 		if( pData->bEnterState )
 		{
-			// Match Ready 상태라면 점수를 초기화시켜준다.
+			// If it is Match Ready, the score is reset.
 			if( pData->byMatchState == BUDOKAI_MAJORMATCH_STATE_MATCH_READY )
 			{
 				SetScore( 0, 0 );
@@ -258,7 +258,7 @@ VOID CTBMatchObserverVersusGui::HandleEvents( RWS::CMsg& msg )
 			{
 				if( !IsShow() )
 				{
-					// 참가자라면 리턴
+					// Return if you are a participant
 					CNtlWorldConceptTB*	pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 					stTBudokaiMember* pMember = pTBWorldConcept->FindMember( Logic_GetAvatarHandle() );
 					if( pMember )
@@ -305,19 +305,19 @@ VOID CTBMatchObserverVersusGui::HandleEvents( RWS::CMsg& msg )
 }
 
 /**
-* \brief 현재 VS GUI의 타입을 설정한다.
+* \brief Sets the type of the current VS GUI.
 */
 VOID CTBMatchObserverVersusGui::SetVersusType()
 {
 	CNtlWorldConceptTB* pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 	DBO_ASSERT( pTBWorldConcept, "CTBMatchObserverVersusGui : must World concept is valid" );
 
-	// 개인전
+	// solo exhibition
 	if( !pTBWorldConcept->IsPartyBattle() )
 	{
 		m_byType = TYPE_INDI;
 	}
-	// 팀전
+	// team fight
 	else
 	{
 		m_byType = TYPE_TEAM;
@@ -325,7 +325,7 @@ VOID CTBMatchObserverVersusGui::SetVersusType()
 }
 
 /**
-* \brief 타입에 따른 Interface를 세팅한다.
+* \brief Set the interface according to the type.
 * \param byType		(RwUInt8) Interface Type
 */
 VOID CTBMatchObserverVersusGui::SetInterfaceByType( RwUInt8 byType )
@@ -342,12 +342,12 @@ VOID CTBMatchObserverVersusGui::SetInterfaceByType( RwUInt8 byType )
 		break;
 	case TYPE_TEAM:
 		{
-			// Red 팀 이름 셋팅
-			// Blue 팀 이름 세팅
+			// Red team name setting
+			// Blue team name setting
 			CNtlWorldConceptTB* pTBWorldConcept = reinterpret_cast<CNtlWorldConceptTB*>( GetNtlWorldConcept()->GetWorldConceptController( WORLD_PLAY_T_BUDOKAI ) );
 			DBO_ASSERT( pTBWorldConcept, "CTBMatchObserverVersusGui : must World concept is valid" );		
 
-			// 학팀이 Red
+			// The crane team is Red
 			stTBudokaiTeam* pRedTeam = pTBWorldConcept->GetRedTeam();
 			DBO_ASSERT( pRedTeam, "CTBMatchObserverVersusGui : must Budokai red team is valid" );
 
@@ -383,7 +383,7 @@ VOID CTBMatchObserverVersusGui::SetCurrentScore()
 }
 
 /**
-* \brief 점수를 지정한다.
+* \brief Specifies the score.
 */
 VOID CTBMatchObserverVersusGui::SetScore( RwUInt8 byRedScore, RwUInt8 byBlueScore )
 {
@@ -391,7 +391,7 @@ VOID CTBMatchObserverVersusGui::SetScore( RwUInt8 byRedScore, RwUInt8 byBlueScor
 	m_numBlueScore.SetNumber( byBlueScore );
 }
 /**
-* \brief 시간을 지정한다.
+* \brief Specifies the time.
 */
 VOID CTBMatchObserverVersusGui::SetTime( RwUInt32 nTime )
 {

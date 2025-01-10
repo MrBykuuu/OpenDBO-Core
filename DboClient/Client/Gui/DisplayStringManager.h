@@ -1,12 +1,12 @@
 /*****************************************************************************
  *
- * File			: DisplayStringManager.h
- * Author		: HyungSuk, Jang
- * Copyright	: (аж)NTL
- * Date			: 2005. 9. 22	
- * Abstract		: DBO display string manager.h
+ *File			: DisplayStringManager.h
+ *Author	    : HyungSuk, Jang
+ *Copyright	    : (аж)NTL
+ *Date			: 2005. 9. 22	
+ *Abstract		: DBO display string manager.h
  *****************************************************************************
- * Desc         : 
+ *Desc          : 
  *
  *****************************************************************************/
 

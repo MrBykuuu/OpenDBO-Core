@@ -36,10 +36,10 @@ void CNtlPLUVAnim::Destory()
 
 
 /**
- * uva파일로 부터 UVAnim을 생성하여 Clump에 적용한다.
- * \param szUVFileName 적용할 uvAnim 파일경로 (*.uva)
- * \param pClump UVAnim을 적용할 Clump 객체
- * return 성공 유무
+ *Create UVAnim from uva file and apply to Clump.
+ * \param szUVFileName uvAnim file path to apply (*.uva)
+ * \param pClump Clump object to apply UVAnim to.
+ *Whether return is successful or not
  */
 RwBool CNtlPLUVAnim::Create( const char* szUVFileName, RpClump* pClump ) 
 {
@@ -75,9 +75,9 @@ RwBool CNtlPLUVAnim::Create( const char* szUVFileName )
         return FALSE;
 
 
-    // NOTE: 화면에 서로다른 UVAnim이 적용된 Object가 두개이상있을때. 문제가 있지 않을까?
-    // 차후에 결과를 보고, 문제가 있으면 수정한다.
-    // DIct객체에 Entry(RpUVAnim*)를 추가하는 형태로 변경이 필요할지도 모르겠다.
+    // NOTE: When there are two or more objects on the screen with different UVAnim applied. Could there be a problem?
+    // Check the results later and correct any problems.
+    // A change may be needed in the form of adding Entry(RpUVAnim*) to the DIct object.
     RtDictSchemaSetCurrentDict(RpUVAnimGetDictSchema(), m_pUvAnimDict);    
 
     return TRUE;
@@ -98,16 +98,16 @@ void CNtlPLUVAnim::Update( RwReal fElapsedTime )
 
     //API_MaterialsInterpolatorsAddAnimTime(m_pAnimationMaterialList, fElapsedTime * m_fUVAnimTime);    
 
-    // 복수개의 Clump에 Material이 공통적으로 적용이되기 때문에, AddTime이 아닌 SetCurrentTime을 적용한다.
+ // SetCurrentTime, not AddTime, because the Material is common to multiple clumps.
     API_MaterialsInterpolatorsSetCurrentTime(m_pAnimationMaterialList, CNtlTimer::GetAppTime() * m_fUVAnimTime);
 
     API_MaterialsAnimApply(m_pAnimationMaterialList);
 }
 
 /**
- * *.uva 파일을 로드한다.
- * \param strFullName uva파일경로
- * return uva파일을 로드한 RtDict 객체
+ *Load the *.uva file.
+ * \param strFullName uva file path
+ *return RtDict object that loaded the uva file
  */
 RtDict* CNtlPLUVAnim::UVAnimDictLoad( const RwChar* strFullName ) 
 {

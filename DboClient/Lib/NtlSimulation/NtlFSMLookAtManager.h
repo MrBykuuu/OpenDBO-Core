@@ -2,7 +2,7 @@
 *
 * File			: NtlFSMLookAtManager.h
 * Author		: HyungSuk, Jang
-* Copyright	: (аж)NTL
+* Copyright	    : NTL Co., Ltd.
 * Date			: 2006. 2. 9	
 * Abstract		: fsm look at manager class
 *****************************************************************************

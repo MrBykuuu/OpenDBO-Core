@@ -21,11 +21,11 @@ class CNtlStage;
 
 /**
  * \ingroup Client
- * active된 stage를 관리하는 class이다.
- * stage manager class는 event를 받아서 처리하는데, 
- * event에는 stage 생성/삭제가 존재한다.
- * event id에는 g_EventCreateStage, g_EventDeleteStage가 쓰이며,
- * NtlGlobalEvent.h에 선언되어 있다.
+ *This is a class that manages the active stage.
+ *The stage manager class receives and processes events. 
+ *Stage creation/deletion exists in event.
+ *g_EventCreateStage and g_EventDeleteStage are used for event id.
+ *Declared in NtlGlobalEvent.h.
   */
 
 class CNtlStageManager : public RWS::CEventHandler

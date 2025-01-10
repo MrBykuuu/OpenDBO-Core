@@ -1,14 +1,14 @@
 #include "precomp_dboclient.h"
 #include "CharSelecterGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLDef.h"
 #include "NtlPLGuiManager.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DialogDefine.h"
@@ -103,7 +103,7 @@ RwBool CCharSelecterGui::Create()
 		m_CharSlot[i].m_pTextStatic->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_CHARACTER_MAKE"));
 		m_CharSlot[i].m_pTextStatic->Enable(false);
 
-		// 캐릭터 이름
+		// character name
 		rect.SetRectWH(75, iNameY, 120, 14);
 		m_CharSlot[i].pName = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER);
 		m_CharSlot[i].pName->CreateFontStd(DEFAULT_FONT, 105, DEFAULT_FONT_ATTR);
@@ -111,29 +111,29 @@ RwBool CCharSelecterGui::Create()
 		m_CharSlot[i].pName->Clear();
 		m_CharSlot[i].pName->Enable(false);
 
-		// 캐릭터 레벨
+		// character level
 		rect.SetRectWH(0, iNameY + 17, 200, 14);
 		m_CharSlot[i].pLevel = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_RIGHT);
 		m_CharSlot[i].pLevel->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 		m_CharSlot[i].pLevel->SetTextColor(RGB(255, 255, 255));
 		m_CharSlot[i].pLevel->Enable(false);
 
-		// New Character 서페이스
+		// New Character Surface
 		m_CharSlot[i].srfNewCharacter.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("CharSelecter.srf", "srfNewCharacter"));
 
-		// New Character 서페이스 포커스
+		// New Character Surface Focus
 		m_CharSlot[i].srfNewCharacterFoc.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("CharSelecter.srf", "srfNewCharacter_Foc"));
 
 		iNameY += dHEIGHT_GAP;
 		iStartButtonY += dHEIGHT_GAP;
 	}
 
-	// 캐릭터 삭제 버튼
+	// Delete character button
 	m_pCharDelButton = (gui::CButton*)GetComponent("btnCharDel");
 	m_pCharDelButton->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_DEL_CHAR"));
 	m_slotCharDelButton = m_pCharDelButton->SigClicked().Connect(this, &CCharSelecterGui::OnClickDelCharButton);
 
-	// 캐릭터 복구 버튼
+	// Character Recovery Button
 	m_pCharRecoveryButton = (gui::CButton*)GetComponent("btnCharRecovery");
 	m_pCharRecoveryButton->SetText(GetDisplayStringManager()->GetString("DST_LOBBY_RECOVERY_CHAR_INFO"));
 	m_slotCharRecoveryButton = m_pCharRecoveryButton->SigClicked().Connect(this, &CCharSelecterGui::OnClickRecoveryCharButton);
@@ -145,7 +145,7 @@ RwBool CCharSelecterGui::Create()
 	GetNtlGuiManager()->AddUpdateFunc(this);
 
 
-	// sig	
+	// Signals	
 	m_slotPaint = m_pThis->SigPaint().Connect(this, &CCharSelecterGui::OnPaint);
 	m_slotPostPaint = m_pPostPaintDummy->SigPaint().Connect(this, &CCharSelecterGui::OnPostPaint);
 
@@ -185,7 +185,7 @@ VOID CCharSelecterGui::Update(RwReal fElapsed)
 		if (CHAR_STATE_RESERVATED_DEL != m_CharSlot[i].m_byState)
 			continue;
 
-		// 꼭 필요한 경우만 딱 한번 로비 정보를 가져오기 위해
+		// To retrieve lobby information only once when absolutely necessary
 		if (!pLobby)
 			pLobby = GetLobbyManager()->GetLobby(hServer);
 
@@ -437,7 +437,7 @@ VOID CCharSelecterGui::OnPostPaint()
 {
 	for (RwUInt8 i = 0; i < NTL_MAX_COUNT_USER_CHAR_SLOT; ++i)
 	{
-		// 아예 그리지 않는 것이 아니라 빈칸 이미지를 그릴지 말지를 결정한다
+		// It's not that you don't draw at all, it's that you decide whether to draw a blank image or not.
 		if (i == m_byFocusIndex)
 			m_CharSlot[i].Render(true);
 		else
@@ -478,10 +478,10 @@ VOID CCharSelecterGui::HandleEvents(RWS::CMsg &msg)
 						continue;
 					}
 
-					// 캐릭터 이름
+					// character name
 					m_CharSlot[i].pName->SetText(pLOBBY_CHARACTER->tSummary.awchName);
 
-					// 캐릭터 레벨
+					// character level
 					if (pLOBBY_CHARACTER->bReservatedDelete)
 					{
 						m_CharSlot[i].pLevel->SetTextColor(RGB(255, 79, 79));
@@ -501,7 +501,7 @@ VOID CCharSelecterGui::HandleEvents(RWS::CMsg &msg)
 						m_CharSlot[i].pButton[CHAR_STATE_RESERVATED_DEL]->Show(false);
 					}
 
-					// 캐릭터 종족
+					// character race
 					m_CharSlot[i].srfRace.GetRect(rect);
 
 					switch (pLOBBY_CHARACTER->tSummary.byRace)

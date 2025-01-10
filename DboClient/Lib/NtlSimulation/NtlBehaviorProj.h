@@ -1,12 +1,12 @@
 /*****************************************************************************
  *
- * File			: NtlBehaviorProj.h
- * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
- * Date			: 2006. 2. 27	
- * Abstract		: projectile behavior class
+ *File			: NtlBehaviorProj.h
+ *Author		: HyungSuk, Jang
+ *Copyright	: (주)NTL
+ *Date			: 2006. 2. 27	
+ *Abstract		: projectile behavior class
  *****************************************************************************
- * Desc         : 
+ *Desc         : 
  *
  *****************************************************************************/
 
@@ -50,7 +50,7 @@ public:
 
 /**
  * \ingroup NtlSimulation
- * \brief 휘어서 상대의 뒤를 공격하는 Projectile
+ * \brief Projectile that bends and attacks the opponent's back
  *
  * \date 2008-10-16
  * \author agebreak
@@ -75,8 +75,8 @@ public:
     virtual void Update(RwReal fElapsed);
 
 protected:
-    EMagareStatus   m_eStatus;                      ///< 현재 상태
-    RwReal          m_fTotalAngle;                  ///< 회전한 총 각도
+    EMagareStatus   m_eStatus;                      ///< Current status
+    RwReal          m_fTotalAngle;                  ///< Total angle rotated
     
 };
 
@@ -200,7 +200,7 @@ public:
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-// 마공 포위탄에 쓴다.
+// Used for magic attack siege bombs.
 class CNtlBehaviorProjHelljone : public CNtlBehaviorProjectile
 {
 	DECLEAR_MEMORY_POOL(CNtlBehaviorProjHelljone, NTL_DEFAULT_MEMORY_POOL)
@@ -244,7 +244,7 @@ public:
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-// drain skill에서 target의 energy를 흡수한다.
+// Absorbs the target's energy in the drain skill.
 class CNtlBehaviorProjSteal : public CNtlBehaviorProjectile
 {
 	DECLEAR_MEMORY_POOL(CNtlBehaviorProjSteal, NTL_DEFAULT_MEMORY_POOL)

@@ -2,10 +2,10 @@
 #include "ScrambleBalloonHelper.h"
 
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSobAvatar.h"
 #include "NtlWorldConcept.h"
@@ -13,7 +13,7 @@
 #include "NtlSobManager.h"
 #include "NtlSobAvatarAttr.h"
 
-// client
+// Client
 #include "DboEventGenerator.h"
 #include "ChatBalloonManager.h"
 
@@ -116,7 +116,7 @@ VOID ScrambleBalloonHelper::Update(RwReal fElapsed)
 					continue;
 				}
 
-				// 모습이 안 보이면 말풍선 생성에 실패한다
+				// If the appearance is not visible, the speech bubble creation fails.
 
 				if( !pSob->IsVisible() )
 				{
@@ -155,10 +155,10 @@ VOID ScrambleBalloonHelper::HandleEvents( RWS::CMsg &msg )
 		if( FALSE == GetNtlWorldConcept()->IsActivePlayConcept(WORLD_PLAY_DOJO_SCRAMBLE) )
 			NTL_RETURNVOID();
 
-		// avooo's comment : 바로 배틀 말풍선을 생성하지 않는 이유
-		//					 g_EventSobCreate 이벤트가 발생되고 Sob 객체가 만들어진 후 별도의 Notify가 없다
-		//					 일단 이벤트 발생 후 몇 Tick이 지나고 Sob 데이터가 확실히 있음이 보장될 때
-		//					 배틀 말풍선을 생성한다
+		// avooo's comment: Why not create a battle speech bubble right away?
+		//					 After the g_EventSobCreate event occurs and the Sob object is created, there is no separate notification.
+		//					 Once a few ticks have passed since the event occurred and it is guaranteed that Sob data exists
+		//					 Create a battle speech bubble
 		SNtlEventSob* pEvent = reinterpret_cast<SNtlEventSob*>( msg.pData );
 
 		if( INVALID_SERIAL_ID == pEvent->hSerialId )
@@ -196,7 +196,7 @@ VOID ScrambleBalloonHelper::HandleEvents( RWS::CMsg &msg )
 	}
 	else if( msg.Id == g_EventEndterWorld )
 	{
-		// 아바타는 기본적으로 도장쟁탈전용 말풍선을 보여준다
+		// The avatar basically shows a speech bubble for the stamp competition.
 		if( FALSE == GetNtlWorldConcept()->IsActivePlayConcept(WORLD_PLAY_DOJO_SCRAMBLE) )
 			NTL_RETURNVOID();
 

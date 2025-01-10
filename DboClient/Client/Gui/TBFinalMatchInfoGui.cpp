@@ -7,7 +7,7 @@
 // Presentation
 #include "NtlPLGuiManager.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
 // Simulation
@@ -25,7 +25,7 @@
 #include "DisplayStringManager.h"
 #include "DboEventGenerator.h"
 
-#define TB_FINAL_ENEMY_PARTYINFO_CLASSICON_X	-24		// 각 파티인포아이템 기준 좌표.
+#define TB_FINAL_ENEMY_PARTYINFO_CLASSICON_X	-24		// The coordinates of each party info item.
 #define TB_FINAL_ENEMY_PARTYINFO_CLASSICON_Y	0	
 
 #define TB_FINAL_BATTLEINFO_BLUESCORE_X		127
@@ -290,11 +290,11 @@ VOID CTBFinalMatchInfoGui::HandleEvents( RWS::CMsg& msg )
 
 		if( pData->bEnterState )
 		{
-			// 현재 자신의 경기가 아니라면
+			// If it's not your game right now
 			if( !pTBWorldConcept->GetMyTeam() )
 				return;
 
-			// 참가자가 아니라면
+			// Unless you are a participant
 			if( !pTBWorldConcept->GetMyTeam() )
 				return;
 

@@ -21,7 +21,7 @@
 #include "BudokaiTable.h"
 #include "TableContainer.h"
 
-// DBO
+// Dbo
 #include "DboDef.h"
 #include "DboEvent.h"
 #include "DialogDefine.h"
@@ -32,7 +32,7 @@
 
 /**
 * \brief Construction
-* \param pName	(const RwChar*) GUI의 이름
+* \param pName	(const RwChar*) Name of the GUI
 */
 CTBRequestGui::CTBRequestGui( const RwChar* pName )
 : CNtlPLGui(pName)
@@ -124,7 +124,7 @@ RwBool CTBRequestGui::Create()
 		m_paMemberRankingPoint[i]	= (gui::CStaticBox*)GetComponent( acBuffer );
 	}
 
-	// 개인전 접수증
+	// Individual exhibition receipt
 	m_pDlgIndiTicket			= (gui::CDialog*)GetComponent("dlgIndiTicket");
 	m_pStbTicketGuide		= (gui::CStaticBox*)GetComponent("stbTicketGuide");
 	m_pStbTicketNumber		= (gui::CStaticBox*)GetComponent("stbTicketNumber");
@@ -133,7 +133,7 @@ RwBool CTBRequestGui::Create()
 	m_surEmblem.SetSize( dEMBLEM_TEXTURE_DEFAULT_SIZE, dEMBLEM_TEXTURE_DEFAULT_SIZE );
 	m_surEmblem.SetPositionfromParent( 79, 208 );
 
-	// 팀전 접수증
+	// Team match receipt
 	m_pDlgTeamTicket		= (gui::CDialog*)GetComponent("dlgTeamTicket");
 	m_pStbTicketTeamGuide	= (gui::CStaticBox*)GetComponent("stbTicketTeamGuide");
 	m_pStbTicketTeamNumber	= (gui::CStaticBox*)GetComponent("stbTicketTeamNumber");
@@ -148,7 +148,7 @@ RwBool CTBRequestGui::Create()
 		m_paTicketTeamMember[i] = (gui::CStaticBox*)GetComponent( acBuffer );
 	}
 
-	// 접수번호
+	// Application number
 	m_numTicket.Create( ND_CENTER, NVD_CENTER, 0 );
 	m_numTicket.SetSurface( 0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CommonNumber.srf", "srfTB_0" ) );
 	m_numTicket.SetSurface( 1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "CommonNumber.srf", "srfTB_1" ) );
@@ -242,8 +242,8 @@ RwInt32 CTBRequestGui::SwitchDialog( bool bOpen )
 */
 void CTBRequestGui::HandleEvents( RWS::CMsg& msg )
 {
-	// 천하제일 무도회의 메인 스테이트가 변경되었을 경우
-	//// 1. 메인 스테이트가 만약에 CLOSE 또는 CLEAR 상태일 때 신청서가 떠 있을 경우 닫는다.
+	// When the main state of the world's best martial arts club is changed
+	//// 1. If the main state is in CLOSE or CLEAR status and the application is floating, close it.
 	if( msg.Id == g_EventBudokaiUpdateStateNfy )
 	{
 		sNtlEventBudokaiUpdateStateNfy* pNotify = reinterpret_cast<sNtlEventBudokaiUpdateStateNfy*>( msg.pData );
@@ -257,8 +257,8 @@ void CTBRequestGui::HandleEvents( RWS::CMsg& msg )
 				GetDialogManager()->CloseDialog( DIALOG_BUDOKAI_REQUEST );
 		}
 	}
-	// 천하제일 무도회의 매치 스테이트가 변경되었을 경우
-	// 1. 매치 스테이트가 Register 기간이 아닌 경우에 GUI의 타입이 신청서라면 닫는다.
+	// When the match state of World's First Budokai is changed
+	// 1. If the match state is not the Register period and the GUI type is Application, close it.
 	else if( msg.Id == g_EventBudokaiUpdateMatchStateNfy )
 	{
 		sNtlEventBudokaiUpdateMatchStateNfy* pNotify = reinterpret_cast<sNtlEventBudokaiUpdateMatchStateNfy*>( msg.pData );
@@ -320,8 +320,8 @@ void CTBRequestGui::HandleEvents( RWS::CMsg& msg )
 				GetDialogManager()->CloseDialog( DIALOG_BUDOKAI_REQUEST );
 		}
 	}
-	// 파티전 신청 취소의 결과 ( 팀 리더 )
-	// 성공 : 접수증을 신청서로 변환하고 정보를 초기화한다. 만약 파티원이 없는 상태라면 개인전의 신청서로 전환
+	// Consequences of party battle application cancellation (team leader)
+	// Success: Convert the receipt into an application and initialize the information. If there are no party members, switch to the application form for a solo exhibition.
 	else if( msg.Id == g_EventBudokaiLeaveTeamRes )
 	{
 		SNtlEventBudokaiLeaveTeamRes* pResult = reinterpret_cast<SNtlEventBudokaiLeaveTeamRes*>( msg.pData );
@@ -332,14 +332,14 @@ void CTBRequestGui::HandleEvents( RWS::CMsg& msg )
 				GetDialogManager()->CloseDialog( DIALOG_BUDOKAI_REQUEST );
 		}
 	}
-	// 파티전 신청 취소했다는 알림 ( 팀 멤버 전원에게 )
-	// 접수증을 신청서로 변환하고 정보를 초기화한다. ( 팀멤버의 경우 파티전 신청서를 띄우고 아니라면 개인전 신청서로 전환 )
+	// Notification that party application has been canceled (to all team members)
+	// Convert the receipt into an application form and initialize the information. (If you are a team member, open the party application form. Otherwise, switch to the individual application form.)
 	else if( msg.Id == g_EventBudokaiLeaveTeamNfy )
 	{
 		if( GetDialogManager()->IsOpenDialog( DIALOG_BUDOKAI_REQUEST ) )
 			GetDialogManager()->CloseDialog( DIALOG_BUDOKAI_REQUEST );
 	}
-	// 파티전 멤버가 파티전 신청 취소를 했을 경우 ( 멤버 본인 )
+	// If a pre-party member cancels the pre-party application (member)
 	else if( msg.Id == g_EventBudokaiLeaveTeamMemberRes )
 	{
 		SNtlEventBudokaiLeaveTeamMemberRes* pResult = reinterpret_cast<SNtlEventBudokaiLeaveTeamMemberRes*>( msg.pData );
@@ -350,7 +350,7 @@ void CTBRequestGui::HandleEvents( RWS::CMsg& msg )
 				GetDialogManager()->CloseDialog( DIALOG_BUDOKAI_REQUEST );
 		}
 	}
-	// 파티전 멤버가 파티전 신청 취소를 했을 경우 ( 팀 멤버들에게 )
+	// If a pre-party member cancels the pre-party application (to team members)
 	else if( msg.Id == g_EventBudokaiLeaveTeamMemberNfy )
 	{
 		SNtlEventBudokaiLeaveTeamMemberNfy* pNotify = reinterpret_cast<SNtlEventBudokaiLeaveTeamMemberNfy*>( msg.pData );
@@ -363,7 +363,7 @@ void CTBRequestGui::HandleEvents( RWS::CMsg& msg )
 			}
 		}
 	}
-	// 중간에 탈락하였을 경우
+	// If you are eliminated in the middle
 	else if( msg.Id == g_EventBudokaiJoinStateNfy )
 	{
 		SNtlEventBudokaiJoinStateNfy* pNotify = reinterpret_cast<SNtlEventBudokaiJoinStateNfy*>( msg.pData );
@@ -404,7 +404,7 @@ void CTBRequestGui::HandleEvents( RWS::CMsg& msg )
 			//		{
 			//			if( wcscmp( pJoinInfo->sTeamInfo.aMemberInfo[i].wszName, pAvatarInfo->sCharPf.awchName ) == 0 )
 			//			{
-			//				// i 가 0 일 때만 신청한 사람이 파티장이고 그 이외에는 멤버로 간주한다.
+			//				// Only when i is 0, the person who applied is considered the party leader, and everyone else is considered a member.
 			//				if( i == 0 )
 			//					GetDboGlobal()->GetGamePacketGenerator()->SendBudokaiLeaveTeamReq();
 			//				else
@@ -422,7 +422,7 @@ void CTBRequestGui::HandleEvents( RWS::CMsg& msg )
 }
 
 /**
-* \brief 신청서의 타입을 세팅한다.
+* \brief Sets the type of application.
 */
 void CTBRequestGui::SetRequestType( RwUInt8 byRequestType )
 {
@@ -430,7 +430,7 @@ void CTBRequestGui::SetRequestType( RwUInt8 byRequestType )
 }
 
 /**
-* \brief 천하제일 무도회 참가 상태에 따른 신청서의 Type을 지정한다.
+* \brief Specifies the application type according to the status of participation in the World's Best Martial Arts Club.
 */
 void CTBRequestGui::UpdateJoinInfo()
 {
@@ -440,8 +440,8 @@ void CTBRequestGui::UpdateJoinInfo()
 	sBUDOKAI_UPDATE_MATCH_STATE_INFO* pSoloMatch;
 	sBUDOKAI_UPDATE_MATCH_STATE_INFO* pTeamMatch;
 
-	// NULL 일 때는 아바타 생성 전에 정보가 들어왔을 경우
-	// NULL이 아닐 때는 정상적으로 데이터가 셋팅 되었을 경우
+	// If NULL, the information was received before avatar creation.
+	// If it is not NULL, the data is set normally.
 	if( pSobAvatar == NULL )
 	{
 		pJoinInfo = &GetNtlSLGlobal()->GetTBudokaiStateInfo()->sJoinInfo;
@@ -457,11 +457,11 @@ void CTBRequestGui::UpdateJoinInfo()
 
 	if( pJoinInfo->byJoinState == BUDOKAI_JOIN_STATE_DROPOUT )
 	{
-		// Exception ( 탈락자는 접수증, 신청서 둘다 뜨면 안된다. )
+		// Exception (If you are rejected, neither the receipt nor the application form should appear.)
 	}
 	else if( pJoinInfo->byJoinState == BUDOKAI_JOIN_STATE_PLAY )
 	{
-		// 접수증이 보여줘야함
+		// Receipt must be visible
 		m_byGuiType = TYPE_TICKET;
 		
 		if( pJoinInfo->byMatchType == BUDOKAI_MATCH_TYPE_INDIVIDIAUL )
@@ -509,7 +509,7 @@ void CTBRequestGui::UpdateJoinInfo()
 }
 
 /**
-* \brief 현재의 상태에 따른 인터페이스를 세팅해준다. ( 천하제일 무도회 정보를 읽어서 세팅한다. )
+* \brief Sets the interface according to the current state. (Read the World's Best Martial Arts information and set it up.)
 */
 void CTBRequestGui::UpdateInterface()
 {
@@ -522,7 +522,7 @@ void CTBRequestGui::UpdateInterface()
 	m_pDlgIndiTicket->Show( false );
 	m_pDlgTeamTicket->Show( false );
 
-	// 현재 참가 상태를 체크한다.
+	// Check your current participation status.
 	UpdateJoinInfo();
 
 	if( m_byGuiType == TYPE_REQUEST )
@@ -536,17 +536,17 @@ void CTBRequestGui::UpdateInterface()
 			if( pSobAvatar == NULL )
 				return;
 
-			// 이름, 레벨
+			// name, level
 			m_pStbIndiNameDisplay->SetText( Logic_GetAvatarName() );
 			m_pStbIndiLevelDisplay->SetText( Logic_GetLevel( pSobAvatar ) );
 
-			// 클래스
-			RwUInt8 byClass = Logic_GetPlayerClass(pSobAvatar);	// 클래스
+			// class
+			RwUInt8 byClass = Logic_GetPlayerClass(pSobAvatar);	// class
 			m_pStbIndiClassDisplay->SetText( Logic_GetClassName( byClass ) );
 
 			sRANKBATTLE_SCORE_INFO* pData = pSobAvatar->GetRankBattle()->GetRankBattleScore();
 			
-			// 전적 ( 몇전 몇승 몇패 )
+			// Records (how many wins and how many losses)
 			WCHAR awcBuffer[256];
 			swprintf( awcBuffer, 256, 
 				GetDisplayStringManager()->GetString( "DST_BUDOKAI_INDI_REQ_RECORD_DATA" ),
@@ -555,10 +555,10 @@ void CTBRequestGui::UpdateInterface()
 				pData->dwLose );
 			m_pStbIndiRecordDisplay->SetText( awcBuffer );
 
-			// 랭킹 포인트
+			// ranking points
 			m_pStbIndiRankingPointDisplay->SetText( (RwInt32)pData->fPoint );
 
-			// 길드
+			// guild
 			if( pSobAvatar->GetGuild()->IsHaveGroup() )
 			{
 				m_pStbIndiGuildDisplay->SetText( pSobAvatar->GetGuild()->GetGuildName() );
@@ -573,7 +573,7 @@ void CTBRequestGui::UpdateInterface()
 			m_pDlgTeam->Show( true );
 
 			
-			// Input Box에 파티 이름을 기본으로 세팅한다.
+			// Set the party name as default in the input box.
 			m_pIpbTeamName->Clear();
 			CNtlSobAvatar* pAvatar = GetNtlSLGlobal()->GetSobAvatar();
 			if( pAvatar )
@@ -585,7 +585,7 @@ void CTBRequestGui::UpdateInterface()
 				}
 			}
 
-			// 신청 되는 멤버의 리스트를 클리어 하고 서버에 팀의 정보를 요청한다.
+			// Clear the list of applied members and request team information from the server.
 			ClearRequestMemberInfo();
 			GetDboGlobal()->GetGamePacketGenerator()->SendBudokaiJoinTeamInfoReq();		
 		}
@@ -600,7 +600,7 @@ void CTBRequestGui::UpdateInterface()
 	{
 		if( m_byRequestType == REQUEST_INDIVIDUAL )
 		{
-			m_numTicket.SetPosition( 215, 192 ); // 개인전 신청서 위치
+			m_numTicket.SetPosition( 215, 192 ); // Individual exhibition application location
 			m_pDlgIndiTicket->Show( true );
 
 			
@@ -665,7 +665,7 @@ void CTBRequestGui::UpdateInterface()
 		}
 		else if( m_byRequestType == REQUEST_TEAM )
 		{
-			m_numTicket.SetPosition( 215, 140 ); // 팀전 신청서 위치
+			m_numTicket.SetPosition( 215, 140 ); // Team match application location
 			m_pDlgTeamTicket->Show( true );
 
 			CNtlSobAvatar* pSobAvatar = GetNtlSLGlobal()->GetSobAvatar();
@@ -674,7 +674,7 @@ void CTBRequestGui::UpdateInterface()
 
 			sBUDOKAI_JOIN_INFO* pInfo = pSobAvatar->GetTenkaichiBudokai()->GetBudokaiJoinInfo();
 
-			// 팀 데이터가 아니라면 잘못된 데이터
+			// Bad data if not team data
 			if( pInfo->byMatchType != BUDOKAI_MATCH_TYPE_TEAM )
 				return;
 
@@ -686,11 +686,11 @@ void CTBRequestGui::UpdateInterface()
 			swprintf_s( awcBuffer, 512, GetDisplayStringManager()->GetString( "DST_BUDOKAI_SUCCESS_GUIDE" ), pInfo->sTeamInfo.wszTeamName );
 			m_pStbTicketTeamNumber->SetText( awcBuffer );
 
-			// 멤버의 정보를 초기화하고 새로운 정보를 넣는다.
+			// Initialize member information and add new information.
 			ClearTicketMemberInfo();
 			for( RwInt32 i = 0; i< dTBREQUEST_TEAM_MEMBER; ++i )
 			{
-				// Class가 있고 aMemberInfo의 이름이 있다면
+				// If you have a Class and a name of aMemberInfo
 				if( ( pInfo->sTeamInfo.aMemberInfo[i].byClass != INVALID_BYTE )
 					&& ( wcslen( pInfo->sTeamInfo.aMemberInfo[i].wszName ) > 0 ) )
 				{
@@ -745,7 +745,7 @@ void CTBRequestGui::OnClickedBtnAccept( gui::CComponent* pComponent )
 			GetDboGlobal()->GetGamePacketGenerator()->SendBudokaiJoinIndividualReq();
 		else if( m_byRequestType == REQUEST_TEAM )
 		{
-			// 파티의 리더가 아니라면 신청 할수 없습니다.
+			// You cannot apply if you are not the party leader.
 			if( !Logic_I_am_PartyLeader() )
 			{
 				GetAlarmManager()->AlarmMessage( "DST_BUDOKAI_NEWS_CAN_ONLY_LEADER" );
@@ -754,7 +754,7 @@ void CTBRequestGui::OnClickedBtnAccept( gui::CComponent* pComponent )
 
 			if( wcslen( m_pIpbTeamName->GetText() ) < 4 )
 			{
-				// 4글자 이상이 되어야 합니다.
+				// It must be at least 4 characters.
 			}
 			else
 			{

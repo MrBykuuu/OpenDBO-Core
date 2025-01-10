@@ -1,18 +1,18 @@
 #include "precomp_dboclient.h"
 #include "GuildWarehouseGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "NPCTable.h"
 #include "ItemTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLDef.h"
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSobItem.h"
 #include "NtlSobItemAttr.h"
@@ -24,7 +24,7 @@
 #include "NtlSLEventFunc.h"
 #include "NtlCameraController.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DboGlobal.h"
@@ -121,7 +121,7 @@ VOID CGuildWarehouseGui::Init()
 {
 	CRectangle rect;
 
-	// 다이얼로그 이름 스태틱
+	// Static dialog name
 	rect.SetRectWH(DBOGUI_DIALOG_TITLE_X, DBOGUI_DIALOG_TITLE_Y, 175, 16);
 	m_pDialogName = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_pDialogName->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -134,14 +134,14 @@ VOID CGuildWarehouseGui::Init()
 	else if( m_byWarehouseIndex == 2 )
 		m_pDialogName->SetText(GetDisplayStringManager()->GetString("DST_GUILDWAREHOUSE_TITLE_3"));
 
-	// 창닫기 버튼
+	// Close window button
 	m_pExitButton= (gui::CButton*)GetComponent("btnExit");
 	m_slotCloseButton = m_pExitButton->SigClicked().Connect(this, &CGuildWarehouseGui::ClickedCloseButton);
 
-	// 슬롯 포커스 이펙트
+	// Slot Focus Effect
 	m_FocusEffect.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GameCommon.srf", "srfSlotFocusEffect") );
 
-	// 슬롯 셀렉트 이펙트
+	// Slot Select Effect
 	m_SelectEffect.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GameCommon.srf", "srfSlotGrayedEffect" ) );
 
 	SetupItems();
@@ -151,7 +151,7 @@ VOID CGuildWarehouseGui::Init()
 	LinkMsg(g_EventPickedUpHide);
 	LinkMsg(g_EventEnableItemIcon);
 
-	// sig
+	// Signals
 	m_slotMouseDown		= m_pThis->SigMouseDown().Connect( this, &CGuildWarehouseGui::OnMouseDown );
 	m_slotMouseUp		= m_pThis->SigMouseUp().Connect( this, &CGuildWarehouseGui::OnMouseUp );
 	m_slotMove			= m_pThis->SigMove().Connect( this, &CGuildWarehouseGui::OnMove);
@@ -299,7 +299,7 @@ VOID CGuildWarehouseGui::OnMouseDown(const CKey& key)
 		m_iMouseDownSlot = iPtinSlot;
 		m_pThis->CaptureMouse();
 
-		// 클릭 이벤트 시작
+		// Start click event
 		m_iClickEffectedSlot = iPtinSlot;	
 		m_Slot[m_iClickEffectedSlot].ClickEffect(TRUE);
 	}
@@ -317,7 +317,7 @@ VOID CGuildWarehouseGui::OnMouseUp(const CKey& key)
 {
 	m_pThis->ReleaseMouse();
 
-	// 클릭 이벤트 종료	
+	// Ends the click event	
 	if( m_iClickEffectedSlot != INVALID_INDEX )
 	{		
 		m_Slot[m_iClickEffectedSlot].ClickEffect(FALSE);
@@ -343,7 +343,7 @@ VOID CGuildWarehouseGui::OnMouseUp(const CKey& key)
 
 				if( GetIconMoveManager()->IsActive() )
 				{
-					// 창고로 물건을 옮긴다. 선택한 아이템의 부모 핸들이 아니라 창고의 인덱스를 보낸다
+					// Move the item to the warehouse. Sends the index of the warehouse, not the parent handle of the selected item
 					GetIconMoveManager()->IconMovePutDown(PLACE_GUILD_WAREHOUSE, m_byWarehouseIndex, m_iMouseDownSlot);
 				}
 				else
@@ -355,13 +355,13 @@ VOID CGuildWarehouseGui::OnMouseUp(const CKey& key)
 
 						if( key.m_dwVKey & UD_MK_CONTROL )
 						{
-							// 창고에서 아이템을 나누기 위해 계산기를 연다
+							// Open a calculator to divide items in a warehouse
 							CRectangle rtScreen = m_pThis->GetScreenRect();
 							CDboEventGenerator::CalcPopupShow( TRUE, pSlotData->hHandle, PLACE_GUILD_WAREHOUSE, rtScreen.left, rtScreen.top, m_Slot[m_iMouseDownSlot].GetCount() );
 						}
 						else
 						{
-							// 창고에서 물건을 집는다.
+							// Pick up an item from the warehouse.
 							GetIconMoveManager()->IconMovePickUp(pSlotData->hHandle, PLACE_GUILD_WAREHOUSE,
 								m_iMouseDownSlot, pSlotData->byStackcount, m_Slot[m_iMouseDownSlot].GetTexture(), pSlotData->pITEM_TBLDAT->tblidx);
 
@@ -386,7 +386,7 @@ VOID CGuildWarehouseGui::OnMouseUp(const CKey& key)
 						sGuildWarehouseSlot* pSlotData = pGuildWarehouse->GetItem(m_byWarehouseIndex, (RwUInt8)m_iMouseDownSlot);
 						NTL_ASSERT(pSlotData, "CGuildWarehouseGui::OnMouseUp, Not exist guild warehouse item of index : " << m_byWarehouseIndex << " of slot : " << m_iMouseDownSlot);
 
-						// 바로 가방으로 옮긴다
+						// Move directly to the bag
 						Logic_ItemMoveProc(pSlotData->hHandle, PLACE_GUILD_WAREHOUSE, (RwUInt8)m_iMouseDownSlot,
 							PLACE_BAG, hBagHandle, (RwUInt8)uiSlot_of_Bag, m_Slot[m_iMouseDownSlot].GetCount());
 
@@ -425,7 +425,7 @@ VOID CGuildWarehouseGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 	{
 		FocusEffect(TRUE, iPtinSlot);
 
-		// 슬롯 클릭 이펙트
+		// Slot Click Effect
 		if( m_iClickEffectedSlot != INVALID_INDEX )
 		{
 			if( m_iClickEffectedSlot == iPtinSlot )
@@ -557,7 +557,7 @@ VOID CGuildWarehouseGui::HandleEvents( RWS::CMsg &msg )
 		{
 			CNtlGuildWarehouse* pGuildWarehouse = GetNtlSLGlobal()->GetSobAvatar()->GetGuildWarehouse();
 
-			// 3개의 창고중에 해당 아이템을 가지고 있는 것을 찾는다
+			// Find one of the three warehouses that has the item
 			sGuildWarehouseSlot* pSlotData = pGuildWarehouse->GetItem(pEvent->uiSerial);
 			NTL_ASSERT(pSlotData, "CGuildWarehouseGui::HandleEvents, Not exist item of handle : " << pEvent->uiSerial <<" in guild warehouse");
 
@@ -573,7 +573,7 @@ VOID CGuildWarehouseGui::HandleEvents( RWS::CMsg &msg )
 		if( pEvent->nSrcPlace != PLACE_GUILD_WAREHOUSE )
 			return;
 
-		// 3개의 창고중에 해당 아이템을 가지고 있는 것을 찾는다
+		// Find one of the three warehouses that has the item
 		CNtlGuildWarehouse* pGuildWarehouse = GetNtlSLGlobal()->GetSobAvatar()->GetGuildWarehouse();
 		sGuildWarehouseSlot* pSlotData = pGuildWarehouse->GetItem(pEvent->uiSerial);
 		NTL_ASSERT(pSlotData, "CGuildWarehouseGui::HandleEvents, Not exist item of handle : " << pEvent->uiSerial <<" in guild warehouse");
@@ -647,11 +647,11 @@ RwBool CGuildWarehouseAddonGui::Create()
 
 	Init();
 
-	// 제니 버튼
+	// Zenny Button
 	m_pZennyButton = (gui::CButton*)GetComponent("btnZenny");
 	m_slotZennyButton = m_pZennyButton->SigClicked().Connect(this, &CGuildWarehouseAddonGui::ClickedZennyButton);
 
-	// 제니 스태틱
+	// Zenny Static Box
 	rect.SetRectWH(56, 36, 82, 14);
 	m_pZenny = NTL_NEW gui::CStaticBox( rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_RIGHT );
 	m_pZenny->CreateFontStd(DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);	
@@ -662,11 +662,11 @@ RwBool CGuildWarehouseAddonGui::Create()
 
 	m_pMoneyIconTexture = Logic_CreateTexture( MONEYICON_NAME );
 
-	// 제니 슬롯 Destination 이미지
+	// Zenny Slot Destination Image
 	m_srfZennySlotDestination.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "BasicBag.srf", "srfMoneyBtnWayFocus" ) );
 	m_srfZennySlotDestination.SetPositionfromParent(31, 32);
 
-	// sig
+	// Signals
 	m_slotPostPaint		= m_pZennyButton->SigPaint().Connect( this, &CGuildWarehouseAddonGui::OnPostPaint );
 
 	LinkMsg(g_EventIconMoveClick);
@@ -703,7 +703,7 @@ VOID CGuildWarehouseAddonGui::ClickedZennyButton(gui::CComponent* pComponent)
 	{
 		CNtlGuildWarehouse* pGuildWarehouse = GetNtlSLGlobal()->GetSobAvatar()->GetGuildWarehouse();
 
-		// 제니 보관
+		// Archive Zenny
 		GetIconMoveManager()->IconMovePutDown(PLACE_SUB_GUILD_WAREHOUSE_ZENNY, pGuildWarehouse->GetNPCHandle(), INVALID_INDEX);
 	}
 	else
@@ -712,7 +712,7 @@ VOID CGuildWarehouseAddonGui::ClickedZennyButton(gui::CComponent* pComponent)
 
 		if( pGuildWarehouse->GetZenny() > 0 )
 		{
-			// 창고에 제니가 있다면...인출
+			// If Zenny is in the warehouse...withdraw
 			CRectangle rect = m_pZennyButton->GetScreenRect();
 			CDboEventGenerator::CalcPopupShow(TRUE, INVALID_SERIAL_ID, PLACE_SUB_GUILD_WAREHOUSE_ZENNY, 
 				rect.right, rect.bottom, pGuildWarehouse->GetZenny());
@@ -743,7 +743,7 @@ VOID CGuildWarehouseAddonGui::HandleEvents( RWS::CMsg &msg )
 		SDboEventCalcPopupResult* pEvent = reinterpret_cast<SDboEventCalcPopupResult*>( msg.pData );
 		if( pEvent->nSrcPlace == PLACE_SUB_GUILD_WAREHOUSE_ZENNY )
 		{
-			// 창고(은행)에서 돈을 뺀다
+			// subtract money from the warehouse (bank)
 			GetIconMoveManager()->IconMovePickUp(INVALID_SERIAL_ID, PLACE_SUB_GUILD_WAREHOUSE_ZENNY, INVALID_INDEX, pEvent->uiValue, m_pMoneyIconTexture);
 		}		
 	}
@@ -796,27 +796,27 @@ RwBool CGuildWarehouseBar::Create()
 
 	m_pThis = (gui::CDialog*)GetComponent("dlgMain");
 
-	// 1번 창고 버튼
+	// Window #1 clickn button
 	m_pWarehouseBtn[0] = (gui::CButton*)GetComponent("btnAddon");
 	m_pWarehouseBtn[0]->SetToolTip(GetDisplayStringManager()->GetString("DST_WAREHOUSE_NAME_1"));
 	m_slotWarehouseBtn[0] = m_pWarehouseBtn[0]->SigClicked().Connect(this, &CGuildWarehouseBar::Clicked_1_Button);
 
-	// 2번 창고 버튼
+	// Window #2 clickn button
 	m_pWarehouseBtn[1] = (gui::CButton*)GetComponent("btn1");
 	m_pWarehouseBtn[1]->SetToolTip(GetDisplayStringManager()->GetString("DST_WAREHOUSE_NAME_2"));
 	m_slotWarehouseBtn[1] = m_pWarehouseBtn[1]->SigClicked().Connect(this, &CGuildWarehouseBar::Clicked_2_Button);
 
-	// 3번 창고 버튼
+	// Window #3 clickn button
 	m_pWarehouseBtn[2] = (gui::CButton*)GetComponent("btn2");
 	m_pWarehouseBtn[2]->SetToolTip(GetDisplayStringManager()->GetString("DST_WAREHOUSE_NAME_3"));
 	m_slotWarehouseBtn[2] = m_pWarehouseBtn[2]->SigClicked().Connect(this, &CGuildWarehouseBar::Clicked_3_Button);
 
-	// 모든 창고 버튼
+	// All Warehouses button
 	m_p_All_Button = (gui::CButton*)GetComponent("btnAll");
 	m_p_All_Button->SetToolTip(GetDisplayStringManager()->GetString("DST_WAREHOUSE_ALL"));
 	m_slot_All_Button = m_p_All_Button->SigClicked().Connect(this, &CGuildWarehouseBar::ClickedAllButton);
 
-	// 창닫기 버튼
+	// Close window button
 	m_pExitButton= (gui::CButton*)GetComponent("btnExit");
 	m_slotCloseButton = m_pExitButton->SigClicked().Connect(this, &CGuildWarehouseBar::ClickedCloseButton);
 
@@ -838,7 +838,7 @@ RwBool CGuildWarehouseBar::Create()
 		Link( m_pWareHouseGui[i]->GetDialog() );
 	}	
 
-	// 위치 지정
+	// Position
 	CRectangle rtScreen = m_pThis->GetScreenRect();
 	RwInt32 iXPos = rtScreen.left;
 	RwInt32 iYPos = rtScreen.bottom + NTL_LINKED_DIALOG_GAP;
@@ -853,7 +853,7 @@ RwBool CGuildWarehouseBar::Create()
 	m_pWareHouseGui[2]->SetPosition(iXPos, iYPos);
 
 
-	// sig
+	// Signals
 	m_slotMove			   = m_pThis->SigMove().Connect( this, &CGuildWarehouseBar::OnMove );	
 	m_slotCaptureMouseDown = GetNtlGuiManager()->GetGuiManager()->SigCaptureMouseDown().Connect( this, &CGuildWarehouseBar::OnCaptureMouseDown );
 
@@ -947,7 +947,7 @@ VOID CGuildWarehouseBar::Clicked_3_Button(gui::CComponent* pComponent)
 
 VOID CGuildWarehouseBar::ClickedAllButton(gui::CComponent* pComponent)
 {
-	// 창고가 하나라도 열려있다면 전부 닫는다
+	// If any warehouses are open, close all of them
 
 	RwBool bAlreadyOpen = FALSE;
 	for( RwUInt8 i = 0 ; i < NTL_MAX_GUILD_BANK_COUNT ; ++i )
@@ -1018,7 +1018,7 @@ RwInt32 CGuildWarehouseBar::SwitchDialog(bool bOpen)
 
 		CNtlSLEventGenerator::GuildWarehousePostEvent(GUILD_WAREHOUSE_EVENT_END);
 
-		// 서버에 길드 창고 이용이 끝났음을 알린다
+		// Notify the server that the guild warehouse is closed
 		GetDboGlobal()->GetGamePacketGenerator()->SendGuildWarehouseEnd();
 
 		Show(false);
@@ -1052,7 +1052,7 @@ VOID CGuildWarehouseBar::HandleEvents( RWS::CMsg &msg )
 	}
 	else if( msg.Id == g_EventCharObjDelete )
 	{
-		// 갑자기 캐릭터가 사라졋다
+		// The character suddenly disappeared
 		SERIAL_HANDLE* pDeleteSerial = reinterpret_cast<SERIAL_HANDLE*>( msg.pData );
 		SERIAL_HANDLE hNPC = GetNtlSLGlobal()->GetSobAvatar()->GetGuildWarehouse()->GetNPCHandle();
 
@@ -1060,7 +1060,7 @@ VOID CGuildWarehouseBar::HandleEvents( RWS::CMsg &msg )
 		{
 			CNtlSLEventGenerator::GuildWarehousePostEvent(GUILD_WAREHOUSE_EVENT_END);
 
-			// 서버에 길드 창고 이용이 끝났음을 알린다
+			// Notify the server that the guild warehouse is closed
 			GetDboGlobal()->GetGamePacketGenerator()->SendGuildWarehouseEnd();
 		}
 	}
@@ -1077,7 +1077,7 @@ VOID CGuildWarehouseBar::HandleEvents( RWS::CMsg &msg )
 
 				CNtlSLEventGenerator::GuildWarehousePostEvent(GUILD_WAREHOUSE_EVENT_END);
 
-				// 서버에 길드 창고 이용이 끝났음을 알린다
+				// Notify the server that the guild warehouse is closed
 				GetDboGlobal()->GetGamePacketGenerator()->SendGuildWarehouseEnd();
 			}
 			else if( pEvent->iType == DIALOGEVENT_OPEN_FAIL_NPC_DIALOG )

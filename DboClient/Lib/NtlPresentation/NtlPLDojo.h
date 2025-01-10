@@ -8,8 +8,8 @@
 #include "NtlPLEmblemMaker.h"
 
 
-// 꼭 지켜야 하는 규칙.
-// Update Return Value는 Controller 작업이 완료되면 FALSE, 작업 중이면 TRUE를 retrun 한다.
+// Rules that must be followed.
+// Update Return Value returns FALSE when the Controller task is completed and TRUE when the task is in progress.
 class CNtlPLObjectController
 {
 public:

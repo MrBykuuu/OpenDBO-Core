@@ -1,11 +1,11 @@
 /******************************************************************************
-* File			: OptionControlTab.h
-* Author		: Cho Hae sung
-* Copyright		: (주)NTL
-* Date			: 2007. 10. 15 
-* Abstract		: 
+*File			: OptionControlTab.h
+*Author		    : Cho Hae sung
+*Copyright		: (주)NTL
+*Date			: 2007. 10. 15 
+*Abstract		: 
 *****************************************************************************
-* Desc			: Tab of Options
+*Desc			: Tab of Options
 *****************************************************************************/
 
 #ifndef _OPTIONCONTROLTAB_H_
@@ -27,7 +27,7 @@
 #define dOPTIONCONTROL_LIST_SLIDER_WIDTH			12
 #define dOPTIONCONTROL_LIST_SLIDER_HEIGHT			39
 
-// OptionControl의 StaticBox(설명 부분)
+// StaticBox in OptionControl (Explanation)
 #define dOPTIONCONTROL_STATICBOX_X		0
 #define dOPTIONCONTROL_STATICBOX_Y		0
 #define dOPTIONCONTROL_STATICBOX_WIDTH	288
@@ -53,35 +53,35 @@
 #define dOPTIONCONTROL_CATEGORY_TITLE_COLOR			RGB(255, 255, 255)
 #define dOPTIONCONTROL_CATEGORY_TITLE_COLOR_DOWN	RGB( 255, 219, 71 )
 
-// COptionControlActionNode StaticBox의 Size
+// COptionControlActionNode StaticBox of Size
 #define dOPTIONCONTROL_ACTIONNODE_TITLE_X 0
 #define dOPTIONCONTROL_ACTIONNODE_TITLE_Y 0
 #define dOPTIONCONTROL_ACTIONNODE_TITLE_WIDTH 147
 #define dOPTIONCONTROL_ACTIONNODE_TITLE_HEIGHT 19
 #define dOPTIONCONTROL_ACTIONNODE_TITLE_COLOR RGB(255, 255, 255)
 
-// Action Node Statib Box Text의 Coordinate
+// Action Node Statib Box Text of Coordinate
 #define dOPTIONCONTROL_ACTIONNODE_TEXT_COORD_X 10
 #define dOPTIONCONTROL_ACTIONNODE_TEXT_COORD_Y 3
 
-// COptionControlActionNode Button의 Size
+// COptionControlActionNode Button of Size
 #define dOPTIONCONTROL_ACTIONNODE_BUTTON_X 150
 #define dOPTIONCONTROL_ACTIONNODE_BUTTON_Y 0
 #define dOPTIONCONTROL_ACTIONNODE_BUTTON_WIDTH 91
 #define dOPTIONCONTROL_ACTIONNODE_BUTTON_HEIGHT 19
 #define dOPTIONCONTROL_ACTIONNODE_BUTTON_COLOR RGB(255, 255, 255)
 
-// CGuiLineTree를 구성하는 Item들의 Size
+// Size of items that make up CGuiLineTree
 #define dOPTIONCONTROL_LINE_HEIGHT				20
 #define dOPTIONCONTROL_LINE_MARGIN				4	
 #define dOPTIONCONTROL_CHILD_MARGIN_WIDTH		20
 
-// Action들을 그룹짓는 기준
-#define dOPTIONCONTROL_CATEGORY_AVATAR			-2	// 아바타 관련
-#define dOPTIONCONTROL_CATEGORY_TARGET			-3	// 타겟 행동
-#define dOPTIONCONTROL_CATEGORY_QUICKSLOT		-4	// 퀵슬롯 행동
-#define dOPTIONCONTROL_CATEGORY_WINDOW			-5	// 윈도우 관련 행동
-#define dOPTIONCONTROL_CATEGORY_FIXED			-6	// 고정(단축키 변경 불가능)
+// Standards for grouping actions
+#define dOPTIONCONTROL_CATEGORY_AVATAR			-2	// Avatar related
+#define dOPTIONCONTROL_CATEGORY_TARGET			-3	// target behavior
+#define dOPTIONCONTROL_CATEGORY_QUICKSLOT		-4	// Quick Slot Action
+#define dOPTIONCONTROL_CATEGORY_WINDOW			-5	// Windows-related behavior
+#define dOPTIONCONTROL_CATEGORY_FIXED			-6	// Fixed (shortcut key cannot be changed)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Class : COptionControlCategoryNode, COptionControlActionNode, COptionControlList, COptionControl
@@ -89,8 +89,8 @@
 //
 // COptionControlList(CGuiLineTree)의 구성
 // (RootNode)
-//     ├ COptionControlCategoryNode(CGuiLineTreeNode) ( 예: [+] 아바타 행동 관련 )
-//     │ ├ COptionControlActionNode(CGuiLineTreeNode)  ( 예:  [아바타 전진]  [ W ] )
+//     ├ COptionControlCategoryNode(CGuiLineTreeNode) (e.g. [+] related to avatar behavior )
+//     │ ├ COptionControlActionNode(CGuiLineTreeNode)  (Example: [Avatar Forward] [W] )
 //     │ ├ COptionControlActionNode(CGuiLineTreeNode)
 //     │ └ ...
 //     ├ COptionControlCategoryNode(CGuiLineTreeNode)
@@ -99,7 +99,7 @@
 
 /**
 * \ingroup Client
-* 조작키 옵션 윈도우의 Action의 Group을 표시하는 NODE
+*NODE that displays the Action Group in the operation key option window
 */
 class COptionControlCategoryNode : public CGuiLineTreeNode
 {
@@ -107,11 +107,11 @@ public:
 	COptionControlCategoryNode(CGuiLineTree* pMgr, std::wstring strTitle, RwInt32 nID);
 	virtual ~COptionControlCategoryNode();
 
-	virtual void ShowProc();				///< CGuiLineTreeNode에서의 Override
-	virtual void HideProc();				///< CGuiLineTreeNode에서의 Override
+	virtual void ShowProc();				///< Override in CGuiLineTreeNode
+	virtual void HideProc();				///< Override in CGuiLineTreeNode
 
-	void OnClickBtnExpand(gui::CComponent* pComponent);		///< + 버튼을 클릭할때 실행되는 함수
-	void OnClickBtnReduce(gui::CComponent* pComponent);		///< - 버튼을 클릭할때 실행되는 함수
+	void OnClickBtnExpand(gui::CComponent* pComponent);		///< Function executed when the + button is clicked
+	void OnClickBtnReduce(gui::CComponent* pComponent);		///< -Function executed when the button is clicked
 
 protected:
 	gui::CStaticBox* m_pStbTitle;			///< Action Group의 Title
@@ -125,7 +125,7 @@ protected:
 
 /**
 * \ingroup Client
-* 조작키 옵션 윈도우 Action Group의 Item들을 표시하는 Node
+*Node that displays items in the operation key option window Action Group
 */
 class COptionControlActionNode : public CGuiLineTreeNode
 {
@@ -136,10 +136,10 @@ public:
 	virtual void ShowProc();
 	virtual void HideProc();
 
-	///< 키 이름의 버튼
+	///< Button with key name
 	void OnClickBtnSetKey(gui::CComponent* pComponent);
 
-	///< 키 버튼의 이름을 지정
+	///< Specifies the name of the key button
 	void SetText( std::wstring& strTitle );
 	
 	void Update();
@@ -147,20 +147,20 @@ public:
 	void RestoreBtnSetKey() { m_pBtnSetKey->Enable(); }
 
 protected:
-	gui::CStaticBox* m_pStbTitle;			///< 액션의 이름
+	gui::CStaticBox* m_pStbTitle;			///< name of action
 	
-	gui::CButton* m_pBtnSetKey;				///< 키 지정 버튼
+	gui::CButton* m_pBtnSetKey;				///< Key assignment button
 	
-	gui::CSlot m_slotClickedBtnSetKey;		///< 키 지정 버튼의 signal
+	gui::CSlot m_slotClickedBtnSetKey;		///< signal of key assignment button
 
-	RwUInt32 m_nAction;						///< 액션값을 가지고 있는다.
+	RwUInt32 m_nAction;						///< Contains action value.
 	RwBool m_bFixed;
 };
 
 /**
 * \ingroup Client
-* CGuiLineTreeNode를 상속받는 윈도우 조작키 관련 Node들을 관리하기 위해
-* CGuiLineTree를 상속받은 매니저 클래스
+*To manage Nodes related to Windows operation keys that inherit CGuiLineTreeNode
+*Manager class that inherits CGuiLineTree
 */
 class COptionControlList : public CGuiLineTree
 {
@@ -170,15 +170,15 @@ public:
 
 	RwBool	Create(CRectangle& rect, gui::CComponent* pParent, RwInt32 nLineHeight, RwInt32 nLineMargin, RwInt32 nChildXMargin, RwInt32 nScrollBarWidth, COptionControl* pOptionControl = NULL);
 
-	void CreateTree();									///< 트리를 구축한다.
+	void CreateTree();									///< Build a tree.
 
-	///< 트리를 업데이트 한다.
+	///< Update the tree.
 	void UpdateNode();
 
-	///< 스크롤 바를 휠마우스 조작을 하기 위해
+	///< To operate the scroll bar with a wheel mouse
 	void OnCaptureWheelMove( RwInt32 nFlag, RwInt16 sDelta, CPos& pos );
 
-	///< 현재의 COptionControlList가 속해있는 탭을 부른다.
+	///< Calls the tab to which the current COptionControlList belongs.
 	COptionControl* GetParentTab(); 
 
 protected:
@@ -189,8 +189,8 @@ protected:
 
 /**
 * \ingroup Client
-* COptionBase를 상속받아서 옵션 윈도우의 탭 중에 하나인 조작키 관련 탭을 구성
-* CGuiLineTree를 포함하여 조작키 입력 지정을 받을 수 있음
+*Inherit COptionBase to configure the operation key-related tab, one of the tabs in the option window.
+*Can receive operation key input designation, including CGuiLineTree
 */
 class COptionControl : public COptionBase
 {
@@ -210,24 +210,24 @@ public:
 	virtual void		OnCancel();
 	virtual void		OnHandleEvents(RWS::CMsg &pMsg);
 
-	// 출력될 안내 메시지
+	// Information message to be printed
 public:
 
 	void SetGuideText( RwUInt32 uiColor, const WCHAR* pString );
 
-	void SetGuideDefault();						///< 기본 안내
-	void SetGuideChange(RwUInt32 nAction);		///< nAction과 중복됩니다. nAction은 지정안됨으로...
-	void SetGuideFixed(RwUInt32 nAction);		///< %s 은 변경 불가능 합니다.
-	void SetGuideNegativeMode();				///< 현재 모드에서는 변경이 불가능합니다.
+	void SetGuideDefault();						///< Basic information
+	void SetGuideChange(RwUInt32 nAction);		///< Redundant with nAction. nAction is not specified...
+	void SetGuideFixed(RwUInt32 nAction);		///< %s cannot be changed.
+	void SetGuideNegativeMode();				///< Changes are not possible in the current mode.
 	
 
 protected:
-	COptionControlList* m_pOptionControlList;		///< 라인트리의 매니저
-	gui::CDialog*		m_pDlgControlList;			///< 라인트리의 부모가 될 Dialog
+	COptionControlList* m_pOptionControlList;		///< Manager of Line Tree
+	gui::CDialog*		m_pDlgControlList;			///< Dialog that will be the parent of the line tree
 
-	gui::CStaticBox*	m_pStbControlTitle;			///< 조작키 변경 창의 제목
-	gui::CStaticBox*	m_pStbControlBack;			///< 옵션창의 텍스트 출력창 배경
-	gui::CStaticBox*	m_pStbControlText;			///< 옵션창의 텍스트 출력창
+	gui::CStaticBox*	m_pStbControlTitle;			///< Title of the operation key change window
+	gui::CStaticBox*	m_pStbControlBack;			///< Background of text output window in option window
+	gui::CStaticBox*	m_pStbControlText;			///<Text output window in options window
 };
 
 #endif//OPTIONREFACTOR

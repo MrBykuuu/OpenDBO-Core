@@ -1,21 +1,21 @@
 #include "precomp_dboclient.h"
 #include "DojoSideIconGui.h"
 
-// shared
+// Shared
 #include "NtlDojo.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSobAvatar.h"
 #include "NtlSLGlobal.h"
 
-// client
+// Client
 #include "AlarmManager.h"
 #include "DisplayStringManager.h"
 #include "DboLogic.h"
@@ -120,7 +120,7 @@ RwBool CDojoSideViewGui::Create()
 
 	m_pMessage = (gui::CStaticBox*)GetComponent("stbMessage");
 
-	// 배경
+	// background
 	m_BackPanel.SetType(CWindowby3::WT_HORIZONTAL);
 	m_BackPanel.SetSurface(0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("DojoSideIcon.srf", "srfBackgroundTop"));
 	m_BackPanel.SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("DojoSideIcon.srf", "srfBackgroundCenter"));
@@ -128,7 +128,7 @@ RwBool CDojoSideViewGui::Create()
 
 	GetNtlGuiManager()->AddUpdateFunc( this );
 
-	// sig
+	// Signals
 	m_slotPaint			= m_pThis->SigPaint().Connect( this, &CDojoSideViewGui::OnPaint );
 
 	LinkMsg(g_EventDojoStateNotify);
@@ -175,12 +175,12 @@ VOID CDojoSideViewGui::Update(RwReal fElapsed)
 	{
 		if( DOJO_TEAM_SCRAMBLE_RESERV_OFFENCE == pGuildDojo->eDojoTeamState )
 		{
-			m_pMessage->SetText("잠시 후 도장 쟁탈전이 시작될 예정이니 전투를 준비해 주세요");
+			m_pMessage->SetText("The dojo battle will begin in a moment, so please prepare for battle");
 		}
 		else if( DOJO_TEAM_SCRAMBLE_RESERV_DEFENCE == pGuildDojo->eDojoTeamState )
 		{
-			GetAlarmManager()->AlarmMessage(L"쟁탈전 준비로 인해 도장 내 유파원은 잠시 후 도장 입구로 강제 이동되오니 준비해 주세요");
-			m_pMessage->SetText("쟁탈전 준비를 위해 잠시 후 도장 입구로 강제 이동되오니 준비해 주세요");
+			GetAlarmManager()->AlarmMessage(L"Due to preparations for the competition, members of the dojo will be forced to move to the dojo entrance after a while, so please prepare.");
+			m_pMessage->SetText("Please prepare as you will be forcibly moved to the entrance of the dojo in a moment to prepare for the battle.");
 		}
 
 		m_bShowTimerMessage[0] = false;
@@ -199,12 +199,12 @@ VOID CDojoSideViewGui::Update(RwReal fElapsed)
 	{
 		if( DOJO_TEAM_SCRAMBLE_RESERV_OFFENCE == pGuildDojo->eDojoTeamState )
 		{
-			m_pMessage->SetText("잠시 후 도장 쟁탈전이 시작될 예정이니 전투를 준비해 주세요");
+			m_pMessage->SetText("The dojo battle will begin in a moment, so please prepare for battle");
 		}
 		else if( DOJO_TEAM_SCRAMBLE_RESERV_DEFENCE == pGuildDojo->eDojoTeamState )
 		{
-			GetAlarmManager()->AlarmMessage(L"쟁탈전이 임박하여 5분 후 도장 내 모든 유파원은 도장 입구로 이동됩니다");
-			m_pMessage->SetText("쟁탈전 준비를 위해 잠시 후 도장 입구로 강제 이동되오니 준비해 주세요");
+			GetAlarmManager()->AlarmMessage(L"As a contest is imminent, all members in the dojo will be moved to the dojo entrance in 5 minutes");
+			m_pMessage->SetText("Please prepare as you will be forcibly moved to the entrance of the dojo in a moment to prepare for the battle.");
 		}
 
 		m_bShowTimerMessage[1] = false;
@@ -223,12 +223,12 @@ VOID CDojoSideViewGui::Update(RwReal fElapsed)
 	{
 		if( DOJO_TEAM_SCRAMBLE_RESERV_OFFENCE == pGuildDojo->eDojoTeamState )
 		{
-			m_pMessage->SetText("잠시 후 도장 쟁탈전이 시작될 예정이니 전투를 준비해 주세요");
+			m_pMessage->SetText("The dojo battle will begin in a moment, so please prepare for battle");
 		}
 		else if( DOJO_TEAM_SCRAMBLE_RESERV_DEFENCE == pGuildDojo->eDojoTeamState )
 		{
-			GetAlarmManager()->AlarmMessage(L"쟁탈전이 임박하여 3분 후 도장 내 모든 유파원은 도장 입구로 이동됩니다");
-			m_pMessage->SetText("쟁탈전 준비를 위해 잠시 후 도장 입구로 강제 이동되오니 준비해 주세요");
+			GetAlarmManager()->AlarmMessage(L"As a contest is imminent, all members in the dojo will be moved to the dojo entrance in 3 minutes");
+			m_pMessage->SetText("Please prepare as you will be forcibly moved to the entrance of the dojo in a moment to prepare for the battle.");
 		}
 
 		m_bShowTimerMessage[2] = false;
@@ -247,12 +247,12 @@ VOID CDojoSideViewGui::Update(RwReal fElapsed)
 	{
 		if( DOJO_TEAM_SCRAMBLE_RESERV_OFFENCE == pGuildDojo->eDojoTeamState )
 		{
-			m_pMessage->SetText("잠시 후 도장 쟁탈전이 시작될 예정이니 전투를 준비해 주세요");
+			m_pMessage->SetText("The dojo battle will begin in a moment, so please prepare for battle");
 		}
 		else if( DOJO_TEAM_SCRAMBLE_RESERV_DEFENCE == pGuildDojo->eDojoTeamState )
 		{
-			GetAlarmManager()->AlarmMessage(L"쟁탈전이 임박하여 1분 후 도장 내 모든 유파원은 도장 입구로 이동됩니다");
-			m_pMessage->SetText("쟁탈전 준비를 위해 잠시 후 도장 입구로 강제 이동되오니 준비해 주세요");
+			GetAlarmManager()->AlarmMessage(L"As a contest is imminent, all members in the dojo will be moved to the dojo entrance in 1 minute");
+			m_pMessage->SetText("Please prepare as you will be forcibly moved to the entrance of the dojo in a moment to prepare for the battle.");
 		}
 
 		m_bShowTimerMessage[3] = false;
@@ -271,12 +271,12 @@ VOID CDojoSideViewGui::Update(RwReal fElapsed)
 	{
 		if( DOJO_TEAM_SCRAMBLE_RESERV_OFFENCE == pGuildDojo->eDojoTeamState )
 		{
-			m_pMessage->SetText("잠시 후 도장 쟁탈전이 시작될 예정이니 전투를 준비해 주세요");
+			m_pMessage->SetText("The dojo battle will begin in a moment, so please prepare for battle");
 		}
 		else if( DOJO_TEAM_SCRAMBLE_RESERV_DEFENCE == pGuildDojo->eDojoTeamState )
 		{
-			GetAlarmManager()->AlarmMessage(L"쟁탈전 준비로 인해 도장내 유파원이 도장 입구로 강제 이동되었습니다");
-			m_pMessage->SetText("쟁탈전 준비를 위해 잠시 후 도장 입구로 강제 이동되오니 준비해 주세요");
+			GetAlarmManager()->AlarmMessage(L"Due to preparations for the contest, members of the dojo have been forced to move to the dojo entrance");
+			m_pMessage->SetText("Please prepare as you will be forcibly moved to the entrance of the dojo in a moment to prepare for the battle.");
 		}
 
 		m_bShowTimerMessage[4] = false;
@@ -293,8 +293,8 @@ VOID CDojoSideViewGui::Update(RwReal fElapsed)
 	}
 	else if( m_bShowTimerMessage[5] && fMinute < dSHOW_TIME_LEFT_5 )
 	{
-		GetAlarmManager()->AlarmMessage(L"도장 쟁탈전 준비가 완료되어 도장 입장이 가능합니다");
-		m_pMessage->SetText("지금부터 도장 쟁탈전을 시작할 예정이오니 도장에 입장해 주세요");
+		GetAlarmManager()->AlarmMessage(L"Preparation for the dojo battle is complete and you can enter the dojo");
+		m_pMessage->SetText("The competition for the dojo will begin now, so please enter the dojo.");
 
 		m_bShowTimerMessage[5] = false;
 		
@@ -321,7 +321,7 @@ VOID CDojoSideViewGui::SetMessage(RwUInt32 uiDojoTableIndex, RwUInt8 byDojoState
 	{
 	case eDBO_DOJO_STATUS_NORMAL:
 		{
-			// 12시간 전에는 표시하지 않는다
+			// Do not display before 12 hours
 			RwReal	fLeftTime	= (RwReal)(ui64NextStepTime - GetNtlSLGlobal()->GetServerTime());
 			RwReal	fLimitTime	= 60.f * 60.f * 12.f;
 

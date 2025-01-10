@@ -1,17 +1,17 @@
 ﻿#include "precomp_ntlsimulation.h"
 #include "NtlCameraManager.h"
 
-// presentation
+// Presentation
 #include "NtlPLGlobal.h"
 #include "NtlPLApi.h"
 #include "NtlPLSceneManager.h"
 #include "NtlPLCharacter.h"
 #include "NtlPLVisualManager.h"
 
-// framework
+// Framework
 #include "NtlCamera.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlCameraController.h"
 #include "NtlSLLogic.h"
@@ -435,7 +435,7 @@ RwBool CNtlGameCameraManager::WorldHeight(RwV3d& vCamPos, RwV3d& vLookAt)
 		return FALSE;
 	}
 
-	// camera 높이 구하기.
+	// Find the camera height.
 	RwV3d vTempPos;
 	RwV3dAssignMacro(&vTempPos, &vCamPos);
 	RwV3d vActorPos = m_pActor->GetPosition();
@@ -469,7 +469,7 @@ RwBool CNtlGameCameraManager::UpdateCameraForWorld(RwV3d& vCamPos, RwV3d& vLookA
 		vCamPos = sPickInfo.vPickPos;
 	}
 
-	// Boundary ray 구성
+	// Boundary ray configuration
 	RwV3d vRight;
 	RwV3dCrossProduct( &vRight, &CNtlPLGlobal::m_vYAxisV3, &vCenterDir );
 	if ( RwV3dNormalize( &vRight, &vRight ) < 0.0001f )
@@ -537,7 +537,7 @@ void CNtlGameCameraManager::CollisionActor(RwV3d& vCamPos, RwV3d& vLookAt)
 
     CNtlPLCharacter* pPLChar = (CNtlPLCharacter*)m_pActor->GetSobProxy()->GetPLMainEntity();    
 
-    // 캐릭터와 카메라가 가까이 있을 때 캐릭터에 알파를 준다.	    
+    // Gives alpha to the character when the camera is close to the character.	    
 	if(CNtlMath::GetLength(vLookAt, vCamPos) < pPLChar->GetAlphaDistance())
 	{
 		if(!m_bActorAlpha)
@@ -550,7 +550,7 @@ void CNtlGameCameraManager::CollisionActor(RwV3d& vCamPos, RwV3d& vLookAt)
 	}
 	else
 	{
-		// 캐릭터가 알파가 들어 있을 경우.
+		// If the character contains alpha.
 		if(m_bActorAlpha)
 		{
 			m_pActor->EnableInput(TRUE);
@@ -562,7 +562,7 @@ void CNtlGameCameraManager::CollisionActor(RwV3d& vCamPos, RwV3d& vLookAt)
 }
 
 /**
- * 아바타이외에 카메라가 가까워지면 알파 처리하는 객체들을 처리한다.
+ *Processes alpha-processed objects other than avatars when the camera approaches.
  */
 void CNtlGameCameraManager::CollisionObj() 
 {
@@ -674,7 +674,7 @@ void CNtlGameCameraManager::Update(RwReal fElapsed)
 
 	RwBool bDelete = FALSE;
 
-	// 기본 camera control
+	// Basic camera control
 	if(m_pBaseController)
 	{
 		m_pBaseController->Update(fElapsed);
@@ -683,7 +683,7 @@ void CNtlGameCameraManager::Update(RwReal fElapsed)
     RwBool bCollisionCheck = m_pBaseController ? m_pBaseController->IsCollisionCheck() : TRUE;
 	RwBool bInterpCheck = TRUE;
 
-	// 확장 camera control 
+	// Extended camera control 
 	CNtlCameraController *pController;
 	ListCameraController::iterator it;
 	for(it = m_listController.begin(); it != m_listController.end(); )
@@ -739,19 +739,19 @@ void CNtlGameCameraManager::Update(RwReal fElapsed)
 
 		//////////////////////////////////////////////////////////////////////////
 		//
-		//	카메라 충돌
+		//	camera crash
 		//
 		//////////////////////////////////////////////////////////////////////////
 
 		UpdateCameraForWorld( vCamPos, vLookAt, fRadius );
 
-		// Camera와 지형 지물과의 충돌 처리에 따른 위치 보정
+		// Position correction according to collision processing between camera and terrain features
 		RwV3d vNewPos;
 		RwBool bCollision = GetSceneManager()->GetCameraCollision( &vCamPos, &vLookAt, fRadius, vNewPos );
 
 		//////////////////////////////////////////////////////////////////////////
 		//
-		//	카메라 보간
+		//	camera interpolation
 		//
 		//////////////////////////////////////////////////////////////////////////
 
@@ -788,7 +788,7 @@ void CNtlGameCameraManager::Update(RwReal fElapsed)
 		}
 	}
 
-    // SobObj들의 카메라 거리 처리    
+    // Camera distance processing in SobObj    
     m_fCollisionObjCheckTime += fElapsed;
     if(m_fCollisionObjCheckTime > 0.2f)
     {
@@ -818,7 +818,7 @@ void CNtlGameCameraManager::HandleEvents(RWS::CMsg &pMsg)
 	}
 	else if(pMsg.Id == g_EventCameraDash)
 	{
-        // 넉다운 카메라가 있으면 해제한다.
+        // If there is a knockdown camera, disable it.
         if(FindController(CAMERA_CONTROL_KNOCKDOWN_MATRIX))
         {
             RemoveController(CAMERA_CONTROL_KNOCKDOWN_MATRIX);
@@ -891,16 +891,16 @@ void CNtlGameCameraManager::HandleEvents(RWS::CMsg &pMsg)
 	{
 		SNtlEventCameraExplosion* pExplosionCamera = reinterpret_cast<SNtlEventCameraExplosion*>( pMsg.pData );
 
-		// 기존에 Explosion이 동작 중에 있으면 해당 이벤트는 동작시키지 않는다
+		// If an Explosion is already in operation, the event does not operate.
 		if(FindController(CAMERA_CONTROL_EXPLOSION))
 			return;
 
-		// Explosion 객체 생성 및 등록
+		// Creating and registering an Explosion object
 		CNtlSobCameraExplosion* pExplosionController = NTL_NEW CNtlSobCameraExplosion;
 		pExplosionController->SetActiveActor(reinterpret_cast<CNtlSobActor*>(pExplosionCamera->pObject));
 		AddController(pExplosionController);
 
-		// Explosion lua script를 실행한다
+		// Execute the Explosion lua script
 		LuaExec_ExplosionCamera( pExplosionCamera->uiExplosionId );
 
 		CheckNormalControlPause();
@@ -972,7 +972,7 @@ void CNtlGameCameraManager::HandleEvents(RWS::CMsg &pMsg)
 			CheckNormalControlPause();
 		}
 	}
-    else if(pMsg.Id == g_EventDBCScatter)       // 드래곤볼 흩어지는 카메라 연출을 위한 이벤트
+    else if(pMsg.Id == g_EventDBCScatter)       // Dragon Ball event for scattering camera production
     {
         CNtlCameraDragonBallController *pDBController = reinterpret_cast<CNtlCameraDragonBallController*>( FindController(CAMERA_CONTROL_DRAGONBALL) );
         if(!pDBController)
@@ -995,7 +995,7 @@ void CNtlGameCameraManager::HandleEvents(RWS::CMsg &pMsg)
 			CheckNormalControlPause();
 		}
 	}
-    else if(pMsg.Id == g_EventCameraFPS)            // 1인칭 카메라
+    else if(pMsg.Id == g_EventCameraFPS)            // first person camera
     {
         if(FindController(CAMERA_CONTROL_FPS))
             return;
@@ -1165,8 +1165,8 @@ void CNtlGameCameraManager::UserCameraControlEnable(RwBool bEnable)
 }
 
 /**
- * Folder가 없을시 Folder 생성을 위해서 항상 CreateDirectoty()를 호출을 한다.
- * png로 저장 할 경우 Edge가 흰색으로 저장되고 저장시 시간이 조금 걸린다.
+ * If there is no folder, CreateDirectoty() is always called to create the folder.
+ * When saving as png, the edges are saved in white and it takes some time to save.
  * (by HoDong 2006. 8. 5)
  */
 void CNtlGameCameraManager::SetCaptureScreenShot()
@@ -1222,7 +1222,7 @@ void CNtlGameCameraManager::SetYaw(RwReal fYaw)
 
 	m_fYaw = fYaw;
 
-	// 카메라 각도는 0 ~ 360 을 사용한다. 
+	// Camera angles range from 0 to 360. 
 	if(m_fYaw >= 360.0f)
 		m_fYaw -= 360.0f;
 
@@ -1272,7 +1272,7 @@ void CNtlGameCameraManager::AddYaw(RwReal fDeltaYaw)
 
 	m_fYaw += fDeltaYaw;
 		
-	// 카메라 각도는 0 ~ 360 을 사용한다. 
+	// Camera angles range from 0 to 360. 
 	if(m_fYaw >= 360.0f)
 		m_fYaw -= 360.0f;
 
@@ -1348,7 +1348,7 @@ void CNtlGameCameraManager::ResetCamera(void)
 		m_pBaseController->ResetCamera();
 	}
 
-	// 확장 camera control 
+	// Extended camera control 
 	CNtlCameraController *pController;
 	ListCameraController::iterator it;
 	for ( it = m_listController.begin(); it != m_listController.end(); ++it )

@@ -1,20 +1,20 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlWorldConceptDirect.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
 // PL
 #include "NtlPLGlobal.h"
 #include "NtlPLOptionManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 #include "InputActionMap.h"
 #include "NtlStorageManager.h"
 
-// World Concept Direct���� ������ ���� �� �繰 �þ߰Ÿ�
+// Terrain and object viewing distance to be applied in World Concept Direct
 #define dDIRECT_TERRAIN_FAR		(1024.f)
 #define dDIRECT_OBJECT_FAR		(1024.f)
 
@@ -58,15 +58,15 @@ void CNtlWorldConceptDirect::ChangeState(RwInt32 iState)
 			GetInputActionMap()->Reset();
 			CNtlSLEventGenerator::ActionMapHalt();
 
-            // Entity Culling�� ���� (by agebreak)
+            // Turn off Entity Culling (by agebreak)
             CNtlPLGlobal::m_bEntityNotCulling = TRUE;
 
-			// ���� �þ� �Ÿ�, �繰 �þ� �Ÿ� �ɼ��� �ִ�� �����Ѵ�.
-			// ���� �þ߰Ÿ� ( 1lv : 200, 2lv : 300, 3lv : 400, 4lv : 512 )
+			// Set the Terrain View Distance and Object View Distance options to maximum.
+			// Terrain viewing distance (1lv: 200, 2lv: 300, 3lv: 400, 4lv: 512)
 			if( GetNtlPLOptionManager()->GetTerrainFar() != dDIRECT_TERRAIN_FAR )
 				GetNtlPLOptionManager()->SetTerrainFar( dDIRECT_TERRAIN_FAR );
 			
-			// �繰 �þ߰Ÿ� : 200, 300, 400, 512 )
+			// Object viewing distance: 200, 300, 400, 512)
 			if( GetNtlPLOptionManager()->GetObjectFar() != dDIRECT_OBJECT_FAR )
 				GetNtlPLOptionManager()->SetObjectFar( dDIRECT_OBJECT_FAR );
 
@@ -76,8 +76,8 @@ void CNtlWorldConceptDirect::ChangeState(RwInt32 iState)
 		{
 			CNtlWorldConceptController::ChangeState(WORLD_PLAY_NONE);
 
-			// �ɼ� ����
-			// ���� �þ߰Ÿ� ( 1lv : 200, 2lv : 300, 3lv : 400, 4lv : 512 )
+			// restore options
+			// terrain view distance ( 1lv : 200, 2lv : 300, 3lv : 400, 4lv : 512 )
 			RwInt32 nTerrainRangeLevel = GetNtlStorageManager()->GetIntData( dSTORAGE_GRAPHIC_TERRAIN_RANGE );
 			RwReal fTerranRange = 512.f;
 			switch( nTerrainRangeLevel )
@@ -93,7 +93,7 @@ void CNtlWorldConceptDirect::ChangeState(RwInt32 iState)
 			if( GetNtlPLOptionManager()->GetTerrainFar() != fTerranRange )
 				GetNtlPLOptionManager()->SetTerrainFar( fTerranRange );
 
-			// �繰 �þ߰Ÿ� : 200, 300, 400, 512 )
+			// Object viewing distance: 200, 300, 400, 512, 1024)
 			RwInt32 nObjectRangeLevel = GetNtlStorageManager()->GetIntData( dSTORAGE_GRAPHIC_OBJECT_RANGE );
 			RwReal fObjectRange = 512.f;
 			switch( nObjectRangeLevel )

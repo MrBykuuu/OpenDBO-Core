@@ -21,9 +21,9 @@ CNtlPLAnimSet::~CNtlPLAnimSet()
 }
 
 /**
- * Frame의 Hierarchy를 얻어 온다.
- * \param *frame 현재 frame
- * \param *data return를 할 Hierarchy
+ *Obtain the Frame Hierarchy.
+ * \param *frame Current frame
+ * \param *Data Hierarchy to return
  */
 static RwFrame *GetChildFrameHierarchy(RwFrame *frame, void *data)
 {    
@@ -43,8 +43,8 @@ static RwFrame *GetChildFrameHierarchy(RwFrame *frame, void *data)
 }
 
 /**
- * Skin에 Hierarchy를 Setting을 한다.
- * \param *atomic 현재 atomic
+ *Set Hierarchy in Skin.
+ * \param *atomic current atomic
  * \param *data Hierarchy 
  */
 static RpAtomic *SetHierarchyForSkinAtomic(RpAtomic *atomic, void *data)
@@ -74,9 +74,9 @@ float Max(float x, float y)
 }
 
 /**
- * AnimSet를 생성을 한다.
+ *Create AnimSet.
  * \param *pClump Target Clump
- * \param *pDefaultAnim Default Animation(Idle): Hierarchy를 생성하기 위해서 필요
+ * \param *pDefaultAnim Default Animation(Idle): Required to create Hierarchy
  */
 void CNtlPLAnimSet::Create(RpClump *pClump, RtAnimAnimation *pDefaultAnim, CNtlPLCharacter *pOwner)
 {
@@ -99,15 +99,15 @@ void CNtlPLAnimSet::CreateAnimation(RtAnimAnimation *pDefaultAnim)
 	NTL_ASSERT(m_pTargetClump != NULL, "m_pTargetClump = NULL");
 	NTL_ASSERT(pDefaultAnim != NULL, "pDefaultAnim = NULL");
 
-	//Hierarchy를 얻어온다.
+	//Get Hierarchy.
 	RwFrameForAllChildren( RpClumpGetFrame(m_pTargetClump), 
 		                   GetChildFrameHierarchy, 
 						   (void *)&m_pMainHierarchy);
 
-	//Skin에 Hierarchy 정보를 준다.
+	//Provides hierarchy information to the skin.
 	RpClumpForAllAtomics( m_pTargetClump, SetHierarchyForSkinAtomic, (void *)m_pMainHierarchy);
 
-	//Default Animation를 세팅한다.
+	//Set Default Animation.
 	RpHAnimHierarchySetCurrentAnim(m_pMainHierarchy, pDefaultAnim);
 	
 	
@@ -126,7 +126,7 @@ void CNtlPLAnimSet::CreateAnimation(RtAnimAnimation *pDefaultAnim)
 			RpHAnimHierarchyGetFlags(m_pMainHierarchy),
 			m_pMainHierarchy->currentAnim->maxInterpKeyFrameSize);
 		
-		//Default Anim이 없으면 AddTogether 연산시 에러가 난다.
+		//If there is no Default Anim, an error occurs when calculating AddTogether.
 		RpHAnimHierarchySetCurrentAnim(m_Channel[i].pHierarchy,      pDefaultAnim);
 	}
 	m_eBlendType    = BLEND_TWEEN;
@@ -141,7 +141,7 @@ void CNtlPLAnimSet::CreateAnimation(RtAnimAnimation *pDefaultAnim)
 }
 
 /**
- * AnimSet를 Destory 한다.
+ * Destroy the AnimSet.
  */
 void CNtlPLAnimSet::Destroy()
 {
@@ -185,9 +185,9 @@ void CNtlPLAnimSet::SendFootStep()
 }
 
 /*
- * AnimSet를 Update를 하는 함수이며 2개의 Animation
- * 간의 Blend를 처리를 한다.
- * \param fElapsed 이전 시간에서 경과된 시간
+ *This is a function that updates AnimSet and has 2 animations.
+ *Processes the blend between livers.
+ *\param fElapsed Time elapsed from previous time
  */
 void CNtlPLAnimSet::Update(float fElapsed)
 {
@@ -275,7 +275,7 @@ void CNtlPLAnimSet::Update(float fElapsed)
 				m_bAnimChanging = FALSE;
 				m_fBlendAlpha = 0.f;
 
-				//Next Animation의 상태 및 Ani 정보를 Current로 옮긴다.
+				//Move the status and Ani information of Next Animation to Current.
 				RpHAnimHierarchySetCurrentAnim( m_Channel[ANIM_CHANNEL_CURRENT].pHierarchy,
 					                            RpHAnimHierarchyGetCurrentAnim(m_Channel[ANIM_CHANNEL_NEXT].pHierarchy) );
 				float animTime = m_Channel[ANIM_CHANNEL_NEXT].pHierarchy->currentAnim->currentTime;
@@ -298,9 +298,9 @@ void CNtlPLAnimSet::Update(float fElapsed)
 	NTL_RETURNVOID();
 }
 /**
- * Animation를 Change를 한다.
- * \param *pAnim 현재 Play를 할 RtAnimation
- * \param bLoop Loop Animation인가(이부분은 아직 코딩 안함)
+ * Change the Animation.
+ * \param *pAnim RtAnimation to currently play
+ * \param bLoop Is it Loop Animation (this part is not coded yet)
  */
 void CNtlPLAnimSet::SetChangeAnimation(SAnimData *pAnimData, RwBool bLoop, unsigned int uiAnimKey)
 {
@@ -316,7 +316,7 @@ void CNtlPLAnimSet::SetChangeAnimation(SAnimData *pAnimData, RwBool bLoop, unsig
 		}
 		else
 		{
-			//Next Animation의 상태 및 Ani 정보를 Current로 옮긴다.
+			//Move the status and Ani information of Next Animation to Current.
 			RpHAnimHierarchySetCurrentAnim( m_Channel[ANIM_CHANNEL_CURRENT].pHierarchy,
 											RpHAnimHierarchyGetCurrentAnim(m_Channel[ANIM_CHANNEL_NEXT].pHierarchy) );
 			
@@ -350,8 +350,8 @@ void CNtlPLAnimSet::SetChangeChannelAnimation(EAnimChannel eChannel, RtAnimAnima
 /**
  *
  * \param blendType BlendType
- * \param fBlendTargetAlpha    변해야 할 Blend의 값(0 - 1)
- * \param fBlendTargetInterval TargetAlpha까지 Blend가 되어질 시간(초)
+ * \param fBlendTargetAlpha Blend value to be changed (0 - 1)
+ * \param fBlendTargetInterval Time to Blend to TargetAlpha (in seconds)
  * \return 
  */
 RwBool CNtlPLAnimSet::SetChangeBlend(EBlendType blendType, RwReal fBlendTargetAlpha, RwReal fBlendTargetInterval)

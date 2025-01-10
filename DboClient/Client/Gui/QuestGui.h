@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: QuestGui.h
 // Desc: QuestGui
-//		 Quest에 관련된 모든 윈도우들의 관리.
+//		 Management of all Windows related to Quest.
 //
 // 2006.10.19 Peessi@hitel.net   
 //

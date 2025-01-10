@@ -1,12 +1,12 @@
 /*****************************************************************************
 *
-* File			: PetStatusBarGui.h
-* Author		: agebreak
-* Copyright	: (주)NTL
-* Date			: 2007. 8. 16	
-* Abstract		: DBO Pet HP/MP gui.
+*File			: PetStatusBarGui.h
+*Author		    : agebreak
+*Copyright	    : NTL Co., Ltd.
+*Date			: 2007. 8. 16	
+*Abstract		: DBO Pet HP/MP gui.
 *****************************************************************************
-* Desc         : Summon Pet의 StatusBar GUI를 표시하는 클래스
+*Desc          : A class that displays the Summon Pet's StatusBar GUI
 *
 *****************************************************************************/
 
@@ -17,7 +17,7 @@
 #include "SurfaceGui.h"
 #include "NumberGui.h"
 
-//sound
+//Sound
 #include "GUISoundDefine.h"
 
 class CBuffDispGui;
@@ -40,7 +40,7 @@ public:
 	static CPetStatusBarGui* GetInstance();
 	static void				 DeleteInstance();
 
-	void			SetPetID(RwUInt32 uiSerialId);			///< 소환한 Pet의 ID를 설정한다.
+	void			SetPetID(RwUInt32 uiSerialId);			///< Set the ID of the summoned Pet.
 	RwUInt32		GetPetID();
 
 protected:
@@ -53,12 +53,12 @@ protected:
     VOID	OnCaptureMouseDown(const CKey& key);
 	VOID	OnCaptureMouseUp(const CKey& key);
     
-	void	UpdatePetInfo();						///< Pet의 정보를 UI에 업데이트한다.
-	//void	UpdatePetPowerValue();					///< Pet의 전투력을 UI에 업데이트한다.
-    void    ToggleInfo();                           ///< 상세 정보창을 토글한다	
+	void	UpdatePetInfo();						///< Update the pet's information in the UI.
+	//void	UpdatePetPowerValue();					///< Updates the Pet's combat power in the UI.
+    void    ToggleInfo();                           ///< Toggle the detailed information window	
 
 protected:
-	static CPetStatusBarGui* m_pInstance;			///< 싱글톤 객체
+	static CPetStatusBarGui* m_pInstance;			///< singleton object
     
 	gui::CProgressBar*	m_ppgbHp;
 	gui::CProgressBar*	m_ppgbEp;		
@@ -81,11 +81,11 @@ protected:
     gui::CStaticBox*    m_pSttInfoEDLabel;
     gui::CStaticBox*    m_pSttInfoLP;
     gui::CStaticBox*    m_pSttInfoEP;    
-    gui::CStaticBox*    m_pSttInfoHR;           // 공격 성공율
-    gui::CStaticBox*    m_pSttInfoDR;           // 회피율
-    gui::CStaticBox*    m_pSttInfoPO;           // 공격력
-    gui::CStaticBox*    m_pSttInfoPD;           // 타격 방어력    
-    gui::CStaticBox*    m_pSttInfoED;           // 기공 방어력
+    gui::CStaticBox*    m_pSttInfoHR;           // Attack success rate
+    gui::CStaticBox*    m_pSttInfoDR;           // Evasion rate
+    gui::CStaticBox*    m_pSttInfoPO;           // attack power
+    gui::CStaticBox*    m_pSttInfoPD;           // Strike Defense    
+    gui::CStaticBox*    m_pSttInfoED;           // Qigong Defense
 
 	//CFilteredSurfaceGui m_surCharacter;
 	gui::CTexture		m_texCharacter;
@@ -113,5 +113,5 @@ protected:
 
 	RwBool			m_bDelete;
 	RwUInt32		m_uiPetID;
-    bool            m_bShowInfo;                ///< 정보 윈도우의 표시 여부
+    bool            m_bShowInfo;                ///< Whether to display the information window
 };

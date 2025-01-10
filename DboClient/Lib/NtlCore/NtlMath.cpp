@@ -151,7 +151,7 @@ RwReal CNtlMath::MathRwV3dSquaredLength(const RwV3d *pIn)
 }
 
 /**
- * curPos와 desPos간의 각도를 구한다(degree)임
+ *Find the angle between curPos and desPos (degree)
  */
 RwReal CNtlMath::GetLineAngle(const RwV3d &curPos, const RwV3d &desPos)
 {
@@ -234,9 +234,9 @@ void CNtlMath::LineToAngleXY(const RwV3d *pLine, RwReal& fAxisAngleX, RwReal& fA
 }
 
 /**
- * Matrix에서 Euler Angle 값을 얻어 오는 함수
- * 주의 사항: x축 각도는 -90 - 90 사이만 정상적으로 얻을 수 있다. (-90, 90 은 안됨)
- * 그리고 Rotation과 Translation만 적용된 Matrix에서만 현재 Test를 해봄
+ *Function to obtain Euler Angle value from Matrix
+ *Note: The x-axis angle can only be obtained normally between -90 and 90. (-90, 90 does not work)
+ *And the current test is only performed on Matrix with rotation and translation applied.
  */
 void CNtlMath::MathGetMatrixEulerAngle(const RwMatrix *pMatrix, RwV3d *pvAngle)
 {
@@ -283,7 +283,7 @@ void CNtlMath::MathGetRotationMatrix(RwMatrix* pMatrix, const RwV3d* pvUnit_A, c
 	RwV3d	vCross;
 	RwReal	f = (1.0f + RwV3dDotProduct(pvUnit_A, pvUnit_B)) * 2.0f; 
 	
- 	if (f <= 0.0f) // f가 0이 될 수 있으므로... 오류가 나올 수 있다.
+ 	if (f <= 0.0f) // Since f can become 0... errors can occur.
 	{
 		f = 0.0001f;
 	}
@@ -441,7 +441,7 @@ RwReal CNtlMath::GetLength( const RwV2d& v1, const RwV2d& v2 )
     return RwV2dLength(&vTemp);
 }
 
-/// 3D 벡터간의 더하기
+/// Addition between 3D Vectors
 const RwV3d operator+(const RwV3d& lhs, const RwV3d& rhs)
 {
     RwV3d v3Return;
@@ -452,7 +452,7 @@ const RwV3d operator+(const RwV3d& lhs, const RwV3d& rhs)
     return v3Return;
 }
 
-/// 3D 벡터간의 뺴기
+/// Subtraction between 3D Vectors
 const RwV3d operator-(const RwV3d& lhs, const RwV3d& rhs)
 {
     RwV3d v3Return;
@@ -463,7 +463,7 @@ const RwV3d operator-(const RwV3d& lhs, const RwV3d& rhs)
     return v3Return;
 }
 
-/// 3D 벡터 * 스칼라값
+/// 3D Vector * Scalar Value
 const RwV3d operator*(const RwV3d& lhs, const RwReal& rhs)
 {
     RwV3d v3Return;
@@ -473,7 +473,7 @@ const RwV3d operator*(const RwV3d& lhs, const RwReal& rhs)
 
     return v3Return;
 }
-/// 3D 벡터 *= 스칼라값
+/// 3D Vector *= Scalar Value
 const void operator*=( RwV3d& lhs, const RwReal& rhs ) 
 {
 	lhs.x *= rhs;
@@ -493,7 +493,7 @@ const RwMatrix operator*( const RwMatrix& lhs, const RwMatrix& rhs )
 	return matResult;
 }
 
-/// 3D 벡터 / 스칼라값
+/// 3D Vector / Scalar Value
 const RwV3d operator/(const RwV3d& lhs, const RwReal& rhs)
 {
     assert(rhs != 0);
@@ -512,7 +512,7 @@ const RwV3d operator/(const RwReal& lhs, const RwV3d& rhs)
 }
 
 
-/// 3D 벡터 += 연산
+/// 3D vector += operation
 const void operator+=(RwV3d& lhs, const RwV3d& rhs)
 {
     lhs.x += rhs.x;
@@ -520,7 +520,7 @@ const void operator+=(RwV3d& lhs, const RwV3d& rhs)
     lhs.z += rhs.z;
 }
 
-/// 3D벡터 -= 연산
+/// 3D vector -= operation
 const void operator-=(RwV3d& lhs, const RwV3d& rhs)
 {
     lhs.x -= rhs.x;
@@ -528,7 +528,7 @@ const void operator-=(RwV3d& lhs, const RwV3d& rhs)
     lhs.z -= rhs.z;
 }
 
-/// 3D벡터 == 연산
+/// 3D vector == operation
 const RwBool operator==(const RwV3d& lhs, const RwV3d& rhs)
 {
 	if( lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z )
@@ -537,7 +537,7 @@ const RwBool operator==(const RwV3d& lhs, const RwV3d& rhs)
 	return false;
 }
 
-/// 3D벡터 != 연산
+/// 3D vector != operation
 const RwBool operator!=(const RwV3d& lhs, const RwV3d& rhs)
 {
 	if( lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z )
@@ -836,8 +836,8 @@ RwBool CNtlOBB::IntersectionOBBvsOBB(CNtlOBB* pA, CNtlOBB* pB) // Game Physics P
 
 RwInt32 CNtlMath::GetSafeIdx3D(RwV3d& vPos, RwInt32 iHalfSize, RwInt32 iChunkSize, RwInt32 iChunkNum)
 {	
-	// float 유효수의 문제로 0.9995 같은 경우 올림으로 1이 되어 버리는 현상으로 Idx가 잘못 계산 되었다.
-	// 이런 문제를 해결하기 위해서 floor를 사용하여 소수부를 내림하여 해결하였다.
+	// Due to floating point precision issues, numbers like 0.9995 were being rounded up to 1, causing incorrect index calculations.
+	// To solve this problem, we used floor() to round down the decimal part.
 	RwReal fX = floor(vPos.x);
 	RwReal fZ = floor(vPos.z);
 

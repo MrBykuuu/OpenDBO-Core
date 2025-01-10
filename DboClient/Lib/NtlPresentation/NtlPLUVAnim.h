@@ -3,7 +3,7 @@
 
 /**
  * \ingroup NtlPresentation
- * \brief UVAnim을 처리하는 클래스
+ * \brief Classes that handle UVAnim
  * \date 2006-07-11
  * \author agebreak
  */
@@ -15,17 +15,17 @@ public:
 
     RwBool Create(const char* szUVFileName);
     RwBool SetClump(RpClump* pClump);
-    RwBool Create(const char* szUVFileName, RpClump* pClump);       ///< UVAnim을 생성한다.
-    void   Destory();                                               ///< 할당된 메모리를 해제한다.
-    void   Update(RwReal fElapsedTime);                             ///< UVAim을 Update한다.
-    void   SetUVAnimSpeed(RwReal fSpeed) {m_fUVAnimTime = fSpeed;}  ///< UVAnim의 속도를 지정한다
+    RwBool Create(const char* szUVFileName, RpClump* pClump);       ///< Create UVAnim.
+    void   Destory();                                               ///< Releases the allocated memory.
+    void   Update(RwReal fElapsedTime);                             ///< Update UVAim.
+    void   SetUVAnimSpeed(RwReal fSpeed) {m_fUVAnimTime = fSpeed;}  ///< Specifies the speed of UVAnim
 
 protected:
-    RtDict* UVAnimDictLoad(const RwChar* strFullName);              ///< *.uva 파일을 로드한다.
+    RtDict* UVAnimDictLoad(const RwChar* strFullName);              ///<Load the *.uva file.
 
 protected:
-    RtDict*							m_pUvAnimDict;                 ///< UVAnim dict 객체
-    RwSList*						m_pAnimationMaterialList;      ///< UVAnim을 적용할 Material list
+    RtDict*							m_pUvAnimDict;                 ///< UVAnim dict object
+    RwSList*						m_pAnimationMaterialList;      ///< Material list to apply UVAnim to
     RwReal                          m_fUVAnimTime;                 ///< UVAnim Speed
     
     

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // File: GuiLineTree.h
-// Desc: GuiLineTree - QuestList, Quest Window등에서 사용될 모듈.
-//		 트리구조와 LineID만 관할하며, 좌표와 렌더링, 인터랙티브는 상속하여 구현
+// Desc: GuiLineTree -Module to be used in QuestList, Quest Window, etc.
+//		 Only the tree structure and LineID are in charge, and coordinates, rendering, and interactivity are implemented through inheritance.
 //
 // 2006.10.16 Peessi@hitel.net   
 //
@@ -54,19 +54,19 @@ public:
 	//! Virtual
 	virtual VOID		Expand( RwBool bExpand );
 	virtual VOID		ExpandChild( RwBool bExpand );
-	virtual VOID		ShowProc(VOID);		// 포함 컴포넌트의 Show, 좌표지정등을 오버라이드.
-	virtual VOID		HideProc(VOID);		// 포함 컴포넌트의 Hide등으로 오버라이드.			
+	virtual VOID		ShowProc(VOID);		// Overrides Show, coordinate designation, etc. of included components.
+	virtual VOID		HideProc(VOID);		// Override with Hide, etc. of the included component.			
 
 protected:
 	CGuiLineTree*		m_pMgr;		
 	CGuiLineTreeNode*	m_pParent;
 	LIST_LINENODE		m_listpChild;
-	RwInt32				m_nID;			// 고유 ID
-	RwInt32				m_nLineID;		// 라인 ID
-	RwInt32				m_nPosX;		// 시작점
+	RwInt32				m_nID;			// unique ID
+	RwInt32				m_nLineID;		// line id
+	RwInt32				m_nPosX;		// starting point
 	RwInt32				m_nPosY;		
 	RwBool				m_bIsExpand;	
-	RwBool				m_bShow;		// 이 노드가 보이는 노드인가.
+	RwBool				m_bShow;		// Is this node a visible node?
 };
 
 inline CGuiLineTreeNode* CGuiLineTreeNode::GetParentNode(VOID)
@@ -137,12 +137,12 @@ public:
 							RwInt32 nLineHeight = GUILINETREE_DEFAULT_HEIGHT,
 							RwInt32 nLineMargin = GUILINETREE_DEFAULT_MARGIN,
 							RwInt32 nChildXMargin = GUILINETREE_DEFAULT_CHILDMARGINX,
-							RwInt32 nScrollBarWidth = GUILINETREE_DEFAULT_SCROLLBARWIDTH );	// 그림등을 추가할 때 오버라이드 한다. 		
+							RwInt32 nScrollBarWidth = GUILINETREE_DEFAULT_SCROLLBARWIDTH );	// Override when adding pictures, etc. 		
 	virtual	VOID	Destroy(VOID);		
 	
-	virtual VOID	AddNode( CGuiLineTreeNode* pNode, RwInt32 nParentID = GUILINETREE_ROOTNODE_ID ); // Add, Delete시 적용기준이 있다면 Override 혹은 Overload 해야함.
+	virtual VOID	AddNode( CGuiLineTreeNode* pNode, RwInt32 nParentID = GUILINETREE_ROOTNODE_ID ); // If there is a standard to apply when adding or deleting, you must override or overload.
 	virtual VOID	DeleteNode( RwInt32 nID );
-	virtual VOID	ClearNodes(VOID);			// 루트노드는 지우지 않음.
+	virtual VOID	ClearNodes(VOID);			// The root node is not deleted.
 
 	CGuiLineTreeNode*	FindNode( RwInt32 nID );
 	VOID				RecalcLineID(VOID);
@@ -165,12 +165,12 @@ protected:
 	gui::CSlot			m_slotScrollMoved;
 
 	// Variable
-	RwInt32				m_nLineHeight;	// 라인폭.
-	RwInt32				m_nLineMargin;	// 라인간 여백.
-	RwInt32				m_nScrollOffset;// 스크롤 옵셋.
-	RwInt32				m_nMaxLine;		// 최대 라인수.
-	RwInt32				m_nChildXMargin;// child node의 들여쓰기 값.
-	gui::CScrollBar*	m_pScroll;		// 스크롤 바
+	RwInt32				m_nLineHeight;	// Line width.
+	RwInt32				m_nLineMargin;	// Margin between lines.
+	RwInt32				m_nScrollOffset;// Scroll offset.
+	RwInt32				m_nMaxLine;		// Maximum number of lines.
+	RwInt32				m_nChildXMargin;// The indentation value of the child node.
+	gui::CScrollBar*	m_pScroll;		// scroll bar
 	gui::CDialog*		m_pLineTree;	// Line Tree Dialog
 
 	CGuiLineTreeNode*	m_pRootNode;		

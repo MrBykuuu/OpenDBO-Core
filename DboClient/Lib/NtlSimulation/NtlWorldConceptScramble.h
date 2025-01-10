@@ -5,15 +5,15 @@
 * Date			: 2009. 1. 15
 * Abstract		: 
 *****************************************************************************
-* Desc			: µµÀå ÀïÅ»Àü ¿ùµå ÄÁ¼Á
+* Desc			: Dojo Battle World Concept
 *****************************************************************************/
 
 #pragma once
 
-// shared
+// Shared
 #include "NtlDojo.h"
 
-// simulation
+// Simulation
 #include "NtlWorldConceptController.h"
 
 class CNtlWorldConceptScramble : public CNtlWorldConceptController

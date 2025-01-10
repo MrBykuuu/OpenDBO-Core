@@ -1,23 +1,23 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobPlayer.h"
 
-// shared
+// Shared
 #include "PcTable.h"
 #include "TextAllTable.h"
 #include "CharTitleTable.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 #include "NtlPLSceneManager.h"
 #include "NtlPLCharacter.h"
 #include "NtlPLPlayerName.h"
 #include "NtlPLHelpers.h"
 
-// simulation
+// Simulation
 #include "TableContainer.h"
 #include "NtlSobManager.h"
 #include "NtlFSMDef.h"
@@ -165,7 +165,7 @@ RwBool CNtlSobPlayer::Create(void)
 
 	m_pEquipInventory = NTL_NEW CNtlInventoryBase;
 
-	// proxy 설정
+	//proxy settings
 	m_pSobProxy = NTL_NEW CNtlSobCharProxy;
 	m_pSobProxy->Create(NTL_SLPROXY_COMP_EQUIP_ITEM);
 	m_pSobProxy->SetSobObj(this);
@@ -178,7 +178,7 @@ RwBool CNtlSobPlayer::Create(void)
 		NTL_RETURN(FALSE);
 	}
 
-	// class name 설정.
+	// Set class name.
 	SetClassName(SLCLASS_NAME_PLAYER);
 
 	NTL_RETURN(TRUE);
@@ -250,7 +250,7 @@ void CNtlSobPlayer::HandleEvents(RWS::CMsg &pMsg)
 		// proxy setting
 		GetSobProxy()->HandleEvents(pMsg);
 
-		// 좌표와 방향 세팅.
+		//Setting coordinates and direction.
 		RwV3d vLoc, vDir;
 		RwV3dAssignMacro(&vLoc, &pSobPlayerCreate->vLoc); 
 		RwV3dAssignMacro(&vDir, &pSobPlayerCreate->vDir); 
@@ -310,7 +310,7 @@ void CNtlSobPlayer::HandleEvents(RWS::CMsg &pMsg)
 		return;
 	}
 
-	//feeling actor로 Event도 보내준다.
+	//Event is also sent to the feeling actor.
 	CNtlSobFeelingActor::HandleEvents(pMsg); 
 
 	NTL_RETURNVOID();

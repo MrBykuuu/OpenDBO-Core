@@ -2,7 +2,7 @@
  *
  * File			: NtlPLResourcePack.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2007. 3. 20	
  * Abstract		: Presentation layer resource pack class
  *****************************************************************************
@@ -30,11 +30,11 @@
 // pack result
 
 #define NTL_FILEPACK_SUCCESS		0
-#define NTL_FILEPACK_FILENOTFOUND	-1		// file을 찾을 수 없다.
+#define NTL_FILEPACK_FILENOTFOUND	-1		// The file cannot be found.
 #define NTL_FILEPACK_FILEREADONLY	-2		// file read only
-#define NTL_FILEPACK_CREATEFAIL		-3		// file 생성 실패
-#define NTL_FILEPACK_NOT_USEFILE	-4		// file 생성 실패
-#define NTL_FILEPACK_ERROR			-5		// error
+#define NTL_FILEPACK_CREATEFAIL		-3		// File creation failed
+#define NTL_FILEPACK_NOT_USEFILE	-4		// File creation failed
+#define NTL_FILEPACK_ERROR			-5		// Error
 
 
 //------------------------------------------------------------------------------
@@ -208,7 +208,7 @@ private:
 
 	RwUInt32	m_uiFlags;
 
-	// pack을 풀기 위한 참조 함수.
+	// Reference function for unpacking.
 	RwInt32		m_iBufferSize;
 	RwInt32		m_iCurrPathNum;
 	RwChar		m_chPathBuffer[20][1024];
@@ -329,8 +329,8 @@ bool		IsExistSoundFile(const RwChar *pFileName);
 
 /**
  * \ingroup NtlPresentation
- * \brief 팩 테이블 데이터를 읽어오기 위한 클래스 
- * 서버쪽 코드에 맞춰서 테이블만 따로 클래스를 만든다.
+ * \brief Class for reading pack table data 
+ *Create a separate class for the table according to the server-side code.
  * \date 2009-03-17
  * \author agebreak
  */
@@ -341,7 +341,7 @@ public:
 	virtual ~CTablePackLoad( void );
 
 public:
-    virtual bool Call( const char* pfilename, CNtlFileSerializer* pSeralize, const char* pszCryptPassword );  ///< 콜백되는 함수
+    virtual bool Call( const char* pfilename, CNtlFileSerializer* pSeralize, const char* pszCryptPassword );  ///< Function to be called back
 };
 
 #endif

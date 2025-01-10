@@ -452,7 +452,7 @@ RpLight* NtlWorldRemoveLightWhenWorldDestroy(RpLight* light, void *data)
 
 RpAtomic* NtlWorldLogAtmoicWhenWorldDestroy(RpAtomic* atomic, void *data)
 {
-	// Destroy 시 Atomic이 물고 있는 Class 접근하여 이름을 알아온다.
+	// When destroyed, Atomic approaches the class it is holding and learns its name.
 	if (RpNtlAtomicGetData(atomic))
 	{
 		CNtlPLEntity* pPLEntity = static_cast<CNtlPLEntity*>(RpNtlAtomicGetData(atomic));
@@ -505,7 +505,7 @@ void CNtlWorldFieldManager::Init(RpWorld *pNtlWorld, RwV3d& SpawnPos)
 
 	InitSingleInstance();
 
-	// 인도어
+	// Indoor
 	CNtlWorldSectorManager::Init();
 
 	RwD3D9SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
@@ -583,7 +583,7 @@ void CNtlWorldFieldManager::Free(void)
 
 	DBO_TRACE(m_iCzTestCnt == 0, "CNtlWorldFieldManager Free Cnt Test : " << m_iCzTestCnt);
 
-	// 인도어
+	// Indoor
 	CNtlWorldSectorManager::Free();
 
 	DestroySky();
@@ -866,8 +866,8 @@ void CNtlWorldFieldManager::UpdateDatumDir()
 	}
 	else
 	{
-		// 개발 시 Brack를 걸고 서버이동(버스등)을 하게 되면 m_eMove2가 변경 되지
-		// 않는 경우가 발생 한다. 이 경우 ePORTAL 처리를 강행한다.
+		// During development, if you move the server (bus, etc.) with Brack on, m_eMove2 will not change.
+		// There are cases where it does not happen. In this case, ePORTAL processing is enforced.
 		// exception; Sync. wasn't matched
 		m_eMoved2 = ePORTAL;
 		DBO_TRACE(FALSE, "Critical errors occured");
@@ -1707,7 +1707,7 @@ RpCollisionTriangle* GetNtlWorldOutdoorCollisionInfo(RpIntersection *pIntersecti
 		vCollPos.y = pLine->start.y + (fRatio * vDelta.y);
 		vCollPos.z = pLine->start.z + (fRatio * vDelta.z);
 
-		// 툴에서의 Mouse Pick Data는 TransparencyTile도 충돌해야 한다.
+		// Mouse Pick Data from the tool should also conflict with TransparencyTile.
 		if (!dGET_COLLISION_INFO_UPDATE() && GetSceneManager()->GetWorldAttribute(vCollPos) & dNMAP_TRANSPARENCY_TILE_FLAG)
 		{
 			return pRpCollisionTriangle;
@@ -3666,8 +3666,8 @@ RwBool CNtlWorldFieldManager::SetAFieldProp(RwV3d& Pos, sNTL_FIELD_PROP& NtlFiel
 RwBool CNtlWorldFieldManager::GetAFieldProp(RwV3d& Pos, sNTL_FIELD_PROP& NtlFieldProp)
 {
 	/*
-	WorldFileFormat - FieldProperty
-	Field Property를 File 또는 Memory로 부터 정보를 가져온다.
+	WorldFileFormat-FieldProperty
+	Field Property retrieves information from File or Memory.
 	*/
 
 	RwInt32 Idx = GetFieldIdx(Pos);
@@ -4163,14 +4163,14 @@ RwBool CNtlWorldFieldManager::SaveCurFieldsBeforeExit()
 #endif
 
 // #ifdef dNTL_WORLD_SCHEDULE_LOADING
-// 	// 스케쥴러를 사용 중이라면, 아직 삭제되지 않은 Field가 있을 수 있다. WorldScheduler를 끝까지 돌린다.
+// 	// If you are using a scheduler, there may be fields that have not yet been deleted. Run WorldScheduler all the way.
 // 	while (m_WorldScheduler.Scheduling(1.0f, m_WorldScheduler.GetLastPos()))
 // 	{
 // 		++m_iCzTestCnt;
 // 	}
 // #endif
 
-	// FieldManager를 초기화 하는 거나 마찬가지로 m_eMove2를 eC로 변경 WorldEeady 상태를 해제 한다.
+	// Initialize FieldManager or similarly change m_eMove2 to eC to release the WorldEeady state.
 	m_eMoved2 = eC;
 	for(RwInt32 i = 0; i < 36; ++i)
 	{
@@ -4178,7 +4178,7 @@ RwBool CNtlWorldFieldManager::SaveCurFieldsBeforeExit()
 	}
 
 #ifdef dNTL_WORLD_SCHEDULE_LOADING
-	// 스케쥴러를 사용 중이라면, 아직 삭제되지 않은 Field가 있을 수 있다. WorldScheduler를 끝까지 돌린다.
+	// If you are using a scheduler, there may be fields that have not yet been deleted. Run WorldScheduler all the way.
 	while (m_WorldScheduler.Scheduling(1.0f, m_WorldScheduler.GetLastPos()))
 	{
 		++m_iCzTestCnt;
@@ -5253,11 +5253,11 @@ RwBool CNtlWorldFieldManager::GetWorldDecal(RwV3d& vPosition, RwV3d& vSize, RwIn
 	// 	RwInt32		MidX		= static_cast<RwInt32>(vPosition.x / dGET_WORLD_PARAM()->WorldSectorTileSize) * dGET_WORLD_PARAM()->WorldSectorTileSize;
 	// 	RwInt32		MidZ		= static_cast<RwInt32>(vPosition.z / dGET_WORLD_PARAM()->WorldSectorTileSize) * dGET_WORLD_PARAM()->WorldSectorTileSize;
 	// 
-	// 	// 1를 더해주는 이유는 업데이트를 덜 하기 위한 방법이다.
+	// 	// The reason for adding 1 is to do fewer updates.
 	// 	RwInt32		TileNumHalfX= 1 + (static_cast<RwInt32>(vSize.x * 0.5f) + (dGET_WORLD_PARAM()->WorldSectorTileSize + static_cast<RwInt32>(vSize.x * 0.5f) % dGET_WORLD_PARAM()->WorldSectorTileSize)) / dGET_WORLD_PARAM()->WorldSectorTileSize;
 	// 	RwInt32		TileNumHalfZ= 1 + (static_cast<RwInt32>(vSize.z * 0.5f) + (dGET_WORLD_PARAM()->WorldSectorTileSize + static_cast<RwInt32>(vSize.z * 0.5f) % dGET_WORLD_PARAM()->WorldSectorTileSize)) / dGET_WORLD_PARAM()->WorldSectorTileSize;
 	// 
-	// 	// 1를 더해주는 이유는 중앙 타일은 연산에서 빼기 위한 꽁수다.
+	// 	// The reason for adding 1 is to subtract the central tile from the operation.
 	// 	RwInt32		TileNumX	= TileNumHalfX * 2 + 1;
 	// 	RwInt32		TileNumZ    = TileNumHalfZ * 2 + 1;
 	// 
@@ -5476,7 +5476,7 @@ RwBool CNtlWorldFieldManager::GetWorldLightColor(RwV3d& Pos, RwRGBA* pOutColor, 
 		RwV2d ptDist;
 		RwV2dSub(&ptDist, &ptCheckPos, &ptPos);
 
-		// 여기를 통과하지 못하는 섹터는 -1 값으로 변경한다.
+		// Sectors that do not pass here are changed to -1.
 		if (GetSceneManager()->GetActiveWorldType() == AW_HEGITHFIELD && !pSector->m_pAtomic)
 		{
 			vecNeighborSectors.at(i) = -1;
@@ -5489,11 +5489,11 @@ RwBool CNtlWorldFieldManager::GetWorldLightColor(RwV3d& Pos, RwRGBA* pOutColor, 
 		}		
 	}
 
-	// 위에서 재구성된 NeighborSectors만 연산된다.
+	// Only the NeighborSectors reconstructed above are calculated.
 	RwRGBAReal	clrfResult;
 	RwBool		bResult = FALSE;
 
-	// Box 검사.
+	// Box inspection.
 	for (int i = 0; i < 9; ++i)
 	{
 		if (vecNeighborSectors.at(i) == -1)
@@ -5520,10 +5520,10 @@ RwBool CNtlWorldFieldManager::GetWorldLightColor(RwV3d& Pos, RwRGBA* pOutColor, 
 		}
 	}
 
-	// Box에서 체크되지 않았다면 구를 검사 한다.
+	// If the box is not checked, check the sphere.
 	if (!bResult)
 	{
-		// WorldLight
+		// World light
 		RwRGBAReal	clrfTemp;
 		RwRGBAReal*	pclrfTemp = const_cast<RwRGBAReal*>(CNtlFieldColorManager::GetInstance()->GetColorf());
 
@@ -6629,7 +6629,7 @@ RpLight* NtlWorldRemoveLightWhenWorldDestroy(RpLight* light, void *data)
 
 RpAtomic* NtlWorldLogAtmoicWhenWorldDestroy(RpAtomic* atomic, void *data)
 {
-	// Destroy 시 Atomic이 물고 있는 Class 접근하여 이름을 알아온다.
+	// When destroyed, Atomic approaches the class it is holding and learns its name.
 	if (RpNtlAtomicGetData(atomic))
 	{
 		CNtlPLEntity* pPLEntity = static_cast<CNtlPLEntity*>(RpNtlAtomicGetData(atomic));
@@ -6680,7 +6680,7 @@ void CNtlWorldFieldManager::Init(RpWorld *pNtlWorld, RwV3d& SpawnPos)
 
 	InitSingleInstance();
 
-	// 인도어
+	// Indoor
 	CNtlWorldSectorManager::Init();
 
 	RwD3D9SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
@@ -6756,7 +6756,7 @@ void CNtlWorldFieldManager::Free(void)
 {
 	NTL_FUNCTION("CNtlWorldFieldManager::Free");
 
-	// 인도어
+	// Indoor
 	CNtlWorldSectorManager::Free();
 
 	DestroySky();
@@ -7033,8 +7033,8 @@ void CNtlWorldFieldManager::UpdateDatumDir()
 	}
 	else
 	{
-		// 개발 시 Brack를 걸고 서버이동(버스등)을 하게 되면 m_eMove2가 변경 되지
-		// 않는 경우가 발생 한다. 이 경우 ePORTAL 처리를 강행한다.
+		// During development, if you move the server (bus, etc.) with Brack on, m_eMove2 will not change.
+		// There are cases where it does not happen. In this case, ePORTAL processing is enforced.
 		// exception; Sync. wasn't matched
 		m_eMoved2 = ePORTAL;
 		DBO_TRACE(FALSE, "Critical errors occured");
@@ -7857,7 +7857,7 @@ RpCollisionTriangle* GetNtlWorldOutdoorCollisionInfo(RpIntersection *pIntersecti
 		vCollPos.y = pLine->start.y + (fRatio * vDelta.y);
 		vCollPos.z = pLine->start.z + (fRatio * vDelta.z);
 
-		// 툴에서의 Mouse Pick Data는 TransparencyTile도 충돌해야 한다.
+		// Mouse Pick Data from the tool should also conflict with TransparencyTile.
 		if (!dGET_COLLISION_INFO_UPDATE() && GetSceneManager()->GetWorldAttribute(vCollPos) & dNMAP_TRANSPARENCY_TILE_FLAG)
 		{
 			return pRpCollisionTriangle;
@@ -9521,8 +9521,8 @@ void CNtlWorldFieldManager::OnSetSlopeLighting(vector<sTARGET_VERT_SL_INFO>& vec
 RwBool CNtlWorldFieldManager::SetAFieldProp(RwV3d& Pos, sNTL_FIELD_PROP& NtlFieldProp, eNTL_FIELD_PROPID NtlFieldPropID)
 {
 	/*
-	WorldFileFormat - FieldProperty
-	Field Property를 File 또는 Memory 정보를 변경한다.
+	WorldFileFormat-FieldProperty
+	Change the Field Property to File or Memory information.
 	*/
 
 	RwInt32 NumSectorTile	= (dGET_WORLD_PARAM()->WorldSectorTileNum * 2) * (dGET_WORLD_PARAM()->WorldSectorTileNum * 2);
@@ -9813,7 +9813,7 @@ RwBool CNtlWorldFieldManager::GetAFieldProp(RwV3d& Pos, sNTL_FIELD_PROP& NtlFiel
 {
 	/*
 	WorldFileFormat - FieldProperty
-	Field Property를 File 또는 Memory로 부터 정보를 가져온다.
+	Field Property retrieves information from File or Memory.
 	*/
 
 	RwInt32 Idx = GetFieldIdx(Pos);
@@ -10308,7 +10308,7 @@ RwBool CNtlWorldFieldManager::SaveCurFieldsBeforeExit()
 	SaveCurWorldState();
 #endif
 
-	// FieldManager를 초기화 하는 거나 마찬가지로 m_eMove2를 eC로 변경 WorldEeady 상태를 해제 한다.
+	// Initialize FieldManager or similarly change m_eMove2 to eC to release the WorldEeady state.
 	m_eMoved2 = eC;
 	for(RwInt32 i = 0; i < 36; ++i)
 	{
@@ -10316,7 +10316,7 @@ RwBool CNtlWorldFieldManager::SaveCurFieldsBeforeExit()
 	}
 
 #ifdef dNTL_WORLD_SCHEDULE_LOADING
-	// 스케쥴러를 사용 중이라면, 아직 삭제되지 않은 Field가 있을 수 있다. WorldScheduler를 끝까지 돌린다.
+	// If you are using a scheduler, there may be fields that have not yet been deleted. Run WorldScheduler all the way.
 	RwInt32 iCzTestCnt = 0;
 	while (m_WorldScheduler.Scheduling(1.0f, m_WorldScheduler.GetLastPos()))
 	{
@@ -10793,8 +10793,8 @@ RwBool CNtlWorldFieldManager::CreateFieldFromFile(RwInt32 FieldIdx)
 	RwV3d SectorSPos;
 
 	//-------------------------------------------------------------------
-	// 2007.03.23 (형석)
-	// Pack file 기능 추가
+	// 2007.03.23 (Fluorite)
+	// Add pack file function
 
 	FILE *pFile = NULL;
 	if(GetNtlResourcePackManager()->GetActiveFlags() & NTL_PACK_TYPE_FLAG_TERRAIN)
@@ -11385,11 +11385,11 @@ RwBool CNtlWorldFieldManager::GetWorldDecal(RwV3d& vPosition, RwV3d& vSize, RwIn
 	// 	RwInt32		MidX		= static_cast<RwInt32>(vPosition.x / dGET_WORLD_PARAM()->WorldSectorTileSize) * dGET_WORLD_PARAM()->WorldSectorTileSize;
 	// 	RwInt32		MidZ		= static_cast<RwInt32>(vPosition.z / dGET_WORLD_PARAM()->WorldSectorTileSize) * dGET_WORLD_PARAM()->WorldSectorTileSize;
 	// 
-	// 	// 1를 더해주는 이유는 업데이트를 덜 하기 위한 방법이다.
+	// 	// The reason for adding 1 is to do fewer updates.
 	// 	RwInt32		TileNumHalfX= 1 + (static_cast<RwInt32>(vSize.x * 0.5f) + (dGET_WORLD_PARAM()->WorldSectorTileSize + static_cast<RwInt32>(vSize.x * 0.5f) % dGET_WORLD_PARAM()->WorldSectorTileSize)) / dGET_WORLD_PARAM()->WorldSectorTileSize;
 	// 	RwInt32		TileNumHalfZ= 1 + (static_cast<RwInt32>(vSize.z * 0.5f) + (dGET_WORLD_PARAM()->WorldSectorTileSize + static_cast<RwInt32>(vSize.z * 0.5f) % dGET_WORLD_PARAM()->WorldSectorTileSize)) / dGET_WORLD_PARAM()->WorldSectorTileSize;
 	// 
-	// 	// 1를 더해주는 이유는 중앙 타일은 연산에서 빼기 위한 꽁수다.
+	// 	// The reason for adding 1 is to subtract the central tile from the operation.
 	// 	RwInt32		TileNumX	= TileNumHalfX * 2 + 1;
 	// 	RwInt32		TileNumZ    = TileNumHalfZ * 2 + 1;
 	// 
@@ -11608,7 +11608,7 @@ RwBool CNtlWorldFieldManager::GetWorldLightColor(RwV3d& Pos, RwRGBA* pOutColor, 
 		RwV2d ptDist;
 		RwV2dSub(&ptDist, &ptCheckPos, &ptPos);
 
-		// 여기를 통과하지 못하는 섹터는 -1 값으로 변경한다.
+		// Sectors that do not pass here are changed to -1.
 		if (GetSceneManager()->GetActiveWorldType() == AW_HEGITHFIELD && !pSector->m_pAtomic)
 		{
 			vecNeighborSectors.at(i) = -1;
@@ -11621,11 +11621,11 @@ RwBool CNtlWorldFieldManager::GetWorldLightColor(RwV3d& Pos, RwRGBA* pOutColor, 
 		}		
 	}
 
-	// 위에서 재구성된 NeighborSectors만 연산된다.
+	// Only the NeighborSectors reconstructed above are calculated.
 	RwRGBAReal	clrfResult;
 	RwBool		bResult = FALSE;
 
-	// Box 검사.
+	// Box inspection.
 	for (int i = 0; i < 9; ++i)
 	{
 		if (vecNeighborSectors.at(i) == -1)
@@ -11652,10 +11652,10 @@ RwBool CNtlWorldFieldManager::GetWorldLightColor(RwV3d& Pos, RwRGBA* pOutColor, 
 		}
 	}
 
-	// Box에서 체크되지 않았다면 구를 검사 한다.
+	// If the box is not checked, check the sphere.
 	if (!bResult)
 	{
-		// WorldLight
+		// World light
 		RwRGBAReal	clrfTemp;
 		RwRGBAReal*	pclrfTemp = const_cast<RwRGBAReal*>(CNtlFieldColorManager::GetInstance()->GetColorf());
 

@@ -5,7 +5,7 @@
 // 2006.6.21 Peessi@hitel.net   
 //
 // To Be Desired:
-//	1. 현재 캐릭터 및 몹만 표시됨. 지도이미지를 표시하기위한 마스크 기능을 추가해야함.
+//	1. Only the current character and mob are displayed. A mask function must be added to display map images.
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -14,23 +14,23 @@
 
 #include <map>
 
-// shared
+// Shared
 #include "NtlDojo.h"
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// dbo trigger
+// Dbo Trigger
 #include "DboTSCoreDefine.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "NtlParty.h"
 
-// dbo
+// Dbo
 #include "SurfaceGui.h"
 #include "SurfaceCamera.h"
 #include "DboTableInfo.h"
@@ -46,13 +46,13 @@ class CMapItem
 public:
 	enum eMapPosition
 	{
-		///< 좌상단			상단				우상단
+		///< Top left        Top              Top right
 		MP_LT,				MP_CT,				MP_RT,
 
-		///< 좌				중					우
+		///< Left           Middle              Right
 		MP_LC,				MP_CC,				MP_RC,
 
-		///< 좌하단			하단				우하단
+		///< Bottom left    Bottom           Bottom right
 		MP_LB,				MP_CB,				MP_RB,
 
 		NUM_MAPPOSITON
@@ -82,35 +82,35 @@ public:
 	VOID			SetScale(RwReal fScale);
 	RwReal			GetScale();
 
-	RwReal			GetRate();								///< 스케일에 따른 텍스처에 대한 미니맵 비율
+	RwReal			GetRate();								///< Minimap to texture ratio according to scale
 	RealRect		GetAreaRect();
 
 protected:
-	VOID			UpdateAreaRect(RwV3d vFieldPos);	///< 아바타를 중심으로 4개의 필드 영역 계산
-	VOID			UpdatePotalMapUpdateResource();		///< 필요한 리소스 로딩	
+	VOID			UpdateAreaRect(RwV3d vFieldPos);	///< Calculate 4 field areas centered on the avatar
+	VOID			UpdatePotalMapUpdateResource();		///< Loading required resources	
 
-	VOID			LoadingSurface(CSurfaceGui& surface, RwInt32 iFieldIndex, RwInt32 iMapPosition);///< 실제 게임에 그릴 미니맵을 로딩한다
+	VOID			LoadingSurface(CSurfaceGui& surface, RwInt32 iFieldIndex, RwInt32 iMapPosition);///< Loads the minimap to be drawn in the actual game
 
-	RwInt32			CalcIndex(RwInt32 iCenterIndex, RwInt32 iPosition); ///< 지정된 위치의 유효한 인덱스를 반환한다
-	RwBool			IsWorldIndex(RwInt32 iIndex);		///< 월드상의 인덱스인지를 검사
+	RwInt32			CalcIndex(RwInt32 iCenterIndex, RwInt32 iPosition); ///< Returns the valid index of the specified position
+	RwBool			IsWorldIndex(RwInt32 iIndex);		///< Check if it is an index in the world
 	
 
 protected:
-	static CSurfaceCamera*		m_pRealMapCamera;		///< 실제 그릴 텍스처 생성을 위한 카메라
-	static CSurfaceCamera*		m_pRealMapCamera2;		///< 실제 그릴 텍스처 생성을 위한 카메라
+	static CSurfaceCamera*		m_pRealMapCamera;		///< Camera for creating actual grill texture
+	static CSurfaceCamera*		m_pRealMapCamera2;		///< Camera for creating actual grill texture
 	
-	CCameraRenderTargetSurface	m_ResourceSurface[NUM_MAPPOSITON];	///< 리소스는 보관할 서페이스
+	CCameraRenderTargetSurface	m_ResourceSurface[NUM_MAPPOSITON];	///< Surface to store resources
 	
-	CFilteredSurfaceGui			m_SurfaceMap2;			///< 실제 화면에 그릴 맵
-	CCameraRenderTargetSurface	m_SurfaceMap;			///< 실제 화면에 그릴 맵
+	CFilteredSurfaceGui			m_SurfaceMap2;			///< Map to be drawn on the actual screen
+	CCameraRenderTargetSurface	m_SurfaceMap;			///< Map to be drawn on the actual screen
 
-	RealRect					m_rtAreaRect;			///< 아바타를 중심으로 로딩된 필드 영역
+	RealRect					m_rtAreaRect;			///< Field area loaded centered on the avatar
 
-	RwInt32						m_iPostField;			///< 이전에 위치한 필드 인덱스		
-	RwInt32						m_iCurField;			///< 현재 위치한 필드 인덱스
-	WORLDID						m_PostWorldID;			///< 이전 월드 ID
+	RwInt32						m_iPostField;			///< Previously located field index		
+	RwInt32						m_iCurField;			///< Current field index
+	WORLDID						m_PostWorldID;			///< Previous World ID
 
-	RwReal						m_fScale;				///< 미니맵 스케일
+	RwReal						m_fScale;				///< Minimap scale
 };
 
 
@@ -118,7 +118,7 @@ protected:
 class CMinimapGui : public CNtlPLGui, public RWS::CEventHandler
 {
 public:
-#define dMINIMAPSCALE_COUNT					(3)			///< 미니맵 축척 갯수
+#define dMINIMAPSCALE_COUNT					(3)			///< Number of minimap scales
 
 	enum eMapStyle
 	{
@@ -131,7 +131,7 @@ public:
 
 	enum eTriggerObjectMarkType
 	{
-		TOMT_POPOSTONE,									///< 포포스톤
+		TOMT_POPOSTONE,									///< Four PoPostone
 
 		NUM_TOMT
 	};
@@ -158,18 +158,18 @@ public:
 
 	enum eNextQuestMarkType
 	{
-		NQMT_INSIGHT,									///< 미니맵 시야거리 안에 있다(NPC, OBJECT)
-		NQMT_INSIGHT_POSITION,							///< 미니맵 시야거리 안에 있다(POSITION)
+		NQMT_INSIGHT,									///< Within minimap viewing distance (NPC, OBJECT)
+		NQMT_INSIGHT_POSITION,							///< Within the minimap viewing distance (POSITION)
 		NQMT_CHECK,	// to do
-		NQMT_OUTSIGHT,									///< 미니맵 시야거리 밖에 있다
+		NQMT_OUTSIGHT,									///<Out of minimap viewing range
 
 		NUM_NQMT
 	};
 
 	enum eMiniMapPosition
 	{
-		MMP_INSIGHT,									///< 미니맵 시야거리 안에 있다
-		MMP_OUTSIGHT,									///< 미니맵 시야거리 밖에 있다
+		MMP_INSIGHT,									///< Within minimap viewing distance
+		MMP_OUTSIGHT,									///<Out of minimap viewing range
 
 		NUM_MMP
 	};
@@ -245,7 +245,7 @@ public:
 	{
 		RwV2d				v2Pos;
 		RwV2d				v2Icon;
-		RwV2d				v2OutCenter;		///< eNextQuestMarkType이 NQMT_OUTSIGHT일때 유효
+		RwV2d				v2OutCenter;		///< Valid when eNextQuestMarkType is NQMT_OUTSIGHT
 		eNextQuestMarkType	eType;
 		RwBool				bShow;
 		RwBool				bInfoWindow;
@@ -258,10 +258,10 @@ public:
 
 	struct sCHECK_POINT
 	{
-		// 현재는 한번에 하나만 존재하지만 나중을 위해서 std::vector로 관리한다
+		// Currently there is only one at a time, but it is managed as a std::vector for future use.
 		RwV2d				v2Pos;
 		RwV2d				v2Icon;
-		RwV2d				v2OutCenter;		///< eMiniMapPosition이 MMP_OUTSIGHT일때 유효
+		RwV2d				v2OutCenter;		///< Valid when eMiniMapPosition is MMP_OUTSIGHT
 		eMiniMapPosition	eType;
 		RwBool				bShow;
 		RwReal				fAngle;
@@ -272,7 +272,7 @@ public:
 	{
 		RwV2d				v2Pos;
 		RwV2d				v2Icon;
-		RwV2d				v2OutCenter;		///< eMiniMapPosition이 MMP_OUTSIGHT일때 유효
+		RwV2d				v2OutCenter;		///< Valid when eMiniMapPosition is MMP_OUTSIGHT
 		eMiniMapPosition	eType;
 		WCHAR*				pwcName;
 		RwBool				bShow;
@@ -430,29 +430,29 @@ private:
 	CSurfaceGui		m_surMarkPartyMember[NUM_MMP];
 	CSurfaceGui		m_surMarkCommonTarget[NTL_MAX_SHARETARGET_COUNT];
 	CSurfaceGui		m_surMarkDojoSeal[MAX_TOBJECT_STATE_TYPE_C];
-	CSurfaceGui		m_surCamp[NUM_CAMP_PEOPLE];					///< (피아구분)팀을 나누어서 싸우는 경우의 사람들
+	CSurfaceGui		m_surCamp[NUM_CAMP_PEOPLE];					///< (Fia division) People who divide into teams and fight
 
 	RwReal			m_fElapsedTime;
 	
 	RwUInt8			m_byMapStyle;
-	RwInt8			m_byCurScale;								///< 현재 지도의 스케일	
-	RwReal			m_fMiniMapScaleLevels[dMINIMAPSCALE_COUNT];	///< 지도의 스케일 단계
+	RwInt8			m_byCurScale;								///< Current map scale	
+	RwReal			m_fMiniMapScaleLevels[dMINIMAPSCALE_COUNT];	///< Map scale level
 
 	sSCRAMBLE_VISIBLE	m_tSCRAMBLE_VISIBLE;
 
-	SERIAL_HANDLE	m_hBus_with_Avatar;							///< 아바타가 타고 있는 버스의 핸들
+	SERIAL_HANDLE	m_hBus_with_Avatar;							///< Steering wheel of the bus the avatar is riding on
 
-	CMapNameTextTable*			m_pMapNameTextTable;			///< 현재 아바타가 위치한 곳의 Map name code
+	CMapNameTextTable*			m_pMapNameTextTable;			///< Map name code of where the avatar is currently located
 	
 	std::vector<sTRIGGER_OBJECT> m_vecTriggerObject;
-	std::vector<sHIDDEN_OBJECT> m_vecHiddenObject;				///< Trigger object의 한 종류이지만 별도로 관리한다
+	std::vector<sHIDDEN_OBJECT> m_vecHiddenObject;				///< It is a type of Trigger object, but managed separately.
 	std::vector<sMONSTER>		m_vecMob;
 	std::vector<sMINIMAP_NPC>	m_vecNPC;
 	std::vector<sMINIMAP_QUEST>	m_vecQuest;
 	std::vector<sNEXT_QUEST>	m_vectNextQuest;
 	std::vector<sCHECK_POINT>	m_vecCheckPoint;
 	std::vector<sPARTYMEMBER>	m_vecPartyMember;
-	sCOMMON_TARGET				m_aCommonTarget[NTL_MAX_SHARETARGET_COUNT];	///< 배열의 인덱스와 공유 타겟 번호를 맞춘다
+	sCOMMON_TARGET				m_aCommonTarget[NTL_MAX_SHARETARGET_COUNT];	///< Match the array index and shared target number
 	std::map<RwUInt32, sSCRAMBLE_SEAL*>			m_mapScrambleSeal;
 	std::map<RwUInt32, sSCRAMBLE_SEAL_NOTIFY*>	m_mapScrambleSealNotify;
 	LIST_CAMP_PEOPLE			m_listCampPeople;

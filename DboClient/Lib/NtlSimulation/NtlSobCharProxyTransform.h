@@ -14,7 +14,7 @@ struct SEquipItem;
 
 /**
 * \ingroup NtlSimulation
-* \brief 변신관련 비쥬얼을 처리하는 클래스
+* \brief Class that handles transformation-related visuals
 *
 * \date 2008-10-07
 * \author agebreak
@@ -29,90 +29,90 @@ public:
     void	        HandleEvents(RWS::CMsg &pMsg);
     void            Destory();
 
-    void            SetActor(CNtlSobActor* pActor, CNtlPLCharacter* pPLCharacter);          ///< 캐릭터를 설정한다. (포인터가 변경된 경우)        
-    void            PostChangeAdult();                                                      ///< 어른/아이로 변경후 호출되는 함수
-    RwBool          IsTransform()   {return m_bIsTransform;}        ///< 변신했는지 여부를 반환한다.    
+    void            SetActor(CNtlSobActor* pActor, CNtlPLCharacter* pPLCharacter);          ///< Set the character. (if the pointer changes)        
+    void            PostChangeAdult();                                                      ///< Function called after changing to adult/child
+    RwBool          IsTransform()   {return m_bIsTransform;}        ///< Returns whether or not it has been transformed.    
 
-    // 월드 진입/삭제시의 이벤트 함수
+    // Event function when entering/deleting the world
     void            AddWorld();
     void            RemoveWorld();
 
 protected:
     // Event
-    void            EventSobTransform(SNtlEventTransform* pData);     ///< 변신 이벤트 처리
-    void            EventSobSkillAction(RWS::CMsg& pMsg);             ///< 스킬 사용 이벤트를 처리한다.
-    void            EventSobChangeAdult(RWS::CMsg& pMsg);             ///< 성인으로 변신을 처리한다.
+    void            EventSobTransform(SNtlEventTransform* pData);     ///< Transformation event processing
+    void            EventSobSkillAction(RWS::CMsg& pMsg);             ///< Processes skill use events.
+    void            EventSobChangeAdult(RWS::CMsg& pMsg);             ///< Processes transformation into an adult.
 
     // Transform
-    void            OnTransform_SuperSaiyan(RwBool bTransform);     ///< 초사이어인 변신 처리
-    void            OnTransform_KaiOuKen(RwBool bTransform, BYTE byLevel);        ///< 계왕권 변신 처리
-    void            OnTransform_BigNamek(RwBool bTransform);        ///< 거대 나메크 변신 처리
-    void            OnTransform_PureMajin(RwBool bTransform);       ///< 순수 마인 변신 처리
-    void            OnTransform_Mob(RwUInt32 tblIdx);               ///< 몹 변신 처리
-    void            OnTransform_Candy(RwBool bTransform);           ///< 캔디 스킬 변신 처리
-    void            DetachEffect();                                 ///< 변신시의 부착 이펙트 해제
+    void            OnTransform_SuperSaiyan(RwBool bTransform);     ///< Processing of Super Saiyan transformation
+    void            OnTransform_KaiOuKen(RwBool bTransform, BYTE byLevel);        ///< Gyewangkwon transformation processing
+    void            OnTransform_BigNamek(RwBool bTransform);        ///< Processing of the giant Namek transformation
+    void            OnTransform_PureMajin(RwBool bTransform);       ///< Pure Mine transformation processing
+    void            OnTransform_Mob(RwUInt32 tblIdx);               ///< Mob transformation processing
+    void            OnTransform_Candy(RwBool bTransform);           ///< Candy skill transformation processing
+    void            DetachEffect();                                 ///< Cancellation of attachment effect when transformed
 
 	void            OnTransform_CinematicScale(float fScale, float fTime);
 
     // Super Saiyan
-    void            AttachEffectSuperSaiyan(CNtlPLCharacter* pPLCharacter);                      ///< 초사이어인 이펙트 부착
-    CNtlPLItem*     GetTransformItem();                             ///< 초사이어인 변신 아이템을 반환한다.
+    void            AttachEffectSuperSaiyan(CNtlPLCharacter* pPLCharacter);                      ///< Super Saiyan effect attached
+    CNtlPLItem*     GetTransformItem();                             ///< Returns the Super Saiyan transformation item.
 
-    // 계왕권
-    void            AttachEffectKaiouKen(CNtlPLCharacter* pPLCharacter, BYTE byLevel);    ///< 계왕권 이펙트 생성    
+    // Kaioken
+    void            AttachEffectKaiouKen(CNtlPLCharacter* pPLCharacter, BYTE byLevel);    ///< Creation of Kaioken effect    
 
-    // 거대 나멕
-    void            DetachWeapon();                         ///< 원래 장착하고 있는 무기를 해제한다.
-    void            AttachWeapon();                         ///< 원래 장착하고 있던 무기를 장착한다.
-    void            ChangeWeapon(RWS::CMsg& pMsg);          ///< 변신 상태에서 무기를 변경하였을때
+    // Giant Namek
+    void            DetachWeapon();                         ///< Unlocks the originally equipped weapon.
+    void            AttachWeapon();                         ///< Equip the weapon that was originally equipped.
+    void            ChangeWeapon(RWS::CMsg& pMsg);          ///< When changing weapons in transformation state
 
-    // 순수 마인
-    CNtlPLCharacter* CreatePureMajinModel();                ///< 순수 마인 모델을 생성하고 반환한다.
+    // pure majin
+    CNtlPLCharacter* CreatePureMajinModel();                ///< Creates and returns a pure mine model.
 
-    // 캔디 변신
-    CNtlPLCharacter* CreateCandyModel();                    ///< 캔디 모델을 생성하고 반환한다.
+    // candy transformation
+    CNtlPLCharacter* CreateCandyModel();                    ///< Creates and returns a candy model.
 
 protected:
-    CNtlSobActor*       m_pActor;                           ///< Actor 객체
-    CNtlPLCharacter*    m_pPLCharacter;                     ///< Actor의 PLEntity
-    SNtlEventTransform  m_transFormData;                    ///< 변신 정보 구조체
-    CNtlPLCharacter*    m_pPLCharacterUI;                   ///< UI에 표현되는 캐릭터 (아바타만 사용)
-	CNtlPLCharacter*    m_pPLCharacterUI_Dogi;              ///< Dogi UI에 표현되는 캐릭터 (아바타만 사용)
-    RwBool              m_bIsTransform;                     ///< 변신했는지 여부 플래그    
-    RwUInt32            m_uiTransformId;                    ///< 무엇으로 변신했는지의 ID
-    RwBool              m_bReadyTransform;                  ///< 변신 스킬을 사용했다
-    RwBool              m_bScheduleLoadingCheck;            ///< 스케쥴 로딩 체크 플래그
-    BYTE                m_byTransformLevel;                 ///< 변신 레벨    
-    std::vector<CNtlInstanceEffect*> m_vecEffect;           ///< 변신시의 이펙트    
+    CNtlSobActor*       m_pActor;                           ///< Actor object
+    CNtlPLCharacter*    m_pPLCharacter;                     ///< Actor's PLEntity
+    SNtlEventTransform  m_transFormData;                    ///< Transformation information structure
+    CNtlPLCharacter*    m_pPLCharacterUI;                   ///< Characters expressed in the UI (only avatars used)
+	CNtlPLCharacter*    m_pPLCharacterUI_Dogi;              ///< Characters expressed in Dogi UI (only avatars used)
+    RwBool              m_bIsTransform;                     ///< Flag whether it has been transformed or not    
+    RwUInt32            m_uiTransformId;                    ///< ID of what it was transformed into
+    RwBool              m_bReadyTransform;                  ///< Used transformation skill
+    RwBool              m_bScheduleLoadingCheck;            ///< Schedule loading check flag
+    BYTE                m_byTransformLevel;                 ///< Transformation level    
+    std::vector<CNtlInstanceEffect*> m_vecEffect;           ///< Effects upon transformation    
 
-    // 초사이야인
-    CNtlPLItem*         m_pItemTransform;                   ///< 초사이야인 변신시의 헤어
-	CNtlPLItem*         m_pItemTransformUI;                 ///< UI용 아이템
-    CNtlPLItem*         m_pItemTransformUI_Dogi;            ///< Dogi UI용 아이템
-    RwTexture*          m_pFaceTransform;                   ///< 초사이야인 변신 얼굴 텍스쳐
-    CNtlSobProxySystemEffect* m_pSystemEffectColor[2];      ///< 초사이어인 변신시 Effect Color 컨트롤러
+    // Super Saiyan
+    CNtlPLItem*         m_pItemTransform;                   ///< Hair during Super Saiyan transformation
+	CNtlPLItem*         m_pItemTransformUI;                 ///< Items for UI
+    CNtlPLItem*         m_pItemTransformUI_Dogi;            ///< Items for Dogi UI
+    RwTexture*          m_pFaceTransform;                   ///< Super Saiyan transformation face texture
+    CNtlSobProxySystemEffect* m_pSystemEffectColor[2];      ///< Effect Color Controller during Super Saiyan transformation
 
-    // 계왕권
-    CNtlSobProxySystemEffect* m_pKaiOuKenColor[2];          ///< 계왕권 변신시 컬러 컨트롤러
+    // Kaioken
+    CNtlSobProxySystemEffect* m_pKaiOuKenColor[2];          ///< Color controller when transforming into Kaiwangkwon
 
-    // 거대 나멕
-    SEquipItem*         m_pItemOrgWeapon;                   ///< 나메크 변신시에 원래 차고 있던 무기 
-    SEquipItem*         m_pItemOrgSubWeapon;                ///< 나메크 변신시에 원래 차고 있던 서브 웨폰
-    RwReal              m_fOrgAttackRange;                  ///< 변신전의 원래 공격 범위
+    // Giant Namek
+    SEquipItem*         m_pItemOrgWeapon;                   ///< Weapon originally worn when transformed into Namek 
+    SEquipItem*         m_pItemOrgSubWeapon;                ///< The sub-weapon originally worn when transformed into Namek
+    RwReal              m_fOrgAttackRange;                  ///< Original attack range before transformation
 
-    // 순수 마인    
-    CNtlPLCharacter*    m_pMajinOrgModel;                   ///< 원래 마인 모델
-    CNtlPLCharacter*    m_pMajinOrgModelUI;                 ///< UI용 원래 마인 모델
-	CNtlPLCharacter*    m_pMajinOrgModelUI_Dogi;            ///< Dogi UI용 원래 마인 모델
-    CNtlPLCharacter*    m_pMajinPureModel;                  ///< 변신한 순수 마인 모델    
-    CNtlPLCharacter*    m_pMajinPureModelUI;                ///< UI용 순수 마인 모델    
-	CNtlPLCharacter*    m_pMajinPureModelUI_Dogi;           ///< Dogi UI용 순수 마인 모델    
+    // pure majin    
+    CNtlPLCharacter*    m_pMajinOrgModel;                   ///< Original Mine model
+    CNtlPLCharacter*    m_pMajinOrgModelUI;                 ///< Original Mine model for UI
+	CNtlPLCharacter*    m_pMajinOrgModelUI_Dogi;            ///< Original mine model for Dogi UI
+    CNtlPLCharacter*    m_pMajinPureModel;                  ///< Transformed pure mine model    
+    CNtlPLCharacter*    m_pMajinPureModelUI;                ///< Pure mine model for UI    
+	CNtlPLCharacter*    m_pMajinPureModelUI_Dogi;           ///< Pure mine model for Dogi UI    
 
-    // 캔디 변신
-    CNtlPLCharacter*    m_pCandyOrgModel;                   ///< 캔디로 변신하기전 원래 모델
-    CNtlPLCharacter*    m_pCandyOrgModelUI;                 ///< UI용 원래 모델
-	CNtlPLCharacter*    m_pCandyOrgModelUI_Dogi;            ///< Dogi UI용 원래 모델
-    CNtlPLCharacter*    m_pCandyModel;                      ///< 캔디 변신 모델
-	CNtlPLCharacter*    m_pCandyModelUI;                    ///< UI용 캔디 모델
-	CNtlPLCharacter*    m_pCandyModelUI_Dogi;               ///< Dogi UI용 캔디 모델
+    // candy transformation
+    CNtlPLCharacter*    m_pCandyOrgModel;                   ///< Original model before being transformed into Candy
+    CNtlPLCharacter*    m_pCandyOrgModelUI;                 ///< Original model for UI
+	CNtlPLCharacter*    m_pCandyOrgModelUI_Dogi;            ///< Original model for Dogi UI
+    CNtlPLCharacter*    m_pCandyModel;                      ///< Candy transformation model
+	CNtlPLCharacter*    m_pCandyModelUI;                    ///< Candy model for UI
+	CNtlPLCharacter*    m_pCandyModelUI_Dogi;               ///< Candy model for Dogi UI
 };

@@ -4,7 +4,7 @@
 
 /**
  * \ingroup NtlPresentation
- * \brief 궤적(Trace) 이펙트를 만들기 위한 리소스 클래스
+ * \brief Resource class for creating trace effects
  * \date 2006-09-14
  * \author agebreak
  */
@@ -16,11 +16,11 @@ public:
 
     virtual void Destroy();
 
-    virtual RwBool Load(FILE* pFile);           ///< 파일로 부터 데이터를 로드한다.
+    virtual RwBool Load(FILE* pFile);           ///< Loads data from a file.
 
 public:
-    // 프로퍼티 속성들
-    RwInt32 m_nMaxFrameCount;                   ///< 궤적을 그릴 최대 프레임 개수. 정확히는 면의 개수. 버텍스는 이값의 2배로 생성된다. (위아래 짝). 1프레임에 하나씩 위아래짝 라인이 그려진다.
+    // properties properties
+    RwInt32 m_nMaxFrameCount;                   ///< Maximum number of frames to draw trajectories. To be exact, the number of sides. Vertices are created with twice this value. (Up and down pair). Up and down lines are drawn one by one in each frame.
 
 protected:
 

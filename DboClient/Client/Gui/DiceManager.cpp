@@ -1,24 +1,24 @@
 #include "precomp_dboclient.h"
 #include "DiceManager.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLLogic.h"
 
-// dbo
+// Dbo
 #include "DiceGui.h"
 #include "DialogManager.h"
 #include "DboEventGenerator.h"
 #include "DisplayStringManager.h"
 #include "DboGlobal.h"
 
-#define dDISPLAYED_DICE_GAP			40			///< 현재 화면에 표시되고 있는 주사위간 간격
+#define dDISPLAYED_DICE_GAP			40			///< Interval between dice currently displayed on screen
 
 
 CDiceManager* CDiceManager::m_pInstance = NULL;
@@ -46,9 +46,9 @@ RwBool CDiceManager::CreateInstance()
 	m_pInstance = NTL_NEW CDiceManager("DiceManager");
 	m_pInstance->m_pThis = NTL_NEW gui::CDialog( CNtlPLGuiManager::GetInstance()->GetGuiManager(), GetNtlGuiManager()->GetSurfaceManager() );
 
-	// 주사위 타입이 정의된 역순으로 생성하여 가장 먼저 정의된 주사위 GUI가 가장 위에 그려지도록 한다
+	// Create dice types in the reverse order in which they are defined so that the dice GUI defined first is drawn on top.
 
-	// 파티 인벤 주사위
+	// party inventory dice
 	CDiceGui* pPartyInvenDiceGui = NTL_NEW CItemDiceGui("PartyInvenDiceGui", DICE_WORKD_ID_PARTY_INVEN_DICE);
 	if( !pPartyInvenDiceGui->Create(dDICE_FUNCTION_NONE) )
 	{
@@ -61,7 +61,7 @@ RwBool CDiceManager::CreateInstance()
 	((CItemDiceGui*)pPartyInvenDiceGui)->SetExplain( GetDisplayStringManager()->GetString("DST_PARTY_INVEN_START_DICE") );
 	m_pInstance->m_mapDiceGui[DICE_WORKD_ID_PARTY_INVEN_DICE] = pPartyInvenDiceGui;
 
-	// 액션 주사위
+	// action dice
 	CDiceGui* pActionDiceGui = NTL_NEW CActionDiceGui("ActionDiceGui", DICE_WORKD_ID_ACTION);
 	if( !pActionDiceGui->Create(dDICE_FUNCTION_NONE) )
 	{
@@ -75,7 +75,7 @@ RwBool CDiceManager::CreateInstance()
 	((CActionDiceGui*)pActionDiceGui)->SetExplain2( GetDisplayStringManager()->GetString("DST_DICE_EXPLAIN2") );
 	m_pInstance->m_mapDiceGui[DICE_WORKD_ID_ACTION] = pActionDiceGui;
 
-	// 천하제일 무도회 진출자 가려내기 주사위
+	// Dice for selecting the world's best prom contestants
 	CDiceGui* pBudokaiTenkaichiSelectWinnerGui = NTL_NEW CActionDiceGui("BudokaiTenkaichiSelectWinnerGui", DICE_WORKD_ID_BUDOKAI_TENKAICHI_SELECT_WINNER);
 	if( !pBudokaiTenkaichiSelectWinnerGui->Create(dDICE_FUNCTION_DISABLE_CLOSE_BUTTON | dDICE_FUNCTION_DISABLE_CLICK_DICE) )
 	{
@@ -91,7 +91,7 @@ RwBool CDiceManager::CreateInstance()
 
 	GetDialogManager()->RegistDialog(DIALOG_DICE_MANAGER, m_pInstance, &CDiceManager::SwitchDialog);
 
-	// sig
+	// Signals
 	m_pInstance->m_slotMove = m_pInstance->m_pThis->SigMove().Connect( m_pInstance, &CDiceManager::OnMove );
 
 	m_pInstance->LinkMsg(g_EventActionMapDice);		
@@ -165,7 +165,7 @@ VOID CDiceManager::CancelAll()
 
 VOID CDiceManager::LineUpDice()
 {
-	// 계단처럼 우상단으로 정렬된다
+	// It is aligned to the top right like a staircase.
 	CRectangle rtScreen = m_pThis->GetScreenRect();
 	RwBool bFoundFirstDiceHeight = FALSE;
 	CPos curPos(rtScreen.left, rtScreen.top);
@@ -243,7 +243,7 @@ VOID CDiceManager::HandleEvents( RWS::CMsg &msg )
 		{
 		case DICE_WORKD_ID_ACTION:
 			{
-				// g_EventActionMapDice 이벤트에서 받아 처리한다
+				// g_EventActionMapDice Receive and process from g_EventActionMapDice event
 				break;
 			}
 		case DICE_WORKD_ID_BUDOKAI_TENKAICHI_SELECT_WINNER:

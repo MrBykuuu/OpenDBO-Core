@@ -1,16 +1,16 @@
 ﻿#include "precomp_ntlsimulation.h"
 #include "NtlBehaviorCharAirMove.h"
 
-// shared 
+// Shared 
 #include "NtlMovement.h"
 
-// presentation
+// Presentation
 #include "NtlPLCharacter.h"
 #include "NtlPLEvent.h"
 #include "NtlPLHelpers.h"
 
 
-// simulation
+// Simulation
 #include "NtlFSMDef.h"
 #include "NtlSLApi.h"
 #include "NtlSobActor.h"
@@ -42,7 +42,7 @@ void CNtlBehaviorCharAirMove::Enter(void)
 
 	SetAnim(pMoveStuff->byMoveFlags);
 
-	// 나중에 base class enter를 호출한다.
+	// Later, base class enter is called.
 	CNtlBehaviorBase::Enter();
 }
 
@@ -55,7 +55,7 @@ void CNtlBehaviorCharAirMove::Exit(void)
 	CNtlPLCharacter* pPLCharacter = reinterpret_cast<CNtlPLCharacter*>(pSobProxy->GetPLMainEntity());
 	pPLCharacter->SetBlend(BLEND_TWEEN);
 
-	// 나중에 base class enter를 호출한다.
+	// Later, base class enter is called.
 	CNtlBehaviorBase::Exit();
 }
 

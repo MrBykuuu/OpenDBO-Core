@@ -2,7 +2,7 @@
 //	File		:	NtlResourceMeshSystem.h
 //	Desc		:	
 //	Begin		:	2005. 7.28
-//	Copyright	:	ⓒ 2005 by agebreak CO., Ltd
+//	Copyright	:	? 2005 by agebreak CO., Ltd
 //	Author		:	agebreak
 //	Update		:	
 //***********************************************************************************
@@ -26,13 +26,13 @@ public:
 	SNtlPrtStdEmitterPrtSize		m_EmitterPrtSize;
 	SNtlPrtStdEmitterPrtRotate		m_EmitterPrtRotate;
 
-    SNtlPrtStdEmitterPrtFinish      m_EmitterPrtFinish;             ///< Finish 연출에 사용되는 프로퍼티
+    SNtlPrtStdEmitterPrtFinish      m_EmitterPrtFinish;             ///< Properties used to produce Finish
 
 	RpPrtAdvPrtMultiColorEmitter	m_EmitterPrtMultiCol;
 	SNtlAdvMultiSizeEmitter			m_EmitterPrtMultiSize;
 	SNtlAdvMultiRotateEmitter		m_EmitterPrtMultiRotate;
 
-    SNtlPrtStdEmitterTrail          m_EmitterTrail;               ///< Trail Action 관련 프로퍼티
+    SNtlPrtStdEmitterTrail          m_EmitterTrail;               ///< Trail Action related properties
 
 public:
 	CNtlResourceMeshSystem(const RwChar* strName);

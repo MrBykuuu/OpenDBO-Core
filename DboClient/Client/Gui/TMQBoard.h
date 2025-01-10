@@ -1,11 +1,11 @@
 /******************************************************************************
-* File			: TMQBoard.h
-* Author		: Cho Hae sung
-* Copyright		: (주)NTL
-* Date			: 2008. 4. 13
-* Abstract		:  
+*File			: TMQBoard.h
+*Author		    : Cho Hae sung
+*Copyright		: (주)NTL
+*Date			: 2008. 4. 13
+*Abstract		:  
 *****************************************************************************
-* Desc			: TMQ의 순위 게시판
+*Desc			: TMQ's ranking board
 *****************************************************************************/
 
 #ifndef __TMQBOARD_H__
@@ -27,7 +27,7 @@ class CTMQBoard;
 
 /**
 * \ingroup client
-* \brief 파티 리스트 아이템
+* \brief Party list items
 */
 class CTMQPartyListItem
 {
@@ -66,7 +66,7 @@ protected:
 
 /**
 * \ingroup client
-* \brief TMQ Party Member 리스트의 아이템
+* \brief TMQ Party Member list items
 */
 class CTMQPartyMemberItem
 {
@@ -112,7 +112,7 @@ public:
 	CTMQBoard();
 	virtual ~CTMQBoard();
 
-	// abstract
+	// Abstract
 	virtual void Create( eBoardType eType, CRankBoardGui* pParentGui );
 	virtual void Destroy();
 
@@ -161,7 +161,7 @@ protected:
 	gui::CStaticBox*	m_pStbPartyMember;
 	gui::CStaticBox*	m_pStbPartyLevel;
 	gui::CStaticBox*	m_pStbPartyClass;
-	/*gui::CComboBox*		m_pCbbTMQScenarioList;*/
+//	gui::CComboBox*		m_pCbbTMQScenarioList;
 	gui::CPanel*		m_pPanTMQHighLight;
 
 	gui::CSlot			m_slotClickedBtnPrev;
@@ -184,7 +184,7 @@ protected:
 	CTMQPartyListItem		m_itemPartyList[dRANKBOARD_TMQ_PARTYITEM_NUMS];
 	CTMQPartyMemberItem		m_itemPartyMember[dRANKBOARD_TMQ_PARTYMEMBERITEM_NUMS];
 
-	// 서버에서 받은 정보를 GUI에서 가지고 있기 위하여 패킷과 똑같은 구조체를 BOARD에서 가지고 있는다.
+	// In order to have the information received from the server in the GUI, the BOARD has the same structure as the packet.
 	RwUInt8							m_byTeamCount;
 	RwUInt8							m_byMemberCount;
 	sTIMEQUEST_TEAM_RANK_DATA		m_sTeamRankData[dRANKBOARD_TMQ_PARTYITEM_NUMS];

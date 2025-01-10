@@ -1,13 +1,13 @@
 /******************************************************************************
-* File			: PortalGui.h
-* Author		: agebreak
-* Copyright		: (주)NTL
-* Date			: 2007. 10. 22
-* Abstract		: 
+*File			: PortalGui.h
+*Author		    : agebreak
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 10. 22
+*Abstract		: 
 *****************************************************************************
-* Desc			: CPortalGui
-*                 포탈 NPC를 클릭하면 나오는 Portal GUI
-*                 포탈맵에서 가고 싶은 장소를 클릭하면 순간이동 된다.
+*Desc			: CPortalGui
+*                Portal GUI that appears when you click on the portal NPC
+*                If you click on the place you want to go on the portal map, you will be instantly transported.
 *				  
 *****************************************************************************/
 
@@ -81,18 +81,18 @@ public:
 
     RwBool      Create();
     VOID        Destroy();
-    RwInt32     SwitchDialog(bool bOpen);                   ///< DialogManager에서의 Open/Close
+    RwInt32     SwitchDialog(bool bOpen);                   ///< Open/Close in DialogManager
 
 protected:
     VOID        HandleEvents(RWS::CMsg &pMsg);
     VOID        Init();    
     
-    VOID        SetupPortalInfo();                          ///< 포탈들의 정보들을 세팅한다 (최초에 한번만 호출)
-    VOID        UpdatePortalInfo();                         ///< 포탈들의 정보들을 업데이트한다.
-    RwBool      CheckRegist(RwUInt32 hNPCSerialID);         ///< 현재 포탈 포인트가 등록되어 있는 곳인지를 체크하고, 등록되어 있지않으면 등록한다.    
-    RwBool      IsConnect(RwUInt32 nPortalID, DWORD& nZenny);    ///< 현재 포인트와 연결되어 있는 포인트인지 확인한다. (등록되어 있으면 True와 필요 Zenny를 반환한다)
+    VOID        SetupPortalInfo();                          ///< Set portal information (only called once at first)
+    VOID        UpdatePortalInfo();                         ///< Update portal information.
+    RwBool      CheckRegist(RwUInt32 hNPCSerialID);         ///< Check whether the current portal point is registered, and if not, register it.    
+    RwBool      IsConnect(RwUInt32 nPortalID, DWORD& nZenny);    ///< Check whether the point is connected to the current point. (If registered, returns True and required Zenny)
 
-    RwInt32     FindPointIndex(RwUInt32 nCurrPortalID, RwUInt32 nTargetPortalID); ///< 타겟 포탈의 현재포인트에서의 인덱스를 찾아서 반환한다. 
+    RwInt32     FindPointIndex(RwUInt32 nCurrPortalID, RwUInt32 nTargetPortalID); ///< Find and return the index at the current point of the target portal. 
 
 	void		SetCurrentPortalIndex(RwUInt32 hNPCSerialID);
 	void		SetWorldMapSurface();
@@ -101,7 +101,7 @@ protected:
 
 	void		UpdatePortalIcon(); // shows portal icons from current selected map
 
-    inline RwBool      IsRegist(RwUInt32 nPortalID);               ///< 현재 등록되어 있는지 확인한다.;
+    inline RwBool      IsRegist(RwUInt32 nPortalID);               ///< Check if you are currently registered.;
 
     // CallBack
     VOID        OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY);
@@ -147,7 +147,7 @@ protected:
 
 	gui::CComboBox* m_pcbbSearchWorld;
 
-    // slot
+    // Slot
     gui::CSlot  m_slotMouseMove;
     gui::CSlot  m_slotMouseUp;
     gui::CSlot  m_slotPaint;

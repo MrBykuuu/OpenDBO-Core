@@ -192,7 +192,7 @@ RwBool CDboEventHandler::Create(void)
     RegisterMsg(g_EventOpenBagGui, "g_EventOpenBagGui", NULL);
     RegisterMsg(g_EventOpenScouterBackgroundGui, "g_EventOpenScouterBackgroundGui", NULL);
 
-    // 한국 PC방 관련
+    //Korean PC room related
     RegisterMsg(g_EventUpdateNetPy, "g_EventUpdateNetPy", "SDboEventUpdateNetPy");
     RegisterMsg(g_EventNetMarbleMemberShipNfy, "g_EventNetMarbleMemberShipNfy", NULL);
 	RegisterMsg(g_EventNetPyShopEvent, "g_EventNetPyShopEvent", "SDboNetPyShopEvent" );
@@ -375,7 +375,7 @@ void CDboEventHandler::Destroy(void)
     UnRegisterMsg( g_EventOpenBagGui );
     UnRegisterMsg( g_EventOpenScouterBackgroundGui );
     //////////////////////////////////////////////////////////////////////////
-    // 한국 PC방 관련
+    //Korean PC room related
     UnRegisterMsg(g_EventUpdateNetPy);
     UnRegisterMsg(g_EventNetMarbleMemberShipNfy);
 
@@ -494,7 +494,7 @@ void CDboEventHandler::HandleEvents(RWS::CMsg &pMsg)
 
 				if( pActor->GetSerialID() == pCtrlStuff->sRide.hTargetSerialId )
 				{
-					// 내가 타고 있는 버스이다
+					//This is the bus I am riding
 					//const WCHAR* pwcText = GetDisplayStringManager()->GetString("DST_BUS_ASK_GET_OFF");
 					//CDboEventGenerator::MsgBoxShow(pwcText, MBW_GET_OFF_BUS_ASK, MBTF_OK | MBTF_CANCEL);
 					GetAlarmManager()->AlarmMessage( "DST_BUS_ASK_GET_OFF" );

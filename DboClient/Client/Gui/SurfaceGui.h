@@ -2,17 +2,17 @@
  *
  * File			: SurfaceGui.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2005. 10. 25	
  * Abstract		: DBO surface gui.
  *****************************************************************************
- * Desc         : 2중 한가지 방법으로 surface를 지정된 위치에 옮긴다
+ * Desc         : Move the surface to the specified location using one of two methods.
  *
- *				  SetPosition() : 클라이언트 화면상의 좌표를 넣어준다
+ *                SetPosition(): Enters the coordinates on the client screen.
  *
- *				  SetPositionfromParent() : 부모 다이얼로그로부터의 좌표를 넣어준다
- *				  SetPositionbyParent() : 클라이언트 화면상의 부모 다이얼로그의
- *										  좌표를 넣어준다
+ *                SetPositionfromParent(): Enters the coordinates from the parent dialog.
+ *                SetPositionbyParent(): Parent dialog on the client screen
+ *                Enter coordinates
  *****************************************************************************/
 
 #ifndef __SURFACE_GUI_H__
@@ -124,8 +124,8 @@ public:
 * Date			: 2007. 1. 24	
 * Abstract		: DBO surface gui for render target
 *****************************************************************************
-* Desc         : 애플리케이션의 사이즈에 상관없이 카메라 사이즈에 따른
-*				 텍스처를 만들기 위한 서페이스
+* Desc         : Regardless of the size of the application, depending on the camera size
+*                Surface to create texture
 *
 *****************************************************************************/
 

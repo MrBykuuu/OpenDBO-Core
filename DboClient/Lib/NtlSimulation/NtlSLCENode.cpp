@@ -1,29 +1,35 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSLCENode.h"
 
-// shared
+// Shared
+
 #include "QuestNarrationTable.h"
 #include "TableContainer.h"
 #include "NtlMovement.h"
 
-// util
+// Util
+
 #include "NtlSerializer.h"
 
-// core
+// Core
+
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// sound
+// Sound
+
 #include "NtlSoundManager.h"
 
-// presentation
+// Presentation
+
 #include "NtlInstanceEffect.h"
 #include "NtlPLEvent.h"
 #include "NtlPLSceneManager.h"
 #include "NtlPLCharacter.h"
 #include "NtlPLEventGenerator.h"
 
-// simulation
+// Simulation
+
 #include "NtlSLApi.h"
 #include "NtlSobNpc.h"
 #include "NtlSLTBCrowdManager.h"
@@ -59,7 +65,7 @@ RwBool CNtlSLCENode::Update( RwReal fElapsedTime )
 
 RwBool CNtlSLCENode::Load( CNtlSerializer& s ) 
 {
-    // 타입은 컨트롤러에서 판단을 위해서 로드하기 때문에, 여기서는 로드하지 않는다.
+    //Since the type is loaded for judgment in the controller, it is not loaded here.
     s>>m_strName;
 
     return TRUE;    
@@ -82,7 +88,7 @@ CNtlSLCENodeEffect::CNtlSLCENodeEffect()
 
 void CNtlSLCENodeEffect::Create() 
 {
-	// 천하제일 무도회 예선전에서는 이펙트를 플레이 하지 않는다.
+	// Effects are not played during the World's Best Martial Arts Preliminaries.
 	sWORLD_INFO* pWORLD_INFO = Logic_GetActiveWorldInfo();
 	if( !pWORLD_INFO )
 	{
@@ -241,7 +247,7 @@ void CNtlSLCENodeBalloon::Create()
 
 void CNtlSLCENodeBalloon::Destory() 
 {
-    // 생성된 말풍선 모두 소멸
+    // All generated speech bubbles disappear.
     CNtlPLEventGenerator::HideAllSpectatorBalloon();
 }
 
@@ -251,7 +257,7 @@ RwBool CNtlSLCENodeBalloon::Update( RwReal fElapsedTime )
 
     if(m_fTotalElapsedTime >= m_fInstanceTime)
     {
-        // 말풍선 생성 이벤트
+        // Speech bubble creation event
         CreateBalloon();
 
         m_fTotalElapsedTime = 0.0f;
@@ -759,7 +765,7 @@ void CNtlSLCENodeReferee::SetNextNarration()
 			}
 			else
 			{
-				// 처음 시작할 때
+				// When you first start
 				m_NarrationInfo.byCurNarrationIndex = 0;
 			}
 
@@ -792,8 +798,8 @@ void CNtlSLCENodeReferee::SetNextNarration()
 
 void CNtlSLCENodeReferee::UpdateNarration(RwReal fElapsedTime)
 {
-	// 미니 나레이션은 도중에 다른 미니 나레이션의 새치기로 연출 중단 이벤트를 받을 수 없을 수도 있다
-	// 직접 Remain time을 체크하여 다음 내용을 플레이하자!!
+	// A mini narration may not be able to receive a production interruption event due to interruption of another mini narration in the middle.
+	// Let’s check the Remain time directly and play the next content!!
 
 	if( !m_pRefreeActor )
 		return;

@@ -73,8 +73,8 @@ public:
 	VOID	Save(FILE* _pFile);
 };
 
-// CSpawnParty를 상속 받으려 했으나 생성자에서 Singleton을 사용하기 때문에 일단은 따로 만든다.
-// 나중에 시간이 있을 때 합치는 방법을 검토해 본다.
+//I tried to inherit CSpawnParty, but since the constructor uses Singleton, I have to create it separately.
+//I'll look into merging methods later when I have time.
 class CMergeSpawnParty 
 {
 public:

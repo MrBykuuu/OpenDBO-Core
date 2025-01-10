@@ -1,23 +1,23 @@
 #include "precomp_dboclient.h"
 #include "QuestRewardGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "QuestTextDataTable.h"
 #include "ItemTable.h"
 #include "QuestItemTable.h"
 #include "SkillTable.h"
 #include "TableContainer.h"
 
-// gui
+// Gui
 #include "GuiUtil.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLEventFunc.h"
 #include "DboTSCQAgency.h"
@@ -25,7 +25,7 @@
 #include "NtlSLGlobal.h"
 #include "NtlSobAvatar.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DialogManager.h"
 #include "DboLogic.h"
@@ -107,10 +107,10 @@ RwBool CQuestRewardGui::Create( CQuestGui* pQuestGui )
 
 	m_phbxConversation->SetLineSpace( 7 );
 
-	// 보상영역 설정.
+	// Compensation area setting.
 	SetRewardRectHardcode();
 
-	// 기본설정 세팅
+	// Basic settings settings
 	SetBasicUISetting();
 
 	SelectIndex( -1 );
@@ -152,7 +152,7 @@ VOID CQuestRewardGui::HandleEvents( RWS::CMsg& msg )
 	{
 		SNtlEventQuestDirect_Forward* pData = reinterpret_cast<SNtlEventQuestDirect_Forward*>( msg.pData );
 
-		// peessi : 중복해서 Proposal이 날라오면 새로들어온 녀석을 Fail 응답처리.		
+		// peessi: If multiple proposals are sent, a Fail response will be processed for the new person.		
 		if( m_pTCUnit )
 		{
 			SNtlEventQuestDirect_Echo stEcho;
@@ -218,7 +218,7 @@ VOID CQuestRewardGui::SetBasicUISetting(VOID)
 
 VOID CQuestRewardGui::SetQuestData( SNtlEventQuestDirect_Forward* pData )
 {
-	// 다시 보내주어야할 Data
+	// Data that needs to be sent again
 	m_pTCUnit = pData->pTCUnit;
 	m_TSKey = pData->sReward.sTSKey;
 

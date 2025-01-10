@@ -662,7 +662,7 @@ void CNtlBlurCamera::Update_GaussainFiltering(RwRGBA& color, HWND hWnd)
 	m_lpEffect->SetFloat(m_hMapHeight, m_nBlurTextureHeight);
 
 	// ==========================================
-	// 가로 방향 가우시안 필터
+	// Horizontal Gaussian Filter
 	// ==========================================
 	RwCameraClear(m_pGaussianCamera, &color, rwCAMERACLEARZ|rwCAMERACLEARIMAGE);
 	if(RwCameraBeginUpdate(m_pGaussianCamera))
@@ -678,7 +678,7 @@ void CNtlBlurCamera::Update_GaussainFiltering(RwRGBA& color, HWND hWnd)
 	m_lpEffect->EndPass();
 
 	// ==========================================
-	// 가로 방향 가우시안 필터
+	// Horizontal Gaussian Filter
 	// ==========================================
 	m_lpEffect->BeginPass(EFFECT_PASS_GAUSSAIN_Y);
 
@@ -706,7 +706,7 @@ void CNtlBlurCamera::Update_ReductionFiltering(RwRGBA& color, HWND hWnd)
 	m_lpEffect->BeginPass(EFFECT_PASS_NONE);
 
 	// ==========================================
-	// 블러 화면 축소하기
+	// Reduce the blur screen
 	// ==========================================
 	RwCameraClear(m_pReductionCamera, &color, rwCAMERACLEARZ|rwCAMERACLEARIMAGE);
 	if(RwCameraBeginUpdate(m_pReductionCamera))
@@ -722,7 +722,7 @@ void CNtlBlurCamera::Update_ReductionFiltering(RwRGBA& color, HWND hWnd)
 
 
 	// ==========================================
-	// 블러 화면 확대하기
+	// Zoom in on the blur screen
 	// ==========================================
 	m_lpEffect->BeginPass(EFFECT_PASS_NONE);
 
@@ -749,7 +749,7 @@ void CNtlBlurCamera::Update_ReductionFiltering(RwRGBA& color, HWND hWnd)
 void CNtlBlurCamera::Update_FakeHDRFiltering(RwRGBA& color, HWND hWnd)
 {
 	// ==========================================
-	// 화면 축소하기
+	// Zoom out the screen
 	// ==========================================
 	m_lpEffect->BeginPass(EFFECT_PASS_NONE);
 	RwCameraClear(m_pReductionCamera, &color, rwCAMERACLEARZ|rwCAMERACLEARIMAGE);
@@ -766,7 +766,7 @@ void CNtlBlurCamera::Update_FakeHDRFiltering(RwRGBA& color, HWND hWnd)
 
 
 	// ==========================================
-	// 축소화면 블러 먹이기
+	// Adding blur to the reduced screen
 	// ==========================================
 	for (RwInt32 i = 0; i < m_nFakeHDRBlurCount; ++ i)
 	{
@@ -804,7 +804,7 @@ void CNtlBlurCamera::Update_FakeHDRFiltering(RwRGBA& color, HWND hWnd)
 
 
 	// ==========================================
-	// 화면 확대하기
+	// Zoom in on the screen
 	// ==========================================
 	m_lpEffect->BeginPass(EFFECT_PASS_NONE);
 	RwCameraClear(m_pTempCamera, &color, rwCAMERACLEARZ|rwCAMERACLEARIMAGE);
@@ -883,7 +883,7 @@ void CNtlBlurCamera::Update_Last(RwRGBA& color, HWND hWnd)
 	m_lpEffect->BeginPass(EFFECT_PASS_LASTDRAW);
 
 	// ==========================================
-	// 최종적으로 그리기
+	// Finally drawing
 	// ==========================================
 	RwCameraClear(m_pBlurCamera, &color, rwCAMERACLEARZ|rwCAMERACLEARIMAGE);
 	if(RwCameraBeginUpdate(m_pBlurCamera))
@@ -1062,7 +1062,7 @@ void CNtlBlurCamera::DrawInfo(RtCharset* pCharset, RwInt32 iIdx)
 
 //-------------------------------------------------------------
 // Name: UpdateGaussainWeightTable()
-// Desc: 가중치 계산
+// Desc: Weight calculation
 //-------------------------------------------------------------
 void CNtlBlurCamera::UpdateGaussainWeightTable(FLOAT fGaussainDispersion_sq)
 {
@@ -1077,7 +1077,7 @@ void CNtlBlurCamera::UpdateGaussainWeightTable(FLOAT fGaussainDispersion_sq)
 
 //-------------------------------------------------------------
 // Name: CreateReductionTexture()
-// Desc: 가중치 계산
+// Desc: Weight calculation
 //-------------------------------------------------------------
 void CNtlBlurCamera::CreateReductionTexture(RwInt32 nTextureSize)
 {

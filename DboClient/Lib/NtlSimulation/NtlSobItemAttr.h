@@ -2,7 +2,7 @@
  *
  * File			: NtlSobItemAttr.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2005. 11. 30	
  * Abstract		: Simulation object item attribute base class
  *****************************************************************************
@@ -25,23 +25,23 @@ private:
 
 	sITEM_TBLDAT *m_pItemTbl;
 	RwUInt8 m_byStackNum;
-	RwUInt8 m_byRank;		/** item 등급 */
-	RwUInt8 m_byGrade;		/** item 업그레이드 등급 **/
-	RwUInt8 m_byDur;		/** item 내구도 */
-	RwUInt8 m_byMaxDur;		/** item max 내구도 */
-	RwBool	m_bNeedToIdentify; /** item identify 필요여부 **/
+	RwUInt8 m_byRank;		/** item rating */
+	RwUInt8 m_byGrade;		/** item upgrade level **/
+	RwUInt8 m_byDur;		/** item durability */
+	RwUInt8 m_byMaxDur;		/** item max durability */
+	RwBool	m_bNeedToIdentify; /** Is item identification necessary? **/
 	sITEM_OPTION_SET	m_sOptionSet;
 	RwUInt8 m_ucBattleAttribute;
 
-	RwUInt8	m_ucRestrictState;	/** 귀속상태 eITEM_RESTRICT_STATE_TYPE **/
-	std::wstring m_wstrMaker;	/** 제작자 **/
+	RwUInt8	m_ucRestrictState;	/** Reservation status eITEM_RESTRICT_STATE_TYPE **/
+	std::wstring m_wstrMaker;	/** producer **/
 
-	RwUInt8		m_ucDurationType;	/** 사용기간 eDURATIONTYPE **/
-	DBOTIME		m_StartTime;		/** 인벤토리에 들어온 날짜 **/
-	DBOTIME		m_EndTime;			/** 사용 만료 기간 **/
-	DBOTIME		m_RemainTime;		/** 남은시간 초 **/
-	RwReal		m_fRemainTimeBelowPeriod;		/** 남은시간 소수점 이하 **/
-	RwReal		m_fNotifyTime;		/** 남은시간 알림간격 **/
+	RwUInt8		m_ucDurationType;	/** Period of use eDURATIONTYPE **/
+	DBOTIME		m_StartTime;		/** Date entered into inventory **/
+	DBOTIME		m_EndTime;			/** expiration period **/
+	DBOTIME		m_RemainTime;		/** seconds remaining **/
+	RwReal		m_fRemainTimeBelowPeriod;		/** Remaining time below decimal point **/
+	RwReal		m_fNotifyTime;		/** Remaining time notification interval **/
 		
 public:
 

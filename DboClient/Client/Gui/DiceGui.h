@@ -1,19 +1,19 @@
 /******************************************************************************
-* File			: DiceGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 5. 26
-* Abstract		: 
+*File			: DiceGui.h
+*Author	    	: Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2008. 5. 26
+*Abstract		: 
 *****************************************************************************
-* Desc			: 
+*Desc			: 
 *****************************************************************************/
 
 #pragma once
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// dbo
+// Dbo
 #include "SlotGui.h"
 #include "DiceManager.h"
 
@@ -21,8 +21,8 @@ struct sITEM_PROFILE;
 
 struct sWaitDiceDisappear
 {
-	RwReal		fElapsedDisappear;	///< 주사위가 사라지기까지의 시간
-	RwBool		bWaitDisappear;		///< 주사위가 사라지기를 기다리는지 여부
+	RwReal		fElapsedDisappear;	///< Time until the dice disappear
+	RwBool		bWaitDisappear;		///< Whether to wait for the dice to disappear
 
 	sWaitDiceDisappear()
 	:fElapsedDisappear(0.f), bWaitDisappear(false)
@@ -98,12 +98,12 @@ protected:
 	gui::CSlot			m_slotFSCallback;
 	gui::CSlot			m_slotMovieEnd;
 	
-	gui::CButton*		m_pExitButton;			///< 창닫기 버튼
-	gui::CFlash*		m_pflashDice;			///< 주사위 플래쉬
+	gui::CButton*		m_pExitButton;			///< Close window button
+	gui::CFlash*		m_pflashDice;			///< Dice Flash
 
-	gui::CStaticBox*	m_pActionDiceExplain;	///< 액션 주사위 설명
-	gui::CStaticBox*	m_pActionDiceExplain2;	///< 액션 주사위 설명2
-	gui::CStaticBox*	m_pResultNum;			///< 주사위를 굴린 숫자
+	gui::CStaticBox*	m_pActionDiceExplain;	///< Action dice description
+	gui::CStaticBox*	m_pActionDiceExplain2;	///< Action dice description 2
+	gui::CStaticBox*	m_pResultNum;			///< Number rolled on the dice
 };
 
 
@@ -150,22 +150,22 @@ protected:
 	gui::CSlot			m_slotMouseLeave;
 	gui::CSlot			m_slotPaint;
 
-	gui::CButton*		m_pExitButton;			///< 창닫기 버튼
-	gui::CFlash*		m_pflashDice;			///< 주사위 플래쉬
+	gui::CButton*		m_pExitButton;			///< Close window button
+	gui::CFlash*		m_pflashDice;			///< Dice Flash
 
-	gui::CStaticBox*	m_pAutoDiceExplain;		///< 자동 주사위 설명
-	gui::CStaticBox*	m_pResultNum;			///< 주사위를 굴린 숫자
+	gui::CStaticBox*	m_pAutoDiceExplain;		///< Description of automatic dice
+	gui::CStaticBox*	m_pResultNum;			///< Number rolled on the dice
 
-	gui::CProgressBar*	m_pTimeGauge;			///< 주사위 굴리기 시간 제한
+	gui::CProgressBar*	m_pTimeGauge;			///< Dice rolling time limit
 
-	CSurfaceGui			m_srfItemSlot;			///< 아이템 슬롯 배경
-	CSurfaceGui			m_srfTimeGaugeBack;		///< 주사위 굴리기 시간 제한 배경
+	CSurfaceGui			m_srfItemSlot;			///< Item slot background
+	CSurfaceGui			m_srfTimeGaugeBack;		///< Dice rolling time limit background
 
-	CRegularSlotGui			m_slot;					///< 아이템 슬롯
+	CRegularSlotGui			m_slot;					///< Item slot
 
-	RwReal				m_fElapsed;				///< 주사위를 굴려야 할 제한 시간
+	RwReal				m_fElapsed;				///< Limited time to roll the dice
 	
-	sWaitDiceDisappear	m_WaitDiceDisappear;	///< 주사위가 사라질 때까지 필요로 하는 정보
+	sWaitDiceDisappear	m_WaitDiceDisappear;	///< Information needed until the dice disappear
 
 	sITEM_PROFILE*		m_pItemProfile;	
 };

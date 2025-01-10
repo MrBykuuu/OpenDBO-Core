@@ -2,12 +2,12 @@
 *
 * File			: NtlSoundMoodManager.h
 * Author		: Hong SungBock
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 
 * Update		: 2009. 3. 11
 * Abstract		: Simulation sound mood manager
 *****************************************************************************
-* Desc         : 사운드의 단순 play가 아닌 데이터에 따른 상황 연출을 관리한다
+* Desc         : Manages situational presentation based on data rather than simple play of sound.
 *****************************************************************************/
 
 #ifndef __NTL_SOUND_MOOD_MANAGER_H__

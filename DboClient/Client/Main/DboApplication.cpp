@@ -4,7 +4,7 @@
 //#include "toonmultiTex.h"
 #include "DboApplication.h"
 
-// core
+// Core
 #include "NtlAtomic.h"
 #include "NtlPLMaterialExtWrapper.h"
 #include "NtlDebug.h"
@@ -16,17 +16,17 @@
 #include "NtlLoadingController.h"
 #include "NtlProfiler.h"
 
-// shared
+// Shared
 #include "NtlClientNet.h"
 #include "table.h"
 
-// frame
+// Frame
 #include "NtlStage.h"
 
-// sound
+// Sound
 #include "NtlSoundManager.h"
 
-// gui
+// Gui
 #include "gui_precomp.h"
 #include "guicore_precomp.h"
 #include "gui_componenttokenizer.h"
@@ -35,10 +35,10 @@
 #include "gui_inputbox_generic.h"
 #include "StringLocalConverter.h"
 
-// flash
+// Flash
 #include "NtlFlasherManager.h"
 
-// presentation
+// Presentation
 #include "NtlPLEventGenerator.h"
 #include "NtlPLSceneManagerFactory.h"
 #include "NtlPLPropertyContainer.h"
@@ -60,7 +60,7 @@
 #include "NtlPLEmblemStuffList.h"
 #include "NtlPLPalette.h"
 
-// simulation
+// Simulation
 #include "InputHandler.h"
 #include "InputActionMap.h"
 #include "NtlPacketLockManager.h"
@@ -75,7 +75,7 @@
 #include "NtlStorageManager.h"
 #include "NtlSoundLogic.h"
 
-// dbo
+// Dbo
 #include "PacketProc.h"
 #include "DisplayParser.h"
 #include "DisplayStringManager.h"
@@ -104,16 +104,16 @@
 #include "LobbyManager.h"
 
 
-// discord
+// Discord
 #ifdef USE_DISCORD
 #include "Discord.h"
 #endif
 
-// lleo52 - 추후 삭제 필요
+// lleo52 -Needs to be deleted later
 #include "NtlMovieManager.h"
 #include <fstream>
 
-// lleo52 - 추후 삭제 필요
+// lleo52 -Needs to be deleted later
 std::vector< NTL_MOVIE_HANDLE > g_vecdefMovieList;
 
 
@@ -196,7 +196,7 @@ RwBool CDboApplication::CreateSubSystem(RwUInt32 iWidth, RwUInt32 iHeight, RwBoo
 	 // Load keyboard accelerators
     m_hAccel = LoadAccelerators( NULL, MAKEINTRESOURCE(IDR_MAIN_ACCEL) );
 
-	// dev master 정보를 읽는다.
+	// Read dev master information.
 	RwUInt8 byMasterRes = API_LoadSLDevMasterInformation();
 	RwBool bDevUser = Logic_IsDevUser();
 	SDevMasterInfo *pDevMasterInfo = API_GetSLDevMasterInformation();
@@ -259,7 +259,7 @@ RwBool CDboApplication::CreateSubSystem(RwUInt32 iWidth, RwUInt32 iHeight, RwBoo
 	// presentation layer
 	//----------------------------------------------------------------------
 
-	// API_PLInit
+	// Api pl init
 	API_PLInit();
 
 	// Presentation layer option apply
@@ -327,7 +327,7 @@ RwBool CDboApplication::CreateSubSystem(RwUInt32 iWidth, RwUInt32 iHeight, RwBoo
 
 	CPetitionManager::CreateInstance();
 
-	// property container 생성 및 load 한다.
+	// Create and load a property container.
 
 	RwBool bLoadPropertyContainer;
 
@@ -365,9 +365,9 @@ RwBool CDboApplication::CreateSubSystem(RwUInt32 iWidth, RwUInt32 iHeight, RwBoo
 		NTL_RETURN(FALSE);
 	}
 
-	// camera 
+	// Camera 
 	m_pCamera = NTL_NEW CNtlPostEffectCamera;
-	// disable b daneos
+	// disabled by daneos
 	/*if(bDevUser)
 	{
 		SDevMasterInfo *pDevMasterInfo = API_GetSLDevMasterInformation();
@@ -400,7 +400,7 @@ RwBool CDboApplication::CreateSubSystem(RwUInt32 iWidth, RwUInt32 iHeight, RwBoo
 	{
 		NTL_RETURN(FALSE);
 	}
-	// active scene manager를 setting 한다.
+	// Set the active scene manager.
 	CNtlPLSceneManagerFactory::ActiveSceneManager(m_pVisualManager);
 
 	// gui setup
@@ -412,15 +412,15 @@ RwBool CDboApplication::CreateSubSystem(RwUInt32 iWidth, RwUInt32 iHeight, RwBoo
 		NTL_RETURN(FALSE);
 	}
 
-	// Particle Surface 로드
+	// Load Particle Surface
 
-	// GlobalGui 생성_ 해제는 역순으로.
+	// GlobalGui creation and release are in reverse order.
 	gui::CGlobalComponent::GetInstance()->CreateComponent( "gui\\GlobalGui.rsr", "gui\\GlobalGui.srf", "gui\\GlobalGui.frm", 
 		GetNtlGuiManager()->GetReourceManager(), GetNtlGuiManager()->GetSurfaceManager(),
 		GetNtlGuiManager()->GetComponentManager(), GetNtlGuiManager()->GetGuiManager() );
 	gui::CGlobalComponent::GetInstance()->SetToolTip( "tooltipcomponent" );
 
-	// sound 생성
+	// sound generation
 	GetSoundManager()->Init(".\\sound\\", 1.0f, 1.0f, 1.0f, 0.5f);
 
 	//----------------------------------------------------------------------
@@ -486,10 +486,10 @@ RwBool CDboApplication::CreateSubSystem(RwUInt32 iWidth, RwUInt32 iHeight, RwBoo
 		}
 	}
 
-	// Ntl Storage에 Apply 함수를 지정하고 Scouter와 Quest에 저장을 하는 함수를 지정한다.
+	// Specify the Apply function in Ntl Storage and the function for saving in Scouter and Quest.
 	
 
-	// 볼륨이 너무 큰 사운드 그룹의 최대 볼륨 조정
+	// Adjust maximum volume for sound groups that are too loud
 	float fDefaultVolume = GetNtlStorageManager()->GetFloatData( dSTORAGE_SOUND_BACK_VOLUME );
 	GetSoundManager()->SetGroupVolume(CHANNEL_GROUP_JINGLE_MUSIC,	fDefaultVolume);
 	GetSoundManager()->SetGroupVolume(CHANNEL_GROUP_FLASH_MUSIC,	fDefaultVolume);
@@ -543,7 +543,7 @@ RwBool CDboApplication::CreateSubSystem(RwUInt32 iWidth, RwUInt32 iHeight, RwBoo
 	GetDboGlobal()->LoadingContractInfo();
 	CDboEventGenerator::StageCreate(LOGIN_STAGE_NAME);
 
-	// 필터링 테이블과 텍스트 올 테이블에서 데이터를 읽여들여 채팅 메시지 필터링 데이터를 생성
+	// Create chat message filtering data by reading data from the filtering table and text all table.
 	GetChattingFilter()->Create();
 
 	if(bDevUser)
@@ -551,7 +551,7 @@ RwBool CDboApplication::CreateSubSystem(RwUInt32 iWidth, RwUInt32 iHeight, RwBoo
 		DragAcceptFiles(m_hWnd, TRUE);
 	}
 
-    // AddIn
+    // Add in
     CDBOAddinManager::Init();
 
 	// Init mouse double click time
@@ -566,7 +566,7 @@ RwBool CDboApplication::CreateSubSystem(RwUInt32 iWidth, RwUInt32 iHeight, RwBoo
 
 	CPacketTracer::CreateInstance();			/// woosungs_test 20090804
 
-	// lleo52 - 추후 제거 필요
+	// lleo52 -needs to be removed later
 	CNtlMovieManager::CreateInstance( CDboApplication::GetInstance()->GetHWnd() );
 
 #ifdef USE_DISCORD
@@ -638,7 +638,7 @@ RwBool CDboApplication::AttachPlugin()
 	if (!NtlMatExtPluginAttach())
 		NTL_RETURN(FALSE);
 
-	// woody1019
+	// Woody1019
 	if( !RpNtlWorldAttach() )
 		NTL_RETURN(FALSE);
 
@@ -709,13 +709,13 @@ LRESULT CDboApplication::PreTranslateMessage(HWND window, UINT message, WPARAM w
 	if(pDboGlobal == NULL)
 		return 0;
 
-	// avooo's comment : (08. 10.21) 다른 방법으로 인풋이 제어되고 있다. 이 부분은
-	// 필요가 없을 것 같아 한동안 주석으로 처리하고 결과를 지켜본다
-	// input이 active 안되어 있으면.
+	// avooo's comment: (08. 10.21) Input is being controlled in a different way. This part
+	// I don't think it's necessary, so I'll comment it out for a while and see the results.
+	// If input is not active.
 	//if(!pDboGlobal->GetGameData()->bInputActive)
 	//	return 0;
 
-	// window command message 조사.
+	// Investigate window command message.
 	switch(message)
 	{
 		case WM_DROPFILES:
@@ -725,20 +725,20 @@ LRESULT CDboApplication::PreTranslateMessage(HWND window, UINT message, WPARAM w
 			//	POINT pt;
 			//	char buffer[_MAX_PATH] = {0,};
 
-			//	// 어느 위치에 드롭되었는지 그 항목을 알아낸다.
+			//	// Find out where the item was dropped.
 			//	if (DragQueryPoint((HDROP)wParam, &pt)) 
 			//	{
 			//		UINT i = 0;
-			//		// 모두 몇 개의 파일이 드롭되었는지 알아낸다.
-			//		// 만일 폴더가 드롭되었다면 폴더의 이름만 넘어온다.
+			//		// Find out how many files were dropped in all.
+			//		// If a folder is dropped, only the name of the folder is returned.
 			//		UINT uCount = DragQueryFile((HDROP)wParam, 0xFFFFFFFF, NULL ,0);
 
 			//		for(i = 0;i < uCount;i++)
 			//		{
-			//			// 드롭된 파일의 이름을 알아온다.
+			//			// Retrieves the name of the dropped file.
 			//			DragQueryFile((HDROP)wParam, i, buffer ,_MAX_PATH);
 
-			//			// 드롭된 파일 이름을 출력해본다.
+			//			// Print the name of the dropped file.
 			//			//MessageBox(m_hWnd, buffer, "File Name", MB_OK);
 
 			//			string	strCmp		= buffer;
@@ -747,12 +747,12 @@ LRESULT CDboApplication::PreTranslateMessage(HWND window, UINT message, WPARAM w
 
 			//			if(!stricmp("LinkItemTrasformList.xml", strCmp.c_str()))
 			//			{
-			//				CDboEventGenerator::NotifyMessage(SDboEventNotify::ACTION, L"Link Mesh Transform Script이 갱신되었습니다.");
+			//				CDboEventGenerator::NotifyMessage(SDboEventNotify::ACTION, L"Link Mesh Transform Script has been updated.");
 			//				CLinkItemTrasformList::GetInstance().Refresh();
 			//			}
 			//		}
 			//	}
-			//	// drag and drop 작업을 끝낸다.
+			//	// Finish the drag and drop operation.
 			//	DragFinish((HDROP)wParam);
 			//	break;
 			//}
@@ -818,12 +818,12 @@ LRESULT CDboApplication::PreTranslateMessage(HWND window, UINT message, WPARAM w
 			}
 	}
 
-	// chatting mode 검사. 
+	// Check chatting mode. 
 	RwBool bChatMode = FALSE;
 	SGameData *pGameData = pDboGlobal->GetGameData();
 	bChatMode = pGameData->bChatMode;
 
-	// gui window message 처리.
+	// GUI window message processing.
 	LRESULT ret = 0;
 	gui::CGUIManager *pGuiMgr = CNtlPLGuiManager::GetInstance()->GetGuiManager();
 	if( pGuiMgr && !m_bMouseBackgroundCapture )
@@ -832,10 +832,10 @@ LRESULT CDboApplication::PreTranslateMessage(HWND window, UINT message, WPARAM w
 	using namespace gui;
 #define GET_KEY_REPEAT(lParam)	(lParam & 0x0000ffff)
 
-	// window focus를 빠져나갔을 때.
+	// When the window focus goes out.
 	if(message == WM_ACTIVATE)
 	{
-		// Minimize 또는 Active 비활성화
+		// Disable Minimize or Active
 		if(LOWORD(wParam) == WA_INACTIVE || ::IsIconic(window))
 		{
 			if(GetInputActionMap())
@@ -844,7 +844,7 @@ LRESULT CDboApplication::PreTranslateMessage(HWND window, UINT message, WPARAM w
 			if( m_pGamma )
 				m_pGamma->RestoreBackGroundGamma();
 		}
-		// 활성화
+		// activate
 		else if( LOWORD(wParam) == WA_ACTIVE )
 		{
 			if( m_pGamma )
@@ -859,8 +859,8 @@ LRESULT CDboApplication::PreTranslateMessage(HWND window, UINT message, WPARAM w
 		{
 		case WM_SYSKEYDOWN:
 		case WM_KEYDOWN:
-			// 한글 입력 모드라면 VK_PROCESSKEY 가 전달 된다. 실제 눌러진 가상키는 ImmGetVirtualKey() 함수를 이용하여 한글/영문 입력 모드에 상관없이 
-			// 눌러진 가상 키 코드를 조사할 수 있다.
+			// In Korean input mode, VK_PROCESSKEY is transmitted. The actual pressed virtual key can be used regardless of Korean/English input mode by using the ImmGetVirtualKey() function. 
+			// You can examine the pressed virtual key code.
 			if( VK_PROCESSKEY == wParam )
 			{
 				unsigned int uiKey = MapVirtualKey( LOBYTE(HIWORD( lParam ) ), 1 );
@@ -920,8 +920,8 @@ LRESULT CDboApplication::PreTranslateMessage(HWND window, UINT message, WPARAM w
 		{
 		case WM_SYSKEYDOWN:
 		case WM_KEYDOWN:
-			// 한글 입력 모드라면 VK_PROCESSKEY 가 전달 된다. 실제 눌러진 가상키는 ImmGetVirtualKey() 함수를 이용하여 한글/영문 입력 모드에 상관없이 
-			// 눌러진 가상 키 코드를 조사할 수 있다.
+			// In Korean input mode, VK_PROCESSKEY is transmitted. The actual pressed virtual key can be used regardless of Korean/English input mode by using the ImmGetVirtualKey() function. 
+			// You can examine the pressed virtual key code.
 			if( VK_PROCESSKEY == wParam )
 			{
 				unsigned int uiKey = MapVirtualKey( LOBYTE(HIWORD( lParam ) ), 1 );
@@ -934,8 +934,8 @@ LRESULT CDboApplication::PreTranslateMessage(HWND window, UINT message, WPARAM w
 			break;
 		case WM_SYSKEYUP:
 		case WM_KEYUP:
-			// 한글 입력 모드라면 VK_PROCESSKEY 가 전달 된다. 실제 눌러진 가상키는 ImmGetVirtualKey() 함수를 이용하여 한글/영문 입력 모드에 상관없이 
-			// 눌러진 가상 키 코드를 조사할 수 있다.
+			// In Korean input mode, VK_PROCESSKEY is transmitted. The actual pressed virtual key can be used regardless of Korean/English input mode by using the ImmGetVirtualKey() function. 
+			// You can examine the pressed virtual key code.
 			if( VK_PROCESSKEY == wParam )
 			{
 				unsigned int uiKey = MapVirtualKey( LOBYTE(HIWORD( lParam ) ), 1 );
@@ -988,14 +988,14 @@ LRESULT CDboApplication::PreTranslateMessage(HWND window, UINT message, WPARAM w
 		}
 	}
 
-	// chatting mode 검사.
+	// Check chatting mode.
 	if(!bChatMode && pGameData->bChatMode)
 	{
 		if(GetInputActionMap())
 			GetInputActionMap()->Reset();
 	}
 
-	// lleo52 - 추후 삭제 필요
+	// lleo52 -Needs to be deleted later
 	{
 		struct sMovieInfo
 		{
@@ -1110,7 +1110,7 @@ RwBool CDboApplication::Update(RwReal fTime, RwReal fElapsedTime)
 	CDboVirtualServer::GetInstance()->Update(fElapsedTime);
 #endif
 
-//	EventQueueCurrentProcessFilterMsg(
+//	Event queue current process filter msg(
 
 	API_CoreUpdate(fElapsedTime);
 
@@ -1166,7 +1166,7 @@ RwBool CDboApplication::Update(RwReal fTime, RwReal fElapsedTime)
 				m_pCamera->MainCameraEndUpdate();
 			}
 
-			// lleo52 - 추후 제거 필요
+			// lleo52 -needs to be removed later
 			std::vector< NTL_MOVIE_HANDLE >::iterator it = g_vecdefMovieList.begin();
 			for ( ; it != g_vecdefMovieList.end(); ++it )
 			{
@@ -1184,14 +1184,14 @@ RwBool CDboApplication::Update(RwReal fTime, RwReal fElapsedTime)
 
 	CNtlLoadingController::GetInstance()->Unlock();
 
-	//프로파일
+	//profile
 	//CProfileIterator* pThe = CProfileManager::Get_Iterator();
 	//CProfileManager::Release_Iterator(pThe);
 
 	// update discord
 #ifdef USE_DISCORD
 	GetDiscordManager()->UpdateDiscordConnection();
-#endif // USE_DISCORD
+#endif // Use discord
 
 	m_fLastClientInfoUpdate += fElapsedTime;
 	if (m_fLastClientInfoUpdate >= 110.f) // send every 110 seconds
@@ -1226,7 +1226,7 @@ void CDboApplication::Destroy()
 {
 	NTL_FUNCTION("CDboApplication::Destroy" );	
 
-	// lleo52 - 추후 제거 필요
+	// lleo52 -needs to be removed later
 	CNtlMovieManager::DeleteInstance();
 
 	gui::CStringLocalConverter::DestroyInstance();
@@ -1320,10 +1320,10 @@ void CDboApplication::Destroy()
 		m_pCamera = NULL;
 	}
 
-	// property를 destroy 한다.
+	// Destroy property.
 	CNtlPLPropertyContainer::GetInstance()->Destroy();
 
-	// API_PLInit
+	// Api pl init
 	UnLinkTextureLoad();
 
 #ifdef USE_PACK_DATA
@@ -1344,10 +1344,10 @@ void CDboApplication::Destroy()
 		NTL_DELETE(m_pPLEventHandler);
 	}
 
-	// gui
+	// Gui
 	gui::CSetupGUI::Deinit();
 
-	// sound 해제
+	// sound off
 	GetSoundManager()->Release();
 
 	// Gamma Controller
@@ -1389,7 +1389,7 @@ void CDboApplication::DisplayInfo()
 
 	RwChar caption[256];
 	RwInt32 iIdx = 0;
-	//fps
+	//Fps
 	RsSprintf(caption, RWSTRING("FPS: %4.2f"), GetFps());
 	RsCharsetPrint(m_pCharset, caption, 0, iIdx++, rsPRINTPOSTOPRIGHT);
 
@@ -1453,12 +1453,12 @@ void CDboApplication::DisplayFps()
 
 	RwChar caption[256];
 
-	//fps
+	//Fps
 	RsSprintf(caption, RWSTRING("FPS: %4.2f"), GetFps());
 	RsCharsetPrint(m_pCharset, caption, -22, 0, rsPRINTPOSTOPRIGHT);
 }
 
-// 아이콘 사용 때문에 오버라이딩 한다. (by agebreak)
+// Overriding due to the use of icons. (by agebreak)
 bool CDboApplication::RegisterMainWindowClass( HANDLE processInstance ) 
 {
 	WNDCLASS windowClass;
@@ -1490,14 +1490,14 @@ void CDboApplication::SetGammaRamp( RwReal fGamma )
 RwBool CDboApplication::CanExitApp( void )
 {
 	// Work thread
-	// - loading thread 가 존재하면 아직 Thread가 데이터를 로딩중이므로 로딩을
-	//   완료후 종료 시킨다
+	// -If a loading thread exists, load is stopped because the thread is still loading data.
+	//   Shut down after completion
 	return g_clWorkThreadMgr.GetThreadCnt() == 0 ? TRUE : FALSE;
 }
 
 RwBool CDboApplication::Create( HINSTANCE hInstance, RwInt32 posX, RwInt32 posY, RwInt32 sizeX, RwInt32 sizeY, RwBool bFullScreen )
 {
-	// Application을 세팅하기 위하여 System의 Option을 읽어들인다.
+	// To set up the application, read the system options.
 	Logic_LoadSystemOption();
 
 	// Debug mode creates a window by referring to the bFullScreen variable that calls this function in WinMain.
@@ -1522,7 +1522,7 @@ RwBool CDboApplication::Create( HINSTANCE hInstance, RwInt32 posX, RwInt32 posY,
 	RwInt32 nScreenHeight = GetNtlStorageManager()->GetIntData( dSTORAGE_GRAPHIC_SELECT_VIDEOHEIGHT );
 	RwInt32 nScreenDepth = GetNtlStorageManager()->GetIntData( dSTORAGE_GRAPHIC_SELECT_VIDEODEPTH );
 
-	// 창 모드라면 화면을 중간으로 세팅한다.
+	// If you are in windowed mode, set the screen to middle.
 	RwInt32 nPosX = 0;
 	RwInt32 nPosY = 0;
 	if( bUserScreen )

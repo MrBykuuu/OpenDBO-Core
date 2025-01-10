@@ -34,7 +34,7 @@
 
 #define dHOIPOIMIX_CREATE_TIME 2.0f
 #define dHOIPOIMIX_HIT_RATE		0.02f
-#define dHOIPOIMIX_NOTIFY_TIME	0.5f		///< COOL 같은 텍스트가 떠 있는 타임
+#define dHOIPOIMIX_NOTIFY_TIME	0.5f		///< Time with floating text such as COOL
 
 CHoiPoiMixCraftGui::CHoiPoiMixCraftGui(const RwChar* pName)
 	:CNtlPLGui(pName)
@@ -815,7 +815,7 @@ VOID CHoiPoiMixCraftGui::OnMouseMove(RwInt32 nKey, RwInt32 nXPos, RwInt32 nYPos)
 		{
 			if (m_SlotPreview[i].GetSerial() != INVALID_SERIAL_ID)
 			{
-				// InfoWindow
+				// Info window
 				GetInfoWndManager()->ShowInfoWindow(TRUE,
 					CInfoWndManager::INFOWND_TABLE_ITEM,
 					m_SlotPreview[i].GetX_fromParent() + rect.left,

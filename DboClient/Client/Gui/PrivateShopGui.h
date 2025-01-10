@@ -1,11 +1,11 @@
 /*****************************************************************************
-* File			: PrivateShopGui.h
-* Author		: Jinsung, Kim -> Haesung, Cho
-* Copyright		: (주)NTL
-* Date			: 2007. 7. 4 -> 2007. 12. 19
-* Abstract		: DBO 개인상점
+*File			: PrivateShopGui.h
+*Author		    : Jinsung, Kim -> Haesung, Cho
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 7. 4 -> 2007. 12. 19
+*Abstract		: DBO personal store
 *****************************************************************************
-* Desc         : 
+*Desc           : 
 *****************************************************************************/
 
 #ifndef __PRIVATE_SHOP_GUI_H__
@@ -17,7 +17,7 @@
 #include "SlotGui.h"
 #include "NtlItem.h"
 
-// 개인상점 아이템의 위치
+// Location of personal store items
 #define dPRIVATESHOP_UI_ITEM_TOP				42
 #define dPRIVATESHOP_UI_ITEM_LEFT				20
 #define dPRIVATESHOP_UI_ITEM_GAP				55
@@ -42,7 +42,7 @@ class CPrivateShopGui;
 
 /**
 * \ingroup client
-* \brief 개인상점 아이템 슬롯
+* \brief Personal store item slot
 */
 class CPrivateShopItemGui
 {
@@ -90,10 +90,10 @@ public:
 
 protected:
 	// Components
-	gui::CDialog*		m_pShopItem;				///< Item의 Dialog
-	gui::CPanel*		m_pShopItemBg;				///< Item Slot의 배경
-	gui::CStaticBox*	m_pShopItemName;			///< Item 이름
-	gui::CButton*		m_pShopItemPrice;			///< Item 가격
+	gui::CDialog*		m_pShopItem;				///< Item Dialog
+	gui::CPanel*		m_pShopItemBg;				///< Background of Item Slot
+	gui::CStaticBox*	m_pShopItemName;			///< Item name
+	gui::CButton*		m_pShopItemPrice;			///< Item price
 	CRegularSlotGui*			m_pShopItemIcon;			///< Item Icon의 Slot
 
 	// Signals
@@ -107,49 +107,49 @@ protected:
 	gui::CSlot			m_slotClickedBtnPrice;			
 
 	// Effects
-	CSurfaceGui			m_EffectPick;				///< 픽된 상태의 그림
-	CSurfaceGui*		m_pEffectSelect;			///< 선택된 상태의 그림
-	CSurfaceGui*		m_pEffectFocus;				///< 포커스 상태의 그림
+	CSurfaceGui			m_EffectPick;				///< Picture in picked state
+	CSurfaceGui*		m_pEffectSelect;			///< Picture in selected state
+	CSurfaceGui*		m_pEffectFocus;				///< Picture in focus state
 
-	CPrivateShopGui*	m_pPrivateShopGui;			///< 이 슬롯을 가지는 부모의 Class
-	RwBool				m_bClick;					///< 클릭되었나?
+	CPrivateShopGui*	m_pPrivateShopGui;			///< Parent Class that holds this slot
+	RwBool				m_bClick;					///< Was it clicked?
 	
-	RwUInt8				m_uiItemState;				///< 아이템 상태
+	RwUInt8				m_uiItemState;				///< Item status
 	CRectangle			m_rectItem;
 	RwUInt8				m_uiPos;
 };
 
 /**
 * \ingroup client
-* \brief 개인상점 GUI
+* \brief Personal store GUI
 */
 class CPrivateShopGui : public CNtlPLGui, public RWS::CEventHandler
 {
 public:
 	
-	///< 개인상점 UI의 Tab Type
+	///< Tab Type of Personal Store UI
 	enum eTAB_TYPE
 	{
-		TAB_SHOP,	///< 상점
-		TAB_NOTE,	///< 공지
-		TAB_NUM,	///< TAB의 갯수
+		TAB_SHOP,	///< Store
+		TAB_NOTE,	///< Notice
+		TAB_NUM,	///< Number of TABs
 	};
 
-	///< 개인상점 UI의 Item Slot
+	///< Item Slot in Personal Store UI
 	enum eITEM_SLOT
 	{
-		SLOT_NUM = 6,	///< 슬롯 갯수
+		SLOT_NUM = 6,	///< Number of slots
 	};
 
-	///< 개인상점 UI의 Type
+	///< Type of personal store UI
 	enum ePrivateShopType
 	{
-		PRIVATESHOP_BUY,	///< 손님
-		PRIVATESHOP_SELL,	///< 주인
+		PRIVATESHOP_BUY,	///< Guest
+		PRIVATESHOP_SELL,	///< owner
 		PRIVATESHOP_NONE,
 	};
 
-	// 생성자 & 소멸자
+	// Constructor & Destructor
 	CPrivateShopGui(const RwChar* pName);
 	virtual ~CPrivateShopGui();
 
@@ -161,25 +161,25 @@ public:
 
 	// SwitchDialog & HandleEvents
 	RwInt32	SwitchDialog(bool bOpen);
-	void	HandleEvents(RWS::CMsg& msg);								///< 이벤트
-	void	HandleMsgboxResult(void* pData);							///< 메시지 박스 결과
+	void	HandleEvents(RWS::CMsg& msg);								///< Event
+	void	HandleMsgboxResult(void* pData);							///< Message box result
 
-	void	HandleCalcPopupResult(void* pData);							///< 계산기의 입력 결과
-	void	HandleSobPrivateShopCommunity(void *pData);					///< 상점의 상태가 변경되었을 경우
-	void	HandleRegPrivateShopItem(void* pData);						///< 개인상점 Item Reg
-	void	HandleSobInfoUpdate(void* pData);							///< Sob 객채의 정보 Update
-	void	HandlePickedUpHide(void* pData);							///< 개인상점 아이템이 픽업 되어서 Hide 되었을 때 
+	void	HandleCalcPopupResult(void* pData);							///< Input result of calculator
+	void	HandleSobPrivateShopCommunity(void *pData);					///< When the status of the store changes
+	void	HandleRegPrivateShopItem(void* pData);						///< Personal store Item Reg
+	void	HandleSobInfoUpdate(void* pData);							///< Sob guest house information update
+	void	HandlePickedUpHide(void* pData);							///< When a personal store item is picked up and hidden 
 
-	// HandleEvents : 개인상점 관련
-	void	HandlePrivateShopState(void* pData);						///< 개인상점 State
-	void	HandlePrivateShopStateVisitor(void *pData);					///< 방문자가 들어왔을 때
-	void	HandlePrivateShopItem(void* pData);							///< 개인상점 Item
-	void	HandlePrivateShopItemDataInfo(void* pData);					///< 개인상점 Item Update
-	void	HandlePrivateShopItemSelect(void* pData);					///< 개인상점 Item Select
+	// HandleEvents : Personal store related
+	void	HandlePrivateShopState(void* pData);						///< Private store State
+	void	HandlePrivateShopStateVisitor(void *pData);					///< When a visitor comes in
+	void	HandlePrivateShopItem(void* pData);							///< Personal store Item
+	void	HandlePrivateShopItemDataInfo(void* pData);					///< Personal store Item Update
+	void	HandlePrivateShopItemSelect(void* pData);					///< Personal Store Item Select
 	void	HandlePrivateShopSelectNfy(void* pData);
-	void	HandlePrivateShopItemBuying(void* pData);					///< 개인상점 Item Buying
-	void	HandlePrivateShopItemState(void* pData);					///< 개인상점 Item State
-	void	HandlePrivateShopNameTag(void* pData);						///< 개인상점 NameTag Update
+	void	HandlePrivateShopItemBuying(void* pData);					///< Personal Store Item Buying
+	void	HandlePrivateShopItemState(void* pData);					///< Personal store Item State
+	void	HandlePrivateShopNameTag(void* pData);						///< Personal store NameTag Update
 
 	// Event
 	void	OnPaintEffect();
@@ -209,8 +209,8 @@ public:
 	void	OnShopItemPriceClicked(CPrivateShopItemGui* pShopItem, gui::CComponent* pComponent);
 	
 	// Gui Setting
-	void	SetSale(bool bSale);		// 판매개시
-	void	SetAway(bool bAway);		// 자리비움
+	void	SetSale(bool bSale);		// Sales start
+	void	SetAway(bool bAway);		// away
 	void	SetNotice(const WCHAR* pText);
 	void	SetPage(RwUInt32 iPage, bool bCheckMax = true);
 
@@ -247,7 +247,7 @@ protected:
 	gui::CSlot					m_slotTabShopMouseLeave;
 	gui::CSlot					m_slotCaptureMouseDown;
 
-	// TAB_SHOP ( 상점 ) Components
+	// TAB_SHOP (Shop) Components
 	gui::CButton*				m_pNextButton;
 	gui::CButton*				m_pPrevButton;
 	gui::CButton*				m_pSaleButton;
@@ -262,26 +262,26 @@ protected:
 	gui::CSlot					m_slotSaleClicked;
 	gui::CSlot					m_slotEffectPaint;
 
-	// TAB_SHOP ( 상점 ) Signals
-	CPrivateShopItemGui			m_aShopItem[SLOT_NUM];		///< 개인상점 아이템
-	CSurfaceGui					m_EffectSelect;				///< 선택된 상태의 그림
-	CSurfaceGui					m_EffectFocus;				///< 포커스 상태의 그림
+	// TAB_SHOP (Shop) Signals
+	CPrivateShopItemGui			m_aShopItem[SLOT_NUM];		///< Personal store items
+	CSurfaceGui					m_EffectSelect;				///< Picture in selected state
+	CSurfaceGui					m_EffectFocus;				///< Picture in focus state
 
-	// TAB_SHOP ( 상점 ) State & Effect
-	ePrivateShopType			m_eShopType;				///< 상점의 상태
+	// TAB_SHOP (Shop) State & Effect
+	ePrivateShopType			m_eShopType;				///<Status of the store
 	sPRIVATESHOP_ITEM_DATA		m_aShopItemData[NTL_MAX_PRIVATESHOP_INVENTORY];
 	sPRIVATESHOP_SHOP_DATA		m_ShopData;
 
-	CPrivateShopItemGui*		m_pItemSelect;		///< 선택된 아이템
-	CPrivateShopItemGui*		m_pItemFocus;		///< 포커스 된 아이템
+	CPrivateShopItemGui*		m_pItemSelect;		///< Selected item
+	CPrivateShopItemGui*		m_pItemFocus;		///< Focused item
 
-	RwUInt32					m_uiItemCount;		///< 아이템 갯수
-	RwUInt32					m_uiPageMax;		///< 최대 페이지 
-	RwUInt32					m_uiPageCur;		///< 현재 페이지
-	bool						m_bAway;			///< 자리비움
-	bool						m_bSale;			///< 판매중
+	RwUInt32					m_uiItemCount;		///< Number of items
+	RwUInt32					m_uiPageMax;		///< maximum pages 
+	RwUInt32					m_uiPageCur;		///< Current page
+	bool						m_bAway;			///< Away
+	bool						m_bSale;			///< On sale
 
-	// TAB_NOTE ( 공지 ) Components
+	// TAB_NOTE (Notice) Components
 	gui::CStaticBox*			m_pShopNameTitle;
 	gui::CInputBox*				m_pShopNameInput;
 	gui::CStaticBox*			m_pShopNoticeTitle;
@@ -291,7 +291,7 @@ protected:
 	gui::CButton*				m_pMailButton;
 	gui::CStaticBox*			m_pNoticeMaxNum;
 
-	// TAB_NOTE ( 공지 ) Signals
+	// TAB_NOTE (Notice) Signals
 	gui::CSlot					m_slotNameGotFocus;
 	gui::CSlot					m_slotNameLostFocus;
 	gui::CSlot					m_slotNoticeGotFocus;

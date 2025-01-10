@@ -3,11 +3,11 @@
 #include "NtlDebug.h"
 
 /**
- * Camera 자신을 좌,우 상,하로 움직인다.
- * \param *pCamera 회전하고자 하는 Camera
+ * Camera moves itself left, right, up and down.
+ * \param *pCamera Camera you want to rotate
  * \param turn Yaw
  * \param tilt Pitch
- * \return 성공 유무
+ * \return Success or not
  */
 RwBool CNtlCameraHelper::CameraRotation(const RwCamera *pCamera, RwReal turn, RwReal tilt)
 {
@@ -70,10 +70,10 @@ RwBool CNtlCameraHelper::CameraRotation(const RwCamera *pCamera, RwReal turn, Rw
 
 
 /**
- * Camera의 AtVector 방향으로 이동을 시킨다
- * \param *pCamera 이동하고자 하는 Camera
- * \param delta 회전 각도
- * \return 성공유무
+ * Move in the AtVector direction of the Camera.
+ * \param *pCamera Camera to be moved
+ * \param delta rotation angle
+ * \return Success or not
  */
 RwBool CNtlCameraHelper::CameraTranslateAt(const RwCamera *pCamera, RwReal delta)
 {
@@ -97,10 +97,10 @@ RwBool CNtlCameraHelper::CameraTranslateAt(const RwCamera *pCamera, RwReal delta
 
 
 /**
- * Camera를 Vector만큼 이동을 시킨다.
- * \param *pCamera 이동하고자 하는 Camera
- * \param *pDelta Camera의 이동값.
- * \return 성공유무
+ * Move the Camera by the Vector.
+ * \param *pCamera Camera to be moved
+ * \param *pDelta Camera's movement value.
+ * \return Success or not
  */
 RwBool CNtlCameraHelper::CameraTranslate(const RwCamera *pCamera, const RwV3d *delta)
 {

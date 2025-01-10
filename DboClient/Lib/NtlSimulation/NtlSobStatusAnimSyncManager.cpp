@@ -144,8 +144,8 @@ void CNtlSobStatusAnimSync::PopAnimSyncUnit(void)
 	ListAnimSyncUnit::iterator it = m_listAnimSyncUnit.begin();
 	CNtlSobStatusAnimSyncUnit *pSyncUnit = (*it);
 
-	// 여기에서 보낸다.
-	// Event를 보낸다. 
+    //Send from here.
+	//Send Event. 
 	CNtlSob *pSobObj = GetNtlSobManager()->GetSobObject(m_hSerialId);
 	if(pSobObj)
 	{
@@ -238,7 +238,7 @@ void CNtlSobStatusAnimSyncContainer::Update(RwReal fElapsed)
 		pAnimSync->Update(fElapsed);
 		if(pAnimSync->IsFinish())
 		{
-			// 서버 동기 처리를 한다.
+			//Perform server synchronous processing.
 			if(bFinialServerSync)
 			{
 				pAnimSync->ProcFinialServerSyncUnit();
@@ -325,7 +325,7 @@ void CNtlSobStatusAnimSyncContainer::PopAnimSyncUnit(SYNCEVENT_HANDLE hSyncStatu
 			pAnimSync->PopAnimSyncUnit();
 			if(pAnimSync->IsFinish())
 			{
-				// 서버 동기 처리를 한다.
+				//Perform server synchronous processing.
 				if(bFinialServerSync)
 				{
 					pAnimSync->ProcFinialServerSyncUnit();
@@ -369,7 +369,7 @@ void CNtlSobStatusAnimSyncContainer::PopAnimSyncUnitAll(SYNCEVENT_HANDLE hSyncSt
 			pAnimSync->PopAnimSyncUnitAll();
 			if(pAnimSync->IsFinish())
 			{
-				// 서버 동기 처리를 한다.
+				//Perform server synchronous processing.
 				if(bFinialServerSync)
 				{
 					pAnimSync->ProcFinialServerSyncUnit();

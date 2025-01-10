@@ -5,15 +5,15 @@
 * Date			: 2009. 6. 18
 * Abstract		: 
 *****************************************************************************
-* Desc			: 도장전 말풍선 관리자의 생성, 소멸을 주관한다
+* Desc			: Supervises the creation and destruction of pre-painting speech bubble managers.
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
 

@@ -41,19 +41,19 @@ struct stINFOWND_UPGRADE
 };
 
 /**
-* \brief Battle Attribute의 계산된 속성을 출력하기 위하여
+* \brief To print the calculated attributes of Battle Attribute
 */
 struct stINFOWND_BATTLEATTR
 {
 	enum eTYPE
 	{
-		TYPE_ATTR_WEAPON_INFO = 0,			///< 무기 속성이 가지는 상성 관계
-		TYPE_ATTR_ARMOR_INFO,				///< 방어구 속성이 가지는 상성 관계
-		TYPE_ATTR_TARGET_ATTACK_RATE,		///< 현재 대상에게 공격효율
-		TYPE_ATTR_TARGET_DEFENCE_RATE,		///< 현재 대상에게 방어효율
-		TYPE_ATTR_TARGET_ALL_RATE,			///< 현재 대상에게 공격, 방어 효율
-		TYPE_ATTR_UPGRADE,					///< 업그레이드시 상성 관계
-		TYPE_ATTR_NUM,						///< 전투속성 툴팁의 타입 갯수
+		TYPE_ATTR_WEAPON_INFO = 0,			///< Correlation between weapon properties
+		TYPE_ATTR_ARMOR_INFO,				///< Correlation between armor properties
+		TYPE_ATTR_TARGET_ATTACK_RATE,		///< Attack efficiency against current target
+		TYPE_ATTR_TARGET_DEFENCE_RATE,		///< Defense efficiency against current target
+		TYPE_ATTR_TARGET_ALL_RATE,			///< Attack and defense efficiency against current target
+		TYPE_ATTR_UPGRADE,					///< Compatibility when upgrading
+		TYPE_ATTR_NUM,						///< Number of combat attribute tooltip types
 		TYPE_ATTR_INVALID = TYPE_ATTR_NUM
 	};
 
@@ -118,15 +118,15 @@ public:
 		INFOWND_QUESTITEM,
 		INFOWND_NOTSOBBUFF,
 		INFOWND_REWARD,
-		INFOWND_FAKEBUFF,						//! 파티 버프
+		INFOWND_FAKEBUFF,						//! party buff
 		INFOWND_MINIMAP,
-		INFOWND_PORTAL,                         ///< NPC를 이용한 포탈시 사용되는 맵의 툴팁
-		INFOWND_FRIEND_LIST,                    ///< 친구리스트에서 세부 정보를 표시하는 툴팁
-		INFOWND_UPGRADE,						// 업그레이드 아이템 장착시 호이포이스톤.
-		INFOWND_BATTLEATTRIBUTE,				///< Battle Attribute의 계산된 속성을 표시하는 툴팁
+		INFOWND_PORTAL,                         ///< Tooltip of the map used when portal using NPC
+		INFOWND_FRIEND_LIST,                    ///< Tooltip that displays detailed information in the friend list
+		INFOWND_UPGRADE,						// Hoipoiston when equipped with an upgrade item.
+		INFOWND_BATTLEATTRIBUTE,				///< Tooltip showing calculated properties of Battle Attribute
 		INFOWND_QUEST_SEARCH,
-		INFOWND_QUEST_INDICATOR,				/// 퀘스트알리미 마우스오버 정보.
-		INFOWND_SKILL_SPUPGRADE,				/// SP 업그레이드 버튼.
+		INFOWND_QUEST_INDICATOR,				/// Quest notification mouseover information.
+		INFOWND_SKILL_SPUPGRADE,				/// SP upgrade button.
 		INFOWND_RECIPE,
 		INFOWND_HLS_ITEM,
 	};

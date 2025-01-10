@@ -1,12 +1,12 @@
 /*****************************************************************************
 *
-* File			: RankBoardCommon.h
-* Author		: Haesung, Cho
-* Copyright		: (주)NTL
-* Date			: 2007. 12. 14	
-* Abstract		: DBO Rank Board GUI 공통
+*File			: RankBoardCommon.h
+*Author		    : Haesung, Cho
+*Copyright		: (주)NTL
+*Date			: 2007. 12. 14	
+*Abstract		: DBO Rank Board GUI common
 *****************************************************************************
-* Desc         : 
+*Desc         : 
 *
 *****************************************************************************/
 
@@ -17,7 +17,7 @@
 #include "ceventhandler.h"
 #include "NtlRankBattle.h"
 
-// 보드의 타입들
+// Types of Boards
 enum eBoardType
 { 
 	eBOARD_RANKBATTLE = 0,						// RankBattle Board
@@ -27,7 +27,7 @@ enum eBoardType
 };
 
 // RankBoard Common Define
-#define dRANKBOARD_COMMON_ENABLE_IDLE			((RwReal)DBO_RANKBATTLE_RANK_REQUEST_TERM*0.001f)// 한번의 패킷 전송 후에 입력이 될 수 있는 시간
+#define dRANKBOARD_COMMON_ENABLE_IDLE			((RwReal)DBO_RANKBATTLE_RANK_REQUEST_TERM*0.001f)// Time available for input after one packet transmission
 
 // RankBoard Size
 #define dRANKBOARD_DIALOG_WIDTH					631				// Dialog Width
@@ -48,7 +48,7 @@ public:
 
 	eBoardType GetType() { return m_eBoardType; }
 
-	// abstract
+	// Abstract
 	virtual void Create( eBoardType eType , CRankBoardGui* pParent ) = 0;
 	virtual void Destroy() = 0;
 

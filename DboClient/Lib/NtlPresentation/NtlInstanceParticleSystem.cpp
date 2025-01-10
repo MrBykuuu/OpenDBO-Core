@@ -282,7 +282,7 @@ RwBool CNtlInstanceParticleSystem::Create(CNtlResourceEffect* pResourceEffect, C
 //------------------------------------------------------------------
 void CNtlInstanceParticleSystem::Stop()
 {
-	// update 가 더 이상 필요 없으면 생성되는 파티클갯수를 0으로 해 버린다
+	// If update is no longer needed, the number of generated particles is set to 0.
 	m_pEmitterStandard->emtPrtEmit = 0;
 	m_pEmitterStandard->emtPrtEmitBias = 0;
 	m_fFadeOutTime = 0.f;
@@ -358,7 +358,7 @@ RwBool CNtlInstanceParticleSystem::Update(RwReal fElapsedTime)
 			m_bReady	= TRUE;
 			m_bUpdate	= TRUE;
 
-			// 스타트가 되면 라이프 타임을 초기화 한다.
+			// When starting, the life time is initialized.
 			m_fLifeTime = fElapsedTime;
 		}
 		else
@@ -378,7 +378,7 @@ RwBool CNtlInstanceParticleSystem::Update(RwReal fElapsedTime)
 
 	if (m_bReady)
 	{
-        // spline
+        // Spline
 		if (m_pSplinePath != NULL)
 		{
 			SetWorldMatrix(m_matWorld);
@@ -469,7 +469,7 @@ RwBool CNtlInstanceParticleSystem::Update(RwReal fElapsedTime)
         }
     }
 
-    // 바운딩 박스 계산    
+    // Bounding box calculation    
     if(CNtlResourceEffect::m_bUpdateBoundingSphere)
     {
         m_pResourceParticleSystem->SetBoundingSphereRadius(RpAtomicGetWorldBoundingSphere(m_pAtomic)->radius);
@@ -579,7 +579,7 @@ void CNtlInstanceParticleSystem::BuildHurricanePoint(RwV3d& vPosition, RwReal fL
 }
 
 /**
- * Follow 파티클의 위치를 갱신한다. 
+ *Update the position of the follow particle. 
  */
 void CNtlInstanceParticleSystem::UpdateFollow()
 {
@@ -648,7 +648,7 @@ void CNtlInstanceParticleSystem::UpdateBillboard()
                 RwV3dCrossProduct(&vRightParticle, &vAtParticle, &YAxis);
                 RwV3dNormalize(&vRightParticle, &vRightParticle);
 
-                // 파티클의 At 방향을 가지고 파티클의 기본축 행렬을 만든다.
+                // Create the particle's basic axis matrix using the particle's At direction.
                 matParticle = *pMatParticle;
                 *RwMatrixGetAt(&matParticle) = vAtParticle;
                 *RwMatrixGetRight(&matParticle) = vRightParticle;
@@ -682,7 +682,7 @@ void CNtlInstanceParticleSystem::UpdateBillboard()
                 RwV3dCrossProduct(&vRightParticle, &vAtParticle, &XAxis);
                 RwV3dNormalize(&vRightParticle, &vRightParticle);
 
-                // 파티클의 At 방향을 가지고 파티클의 기본축 행렬을 만든다.
+                // Create the particle's basic axis matrix using the particle's At direction.
                 matParticle = *pMatParticle;
                 *RwMatrixGetAt(&matParticle) = vAtParticle;
                 *RwMatrixGetRight(&matParticle) = vRightParticle;
@@ -716,7 +716,7 @@ void CNtlInstanceParticleSystem::UpdateBillboard()
                 RwV3dCrossProduct(&vRightParticle, &vAtParticle, &ZAxis);
                 RwV3dNormalize(&vRightParticle, &vRightParticle);
 
-                // 파티클의 At 방향을 가지고 파티클의 기본축 행렬을 만든다.
+                // Create the particle's basic axis matrix using the particle's At direction.
                 matParticle = *pMatParticle;
                 *RwMatrixGetAt(&matParticle) = vAtParticle;
                 *RwMatrixGetRight(&matParticle) = vRightParticle;
@@ -746,13 +746,13 @@ void CNtlInstanceParticleSystem::UpdateBillboard()
 
             // A * M = B
             // M = A(-1) * B
-            // 기본축 행렬을 빌보드 행렬로 변환하는 변환행렬을 구한다.
+            // Obtain a transformation matrix that converts the basic axis matrix into a billboard matrix.
             RwMatrix matTemp = matParticle;
             RwMatrixInvert(&matParticle, &matTemp);            
             RwMatrix matResult;            
             RwMatrixMultiply(&matResult, &matParticle, &matBillboard);
 
-            // 변환행렬을 원래 파티클의 행렬에 적용한다.
+            // Apply the transformation matrix to the matrix of the original particle.
             matTemp = *pMatParticle;
             RwMatrixMultiply(pMatParticle, &matTemp, &matResult);
             *RwMatrixGetPos(pMatParticle) = vParticlePos;
@@ -766,7 +766,7 @@ void CNtlInstanceParticleSystem::UpdateBillboard()
 
 void CNtlInstanceParticleSystem::UpdateRotate() 
 {
-    // Matrix Action이 적용되어 있지 않거나, 빌보드가 적용되어 있으면 Rotate를 먹지 않는다.
+    // If Matrix Action is not applied or a billboard is applied, Rotate is not used.
     if(!m_pEmitterPrtMatrix || m_pResourceParticleSystem->IsEmitterDataFlag(NTLrpPRTSTDEMITTERDATAFLAGPRTYBILLBOARD) ||
                                m_pResourceParticleSystem->IsEmitterDataFlag(NTLrpPRTSTDEMITTERDATAFLAGPRTXBILLBOARD) || 
                                m_pResourceParticleSystem->IsEmitterDataFlag(NTLrpPRTSTDEMITTERDATAFLAGPRTZBILLBOARD))
@@ -781,9 +781,9 @@ void CNtlInstanceParticleSystem::UpdateRotate()
 
 void CNtlInstanceParticleSystem::SetScale( RwReal fScale ) 
 {
-    RwReal fFinalScale = fScale / m_fScale;         // Scale의 누적을 막기위해, 현재 스케일값을 나눈후에 다시 곱해준다.
+    RwReal fFinalScale = fScale / m_fScale;         // To prevent scale accumulation, divide the current scale value and then multiply it again.
 
-    // 기본 Size
+    // Default Size
     m_pEmitterStandard->emtSize *= fFinalScale;
     m_pEmitterStandard->prtSize *= fFinalScale;
 	
@@ -844,8 +844,8 @@ static RpPrtStdParticleBatch* NtlStdParticleUpdateCB(RpPrtStdEmitter *emt, RpPrt
 
     RwV3d*						prtVelIn;
 
-    // emPTank는 인스턴스의 EmitterPTank 포인터이다.
-    // Static 메소드 이기때문에 Static 변수에다 할당해서 사용한다.
+    // emPTank is a pointer to the instance's EmitterPTank.
+    // Because it is a static method, it is used by assigning it to a static variable.
 	if (emtPTank)
 	{
 		i = 0;
@@ -916,8 +916,8 @@ static RpPrtStdParticleBatch* NtlStdParticleUpdateCB(RpPrtStdEmitter *emt, RpPrt
 		pTankPosIn += nTankPosStride;
     }
 
-    // 전역 변수들인데 Update할때마다 새로 갱신되기 때문에
-    // 처리가 끝난후에 NULL을 넣어준다.
+    // Because they are global variables, they are updated every time you update.
+    // After processing is complete, NULL is inserted.
     emtPTank = NULL;
     emtStd   = NULL;
 

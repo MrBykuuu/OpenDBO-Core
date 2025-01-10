@@ -1,11 +1,11 @@
 /******************************************************************************
-* File			: HintCommon.h
-* Author		: Cho Haesung
-* Copyright		: (주)NTL
-* Date			: 2007. 1. 16
-* Abstract		: 
+*File           : HintCommon.h
+*Author		    : Cho Haesung
+*Copyright	    : NTL Co., Ltd.
+*Date           : January 16, 2007
+*Abstract		: 
 *****************************************************************************
-* Desc			: PoPo Icon을 통하여 출력되는 힌트들
+*Desc           : Hints displayed through PoPo Icon
 *****************************************************************************/
 
 #ifndef __HINT_COMMON_H__
@@ -13,8 +13,8 @@
 
 #pragma once
 
-#define MAX_HINT_STRING_TITLE_LEN 64		// Popo Notify 제목의 길이 ( 32글자 )
-#define MAX_HINT_STRING_BUFFER_LEN 128		// Popo Notify 내용의 길이 ( 64글자 )
+#define MAX_HINT_STRING_TITLE_LEN 64		// Length of Popo Notify title (32 characters)
+#define MAX_HINT_STRING_BUFFER_LEN 128		// Length of Popo Notify content (64 characters)
 
 /**
 * \ingroup client
@@ -25,10 +25,10 @@ class CHint
 public:
 	enum eHintType
 	{
-		eHINT_TYPE_HELP,			// 도움말 힌트
-		eHINT_TYPE_GUIDE,			// 안내 힌트
-		eHINT_TYPE_STRING,			// 문자열 힌트
-		eHINT_TYPE_NUMS,			// 힌트 타입 갯수
+		eHINT_TYPE_HELP,			// help hint
+		eHINT_TYPE_GUIDE,			// Guidance Hints
+		eHINT_TYPE_STRING,			// string hint
+		eHINT_TYPE_NUMS,			// Number of hint types
 		eHINT_TYPE_INVALID = eHINT_TYPE_NUMS
 	};
 

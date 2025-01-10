@@ -1,11 +1,11 @@
 #include "precomp_ntlpresentation.h"
 #include "NtlPLPicking.h"
 
-// core
+// Core
 #include "NtlAtomic.h"
 #include "NtlMath.h"
 
-// presentation
+// Presentation
 #include "NtlPLGlobal.h"
 #include "NtlPLVisualManager.h"
 
@@ -37,7 +37,7 @@ const RwSphere* NtlCustomBoundingSphere( RpAtomic * atomic, void* pData )
 		return pOriginSphere;
 	}
 
-	// 바운딩의 크기가 0.7M 이하인 경우의 Bounding box resizing 알고리즘
+	// Bounding box resizing algorithm when the bounding size is 0.7M or less
 	if ( pOriginSphere->radius < 0.7f )
 	{
 		RwV3d* pCamPos = (RwV3d*)pData;
@@ -463,7 +463,7 @@ RpAtomic* Collision_IntersectionCharacterBoxAtomic( RpIntersection* pIntersectio
 	return pAtomic;
 }
 
-// 오름 차순 sorting(가까운 것이 앞에 온다)
+// Sorting in ascending order (closer comes first)
 int Pick_DepthSortFunc(const void *a, const void *b)
 {
 	/*
@@ -482,7 +482,7 @@ int Pick_DepthSortFunc(const void *a, const void *b)
 }
 
 /**
-* 충돌 가능 Atomic인지 검사한다
+*Check whether collision is possible atomic
 **/
 RwBool IsCollisionAtomic(RpAtomic* pAtomic)
 {
@@ -521,7 +521,7 @@ RwBool IsCollisionAtomic(RpAtomic* pAtomic)
 }
 
 /**
-* mouse picking을 한다.
+*Do mouse picking.
 */
 void Pick_WorldIntersectionLine(RwLine& Line, SWorldPickInfo& sPickInfo, RwReal fRayDist)
 {
@@ -544,12 +544,12 @@ void Pick_WorldIntersectionLine(RwLine& Line, SWorldPickInfo& sPickInfo, RwReal 
 	//	RpWorldForAllAtomicIntersections( CNtlPLGlobal::m_pRpWorld, &Intersection, Pick_IntersectionLineAtomicCB, &sPickInfo);
 	NtlWorldForAllAtomicIntersections_CustomBBox( CNtlPLGlobal::m_pRpWorld, &Intersection, NtlCustomBoundingSphere, &RwCameraGetFrame(CNtlPLGlobal::m_RwCamera)->modelling.pos, Pick_IntersectionLineAtomicCB, &sPickInfo );
 
-	// 좀더 빠른 속도를 위하여... qsort도 안하는 방법을 생각해 봐야 한다.(예를 들면 depth 를 비교문으로 하여 쓴다.)
+	// For faster speed... you should consider a method that does not even use qsort (for example, use depth as a comparison statement).
 	// qsort((void*)sPickInfo.sAtomic, sPickInfo.byAtomicCnt, sizeof(SPickAtomic), Pick_DepthSortFunc);
 }
 
 /**
-* 충돌되는 height field 높이를 구하는 collision logic에 optimize 되어 있다.
+*Optimized for collision logic that determines the height of the colliding height field.
 */
 RwBool Collision_HeightFieldIntersectionLineTopDown(RwLine& Line, SWorldIntersect& sInter)
 {
@@ -571,7 +571,7 @@ RwBool Collision_HeightFieldIntersectionLineTopDown(RwLine& Line, SWorldIntersec
 }
 
 /**
-* 충돌되는 Indoor 높이를 구하는 collision logic에 optimize 되어 있다.
+*Optimized for collision logic that determines the indoor height of collision.
 */
 RwBool Collision_IndoorIntersectionLineTopDown(RwLine& Line, SWorldIntersect& sInter)
 {
@@ -587,7 +587,7 @@ RwBool Collision_IndoorIntersectionLineTopDown(RwLine& Line, SWorldIntersect& sI
 
 
 /**
-* 충돌되는 object 높이를 구하는 collision logic에 optimize 되어 있다.
+*Optimized for collision logic that calculates the height of colliding objects.
 */
 RwBool Collision_WorldIntersectionLineTopDown(RwLine& Line, SWorldIntersect& sInter)
 {
@@ -603,7 +603,7 @@ RwBool Collision_WorldIntersectionLineTopDown(RwLine& Line, SWorldIntersect& sIn
 }
 
 /**
-* 충돌되는 mini indoor object 높이를 구하는 collision logic에 optimize 되어 있다.
+*Optimized for collision logic that determines the height of colliding mini indoor objects.
 */
 RwBool Collision_MiniIndoorIntersectionLineTopDown(RwLine& Line, SWorldIntersect& sInter)
 {
@@ -647,7 +647,7 @@ RwBool Collision_WorldIntersectionObjectForTarget( const RwLine& line, SWorldPic
 }
 
 /**
-* world object중에 충돌되는 atomic을 구한다.
+*Find colliding atoms among world objects.
 */
 RwBool Collision_WorldIntersectionCharacter(RwBBox& box, SWorldCharIntersectionInfo& sCharInfo)
 {
@@ -684,7 +684,7 @@ RwBool Collision_WorldIntersectionWorldSector(RwLine& Line, SWorldCharIntersecti
 }
 
 /**
-* world object중에 충돌되는 atomic을 구한다.
+*Find colliding atoms among world objects.
 */
 RwBool Collision_WorldIntersectionCharacterData(RwLine& Line, RpAtomic *pAtomic, SWorldCharIntersectionData& sCharDataInfo)
 {
@@ -792,12 +792,12 @@ RpAtomic* Collision_CameraAtomicSphereCB( RpIntersection* pIntersection, RpWorld
 
 
 /**
-* world상의 공간에서 camera 충돌 정보를 구한다.
+*Obtain camera collision information in space on the world.
 */
 
 RwBool Collision_CameraCenterIntersection( const RwV3d& vCameraPos, const RwV3d& vLookAt, RwReal fRadius, RwV3d& vNewPos )
 {
-	// 캐릭터에서 카메라를 바라보는 벡터 계산
+	// Vector calculations for characters looking at the camera
 	RwV3d vCharToCamDir = vCameraPos - vLookAt;
 	RwReal fCharToCamDist = RwV3dNormalize( &vCharToCamDir, &vCharToCamDir );
 	if ( fCharToCamDist <= 0.0001f )
@@ -805,19 +805,19 @@ RwBool Collision_CameraCenterIntersection( const RwV3d& vCameraPos, const RwV3d&
 		return FALSE;
 	}
 
-	// Line 충돌 정보 초기화
+	// Reset line conflict information
 	g_CameraInterParam.sLineAtomicData.byCollCount = 0;
 
-	// Center intersection ray 구성
+	// Center intersection ray composition
 	RpIntersection sCenterIntersData;
 	sCenterIntersData.type = rpINTERSECTLINE;
 	sCenterIntersData.t.line.start = vLookAt;
 	sCenterIntersData.t.line.end = vCameraPos;
 
-	// Center intersection 검사
+	// Center intersection inspection
 	RpWorldForAllAtomicIntersections( CNtlPLGlobal::m_pRpWorld, &sCenterIntersData, Collision_CameraAtomicLineCB, NULL );
 
-	// Center intersection 결과 처리
+	// Center intersection result processing
 	if ( g_CameraInterParam.sLineAtomicData.byCollCount > 0 )
 	{
 		RwUInt8 byIndex = 255;
@@ -852,7 +852,7 @@ RwBool Collision_CameraCenterIntersection( const RwV3d& vCameraPos, const RwV3d&
 
 RwBool Collision_CameraBoundaryIntersection( const RwV3d& vCameraPos, const RwV3d& vLookAt, RwReal fRadius, RwV3d& vNewPos )
 {
-	// 캐릭터에서 카메라를 바라보는 벡터 계산
+	// Vector calculations for characters looking at the camera
 	RwV3d vCharToCamDir = vCameraPos - vLookAt;
 	RwReal fCharToCamDist = RwV3dNormalize( &vCharToCamDir, &vCharToCamDir );
 	if ( fCharToCamDist <= 0.0001f )
@@ -861,33 +861,33 @@ RwBool Collision_CameraBoundaryIntersection( const RwV3d& vCameraPos, const RwV3
 	}
 
 	//////////////////////////////////////////////////////////////////////////
-	// Sphere 충돌
+	// Sphere collision
 	//////////////////////////////////////////////////////////////////////////
 
-	// Sphere 충돌 정보 초기화
+	// Reset Sphere collision information
 	g_CameraInterParam.sLineAtomicData.byCollCount = 0;
 
-	// Sphere intersection ray 구성
+	// Sphere intersection ray composition
 	RpIntersection sSphereIntersData;
 	sSphereIntersData.type = rpINTERSECTSPHERE;
 	sSphereIntersData.t.sphere.center = vCameraPos;
 	sSphereIntersData.t.sphere.radius = fRadius;
 
-	// Sphere intersection 검사
+	// Sphere intersection check
 	RpWorldForAllAtomicIntersections( CNtlPLGlobal::m_pRpWorld, &sSphereIntersData, Collision_CameraAtomicSphereCB, NULL );
 
-	// Sphere intersection 결과 처리
+	// Sphere intersection result processing
 	SWorldCameraLineAtomicData sSphereIntersResult;
 	memcpy( &sSphereIntersResult, &g_CameraInterParam.sLineAtomicData, sizeof( SWorldCameraLineAtomicData ) );
 
 	//////////////////////////////////////////////////////////////////////////
-	// Boundary ray 충돌
+	// Boundary ray collision
 	//////////////////////////////////////////////////////////////////////////
 
-	// Boundary ray intersection 정보 초기화
+	// Initializing boundary ray intersection information
 	g_CameraInterParam.sLineAtomicData.byCollCount = 0;
 
-	// Boundary ray 구성
+	// Boundary ray configuration
 	RwV3d vRight;
 	RwV3dCrossProduct( &vRight, &CNtlPLGlobal::m_vYAxisV3, &vCharToCamDir );
 	if ( RwV3dNormalize( &vRight, &vRight ) < 0.0001f )
@@ -914,7 +914,7 @@ RwBool Collision_CameraBoundaryIntersection( const RwV3d& vCameraPos, const RwV3
 		}
 	}
 
-	// Boundary ray intersection 검사
+	// Boundary ray intersection inspection
 
 	for ( int j = 0; j < 6; ++j )
 	{

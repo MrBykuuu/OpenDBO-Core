@@ -1,25 +1,25 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlThemeBGM.h"
 
-// shared
+// Shared
 #include "WorldTable.h"
 #include "TableContainer.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// util
+// Util
 #include "NtlXMLDoc.h"
 
-// sound
+// Sound
 #include "NtlSound.h"
 #include "NtlSoundManager.h"
 #include "NtlSoundEventGenerator.h"
 
-// presentation
+// Presentation
 #include "NtlPLResourcePack.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLApi.h"
 #include "NtlSLEvent.h"
@@ -210,7 +210,7 @@ VOID CNtlThemeBGM::LoadScript()
 		if( NULL == pcData )
 			return;
 
-		// 버퍼 +1 생성
+		// Create buffer +1
 		char* pcBuffer = NTL_NEW char[iSize+1];
 		memcpy(pcBuffer, pcData, sizeof(char)*iSize);
 		pcBuffer[iSize] = '\0';
@@ -267,7 +267,7 @@ VOID CNtlThemeBGM::LoadScript()
 
 		IXMLDOMNodeList* pChildNodeList = NULL;
 
-		// 월드 타입
+		// world type
 		pNode->selectNodes(L"world", &pChildNodeList);
 		if(pChildNodeList)
 		{
@@ -300,7 +300,7 @@ VOID CNtlThemeBGM::LoadScript()
 			continue;
 		}
 
-		// 테이블 타입과 인덱스
+		// Table type and index
 		pNode->selectNodes(L"table", &pChildNodeList);
 		if(pChildNodeList)
 		{
@@ -356,7 +356,7 @@ VOID CNtlThemeBGM::LoadScript()
 			continue;
 		}
 
-		// 사운드
+		// Sound
 		pNode->selectNodes(L"sound", &pChildNodeList);
 		if(pChildNodeList)
 		{
@@ -389,7 +389,7 @@ VOID CNtlThemeBGM::LoadScript()
 			continue;
 		}
 
-		// 범위
+		// range
 		pNode->selectNodes(L"range", &pChildNodeList);
 		if(pChildNodeList)
 		{
@@ -422,7 +422,7 @@ VOID CNtlThemeBGM::LoadScript()
 			continue;
 		}
 
-		// 반복여부
+		// Repeat or not
 		pNode->selectNodes(L"loop", &pChildNodeList);
 		if(pChildNodeList)
 		{
@@ -477,7 +477,7 @@ VOID CNtlThemeBGM::HandleEvents(RWS::CMsg &pMsg)
 	{
 		SNtlEventWorldConceptState* pEvent = reinterpret_cast<SNtlEventWorldConceptState*>( pMsg.pData );
 
-		// Theme BGM의 월드 타입을 결정하기 위해
+		// To determine the world type of Theme BGM
 		if( GetNtlWorldConcept()->IsGrade(WORLD_CONCEPT_FIRST_GRADE, pEvent->eWorldConcept) )
 		{
 			if( pEvent->uiState == WORLD_STATE_EXIT )

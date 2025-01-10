@@ -1,26 +1,26 @@
 /******************************************************************************
-* File			: DBCSideIcon.h
-* Author		: agebreak
-* Copyright		: (주)NTL
-* Date			: 2007. 7. 27
-* Abstract		: 
+*File           : DBCSideIcon.h
+*Author         : agebreak
+*Copyright      : NTL Co., Ltd.
+*Date           : July 27, 2007
+*Abstract		:
 *****************************************************************************
-* Desc			: 드래곤볼 수집 관련 사이드 아이콘
+*Desc           : Side icon related to dragon ball collection
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 #include "NtlSLEvent.h"
 
-// share
+// Share
 #include "NtlTimeQuest.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// dbo
+// Dbo
 #include "Windowby3.h"
 #include "SideIconGui.h"
 
@@ -41,20 +41,20 @@ protected:
 
 	VOID				SetIconImageType(eDBCSideIconType eType);
 	eDBCSideIconType	GetIconImageType();
-	RwBool			IsCollectComplete();			///< 드래곤볼을 전부다 수집했는지 체크한다.
-	VOID			ResetSheduleInfo();				///< 상태를 서버로 받은 상태로 되돌린다. (드래곤볼 사용후 호출)
+	RwBool			IsCollectComplete();			///< Check whether all Dragon Balls have been collected.
+	VOID			ResetSheduleInfo();				///< Returns the state to the state received from the server. (Call after using Dragon Ball)
 
 protected:			
 	gui::CSlot			m_slotNoSeasonButton;
 	gui::CSlot			m_slotSeasonButton;
 	gui::CSlot			m_slotCollectButton;
 
-	gui::CButton*		m_pBtnNoSeason;			///< 드래곤볼 수집 기간이 아닐때의 표시 아이콘
-	gui::CButton*		m_pBtnSeason;			///< 드래곤볼 수집 기간일때의 표시 아이콘
-	gui::CButton*		m_pBtnCollect;			///< 드래곤볼을 다 모은 경우의 표시 아이콘
+	gui::CButton*		m_pBtnNoSeason;			///< Display icon outside of Dragon Ball collection period
+	gui::CButton*		m_pBtnSeason;			///< Display icon during Dragon Ball collection period
+	gui::CButton*		m_pBtnCollect;			///< Icon for when all Dragon Balls are collected
 
 	eDBCSideIconType	m_eIconImageType;		
-	RwBool				m_bDBCComplete;			///< 드래곤볼을 다 모았는지 유무
+	RwBool				m_bDBCComplete;			///< Have you collected all the dragon balls?
 };
 
 
@@ -90,9 +90,9 @@ protected:
 	gui::CSlot			m_slotMove;
 	gui::CSlot			m_slotResize;
 
-	CWindowby3			m_BackPanel;		///< 배경
+	CWindowby3			m_BackPanel;		///< background
 
-	gui::CStaticBox*	m_pNotify;			///< 알림 메세지
-	gui::CStaticBox*	m_pTitle;			///< Side View 제목	
-	gui::CButton*		m_pExitButton;		///< 닫기 버튼	
+	gui::CStaticBox*	m_pNotify;			///< Notification message
+	gui::CStaticBox*	m_pTitle;			///< Side View Title	
+	gui::CButton*		m_pExitButton;		///< Close button	
 };

@@ -1,10 +1,10 @@
 #include "precomp_ntlpresentation.h"
 #include "NtlPLEmblemMaker.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLCameraRT.h"
 #include "NtlPLPalette.h"
 
@@ -161,7 +161,7 @@ RwTexture* CNtlPLEmblemMaker::CreateEmblem(const sEmblemFactor* pEmblemFactor,
 		return NULL;
 
 
-	// 기존에 존재하는 텍스처이다
+	// This is an existing texture.
 	ITER_MAP_TEXTURE it = m_mapTexture.find(acEmblemName);
 	if( it != m_mapTexture.end() )
 	{
@@ -170,7 +170,7 @@ RwTexture* CNtlPLEmblemMaker::CreateEmblem(const sEmblemFactor* pEmblemFactor,
 		return pEmblemData->pTexture;
 	}
 
-	// 텍스처를 새로 제작한다
+	// Create a new texture
 	return MakeEmblemImmidately(pEmblemFactor, acEmblemName, byEmblemSize, pcBaseTextureName);
 }
 
@@ -200,7 +200,7 @@ RwTexture* CNtlPLEmblemMaker::MakeEmblemImmidately(const sEmblemFactor* pEmblemF
 	
 	RwImageSetPath(".\\texture\\gui\\emblem\\");
 
-	// 재료 텍스처를 읽어온다
+	//Read material texture
 	if( pEmblemFactor->byTypeA != dPLEMBLEM_INVALID_FACTOR )
 	{
 		MakeEmblemResourceName(EMBLEMTYPE_A, pEmblemFactor->byTypeA, acEmblemFactor, 64, byEmblemSize);
@@ -256,7 +256,7 @@ RwTexture* CNtlPLEmblemMaker::MakeEmblemImmidately(const sEmblemFactor* pEmblemF
 		pBaseTexture = RwTextureRead(pcBaseTextureName, NULL);
 		if(!pBaseTexture)
 		{
-			// Base Texture가 없어도 엠블렘을 만든다
+			// Create an emblem even without a base texture
 			char acBuffer[128];
 			sprintf_s(acBuffer, 128, "Not exist texture of name : %s", pcBaseTextureName);
 			NtlLogFilePrint(acBuffer);
@@ -287,7 +287,7 @@ RwTexture* CNtlPLEmblemMaker::MakeEmblemImmidately(const sEmblemFactor* pEmblemF
 	if( pRTCamera->CameraBeginUpdate() )
 	{
 
-	// 엠블렘 사이즈 결정
+	// Determination of emblem size
 #define d2DPIXEL_OFFSET		(-.5f)
 
 		RwIm2DVertexSetScreenX(&m_pInstance->m_2dVertices[0], 0.f + d2DPIXEL_OFFSET);
@@ -334,7 +334,7 @@ RwTexture* CNtlPLEmblemMaker::MakeEmblemImmidately(const sEmblemFactor* pEmblemF
 		pNewEmblemTexture = CopyToTexture( pRTCamera->GetTexture() );
 		RwTextureSetName(pNewEmblemTexture, pcEmblemName);
 
-		// 새로 제작된 엠블렘을 저장한다
+		// Save the newly created emblem
 		sEmblemData* pNewEmblemData = NTL_NEW sEmblemData;
 		pNewEmblemData->pTexture	= pNewEmblemTexture;
 		pNewEmblemData->factor		= *pEmblemFactor;

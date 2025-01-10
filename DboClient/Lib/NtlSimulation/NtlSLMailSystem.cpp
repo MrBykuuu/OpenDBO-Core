@@ -1,9 +1,9 @@
 #include "precomp_ntlsimulation.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLLogic.h"
 #include "NtlSLApi.h"
@@ -272,7 +272,7 @@ void CNtlMailSystem::ClearMail()
 
 void CNtlMailSystem::ReloadMail(RwUInt8 uiCount, MAILID* pmailID)
 {
-	// MailStart를 한번이라도 했나 안했나 && 읽는 것이 가능한 상태인가 판단
+	// Determine whether MailStart has been performed at least once && whether it is possible to read
 	if (!m_bMailStart)
 		return;
 
@@ -386,11 +386,11 @@ void CNtlMailSystem::CheckMailSystemNotify(RwUInt32 uiMailCount, RwUInt32 uiUnre
 {
 	RwUInt32 uiNotify = MAILSYSTEM_NOTIFY_VALUE_NONE;
 
-	m_uiMailCount				= uiMailCount;				// 서버에 있는 총 메일 갯수
-	m_uiUnreadMailCountNormal	= uiUnreadMailCountNormal;	// 읽지 않은 일반 메일
-	m_uiUnreadMailCountManager	= uiUnreadMailCountManager; // 읽지 않은 시스템 메일( 시스템에서 자동으로 보내는 메일 )
+	m_uiMailCount				= uiMailCount;				// Total number of emails on the server
+	m_uiUnreadMailCountNormal	= uiUnreadMailCountNormal;	// Unread regular mail
+	m_uiUnreadMailCountManager	= uiUnreadMailCountManager; // Unread system mail (mail sent automatically by the system)
 
-	// 메일 발송
+	//send mail
 	if (m_uiMailCount == NTL_MAX_MAIL_SLOT_COUNT)
 	{
 		uiNotify |= MAILSYSTEM_NOTIFY_VALUE_MAIL_FULL;
@@ -408,7 +408,7 @@ void CNtlMailSystem::CheckMailSystemNotify(RwUInt32 uiMailCount, RwUInt32 uiUnre
 	m_uiNotify = uiNotify;
 	CNtlSLEventGenerator::MailSystemNfy(MAILSYSTEM_NOTIFY_TYPE_NONE, uiNotify);
 
-	// 새로운 메일이 갱신되었는지 확인
+	//Check if new mail has been updated
 	RwBool bNewMail = FALSE;
 	if( m_uiUnreadMailCountNormal > m_uiOldUnreadMailCountNormal )
 	{

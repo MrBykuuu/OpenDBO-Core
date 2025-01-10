@@ -10,7 +10,7 @@ CStageManager* CStageManager::m_pInstance = 0;
 
 /**
 *
-*  Default constructor for CStageManager
+* Default constructor for CStageManager
 *
 */
 CStageManager::CStageManager()
@@ -21,7 +21,7 @@ CStageManager::CStageManager()
 
 /**
 *
-*  Destructor for CStageManager
+* Destructor for CStageManager
 *
 */
 CStageManager::~CStageManager()
@@ -35,8 +35,8 @@ CStageManager* CStageManager::GetInstance(void)
 
 /**
 * 
-*  \return stage name에 해당하는 stage를 생성하여 리턴한다. 
-*  \param pSatgeName은 stage name이다.
+*  \return Creates and returns the stage corresponding to the stage name. 
+*  \param pSatgeName is the stage name.
 */
 CNtlStage* CStageManager::CreateStage(const char *pStageName)
 {

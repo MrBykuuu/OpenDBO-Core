@@ -1,12 +1,12 @@
 /*****************************************************************************
  *
- * File			: NtlCharacterData.h
- * Author		: HongHoDong
- * Copyright	: (주)NTL
- * Date			: 2006. 4. 11	
- * Abstract		: NTL NtlCharacterData
+ *File			: NtlCharacterData.h
+ *Author		: HongHoDong
+ *Copyright	: (주)NTL
+ *Date			: 2006. 4. 11	
+ *Abstract		: NTL NtlCharacterData
  *****************************************************************************
- * Desc         : 
+ *Desc         : 
  *
  *****************************************************************************/
 
@@ -23,9 +23,9 @@ const RwUInt32 INVALID_GRAPHIC_ANIMATION_ID = 0xFFFFFFFF;
 
 struct STypeScaleBone
 {
-	RwReal	fLength;									///< Bone의 길이
-	RwReal	fWidth;										///< Bone의 두께
-	RwV3d	vAngle;										///< Bone의 각도(현재는 미사용)
+	RwReal	fLength;									///< Bone length
+	RwReal	fWidth;										///< Bone thickness
+	RwV3d	vAngle;										///< Bone angle (currently not used)
 	
 	STypeScaleBone() : fLength(1.f), fWidth(1.f)
 	{
@@ -35,13 +35,13 @@ struct STypeScaleBone
 
 struct STypeBoneData
 {
-	RwBool			bBoneScale;							///< BoneScale을 적용을 할것인지
-	RwV3d			vPosOffset;							///< 최상위 Bone 위치 Offset
-	RwInt32			nBoneCount;                         ///< Bone의 갯수
+	RwBool			bBoneScale;							///< Should BoneScale be applied?
+	RwV3d			vPosOffset;							///< Top Bone Location Offset
+	RwInt32			nBoneCount;                         ///< Number of Bones
 	STypeScaleBone	BoneScale[MAX_NUM_SCALE_BONE];		///< Bone Scale Data
 
 
-	RwBool			bBaseScale;							///< Base Scale를 적용을 할것인지
+	RwBool			bBaseScale;							///< Should Base Scale be applied?
 	RwV3d			vBaseScale;							///< Base Scale
 
 	STypeBoneData() : bBoneScale(FALSE),
@@ -57,7 +57,7 @@ struct STypeBoneData
 		vBaseScale.z = 1.f;
 	}
 
-	// 최적화를 위해서 Bone Scale이나 Base가 적용되어 있을때만 저장을 한다.
+	// For optimization purposes, save only when Bone Scale or Base is applied.
 	void SaveSerialize(CNtlSerializer& sOut)
 	{
 		// Bone Scale
@@ -107,12 +107,12 @@ struct STypeCharEffectData
 enum ECharWorkState
 {
 	CHAR_WORK_STATE_NONE,								
-	CHAR_WORK_STATE_RES_LOAD_END,					// Res Load 완료
+	CHAR_WORK_STATE_RES_LOAD_END,					// Res Load Completed
 };
 
 struct SCharScheduleResInfo
 {
-	RwBool		bVisible;								// 화면에 보여주는지 아닌지
+	RwBool		bVisible;								// Shown on screen or not
 	RwBool		bLoadComplete;
 	
 	RwUInt32	uiAnimKey;

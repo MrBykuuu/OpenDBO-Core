@@ -1,14 +1,14 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlWorldConceptTutorial.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "TimeQuestTable.h"
 #include "NtlLuaState.h"
 
-// simulation
+// Simulation
 #include "NtlSLEventFunc.h"
 #include "NtlSLLuaGlue.h"
 #include "NtlSLLogic.h"
@@ -133,7 +133,7 @@ RwBool CNtlWorldConceptTutorial::IsStepSkipping()
 
 void CNtlWorldConceptTutorial::SetTMQState(eTIMEQUEST_GAME_STATE eState)
 {
-	// 서버 상태를 클라이언트 상태로 컨버트
+	//Convert server state to client state
 	switch(eState)
 	{
 	case TIMEQUEST_GAME_STATE_WAIT:				m_byTMQState = WORLD_STATE_TMQ_WAIT;				break;

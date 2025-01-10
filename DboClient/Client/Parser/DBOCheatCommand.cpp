@@ -1,19 +1,19 @@
 #include "precomp_dboclient.h"
 #include "DBOCheatCommand.h"
 
-// shared
+// Shared
 #include "QuestNarrationTable.h"
 #include "TableContainer.h"
 #include "PCTable.h"
 #include "TableFileNameList.h"
 #include "NtlMovement.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "DumpCommand.h"
 #include "NtlLuaState.h"
 
-// sound
+// Sound
 #include "NtlSoundEventGenerator.h"
 
 // Presentation
@@ -40,15 +40,15 @@
 #include "NtlSobCharPerfController.h"
 #include "NtlSobManager.h"
 
-// dbo
+// Dbo
 #include "DboEventGenerator.h"
 #include "AlarmManager.h"
 #include "DboLogic.h"
-#include "DialogManager.h"		/// woosungs_test
-#include "SideDialogManager.h"	/// woosungs_test
+#include "DialogManager.h"		/// Woosungs test
+#include "SideDialogManager.h"	/// Woosungs test
 #include "PacketTracer.h"
 
-// NtlGui						/// woosungs_test
+// NtlGui						///woosungs_test
 #include "gui_component.h"		
 #include "gui_component_generic.h"		
 #include "gui_guimanager_generic.h"		
@@ -142,10 +142,10 @@ void CDBOCheatCommand::Register()
 	m_mapCheatHandler["perf"]				= &CDBOCheatCommand::OnPerf;
 
 	m_mapCheatHandler["dialog"]				= &CDBOCheatCommand::OnDialog;			/// woosungs_test	
-	// _ENABLE_PACKET_TRACE_	/// Defalut로 Disable /// 프로토콜이 변경될수있다. 자동빌드가 실패할 수 있음
+	// _ENABLE_PACKET_TRACE_ ///Disable with Defalut ///The protocol can be changed. Automatic build may fail
 	m_mapCheatHandler["packettrace"]		= &CDBOCheatCommand::OnPacketTrace;		/// woosungs_test 20090804	
 
-	// sound
+	// Sound
 	m_mapCheatHandler["playmanysound"]		= &CDBOCheatCommand::OnPlayManySound;
 	m_mapCheatHandler["stopmanysound"]		= &CDBOCheatCommand::OnStopManySound;
 
@@ -165,7 +165,7 @@ RwBool CDBOCheatCommand::OnCmdParsing( const std::string& strCmd )
     if(!lexer.IsSuccess())
         return FALSE;
 
-    // 첫 시작은 '/'로 시작해야 한다.
+    // It must start with '/'.
     RwInt32 iLine;
     std::string strToken = lexer.PeekNextToken(NULL, &iLine);
     if(strToken != "/")
@@ -528,7 +528,7 @@ RwBool CDBOCheatCommand::OnShadow(CNtlTokenizer* pLexer)
 }
 
 /**
-* \brief PL단의 캐릭터 스케쥴링 로딩에 쓰일 변수
+* \brief Variables used for character scheduling loading of PL stage
 */
 RwBool CDBOCheatCommand::OnCharLoadTime( CNtlTokenizer* pLexer ) 
 {
@@ -969,7 +969,7 @@ RwBool CDBOCheatCommand::OnCreatePC(CNtlTokenizer* pLexer)
 	RwV3d vDir = pAvatar->GetDirection();
 
 	//////////////////////////////////////////////////////////////////////////
-	// Brief 정보 채워 넣기
+	// Fill in brief information
 	//////////////////////////////////////////////////////////////////////////
 
 	sPC_BRIEF sPcBrief;
@@ -1008,7 +1008,7 @@ RwBool CDBOCheatCommand::OnCreatePC(CNtlTokenizer* pLexer)
 	memset( &sPcBrief.sDogi, 0xffffffff, sizeof( sPcBrief.sDogi ) );
 
 	//////////////////////////////////////////////////////////////////////////
-	// State 정보 채워 넣기
+	// Fill in state information
 	//////////////////////////////////////////////////////////////////////////
 
 	sCHARSTATE sCharState;
@@ -1138,7 +1138,7 @@ RwBool CDBOCheatCommand::OnPerf( CNtlTokenizer* pLexer )
 	return TRUE;
 }
 
-RwBool CDBOCheatCommand::OnDialog( CNtlTokenizer* pLexer )			/// woosungs_test
+RwBool CDBOCheatCommand::OnDialog( CNtlTokenizer* pLexer )			/// Woosungs test
 {
 	RwInt32 iLine;
 
@@ -1187,9 +1187,9 @@ RwBool CDBOCheatCommand::OnDialog( CNtlTokenizer* pLexer )			/// woosungs_test
 			if(strCommand1 == "all")
 			{
 				if(1 == iDialogType)
-					GetSideDialogManager()->ShowAllDialogTEST(bOpen);				/// side
+					GetSideDialogManager()->ShowAllDialogTEST(bOpen);				/// Side
 				else
-					GetDialogManager()->ShowAllDialogTEST(bOpen);					/// side 포함 all
+					GetDialogManager()->ShowAllDialogTEST(bOpen);					/// all including side
 			}
 			else if(strCommand1 == "inc")
 			{
@@ -1227,7 +1227,7 @@ RwBool CDBOCheatCommand::OnDialog( CNtlTokenizer* pLexer )			/// woosungs_test
 				else
 					return FALSE;
 			}
-			else if(strCommand1.c_str()[0] <= '9' && strCommand1.c_str()[0] >= '0')	/// dialog번호로 해당 dialog open(close)
+			else if(strCommand1.c_str()[0] <= '9' && strCommand1.c_str()[0] >= '0')	/// Dialog open(close) corresponding to dialog number
 			{
 				m_iCurrOpenedDialogIndex = atoi( strCommand1.c_str());
 				if(DIALOG_UNKNOWN - 1 < m_iCurrOpenedDialogIndex)
@@ -1236,7 +1236,7 @@ RwBool CDBOCheatCommand::OnDialog( CNtlTokenizer* pLexer )			/// woosungs_test
 				GetDialogManager()->ShowDialogTEST((eDialogType) m_iCurrOpenedDialogIndex, 
 					bOpen);
 			}
-			else																	/// dialog frm file명으로 open(close)
+			else																	/// open(close) with dialog frm file name
 			{
 				CNtlPLGui* pDialog = GetDialogManager()->GetpDialogTEST(strCommand1.c_str());
 				if(pDialog)
@@ -1261,7 +1261,7 @@ RwBool CDBOCheatCommand::OnDialog( CNtlTokenizer* pLexer )			/// woosungs_test
 	return TRUE;
 }
 
-RwBool CDBOCheatCommand::OnPacketTrace(CNtlTokenizer* pLexer)	/// woosungs_test
+RwBool CDBOCheatCommand::OnPacketTrace(CNtlTokenizer* pLexer)	/// Woosungs test
 {
 	RwInt32 iLine;
 
@@ -1276,12 +1276,12 @@ RwBool CDBOCheatCommand::OnPacketTrace(CNtlTokenizer* pLexer)	/// woosungs_test
 			 if(!strCommand2.empty())
 			 {
 				 if(strCommand2 == "on")		
-				 {	/// packet 기록 시작
+				 {	/// Start packet recording
 					 if(CPacketTracer::GetInstance())
 						CPacketTracer::GetInstance()->Activate();
 				 }
 				 else if(strCommand2 == "off")		
-				 {  /// packet 기록 종료
+				 {  /// End packet recording
 					 if(CPacketTracer::GetInstance())
 						 CPacketTracer::GetInstance()->Deactivate();			
 				 }
@@ -1417,7 +1417,7 @@ RwBool CDBOCheatCommand::OnPlaySound(CNtlTokenizer* pLexer)
 	enum eParametaType
 	{
 		PT_PLAY_TYPE,			// 1 : 2D sound, 2 : 3D sound
-		PT_FILE_NAME,			// DBO_Resource\sound 폴더에서만 파일을 찾는다
+		PT_FILE_NAME,			// Looks for files only in the DBO_Resource\sound folder
 		PT_POS_X,
 		PT_POS_Y,
 		PT_POS_Z,
@@ -1434,9 +1434,9 @@ RwBool CDBOCheatCommand::OnPlaySound(CNtlTokenizer* pLexer)
 	RwUInt8			byPlayType = 0xff;
 	std::string		strFileName;
 
-	// SoundManager에서의 디폴트 값과 일치시켜서 차후 인자로 받지 않은 것이
-	// 있더라도 따로 받은 인자가 무엇무엇인지 검사하지 않고 전부 인자로 넘길 수
-	// 있도록 한다
+	// It matches the default value in SoundManager and is not received as a later argument.
+	// Even if there is, you can pass all the arguments separately without checking what they are.
+	// let it be
 	RwV3d			v3Pos;
 	bool			bLoop = false;
 	RwReal			fVolume = 1.f;

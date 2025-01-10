@@ -1,14 +1,14 @@
 #include "precomp_dboclient.h"
 #include "GMChatGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLEvent.h"
 #include "NtlPLGuiManager.h"
 
-// cleint
+// Client
 #include "DialogManager.h"
 #include "DboGlobal.h"
 #include "DisplayStringManager.h"
@@ -39,7 +39,7 @@ RwBool CGMChatGui::Create()
 	m_pThis			= (gui::CDialog*)GetComponent("dlgMain");
 	m_pThis->SetPriority(dDIALOGPRIORITY_QUICKSLOT);
 
-	// 다이얼로그 제목
+	// Dialog title
 	m_pDialogName	= (gui::CStaticBox*)GetComponent( "stbDialogName" );
 	m_pDialogName->SetPosition(DBOGUI_DIALOG_TITLE_X, DBOGUI_DIALOG_TITLE_Y);
 	WCHAR awcBuffer[256] = L"";
@@ -47,20 +47,20 @@ RwBool CGMChatGui::Create()
 	swprintf_s(awcBuffer, 256, L"%s : %s", pwcTitle, GetPetitionManager()->GetChattingGMName() );
 	m_pDialogName->SetText( awcBuffer );
 
-	// 대화내용
+	// Content of conversation
 	m_pOutDisplay	= (gui::COutputBox*)GetComponent( "outputDisplay" );
 	m_pOutDisplay->SetLineSpace(CHAT_DISP_LINE_GAP);
 	m_pOutDisplay->SetMaxLine(CHAT_DISP_MAX_LINE);
 
-	// IME 상태
+	// IME status
 	m_pIME			= (gui::CStaticBox*)GetComponent( "stbIME" );
 	OnIMEChange( m_pInput->GetCurrentIMEState() );
 
-	// 유저 인풋창
+	// User input window
 	m_pInput		= (gui::CInputBox*)GetComponent( "inbChat" );
 	m_pInput->SetCaretSize(dINPUTBOX_CARET_WIDTH, dINPUTBOX_CARET_HEIGHT);
 
-	// 배경
+	// background
 	m_BackPanel.SetType(CWindowby3::WT_VERTICAL);
 	m_BackPanel.SetSurface( 0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GMChat.srf", "srfBackPanelLeft" ) );
 	m_BackPanel.SetSurface( 1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GMChat.srf", "srfBackPanelCenter" ) );
@@ -68,11 +68,11 @@ RwBool CGMChatGui::Create()
 	m_BackPanel.SetSize(269, 305);
 	m_BackPanel.SetPositionfromParent(12, 45);
 
-	// 인풋 배경
+	// input background
 	m_InputBack.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "GMChat.srf", "srfInputBack" ) );
 	m_InputBack.SetPositionfromParent(12, 359);
 
-	// sig
+	// Signals
 	m_slotGotFocus			= m_pInput->SigGotFocus().Connect( this, &CGMChatGui::OnGotFocus );
 	m_slotLostFocus			= m_pInput->SigLostFocus().Connect( this, &CGMChatGui::OnLostFocus );
 	m_slotReturn			= m_pInput->SigReturnPressed().Connect( this, &CGMChatGui::OnInputReturn );	
@@ -81,7 +81,7 @@ RwBool CGMChatGui::Create()
 	m_slotMove				= m_pThis->SigMove().Connect( this, &CGMChatGui::OnMove );
 	m_slotPaint				= m_pThis->SigPaint().Connect( this, &CGMChatGui::OnPaint );
 
-	// Surface들을 위치시키기 위해
+	// To position surfaces
 	CRectangle rtScreen = m_pThis->GetScreenRect();
 	OnMove(rtScreen.left, rtScreen.top);
 

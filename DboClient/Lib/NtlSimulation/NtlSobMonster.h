@@ -36,9 +36,9 @@ public:
 	virtual void*			GetBehaviorData(void);
 
 protected:
-    // 이벤트 처리
-    void    OnEventBotCautionNfy_Handler(RWS::CMsg& pMsg);          ///< 선공몹이 캐릭터를 발견했을때
-    void    OnEventBotHelpMeNfy_Handler(RWS::CMsg& pMsg);           ///< 몹이 주위몹에게 도움을 요청할때
+    // Event handling
+    void    OnEventBotCautionNfy_Handler(RWS::CMsg& pMsg);          ///< When the lead mob discovers the character
+    void    OnEventBotHelpMeNfy_Handler(RWS::CMsg& pMsg);           ///< When a mob asks for help from surrounding mobs
 
 protected:
     CNtlBeCharData*         m_pBeData;				/** character behavior data */

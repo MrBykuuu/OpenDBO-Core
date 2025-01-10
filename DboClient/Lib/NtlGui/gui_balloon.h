@@ -1,12 +1,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Name: class gui:CBalloon
-// Desc: 풍선 도움말.
+// Desc: Balloon help.
 //
 // 2006.02.20 Peessi@hitel.net   
 //
 // To Be Desired:
-//	1. 글자수 초과하면 ...로 생략
+//	1. If the number of characters is exceeded, omit it as...
 ////////////////////////////////////////////////////////////////////////////////
+
 #ifndef __GUI_BALLOON_H__
 #define __GUI_BALLOON_H__
 
@@ -17,29 +18,39 @@ class CBalloon_Generic;
 class CBalloon : public CComponent
 {
 //! Construction & Destruction:
+
 public:
 	// Balloon Constructor 
+
 	CBalloon( CComponent* pParent, CSurfaceManager* pSurfaceManager, BOOL bLeft = TRUE, DWORD dwStyle = COMP_TEXT_VERTICAL_CENTER );
 
 	CBalloon( CRectangle& rtPos, CComponent* pParent, CSurfaceManager* pSurfaceManager, BOOL bLeft = TRUE, DWORD dwStyle = COMP_TEXT_VERTICAL_CENTER );	
 	
 	// Balloon Destructor
+
 	~CBalloon(VOID);
 
 //! Attributes:
+
 public:
 	
 //! Operations:
+
 public:
-	// 시작점. 풍선꼬리의 Left or Right Bottom
-	VOID SetOrigin( INT nScreenX, INT nScreenY, BOOL bLeft = FALSE );    // 다음 Text입력까지 옮겨지지 않는다.
-	VOID SetOriginNow( INT nScreenX, INT nScreenY, BOOL bLeft = FALSE ); // 바로 옮겨진다.
+	// Starting point. Balloon Tail's Left or Right Bottom
+
+	VOID SetOrigin( INT nScreenX, INT nScreenY, BOOL bLeft = FALSE );    // It does not move to the next text input.
+
+	VOID SetOriginNow( INT nScreenX, INT nScreenY, BOOL bLeft = FALSE ); // It is transferred immediately.
+
 	VOID SetMargin( INT nMarginX, INT nMarginY );
 
-	// Balloon의 텍스쳐 버텍스 칼라설정.
+	// Balloon's texture vertex color settings.
+
 	VOID SetBalloonColor( BYTE ucRed, BYTE ucGreen, BYTE ucBlue );
 
-	// Static Box관련 Interface
+	// Interface related to Static Box
+
 	VOID CreateFontStd( CHAR* pFaceName, INT nHeight, INT nAttributes );
 	VOID SetText( const CHAR* text );
 	VOID SetText( const WCHAR* text );
@@ -62,7 +73,8 @@ public:
 
 	VOID Clear();	
 	
-	// Outline 관련 Interface
+	// Outline-related Interface
+
 	VOID AddSurfaces( CSurface& surCenter, CSurface& surLTC, CSurface& surRTC, CSurface& surLBC, CSurface& surRBC,
 					  CSurface& surLL, CSurface& surTL, CSurface& surRL, CSurface& surBL, CSurface& surTail );
 
@@ -73,18 +85,22 @@ public:
 		
 private:
 //! Callbacks:
+
 	VOID OnSetOption( const CComponentOptions& options );
 	
 	CSlot m_SlotSetOptions;
 	
 protected:
 //! Variables:
+
 	CStaticBox*			m_pStaticBox;
 	CBalloon_Generic*	m_pImpl;
 
 private:
 //! Etc:
+
 	CBalloon( const CBalloon& copy ) : CComponent( NULL, NULL ) { return; } // dissallow copy construction.
+
 	friend class CBalloon_Generic;
 };
 

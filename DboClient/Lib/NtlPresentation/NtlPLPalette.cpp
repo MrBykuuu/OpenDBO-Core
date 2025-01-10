@@ -1,10 +1,10 @@
 #include "precomp_ntlpresentation.h"
 #include "NtlPLPalette.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// util
+// Util
 #include "NtlXMLDoc.h"
 
 
@@ -141,7 +141,7 @@ eLOAD_RESULT CNtlPLPalette::LoadPalette_forDeveloper()
 
 	XMLDoc.Create();
 
-	// NtlPresentation 레이어에 Palette.xml 을 추가해 두었다
+	// Palette.xml was added to the NtlPresentation layer.
 	if( !XMLDoc.Load("Palette.xml") )
 		return LOAD_RESULT_FAIL_LOAD_FILE;
 

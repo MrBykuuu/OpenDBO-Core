@@ -217,7 +217,7 @@ RwBool CNtlPLObjectXMLScript::SaveBody( CNtlPLObjectProperty* pProperty )
     swprintf_s(buf, L"%d", pProperty->GetFlag());
     pElemFlag->put_text(buf);
 
-    // 사운드 설정
+    // sound settings
     m_XMLScriptHelper.SaveSoundEvent(pElemObjSound, pProperty->GetSoundProp());
     
     pElemBody->appendChild(pElemShadow, NULL);    
@@ -346,7 +346,7 @@ RwBool CNtlPLObjectXMLScript::LoadBody( CNtlPLObjectProperty* pProperty )
     bbox.sup = Helper_String2V3D(szBBoxMax);
     pProperty->SetBBox(bbox);
 
-    // 사운드
+    // sound
     m_XMLScriptHelper.LoadSoundEvent(SelectSingleNode((char*)strSound.c_str()), pProperty->GetSoundProp());
 
     NTL_RETURN(TRUE);
@@ -538,7 +538,7 @@ RwBool CNtlPLObjectXMLScript::LoadAnimTable( CNtlPLObjectProperty* pProperty )
 				STypeAnimData* pTypeAnimData = NTL_NEW STypeAnimData();                
                 m_XMLScriptHelper.LoadAnimData(pAnimData, pTypeAnimData);
 
-				// 이벤트
+				// event
 				IXMLDOMNodeList* pEventList = NULL;
 				pAnimData->selectNodes(L"ANIM_EVENT", &pEventList);
 				if(pEventList)

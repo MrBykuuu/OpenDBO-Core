@@ -1,16 +1,16 @@
 #include "precomp_dboclient.h"
 #include "GMSideIconGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// dbo
+// Dbo
 #include "DisplayStringManager.h"
 #include "DboEventGenerator.h"
 #include "DialogManager.h"
@@ -74,7 +74,7 @@ void CGMSideIconGui::OnSideViewClosed()
 
 void CGMSideIconGui::OnIconButtonClicked(gui::CComponent* pComponent)
 {
-	// ¿­°í ´Ý±â
+	// open and close
 	if( GetDialogManager()->GetDialog(DIALOG_GM_QUICKSLOT) )
 	{
 		GetDialogManager()->CloseGMDialog();

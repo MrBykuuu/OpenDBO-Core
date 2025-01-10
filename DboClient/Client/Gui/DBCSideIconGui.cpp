@@ -1,13 +1,13 @@
 #include "precomp_dboclient.h"
 #include "DBCSideIconGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLGlobal.h"
 #include "NtlSlApi.h"
@@ -17,7 +17,7 @@
 // Sound
 #include "GUISoundDefine.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboGlobal.h"
 #include "DisplayStringManager.h"
@@ -51,15 +51,15 @@ RwBool CDBCSideIconGui::Create()
 
 	m_pThis = (gui::CDialog*)GetComponent("dlgMain");
 
-	// 비시즌 아이콘 버튼
+	// Off season icon button
 	m_pBtnNoSeason = (gui::CButton*)GetComponent("btnDBCSideIconNoSeason");
 	m_slotNoSeasonButton = m_pBtnNoSeason->SigClicked().Connect(this, &CDBCSideIconGui::OnIconButtonClicked);
 
-	// 시즌 아이콘 버튼
+	// season icon button
 	m_pBtnSeason = (gui::CButton*)GetComponent("btnDBCSideIconSeason");
 	m_slotSeasonButton = m_pBtnSeason->SigClicked().Connect(this, &CDBCSideIconGui::OnIconButtonClicked);
 
-	// 수집 완료 아이콘 버튼
+	// Collection complete icon button
 	m_pBtnCollect = (gui::CButton*)GetComponent("btnDBCSideIconCollect");
 	m_slotCollectButton = m_pBtnCollect->SigClicked().Connect(this, &CDBCSideIconGui::OnIconButtonClicked);
 
@@ -119,9 +119,9 @@ VOID CDBCSideIconGui::HandleEvents( RWS::CMsg &msg )
 {
 	NTL_FUNCTION("CDBCSideIconGui::HandleEvents");
 
-	if(msg.Id == g_EventDBCShedule_Info || msg.Id == g_EventSobCheckItemInOut)		// 서버로부터 정보를 받거나 인벤토리의 아이템이 변경되었을때
+	if(msg.Id == g_EventDBCShedule_Info || msg.Id == g_EventSobCheckItemInOut)		// When information is received from the server or an item in the inventory changes
 	{
-		if(IsCollectComplete())					// 드래곤볼을 다 모았는지 체크한다.
+		if(IsCollectComplete())					// Check if you have collected all the dragon balls.
 		{
 			if( GetIconImageType() != E_ICON_COLLECT )
 			{
@@ -142,7 +142,7 @@ VOID CDBCSideIconGui::HandleEvents( RWS::CMsg &msg )
 
 RwBool CDBCSideIconGui::IsCollectComplete() 
 {
-	// 인벤토리에서 드래곤볼을 검사한다.
+	// Inspect the Dragon Ball in your inventory.
 	for(BYTE type = DRAGON_BALL_TYPE_BASIC; type < DRAGON_BALL_TYPE_COUNT; ++type)
 	{
 		sDRAGONBALL_TBLDAT* pData = (sDRAGONBALL_TBLDAT*)API_GetTableContainer()->GetDragonBallTable()->GetDBTbldat(type);
@@ -169,8 +169,8 @@ RwBool CDBCSideIconGui::IsCollectComplete()
 
 VOID CDBCSideIconGui::ResetSheduleInfo() 
 {
-	// Kell's comment : 드래곤볼 수집 기간이 아닌 경우에는 출력하지 않음으로 변경( 08. 07. 03 )
-	if(GetDboGlobal()->GetDBCScheduleInfo()->bIsAlive)	// 기간중인지 유무
+	// Kell's comment: Changed to not print outside the Dragon Ball collection period (08. 07. 03)
+	if(GetDboGlobal()->GetDBCScheduleInfo()->bIsAlive)	// Is it during the period?
 	{
 		SetIconImageType(E_ICON_SEASON);
 
@@ -216,30 +216,30 @@ RwBool CDBCSideViewGui::Create()
 
 	m_pThis = (gui::CDialog*)GetComponent("dlgMain");
 
-	// 닫기 버튼
+	// close button
 	m_pExitButton = (gui::CButton*)GetComponent("btnClose");
 	m_slotCloseButton = m_pExitButton->SigClicked().Connect(this, &CDBCSideViewGui::OnExitClicked);
 
-	// 배경
+	// background
 	m_BackPanel.SetType(CWindowby3::WT_HORIZONTAL);
 	m_BackPanel.SetSurface(0, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("DBCSideView.srf", "srfDialogBackUp"));
 	m_BackPanel.SetSurface(1, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("DBCSideView.srf", "srfDialogBackCenter"));
 	m_BackPanel.SetSurface(2, GetNtlGuiManager()->GetSurfaceManager()->GetSurface("DBCSideView.srf", "srfDialogBackDown"));	
 
-	// Side View 제목
+	// Side View Title
 	rect.SetRectWH(20, 20, 250, 14);
 	m_pTitle = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_pTitle->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);	    
 	m_pTitle->Enable(false);	
 
-	// 알림 메세지
+	// Notification message
 	rect.SetRectWH(20, 50, 250, 14);
 	m_pNotify = NTL_NEW gui::CStaticBox(rect, m_pThis, GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_pNotify->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_pNotify->SetTextColor( RGB(255, 255, 255) );	
 	m_pNotify->Enable(false);
 
-	// sig	
+	// Sig	
 	m_slotPaint			= m_pThis->SigPaint().Connect( this, &CDBCSideViewGui::OnPaint );
 	m_slotMove			= m_pThis->SigMove().Connect(this, &CDBCSideViewGui::OnMove);
 	m_slotResize		= m_pThis->SigMove().Connect(this, &CDBCSideViewGui::OnResize);
@@ -304,7 +304,7 @@ VOID CDBCSideViewGui::SetState(eDBCSideIconType eState)
 			m_pTitle->SetTextColor(RGB(43, 255, 243));
 			m_pTitle->SetText(wstrTitle.c_str());
 
-			// 기간 : -월 -일 ~ -월 -일			
+			// Period: -Month-Day ~ -Month-Day			
 			WCHAR buf[64] = {0,};
 			tm tmStart, tmEnd;
 			localtime_s(&tmStart, &GetDboGlobal()->GetDBCScheduleInfo()->nStartTime);

@@ -1,19 +1,19 @@
 #pragma once
 
-// share
+// Share
 #include "NtlTimeQuest.h"
 
-// simulation
+// Simulation
 #include "NtlWorldConceptController.h"
 #include "DboTLSystem.h"
 #include "DboTLConditionCheck.h"
 
 /**
  * \ingroup NtlSimulation
- * \brief Tutorial시의 제어 클래스
+ * \brief Control class in Tutorial
  * \date 2007-07-20
  * \author avooo
- * TMQ와 동일한 클라이언트 상태를 유지한다
+ *Maintain the same client state as TMQ
  */
 class CNtlWorldConceptTutorial : public CNtlWorldConceptController
 {
@@ -37,7 +37,7 @@ public:
 	RwBool				IsStepSkipping();
 
 	void					SetTMQState(eTIMEQUEST_GAME_STATE eState);
-	void					SetTMQState_from_Cleint(RwUInt8 byState);	// 클라이언트 자체적으로 상태를 변경한다
+	void					SetTMQState_from_Cleint(RwUInt8 byState);	// The client changes the state on its own
 
 	void					NotifyTMQStateUpdate();
 	eTIMEQUEST_GAME_STATE	GetTMQState();

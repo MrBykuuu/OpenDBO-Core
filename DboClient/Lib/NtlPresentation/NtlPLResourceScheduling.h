@@ -2,7 +2,7 @@
  *
  * File			: NtlPLResourcePack.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: (?)NTL
  * Date			: 2007. 3. 20	
  * Abstract		: Presentation layer resource pack class
  *****************************************************************************
@@ -29,7 +29,7 @@ struct SResourceScheduleNode
 };
 
 /**
-* \brief Serial ID 로 하나씩 묶어서 사용하기 위한 CharUnit의 구조체
+* \brief CharUnit structure for grouping and using Serial ID one by one
 */
 struct SResourceScheduleCharUnit
 {
@@ -84,7 +84,7 @@ public:
 
 /**
 * \ingroup client
-* \brief 캐릭터를 위한 Schedule Unit
+* \brief Schedule Unit for characters
 */
 class CNtlResourceScheduleCharUnit : public CNtlResourceScheduleUnit
 {
@@ -105,7 +105,7 @@ protected:
 
 	void			UpdateCharacterLoadSeamlessScheduling(RwReal fElapsed);
 
-	// list
+	// List
 	typedef std::list< SResourceScheduleCharUnit > ListCharScheduling;
 	ListCharScheduling	m_listCharClumpLoadSchedule;
 };

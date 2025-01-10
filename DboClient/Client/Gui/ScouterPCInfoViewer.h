@@ -1,28 +1,28 @@
 /******************************************************************************
-* File			: ScouterMenuGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2006. 10. 30
-* Abstract		: 
+*File			: ScouterMenuGui.h
+*Author		    : Hong SungBock
+*Copyright		: (주)NTL
+*Date			: 2006. 10. 30
+*Abstract		: 
 *****************************************************************************
-* Desc			: ScouterMenuGui
+*Desc			: ScouterMenuGui
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// share
+// Share
 #include "NtlItem.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// dbo
+// Dbo
 #include "SlotGui.h"
 
 class CScouterPCInfoViewerGui : public CNtlPLGui, public RWS::CEventHandler
@@ -41,13 +41,13 @@ public:
 	VOID		Update(RwReal fElapsed);
 	VOID		Destroy();
 
-	RwInt32		SwitchDialog(bool bOpen);			///< DialogManager에서의 Open/Close
+	RwInt32		SwitchDialog(bool bOpen);			///< Open/Close in DialogManager
 
 protected:
 	CScouterPCInfoViewerGui() {}
 	virtual VOID	HandleEvents( RWS::CMsg &msg );
 
-	VOID			ShowPCInfo(SERIAL_HANDLE hTarger, RwUInt8 byCount, sITEM_PROFILE* pItemProfile);	///< 상대의 장비를 보여준다
+	VOID			ShowPCInfo(SERIAL_HANDLE hTarger, RwUInt8 byCount, sITEM_PROFILE* pItemProfile);	///< Show the opponent's equipment
 	VOID			CheckInfoWindow();
 
 	VOID			OnClicked_CloseButton(gui::CComponent* pComponent);
@@ -87,5 +87,5 @@ protected:
 
 	RwInt8				m_byInfoWindowIndex;
 	RwReal				m_fElapsed;
-	PCEquipItem			m_Item[EQUIP_SLOT_TYPE_COUNT];		///< 아이템 정보
+	PCEquipItem			m_Item[EQUIP_SLOT_TYPE_COUNT];		///< Item information
 };

@@ -1,14 +1,14 @@
 #include "precomp_dboclient.h"
 #include "GameStageState.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// PL
+// Presentation
 #include "NtlPLEvent.h"
 #include "NtlPLEventGenerator.h"
 
-// dbo
+// Dbo
 #include "DboEvent.h"
 #include "DboEventGenerator.h"
 #include "DisplayStringManager.h"

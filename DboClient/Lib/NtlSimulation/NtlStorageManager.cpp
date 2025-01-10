@@ -125,13 +125,13 @@ void CNtlStorageManager::Destroy()
 
 bool CNtlStorageManager::Load( eNTL_STORAGE_GROUP_TYPE eType, const char* filename )
 {
-	// 파일이 없으면 Default 값으로 로드
+	// If the file does not exist, load it with default values.
 	CNtlStorageGroup* pGroup = GetStorageGroup( eType );
 	if( pGroup )
 	{
 		NtlFileAttrReadOnlyRelease((RwChar*)filename);
 
-		// Text 로 로드할 것들
+		//Things to load as Text
 		if( eType == eNTL_STORAGE_ACCOUNT ||
 			eType == eNTL_STORAGE_GROUP_SYSTEM ||
 			eType == eNTL_STORAGE_GROUP_GAMEINFO ||
@@ -217,7 +217,7 @@ bool CNtlStorageManager::Load( eNTL_STORAGE_GROUP_TYPE eType, const char* filena
 	}
 	else
 	{
-		// 그룹을 찾지 못함
+		//group not found
 		return false;
 	}
 }
@@ -275,7 +275,7 @@ bool CNtlStorageManager::Save( eNTL_STORAGE_GROUP_TYPE eType, const char* filena
 	}
 	else
 	{
-		// 그룹을 찾지 못함
+		//group not found
 		return false;
 	}
 }
@@ -298,7 +298,7 @@ CNtlStorageGroup* CNtlStorageManager::GetStorageGroup(eNTL_STORAGE_GROUP_TYPE eT
 	GROUPMAP::iterator it = m_mapStorageGroup.find( eType );
 	if( it == m_mapStorageGroup.end() )
 	{
-		// 못 찾음
+		//not found
 		return NULL;
 	}
 
@@ -396,7 +396,7 @@ float CNtlStorageManager::GetFloatData( unsigned int uiKey )
 
 bool CNtlStorageManager::SetData( unsigned int uiKey, std::string strData )
 {
-	// 받은 Key의 Type을 찾는다.
+	//Find the type of the received key.
 	eNTL_STORAGE_TYPE eType = GetNtlStorageMTContainer()->GetStorageType( uiKey );
 	for each( std::pair<eNTL_STORAGE_GROUP_TYPE, CNtlStorageGroup*> pair in m_mapStorageGroup )
 	{

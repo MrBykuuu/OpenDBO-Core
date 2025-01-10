@@ -1,25 +1,25 @@
 /******************************************************************************
-* File			: PetitionGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 10. 23
-* Abstract		: 
+*File: PetitionGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : October 23, 2008
+*Abstract		: 
 *****************************************************************************
-* Desc			: GM 상담 요청창
+*Desc: GM consultation request window
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
-// cleint
+// Client
 #include "Windowby3.h"
 #include "SurfaceGui.h"
 
@@ -34,9 +34,9 @@ public:
 
 	RwInt32		SwitchDialog(bool bOpen);
 
-	// avooo's comment : GM 상담 요청창은 게임의 내용이 아니며 이미 다른 다이얼로그가
-	//					 꽉 들어찬 상태에서 고정적으로 자리를 정할 수도 없다.
-	//					 언제나 유저가 위치를 변경할 수 있도록 한다.
+	// avooo's comment: The GM consultation request window is not part of the game and there are already other dialogs.
+	//					 It is impossible to fix a fixed seat in a crowded situation.
+	//					 Allow users to change their location at any time.
 	virtual void	SetMovable(RwBool bMovable) {}
 
 protected:
@@ -72,22 +72,22 @@ protected:
 	gui::CSlot			m_slotMove;
 	gui::CSlot			m_slotPaint;
 
-	gui::CButton*		m_pCloseButton;			///< 닫기 버튼
+	gui::CButton*		m_pCloseButton;			///< Close button
 
-	gui::CComboBox*		m_pCategory;			///< 대분류 카테고리
-	gui::CComboBox*		m_pCategory2;			///< 소분류 카테고리
+	gui::CComboBox*		m_pCategory;			///< Main category
+	gui::CComboBox*		m_pCategory2;			///< Subcategories
 	
-	gui::CInputBox*		m_pInput;				///< 진정내용
+	gui::CInputBox*		m_pInput;				///< Contents of complaint
 	
-	gui::CStaticBox*	m_pDialogName;			///< 다이얼로그 제목
-	gui::CStaticBox*	m_pCategoryStatic;		///< 대분류 카테고리
-	gui::CStaticBox*	m_pCategoryStatic2;		///< 소분류 카테고리
-	gui::CStaticBox*	m_pCategoryMessage;		///< 대분류 카테고리 선택 메세지
-	gui::CStaticBox*	m_pCategoryMessage2;	///< 소분류 카테고리 선택 메세지
+	gui::CStaticBox*	m_pDialogName;			///< Dialog title
+	gui::CStaticBox*	m_pCategoryStatic;		///< Main category
+	gui::CStaticBox*	m_pCategoryStatic2;		///< Subcategories
+	gui::CStaticBox*	m_pCategoryMessage;		///< Main category selection message
+	gui::CStaticBox*	m_pCategoryMessage2;	///< Subcategory selection message
 	
-	gui::CButton*		m_pSendButton;			///< 전송버튼
+	gui::CButton*		m_pSendButton;			///< Send button
 
-	CWindowby3			m_BackPanel;			///< 배경
-	CSurfaceGui			m_srfCaregoryBack;		///< 카테고리 1 배경
-	CSurfaceGui			m_srfCaregoryBack2;		///< 카테고리 2 배경
+	CWindowby3			m_BackPanel;			///< background
+	CSurfaceGui			m_srfCaregoryBack;		///< Category 1 Background
+	CSurfaceGui			m_srfCaregoryBack2;		///< Category 2 Background
 };

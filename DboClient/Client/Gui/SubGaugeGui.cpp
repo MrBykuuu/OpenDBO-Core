@@ -1,16 +1,16 @@
 #include "precomp_dboclient.h"
 #include "SubGaugeGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// simulation
+// Simulation
 #include "NtlSLEvent.h"
 #include "NtlSLGlobal.h"
 #include "NtlSLLogic.h"
@@ -18,7 +18,7 @@
 #include "NtlSobAvatarAttr.h"
 #include "NtlSobProxy.h"
 
-// dbo
+// Dbo
 #include "DialogManager.h"
 #include "DboEvent.h"
 #include "GuiFunctor.h"
@@ -132,7 +132,7 @@ RwBool CSubGaugeGui::Create(VOID)
 	m_pRPGauge->Show( false );
 	m_pRPBack->Show( false );
 
-	// Guard Gauge 초기세팅
+	// Guard Gauge initial settings
 	m_ppnlGuardMark->Show( false );
 	m_surGuardGauge.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "RPCGauge.srf", "srfGuardGauge" ) );
 	m_surGuardGauge.SetPositionfromParent( SUBGAUGE_GUARD_OFFSET_GAUGE_X, SUBGAUGE_GUARD_OFFSET_GAUGE_Y );
@@ -237,14 +237,14 @@ VOID CSubGaugeGui::HandleEvents( RWS::CMsg& msg )
 		if( pData->bStartOrEnd )
 		{// Casting On
 			if( iter == m_mapCastGauge.end() )
-			{// 없을때만 추가
+			{// Add only when not present
 				m_mapCastGauge[pData->pActor->GetSerialID()] = NTL_NEW CCastGauge( m_pThis, pData->pActor );
 			}
 		}
 		else
 		{// Casting Off
 			if( iter != m_mapCastGauge.end() )
-			{// 있을때만 삭제
+			{// Delete only when present
 				CCastGauge* pCastGauge = iter->second;
 				NTL_DELETE( pCastGauge );
 				m_mapCastGauge.erase( iter );
@@ -257,7 +257,7 @@ VOID CSubGaugeGui::HandleEvents( RWS::CMsg& msg )
 		MAP_CASTGAUGE_ITER iter = m_mapCastGauge.find( handle );
 		
 		if( iter != m_mapCastGauge.end() )
-		{// 있을때만 삭제
+		{// Delete only when present
 			CCastGauge* pCastGauge = iter->second;
 			NTL_DELETE( pCastGauge );
 			m_mapCastGauge.erase( iter );
@@ -285,7 +285,7 @@ VOID CSubGaugeGui::HandleEvents( RWS::CMsg& msg )
 			SetGuardMark( "srfGuardDown" );			
 			SetGuardState( STATE_RUN );		
 
-			// Sound 시작
+			// Start Sound
 			sNtlSoundPlayParameta tSoundParam;
 			tSoundParam.iChannelGroup	= CHANNEL_GROUP_UI_SOUND;
 			tSoundParam.pcFileName		= GSD_SYSTEM_GUARD_GAGE;
@@ -319,7 +319,7 @@ VOID CSubGaugeGui::CheckRPGaugeState( RwInt32 nCurrentRPBall )
 			m_pRPBack->Show( true );
 			m_bRPBallMax = FALSE;
 
-			// RP Gauge이미지 변경
+			// RP Gauge image change
 			RwChar buf[256];
 			sprintf_s( buf, 256, "srfNewRPGauge%d", nCurrentRPBall );
 			m_pRPGauge->ClearSurface();
@@ -432,10 +432,10 @@ VOID CSubGaugeGui::GuardGaugeUpdate( RwReal fElapsed )
 					m_bGuardShow = FALSE;
 					m_ppnlGuardMark->Show( false );
 
-					// 기존 음악 끄고
+					// Turn off existing music
 					GetSoundManager()->Stop(m_hSound);
 
-					// 새로운 음악
+					// new music
 					sNtlSoundPlayParameta tSoundParam;
 					tSoundParam.iChannelGroup	= CHANNEL_GROUP_UI_SOUND;
 					tSoundParam.pcFileName		= GSD_SYSTEM_GUARD_GAGE_END;

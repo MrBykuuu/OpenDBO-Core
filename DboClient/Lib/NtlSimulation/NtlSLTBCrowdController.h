@@ -5,22 +5,22 @@
 * Copyright		: (주)NTL
 * Date			: 2008. 7. 14	
 *****************************************************************************
-* Desc          : 천하제일 무도회의 관중 이벤트 컨트롤러
+* Desc          : World's Best Martial Arts Crowd Event Controller
 *****************************************************************************/
 
 #pragma once
 
-// core
+// Core
 #include "ceventhandler.h"
 
-// util
+// Util
 #include "NtlSerializer.h"
 
 class CNtlSLCENode;
 
 /**
  * \ingroup NtlSimulation
- * \brief 관중을 제어하는 컨트롤러 클래스. 타입별로 생성되어 사용된다.
+ * \brief Controller class that controls the crowd. It is created and used by type.
  *
  * \date 2008-07-21
  * \author agebreak
@@ -64,12 +64,12 @@ public:
 protected:    
 
 protected:        
-    std::string                 m_strKeyName;               ///< 컨트롤러의 키네임
-    RwBool                      m_bLoop;                    ///< 관중 이펙트가 계속 재생될 것인지 유무 플래그
-    RwReal                      m_fLifeTime;                ///< 재생 시간
-	RwV3d							m_v3Pos;					///< Entry 좌표
+    std::string                 m_strKeyName;               ///< Controller key name
+    RwBool                      m_bLoop;                    ///< Flag whether the crowd effect will continue to play or not
+    RwReal                      m_fLifeTime;                ///< Playing time
+	RwV3d							m_v3Pos;					///< Entry coordinates
 
 
-    LIST_CENODE					    m_listNode;                 ///< 구성 노드의 리스트
-    RwReal                      m_fInstanceTime;            ///< 생성된 시간
+    LIST_CENODE					    m_listNode;                 ///< List of configuration nodes
+    RwReal                      m_fInstanceTime;            ///< Created time
 };

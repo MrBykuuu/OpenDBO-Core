@@ -1,18 +1,18 @@
 #include "precomp_dboclient.h"
 #include "ChatSender.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "ChatCommandTable.h"
 #include "ActionTable.h"
 
-// simulation
+// Simulation
 #include "NtlSobActionSkill.h"
 #include "NtlSobActionSkillAttr.h"
 
-// dbo
+// Dbo
 #include "DboDef.h"
 #include "DboGlobal.h"
 #include "DboEvent.h"
@@ -147,7 +147,7 @@ VOID CChatSender::Process_Send( const WCHAR* pText )
 	if( !pSobAvatar )
 		return;
 
-	// 명령어 해석
+	// Command interpretation
 	std::wstring strParseText;
 	eChatType ePostType = m_pChatGui->GetChatType();
 	RwUInt8  bySendWorkType = SEND_WORK_NORMAL;
@@ -250,7 +250,7 @@ eChatType CChatSender::Process_Parsing( std::wstring& wstrOutputText, const WCHA
 		return CHAT_SHORTCUT;
 	}
 
-	// help
+	// Help
 	else if( HaveShortCut(wstrOutputText, wstrOriginal, "DST_CHAT_SHORT_CUT_HELP", "") )
 	{
 		wstrOutputText = GetDisplayStringManager()->GetString( "DST_CHAT_HELP_TEXT" );
@@ -294,14 +294,14 @@ RwBool CChatSender::HaveShortCut(std::wstring& wstrOutput, std::wstring& wstrOri
 
 			if( stringSize > 0 )
 			{
-				// 소문자 비교
+				// lowercase letter comparison
 				if( wstrOriginal.compare(0, stringSize, pwcShortcut) == 0 )
 				{
 					wstrOutput = wstrOriginal.substr( stringSize, wstrOriginal.size() - 1 );
 					return TRUE;
 				}
 
-				// 대문자 비교
+				// Compare capital letters
 				static WCHAR awcBuffer[64] = L"";
 				swprintf_s(awcBuffer, 64, L"%s", pwcShortcut);
 				wcsupr( awcBuffer );

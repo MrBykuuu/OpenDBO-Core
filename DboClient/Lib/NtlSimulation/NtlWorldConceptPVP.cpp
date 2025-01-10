@@ -2,15 +2,15 @@
 #include "NtlWorldConceptPVP.h"
 #include "NtlWorldConcept.h"
 
-// sound
+// Sound
 #include "NtlSoundEventGenerator.h"
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLCharacter.h"
 #include "NtlPLSceneManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLLogic.h"
 #include "NtlSLVisualDeclear.h"
 #include "NtlSobManager.h"
@@ -40,7 +40,7 @@ void CNtlWorldConceptPVP::Update( RwReal fElapsedTime )
 
 		if(m_FreeBattleInfo.pCharacter)
 		{
-			// PVP 마크(심판 캐릭터)의 등장 부분. 알파값과 Ink를 조절한다.
+			// The appearance of the PVP mark (referee character). Adjust alpha value and Ink.
 			RwUInt8 byAlpha = (RwUInt8)((RwReal)255*m_fStateTime/2.0f);
 			m_FreeBattleInfo.pCharacter->SetAlpha(byAlpha);
 
@@ -67,7 +67,7 @@ void CNtlWorldConceptPVP::Update( RwReal fElapsedTime )
 	case WORLD_STATE_EXIT:
 		if(m_FreeBattleInfo.pCharacter)
 		{
-			// PVP 마크(심판 캐릭터)의 소멸 부분
+			// The disappearing part of the PVP mark (referee character)
 			RwUInt8 byAlpha = 255 - (RwUInt8)((RwReal)255*m_fStateTime/2.0f);
 			m_FreeBattleInfo.pCharacter->SetAlpha(byAlpha);
 
@@ -155,6 +155,22 @@ void CNtlWorldConceptPVP::SetPvpName(SERIAL_HANDLE hTarget)
 	NTL_ASSERT(pSob->GetClassID() == SLCLASS_PLAYER, "It is not sob player");
 
 	// to do
+	/*CNtlSobAttr*pSobAttr = pSob->GetSobAttr();
+
+	if (pSob->GetClassID() == SLCLASS_PLAYER)
+	{
+		Logic_SetHeadNameColor(pSob);
+	}
+	else if (pSob->GetClassID() == SLCLASS_PET)
+	{
+		CNtlSob*pSobOwner = GetNtlSobManager()->GetSobObject(pSob->GetOwnerID());
+		if (pSobOwner)
+		{
+			Logic_SetHeadNameColor(pSobOwner);
+			Logic_SetHeadNameColor(pSob);
+		}
+	}
+*/
 }
 
 void CNtlWorldConceptPVP::ChangeState( RwInt32 iState ) 

@@ -1,20 +1,20 @@
 #include "precomp_dboclient.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 #include "CEventHandler.h"
 
 /// Sound
 #include "GuiSoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLGui.h"
 #include "NtlPLGuiManager.h"
 
-// framework
+// Framework
 #include "NtlApplication.h"
 
-// dbo
+// Dbo
 #include "DialogManager.h"
 #include "DisplayStringManager.h"
 

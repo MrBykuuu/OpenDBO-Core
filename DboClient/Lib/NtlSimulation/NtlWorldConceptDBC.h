@@ -12,7 +12,7 @@ typedef std::list<CNtlSobItem*>	ListSobItem;
 
 /**
  * \ingroup NtlSimulation
- * \brief 용신 소환및 드래곤볼 보상 상태를 제어하는 컨트롤러
+ * \brief Controller to control dragon god summoning and dragon ball reward status
  * \date 2007-06-14
  * \author agebreak
  */
@@ -22,36 +22,36 @@ public:
 	CNtlWorldConceptDBC(void);
 	~CNtlWorldConceptDBC(void);
 
-	virtual void		Update(RwReal fElapsedTime);				///< 각 컨셉에 맞는 내용들의 Update처리 함수
-	virtual RwBool		IsEnableAction(EAvatarAction eAction);		///< Avatar의 Action이 현재 처리 가능한지를 각 컨셉에 따라 판별한다.
-	virtual void		ChangeState(RwInt32 iState);				///< State 상태를 변경한다.	
+	virtual void		Update(RwReal fElapsedTime);				///< Update processing function for contents suitable for each concept
+	virtual RwBool		IsEnableAction(EAvatarAction eAction);		///< Determine whether the Avatar's Action can currently be processed according to each concept.
+	virtual void		ChangeState(RwInt32 iState);				///< State Changes the state.	
 
     // DragonBall List	
-	void				AddDragonBall(CNtlSobItem* pItem);			///< 리스트에 드래곤볼 아이템을 추가한다.
-	void				RemoveDragonBall(CNtlSobItem* pItem);		///< 리스트에서 드래곤볼 아이템을 제거한다.
+	void				AddDragonBall(CNtlSobItem* pItem);			///< Add a Dragon Ball item to the list.
+	void				RemoveDragonBall(CNtlSobItem* pItem);		///< Remove the Dragon Ball item from the list.
 	ListSobItem*		GetDBList() {return &m_listDragonBall;}
 
     // Property
-    void				SetDBKind(eDRAGON_BALL_TYPE eDBKind) {m_eDragonBallKind = eDBKind;}	///< 현재 진행중인 드래곤볼의 종류를 설정한다.
-    eDRAGON_BALL_TYPE	GetDBKind() {return m_eDragonBallKind;}		                        ///< 현재 진행중인 드래곤볼의 종류를 반환한다.			
+    void				SetDBKind(eDRAGON_BALL_TYPE eDBKind) {m_eDragonBallKind = eDBKind;}	///< Set the type of Dragon Ball currently in progress.
+    eDRAGON_BALL_TYPE	GetDBKind() {return m_eDragonBallKind;}		                        ///< Returns the type of Dragon Ball currently in progress.			
 
     void				SetAltarSerialID(RwUInt32 nSerialID) {m_uiAltarID = nSerialID;}
     RwUInt32			GetAltarSerialID() {return m_uiAltarID;}
 
-    void				ResetRemainTime();							///< 남은 제한시간을 설정한다.
-    RwUInt32			GetReaminTime();	                        ///< 남은 제한시간을 가져온다.
+    void				ResetRemainTime();							///< Set the remaining time limit.
+    RwUInt32			GetReaminTime();	                        ///< Gets the remaining time limit.
 
-    void                SetMyDragon(RwBool bMyDragon) {m_bMyDragon = bMyDragon;}    ///< 자신이 소환한 용신인지를 설정한다.
-    RwBool              IsMyDragon() {return m_bMyDragon;}                          ///< 자신용 소환한 용신인지 여부를 반환한다.
+    void                SetMyDragon(RwBool bMyDragon) {m_bMyDragon = bMyDragon;}    ///< Set whether it is a dragon god you have summoned.
+    RwBool              IsMyDragon() {return m_bMyDragon;}                          ///< Returns whether it is a dragon god summoned for you.
 
 protected:	
 
 protected:
-	RwUInt32				m_uiAltarID;							///< 제단의 Serial ID
-	eDRAGON_BALL_TYPE		m_eDragonBallKind;						///< 현재 진행중인 드래곤볼 연출의 종류
-	RwUInt32				m_uiRemainTime;							///< 남은 제한시간
-	ListSobItem				m_listDragonBall;						///< 드래곤볼 아이템들
-    RwBool                  m_bMyDragon;                            ///< 자기가 소환한 용신인지를 확인하기 위한 플래그
-    RwBool                  m_bUpdateRemainTime;                    ///< 제한 시간 업데이트 유무 플래그
-    SOUND_HANDLE            m_hBGMHandle;                           ///< 용신 나오는 사운드의 핸들
+	RwUInt32				m_uiAltarID;							///< Serial ID of the altar
+	eDRAGON_BALL_TYPE		m_eDragonBallKind;						///< Types of Dragon Ball production currently in progress
+	RwUInt32				m_uiRemainTime;							///< Remaining time limit
+	ListSobItem				m_listDragonBall;						///< Dragon Ball items
+    RwBool                  m_bMyDragon;                            ///< Flag to check whether it is the dragon god you have summoned
+    RwBool                  m_bUpdateRemainTime;                    ///< Time-limited update presence flag
+    SOUND_HANDLE            m_hBGMHandle;                           ///< The handle of the sound that comes out of the Dragon God
 };

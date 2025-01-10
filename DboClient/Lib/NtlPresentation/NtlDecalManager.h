@@ -2,8 +2,8 @@
  *
  * File			: NtlDecalManager.h
  * Author		: HongHoDong
- * Copyright	: (주)NTL
- * Date			: 2005. 12. 12 (Prototype 형석씨가 만든거 복사)	
+ * Copyright	: (?)NTL
+ * Date			: 2005. 12. 12 (Copy of Prototype made by Hyungseok)
  * Abstract		: Decal Shadow Class
  *****************************************************************************
  * Desc         : 

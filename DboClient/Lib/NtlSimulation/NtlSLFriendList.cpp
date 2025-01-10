@@ -57,31 +57,31 @@ VOID CNtlSLFriendList::Leave()
 
 void CNtlSLFriendList::HandleEvents( RWS::CMsg &pMsg ) 
 {
-    if(pMsg.Id == g_EventFriendAdd_Res)         // 친구 추가
+    if(pMsg.Id == g_EventFriendAdd_Res)         // add friend
     {
         OnFriendAddRes((SNtlEventFriendAddRes*)pMsg.pData);
     }
-    else if(pMsg.Id == g_EventFriendDel_Res)    // 친구 삭제
+    else if(pMsg.Id == g_EventFriendDel_Res)    // delete friend
     {
         OnFriendDelRes((SNtlEventFriendDelRes*)pMsg.pData);
     }
-    else if(pMsg.Id == g_EventFriendMove_Res)   // 친구 블록
+    else if(pMsg.Id == g_EventFriendMove_Res)   // friends block
     {
         OnFriendMoveRes((SNtlEventFriendMoveRes*)pMsg.pData);
     }
-    else if(pMsg.Id == g_EventFriendList_Info)  // 친구 리스트 정보 수신
+    else if(pMsg.Id == g_EventFriendList_Info)  // Receive friend list information
     {
         OnFriendListInfo((SNtlEventFriendListInfo*)pMsg.pData);
     }
-    else if(pMsg.Id == g_EventFriendInfo)       // 친구 정보 
+    else if(pMsg.Id == g_EventFriendInfo)       // friend information 
     {
         OnFriendInfo((SNtlEventFriendInfo*)pMsg.pData);
     }
-    else if(pMsg.Id == g_EventFriendInfoChange) // 친구 정보 변경
+    else if(pMsg.Id == g_EventFriendInfoChange) // Change friend information
     {
         OnFriendInfoChange((SNtlEventFriendInfoChange*)pMsg.pData);
     }
-	else if (pMsg.Id == g_EventChangeCharName) // 친구 정보 변경
+	else if (pMsg.Id == g_EventChangeCharName) // Change friend information
 	{
 		OnFriendNameChange((SNtlEventChangeCharName*)pMsg.pData);
 	}

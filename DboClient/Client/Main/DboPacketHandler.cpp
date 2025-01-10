@@ -1,20 +1,20 @@
 ﻿/*****************************************************************************
-* File			: DboPackethandler.cpp
-* Author		: Hong sungbock
-* Copyright		: (주)NTL
-* Date			: 2007. 1. 16
-* Abstract		: 패킷 핸들러 모음
+*File			: DboPackethandler.cpp
+*Author		    : Hong sungbock
+*Copyright		: NTL Co., Ltd.
+*Date			: 2007. 1. 16
+*Abstract		: Packet handler collection
 *****************************************************************************
-* Desc         : 
+*Desc         : 
 *****************************************************************************/
 
 #include "precomp_dboclient.h"
 #include "DboPacketHandler.h"
 
-// core
+// Core
 #include "NtlMath.h"
 
-// shared
+// Shared
 #include "NtlMovement.h"
 #include "SystemEffectTable.h"
 #include "ItemTable.h"
@@ -34,15 +34,15 @@
 #include "NtlItem.h"
 #include "NtlFSMDef.h"
 
-// sound
+// Sound
 #include "GUISoundDefine.h"
 
-// presentation
+// Presentation
 #include "NtlPLResourceManager.h"
 #include "NtlPLSceneManager.h"
 #include "NtlPLEventGenerator.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 #include "NtlClientNet.h"
 #include "NtlNetSender.h"
@@ -79,7 +79,7 @@
 #include "NtlSoundMoodManager.h"
 
 
-// dbo
+// Dbo
 #include "IconMoveManager.h"
 #include "PacketProc.h"
 #include "InfoWndManager.h"
@@ -95,7 +95,7 @@
 #include "GMPopupGui.h"
 #include "GMQuickSlotGui.h"
 
-// discord
+// Discord
 #ifdef USE_DISCORD
 #include "Discord.h"
 #endif
@@ -153,7 +153,7 @@ void PacketHandler_GSObjectCreate(void *pPacket)
 		sNPC_BRIEF *pNpcBrief = &(pObjCreate->sObjectInfo.npcBrief);
 		sCHARSTATE *pCharState = &(pObjCreate->sObjectInfo.npcState);
 
-		// dragon ball camera 연출.
+		// dragon ball camer Directing.
 		if(GetNtlWorldConcept()->GetWorldConceptController(WORLD_PLAY_DRAGONBALL_COLLECT) && 
 			Logic_IsDragonBallNPC(pNpcBrief->tblidx))
 		{
@@ -163,11 +163,11 @@ void PacketHandler_GSObjectCreate(void *pPacket)
 			CNtlSLEventGenerator::SobNpcCreate(SLCLASS_NPC, pObjCreate->handle, vLoc, vDir, pNpcBrief, pCharState, FALSE);
 			GetNtlResourceManager()->SetLoadScheduling(bScheduling);
 
-            // 자신이 소환한 용신일때만 카메라 연출을 한다. (2007.9.10 by agebreak)
+            // The camera only works when the dragon god is summoned. (2007.9.10 by agebreak)
             CNtlWorldConceptDBC* pDBC = (CNtlWorldConceptDBC*)GetNtlWorldConcept()->GetWorldConceptController(WORLD_PLAY_DRAGONBALL_COLLECT);
             if(pDBC->IsMyDragon())
             {
-			    // 여기다가... dragon ball camera를 연출한다.
+			    // Here... we create a dragon ball camera.
 			    CNtlSLEventGenerator::CameraDB(pObjCreate->handle);
             }
 		}
@@ -199,7 +199,7 @@ void PacketHandler_GSObjectCreate(void *pPacket)
 
 		sCHARSTATE *pCharState = &(pObjCreate->sObjectInfo.summonPetState);
 		
-		// 이 부분 잠시 검토
+		// Take a moment to review this part
 		CNtlSobAvatar *pSobAvatar = GetNtlSLGlobal()->GetSobAvatar();
 		if(pSobAvatar->GetSerialID() == pObjCreate->sObjectInfo.summonPetBrief.hOwner)
 		{
@@ -211,7 +211,7 @@ void PacketHandler_GSObjectCreate(void *pPacket)
 			CNtlSLEventGenerator::SobPetCreate(SLCLASS_PET, pSummonPetInfo->uiSerialId, vLoc, vDir, TRUE, uPetBrief, pCharState);
 			CNtlSLEventGenerator::SobSummonPetSpawnSync(pSummonPetInfo->sCharPf.hOwner, pSummonPetInfo->uiSerialId);
 
-			// 자신의 Pet인경우에만 Pet UI를 뛰운다.
+			// Run the Pet UI only if it is your pet.
 			CDboEventGenerator::SummonPet(TRUE, pSummonPetInfo->uiSerialId);
 		}
 		else
@@ -293,7 +293,7 @@ void PacketHandler_GSObjectDestroy(void *pPacket)
 
 	if(pSobAvatar->GetSerialID() != pObjDestroy->handle)
 	{
-		// 자기 Pet인 경우에만 UI 이벤트를 보낸다.
+		// UI events are sent only when it is a pet.
 		if(pSobObj && pSobObj->GetClassID() == SLCLASS_PET && pSobObj->GetOwnerID() == pSobAvatar->GetSerialID())
 		{
 			CDboEventGenerator::SummonPet(FALSE, pObjDestroy->handle);
@@ -406,8 +406,8 @@ void PacketHandler_GSCharTeleportRes(void *pPacket)
 			CDboEventGenerator::DialogEvent(DIALOGEVENT_NPC_BYEBYE, DIALOG_UNKNOWN, edType);
 		}
 
-		// teleport 전에 정보를 clear 한다.
-		// 정보 clear
+		// Clear information before teleporting.
+		// information clear
 		Logic_SobTarget(INVALID_SERIAL_ID, INVALID_BYTE);
 		//CBalloonManager::GetInstance()->RemoveAllBalloonData();
 		GetNtlGameCameraManager()->EnableUpdateData(FALSE);
@@ -418,14 +418,14 @@ void PacketHandler_GSCharTeleportRes(void *pPacket)
 			GetNtlDTCinematicManager()->Clear();
 		CNtlSLEventGenerator::SobRevivalNotify();
 
-		// 새로운 서버로 옮겨야 하는가?
+		// Should I move to a new server?
 		if(pTeleport->bIsToMoveAnotherServer)
 		{
 			GetDboGlobal()->GetGamePacketGenerator()->SendServerChangeReq();
 		}
 		else
 		{
-			// 새로운 정보 setting.
+			// New information setting.
 
 			SAvatarInfo *pAvatarInfo = GetNtlSLGlobal()->GetAvatarInfo(); 
 
@@ -542,13 +542,13 @@ void PacketHandler_GSItemReplace(void *pPacket)
 	sGU_ITEM_REPLACE* pItemReplace = (sGU_ITEM_REPLACE*)pPacket;
 	CNtlSobAvatar *pSobAvatar = GetNtlSLGlobal()->GetSobAvatar();
 
-	// 삭제해주기 전에 Table을 가지고 와서 확인해야 한다.
+	// You must bring the table and check it before deleting it.
 	sITEM_TBLDAT* pItemTblDat = Logic_GetItemDataFromSob( pItemReplace->hDeleteItem );
 	
 	// Gamble
 	if( pItemTblDat->byItem_Type == ITEM_TYPE_GAMBLE )
 	{
-		// 연출 플래쉬의 이름
+		// Director Flash's name
 		CHAR acBuffer[DBO_MAX_LENGTH_ITEM_ICON_NAME + 1];
 		sprintf_s( acBuffer, DBO_MAX_LENGTH_ITEM_ICON_NAME + 1, "%s", pItemTblDat->szIcon_Name );
 		CHAR* pcNewExtension = ".swf";
@@ -559,17 +559,17 @@ void PacketHandler_GSItemReplace(void *pPacket)
 			return;
 		}
 
-		// 확장자 .png -> .swf 변경
+		// Change extension .png -> .swf
 		memcpy( pExtensionPos, pcNewExtension, strlen(pcNewExtension) * sizeof(CHAR) );
 
-		// 파일 이름 앞에 인식자 TB_Boom_
+		// The identifier TB_Boom_ before the file name.
 		CHAR acBuffer2[DBO_MAX_LENGTH_ITEM_ICON_NAME +1 ];
 		sprintf_s( acBuffer2, DBO_MAX_LENGTH_ITEM_ICON_NAME+1, "TB_Boom_%s", acBuffer );
 
 		// Delete item
 		if( pItemReplace->byDeleteItemPlace >= CONTAINER_TYPE_BANK1 && pItemReplace->byDeleteItemPlace <= CONTAINER_TYPE_BANK4 )
 		{
-			// 창고의 아이템을 지운다
+			// Delete items from warehouse
 			CNtlSLEventGenerator::SobWarehouseItemDelete(pSobAvatar->GetSerialID(), pItemReplace->hDeleteItem, pItemReplace->byDeleteItemPlace, pItemReplace->byDeleteItemPos);
 		}
 		else
@@ -590,13 +590,13 @@ void PacketHandler_GSItemReplace(void *pPacket)
 		CDboEventGenerator::GambleUseEffect( (RwUInt8)(pItemReplace->byDeleteItemPlace - CONTAINER_TYPE_BAG1), (RwUInt8)(pItemReplace->byDeleteItemPos),
 			pItemReplace->hCreateItem, acBuffer2 );
 	}
-	// others
+	// Others
 	else
 	{
 		// Delete item
 		if( pItemReplace->byDeleteItemPlace >= CONTAINER_TYPE_BANK1 && pItemReplace->byDeleteItemPlace <= CONTAINER_TYPE_BANK4 )
 		{
-			// 창고의 아이템을 지운다
+			// Delete items from warehouse
 			CNtlSLEventGenerator::SobWarehouseItemDelete(pSobAvatar->GetSerialID(), pItemReplace->hDeleteItem, pItemReplace->byDeleteItemPlace, pItemReplace->byDeleteItemPos);
 		}
 		else
@@ -635,7 +635,7 @@ void PacketHandler_GSItemDelete(void *pPacket)
 	CNtlSobAvatar *pSobAvatar = GetNtlSLGlobal()->GetSobAvatar(); 
 	if( pItemDelRes->bySrcPlace >= CONTAINER_TYPE_BANK1 && pItemDelRes->bySrcPlace <= CONTAINER_TYPE_BANK4 )
 	{
-		// 창고의 아이템을 지운다
+		// Delete items from warehouse
 		CNtlSLEventGenerator::SobWarehouseItemDelete(pSobAvatar->GetSerialID(), pItemDelRes->hSrcItem, pItemDelRes->bySrcPlace, pItemDelRes->bySrcPos);
 	}
 	else
@@ -772,7 +772,7 @@ void PacketHandler_GSItemRepair(void *pPacket)
 
 void PacketHandler_GSItemRepairAll(void *pPacket)
 {
-	// 서버로부터 응답을 받았다
+	// Received a response from the server
 	API_GetSLPacketLockManager()->Unlock(GU_ITEM_EQUIP_REPAIR_RES);
 
 	sGU_ITEM_EQUIP_REPAIR_RES* pResult = (sGU_ITEM_EQUIP_REPAIR_RES*)pPacket;
@@ -782,7 +782,7 @@ void PacketHandler_GSItemRepairAll(void *pPacket)
 		return;
 	}
 
-	// %d 제니를 지불하고 모든 아이템을 수리하였습니다
+	// Paid %d Zenny to repair all items
 	GetAlarmManager()->FormattedAlarmMessage("DST_REPAIR_ALL_ITEM", FALSE, NULL, Logic_FormatZeni(pResult->dwSpendedZenny));
 
 	CDboEventGenerator::DialogEvent(DIALOGEVENT_REPAIR_ALL, DIALOG_UNKNOWN, DIALOG_NPCSHOP);
@@ -1037,7 +1037,7 @@ void Packethandler_QuickTeleportLoadRes(void * pPacket)
 
 	if (pRes->wResultCode == GAME_SUCCESS)
 	{
-		// event
+		// Event
 		CDboEventGenerator::EventQuickTeleportLoad(pRes->byCount, pRes->asData);
 	}
 	else
@@ -1054,7 +1054,7 @@ void Packethandler_QuickTeleportUpdateRes(void * pPacket)
 
 	if (pRes->wResultCode == GAME_SUCCESS)
 	{
-		// event
+		// Event
 		CDboEventGenerator::EventQuickTeleportUpdate(&pRes->aData);
 	}
 	else
@@ -1071,7 +1071,7 @@ void Packethandler_QuickTeleportDelRes(void * pPacket)
 
 	if (pRes->wResultCode == GAME_SUCCESS)
 	{
-		// event
+		// Event
 		CDboEventGenerator::EventQuickTeleportDelete(pRes->bySlot);
 	}
 	else
@@ -1088,7 +1088,7 @@ void Packethandler_QuickTeleportUseRes(void * pPacket)
 
 	if (pRes->wResultCode == GAME_SUCCESS)
 	{
-		// event
+		// Event
 		CDboEventGenerator::EventQuickTeleportMove(pRes->bySlot);
 	}
 	else
@@ -1155,7 +1155,7 @@ void PacketHandler_GSPartySelectStateNfy(void * pPacket)
 {
 	sGU_PARTY_SELECT_STATE_NFY* pResult = (sGU_PARTY_SELECT_STATE_NFY*)pPacket;
 
-	// event
+	// Event
 	CNtlSLEventGenerator::EventPartySelectState(pResult->hTarget, pResult->bySelectState);
 }
 
@@ -1171,7 +1171,7 @@ void PacketHandler_GSPartySelectStateRes(void * pPacket)
 		return;
 	}
 
-	// event
+	// Event
 	CNtlSLEventGenerator::EventPartySelectState(Logic_GetAvatarHandle(), pResult->bySelectState);
 }
 
@@ -1179,7 +1179,7 @@ void PacketHandler_GSPartySelectStateInitNfy(void * pPacket)
 {
 	sGU_PARTY_SELECT_STATE_INIT_NFY* pResult = (sGU_PARTY_SELECT_STATE_INIT_NFY*)pPacket;
 
-	// event
+	// Event
 	CNtlSLEventGenerator::EventPartySelectStateInit(pResult->bySelectState, pResult->dwParam, pResult->bLastStage);
 }
 
@@ -1280,7 +1280,7 @@ void PacketHandler_GSQuestItemCreate(void *pPacket)
 
 	CNtlSLEventGenerator::SobQuestItemAdd( GetNtlSLGlobal()->GetSobAvatar()->GetSerialID(), pCreate->qItemTblidx, pCreate->byPos, pCreate->byCurCount );
 
-	// 메세지 출력
+	// Message output
 	std::wstring wstrName;	
 	CTextTable* pQuestItemTextTable = API_GetTableContainer()->GetTextAllTable()->GetQuestItemTbl();
 	sQUESTITEM_TBLDAT* pQuestItemData = reinterpret_cast<sQUESTITEM_TBLDAT*>( API_GetTableContainer()->GetQuestItemTable()->FindData( pCreate->qItemTblidx ) );
@@ -1294,7 +1294,7 @@ void PacketHandler_GSQuestItemUpdateNfy(void *pPacket)
 {
 	sGU_QUEST_ITEM_UPDATE_NFY* pUpdate = (sGU_QUEST_ITEM_UPDATE_NFY*)pPacket;
 
-	// 메세지 출력
+	// Message output
 	std::wstring wstrName;
 	CTextTable* pQuestItemTextTable = API_GetTableContainer()->GetTextAllTable()->GetQuestItemTbl();
 	CNtlSobQuestItemAttr* pQuestItemAttr = reinterpret_cast<CNtlSobQuestItemAttr*>( GetNtlSLGlobal()->GetSobAvatar()->GetQuestInventory()->GetQuestItemFromIdx( pUpdate->byPos )->GetSobAttr() );
@@ -1391,7 +1391,7 @@ void PacketHandler_GSWorldZennyPickRes(void *pPacket)
 	{
 		if( pWorldZennyPickRes->bSharedInParty )
 		{
-			// Gets Jenny by party distribution (%S out of %s)
+			// Gets Zenny by party distribution (%S out of %s)
 			// This message comes from the party, not GAIN, when you get it at the party.
 
             if(pWorldZennyPickRes->dwBonusZenny > 0)
@@ -1425,14 +1425,14 @@ void PacketHandler_GSCharDestMove(void *pPacket)
 {
 	sGU_CHAR_DEST_MOVE *pDestMove = (sGU_CHAR_DEST_MOVE*)pPacket;
 
-	//// Dest location counter는 반드시 1 이상이어야 한다
+	//// Dest location counter must be 1 or more.
 	//if ( 0 == pDestMove->byDestLocCount )
 	//{
 	//	DBO_FAIL( "A dest location counter must be one more." );
 	//	return;
 	//}
 
-	//// Dest location counter는 반드시 DBO_MAX_NEXT_DEST_LOC_COUNT 보다 작거나 같아야 한다
+	//// Dest location counter must be less than or equal to DBO_MAX_NEXT_DEST_LOC_COUNT
 	//if ( pDestMove->byDestLocCount > DBO_MAX_NEXT_DEST_LOC_COUNT )
 	//{
 	//	DBO_FAIL( "A dest location counter must be less equal than DBO_MAX_NEXT_DEST_LOC_COUNT." );
@@ -1711,7 +1711,7 @@ void PacketHandler_GSCharSkillAction(void *pPacket)
 	CNtlSobAvatar *pSobAvatar = GetNtlSLGlobal()->GetSobAvatar();
 	NTL_ASSERT(pSobAvatar, "Not exist avatar instance");
 
-	// failure
+	// Failure
 	if(pSkillAction->wResultCode != GAME_SUCCESS)
 	{
 		if( pSobAvatar->GetSerialID() == pSkillAction->handle )
@@ -1719,7 +1719,7 @@ void PacketHandler_GSCharSkillAction(void *pPacket)
 
 		CNtlSLEventGenerator::SobSkillCancel(pSkillAction->handle, pSkillAction->wResultCode);
 	}
-	else // success
+	else // Success
 	{
 		RwUInt32 stateId = Logic_GetActorStateId(pSobAvatar);
 
@@ -1738,7 +1738,7 @@ void PacketHandler_GSCharSkillAction(void *pPacket)
 
 		CNtlSLEventGenerator::SobSkillActioned(pSkillAction->hAppointedTarget, pSkillAction->handle);
 
-		//CNtlSLEventGenerator::SobSkillResult(); // to do
+		//CNtlSLEventGenerator::SobSkillResult(); //to do
 
 		CSkillTable *pSkillTbl = API_GetTableContainer()->GetSkillTable();
 		sSKILL_TBLDAT *pSkillTblData = reinterpret_cast<sSKILL_TBLDAT*>(pSkillTbl->FindData(pSkillAction->skillId));
@@ -1917,7 +1917,7 @@ void PacketHandler_GUSkillRpBonusSettingRes( void *pPacket )
 		return;
 	}
 
-	// 설정이 적용되었다.
+	// Settings have been applied.
 	CNtlSLEventGenerator::RpBonusSetupRes( pResult->skillId, pResult->skillIndex, pResult->byRpBonusType, pResult->bIsRpBonusAuto );
 	GetAlarmManager()->AlarmMessage( "DST_SKILL_ABILITY_ACCEPT" );
 }
@@ -1961,7 +1961,7 @@ void PacketHandler_GSBuffRegisted(void *pPacket)
 	CNtlSLEventGenerator::SobBuffAdd(pBuffReg->hHandle, pBuffReg->buffInfo.buffIndex, pBuffReg->buffInfo.bySourceType, pBuffReg->buffInfo.sourceTblidx, 
 		pBuffReg->buffInfo.dwTimeRemaining, pBuffReg->buffInfo.dwInitialDuration, pBuffReg->buffInfo.aBuffParameter);
 
-	// Fake Buff의 처리	
+	// Fake Buff Processing	
 	if (pBuffReg->hHandle != Logic_GetAvatarHandle())
 	{
 		CNtlSLEventGenerator::SobFakeBuffAdd(pBuffReg->hHandle, pBuffReg->buffInfo.buffIndex, pBuffReg->buffInfo.bySourceType, pBuffReg->buffInfo.sourceTblidx, pBuffReg->buffInfo.dwTimeRemaining, pBuffReg->buffInfo.dwInitialDuration, pBuffReg->buffInfo.aBuffParameter);
@@ -1982,7 +1982,7 @@ void PacketHandler_GSBuffDropped(void *pPacket)
 
 	CNtlSLEventGenerator::SobBuffDrop(pBuffDrop->hHandle, pBuffDrop->buffIndex, pBuffDrop->bySourceType);
 
-	// Fake Buff의 처리	
+	// Fake Buff Processing	
 	if( pBuffDrop->hHandle != Logic_GetAvatarHandle() )
 		CNtlSLEventGenerator::SobFakeBuffDrop(pBuffDrop->hHandle, pBuffDrop->buffIndex, pBuffDrop->bySourceType);
 }
@@ -1993,7 +1993,7 @@ void PacketHandler_GSBuffRefreshAll(void *pPacket)
 
 	CNtlSLEventGenerator::SobBuffRefreshAll( pBuffRefreshAll->hHandle, pBuffRefreshAll->byCount, pBuffRefreshAll->aBuffInfo );
 
-	// Fake Buff의 처리	
+	// Fake Buff Processing	
 	if( pBuffRefreshAll->hHandle != Logic_GetAvatarHandle() )
 		CNtlSLEventGenerator::SobFakeBuffRefreshAll(pBuffRefreshAll->hHandle, pBuffRefreshAll->byCount, pBuffRefreshAll->aBuffInfo);
 }
@@ -2023,7 +2023,7 @@ void PacketHandler_GSCharUpdateLp(void *pPacket)
 	CNtlParty* pParty = reinterpret_cast<CNtlParty*>(GetNtlSLGlobal()->GetSobAvatar()->GetParty());
 	if( pParty->IsMember(pUpdateLp->handle) )
 	{
-		// 나의 파티원이라면 업데이트
+		// Update if you are a member of my party
 		CNtlSLEventGenerator::PartyUpdate(PMT_LP, pUpdateLp->handle, pUpdateLp->curLp, pUpdateLp->maxLp);
 	}
 
@@ -2053,7 +2053,7 @@ void PacketHandler_GSCharUpdateEp(void *pPacket)
 	CNtlParty* pParty = reinterpret_cast<CNtlParty*>(GetNtlSLGlobal()->GetSobAvatar()->GetParty());
 	if( pParty->IsMember(pUpdateEp->handle) )
 	{
-		// 나의 파티원이라면 업데이트
+		// Update if you are a member of my party
 		CNtlSLEventGenerator::PartyUpdate(PMT_EP, pUpdateEp->handle, pUpdateEp->wCurEP, pUpdateEp->wMaxEP);
 	}
 
@@ -2061,7 +2061,7 @@ void PacketHandler_GSCharUpdateEp(void *pPacket)
 
 	if(pActor == NULL)
 	{
-		// avooo : 멀리 떨어져 있는 파티의 EP 업데이트도 오기에 주석처리 했습니다.
+		// avooo: I commented out the EP updates from distant parties as well.
 		//NTL_ASSERTFAIL( "PacketHandler_GSCharUpdateRp => invalid handle (" << pUpdateEp->handle << ")" );
 		return;
 	}
@@ -2075,7 +2075,7 @@ void PacketHandler_GSCharUpdateLpEp(void* pPacket)
 	CNtlParty* pParty = reinterpret_cast<CNtlParty*>(GetNtlSLGlobal()->GetSobAvatar()->GetParty());
 	if( pParty->IsMember(pUpdateLpEp->handle) )
 	{
-		// 나의 파티원이라면 업데이트
+		// Update if you are a member of my party
 		CNtlSLEventGenerator::PartyUpdate(PMT_LP, pUpdateLpEp->handle, pUpdateLpEp->curLp, pUpdateLpEp->maxLp);		
 		CNtlSLEventGenerator::PartyUpdate(PMT_EP, pUpdateLpEp->handle, pUpdateLpEp->wCurEP, pUpdateLpEp->wMaxEP);
 	}
@@ -2107,7 +2107,7 @@ void PacketHandler_GSCharRefreshLpEp(void* pPacket)
 	//CNtlParty* pParty = reinterpret_cast<CNtlParty*>(GetNtlSLGlobal()->GetSobAvatar()->GetParty());
 	//if( pParty->IsMember(pRefreshLpEp->hSubject) )
 	//{
-	//	// 나의 파티원이라면 업데이트
+	//	// If my party is updated
 	//	CNtlSLEventGenerator::PartyUpdate(PMT_LP, pRefreshLpEp->hSubject, pRefreshLpEp->wCurLp, pRefreshLpEp->wMaxLp);		
 	//	CNtlSLEventGenerator::PartyUpdate(PMT_EP, pRefreshLpEp->hSubject, pRefreshLpEp->wCurEp, pRefreshLpEp->wMaxEp);
 	//}
@@ -2200,7 +2200,7 @@ void PacketHandler_GSCharUpdateLevel(void *pPacket)
 		CNtlMath::MathRwV3dAssign(&vOffset, 0.0f, 0.0f, 0.0f);
 		pSobProxy->CreatePLChildEffect(NTL_VID_LEVEL_UP, vOffset);		
 
-		// discord
+		// Discord
 #ifdef USE_DISCORD
 		if(Logic_GetAvatarHandle() == pUpdateLevel->handle)
 			GetDiscordManager()->UpdateLevel(pUpdateLevel->byCurLevel);
@@ -2355,8 +2355,8 @@ void PacketHandler_GSCharUpdateZenny(void *pPacket)
 		RwUInt32 uiZenny = pUpdateState->dwZenny - Logic_GetZenny();
 		CDboEventGenerator::ZennyLootingEffect( uiZenny );
 
-        if(pUpdateState->byChangeType != ZENNY_CHANGE_TYPE_PICK &&    // PICK은 PICK RES에서 처리한다.
-		   pUpdateState->byChangeType != ZENNY_CHANGE_TYPE_PARTY_PICK ) // ZENNY_CHANGE_TYPE_PARTY_PICK : GU_ZENNY_PICK_RES 에서 처리
+        if(pUpdateState->byChangeType != ZENNY_CHANGE_TYPE_PICK &&    // PICK is processed in PICK RES.
+		   pUpdateState->byChangeType != ZENNY_CHANGE_TYPE_PARTY_PICK ) // ZENNY_CHANGE_TYPE_PARTY_PICK: Processed in GU_ZENNY_PICK_RES
         {
 		    GetAlarmManager()->FormattedAlarmMessage( "DST_NOTIFY_GET_ZENNY", FALSE, NULL, Logic_FormatZeni(uiZenny) );
         }
@@ -2412,7 +2412,7 @@ void PacketHandler_GUCharUpdateHonor(void *pPacket)
 
 void PacketHandler_GSItemIdentificationRes(void *pPacket)
 {	
-	// 미확인 아이템 감정 결과
+	// Unidentified item appraisal result
 	sGU_ITEM_IDENTIFY_RES* pResult = (sGU_ITEM_IDENTIFY_RES*)pPacket;
 
 	API_GetSLPacketLockManager()->Unlock( GU_ITEM_IDENTIFY_RES );
@@ -2423,7 +2423,7 @@ void PacketHandler_GSItemIdentificationRes(void *pPacket)
 		return;
 	}
 
-	// 아이템 Update와 함께 Effect
+	// Effect with item update
 	sITEM_DATA* pItemData = &pResult->sItemData;
 	CNtlSobAvatar* pSobAvatar = GetNtlSLGlobal()->GetSobAvatar();
 	CNtlSLEventGenerator::SobItemUpdate(pSobAvatar->GetSerialID(), pResult->hItemHandle, pItemData->itemNo, &pItemData->sOptionSet, pItemData->byPlace, pItemData->byPosition,
@@ -2431,13 +2431,13 @@ void PacketHandler_GSItemIdentificationRes(void *pPacket)
 		pItemData->byRestrictState, pItemData->awchMaker, pItemData->byDurationType, pItemData->nUseStartTime, pItemData->nUseEndTime);
 	CDboEventGenerator::ItemIdentifyEffect( TRUE, pResult->hItemHandle );
 
-	// 아이템 감정 퀘스트
+	// Item Appraisal Quest
 	CNtlSLEventGenerator::TSItemIdentity();
 }
 
 void PacketHandler_GSScouterEquipCheckRes(void *pPacket)
 {
-	// PC 장비 보기
+	// View PC Equipment
 	sGU_SCOUTER_EQUIP_CHECK_RES* pResult = (sGU_SCOUTER_EQUIP_CHECK_RES*)pPacket;
 
 	if( pResult && pResult->wResultCode != GAME_SUCCESS )
@@ -2724,7 +2724,7 @@ void PacketHandler_GSEffectAffected(void *pPacket)
 		}
 	}
 
-    // 원기 흡수를 위한 처리
+    // Treatment for energy absorption
     if(pSystemEffTblData->effectCode == ACTIVE_LP_STEAL_OVER_TIME || 
        pSystemEffTblData->effectCode == ACTIVE_EP_STEAL_OVER_TIME)
     {
@@ -2914,7 +2914,7 @@ void PacketHandler_GSNPCShopStartRes(void *pPacket)
 
 void PacketHandler_GSNPCShopBuyRes(void *pPacket)
 {
-	// 서버로부터 응답을 받았다
+	// Received a response from the server
 	API_GetSLPacketLockManager()->Unlock(GU_SHOP_BUY_RES);
 
 	sGU_SHOP_BUY_RES* pResult = (sGU_SHOP_BUY_RES*)pPacket;
@@ -2929,7 +2929,7 @@ void PacketHandler_GSNPCShopBuyRes(void *pPacket)
 
 void PacketHandler_GSNPCShopSellRes(void *pPacket)
 {
-	// 서버로부터 응답을 받았다
+	// Received a response from the server
 	API_GetSLPacketLockManager()->Unlock(GU_SHOP_SELL_RES);
 
 	sGU_SHOP_SELL_RES* pResult = (sGU_SHOP_SELL_RES*)pPacket;
@@ -2954,13 +2954,13 @@ void PacketHandler_GSNPCShopEndRes(void *pPacket)
 		return;
 	}
 
-	// 상점을 닫는다
+	// close the store
 	CDboEventGenerator::ShopEvent(TRM_CLOSE, 0);
 }
 
 void PacketHandler_GSNPCEventShopStartRes(void *pPacket)
 {
-	// 이벤트 상점 시작
+	// Event Store Launched
 	API_GetSLPacketLockManager()->Unlock( GU_SHOP_EVENTITEM_START_RES );
 
 	sGU_SHOP_EVENTITEM_START_RES* pResult = (sGU_SHOP_EVENTITEM_START_RES*)pPacket;
@@ -2980,7 +2980,7 @@ void PacketHandler_GSNPCEventShopStartRes(void *pPacket)
 
 void PacketHandler_GSNPCEventShopBuyRes(void *pPacket)
 {
-	// 이벤트 상점에서 구입을 했다
+	// Purchased at the event store
 	API_GetSLPacketLockManager()->Unlock(GU_SHOP_EVENTITEM_BUY_RES);
 
 	sGU_SHOP_EVENTITEM_BUY_RES* pResult = (sGU_SHOP_EVENTITEM_BUY_RES*)pPacket;
@@ -2995,7 +2995,7 @@ void PacketHandler_GSNPCEventShopBuyRes(void *pPacket)
 
 void PacketHandler_GSNPCEventShopEndRes(void *pPacket)
 {
-	// 이벤트 상점 종료
+	// Event Store Closed
 	API_GetSLPacketLockManager()->Unlock( GU_SHOP_EVENTITEM_END_RES );
 
 	sGU_SHOP_EVENTITEM_END_RES* pResult = (sGU_SHOP_EVENTITEM_END_RES*)pPacket;
@@ -3006,7 +3006,7 @@ void PacketHandler_GSNPCEventShopEndRes(void *pPacket)
 		return;
 	}
 
-	// 상점을 닫는다
+	// close the store
 	CDboEventGenerator::ShopEvent(TRM_CLOSE, 0);
 }
 
@@ -3022,7 +3022,7 @@ void PacketHandler_GSNPCShopItemIdentifyRes(void *pPacket)
 		return;
 	}
 
-	// Pos 슬롯 위치
+	// Pos slot locations
 
 	sITEM_DATA* pItemData = &pResult->sItemData;
 	CNtlSobAvatar* pSobAvatar = GetNtlSLGlobal()->GetSobAvatar();
@@ -3034,7 +3034,7 @@ void PacketHandler_GSNPCShopItemIdentifyRes(void *pPacket)
 		pItemData->byRestrictState, pItemData->awchMaker, pItemData->byDurationType, pItemData->nUseStartTime, pItemData->nUseEndTime);
 	CDboEventGenerator::ItemIdentifyEffect( TRUE, hItem );
 
-	// 아이템 감정 퀘스트
+	// Item Appraisal Quest
 	CNtlSLEventGenerator::TSItemIdentity();
 }
 
@@ -3317,7 +3317,7 @@ void PacketHandler_GUQuestForceCompletion(void* pPacket)
 
 void PacketHandler_GSTradeStartNfy(void *pPacket)
 {
-	// 거래 요청을 받은 사람에게 거래 시작을 알린다
+	// Notifies the person who received the transaction request that the transaction has begun
 	sGU_TRADE_START_NFY* pResult = (sGU_TRADE_START_NFY*)pPacket;	
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -3341,7 +3341,7 @@ void PacketHandler_GSTradeStartRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_TRADE_START_RES );
 
-	// 거래 요청을 한 사람에게 시작을 알린다
+	// Inform the person who requested the transaction of the start
 	sGU_TRADE_START_RES* pResult = (sGU_TRADE_START_RES*)pPacket;	
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -3362,7 +3362,7 @@ void PacketHandler_GSTradeStartRes(void *pPacket)
 
 void PacketHandler_GSTradeOKReq(void *pPacket)
 {	
-	// 다른 사람으로부터 거래를 신청받는다
+	// Receive a transaction request from another person
 	sGU_TRADE_OK_REQ* pResult = (sGU_TRADE_OK_REQ*)pPacket;
 
 	CNtlSobPlayer* pSobPlayer = reinterpret_cast<CNtlSobPlayer*>(GetNtlSobManager()->GetSobObject(pResult->handle));
@@ -3374,27 +3374,27 @@ void PacketHandler_GSTradeOKReq(void *pPacket)
 		GetDboGlobal()->SetAskedPCSerial(INVALID_SERIAL_ID);
 		return;
 	}
-	else if(Logic_IsBlackList(pResult->handle)) // 블랙리스트에 등록되어 있는 경우 거절  
+	else if(Logic_IsBlackList(pResult->handle)) // Rejected if registered on blacklist  
 	{
 		GetDboGlobal()->GetGamePacketGenerator()->SendTradeOkReq(pResult->handle, ACCEPT_RES_TYPE_DENY);        
 		GetDboGlobal()->SetAskedPCSerial(INVALID_SERIAL_ID);
 		return;
 	}
 
-	// 질문을 한 PC의 핸들 저장
+	// Save the handle of the PC that asked the question
 	GetDboGlobal()->SetAskedPCSerial(pResult->handle);
 
 	//memset((char*)awcPacketMessageBuffer, 0, sizeof(WCHAR) * dPACKET_MEESAGE_LENGTH);
 	//swprintf_s(awcPacketMessageBuffer, dPACKET_MEESAGE_LENGTH, GetDisplayStringManager()->GetString("DST_TRADE_ACCEPT_TRADE"), pSobPlayerAttr->GetName() );	
 
-	// %s님의 거래 요청에 응하시겠습니까?
+	// Would you like to respond to %s’ transaction request?
 	//CDboEventGenerator::MsgBoxShow(awcPacketMessageBuffer, MBW_USER_TRADE_REQ, MBTF_OK | MBTF_CANCEL);
 	GetAlarmManager()->FormattedAlarmMessage( "DST_TRADE_ACCEPT_TRADE", FALSE, NULL, pSobPlayerAttr->GetName() );
 }
 
 void PacketHandler_GSTradeAddNfy(void *pPacket)
 {
-	// 다른 사람이 아이템을 등록한다
+	// Someone else posts an item
 	sGU_TRADE_ADD_NFY* pResult = (sGU_TRADE_ADD_NFY*)pPacket;
 
 	CDboEventGenerator::UserTrade(USERTRADE_ADD_ITEM_NOTIFY, INVALID_SERIAL_ID, pResult->hItem, pResult->byCount, (void*)&pResult->sItem);
@@ -3404,7 +3404,7 @@ void PacketHandler_GSTradeAddRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_TRADE_ADD_RES );
 
-	// 자신이 아이템을 등록한다
+	// Register your item
 	sGU_TRADE_ADD_RES* pResult = (sGU_TRADE_ADD_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -3420,7 +3420,7 @@ void PacketHandler_GSTradeAddRes(void *pPacket)
 
 void PacketHandler_GSTradeDelNfy(void *pPacket)
 {
-	// 다른 사람이 아이템을 등록해제한다
+	// Someone else unregisters the item
 	sGU_TRADE_DEL_NFY* pResult = (sGU_TRADE_DEL_NFY*)pPacket;
 
 	CDboEventGenerator::UserTrade(USERTRADE_DEL_ITEM_NOTIFY, INVALID_SERIAL_ID, pResult->hItem);
@@ -3430,7 +3430,7 @@ void PacketHandler_GSTradeDelRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_TRADE_DEL_RES );
 
-	// 내가 아이템을 등록해제한다
+	// I unregister the item
 	sGU_TRADE_DEL_RES* pResult = (sGU_TRADE_DEL_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -3444,7 +3444,7 @@ void PacketHandler_GSTradeDelRes(void *pPacket)
 
 void PacketHandler_GSTradeModifyNfy(void *pPacket)
 {
-	// 다른 사람이 아이템 갯수를 변경하였다
+	// Someone else changed the number of items
 	sGU_TRADE_MODIFY_NFY* pResult = (sGU_TRADE_MODIFY_NFY*)pPacket;
 
 	CDboEventGenerator::UserTrade(USERTRADE_UPDATE_ITEM_NOTIFY, INVALID_SERIAL_ID, pResult->hItem, pResult->byCount);
@@ -3454,7 +3454,7 @@ void PacketHandler_GSTradeModifyRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_TRADE_MODIFY_RES );
 
-	// 내가 아이템을 아이템 갯수를 변경하였다
+	// I changed the number of items
 	sGU_TRADE_MODIFY_RES* pResult = (sGU_TRADE_MODIFY_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -3468,7 +3468,7 @@ void PacketHandler_GSTradeModifyRes(void *pPacket)
 
 void PacketHandler_GSTradeZennyUpdateNfy(void *pPacket)
 {
-	// 다른 사람이 제니를 변경하였다
+	// Someone else changed Zenny
 	sGU_TRADE_ZENNY_UPDATE_NFY* pResult = (sGU_TRADE_ZENNY_UPDATE_NFY*)pPacket;
 
 	CDboEventGenerator::UserTrade(USERTRADE_UPDATE_ZENNY_NOTIFY, INVALID_SERIAL_ID, pResult->dwZenny);
@@ -3478,7 +3478,7 @@ void PacketHandler_GSTradeZennyUpdateRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_TRADE_ZENNY_UPDATE_RES );
 
-	// 내가 제니를 변경하였다
+	// I changed Zenny.
 	sGU_TRADE_ZENNY_UPDATE_RES* pResult = (sGU_TRADE_ZENNY_UPDATE_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -3494,7 +3494,7 @@ void PacketHandler_GSTradeZennyUpdateRes(void *pPacket)
 
 void PacketHandler_GSTradeEndNfy(void *pPacket)
 {
-	// 상대방이 거래 준비를 끝났다
+	// The other party is ready for the transaction
 	sGU_TRADE_END_NFY* pResult = (sGU_TRADE_END_NFY*)pPacket;	
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -3510,7 +3510,7 @@ void PacketHandler_GSTradeEndNfy(void *pPacket)
 
 void PacketHandler_GSTradeEndRes(void *pPacket)
 {
-	// 내가 거래 준비가 끝났다
+	// I'm ready to trade
 	API_GetSLPacketLockManager()->Unlock( GU_TRADE_END_RES );
 	
 	sGU_TRADE_END_RES* pResult = (sGU_TRADE_END_RES*)pPacket;
@@ -3528,21 +3528,21 @@ void PacketHandler_GSTradeEndRes(void *pPacket)
 
 void PacketHandler_GSTradeCancelNfy(void *pPacket)
 {
-	// 서버에서 다양한 이유로 GU_TRADE_START_RES의 응답 대신 GU_TRADE_CANCEL_NFY로 종료될 수 있다
+	// The server may end up with GU_TRADE_CANCEL_NFY instead of a response of GU_TRADE_START_RES for various reasons.
 	API_GetSLPacketLockManager()->Unlock( GU_TRADE_START_RES );
 
-	// 상대방이 거래를 종료하였다
+	// The other party has terminated the transaction
 	sGU_TRADE_CANCEL_NFY* pResult = (sGU_TRADE_CANCEL_NFY*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
 	{
-		// 종료되는 이유를 설명하고 남은 로직을 계속 진행한다
+		// Explain the reason for termination and continue with the remaining logic.
 		GetAlarmManager()->AlarmMessage(Logic_GetResultCodeString(pResult->wResultCode, "GU_TRADE_START_RES"), TRUE );
 	}
 
 	GetDboGlobal()->SetAskedPCSerial(INVALID_SERIAL_ID);
 
-	// 상대방이 거래를 종료하였습니다
+	// The other party has terminated the transaction
 	GetAlarmManager()->AlarmMessage("DST_TRADE_OTHER_CANCLE_TRADE");
 
 	if( GetDialogManager()->IsOpenDialog(DIALOG_TRADECART) )
@@ -3551,9 +3551,9 @@ void PacketHandler_GSTradeCancelNfy(void *pPacket)
 
 void PacketHandler_GSTradeCancelRes(void *pPacket)
 {
-	// 내가 거래를 종료하였다
+	// I closed the transaction
 
-	// 서버에서 다양한 이유로 GU_TRADE_START_RES의 응답 대신 GU_TRADE_CANCEL_RES로 종료될 수 있다
+	// The server may end up with GU_TRADE_CANCEL_RES instead of a response of GU_TRADE_START_RES for various reasons.
 	API_GetSLPacketLockManager()->Unlock( GU_TRADE_START_RES );
 	API_GetSLPacketLockManager()->Unlock( GU_TRADE_CANCEL_RES );
 	
@@ -3561,7 +3561,7 @@ void PacketHandler_GSTradeCancelRes(void *pPacket)
 
 	if( pResult->wResultCode != GAME_SUCCESS )
 	{
-		// 종료되는 이유를 설명하고 남은 로직을 계속 진행한다
+		// Explain the reason for termination and continue with the remaining logic.
 		GetAlarmManager()->AlarmMessage(Logic_GetResultCodeString(pResult->wResultCode, "GU_TRADE_CANCEL_RES"), TRUE );
 	}
 
@@ -3575,7 +3575,7 @@ void PacketHandler_GSTradeDeclineRes(void *pPacket)
 {
 	API_GetSLPacketLockManager()->Unlock( GU_TRADE_DENY_RES );
 
-	// 내가 거래 신청을 받지 않도록 요청하였다
+	// I requested not to receive transaction requests
 	sGU_TRADE_DENY_RES* pResult = (sGU_TRADE_DENY_RES*)pPacket;
 
 	if( pResult->wResultCode != GAME_SUCCESS )
@@ -3586,12 +3586,12 @@ void PacketHandler_GSTradeDeclineRes(void *pPacket)
 
 	if( pResult->bIsDeny )
 	{
-		// 거래 신청을 받지 않는다
+		// We do not accept transaction requests
 		CDboEventGenerator::UserTrade(USERTRADE_DECLINE, INVALID_SERIAL_ID);
 	}
 	else
 	{
-		// 거래 신청을 받는다
+		// Receive transaction request
 		CDboEventGenerator::UserTrade(USERTRADE_ACCEPT, INVALID_SERIAL_ID);
 	}
 }
@@ -3656,8 +3656,8 @@ void PacketHandler_GU_Progess_message_Nfy( void* pPacket )
 {
 	sGU_PROGRESS_MESSAGE_NFY* pResult = (sGU_PROGRESS_MESSAGE_NFY*)pPacket;
 
-	// byProgressType, byMessageValue, byMessageType 순서로 받은 인자를
-	// 2번째 3번째 값을 바꾸어서 적용한다
+	// Arguments received in the order of byProgressType, byMessageValue, and byMessageType
+	// Change the 2nd and 3rd values ​​and apply them.
 	CDboEventGenerator::FlashNotify(pResult->byProgressType, pResult->byMessageValue, pResult->byMessageType);
 }
 
@@ -4009,7 +4009,7 @@ void PacketHandler_GURideOnBusRes( void* pPacket )
 		GetAlarmManager()->FormattedAlarmMessage("DST_BUS_SUCCESS_GET_ON", FALSE, NULL, pNPC_TBLDAT->amerchant_Tblidx[0] );
 	}
 
-    // NOTE: 성공후에는 스테이트 변환이 날라오기 때문에, 실제 처리는 스테이트에서 한다.
+    // NOTE: Since state conversion occurs after success, actual processing is done in the state.
 }
 
 void PacketHandler_GURideOffBusRes( void* pPacket ) 
@@ -4024,7 +4024,7 @@ void PacketHandler_GURideOffBusRes( void* pPacket )
         return;
     }
 
-    // NOTE: 성공후에는 스테이트 변환이 날라오기 때문에, 실제 처리는 스테이트에서 한다.
+    // NOTE: Since state conversion occurs after success, actual processing is done in the state.
 }
 
 void PacketHandler_GUAfterEffectRemainTimeNfy( void* pPacket ) 
@@ -4124,7 +4124,7 @@ void PacketHandler_GUTeleportProposalNfy( void* pPacket )
 {
 	sGU_TELEPORT_PROPOSAL_NFY* pNotify = (sGU_TELEPORT_PROPOSAL_NFY*)pPacket;
 
-	// 구조체를 한번에 날린다.
+	// Throws the structure at once.
 	SDboEventTeleportProposalNfy data;
 	data.byTeleportType = pNotify->byTeleportType;
 	data.byInfoIndex = pNotify->byInfoIndex;
@@ -4151,7 +4151,7 @@ void PacketHandler_GUTeleportConfirmRes( void* pPacket )
 	data.bTeleport = pResult->bTeleport;
 	data.bClearInterface = pResult->bClearInterface;
 
-	// ResultCode 검사 등 모든 것을 TeleportProposalManager에서 받아서 처리한다.
+	// Everything, including ResultCode inspection, is received and processed from TeleportProposalManager.
 
 	CDboEventGenerator::TeleportConfirmRes( &data );
 }
@@ -4247,7 +4247,7 @@ void PacketHandler_GSHTBRPBallResultDecidedNfy( void* pPacket )
 	RwInt32 iAttackPoint	= pHTBRPBall->bySubjectRpBallUsed;
 	RwInt32 iDefenderPoint	= pHTBRPBall->byTargetRpBallUsed;
 	
-	// 공격자 인가?
+	// Are you an attacker?
 	if(hAvatarSerialId == pHTBRPBall->hAttacker)
 	{
 		bAttacker = TRUE;
@@ -4427,13 +4427,13 @@ void PacketHandler_GUCharUpdateNetPy( void* pPacket )
     
     CDboEventGenerator::UpdateNetPy(pData->netP, pData->dwAccumulationNetP, pData->timeNextGainTime);
 
-    // 기존값과 비교를 위해서, 세팅은 뒤에 한다.
+    // For comparison with existing values, settings are made later.
     Logic_SetNetPy(pData->netP);
 }
 
 void PacketHandler_GUBusLocationNfy( void* pPacket ) 
 {
-	// 아바타가 위치하고 있는 존의 버스 위치, 방향 정보를 받았다
+	// Received location and direction information on the bus in the zone where the avatar is located
 	sGU_BUS_LOCATION_NFY* pResult = (sGU_BUS_LOCATION_NFY*)pPacket;
 
 	RwV3d v3Pos = {pResult->vCurLoc.x, 0.f, pResult->vCurLoc.z};
@@ -4444,7 +4444,7 @@ void PacketHandler_GUBusLocationNfy( void* pPacket )
 
 void PacketHandler_GUBusLocationErasedNfy( void* pPacket ) 
 {
-	// 아바타가 위치하고 있는 존의 버스가 사라졌다(혹은 디스폰)
+	// The bus in the zone where the avatar is located has disappeared (or despawn).
 	sGU_BUS_LOCATION_ERASED_NFY* pResult = (sGU_BUS_LOCATION_ERASED_NFY*)pPacket;
 
 	CNtlSLEventGenerator::BusMove(BUS_MOVE_DELETE_BUS, pResult->hSubject, INVALID_TBLIDX, NULL, NULL);
@@ -4452,8 +4452,8 @@ void PacketHandler_GUBusLocationErasedNfy( void* pPacket )
 
 void PacketHandler_GUBusLocationResetAllNfy( void* pPacket ) 
 {
-	// 기존에 서버로 부터 받았던 버스의 위치, 방향 정보를 모두 지운다
-	//sGU_BUS_LOCATION_RESET_ALL_NFY* pResult = (sGU_BUS_LOCATION_RESET_ALL_NFY*)pPacket;
+	// Deletes all bus location and direction information previously received from the server.
+	//sGU_BUS_LOCATION_RESET_ALL_NFY*pResult = (sGU_BUS_LOCATION_RESET_ALL_NFY*)pPacket;
 
 	CNtlSLEventGenerator::BusMove(BUS_MOVE_RESET, INVALID_SERIAL_ID, INVALID_TBLIDX, NULL, NULL);
 }
@@ -4481,7 +4481,7 @@ void PacketHandler_GUItemExpiredNfy(void* pPacket)
 	else
 	{
 		DBO_ASSERTE( "PacketHandler_GUItempExpredNfy : Item Handle is invalid" );
-		// Place, Pos로 다시 한번 검사
+		// Check once again with Place and Pos
 	}
 }
 
@@ -4804,7 +4804,7 @@ void PacketHandler_GUCharUpdateMaxLP( void* pPacket )
 	CNtlParty* pParty = reinterpret_cast<CNtlParty*>(GetNtlSLGlobal()->GetSobAvatar()->GetParty());
 	if( pParty->IsMember(pUpdateLp->handle) )
 	{
-		// 나의 파티원이라면 업데이트
+		// If my party is updated
 		CNtlSLEventGenerator::PartyUpdate(PMT_LP, pNfy->hSubject, pUpdateLp->wCurLP, pUpdateLp->wMaxLP);
 	}
 

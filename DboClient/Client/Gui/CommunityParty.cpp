@@ -1,23 +1,23 @@
 #include "precomp_dboclient.h"
 #include "CommunityParty.h"
 
-// shared
+// Shared
 #include "ItemTable.h"
 #include "NtlDebug.h"
 #include "NtlStringUtil.h"
 #include "NtlResultCode.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "InputActionMap.h"
 #include "NtlSobAvatar.h"
 #include "NtlSLLogic.h"
 #include "NtlSLEventFunc.h"
 
-// dbo
+// Dbo
 #include "InfoWndManager.h"
 #include "IconMoveManager.h"
 #include "DboEvent.h"
@@ -66,18 +66,18 @@ RwBool CCommunityParty::Create(CNtlPLGui* pParent)
 
 	m_pParent = pParent;
 
-	// '파티이름'
+	// 'Party name'
 	rect.SetRectWH(26, 65, 50, 14);
 	m_pPartyName = NTL_NEW gui::CStaticBox( rect, m_pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER );
 	m_pPartyName->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);	
 	m_pPartyName->SetText(GetDisplayStringManager()->GetString(DST_PARTYGUI_PARTY_NAME));
 	m_pPartyName->Enable(false);
 
-	// 파티 이름 백보드
+	// party name backboard
 	m_PartyNameBack.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Community.srf", "PartyNameInputBack" ) );
 	m_PartyNameBack.SetPositionfromParent(86, 63);
 
-	// 현재 파티 이름
+	// Current party name
 	rect.SetRectWH(100, 63, 100, 19);
 	m_pMyPartyNameStatic = NTL_NEW gui::CStaticBox( rect, m_pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_pMyPartyNameStatic->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -85,14 +85,14 @@ RwBool CCommunityParty::Create(CNtlPLGui* pParent)
 	m_pMyPartyNameStatic->Clear();
 	m_pMyPartyNameStatic->Enable(false);
 
-	// 파티 이름 입력란
+	// Party name field
 	m_pPartNameInput = (gui::CInputBox*)m_pParent->GetComponent( "PartyNameInput" );
 	m_pPartNameInput->SetMaxLength(NTL_MAX_SIZE_PARTY_NAME_IN_UNICODE);
 	m_pPartNameInput->SetCaretSize(dINPUTBOX_CARET_WIDTH, dINPUTBOX_CARET_HEIGHT);
 	m_slotReturnInput = m_pPartNameInput->SigReturnPressed().Connect(this, &CCommunityParty::OnReturn_PartyNameInput);
 
 
-	// 파티 생성 버튼
+	// Party creation button
 	m_pPartyButtonCreate = (gui::CButton*)m_pParent->GetComponent("PartyButtonCreate");		
 	m_pPartyButtonCreate->SetTextStyle(COMP_TEXT_CENTER);
 	m_pPartyButtonCreate->SetTextUpColor(NTL_BUTTON_UP_COLOR);
@@ -104,28 +104,28 @@ RwBool CCommunityParty::Create(CNtlPLGui* pParent)
 	m_slotPartyCreateButton = m_pPartyButtonCreate->SigClicked().Connect(this, &CCommunityParty::ClickedPartyCreateButton);
 
 
-	// 'Zenny' 서페이스
+	// 'Zenny' surface
 	rect = m_pParent->GetPosition();
 	m_ZennySurface.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface("Community.srf", "srfZennySurface") );
 	m_ZennySurface.SetPositionfromParent(26, 89);
 
-	// 제니 분배 방식	
+	// Zenny distribution method	
 	m_ZennyDivSurface[ZDT_PICKUP_PERSON].SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface("Community.srf", "srfZennyDivPickup") );
 	m_ZennyDivSurface[ZDT_PICKUP_PERSON].SetPositionfromParent(23, 101);
 	m_ZennyDivSurface[ZDT_EQUAL].SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface("Community.srf", "srfZennyDivNumPeople") );
 	m_ZennyDivSurface[ZDT_EQUAL].SetPositionfromParent(23, 101);
 
-	// 제니 분배 방식 변경 버튼
+	// Zenny distribution method change button
 	m_pSelectZennyDivButton = (gui::CButton*)m_pParent->GetComponent("btnSelectZennyDivButton");		
 	m_pSelectZennyDivButton->SetToolTip(GetDisplayStringManager()->GetString(DST_PARTYGUI_ZENNY_LOOTING));
 	m_slotSelectZennyDivButton = m_pSelectZennyDivButton->SigClicked().Connect(this, &CCommunityParty::ClickedSelectDivButton);
 
-	// 제니 분배 설명 배경
+	// Zenny distribution explanation background
 	rect = m_pParent->GetPosition();
 	m_ZennyExplainPanel.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("Community.srf", "srfExplainPanel") );
 	m_ZennyExplainPanel.SetPositionfromParent(96, 94);
 
-	// 제니 분배 설명
+	// Zenny Distribution Description
 	rect.SetRectWH(104, 98, 146, 31);
 	m_pZennyDivExplain = NTL_NEW gui::CStaticBox( rect, m_pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER );
 	m_pZennyDivExplain->CreateFontStd( "detail", DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -133,18 +133,18 @@ RwBool CCommunityParty::Create(CNtlPLGui* pParent)
 	m_pZennyDivExplain->SetText( GetDisplayStringManager()->GetString(DST_PARTYGUI_ZENNY_LOOTING_GREEDILY) );
 	m_pZennyDivExplain->Enable(false);
 
-	// 제니 분배 잠금 버튼
+	// Zenny dispense lock button
 	m_pZennyLockButton = (gui::CButton*)m_pParent->GetComponent("btnZennyLockButton");		
 	m_slotZennyLockButton = m_pZennyLockButton->SigClicked().Connect(this, &CCommunityParty::ClickedLockButton);
 
 
 
-	// 'Item' 서페이스
+	// 'Item' surface
 	rect = m_pParent->GetPosition();
 	m_ItemSurface.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface("Community.srf", "srfItemSurface") );
 	m_ItemSurface.SetPositionfromParent(31, 133);
 
-	// 아이템 분배 방식	
+	// Item distribution method	
 	m_ItemDivSurface[IDT_PICKUP_PERSON].SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface("Community.srf", "srfItemDivPickup") );
 	m_ItemDivSurface[IDT_PICKUP_PERSON].SetPositionfromParent(23, 144);
 	m_ItemDivSurface[IDT_ORDER].SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface("Community.srf", "srfItemDivOrder") );
@@ -154,17 +154,17 @@ RwBool CCommunityParty::Create(CNtlPLGui* pParent)
 	m_ItemDivSurface[IDT_CONTIBUTION].SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface("Community.srf", "srfItemDivPoint") );
 	m_ItemDivSurface[IDT_CONTIBUTION].SetPositionfromParent(23, 144);
 
-	// 아이템 분배 방식 변경 버튼
+	// Button to change item distribution method
 	m_pSelectItemDivButton = (gui::CButton*)m_pParent->GetComponent("btnSelectItemDivButton");		
 	m_pSelectItemDivButton->SetToolTip(GetDisplayStringManager()->GetString(DST_PARTYGUI_ITEM_LOOTING));
 	m_slotSelectItemDivButton = m_pSelectItemDivButton->SigClicked().Connect(this, &CCommunityParty::ClickedSelectDivButton);
 
-	// 아이템 분배 설명 배경
+	// Item distribution explanation background
 	rect = m_pParent->GetPosition();
 	m_ItemExplainPanel.SetSurface(GetNtlGuiManager()->GetSurfaceManager()->GetSurface("Community.srf", "srfExplainPanel") );
 	m_ItemExplainPanel.SetPositionfromParent(96, 137);
 
-	// 아이템 분배 설명
+	// Item Distribution Description
 	rect.SetRectWH(104, 141, 146, 31);
 	m_pItemDivExplain = NTL_NEW gui::CStaticBox( rect, m_pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER );
 	m_pItemDivExplain->CreateFontStd( "detail", DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
@@ -172,38 +172,38 @@ RwBool CCommunityParty::Create(CNtlPLGui* pParent)
 	m_pItemDivExplain->SetText( GetDisplayStringManager()->GetString(DST_PARTYGUI_ITEM_LOOTING_GREEDILY) );
 	m_pItemDivExplain->Enable(false);
 
-	// 아이템 분배 잠금 버튼
+	// Item distribution lock button
 	m_pItemLockButton = (gui::CButton*)m_pParent->GetComponent("btnItemLockButton");		
 	m_slotItemLockButton = m_pItemLockButton->SigClicked().Connect(this, &CCommunityParty::ClickedLockButton);
 
 
 
-	// '파티 맴버 해드라인'
+	// ‘Party member headline’
 	m_MemberHeadLine.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Community.srf", "PartyHeadLine" ) );
 	m_MemberHeadLine.SetPositionfromParent(11, 189);
 
-	///< '파티 맴버'
+	///< 'Party member'
 	rect.SetRectWH(29, 191, 122, 13);
 	m_MemberStatic = NTL_NEW gui::CStaticBox( rect, m_pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_MemberStatic->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_MemberStatic->SetText(GetDisplayStringManager()->GetString(DST_PARTYGUI_MEMBER));
 	m_MemberStatic->Enable(false);
 
-	///< '기여점수'
+	///< ‘Contribution score’
 	rect.SetRectWH(237, 195, 62, 13);
 	m_ScoreStatic = NTL_NEW gui::CStaticBox( rect, m_pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_CENTER );
 	m_ScoreStatic->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_ScoreStatic->SetText(GetDisplayStringManager()->GetString(DST_PARTYGUI_SCORE));
 	m_ScoreStatic->Enable(false);
 
-	// 파티장 마크
+	// party leader mark
 	m_LeaderMark.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Community.srf", "srfPartyLeaderMark" ) );
 
-	// 맴버 리스트 배경
+	// Member list background
 	m_srfMemberboard.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Community.srf", "Memberboard" ) );
 	m_srfMemberboard.SetPositionfromParent(37, 212);
 
-	// 파티원 이름, 기여도
+	// Party member name, contribution level
 	RwInt32 iYPos = 212;
 	for( RwInt32 i = 0 ; i < NTL_MAX_MEMBER_IN_PARTY ; ++i )
 	{
@@ -228,12 +228,12 @@ RwBool CCommunityParty::Create(CNtlPLGui* pParent)
 	}
 
 
-	// 인벤 버튼
+	// inventory button
 	m_PartyInvenButton = (gui::CButton*)m_pParent->GetComponent("InvenButton");
 	m_PartyInvenButton->SetToolTip(GetDisplayStringManager()->GetString(DST_PARTYGUI_INVEN));
 	m_slotInvenButton = m_PartyInvenButton->SigClicked().Connect(this, &CCommunityParty::OnClicked_InvenButton);
 
-	// 부적 버튼
+	// amulet button
 	m_pCharmButton = (gui::CButton*)m_pParent->GetComponent("CharmButton");
 	m_pCharmButton->SetTextStyle(COMP_TEXT_CENTER);
 	m_pCharmButton->SetTextUpColor(NTL_BUTTON_UP_COLOR);
@@ -243,11 +243,11 @@ RwBool CCommunityParty::Create(CNtlPLGui* pParent)
 	m_pCharmButton->ApplyText();
 	m_slotCharmButton = m_pCharmButton->SigClicked().Connect(this, &CCommunityParty::OnClicked_CharmButton);
 
-	// 부적 패널
+	// amulet panel
 	m_CharmBackpanel.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Community.srf", "CharmBackpanel" ) );
 	m_CharmBackpanel.SetPositionfromParent(218, 328);
 
-	// 부적 슬롯
+	// amulet slot
 	m_PartyCharmSlot[0].Create(m_pParent->GetDialog(), DIALOG_COMMUNITY, ISST_ITEM_TABLE_SERIAL);
 	m_PartyCharmSlot[0].SetPosition(220, 330);
 
@@ -256,25 +256,25 @@ RwBool CCommunityParty::Create(CNtlPLGui* pParent)
 
 
 
-	// 'CP 해드라인'
+	// ‘CP Headline’
 	m_CPHeadLine.SetSurface( GetNtlGuiManager()->GetSurfaceManager()->GetSurface( "Community.srf", "PartyHeadLine" ) );
 	m_CPHeadLine.SetPositionfromParent(11, 372);
 
-	// 'CP 변환'
+	// ‘CP Conversion’
 	rect.SetRectWH(29, 374, 122, 13);
 	m_CPStatic = NTL_NEW gui::CStaticBox( rect, m_pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_CPStatic->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_CPStatic->SetText(GetDisplayStringManager()->GetString(DST_PARTYGUI_CP));
 	m_CPStatic->Enable(false);
 
-	// 실제 보유 CP
+	// Actual CP held
 	rect.SetRectWH(31, 398, 100, 25);
 	m_CPPoint = NTL_NEW gui::CStaticBox( rect, m_pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_RIGHT );
 	m_CPPoint->CreateFontStd( DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_FONT_ATTR);
 	m_CPPoint->SetText( pOtherParam->GetCharmPoint() );
 	m_CPPoint->Enable(false);
 
-	// CP 설명
+	// CP Description
 	rect.SetRectWH(20, 425, 217, 31);
 	m_CPExplain = NTL_NEW gui::CStaticBox( rect, m_pParent->GetDialog(), GetNtlGuiManager()->GetSurfaceManager(), COMP_TEXT_LEFT );
 	m_CPExplain->CreateFontStd( "detail", 80, DEFAULT_FONT_ATTR);
@@ -282,11 +282,11 @@ RwBool CCommunityParty::Create(CNtlPLGui* pParent)
 	m_CPExplain->SetText(GetDisplayStringManager()->GetString(DST_PARTYGUI_CP_EXPLAIN));
 	m_CPExplain->Enable(false);
 
-	// CP 버튼
+	// CP button
 	m_pCPButton = (gui::CButton*)m_pParent->GetComponent("CPButton");
 	m_slotCPButton = m_pCPButton->SigClicked().Connect(this, &CCommunityParty::OnClicked_CPButton);
 
-	// 아이템을 CP로 전환 버튼
+	// Convert item to CP button
 	m_pItemtoCPButton = (gui::CButton*)m_pParent->GetComponent("ItemtoCPButton");
 	m_slotItemtoCPButton = m_pItemtoCPButton->SigClicked().Connect(this, &CCommunityParty::OnClicked_ItemtoCPButton);
 
@@ -468,7 +468,7 @@ VOID CCommunityParty::ClickedPartyCreateButton(gui::CComponent* pComponent)
 	}
 	else if( GetChattingFilter()->IsSlang(pcPartyName) )
 	{
-		// 사용할 수 없는 단어가 있습니다
+		// There are words that cannot be used
 		GetAlarmManager()->AlarmMessage(DST_LOBBY_CAN_NOT_USE_THE_WORD);
 		return;
 	}
@@ -489,7 +489,7 @@ VOID CCommunityParty::ClickedSelectDivButton(gui::CComponent* pComponent)
 {
 	if( !Logic_I_am_PartyLeader() )
 	{
-		// DST_PARTYGUI_ONLY_LEADER
+		// Dst partygui only leader
 		GetAlarmManager()->AlarmMessage(DST_PARTYGUI_ONLY_LEADER);
 		return;
 	}
@@ -535,7 +535,7 @@ VOID CCommunityParty::OnClicked_InvenButton(gui::CComponent* pComponent)
 
 VOID CCommunityParty::OnClicked_CharmButton(gui::CComponent* pComponent)
 {
-	// 파티장만이 열 수 있다.
+	// Only the party leader can open it.
 	if( Logic_I_am_PartyLeader() == false )
 	{
 		GetAlarmManager()->AlarmMessage( GAME_PARTY_ONLY_ALLOWED_TO_PARTY_LEADER, TRUE );
@@ -549,7 +549,7 @@ VOID CCommunityParty::OnClicked_CharmButton(gui::CComponent* pComponent)
 
 	for( RwInt8 i = 0 ; i < NTL_PARTY_CHARM_INVENTORY_COUNT ; ++i )
 	{
-		// 빈 슬롯만 열 수 있다
+		// Only empty slots can be opened
 		const sPartyCharm& rPartyCharm = pParty->GetCharmbyIndex(i);
 
 		if( rPartyCharm.pITEM_TBLDAT == NULL && 
@@ -586,12 +586,12 @@ VOID CCommunityParty::OnClicked_ItemtoCPButton(gui::CComponent* pComponent)
 		sMsgBoxData data;
 		data.sItemDeleteInfo = sInfo;
 
-		// 아이템을 CP로 전환하시겠습니까?
+		// Would you like to convert an item to CP?
 		GetAlarmManager()->AlarmMessage( DST_PARTY_GET_CP_ASK, FALSE, &data );
 		//CDboEventGenerator::MsgBoxShow( GetDisplayStringManager()->GetString( DST_PARTY_GET_CP_ASK ), MBW_GET_CP_FROM_ITEM, MBT_OKCANCEL, FALSE, 0.0f, &sInfo );
 		GetIconMoveManager()->IconMoveEnd();
 
-		// 가방의 아이템 락
+		// Item lock in bag
 		CNtlInventory* pInventory = GetNtlSLGlobal()->GetSobAvatar()->GetInventory();
 		CNtlSobItem* pSrcItem = reinterpret_cast<CNtlSobItem*>( GetNtlSobManager()->GetSobObject(sInfo.hSerial) );
 		NTL_ASSERT(pSrcItem, "CCommunityParty::OnClicked_ItemtoCPButton, Not exist sob item of handle : " << sInfo.hSerial);
@@ -783,7 +783,7 @@ VOID CCommunityParty::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 {
 	CRectangle rtScreen = m_pParent->GetDialog()->GetScreenRect();
 
-	// 아이콘 영역으로 마우스를 이동시켜서 아이템 정보를 보일 필요가 있는지 검사
+	// Move the mouse to the icon area to check whether item information needs to be displayed.
 	for( RwInt32 i = 0 ; i < NTL_PARTY_CHARM_INVENTORY_COUNT ; ++i )
 	{
 		if( m_PartyCharmSlot[i].PtInRect(nX, nY) )
@@ -919,7 +919,7 @@ VOID CCommunityParty::HandleEvents( RWS::CMsg &msg )
 			}
 		case PMT_PARTY_MEMBER_ADD:
 			{
-				// 가장 마지막에 추가된 맴버 정보를 등록				
+				// Register the information of the last added member				
 				CNtlParty* pParty = GetNtlSLGlobal()->GetSobAvatar()->GetParty();
 				RwInt32 iLastMemberIndex = pParty->GetMemberCount();
 				sPartyMember* pPartyMember = reinterpret_cast<sPartyMember*>( pParty->GetMemberbyKey( pPacket->hSerialId ) );
@@ -964,7 +964,7 @@ VOID CCommunityParty::HandleEvents( RWS::CMsg &msg )
 				{		
 					sPartyMember* pMember = reinterpret_cast<sPartyMember*>( *it );
 
-					// 파티 리더라면 마크 표시
+					// Mark if you are the party leader
 					if( hLeaderSerial == pMember->hSerial )
 					{
 						LocateLeaderMark(i+1);

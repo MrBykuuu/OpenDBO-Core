@@ -1,14 +1,14 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlSobBuff.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlInstanceEffect.h"
 #include "NtlPLSceneManager.h"
 
-// simulation 
+// Simulation 
 #include "NtlSLEvent.h"
 #include "NtlSobManager.h"
 #include "NtlSobBuffAttr.h"
@@ -40,10 +40,10 @@ RwBool CNtlSobBuff::Create(void)
 		NTL_RETURN(FALSE);
 	}
 
-	// class name 설정.
+	// Set class name.
 	SetClassName(SLCLASS_NAME_BUFF);
 
-	// icon 생성.
+	// Create icon.
 	m_pIcon->Create(); 
 	m_pIcon->PostCreate();
 

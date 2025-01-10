@@ -2,16 +2,16 @@
 #include "NtlSoundEvent.h"
 
 
-RWS::CEventId g_EventSoundReleaseSound;				// 한 개 채널의 사운드가 해제되었다
+RWS::CEventId g_EventSoundReleaseSound;				// The sound of one channel is turned off
 
-RWS::CEventId g_EventSoundFinishFade;				// 페이드 인/아웃이 끝났다
+RWS::CEventId g_EventSoundFinishFade;				// Fade in/out is finished
 
-RWS::CEventId g_EventSoundDSP;						// 효과음 관련 이벤트
+RWS::CEventId g_EventSoundDSP;						// Sound effect related events
 
-RWS::CEventId g_EventSoundEventMusic;				// 이벤트음악 채널 이벤트
+RWS::CEventId g_EventSoundEventMusic;				// EventMusic Channel Event
 
-RWS::CEventId g_EventSoundRestTime;					// 반복되는 음악의 다음 플레이까지 휴식 시간
+RWS::CEventId g_EventSoundRestTime;					// A break until the next play of repetitive music
 
-RWS::CEventId g_EventSoundKnockdown;				// 넉다운 될 때
+RWS::CEventId g_EventSoundKnockdown;				// When you get knocked down
 
-RWS::CEventId g_EventSoundMinMaxRate;				// 3D 사운드의 전체 Min, Max값을 바꾼다
+RWS::CEventId g_EventSoundMinMaxRate;				// Change the overall Min and Max values ??of 3D sound.

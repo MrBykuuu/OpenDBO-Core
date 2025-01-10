@@ -79,7 +79,7 @@ void CNtlSobProxy::Update(RwReal fElapsed)
 {
     if(!m_listProxySystemEffect.empty())
     {
-        // ProxySystemEffect 업데이트
+        //Update ProxySystemEffect
         RwBool bIsCalcWeight[CNtlSobProxySystemEffect::PROXY_SYSTEM_EFFECT_COUNT];
         ZeroMemory(bIsCalcWeight, sizeof(RwBool) * CNtlSobProxySystemEffect::PROXY_SYSTEM_EFFECT_COUNT);
 
@@ -87,7 +87,7 @@ void CNtlSobProxy::Update(RwReal fElapsed)
         for(ListProxySystemEffect::iterator it = m_listProxySystemEffect.begin(); it != m_listProxySystemEffect.end();)
         {
             pSystemEffect = (*it);
-            if(pSystemEffect->IsFinish())       // 종료시에는 이펙트의 삭제후의 값을 계산해야 한다.
+            if(pSystemEffect->IsFinish())       //At the end, the value after deleting the effect must be calculated.
             {
                 if(pSystemEffect->GetType() != CNtlSobProxySystemEffect::PROXY_SYSTEM_EFFECT_SCALE)
                 {
@@ -202,7 +202,7 @@ void CNtlSobProxy::UpdateSystemEffectAlpha(RwReal fElapsed)
 		}
 	}
 
-	// 형석 작업(2008.03.10) - 민근 이 코딩 의미 있슴.
+	//Fluorite work (2008.03.10) -Mingeun's coding has meaning.
 	if(bAlphaEffectNum == 0)
 		return;
 
@@ -511,14 +511,14 @@ void CNtlSobProxy::RemoveVisualSystemEffectAlpha(CNtlSobProxySystemEffect *pSyst
 		}
 	}
 
-	// (형석 - 2008.05.20)
-	// system effect alpha가 존재하는지를 판단. 없으면 reset 해준다.
+	//(Fluor Seok -2008.05.20)
+	//Determine whether system effect alpha exists. If not, reset it.
 	if(!bRemoveSystemEffectAlpha)
 		return;
 
 	for(it = m_listProxySystemEffect.begin(); it != m_listProxySystemEffect.end(); it++)
 	{
-		// update에서 alpha system effect가 존재한다면?
+		//What if alpha system effect exists in update?
 		if((*it)->GetType() == CNtlSobProxySystemEffect::PROXY_SYSTEM_EFFECT_ALPHA_BLEND)
 		{
 			return;
@@ -666,8 +666,8 @@ void CNtlSobProxy::EnableWorldLight(RwBool bEnable, RwUInt8 byRed, RwUInt8 byGre
 }
 
 /**
- * 카메라와의 거리에 따른 알파 이펙트 적용시에 사용하는 함수
- * \param bEnable 적용 유무
+ *Function used when applying alpha effects depending on the distance from the camera
+ * \param bEnable Applicable or not
  */
 void CNtlSobProxy::EnableCameraAlpha( RwBool bEnable ) 
 {
@@ -676,8 +676,8 @@ void CNtlSobProxy::EnableCameraAlpha( RwBool bEnable )
 
 	RwUInt32 uiFlags = m_pSobObj->GetFlags();
 
-	// 형석.
-	// 현재 camera와 충돌한 object가 Community NPC 이면 aplha를 적용하지 않느다.
+	// fluorite.
+	// If the object currently colliding with the camera is a Community NPC, aplha is not applied.
 	if(bEnable && uiFlags & SLFLAG_NOT_ALPHA_CAMERA_COLLI)
 		return;
 

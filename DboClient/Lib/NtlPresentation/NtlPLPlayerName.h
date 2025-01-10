@@ -2,7 +2,7 @@
  *
  * File			: NtlPLPlayerName.h
  * Author		: HyungSuk Jang
- * Copyright	: (주)NTL
+ * Copyright	: (?)NTL
  * Date			: 2005. 11. 24	
  * Abstract		: Presentation layer player name entity class
  *****************************************************************************
@@ -21,8 +21,8 @@
 #include "gui_font.h"
 #include "gui_texture.h"
 
-// Texture의 1 Size에 가장 뚜렷하게 보이는 폴리곤 사이즈
-// Textrue Size에 곱해주면 가장 뚜렷하게 보이는 폴리곤 사이즈를 내놓는다.
+// The most clearly visible polygon size in 1 size of texture
+// Multiplying the Textrue Size gives the most clearly visible polygon size.
 // ex) 512 * PLAYERNAME_BOX_BASIS_CX = 2.0f
 #define PLAYERNAME_BOX_BASIS_CX			0.00390625f
 #define PLAYERNAME_BOX_BASIS_CY			0.00625f
@@ -44,7 +44,7 @@
 // FONT SIZE
 //#define dNTL_PLAYERNAME_FONTSIZE_NAME	230 
 //#define dNTL_PLAYERNAME_FONTSIZE_GUILD	180
-// modified by kell ( 2008. 7. 1 기획팀요청 )
+// modified by kell ( 2008. 7. 1 Planning Team Request )
 #define dNTL_PLAYERNAME_FONTSIZE_NAME	200 
 #define dNTL_PLAYERNAME_FONTSIZE_GUILD	200
 #define dNTL_PLAYERNAME_FONTSIZE_NICK	190
@@ -58,7 +58,7 @@
 #define dNTL_PL_FLAG_TITLE		0x00000010
 
 /**
-* \brief PlayerNameEntity의 자료구조
+* \brief Data structure of PlayerNameEntity
 */
 struct SPLPlayerNameCreateParam : public SPLEntityCreateParam
 {
@@ -143,8 +143,8 @@ public:
 	void	SetNickNameColor(const WCHAR* pwcTitle, COLORREF color );
 
 protected:
-	RwBool	m_bCameraCullIn;				///< 카메라에 컬링되는가
-	RwReal	m_fCullDist;					///< 컬링 거리
+	RwBool	m_bCameraCullIn;				///< Is it culled by the camera?
+	RwReal	m_fCullDist;					///< Curling distance
 
 	RwBool m_bNameVisible;					///< Whether or not the PlayerName can be Visible
 	RwBool m_bTitleNameVisible;				///< Whether or not the TitleName can be Visible
@@ -163,21 +163,21 @@ protected:
 	CPos	m_posNickNameSize;				///< Nick's pixel size
 	CPos	m_posTitleNameSize;				///< Title pixel size
 
-	RwV3d			m_v3WorldPosition;		///< PlayerName Entity의 월드 포지션
+	RwV3d			m_v3WorldPosition;		///< World position of PlayerName Entity
 	
-	RwV3d			m_v3Pos[PLAYERNAME_VERTEX_COUNT];				///< 이름과 길드 이름의 로컬 좌표
-	RwIm3DVertex	m_3dVertices[PLAYERNAME_VERTEX_COUNT];			///< 실제 오브젝트를 그릴 때 사용될 버텍스 버퍼
+	RwV3d			m_v3Pos[PLAYERNAME_VERTEX_COUNT];				///< Local coordinates of name and guild name
+	RwIm3DVertex	m_3dVertices[PLAYERNAME_VERTEX_COUNT];			///< Vertex buffer to be used when drawing the actual object
 
-	RwV3d			m_v3EmblemPos[PLAYERNAME_VERTEX_COUNT];			///< 길드 엠블렘의 로컬 좌표
-	RwIm3DVertex	m_3dEmblemVertices[PLAYERNAME_VERTEX_COUNT];	///< 엠블렘 오브젝트를 그릴 때 사용될 버텍스 버퍼
+	RwV3d			m_v3EmblemPos[PLAYERNAME_VERTEX_COUNT];			///< Local coordinates of the guild emblem
+	RwIm3DVertex	m_3dEmblemVertices[PLAYERNAME_VERTEX_COUNT];	///< Vertex buffer to be used when drawing the emblem object
 
 	RwV3d			m_v3NickPos[PLAYERNAME_VERTEX_COUNT];
 	RwIm3DVertex	m_3dNickVertices[PLAYERNAME_VERTEX_COUNT];
 
-	RwMatrix		m_matWorld;				///< 카메라의 역행렬과 스케일 값으로 구한 월드 행렬
-    RwUInt8			m_byAlpha;				///< PlayerName의 Alpha
+	RwMatrix		m_matWorld;				///< World matrix obtained from camera inverse matrix and scale value
+    RwUInt8			m_byAlpha;				///< Alpha of PlayerName
 
-	RwUInt32		m_byFlag;				///< 출력되거나 로컬 좌표를 계산하는 상태 태그
+	RwUInt32		m_byFlag;				///< Status tag that is output or calculates local coordinates
 };
 
 #endif

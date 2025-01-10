@@ -2,19 +2,19 @@
 #include "DojoUpgradeGui.h"
 
 
-// shared
+// Shared
 #include "NPCTable.h"
 #include "ItemTable.h"
 #include "DojoTable.h"
 #include "TableContainer.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 #include "NtlCameraController.h"
 #include "NtlSLEventFunc.h"
 #include "NtlSLGuild.h"
@@ -24,7 +24,7 @@
 #include "NtlSobItem.h"
 #include "NtlSobItemAttr.h"
 
-// client
+// Client
 #include "DialogManager.h"
 #include "DisplayStringManager.h"
 #include "DboEventGenerator.h"
@@ -148,12 +148,12 @@ RwBool CDojoUpradeGui::Create()
 	m_NeedItemBackground.SetSize(298, 50);
 	m_NeedItemBackground.SetPositionfromParent(11, 292);
 
-	// 업그레이드 재료 슬롯
+	// upgrade material slot
 	m_StuffSlot.Create(m_pThis, DIALOG_DOGI, REGULAR_SLOT_ITEM_SOB);
 	m_StuffSlot.SetPosition_fromParent(268, 301);
 
 
-	// 스트링
+	// string
 	m_pDialogName					->SetText( GetDisplayStringManager()->GetString("DST_DOJO_UPGRADE") );
 	m_pDojoNameStatic				->SetText( GetDisplayStringManager()->GetString("DST_DOJO_NAME") );	
 	m_pNeedGuildPointStatic			->SetText( GetDisplayStringManager()->GetString("DST_DOJO_NEED_GUILD_POINT") );
@@ -168,11 +168,11 @@ RwBool CDojoUpradeGui::Create()
 	// default value
 	m_pDialogName->SetPosition(DBOGUI_DIALOG_TITLE_X, DBOGUI_DIALOG_TITLE_Y);	
 
-	// 기본 위치 지정
+	// Default positioning
 	OnMove(0, 0);
 
 
-	// sig
+	// Signals
 	m_slotHelpButton	= m_pBtnHelp->SigClicked().Connect(this, &CDojoUpradeGui::OnClicked_HelpButton);
 	m_slotExitButton	= m_pBtnExit->SigClicked().Connect(this, &CDojoUpradeGui::OnClicked_ExitButton);	
 	m_slotUpgradeButton	= m_pBtnUpgrade->SigClicked().Connect(this, &CDojoUpradeGui::OnClicked_UpgradeButton);
@@ -708,7 +708,7 @@ VOID CDojoUpradeGui::OnMouseUp(const CKey& key)
 						{
 							CNtlSobItemAttr* pSobItemAttr = reinterpret_cast<CNtlSobItemAttr*>(pSobItem->GetSobAttr());
 
-							// 미확인 아이템이 아닌 것만 등록
+							// Register only non-identified items
 							if( FALSE == pSobItemAttr->IsNeedToIdentify() )
 							{
 								sITEM_TBLDAT* pITEM_TBLDAT = pSobItemAttr->GetItemTbl();
@@ -716,7 +716,7 @@ VOID CDojoUpradeGui::OnMouseUp(const CKey& key)
 								{
 									if( ITEM_TYPE_HOIPOIROCK == pITEM_TBLDAT->byItem_Type )
 									{
-										// 가방에서 도장 업그레이드 재료 아이템을 등록했다
+										// A seal upgrade material item was registered in the bag.
 										SetHoipoiRock(hItem, pSobItemAttr->GetStackNum());
 										GetIconMoveManager()->IconMoveEnd();
 									}
@@ -746,7 +746,7 @@ VOID CDojoUpradeGui::OnMouseUp(const CKey& key)
 		{
 			if( m_byRightMouseDown == iSlot )
 			{
-				// 등록된 도장 업그레이드 아이템을 지운다				
+				// Delete registered stamp upgrade items				
 				CheckInfoWindow();
 				UnsetHoipoiRock();
 			}
@@ -784,7 +784,7 @@ VOID CDojoUpradeGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 {
 	CRectangle rtScreen = m_pThis->GetScreenRect();
 
-	// 재료 슬롯 인포
+	// Material Slot Info
 	if( m_StuffSlot.PtInRect(nX, nY) )
 	{
 		if( m_StuffSlot.GetSerial() != INVALID_SERIAL_ID )
@@ -807,7 +807,7 @@ VOID CDojoUpradeGui::OnMouseMove(RwInt32 nFlags, RwInt32 nX, RwInt32 nY)
 		m_bSlotFocus = FALSE;
 	}
 
-	// 도장 레벨 설명 인포
+	// Dojo Level Description Info
 	RwBool		bExistDojoLevelInfo = TRUE;
 	CRectangle	rtLeftDojoVisual, rtRightDojoVisual;
 
@@ -1027,7 +1027,7 @@ VOID CDojoUpradeGui::HandleEvents( RWS::CMsg &msg )
 
 		if( m_hNPCSerial == *pDeleteSerial )
 		{
-			// NPC 서버가 다운되거나 하여 갑자기 NPC가 사라지는 경우
+			// When the NPC server suddenly goes down or the NPC suddenly disappears
 			GetDialogManager()->CloseDialog(DIALOG_DOJO_UPGRADE);
 		}
 	}
@@ -1074,7 +1074,7 @@ VOID CDojoUpradeGui::HandleEvents( RWS::CMsg &msg )
 	}
 	else if( msg.Id == g_EventNotifyGuild )
 	{
-		// GUI를 열 때마다 정보를 갱신하기에 닫혀있는 상태에서는 갱신하지 않는다
+		// Since the information is updated every time the GUI is opened, it is not updated when it is closed.
 		if( FALSE == GetDialogManager()->IsOpenDialog(DIALOG_DOJO_UPGRADE) )
 			NTL_RETURNVOID();
 
@@ -1136,7 +1136,7 @@ VOID CDojoUpradeGui::HandleEvents( RWS::CMsg &msg )
 			{
 				if( NULL == GetNtlSobManager()->GetSobObject(m_StuffSlot.GetSerial()) )
 				{
-					// 등록했던 호이포이락이 사라졌다
+					// The HoipoiRock I registered has disappeared.
 					CheckInfoWindow();
 					UnsetHoipoiRock();
 				}
@@ -1145,7 +1145,7 @@ VOID CDojoUpradeGui::HandleEvents( RWS::CMsg &msg )
 	}
 	else if( msg.Id == g_EventDirectMoveIcon )
 	{
-		// GUI를 열 때마다 정보를 갱신하기에 닫혀있는 상태에서는 갱신하지 않는다
+		// Since the information is updated every time the GUI is opened, it is not updated when it is closed.
 		if( FALSE == GetDialogManager()->IsOpenDialog(DIALOG_DOJO_UPGRADE) )
 			NTL_RETURNVOID();
 
@@ -1159,7 +1159,7 @@ VOID CDojoUpradeGui::HandleEvents( RWS::CMsg &msg )
 	}
 	else if( msg.Id == g_EventDojoNotify )
 	{
-		// GUI를 열 때마다 정보를 갱신하기에 닫혀있는 상태에서는 갱신하지 않는다
+		// Since the information is updated every time the GUI is opened, it is not updated when it is closed.
 		if( FALSE == GetDialogManager()->IsOpenDialog(DIALOG_DOJO_UPGRADE) )
 			NTL_RETURNVOID();
 
@@ -1197,7 +1197,7 @@ VOID CDojoUpradeGui::HandleEvents( RWS::CMsg &msg )
 	}
 	else if( msg.Id == g_EventEnableItemIcon )
 	{
-		// GUI를 열 때마다 정보를 갱신하기에 닫혀있는 상태에서는 갱신하지 않는다
+		// Since the information is updated every time the GUI is opened, it is not updated when it is closed.
 		if( FALSE == GetDialogManager()->IsOpenDialog(DIALOG_DOJO_UPGRADE) )
 			NTL_RETURNVOID();
 

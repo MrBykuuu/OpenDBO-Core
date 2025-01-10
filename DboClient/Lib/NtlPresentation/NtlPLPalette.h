@@ -2,11 +2,11 @@
 *
 * File			: NtlPLPalette.h
 * Author		: Hong sungbock
-* Copyright		: (주)NTL
+* Copyright		: NTL Co., Ltd.
 * Date			: 2008. 3. 13
 * Abstract		: Presentation layer palette info
 *****************************************************************************
-* Desc          : Dbo에서 쓰이는 팔레트 정보를 가지고 있다
+* Desc          :  Contains palette information used in Dbo
 *****************************************************************************/
 
 #ifndef __NTL_PLPALETTE_H__
@@ -32,10 +32,10 @@ enum eLOAD_RESULT
 {
 	LOAD_RESULT_OK,
 
-	LOAD_RESULT_FAIL_LOAD_FILE,						///< 파일을 읽지 못했다
-	LOAD_RESULT_NOT_EXIST_PALETTE,					///< 해당 팔레트가 없다
-	LOAD_RESULT_LESS_ELEMENT_COUNT,					///< 팔레트의 구성 갯수가 dEMBLEM_PALETTE_COUNT보다 작다
-	LOAD_RESULT_MORE_ELEMENT_COUNT,					///< 팔레트의 구성 갯수가 dEMBLEM_PALETTE_COUNT보다 많다
+	LOAD_RESULT_FAIL_LOAD_FILE,						///< Failed to read file
+	LOAD_RESULT_NOT_EXIST_PALETTE,					///< There is no such palette
+	LOAD_RESULT_LESS_ELEMENT_COUNT,					///< The number of palette configurations is less than dEMBLEM_PALETTE_COUNT
+	LOAD_RESULT_MORE_ELEMENT_COUNT,					///< The number of palette configurations is greater than dEMBLEM_PALETTE_COUNT
 };
 
 class CNtlPLPalette
@@ -52,9 +52,9 @@ public:
 	COLORREF		GetColor(ePaletteType eType, RwUInt32 uiColorIndex);
 	RwUInt8			GetIndex(ePaletteType eType, const COLORREF* pColor);
 
-	///< 팔레트를 다시 읽어들이는 개발용 함수
-	///< 절대로! 실제 게임에서 외부 데이터를 읽어 사용하지 말자.
-	///< 팔레트 관련 담당자가 팔레트만 바꾸고 관련 GUI 등이 바뀌지 않을 위험이 있다
+	///< Development function to reload the palette
+	///< Never! Do not read and use external data in the actual game.
+	///< There is a risk that the palette-related person only changes the palette and the related GUI does not change.
 	eLOAD_RESULT	LoadPalette_forDeveloper();
 
 protected:

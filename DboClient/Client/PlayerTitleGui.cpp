@@ -1,18 +1,18 @@
 #include "precomp_dboclient.h"
 #include "PlayerTitleGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// shared
+// Shared
 #include "CharTitleTable.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 
-// simulation
+// Simulation
 
-// dbo
+// Dbo
 #include "DboGlobal.h"
 #include "DialogManager.h"
 #include "DisplayStringManager.h"
@@ -111,7 +111,7 @@ RwBool CPlayerTitleGui::Create()
 	m_pEffectBox->ShowScrollBar(false);
 	m_pEffectBox->SetTextColor(RGB(255, 210, 0));
 
-	// sig
+	// Signals
 	m_slotPaint = m_pThis->SigPaint().Connect(this, &CPlayerTitleGui::OnPaint);
 	m_slotMove = m_pThis->SigMove().Connect(this, &CPlayerTitleGui::OnMove);
 	m_slotCaptureWheelMove = m_pThis->SigMouseWheel().Connect(this, &CPlayerTitleGui::OnCaptureWheelMove);

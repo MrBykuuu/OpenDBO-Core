@@ -6,7 +6,7 @@
 * Date			: 2008. 4. 3
 * Abstract		: 
 *****************************************************************************
-* Desc			: Dbo에서 쓰이는 개별 사운드를 다룬다
+* Desc			:Deals with individual sounds used in Dbo
 *****************************************************************************/
 
 #pragma once
@@ -39,7 +39,7 @@ public:
 	std::string			m_strName;
 	eSoundPlayState		m_eState;
 	bool				m_bLoop;
-	bool				m_bCreatedfromSoundPool;	///< Sound pool에서 FMOD::Sound를 가지고 왔다
+	bool				m_bCreatedfromSoundPool;	///< FMOD::Sound was imported from the Sound pool.
 	sNtlVolume			m_tVolume;
 	sNtlMinMax			m_tMinMax;
 	float				m_fXPos;

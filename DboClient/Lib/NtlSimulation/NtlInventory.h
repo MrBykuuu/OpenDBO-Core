@@ -2,7 +2,7 @@
  *
  * File			: NtlInventory.h
  * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2006. 4. 24	
  * Abstract		: Simulation Inventory
  *****************************************************************************
@@ -13,13 +13,13 @@
 #ifndef __NTL_INVENTORY_H__
 #define __NTL_INVENTORY_H__
 
-// core
+// Core
 #include "ceventhandler.h"
 
-//shared
+//Shared
 #include "NtlItem.h"
 
-//simulation
+//Simulation
 #include "NtlSLDef.h"
 #include "NtlSLEvent.h"
 
@@ -27,7 +27,7 @@ class CNtlSobItem;
 class CNtlSobQuestItem;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-// player 사용
+// player use
 
 class CNtlInventoryBase : public RWS::CEventHandler
 {
@@ -48,7 +48,7 @@ public:
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-// avatar 사용
+// use avatar
 
 typedef struct _stCOOLTIMEDATA
 {
@@ -64,7 +64,7 @@ private:
 
 	SERIAL_HANDLE m_hEquipItem[NTL_MAX_EQUIP_ITEM_SLOT];	/** inventory item serial data */
 	SERIAL_HANDLE m_hBagItem[NTL_MAX_BAGSLOT_COUNT];		/** inventory item serial data */
-	stCOOLTIMEDATA	m_stCoolTimeGroup[ITEM_COOL_TIME_GROUP_COUNT];	// 아이템 사용 그룹별 쿨타임 관리
+	stCOOLTIMEDATA	m_stCoolTimeGroup[ITEM_COOL_TIME_GROUP_COUNT];	// Cool time management for each item usage group
 	
 private:
 
@@ -126,7 +126,7 @@ public:
 
 	SERIAL_HANDLE GetScouterItem(VOID);
 
-	// item 전체에 대하여.
+	// About the entire item.
 	void InvalidItem(SERIAL_HANDLE hItemSerial);
 
 	// cooltime

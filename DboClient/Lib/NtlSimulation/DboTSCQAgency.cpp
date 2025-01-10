@@ -163,7 +163,7 @@ SGET_QUEST_INFO* CDboTSCQAgency::GetQuestInfoList( eEVENT_GEN_TYPE eEvtGenType, 
 
 	sQUEST_INFO sQuestInfo;
 
-	// 1. 현재 진행 중인 퀘스트가 해당 오브젝트 아이디를 진행 이벤트로 사용할 수 있는지 검사한다
+	// 1. Check whether the currently ongoing quest can use the object ID as a progress event.
 	mapdef_TRIGGER_LIST::iterator itCPQ = m_defCurTList.begin();
 	for ( ; itCPQ != m_defCurTList.end(); ++itCPQ )
 	{
@@ -312,7 +312,7 @@ SGET_QUEST_INFO* CDboTSCQAgency::GetQuestInfoList( eEVENT_GEN_TYPE eEvtGenType, 
 		}
 	}
 
-	// 2. 해당 오브젝트 아이디로 시작 할 수 있는 퀘스트가 존재하면 시작한다
+	//2. If there is a quest that can be started with the corresponding object ID, start it.
 	CNtlTSEvtMapper* pEvtMapper = 0;
 	
 	if ( eEVENT_GEN_TYPE_CLICK_NPC == eEvtGenType )
@@ -436,18 +436,18 @@ SGET_QUEST_INFO* CDboTSCQAgency::GetQuestInfoList( eEVENT_GEN_TYPE eEvtGenType, 
 
 	for ( itSQ = pSTrigList->begin(); itSQ != pSTrigList->end(); ++itSQ )
 	{
-		// 현재 진행중인 퀘스트이면 더 이상 진행 할 수 없다
+		//If the quest is currently in progress, it cannot proceed further.
 		if ( m_defCurTList.find( *itSQ ) != m_defCurTList.end() ) continue;
 
 		CNtlTSTrigger* pTrig = ((CDboTSCMain*)m_pParent)->FindQuestFromTS( *itSQ );
 		if ( 0 == pTrig ) continue;
 
-		// 반복 가능 퀘스트인지 검사한다
+		//Check if the quest is repeatable
 		if ( !pTrig->IsRepeatQuest() && GetCompletedQInfo()->HasBeenClearQuest( *itSQ ) ) continue;
 
 		CDboTSCQCtrl* pQCtrl = (CDboTSCQCtrl*)MakeTriggerController( pTrig );
 
-		// Main group의 start container(시작 컨테이너)를 만족하면 퀘스트 진행
+		// Main group's start container (starting container), the quest progresses
 
 		sRunParam.SetControl( pQCtrl );
 
@@ -1222,7 +1222,7 @@ const wchar_t* CDboTSCQAgency::GetQuestText( NTL_TS_T_ID tID )
 
 CDboTSTCtrl* CDboTSCQAgency::MakeTriggerController( CNtlTSTrigger* pTrig )
 {
-	// Quest controller 를 생성한다
+	//Create a Quest controller
 	CNtlTSControlObject* pCtrlObj = GetParent()->GetControlFactory()->CreateObj( "CDboTSCQCtrl" );
 	if ( !pCtrlObj->IsDerivedClass( "CDboTSCQCtrl" ) )
 	{
@@ -1231,7 +1231,7 @@ CDboTSTCtrl* CDboTSCQAgency::MakeTriggerController( CNtlTSTrigger* pTrig )
 		return 0;
 	}
 
-	// TS trigger 와 Quest trigger를 연결 및 저장한다
+	//Connect and save TS trigger and Quest trigger
 	((CDboTSCQCtrl*)pCtrlObj)->SetTrigger( pTrig );
 	((CDboTSCQCtrl*)pCtrlObj)->SetParent( this );
 
@@ -1339,10 +1339,10 @@ void CDboTSCQAgency::GetStarterOrRewardEventInfo( NTL_TS_T_ID tID, RwUInt32& uiE
 
 void CDboTSCQAgency::UG_Quest_Share( NTL_TS_T_ID tId )
 {
-	// 서버에게 퀘스트 공유 메시지를 전송한다
+	//Send a quest sharing message to the server
 	API_GetSLPacketGenerator()->SendQuestShare( tId );
 
-	// MSG 출력
+	//MSG output
 	const wchar_t* pQuestText = GetQuestText( tId );
 	CNtlSLEventGenerator::FormatSysMsg( INVALID_SERIAL_ID, "DST_QUEST_SHARE_TRY", FALSE, pQuestText );
 }
@@ -1354,7 +1354,7 @@ void CDboTSCQAgency::GU_Quest_Share_Nfy( WORD wResultCode, HOBJECT hActor, NTL_T
 		// 1. Check that the quest is already in progress.
 		if ( FindProgressTrigger( tId ) )
 		{
-			// MSG 출력
+			//MSG output
 			const wchar_t* pQuestText = GetQuestText( tId );
 			CNtlSLEventGenerator::FormatSysMsg( INVALID_SERIAL_ID, "DST_QUEST_SHARE_ALREADY_PROGRESS", FALSE, pQuestText );
 			return;
@@ -1370,7 +1370,7 @@ void CDboTSCQAgency::GU_Quest_Share_Nfy( WORD wResultCode, HOBJECT hActor, NTL_T
 		// 3. Check that the quest has not progressed as it was not a recurring quest.
 		if ( !pTrig->IsRepeatQuest() && GetCompletedQInfo()->HasBeenClearQuest( tId ) )
 		{
-			// MSG 출력
+			// MSG output
 			const wchar_t* pQuestText = GetQuestText( tId );
 			CNtlSLEventGenerator::FormatSysMsg( INVALID_SERIAL_ID, "DST_QUEST_SHARE_HAS_BEEN", FALSE, pQuestText );
 			return;
@@ -1392,8 +1392,8 @@ void CDboTSCQAgency::GU_Quest_Share_Nfy( WORD wResultCode, HOBJECT hActor, NTL_T
 					continue;
 				}
 
-				// 서버와 통신 중이면 퀘스트 공유 불가
-				// ( 퀘스트 진행을 위해 서버와 통신중인 경우 )
+                //Quest cannot be shared while communicating with the server
+				//(when communicating with server to progress quest)
 				if ( pCtrl->IsCSComunication() )
 				{
 					// MSG 출력
@@ -1402,18 +1402,18 @@ void CDboTSCQAgency::GU_Quest_Share_Nfy( WORD wResultCode, HOBJECT hActor, NTL_T
 					return;
 				}
 
-				// 클라이언트와 통신 중이면 퀘스트 공유 불가
-				// ( 클라이언트에서 퀘스트 관련 UI ( NPC 대화창 제외 )를 출력 중인 경우 )
+				//Quest cannot be shared while communicating with client
+				//(If the client is displaying quest-related UI (excluding NPC dialogue window))
 				if ( pCtrl->IsClientWait() )
 				{
-					// MSG 출력
+					// MSG output
 					const wchar_t* pQuestText = GetQuestText( it->first );
 					CNtlSLEventGenerator::FormatSysMsg( INVALID_SERIAL_ID, "DST_QUEST_SHARE_OTHER_QUEST_PROGRESS", FALSE, pQuestText );
 					return;
 				}
 
-				// 서버와 통신후 대기중이면 퀘스트 공유 불가
-				// ( NPC 대화창 출력 중인 경우 )
+				// Quests cannot be shared while waiting after communicating with the server.
+				// (When NPC dialogue window is being displayed)
 				if ( pCtrl->IsSvrComAfterClientWait() )
 				{
 					// MSG 출력
@@ -1428,7 +1428,7 @@ void CDboTSCQAgency::GU_Quest_Share_Nfy( WORD wResultCode, HOBJECT hActor, NTL_T
 					 pCont->GetEntityType() != DBO_CONT_TYPE_ID_CONT_SWITCH &&
 					 pCont->GetEntityType() != DBO_CONT_TYPE_ID_CONT_END )
 				{
-					// MSG 출력
+					// MSG output
 					const wchar_t* pQuestText = GetQuestText( it->first );
 					CNtlSLEventGenerator::FormatSysMsg( INVALID_SERIAL_ID, "DST_QUEST_SHARE_OTHER_QUEST_PROGRESS", FALSE, pQuestText );
 					return;
@@ -1460,7 +1460,7 @@ void CDboTSCQAgency::GU_Quest_Share_Nfy( WORD wResultCode, HOBJECT hActor, NTL_T
 		{
 			if ( nGeneralQuestCnt >= eMAX_CAN_PROGRESS_GENERAL_QUEST_NUM )
 			{
-				// MSG 출력
+				// MSG output
 				CNtlSLEventGenerator::SysMsg( INVALID_SERIAL_ID, "DST_QUEST_SHARE_MAX_OVERFLOW", FALSE );
 				return;
 			}
@@ -1469,7 +1469,7 @@ void CDboTSCQAgency::GU_Quest_Share_Nfy( WORD wResultCode, HOBJECT hActor, NTL_T
 		{
 			if ( nSpecialQuestCnt >= eMAX_CAN_PROGRESS_SPECIAL_QUEST_NUM )
 			{
-				// MSG 출력
+				// MSG output
 				CNtlSLEventGenerator::SysMsg( INVALID_SERIAL_ID, "DST_QUEST_SHARE_MAX_OVERFLOW", FALSE );
 				return;
 			}
@@ -1534,7 +1534,7 @@ void CDboTSCQAgency::UG_Avatar_TS_Confirm_Step( NTL_TS_T_ID tId, NTL_TS_TC_ID tc
 {
 	OUT_QMSG_9( "[Quest] User -> GameServer : Confirm 처리중 [%d,%d,%d,%d,%d,%d,%d,%d,%d]", tId, tcCurId, tcNextId, uiParam[1], uiParam[2], uiParam[3], uiParam[4], byEventType, uiEventData );
 
-	// 서버에게 메시지를 보낸다
+	//send message to server
 	API_GetSLPacketGenerator()->SendTSConfirmStepReq( TS_TYPE_QUEST_CS, tId, tcCurId, tcNextId, uiParam, byEventType, uiEventData );
 }
 
@@ -1556,7 +1556,7 @@ void CDboTSCQAgency::UG_Avatar_TS_GiveUp_Quest( NTL_TS_T_ID tId )
 {
 	OUT_QMSG_1( "[Quest] User -> GameServer : Give up 처리중 [%d]", tId );
 
-	// 서버에게 퀘스트 포기 메시지를 전송한다
+	//Send a quest abandonment message to the server
 	API_GetSLPacketGenerator()->SendQuestGiveUpReq( tId );
 }
 
@@ -1611,7 +1611,7 @@ void CDboTSCQAgency::UG_TS_Update_State( NTL_TS_T_ID tId, unsigned char byType, 
 {
 	OUT_QMSG_4( "[Quest] User -> GameServer : Update TS state message 처리중 [%d, %d, %d, %d]", tId, byType, wTSState, uiParam );
 
-	// 서버에게 상태 업데이트 메시지를 전송한다
+	//Send a status update message to the server
 	API_GetSLPacketGenerator()->SendTSUpdateState( tId, TS_TYPE_QUEST_CS, byType, wTSState, uiParam );
 }
 
@@ -1619,7 +1619,7 @@ void CDboTSCQAgency::GU_TS_Update_Event_Nfy( NTL_TS_EVENT_ID eID )
 {
 	OUT_QMSG_1( "[Quest] GameServer -> User : Update TS Event 처리중 [%d]", eID );
 
-	// 해당 이벤트 아이디로 퀘스트가 시작하는 경우에 한해서는 바로 처리한다
+	// If a quest starts with that event ID, it will be processed immediately.
 	{
 		SGET_QUEST_INFO* pQuestInfo = GetQuestInfoList( eEVENT_GEN_TYPE_RCV_SVR_EVT, eID );
 
@@ -1638,7 +1638,7 @@ void CDboTSCQAgency::GU_TS_Update_Event_Nfy( NTL_TS_EVENT_ID eID )
 		}
 	}
 
-	// 현재 진행중인 퀘스트에 한해서는 이벤트 등록후 해당 이벤트가 준비된 상황에서 동작시킨다
+	//For quests currently in progress, register the event and activate it when the event is ready.
 	{
 		mapdef_TRIGGER_LIST::iterator it = m_defCurTList.begin();
 		for ( ; it != m_defCurTList.end(); ++it )
@@ -1675,7 +1675,7 @@ void CDboTSCQAgency::GU_TS_RemoveTMQQuest( NTL_TS_T_ID tMin, NTL_TS_T_ID tMax )
 {
 	OUT_QMSG_0( "[Quest] GameServer -> User : Remove TMQ Quest 처리중" );
 
-	// 현재 진행 중인 퀘스트 제거
+	// Remove currently ongoing quest
 	mapdef_TRIGGER_LIST::iterator it = m_defCurTList.begin();
 	for ( ; it != m_defCurTList.end(); )
 	{
@@ -1686,10 +1686,10 @@ void CDboTSCQAgency::GU_TS_RemoveTMQQuest( NTL_TS_T_ID tMin, NTL_TS_T_ID tMax )
 		{
 			it = m_defCurTList.erase( it );
 
-			// 퀘스트 제거
+			// Remove quest
 			GetParent()->GetControlFactory()->DeleteObj( (CNtlTSControlObject*&)pCtrl );
 
-			// 클라이언트에게 해당 퀘스트가 지워져야 함을 알림
+			// Notify the client that the quest should be cleared
 			CNtlSLEventGenerator::RemovingTMQQuest_Nfy( tId );
 		}
 		else
@@ -1698,7 +1698,7 @@ void CDboTSCQAgency::GU_TS_RemoveTMQQuest( NTL_TS_T_ID tMin, NTL_TS_T_ID tMax )
 		}
 	}
 
-	// 완료된 퀘스트 제거
+	// Remove completed quests
 	GetCompletedQInfo()->InitQuest( tMin, tMax );
 }
 
@@ -1709,10 +1709,10 @@ void CDboTSCQAgency::GU_Qeust_Force_Completion( NTL_TS_T_ID tID )
 
 //////////////////////////////////////////////////////////////////////////
 //
-//	호출되는 시점.
+//	When is it called?
 //
-//	1. 퀘스트 등록 액션이 실행되는 시점에 호출된다.
-//	2. DB로 부터 퀘스트 정보를 로딩하는 시점에 호출된다.
+//	1. Called when the quest registration action is executed.
+//	2. Called when loading quest information from DB.
 //
 //////////////////////////////////////////////////////////////////////////
 void CDboTSCQAgency::TU_RegQuestInfoNfy( NTL_TS_T_ID tId, NTL_TS_TC_ID tcId, NTL_TS_TA_ID taId, bool bNewRegister, bool bQuestShare, unsigned int uiQAreaName, unsigned int uiQState, unsigned int uiQTitle, unsigned int uiQGoal, eQUEST_SORT_TYPE eQSortType )
@@ -1731,9 +1731,9 @@ void CDboTSCQAgency::TU_RegQuestInfoNfy( NTL_TS_T_ID tId, NTL_TS_TC_ID tcId, NTL
 
 //////////////////////////////////////////////////////////////////////////
 //
-//	호출되는 시점.
+//	When is it called?
 //
-//	1. 퀘스트가 제거 되는 시점에서 호출된다.
+//	1. Called when a quest is removed.
 //
 //////////////////////////////////////////////////////////////////////////
 void CDboTSCQAgency::TU_UnregQuestInfoNfy( NTL_TS_T_ID tId )
@@ -1798,9 +1798,9 @@ void CDboTSCQAgency::TU_ShowQuestWindowNfy( NTL_TS_T_ID tId )
 
 //////////////////////////////////////////////////////////////////////////
 //
-//	호출되는 시점.
+//	When is it called?
 //
-//	1. g_EventShowIndicator 이벤트가 발생했을 경우 호출된다.
+//	1. g_EventShowIndicator Called when an event occurs.
 //
 //////////////////////////////////////////////////////////////////////////
 void CDboTSCQAgency::TU_ShowQuestIndicatorNfy( NTL_TS_T_ID tId, bool bAuto )
@@ -1833,10 +1833,10 @@ void CDboTSCQAgency::TU_ShowQuestIndicatorNfy( NTL_TS_T_ID tId, bool bAuto )
 
 //////////////////////////////////////////////////////////////////////////
 //
-//	호출되는 시점.
+//	When is it called?
 //
-//	1. Failed or Error 상태로 전이 될 때 호출된다.
-//	2. DB로 부터 퀘스트 정보를 로딩하는 시점에 호출된다.
+//	1. Called when the state transitions to Failed or Error.
+//  2. Called when loading quest information from DB.
 //
 //////////////////////////////////////////////////////////////////////////
 void CDboTSCQAgency::TU_UpdateQuestStateNfy( NTL_TS_T_ID tId, bool bOutStateMsg, unsigned int uiUpdatedQState, unsigned int uiQState, unsigned int uiQuestTitle, eSTOC_EVT_DATA_TYPE eEvtInfoType, const uSTOC_EVT_DATA& uEvtInfoData )
@@ -1882,12 +1882,12 @@ void CDboTSCQAgency::TU_UpdateQuestStateNfy( NTL_TS_T_ID tId, bool bOutStateMsg,
 
 //////////////////////////////////////////////////////////////////////////
 //
-//	호출되는 시점.
+//	When is it called?
 //
-//	1. 시간 제한 퀘스트의 경우 시간의 흐름에 따라서 주기적으로 호출된다.
-//	2. DB로 부터 퀘스트 정보를 로딩하는 시점에 호출된다.
-//	3. 서버로 부터 서버 이벤트 정보를 수신 할 때마다 호출된다.
-//	4. 서버 이벤트가 종료될 때 호출된다.
+//	1. In the case of time-limited quests, they are called periodically according to the passage of time.
+//	2. Called when loading quest information from DB.
+//	3. Called whenever server event information is received from the server.
+//	4. Called when a server event ends.
 //
 //////////////////////////////////////////////////////////////////////////
 void CDboTSCQAgency::TU_UpdateQuestProgressInfoNfy( NTL_TS_T_ID tId, eSTOC_EVT_DATA_TYPE eEvtInfoType, uSTOC_EVT_DATA& uEvtInfoData, RwUInt32 uiTimeLimit )
@@ -1961,12 +1961,12 @@ void CDboTSCQAgency::UT_UpdateAvatarPos( unsigned int uiWorldIdx, float fPosX, f
 		return;
 	}
 
-	// World 가 교체된 경우
+	// When World is replaced
 	if ( m_sAvatarCurPos.uiWorldIx != uiWorldIdx )
 	{
 		sCOL_RGN_DATA sColRgnData;
 
-		// Leave 처리
+		// Leave processing
 		if ( 0xffffffff != m_sAvatarCurPos.uiWorldIx )
 		{
 			sColRgnData.eWorldChangeType = sCOL_RGN_DATA::eWORLD_CHANGE_TYPE_LEAVE;
@@ -1984,8 +1984,8 @@ void CDboTSCQAgency::UT_UpdateAvatarPos( unsigned int uiWorldIdx, float fPosX, f
 				UT_EventDoQuest( sQuestInfo, eEVENT_GEN_TYPE_COL_REGION, 0, &sColRgnData );
 			}
 
-			// 바로 Enter 처리가 이뤄지는 것을 막고
-			// 다음 프레임에 처리되도록 한다
+			// Prevents Enter processing from taking place immediately
+			// Let it be processed in the next frame
 			m_sAvatarCurPos.uiWorldIx = 0xffffffff;
 		}
 		else
@@ -2010,10 +2010,10 @@ void CDboTSCQAgency::UT_UpdateAvatarPos( unsigned int uiWorldIdx, float fPosX, f
 			m_sAvatarCurPos.fPosZ = fPosZ;
 		}
 	}
-	// World 가 교체되지 않은 경우
+	// If World is not replaced
 	else
 	{
-		// 같은 월드에서 이동을 한 경우
+		// When moving in the same world
 		if ( abs( fPosX - m_sAvatarCurPos.fPosX ) > 0.0001f ||
 			 abs( fPosZ - m_sAvatarCurPos.fPosZ ) > 0.0001f )
 		{
@@ -2060,7 +2060,7 @@ void CDboTSCQAgency::UT_EventDoQuest( sQUEST_INFO& sQuestInfo, eEVENT_GEN_TYPE e
 			{
 			case eEVENT_GEN_TYPE_CLICK_NPC:
 				{
-					// Visit의 경우는 카메라를 반드시 빼줘야 한다
+					// In the case of Visit, you must remove the camera.
 					pQCtrl->RegNPCCameraStopEvt();
 					pQCtrl->UnregNPCCameraStopEvt();
 
@@ -2070,7 +2070,7 @@ void CDboTSCQAgency::UT_EventDoQuest( sQUEST_INFO& sQuestInfo, eEVENT_GEN_TYPE e
 
 			case eEVENT_GEN_TYPE_CLICK_OBJECT:
 				{
-					// Visit의 경우는 카메라를 반드시 빼줘야 한다
+					// In the case of Visit, you must remove the camera.
 					pQCtrl->RegNPCCameraStopEvt();
 					pQCtrl->UnregNPCCameraStopEvt();
 
@@ -2089,7 +2089,7 @@ void CDboTSCQAgency::UT_EventDoQuest( sQUEST_INFO& sQuestInfo, eEVENT_GEN_TYPE e
 	{
 		NTL_TS_T_ID tID;
 
-		// 일반 퀘스트와 특별한 퀘스트( TMQ, Tutorial... )의 개수를 센다
+		// Count the number of general quests and special quests (TMQ, Tutorial...)
 		int nGeneralQuestCnt = 0, nSpecialQuestCnt = 0;
 		mapdef_TRIGGER_LIST::iterator itCurQuest = m_defCurTList.begin();
 		for ( ; itCurQuest != m_defCurTList.end(); ++itCurQuest )
@@ -2112,14 +2112,14 @@ void CDboTSCQAgency::UT_EventDoQuest( sQUEST_INFO& sQuestInfo, eEVENT_GEN_TYPE e
 
 		tID = sQuestInfo.sKey.tID;
 
-		// 받을 수 있는 퀘스트 최대치를 넘은 경우는 공유 받을 수 없다
+		// If you exceed the maximum number of quests you can receive, you cannot share them.
 		if ( eQUEST_ID_RANGE_GENERAL_QUEST_MIN <= tID && tID < eQUEST_ID_RANGE_GENERAL_QUEST_MAX )
 		{
 			if ( nGeneralQuestCnt >= eMAX_CAN_PROGRESS_GENERAL_QUEST_NUM )
 			{
 				CNtlSLEventGenerator::SysMsg( INVALID_SERIAL_ID, "GAME_TS_WARNING_OVERFLOW_MAX_TS_NUM" );
 
-				// Camera의 제어권이 넘어온 경우만 카메라를 빼준다
+				// Remove the camera only when control of the camera has been transferred.
 				if ( bTransCameraCtrlRight )
 				{
 					Logic_CancelNpcFacing();
@@ -2134,7 +2134,7 @@ void CDboTSCQAgency::UT_EventDoQuest( sQUEST_INFO& sQuestInfo, eEVENT_GEN_TYPE e
 			{
 				CNtlSLEventGenerator::SysMsg( INVALID_SERIAL_ID, "GAME_TS_WARNING_OVERFLOW_MAX_TS_NUM" );
 
-				// Camera의 제어권이 넘어온 경우만 카메라를 빼준다
+				// Remove the camera only when control of the camera has been transferred.
 				if ( bTransCameraCtrlRight )
 				{
 					Logic_CancelNpcFacing();
@@ -2144,11 +2144,11 @@ void CDboTSCQAgency::UT_EventDoQuest( sQUEST_INFO& sQuestInfo, eEVENT_GEN_TYPE e
 			}
 		}
 
-		// 진행 중에 있는 퀘스트는 새로이 진행할 수 없다
+		// Quests that are in progress cannot be restarted.
 		CDboTSCQCtrl* pProgress = (CDboTSCQCtrl*)FindProgressTrigger( sQuestInfo.sKey.tID );
 		if ( pProgress )
 		{
-			// Camera의 제어권이 넘어온 경우만 카메라를 빼준다
+			// Remove the camera only when control of the camera has been transferred.
 			if ( bTransCameraCtrlRight )
 			{
 				Logic_CancelNpcFacing();
@@ -2160,7 +2160,7 @@ void CDboTSCQAgency::UT_EventDoQuest( sQUEST_INFO& sQuestInfo, eEVENT_GEN_TYPE e
 		CNtlTSTrigger* pTrig = ((CDboTSCMain*)m_pParent)->FindQuestFromTS( sQuestInfo.sKey.tID );
 		if ( 0 == pTrig )
 		{
-			// Camera의 제어권이 넘어온 경우만 카메라를 빼준다
+			// Remove the camera only when control of the camera has been transferred.
 			if ( bTransCameraCtrlRight )
 			{
 				Logic_CancelNpcFacing();
@@ -2175,7 +2175,7 @@ void CDboTSCQAgency::UT_EventDoQuest( sQUEST_INFO& sQuestInfo, eEVENT_GEN_TYPE e
 		sRunParam.SetControl( pQCtrl );
 		sRunParam.SetAgency( this );
 
-		// Main group의 start container(시작 컨테이너)를 만족하면 퀘스트 진행
+		// If the main group's start container is satisfied, proceed with the quest.
 
 		pQCtrl->SetEventGenType( eEvtGenType );
 		pQCtrl->SetEventGenId( uiOwnerId );
@@ -2227,7 +2227,7 @@ void CDboTSCQAgency::UT_EventDoQuest( sQUEST_INFO& sQuestInfo, eEVENT_GEN_TYPE e
 
 			else
 			{
-				// Camera의 제어권이 넘어온 경우만 카메라를 빼준다
+				// Remove the camera only when control of the camera has been transferred.
 				if ( bTransCameraCtrlRight )
 				{
 					Logic_CancelNpcFacing();
@@ -2282,7 +2282,7 @@ void CDboTSCQAgency::UT_EventDoQuest( sQUEST_INFO& sQuestInfo, eEVENT_GEN_TYPE e
 
 			else
 			{
-				// Camera의 제어권이 넘어온 경우만 카메라를 빼준다
+				// Remove the camera only when control of the camera has been transferred.
 				if ( bTransCameraCtrlRight )
 				{
 					Logic_CancelNpcFacing();
@@ -2322,7 +2322,7 @@ void CDboTSCQAgency::UT_DoTutorialQuest( NTL_TS_T_ID tId )
 		{
 			CNtlSLEventGenerator::SysMsg( INVALID_SERIAL_ID, "GAME_TS_WARNING_OVERFLOW_MAX_TS_NUM" );
 
-			// Tutorial의 경우는 카메라를 빼준다
+			// For the tutorial, remove the camera.
 			Logic_CancelNpcFacing();
 
 			return;
@@ -2334,7 +2334,7 @@ void CDboTSCQAgency::UT_DoTutorialQuest( NTL_TS_T_ID tId )
 		{
 			CNtlSLEventGenerator::SysMsg( INVALID_SERIAL_ID, "GAME_TS_WARNING_OVERFLOW_MAX_TS_NUM" );
 
-			// Tutorial의 경우는 카메라를 빼준다
+			// For the tutorial, remove the camera.
 			Logic_CancelNpcFacing();
 
 			return;

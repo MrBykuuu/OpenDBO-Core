@@ -59,7 +59,7 @@ RwBool CNtlSobProjectile::Create(void)
 		NTL_RETURN(FALSE);
 	}
 
-	// class name 설정.
+	//Set class name.
 	SetClassName(SLCLASS_NAME_PROJECTILE);
 		
 	NTL_RETURN(TRUE);
@@ -108,7 +108,7 @@ RwBool CNtlSobProjectile::IsFinish(void)
 
 void CNtlSobProjectile::HandleEvents(RWS::CMsg &pMsg)
 {
-	//Fsm Handler로 Event도 보내준다.
+	//Event is also sent to Fsm Handler.
 	CNtlSobActor::HandleEvents(pMsg); 
 
 	if(pMsg.Id == g_EventSobCreate)
@@ -170,7 +170,7 @@ void CNtlSobProjectile::CreateEventHandler(RWS::CMsg &pMsg)
 		return;
 
 	//-----------------------------------------
-	// attribute 설정.
+	//attribute settings.
 
 	SetOwnerID(pSobCreate->hOwnerSerialId);
 	SetTargetID(pSobCreate->hTargetSerialId); 
@@ -230,8 +230,8 @@ void CNtlSobProjectile::CreateEventHandler(RWS::CMsg &pMsg)
 	
 	if(pTarSobObj && pSobCreate->uiBehavior == NTL_BEID_PROJ_BEAM)
 	{
-		// beam 형태의 발사체는 거리가 가까이 있을 때 target 중심을 향할 경우 beam이 꺽여서 
-		// 이상하게 보일 수 있다. 이것에 대한 보정.
+		//When a beam-shaped projectile is close to the target, the beam is bent and 
+		//This may look strange. Correction for this.
 		RwV3dSubMacro(&vDir, &vTarPos, &vPos);
 		vDir.y = 0.0f;
 		RwReal fLen = RwV3dLength(&vDir);
@@ -343,7 +343,7 @@ void CNtlSobProjectile::CreateEventHandler(RWS::CMsg &pMsg)
 	}
 
 	//-----------------------------------------
-	// effect 설정.
+	//Effect settings.
 
 	if( pSobCreate->fWeightElapsedValue < 0.95f || pSobCreate->fWeightElapsedValue > 1.05f )
 	{
@@ -377,7 +377,7 @@ void CNtlSobProjectile::DamageProc(void)
 	{
 		SHitStuff sHit = (*it);
 
-		//// matrix 연출.
+		//// matrix production.
 		//if(iIdx == 0)
 		//{
 		//	CNtlSob *pOwnerSobObj = GetNtlSobManager()->GetSobObject(GetOwnerID());
@@ -388,7 +388,7 @@ void CNtlSobProjectile::DamageProc(void)
 		//	}
 		//}
 
-		//// avatar가 공격 했을 경우.
+		//// When an avatar attacks.
 		//if(bMatrixDirect)
 		//{
 		//	CNtlSob *pSobTarObj = GetNtlSobManager()->GetSobObject(sHit.hDefenderSerialId);
@@ -398,14 +398,14 @@ void CNtlSobProjectile::DamageProc(void)
 		//	}
 		//}
 
-		//// avatar가 맞았을 경우.
+		//// If the avatar is hit.
 		//if(sHit.hDefenderSerialId == hAvatarSerialId && sHit.uiAttr.bitBehavior == NTL_ATTACK_KNOCKDOWN &&
   //         sHit.uiAttr.bitResult != NTL_ATTACK_RESULT_STEAL)
 		//{
 		//	Logic_ProcKnockdownMatrixDirection(Logic_GetAvatarActor(), hAvatarSerialId, &sHit);
 		//}
 
-		// 카메라 흔들기.
+		//Shake the camera.
 		CNtlSob *pSobObj = GetNtlSobManager()->GetSobObject(sHit.hAttackerSerialId);
 		if(pSobObj && sHit.uiAttr.bitResult != NTL_ATTACK_RESULT_DODGE)
 		{

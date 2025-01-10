@@ -2,7 +2,7 @@
  *
  * File			: NtlPLItem.h
  * Author		: HongHoDong
- * Copyright	: (주)NTL
+ * Copyright	: NTL Co., Ltd.
  * Date			: 2005. 11. 2.	
  * Abstract		: NTL CNtlPLItem
  *****************************************************************************
@@ -46,15 +46,15 @@ public:
 protected:
 	CNtlPLItemProperty		*m_pProperty;							///< Item Property
 	CNtlPLResource			*m_pResourceClump;						///< Item Resource
-	
-	RwMatrix				m_matWorld;								///< Item의 World Matrix
+
+	RwMatrix				m_matWorld;								///< World Matrix of Item
 
 	FRAME_MAP				m_mapFrame;								///< Bone Info
 	ENTITY_ATOMIC_VEC		m_vecAtomicList;						///< Atomic List
+
+	CNtlPLCharacter			*m_pOwner;								///< Owner in case of Equip Item
 	
-	CNtlPLCharacter			*m_pOwner;								///< Equip Item일 경우 소유자
-	
-	SItemScheduleResInfo	m_sScheduleResInfo;						///< Schedule Loading 관련 Resource 정보들	
+	SItemScheduleResInfo	m_sScheduleResInfo;						///< Resource information related to Schedule Loading	
 	EItemEquipSlotType		m_eInstanceEquipSlotType;				///< Instance Equip Slot Type
 	
 
@@ -65,24 +65,24 @@ protected:
 	RwRGBA					m_sAddColor;
 	RwBool					m_bRunTimeAlpha;
 
-	SToonData				m_ToonData;								///< Toon Ink, Toon Paint (Item에서는 기본으로 생성이 되지 않는다.)
-																	///< Character에만 적용이 되므로 Character Equip 될 때 생성이 된다.
+	SToonData				m_ToonData;								///< Toon Ink, Toon Paint (Not created by default in Item.)
+																	///< Since it only applies to characters, it is created when the character is equipped.
 
-	CNtlPLLinkEffect        m_LinkEffectInstance;					///< LinkEffect Instance들을 관리하는 객체
-	RwBool                  m_bEnableTrace;                         ///< 궤적 이펙트 표현 유무    
-    RwBool                  m_bEnableUpgradeEffect;                 ///< Upgrade Effect 표현 유무 플래그
+	CNtlPLLinkEffect        m_LinkEffectInstance;					///< Object that manages LinkEffect Instances
+	RwBool                  m_bEnableTrace;                         ///< Presence of trajectory effect expression    
+    RwBool                  m_bEnableUpgradeEffect;                 ///< Upgrade Effect expression presence/absence flag
 
-    // Item의 Animation 관련
-    RpHAnimHierarchy*       m_pBaseHierarchy;                       ///< Item의 Hierarchy
-    CNtlAnimLayer*          m_pAnimLayer;                           ///< 애니메이션 레이어
+    // Item animation related
+    RpHAnimHierarchy*       m_pBaseHierarchy;                       ///< Item's Hierarchy
+    CNtlAnimLayer*          m_pAnimLayer;                           ///< Animation layer
     CNtlInstanceAnimTable*  m_pInstanceAnimTable;                   ///< Animation Resource Instance Table
-    RwUInt32                m_uiCurAnimKey;                         ///< 현재 적용되고 있는 AnimKey
-    RwBool                  m_bAnimUpdate;                          ///< Animation Update 유무
+    RwUInt32                m_uiCurAnimKey;                         ///< Currently applied AnimKey
+    RwBool                  m_bAnimUpdate;                          ///< Availability of Animation Update
 	
-	RwBool                  m_bVisualEffect;                        ///< VisualEffect 부착 유무
+	RwBool                  m_bVisualEffect;                        ///< Whether VisualEffect is attached or not
 
-    RwInt32                 m_nGrade;                               ///< Item의 Grade    
-    std::vector<CNtlInstanceEffect*> m_pUpgradeEffects;             ///< 생성된 Upgrade Effect들의 벡터
+    RwInt32                 m_nGrade;                               ///< Grade of Item    
+    std::vector<CNtlInstanceEffect*> m_pUpgradeEffects;             ///< Vector of generated Upgrade Effects
 
 	RwTexture				*m_pUVTexture;							///< U,V Texture
 	RwMatrix				*m_pUVMatrix;							///< U,V Texture Matrix
@@ -107,7 +107,7 @@ protected:
 	RwBool m_PetrifyMaterial;
 
 protected:
-	RwBool  CreateAnimData(RwUInt32 uiAnimKey);														///< Animation 관련 데이터를 설정한다.
+	RwBool  CreateAnimData(RwUInt32 uiAnimKey);														///< Set animation-related data.
 
 	RwBool	SetThreadSafeProperty(const CNtlPLProperty *pData);
 	RwBool	CreateScheduling(const SPLEntityCreateParam * pParam);
@@ -121,7 +121,7 @@ public:
 	void* operator new(size_t size);
 	void operator delete(void *pObj);
 	
-    // 오버라이딩 메소드
+    // Overriding Method
 	virtual RwBool Create(const SPLEntityCreateParam *pParam = NULL);
 	virtual void   Destroy(void);
 	virtual RwBool Update(RwReal fElapsed);
@@ -194,33 +194,33 @@ public:
 
 	CNtlPLCharacter *GetOwner() { return m_pOwner; }
 
-    RwBool          GetEnableVisualEffect() {return m_bVisualEffect;}                               ///< Visual Effect 부착 유무를 반환한다.
+    RwBool          GetEnableVisualEffect() {return m_bVisualEffect;}                               ///< Returns whether Visual Effect is attached or not.
     RwBool          AttachVisualEffect( CNtlInstanceEffect* pInstanceEffect, 
 		                                SEventVisualEffect* pEventVisualEffect);
     
-    VecLinkEffect*      GetVecLinkEffect() { return &(m_LinkEffectInstance.m_vecLinkEffect); }	    ///< LinkEffect Vector를 반환한다.
-    CNtlInstanceEffect* AttachLinkEffect( SEventLinkEffect* pEventLinkEffect );                     ///< Link Effect를 Attach 시킨다.
+    VecLinkEffect*      GetVecLinkEffect() { return &(m_LinkEffectInstance.m_vecLinkEffect); }	    ///< Returns LinkEffect Vector.
+    CNtlInstanceEffect* AttachLinkEffect( SEventLinkEffect* pEventLinkEffect );                     ///< Attach Link Effect.
     RwBool              DetachLinkEffect( CNtlInstanceEffect* pLinkEffect );     
 
-    void                SetEnableTrace(RwBool bEnable) {m_bEnableTrace = bEnable; }					///< 궤적 이펙트 표현유무를 설정한다.
-    RwBool              GetEnableTrace() { return m_bEnableTrace; }									///< 궤적 이펙트 표현유무를 반환한다.
-    RwBool              ActiveTraceEffect( SEventTrace* pEventTrace );								///< 궤적 이펙트를 표현한다.
+    void                SetEnableTrace(RwBool bEnable) {m_bEnableTrace = bEnable; }					///< Set the presence or absence of trajectory effect expression.
+    RwBool              GetEnableTrace() { return m_bEnableTrace; }									///< Returns the presence or absence of trajectory effect expression.
+    RwBool              ActiveTraceEffect( SEventTrace* pEventTrace );								///< Expresses the trajectory effect.
 
-    RwBool              SetUpgradeEffect( ENtlPLItemGrade eGrade );									///< Item의 Grade Effect를 설정한다.
+    RwBool              SetUpgradeEffect( ENtlPLItemGrade eGrade );									///< Set the Grade Effect of the Item.
     RwInt32             GetUpgradeEffect() {return m_nGrade;}
-    void                SetEnableUpgradeEffect( RwBool bEnable );									///< Item의 Grade Effect 사용 유무를 설정한다.
+    void                SetEnableUpgradeEffect( RwBool bEnable );									///< Set whether or not to use the Grade Effect of the Item.
 	
 	void				SetEffect(ENtlPLItemGrade eGrade, char* effect, RwChar* bone1 = nullptr, RwChar* bone2 = nullptr);
 
 	RwV3d	GetSubWeaponOffset() { return m_pProperty->GetAttachOffset();}
 
-    RwBool	SetAnimation(RwUInt32 uiAnimKey, RwReal fStartTime = 0.0f, RwBool bLoop = TRUE);		///< Animation을 적용한다.
-    virtual int CallBackBaseAnim(void* pEventData);												///< Animation Event의 CallBack 함수    
+    RwBool	SetAnimation(RwUInt32 uiAnimKey, RwReal fStartTime = 0.0f, RwBool bLoop = TRUE);		///< Apply animation.
+    virtual int CallBackBaseAnim(void* pEventData);												///< CallBack function of Animation Event    
     
-	void    SetAnimUpdate(RwBool bAnimUpdate) {m_bAnimUpdate = bAnimUpdate;}						///< Animation의 업데이트 유무를 설정한다.
-    RwBool  GetAnimUpdate() {return m_bAnimUpdate;}													///< Animation의 업데이트 유무를 반환한다.
-    RwReal  GetBaseDurationAnimTime();																///< Animation의 Play Time을 반환한다.
-    RwBool  IsHaveAnimData();                                                                       ///< 애니메이션 데이터가 세팅되어 있는지 반환한다.
+	void    SetAnimUpdate(RwBool bAnimUpdate) {m_bAnimUpdate = bAnimUpdate;}						///< Set whether animation is updated or not.
+    RwBool  GetAnimUpdate() {return m_bAnimUpdate;}													///< Returns whether animation is updated or not.
+    RwReal  GetBaseDurationAnimTime();																///< Returns the Play Time of Animation.
+    RwBool  IsHaveAnimData();                                                                       ///< Returns whether animation data is set.
 
 	// DOGI interfaces
 	RwTexture*	GetDogiEmblem() { return m_pDogiEmblemTex; }

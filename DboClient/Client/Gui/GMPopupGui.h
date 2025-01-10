@@ -1,22 +1,22 @@
 /******************************************************************************
-* File			: GMPopupGui.h
-* Author		: Hong SungBock
-* Copyright		: (주)NTL
-* Date			: 2008. 11. 17
-* Abstract		: 
+*File           : GMPopupGui.h
+*Author		    : Hong SungBock
+*Copyright	    : NTL Co., Ltd.
+*Date           : November 17, 2008
+*Abstract		: 
 *****************************************************************************
-* Desc			: 화면 하단에 스카우터가 들어갈 슬롯
+*Desc           : Slot for the scouter at the bottom of the screen
 *****************************************************************************/
 
 #pragma once
 
-// shared
+// Shared
 #include "NtlBudokai.h"
 
-// presetation
+// Presetation
 #include "NtlPLGui.h"
 
-// simulation
+// Simulation
 #include "NtlSLDef.h"
 
 

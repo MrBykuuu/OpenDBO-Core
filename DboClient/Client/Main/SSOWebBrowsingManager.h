@@ -3,11 +3,11 @@
 /**
 * \ingroup Client
 * \brief
-*		Netmarble에서 제공하는 CSSOWebBrowser를 멤버로 구성해서 통제하는 매니징 클래스 CSSOWebBrowsingManager
+*		CSSOWebBrowsingManager, a management class that configures and controls CSSOWebBrowser provided by Netmarble as a member.
 *
-*		여러개의 웹브라우저를 뛰울 수 있다.
+*		You can run multiple web browsers.
 *	
-*		웹브라우저는 옮길 수 없다.
+*		Web browsers cannot be moved.
 *
 * 
 * \date 2009-08-22

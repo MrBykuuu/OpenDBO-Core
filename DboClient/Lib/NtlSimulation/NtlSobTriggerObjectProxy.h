@@ -45,7 +45,8 @@ private:
 	CNtlPLEntity			*m_pTargetMark;					/** trigger object target mark */
 	CNtlPLEntity			*m_pQuestMark;					/**	trigger object quest mark */
 	CNtlPLEntity			*m_pDojoSealEff;				/**	Dojo seal effect */
-    CNtlShareTargetMark     *m_pShareTargetMark;            ///< 공유 타겟 마크
+    CNtlShareTargetMark     *m_pShareTargetMark;            ///< Share target mark
+
 
 	RwReal					m_fObjectWidth;					/** trigger object width */
 	RwReal					m_fObjectHeight;				/** trigger object height */
@@ -66,30 +67,30 @@ private:
 protected:
 
 	/** 
-	* trigger object 이름 생성.
+	*Create trigger object name.
 	*/
 	void CreatePLObjectName(void);
 	void DeletePLObjectName(void);
 
 	/** 
-	* trigger object target mark
+	*trigger object target mark
 	*/ 
 	void CreatePLTargetMark(void);
 	void DeletePLTargetMark(void);
 
 	/** 
-	* trigger object quest mark
+	*trigger object quest mark
 	*/ 
 	void CreatePLQuestMark(const RwChar *pKey);
 	void DeletePLQuestMark(void);
 
 	/** 
-	* Dojo seal effect
+	*Dojo seal effect
 	*/ 
 	void CreateDojoSealEffect(RwUInt8 uiMainState);
 	void DeleteDojoSealEffect(void);
 
-    /// 공유 타겟 마크
+    /// Share target mark
     void CreateShareTargetMark(RwUInt8 bySlot, RwInt32 type);
     void DeleteShareTargetMark();
 	
@@ -122,11 +123,11 @@ public:
 public:
 
 	//---------------------------------------------------
-	// main presentation entity에 관련된 함수 
+	// Functions related to the main presentation entity 
 	//---------------------------------------------------
 
 	/**
-	* transform에 관현된 함수.
+	*Function related to transform.
 	*/
 
 	virtual void	SetPosition(const RwV3d *pPos);
@@ -138,32 +139,32 @@ public:
 	virtual void EnableVisible(RwBool bEnable);
 
 	/**
-	* entity 정보에 관한 함수.
+	*Function regarding entity information.
 	*/
 
 	// presentation main entity
 	CNtlPLEntity*			GetPLMainEntity(void);
 
-	// pl entity의 폭을 얻어온다.
+	// Gets the width of pl entity.
 	virtual RwReal			GetPLEntityWidth(void); 
 
-	// pl entity의 높이를 얻어온다.
+	// Gets the height of pl entity.
 	virtual RwReal			GetPLEntityHeight(void);
 
-	// pl entity의 depth을 얻어온다.
+	// Obtains the depth of pl entity.
 	virtual RwReal			GetPLEntityDepth(void); 
 
-    // material에 관현된 함수.
+    // Function implemented in material.
     virtual void			SetAlpha(RwUInt8 byAlpha);
 
 	/**
-	* Decoration에 관련된 함수
+	*Functions related to decoration
 	*/
 
-	// Entity 상단의 이름을 보여줄지 여부
+	// Whether to show the name at the top of the entity
 	void					EnableNameVisible(RwBool bVisible);
 
-	// Entity 상단의 이름 색상을 변경한다
+	// Change the name color at the top of the entity
 	virtual void			SetNameColor(const WCHAR* pwcName, COLORREF color);
 
 protected:

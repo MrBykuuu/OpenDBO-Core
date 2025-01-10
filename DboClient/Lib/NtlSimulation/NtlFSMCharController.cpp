@@ -1,19 +1,19 @@
 #include "precomp_ntlsimulation.h"
 #include "NtlFSMCharController.h"
 
-//shared
+//Shared
 #include "NtlMovement.h"
 #include "ActionTable.h"
 #include "NtlResultCode.h"
 
-//core
+//Core
 #include "NtlDebug.h"
 #include "NtlMath.h"
 
-// DboTrigger
+// Dbo Trigger
 #include "DboTSCoreDefine.h"
 
-// simulation
+// Simulation
 #include "NtlFSMDef.h"
 #include "NtlFSMLayer.h"
 #include "NtlFSMStateBase.h"
@@ -120,7 +120,7 @@ CNtlFSMPlayerController::~CNtlFSMPlayerController()
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : auto command AI 객체 생성.
+//  des : auto command AI object creation.
 //  ------------------------------------------------------------------------
 //  paramater : 
 ////////////////////////////////////////////////////////////////////////////
@@ -136,7 +136,7 @@ void CNtlFSMPlayerController::CreateAutoCmdAI(void)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : auto command AI 객체 삭제.
+//  des : auto command Delete AI object.
 //  ------------------------------------------------------------------------
 //  paramater : 
 ////////////////////////////////////////////////////////////////////////////
@@ -211,7 +211,7 @@ void CNtlFSMPlayerController::UpdateFollowCheck(RwReal fElapsed)
 
 			CNtlSLEventGenerator::SobStateTransition(m_pActor->GetSerialID(), NTL_FSMSID_FIGHTING_FOLLOW);
 
-			// follow packet을 보낸다.			
+			// Send a follow packet.			
 			if(!pCharActAgent->IsFightingMode())
 			{
 				pCharActAgent->SetFightingMode(TRUE);
@@ -428,7 +428,7 @@ RwUInt32 CNtlFSMPlayerController::ServerStateUpdateAnalysis(SNtlEventSobServerUp
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : player controller를 update 한다.
+//  des : Updates the player controller.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : delta time.
@@ -442,7 +442,7 @@ void CNtlFSMPlayerController::Update(RwReal fElapsed)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : event 처리 함수.
+//  des : event processing function.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message
@@ -1074,14 +1074,14 @@ RwUInt32 CNtlFSMPlayerController::SobFaintingEventHandler(RWS::CMsg &pMsg)
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : update에 의해서 상태가 바뀌었을 경우 notify 해 주는 함수.
+//  des: A function that notifies when the state changes due to update.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : previous state.
 //  \param2 : next state.
 ////////////////////////////////////////////////////////////////////////////
 
-// 상태 update에 의해서 상태가 바뀌는 경우.
+// When the status changes due to status update.
 void CNtlFSMPlayerController::NotifyUpdateChangeState(RwUInt32 uiOldState, RwUInt32 uiNextState)
 {
 	///DBO_WARNING_MESSAGE("CNtlFSMPlayerController::NotifyUpdateChangeState");
@@ -1130,11 +1130,12 @@ void CNtlFSMPlayerController::NotifyUpdateChangeState(RwUInt32 uiOldState, RwUIn
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : update에 의한 idle state change 될 경우 처리 함수.
+//  des: Processing function when the idle state changes due to update.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : previous state
 ////////////////////////////////////////////////////////////////////////////
+
 
 void CNtlFSMPlayerController::NotifyOldUpdateStateProc(RwUInt32 uiOldState, RwUInt32 uiNextState)
 {
@@ -1236,7 +1237,7 @@ void CNtlFSMPlayerController::NotifyOldUpdateStateProc(RwUInt32 uiOldState, RwUI
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : update에 의한 spawn state change 될 경우 처리 함수.
+//  des: Processing function when spawn state changes due to update.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : previous state
@@ -1248,7 +1249,7 @@ void CNtlFSMPlayerController::NotifyNextUpdateStateSpawnProc(RwUInt32 uiOldState
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : update에 의한 idle state change 될 경우 처리 함수.
+//  des: Processing function when the idle state changes due to update.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : previous state
@@ -1276,7 +1277,7 @@ void CNtlFSMPlayerController::NotifyNextUpdateStateIdleProc(RwUInt32 uiOldState)
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : update에 의한 hurt state change 될 경우 처리 함수.
+//  des: Processing function when the hurt state changes due to update.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : previous state
@@ -1295,7 +1296,7 @@ void CNtlFSMPlayerController::NotifyNextUpdateStateHurtProc(RwUInt32 uiOldState)
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : update에 의한 skill ready state change 될 경우 처리 함수.
+//  des: Processing function when skill ready state changes due to update.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : previous state
@@ -1312,7 +1313,7 @@ void CNtlFSMPlayerController::NotifyNextUpdateStateSkillReadyProc(RwUInt32 uiOld
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : update에 의한 HTB ready state change 될 경우 처리 함수.
+//  des: Processing function when HTB ready state changes due to update.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : previous state
@@ -1328,7 +1329,7 @@ void CNtlFSMPlayerController::NotifyNextUpdateStateHTBReadyProc(RwUInt32 uiOldSt
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : update에 의한 fighting follow state change 될 경우 처리 함수.
+//  des: Processing function when the fighting follow state changes due to update.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : previous state
@@ -1345,7 +1346,7 @@ void CNtlFSMPlayerController::NotifyNextUpdateStateChaseFollowProc(RwUInt32 uiOl
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : update에 의한 fighting follow state change 될 경우 처리 함수.
+//  des: Processing function when the fighting follow state changes due to update.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : previous state
@@ -1368,7 +1369,7 @@ void CNtlFSMPlayerController::NotifyNextUpdateStateFightingFollowProc(RwUInt32 u
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : update에 의한 skill follow state change 될 경우 처리 함수.
+//  des: Processing function when skill follow state changes due to update.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : previous state
@@ -1383,7 +1384,7 @@ void CNtlFSMPlayerController::NotifyNextUpdateStateSkillFollowProc(RwUInt32 uiOl
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : update에 의한 falling state change 될 경우 처리 함수.
+//  des: Processing function in case of falling state change due to update.
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : previous state
@@ -1438,16 +1439,16 @@ void CNtlFSMPlayerController::NotifyUpdateStateAttackRangeCheck(RwUInt32 uiOldSt
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: A function that notifies the processing result by event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
 
-// event에 의해서 상태가 바뀌는 경우.
+// When the state changes due to an event.
 void CNtlFSMPlayerController::NotifyEvents(RWS::CMsg &pMsg, RwUInt32 uiEventResult, RwUInt32 uiParam1, RwUInt32 uiParam2)
 {
 	RwUInt32 uiCurrState = uiParam1; 
@@ -1493,11 +1494,11 @@ void CNtlFSMPlayerController::NotifyEvents(RWS::CMsg &pMsg, RwUInt32 uiEventResu
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : ActionMapJump event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: A function that notifies the processing result by ActionMapJump event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -1527,11 +1528,11 @@ void CNtlFSMPlayerController::NotifyActionMapJumpEventHandler(RWS::CMsg &pMsg, R
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : ActionMapAirJump event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: Function that notifies the processing result by ActionMapAirJump event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -1548,11 +1549,11 @@ void CNtlFSMPlayerController::NotifyActionMapAirJumpEventHandler(RWS::CMsg &pMsg
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : ActionMapCharging event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: A function that notifies the processing results by the ActionMapCharging event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -1591,11 +1592,11 @@ void CNtlFSMPlayerController::NotifyActionMapChargingEventHandler(RWS::CMsg &pMs
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : ActionMapBlocking event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: A function that notifies the processing results by the ActionMapBlocking event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -1625,11 +1626,11 @@ void CNtlFSMPlayerController::NotifyActionMapBlockingEventHandler(RWS::CMsg &pMs
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : ActionMapSitAndDown event에 의한 처리 결과를 notify 해주는 함수. .
+//  des : A function that notifies the processing results by the ActionMapSitAndDown event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2: Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -1642,10 +1643,10 @@ void CNtlFSMPlayerController::NotifyActionMapSitAndDownEventHandler(RWS::CMsg &p
 
 	if(uiParam1 == NTL_FSMSID_SKILL_READY || uiParam1 == NTL_FSMSID_SKILL_CASTING)
 	{
-		// skill cancel 을 보낸다.
+		// Send skill cancel.
 	}
 
-	// agent
+	// Agent
 	CNtlFSMCharActAgent *pActAgent = reinterpret_cast<CNtlFSMCharActAgent*>(m_pAgent);
 	pActAgent->SetSitDown(!pActAgent->IsSitDown());
 	API_GetSLPacketGenerator()->SendSitAndStand(pActAgent->IsSitDown());  
@@ -1654,11 +1655,11 @@ void CNtlFSMPlayerController::NotifyActionMapSitAndDownEventHandler(RWS::CMsg &p
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : ActionSkillUse event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: A function that notifies the processing results of the ActionSkillUse event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -1691,7 +1692,7 @@ void CNtlFSMPlayerController::NotifyActionMapSkillUseEventHandler(RWS::CMsg &pMs
 		API_GetSLPacketGenerator()->SendCharSkillReq(m_pActor, pSkillStuff->hTargetSerialId, pSkillStuff->bySlotIdx, pSkillStuff->byRpBonusType, m_pActor->GetServerSyncAvatarType());
 	}
 
-	// war mode로 변경
+	// Change to war mode
 	if(m_pActor->GetSerialID() != pActionMapSkillUse->hTargetSerialId)
 	{
 		if(!pCharActAgent->IsFightingMode() && Logic_IsSkillUseAfterAttack(pActionMapSkillUse->hSkillSerialId))
@@ -1706,11 +1707,11 @@ void CNtlFSMPlayerController::NotifyActionMapSkillUseEventHandler(RWS::CMsg &pMs
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : ActionSocialUse event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: Function that notifies the processing result by ActionSocialUse event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2: Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -1720,7 +1721,7 @@ void CNtlFSMPlayerController::NotifyActionMapSocialUseEventHandler(RWS::CMsg &pM
 	if( !(uiEventResult == NTL_FSM_EVENTRES_PASS ||  uiEventResult == NTL_FSM_EVENTRES_CHANGE_STATE) )
 		return;
 
-	// social action use를 보낸다.
+	// Send social action use.
 	RwUInt32 uiOldState = uiParam1;
 	if(uiOldState != NTL_FSMSID_IDLE)
 	{
@@ -1744,7 +1745,7 @@ void CNtlFSMPlayerController::NotifyActionMapSocialUseEventHandler(RWS::CMsg &pM
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing results.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -1759,11 +1760,11 @@ void CNtlFSMPlayerController::NotifyActionMapPrivateShopOpenEventHandler(RWS::CM
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : ActionHTBUse event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: Function that notifies the processing result by ActionHTBUse event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -1782,11 +1783,11 @@ void CNtlFSMPlayerController::NotifyActionMapHTBUseEventHandler(RWS::CMsg &pMsg,
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : ActionItemUse event에 의한 처리 결과를 notify 해주는 함수. .
+//  des : Function that notifies the processing result by ActionItemUse event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -1801,11 +1802,11 @@ void CNtlFSMPlayerController::NotifyActionMapItemUseEventHandler(RWS::CMsg &pMsg
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : ActionItemUse event에 의한 처리 결과를 notify 해주는 함수. .
+//  des : Function that notifies the processing result by ActionItemUse event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -1827,11 +1828,11 @@ void CNtlFSMPlayerController::NotifyActionMapAutoFollowEventHandler(RWS::CMsg &p
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : ActionSkillUse event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: A function that notifies the processing results of the ActionSkillUse event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -1861,11 +1862,11 @@ void CNtlFSMPlayerController::NotifyInputChangeHeadingEventHandler(RWS::CMsg &pM
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : skill cancel event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: A function that notifies the processing result of the skill cancel event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -1878,7 +1879,7 @@ void CNtlFSMPlayerController::NotifySobSkillCancelEventHandler(RWS::CMsg &pMsg, 
 	if(uiParam2 != NTL_FSMSID_SKILL_FOLLOW)
 		return;
 
-    // Rp Bonus가 적용되어 있으면 이펙트를 제거한다.
+    // If the Rp Bonus is applied, the effect is removed.
     CNtlSobCharProxy* pProxy = (CNtlSobCharProxy*)m_pActor->GetSobProxy();
     pProxy->DetachRPBonusEffect();   
 
@@ -1889,11 +1890,11 @@ void CNtlFSMPlayerController::NotifySobSkillCancelEventHandler(RWS::CMsg &pMsg, 
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : TerraionClick event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: A function that notifies the processing results by TerraionClick event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -1909,7 +1910,7 @@ void CNtlFSMPlayerController::NotifyTerrainClickEventHandler(RWS::CMsg &pMsg, Rw
 	RwUInt32 uiCurrState = uiParam1; 
 	if(uiCurrState == NTL_FSMSID_SKILL_READY || uiCurrState == NTL_FSMSID_SKILL_CASTING)
 	{
-		// skill cancel 을 보낸다.
+		// Send skill cancel.
 	}
 	
 	SNtlEventTerrainClick *pTerrainClick = reinterpret_cast<SNtlEventTerrainClick*>(pMsg.pData); 
@@ -1930,11 +1931,11 @@ void CNtlFSMPlayerController::NotifyTerrainClickEventHandler(RWS::CMsg &pMsg, Rw
 }
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : KeyboardMove event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: A function that notifies the processing results of the KeyboardMove event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -1950,7 +1951,7 @@ void CNtlFSMPlayerController::NotifyKeyboardMoveEventHandler(RWS::CMsg &pMsg, Rw
 	RwUInt32 uiCurrState = uiParam1; 
 	if(uiCurrState == NTL_FSMSID_SKILL_READY || uiCurrState == NTL_FSMSID_SKILL_CASTING)
 	{
-		// skill cancel 을 보낸다.
+		// Send skill cancel.
 	}
 
 	if (uiCurrState == NTL_FSMSID_DASH || uiCurrState == NTL_FSMSID_FALLING) // by daneos
@@ -1981,11 +1982,11 @@ void CNtlFSMPlayerController::NotifyKeyboardMoveEventHandler(RWS::CMsg &pMsg, Rw
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : KeyboardMoveStop event에 의한 처리 결과를 notify 해주는 함수. .
+//  des : A function that notifies the processing result of the KeyboardMoveStop event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -1998,7 +1999,7 @@ void CNtlFSMPlayerController::NotifyKeyboardMoveStopEventHandler(RWS::CMsg &pMsg
 	RwUInt32 uiCurrState = uiParam1; 
 	if(uiCurrState == NTL_FSMSID_SKILL_READY || uiCurrState == NTL_FSMSID_SKILL_CASTING)
 	{
-		// skill cancel 을 보낸다.
+		// Send skill cancel.
 	}
 
 	SNtlEventKeyboardMove *pKeyboardMove = reinterpret_cast<SNtlEventKeyboardMove*>(pMsg.pData); 
@@ -2030,11 +2031,11 @@ void CNtlFSMPlayerController::NotifyKeyboardMoveStopEventHandler(RWS::CMsg &pMsg
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : Mouse Dash Move event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: A function that notifies the processing results of the Mouse Dash Move event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -2058,11 +2059,11 @@ void CNtlFSMPlayerController::NotifyMouseDashMoveEventHandler(RWS::CMsg &pMsg, R
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : Keyboard Dash Move event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: A function that notifies the processing results of the Keyboard Dash Move event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -2103,11 +2104,11 @@ void CNtlFSMPlayerController::NotifyAirAccelMoveEventHandler(RWS::CMsg& pMsg, Rw
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : SobDbClick event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: A function that notifies the processing result by SobDbClick event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -2137,11 +2138,11 @@ void CNtlFSMPlayerController::NotifySobTargetSelectEventHandler(RWS::CMsg &pMsg,
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : SobDbClick event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: A function that notifies the processing result by SobDbClick event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -2183,11 +2184,11 @@ void CNtlFSMPlayerController::NotifySobAttackSelectEventHandler(RWS::CMsg &pMsg,
 
 
 ////////////////////////////////////////////////////////////////////////////
-//  des : SobFollowMove event에 의한 처리 결과를 notify 해주는 함수. .
+//  des: A function that notifies the processing result by SobFollowMove event. .
 //  ------------------------------------------------------------------------
 //  paramater : 
 //  \param1 : event message.
-//  \param2 : event 처리 결과.
+//  \param2 : Event processing result.
 //  \param3 : previous state.
 //  \param4 : next state.
 ////////////////////////////////////////////////////////////////////////////
@@ -2322,7 +2323,7 @@ void CNtlFSMServerController::Update(RwReal fElapsed)
 	CNtlFSMCharActAgent *pCharActAgent = reinterpret_cast<CNtlFSMCharActAgent*>(m_pAgent);
 	RwUInt8 byServerState = pCharActAgent->GetServerState();
 
-	// follow 처리.
+	// Follow processing.
 	if(byServerState == CHARSTATE_FOLLOWING)
 	{
 		UpdateServerFollowState(fElapsed);
@@ -2375,7 +2376,7 @@ void CNtlFSMServerController::UpdateServerFollowState(RwReal fElapsed)
 		pMoveStuff->byFormFlag = NTL_MOVE_FLAG_RUN;
 		pMoveStuff->hFollowSerialId = pCtrlStuff->hTargetSerialId;
 
-		// 현재 위치가 육지인지 물속인지 파악한다.    
+		// Determine whether the current location is on land or underwater.    
 		SWorldHeightStuff hStuff;
 		if(Logic_IsSwimmingActor(m_pActor, &m_pActor->GetPosition(), hStuff))
 			pMoveStuff->byForm = NTL_MOVEFORM_SWIMMING;

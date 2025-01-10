@@ -1,12 +1,12 @@
 /*****************************************************************************
  *
- * File			: ExpGui.h
- * Author		: HyungSuk, Jang
- * Copyright	: (주)NTL
- * Date			: 2005. 11. 030	
- * Abstract		: DBO exp  gui.
+ *File			: ExpGui.h
+ *Author	    : HyungSuk, Jang
+ *Copyright	    : (주)NTL
+ *Date			: 2005. 11. 030	
+ *Abstract		: DBO exp  gui.
  *****************************************************************************
- * Desc         : 
+ *Desc          : 
  *
  *****************************************************************************/
 
@@ -34,7 +34,7 @@ public:
 	RwBool	Update( RwReal fElapsed );	
 	VOID	Render(VOID);
 
-	VOID	SetInitXPos( RwInt32 nScreenXPos );	// DestPos도 같이 수정됨.
+	VOID	SetInitXPos( RwInt32 nScreenXPos );	// DestPos was also modified.
 	VOID	SetInitYPos( RwInt32 nScreenYPos );
 
 	RwBool	IsEffectShow(VOID) { return m_bShowEffect; }
@@ -57,7 +57,7 @@ private:
 
 	RwBool		m_bSound;
 
-    // PC방용 추가 EXP 관련 정보
+    // Additional EXP information for PC rooms
     RwUInt32    m_uiAcquisitionExp;
     RwUInt32    m_uiBonusExp;
 };
@@ -70,7 +70,7 @@ public:
 	CExpGui(const RwChar *pName);
 	~CExpGui();
 
-//! Opration
+//! Operation
 	RwBool	Create(VOID);
 	VOID	Destroy(VOID);
 

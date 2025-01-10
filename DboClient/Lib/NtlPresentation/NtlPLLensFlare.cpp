@@ -37,7 +37,7 @@ RwBool CNtlPLLensFlare::Create( const SPLEntityCreateParam * pParam /*= NULL */ 
 	AddSpots();
 
 
-	// LensFlare 설정값을 설정하기 위한 테스트 함수
+	// Test function to set LensFlare settings
 	//AddSpotForTest(".\\Tool\\VenusData\\LensFlare.xml");
 
 	return TRUE;
@@ -86,7 +86,7 @@ void CNtlPLLensFlare::SetMatrix( RwMatrix& matWorld )
 
 void CNtlPLLensFlare::AddSpots() 
 {
-	// Texture를 로딩한다.
+	// Load Texture.
 	RwTexture* tex1 = GetNtlResourceManager()->LoadTexture("LensFlare_01", PATH_EFFECT_TEXTURE);
 	RwTexture* tex2 = GetNtlResourceManager()->LoadTexture("LensFlare_02", PATH_EFFECT_TEXTURE);
 	RwTexture* tex3 = GetNtlResourceManager()->LoadTexture("LensFlare_03", PATH_EFFECT_TEXTURE);
@@ -97,7 +97,7 @@ void CNtlPLLensFlare::AddSpots()
 	DBO_ASSERT(tex3, "Texture load failed.");
 	DBO_ASSERT(tex4, "Texture load failed.");
 
-	// 아래 값들은 그래픽팀에서 테스트하여 지정한 값이다. 
+	// The values ??below are values ??specified through testing by the graphics team. 
 	AddSpot(SNtlPLLensFlareSpot(tex2, 0.30f,  0.7f,  1.0f, 1.0f,  1.0f, 0.3f));
 	AddSpot(SNtlPLLensFlareSpot(tex1, 0.20f,  0.5f,  1.0f, 1.0f,  1.0f, 0.2f));
 	AddSpot(SNtlPLLensFlareSpot(tex4, 0.06f,  0.4f,  0.6f, 1.0f,  0.9f, 0.1f));
@@ -184,7 +184,7 @@ void CNtlPLLensFlare::UpdateVertices(RwReal fElapsedTime)
 	RwInt32 nScreenWidth = CNtlPLGlobal::m_RwCamera->frameBuffer->width;
 	RwInt32 nScreenHeight = CNtlPLGlobal::m_RwCamera->frameBuffer->height;
 
-	// 광원의 2D 위치	
+	// 2D location of the light source	
 	RwV2d posLight = API_PL_Calc3DPosTo2D(RwMatrixGetPos(&m_matWorld), nScreenWidth, nScreenHeight, TRUE);
 	if(posLight.x >= 9999.0f && posLight.y >= 9999.0f)
 	{
@@ -192,7 +192,7 @@ void CNtlPLLensFlare::UpdateVertices(RwReal fElapsedTime)
 		return;
 	}
 
-	// 강도 계산
+	// strength calculation
 	RwReal fRealIntensity;
 	RwReal iAwayX = (posLight.x < 0) ? -posLight.x : 
 		(posLight.x > nScreenWidth) ? posLight.x - nScreenWidth : 0;
@@ -213,7 +213,7 @@ void CNtlPLLensFlare::UpdateVertices(RwReal fElapsedTime)
 
 	if(fRealIntensity > 0.0f)
 	{
-		// Picking 테스트를 한다.
+		// Do a picking test.
 		m_fPickingTickTime += fElapsedTime;
 		m_bPrevPickingResult = CalcPicking(posLight);
 		if(m_bPrevPickingResult)
@@ -272,12 +272,12 @@ void CNtlPLLensFlare::UpdateVertices(RwReal fElapsedTime)
 	}
 	else
 	{
-		// 강도가 0보다 작으면 화면에 안나오기 때문에, 계산도 렌더링도 필요없다
+		// If the intensity is less than 0, it does not appear on the screen, so no calculation or rendering is necessary.
 		m_bRender = FALSE;
 		return;
 	}
 
-	// Vertex 위치를 계산하여 설정한다.
+	// Calculate and set the vertex position.
 
 	RwInt32 nCenterOfScreenX = nScreenWidth / 2;
 	RwInt32 nCenterOfScreenY = nScreenHeight / 2;
@@ -286,16 +286,16 @@ void CNtlPLLensFlare::UpdateVertices(RwReal fElapsedTime)
 
 	for(UINT i = 0; i < m_vecSpots.size(); ++i)
 	{
-		// spot의 위치를 계산한다.
+		// Calculate the location of the spot.
 		RwInt32 nSpotCenterPosX = (RwInt32)(nCenterOfScreenX - (RwReal)nDistanceX * m_vecSpots[i].m_fLinePos);
 		RwInt32 nSpotCenterPosY = (RwInt32)(nCenterOfScreenY - (RwReal)nDistanceY * m_vecSpots[i].m_fLinePos);
 		RwInt32 nSpotSizeHalf = (RwInt32)(nScreenWidth * m_vecSpots[i].m_fSize * 0.5f);		
 
-		// 색상 결정
+		// color decision
 		RwRGBAReal color = m_vecSpots[i].m_color;
 		color.alpha *= fRealIntensity;		
 
-		if(GetDnController()->IsDNEffectApplied())	// D&N이 켜져있으면 LensFlare에도 영향을 준다
+		if(GetDnController()->IsDNEffectApplied())	// If D&N is turned on, it also affects LensFlare.
 		{
 			RwReal TFactor = static_cast<RwReal>(dGET_WORLD_PARAM()->ClrDayAndNight & 0x000000ff) / 255.0f;
 			TFactor = 1.0f - TFactor * CNtlPLGlobal::m_fLensFlareForDNRatio;
@@ -373,7 +373,7 @@ RwBool CNtlPLLensFlare::CalcPicking( const RwV2d& posLight )
 		m_fPickingTickTime = 0.0f;
 	}
 
-	// 지형을 피킹한다.	
+	// Pick the terrain.	
 	CNtlPLWorldEntity* pWorldEntity = reinterpret_cast<CNtlPLVisualManager*>(GetSceneManager())->GetWorld();
 	if(!pWorldEntity)
 	{
@@ -386,7 +386,7 @@ RwBool CNtlPLLensFlare::CalcPicking( const RwV2d& posLight )
 		return TRUE;
 	}
 
-	// 오브젝트를 피킹한다.		
+	// Pick the object.		
 	SWorldPickInfo pickInfo;
 	ZeroMemory(&pickInfo, sizeof(pickInfo));
 	pickInfo.fMinDist = RwRealMAXVAL;	

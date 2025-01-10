@@ -5,7 +5,7 @@ class CNtlPLEntity;
 
 /**
  * \ingroup NtlSimulation
- * \brief 공유 타겟 마크를 관리하는 클래스
+ * \brief Class that manages shared target marks
  *
  * \date 2009-08-13
  * \author agebreak
@@ -13,7 +13,7 @@ class CNtlPLEntity;
 class CNtlShareTargetMark
 {
 public:
-    // 공유 타겟 타입
+    // Shared target type
     enum EShareTargetType
     {
         SHARE_TARGET_NORMAL,        
@@ -25,17 +25,17 @@ public:
     CNtlShareTargetMark(CNtlSob* pSobObject);
     virtual ~CNtlShareTargetMark();
 
-    void    CreateShareTargetMark(RwUInt8 bySlot, RwInt32 type);               ///< 공유타겟 마크를 생성한다.
-    void    DeleteShareTargetMark();                                            ///< 공유타겟 마크를 해제한다.
-    RwBool  IsShareTargeting();                                                 ///< 공유타겟이 설정되어있는지를 반환한다.
-    RwUInt8 GetSlot() {return m_bySlot;}                                        ///< 현재 설정된 슬롯을 반환한다.    
+    void    CreateShareTargetMark(RwUInt8 bySlot, RwInt32 type);               ///< Create a shared target mark.
+    void    DeleteShareTargetMark();                                            ///< Unmark the shared target.
+    RwBool  IsShareTargeting();                                                 ///< Returns whether the shared target is set.
+    RwUInt8 GetSlot() {return m_bySlot;}                                        ///< Returns the currently configured slot.    
 
 protected:
 
 protected:
-    CNtlSob*            m_pSobObj;                  ///< 공유타겟이 붙을 메인 엔티티
-    CNtlPLEntity*       m_pShareTargetMark;         ///< 공유타겟 이펙트
-    RwUInt8             m_bySlot;                   ///< 공유타겟 넘버(슬롯)
-    EShareTargetType    m_type;                     ///< 공유타겟 타입  
+    CNtlSob*            m_pSobObj;                  ///< Main entity to which the shared target will be attached
+    CNtlPLEntity*       m_pShareTargetMark;         ///< Shared target effect
+    RwUInt8             m_bySlot;                   ///< Shared target number (slot)
+    EShareTargetType    m_type;                     ///< Shared target type  
     
 };

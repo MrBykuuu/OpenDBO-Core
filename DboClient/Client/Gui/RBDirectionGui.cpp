@@ -1,20 +1,20 @@
 #include "precomp_dboclient.h"
 #include "RBDirectionGui.h"
 
-// core
+// Core
 #include "NtlDebug.h"
 
-// presentation
+// Presentation
 #include "NtlPLGuiManager.h"
 #include "NtlPLEvent.h"
 
-// simulation
+// Simulation
 #include "NtlSLGlobal.h"
 #include "NtlSLEvent.h"
 #include "NtlSobAvatar.h"
 #include "NtlSLRankBattle.h"
 
-// client
+// Client
 #include "DboGlobal.h"
 
 #define RB_DIRECT_BASIS_WIDTH	1024
@@ -286,7 +286,7 @@ VOID CRBDirectionGui::OnKameTeamMemberMovieEnd( gui::CComponent* pComponent )
 	{
 		if (pComponent == m_pflaKameTeamMember[i])
 		{
-			++i;		// i는 다음에 플레이 되는 인덱스
+			++i;		// i is the index to be played next
 			break;
 		}
 	}
@@ -312,7 +312,7 @@ VOID CRBDirectionGui::OnTsuruTeamMemberMovieEnd( gui::CComponent* pComponent )
 	{
 		if (pComponent == m_pflaTsuruTeamMember[i])
 		{
-			++i;		// i는 다음에 플레이 되는 인덱스
+			++i;		// i is the index to be played next
 			break;
 		}
 	}
